@@ -347,6 +347,7 @@ private extension LoyaltyCardFullDetailsViewController {
             barcodeView.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
             barcodeView.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
             barcodeView.configure(viewModel: viewModel)
+            barcodeView.layoutIfNeeded()
         default:
             let barcodeView: BarcodeViewWide = .fromNib()
             barcodeView.translatesAutoresizingMaskIntoConstraints = false
@@ -354,6 +355,7 @@ private extension LoyaltyCardFullDetailsViewController {
             barcodeView.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
             barcodeView.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
             barcodeView.configure(viewModel: viewModel)
+            barcodeView.layoutIfNeeded()
         }
     }
     
