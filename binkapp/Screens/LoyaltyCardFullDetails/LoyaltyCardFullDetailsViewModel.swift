@@ -82,7 +82,7 @@ class LoyaltyCardFullDetailsViewModel {
     var barcodeButtonTitle: String {
         var buttonTitle = "details_header_show_card_number".localized
         
-        if barcodeViewModel.isBarcodeAvailable {
+        if shouldShowBarcode {
             switch barcodeViewModel.barcodeType {
             case .qr, .aztec:
                 buttonTitle = "details_header_show_qr_code".localized
