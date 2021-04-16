@@ -19,7 +19,7 @@ class BarcodeView: UIView {
         layer.cornerRadius = 12
         clipsToBounds = true
         backgroundColor = Current.themeManager.color(for: .walletCardBackground)
-        titleLabel.text = "bonus_card_number".localized
+        titleLabel.text = "barcode_view_title".localized
         titleLabel.textColor = Current.themeManager.color(for: .text)
         cardNumberLabel.textColor = Current.themeManager.color(for: .text)
     }

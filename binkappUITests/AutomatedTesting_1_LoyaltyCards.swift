@@ -16,7 +16,7 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
         continueAfterFailure = false
         UIView.setAnimationsEnabled(false)
         
-        app.launchArguments = ["enable-testing"]
+        app.launchArguments = ["UI-testing"]
         app.launch()
     }
     

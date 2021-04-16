@@ -16,7 +16,7 @@ class AutomatedTesting_0_Login: XCTestCase {
         continueAfterFailure = false
         UIView.setAnimationsEnabled(false)
         
-        app.launchArguments = ["enable-testing"]
+        app.launchArguments = ["UI-testing"]
         app.launch()
     }
     

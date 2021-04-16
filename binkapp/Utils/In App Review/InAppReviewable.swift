@@ -34,10 +34,13 @@ extension InAppReviewable {
     }
 
     private var canRequestReview: Bool {
-        #if DEBUG
-        guard Current.userDefaults.bool(forDefaultsKey: .applyInAppReviewRules) else { return true }
-        #endif
-        return requestTimeLimitHasPassed && !reviewRequestedForCurrentMinorVersion && enabledInRemoteConfig
+        if !CommandLine.arguments.contains("UI-testing") {
+            #if DEBUG
+            guard Current.userDefaults.bool(forDefaultsKey: .applyInAppReviewRules) else { return true }
+            #endif
+            return requestTimeLimitHasPassed && !reviewRequestedForCurrentMinorVersion && enabledInRemoteConfig
+        }
+        return false
     }
 
     private var requestTimeLimitHasPassed: Bool {
