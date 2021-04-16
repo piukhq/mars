@@ -122,6 +122,7 @@
 "bonus_card_number" = "Bonus Card number:";
 "details_header_show_barcode" = "Tap to enlarge barcode";
 "details_header_show_qr_code" = "Tap to enlarge QR code";
+"details_header_show_aztec_code" = "Tap to enlarge Aztec code";
 "details_header_show_card_number" = "Tap to show card number";
 
 "about_membership_title" = "About membership";

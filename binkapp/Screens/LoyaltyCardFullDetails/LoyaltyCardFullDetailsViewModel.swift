@@ -84,8 +84,10 @@ class LoyaltyCardFullDetailsViewModel {
         
         if shouldShowBarcode {
             switch barcodeViewModel.barcodeType {
-            case .qr, .aztec:
+            case .qr:
                 buttonTitle = "details_header_show_qr_code".localized
+            case .aztec:
+                buttonTitle = "details_header_show_aztec_code".localized
             default:
                 buttonTitle = "details_header_show_barcode".localized
             }
