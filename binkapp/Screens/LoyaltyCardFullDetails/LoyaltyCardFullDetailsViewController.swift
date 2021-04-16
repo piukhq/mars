@@ -339,24 +339,23 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     private func configureBarcodeViewForBrandHeader() {
+        var barcode: BarcodeView
         switch (viewModel.barcodeViewModel.barcodeType, viewModel.barcodeViewModel.barcodeIsMoreSquareThanRectangle) {
         case (.aztec, _), (.qr, _), (_, true):
             let barcodeView: BarcodeViewCompact = .fromNib()
-            barcodeView.translatesAutoresizingMaskIntoConstraints = false
-            brandHeader.addSubview(barcodeView)
-            barcodeView.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
-            barcodeView.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
+            barcode = barcodeView
             barcodeView.configure(viewModel: viewModel)
-            barcodeView.layoutIfNeeded()
         default:
             let barcodeView: BarcodeViewWide = .fromNib()
-            barcodeView.translatesAutoresizingMaskIntoConstraints = false
-            brandHeader.addSubview(barcodeView)
-            barcodeView.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
-            barcodeView.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
+            barcode = barcodeView
             barcodeView.configure(viewModel: viewModel)
-            barcodeView.layoutIfNeeded()
         }
+        
+        barcode.translatesAutoresizingMaskIntoConstraints = false
+        brandHeader.addSubview(barcode)
+        barcode.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
+        barcode.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
+        barcode.layoutIfNeeded()
     }
     
     private func setupCellForType<T: PLRBaseCollectionViewCell>(_ cellType: T.Type, voucher: CD_Voucher) {

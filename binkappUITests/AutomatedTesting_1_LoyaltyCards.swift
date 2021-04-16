@@ -70,19 +70,19 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
         app.toolbars["Toolbar"].buttons["Done"].tap()
         app.buttons["Add card"].tap()
 
-        XCTAssertTrue(app.staticTexts["Tap card to show barcode"].waitForExistence(timeout: 30))
+        XCTAssertTrue(app.staticTexts["Tap to enlarge barcode"].waitForExistence(timeout: 30))
     }
     
     func test_2_viewIcelandBarcode_isSuccessful() {
         app.staticTexts["Iceland"].tap()
-        app.staticTexts["Tap card to show barcode"].tap()
+        app.staticTexts["Tap to show card number"].tap()
         let imageView = app.images["Barcode imageview"]
         XCTAssertTrue(imageView.waitForExistence(timeout: 10))
     }
     
     func test_3_viewBAndQBarcode_isSuccessful() {
         app.staticTexts["B&Q"].tap()
-        app.staticTexts["Tap card to show barcode"].tap()
+        app.staticTexts["Tap to enlarge barcode"].tap()
         let imageView = app.images["Barcode imageview"]
         XCTAssertTrue(imageView.waitForExistence(timeout: 10))
     }
