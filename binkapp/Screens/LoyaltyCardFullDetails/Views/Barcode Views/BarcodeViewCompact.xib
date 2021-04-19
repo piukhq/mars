@@ -29,16 +29,16 @@
                     </constraints>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="pck-86-UYi">
-                    <rect key="frame" x="20" y="73.5" width="119" height="86"/>
+                    <rect key="frame" x="20" y="73.5" width="144" height="43.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bonus Card Number" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="U6h-TA-3MZ">
-                            <rect key="frame" x="0.0" y="0.0" width="119" height="41"/>
+                            <rect key="frame" x="0.0" y="0.0" width="144" height="20.5"/>
                             <fontDescription key="fontDescription" name="NunitoSans-Regular" family="Nunito Sans" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="1234 5678 7904" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="5q0-uG-DT8">
-                            <rect key="frame" x="0.0" y="42" width="119" height="44"/>
+                            <rect key="frame" x="0.0" y="21.5" width="144" height="22"/>
                             <fontDescription key="fontDescription" name="NunitoSans-Bold" family="Nunito Sans" pointSize="16"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -56,7 +56,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="ccd-vJ-ShL" firstAttribute="leading" secondItem="b2e-YA-teQ" secondAttribute="leading" constant="20" id="9Jo-rm-wAA"/>
-                <constraint firstItem="T8c-B0-Mb8" firstAttribute="leading" secondItem="pck-86-UYi" secondAttribute="trailing" constant="45" id="9sh-Dw-n9n"/>
+                <constraint firstItem="T8c-B0-Mb8" firstAttribute="leading" secondItem="pck-86-UYi" secondAttribute="trailing" constant="20" id="9sh-Dw-n9n"/>
                 <constraint firstItem="T8c-B0-Mb8" firstAttribute="top" secondItem="b4f-tC-okO" secondAttribute="top" constant="20" id="Dk6-Kw-8Hh"/>
                 <constraint firstItem="pck-86-UYi" firstAttribute="leading" secondItem="b2e-YA-teQ" secondAttribute="leading" constant="20" id="HN4-Mb-wah"/>
                 <constraint firstItem="ccd-vJ-ShL" firstAttribute="top" secondItem="b4f-tC-okO" secondAttribute="top" constant="20" id="K3N-9D-1QJ"/>
