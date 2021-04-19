@@ -37,13 +37,12 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let primaryCard = UIView()
         primaryCard.frame = CGRect(x: cellFrame.minX + LayoutHelper.RectangleView.primaryRectX + 7.5, y: cellFrame.minY - LayoutHelper.WalletDimensions.cardLineSpacing, width: LayoutHelper.RectangleView.primaryRectWidth / 2, height: LayoutHelper.RectangleView.primaryRectHeight / 2)
         primaryCard.transform = CGAffineTransform(rotationAngle: LayoutHelper.RectangleView.primaryRectRotation)
-        primaryCard.backgroundColor = UIColor(hexString: membershipCard.card?.colour ?? "")
-        primaryCard.layer.cornerRadius = LayoutHelper.RectangleView.cornerRadius
-        primaryCard.alpha = 0
+
         
         let barcodeView = UIView()
         let brandHeader = UIImageView()
         let brandHeaderRect = CGRect(x: LayoutHelper.LoyaltyCardDetail.contentPadding, y: topBarHeight + LayoutHelper.PaymentCardDetail.stackScrollViewContentInsets.top, width: lcdViewController.brandHeader.frame.width, height: lcdViewController.brandHeader.frame.height)
+        var barcodeTransitionView = BarcodeView(frame: .zero)
 
         if lcdViewController.viewModel.shouldShowBarcode {
             /// Barcode View
@@ -51,24 +50,36 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             barcodeView.frame = brandHeaderRect
             barcodeView.alpha = 0
             
+            var barcode: BarcodeView
             switch (lcdViewController.viewModel.barcodeViewModel.barcodeType, lcdViewController.viewModel.barcodeViewModel.barcodeIsMoreSquareThanRectangle) {
             case (.aztec, _), (.qr, _), (_, true):
-                let barcodeViewCompact: BarcodeViewCompact = .fromNib()
-                barcodeViewCompact.configure(viewModel: lcdViewController.viewModel)
-                barcodeView.addSubview(barcodeViewCompact)
-                barcodeViewCompact.heightAnchor.constraint(equalTo: barcodeView.heightAnchor).isActive = true
-                barcodeViewCompact.widthAnchor.constraint(equalTo: barcodeView.widthAnchor).isActive = true
-                barcodeViewCompact.translatesAutoresizingMaskIntoConstraints = false
-                barcodeViewCompact.layer.cornerRadius = LayoutHelper.RectangleView.cornerRadius
+                let barcodeView: BarcodeViewCompact = .fromNib()
+                barcode = barcodeView
+                barcodeView.configure(viewModel: lcdViewController.viewModel)
+                
+                let transitionView: BarcodeViewCompact = .fromNib()
+                barcodeTransitionView = transitionView
+                transitionView.configure(viewModel: lcdViewController.viewModel)
             default:
-                let barcodeViewWide: BarcodeViewWide = .fromNib()
-                barcodeViewWide.configure(viewModel: lcdViewController.viewModel)
-                barcodeView.addSubview(barcodeViewWide)
-                barcodeViewWide.heightAnchor.constraint(equalTo: barcodeView.heightAnchor).isActive = true
-                barcodeViewWide.widthAnchor.constraint(equalTo: barcodeView.widthAnchor).isActive = true
-                barcodeViewWide.translatesAutoresizingMaskIntoConstraints = false
-                barcodeViewWide.layer.cornerRadius = LayoutHelper.RectangleView.cornerRadius
+                let barcodeView: BarcodeViewWide = .fromNib()
+                barcode = barcodeView
+                barcodeView.configure(viewModel: lcdViewController.viewModel)
+                
+                let transitionView: BarcodeViewWide = .fromNib()
+                barcodeTransitionView = transitionView
+                transitionView.configure(viewModel: lcdViewController.viewModel)
             }
+            
+            barcodeView.addSubview(barcode)
+            barcode.heightAnchor.constraint(equalTo: barcodeView.heightAnchor).isActive = true
+            barcode.widthAnchor.constraint(equalTo: barcodeView.widthAnchor).isActive = true
+            barcode.translatesAutoresizingMaskIntoConstraints = false
+            
+            primaryCard.addSubview(barcodeTransitionView)
+            barcodeTransitionView.heightAnchor.constraint(equalTo: primaryCard.heightAnchor).isActive = true
+            barcodeTransitionView.widthAnchor.constraint(equalTo: primaryCard.widthAnchor).isActive = true
+            barcodeTransitionView.translatesAutoresizingMaskIntoConstraints = false
+            barcodeTransitionView.alpha = 0
         } else {
             /// Brand Header
             brandHeader.layer.cornerRadius = LayoutHelper.RectangleView.cornerRadius
@@ -85,6 +96,10 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
                 brandHeader.backgroundColor = UIColor(patternImage: placeholder)
             }
             brandHeader.image = lcdViewController.brandHeaderImageView.image
+            
+            primaryCard.backgroundColor = UIColor(hexString: membershipCard.card?.colour ?? "")
+            primaryCard.layer.cornerRadius = LayoutHelper.RectangleView.cornerRadius
+            primaryCard.alpha = 0
         }
         
         /// Secondary Card
@@ -109,10 +124,12 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         UIView.animate(withDuration: duration / 4, delay: 0, options: .curveEaseIn) {
             primaryCard.alpha = 1
             secondaryCard.alpha = 1
+            barcodeTransitionView.alpha = 1
         } completion: { [weak self] _ in
             guard let self = self else { return }
             UIView.animate(withDuration: self.duration / 2, delay: self.duration / 4, options: .curveEaseOut) {
                 primaryCard.alpha = 0
+                barcodeTransitionView.alpha = 0
             }
         }
 
@@ -130,8 +147,8 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         } completion: { _ in
             loyaltyWalletViewController.view.alpha = 1
             lcdViewController.secondaryColorView.alpha = 1
-            primaryCard.removeFromSuperview()
             secondaryCard.removeFromSuperview()
+            primaryCard.removeFromSuperview()
             brandHeader.removeFromSuperview()
             barcodeView.removeFromSuperview()
             transitionContext.completeTransition(true)
