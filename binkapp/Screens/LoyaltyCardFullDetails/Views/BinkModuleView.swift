@@ -1,11 +1,3 @@
-//
-//  BinkModuleView.swift
-//  binkapp
-//
-//  Created by Dorin Pop on 12/09/2019.
-//  Copyright © 2019 Bink. All rights reserved.
-//
-
 import UIKit
 
 protocol BinkModuleViewDelegate: class {
@@ -18,13 +10,14 @@ class BinkModuleView: CustomView {
     @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var contentView: UIView!
     
-    private var state: ModuleState!
+    private var state: ModuleState?
     private weak var delegate: BinkModuleViewDelegate?
     
     func configure(moduleType: ModuleType, delegate: BinkModuleViewDelegate? = nil) {
+        guard let stateFromModuleType = state(from: moduleType) else { return }
         self.delegate = delegate
-        state = state(from: moduleType)
-        configure(for: state)
+        state = stateFromModuleType
+        configure(for: stateFromModuleType)
         
         layer.applyDefaultBinkShadow()
     }
@@ -41,7 +34,7 @@ class BinkModuleView: CustomView {
 // MARK: - Private methods
 
 private extension BinkModuleView {
-    func state(from moduleType: ModuleType) -> ModuleState {
+    func state(from moduleType: ModuleType) -> ModuleState? {
         switch moduleType {
         case .points(let membershipCard):
             return pointsState(membershipCard: membershipCard)
@@ -50,7 +43,7 @@ private extension BinkModuleView {
         }
     }
     
-    func pointsState(membershipCard: CD_MembershipCard) -> ModuleState {
+    func pointsState(membershipCard: CD_MembershipCard) -> ModuleState? {
         guard let plan = membershipCard.membershipPlan, plan.featureSet?.hasPoints?.boolValue ?? false || plan.featureSet?.transactionsAvailable?.boolValue ?? false else {
             // Points module 1.5
             return .loginUnavailable
@@ -61,7 +54,7 @@ private extension BinkModuleView {
             // PLR
             if membershipCard.membershipPlan?.isPLR == true {
                 if membershipCard.membershipPlan?.featureSet?.transactionsAvailable?.boolValue == true {
-                    return .transactions(transactionsAvailable: true, lastCheckedString: nil)
+                    return .transactions(transactionsAvailable: true, lastCheckedString: nil, formattedTitle: nil)
                 } else {
                     return .aboutMembership
                 }
@@ -80,13 +73,10 @@ private extension BinkModuleView {
                 } else {
                     titleText = prefix + "\(value.intValue)" + " " + suffix
                 }
-                
-                // TODO: Move this logic to state enum
-                print(titleText)
 
                 let transactionsAvailable = plan.featureSet?.transactionsAvailable?.boolValue == true
                 let date = Date(timeIntervalSince1970: balance.updatedAt?.doubleValue ?? 0)
-                return .transactions(transactionsAvailable: transactionsAvailable, lastCheckedString: date.timeAgoString(short: true))
+                return .transactions(transactionsAvailable: transactionsAvailable, lastCheckedString: date.timeAgoString(short: true), formattedTitle: titleText)
             } else {
                 return .pending
             }
@@ -106,10 +96,7 @@ private extension BinkModuleView {
                     return .loginChanges(type: .points(membershipCard: membershipCard), status: membershipCard.status?.status)
                 case .accountDoesNotExist, .addDataRejectedByMerchant, .NoAuthorizationProvided, .updateFailed, .noAuthorizationRequired, .authorizationDataRejectedByMerchant, .authorizationExpired, .pointsScrapingLoginFailed:
                     
-                    // TODO: handle this
-                    
                     // Points module 1.6
-//                    configure(imageName: imageName, titleText: "points_module_retry_log_in_status".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .loginChanges)
                     return .loginChanges(type: .points(membershipCard: membershipCard), status: membershipCard.status?.status)
                 default:
                     // Points module 1.10 (need reason codes, set by default)
@@ -118,16 +105,12 @@ private extension BinkModuleView {
             } else {
                 return .noReasonCode
             }
-        default:
-            // TODO: handle this better
-            fatalError("")
+        default: return nil
         }
     }
     
-    func linkState(membershipCard: CD_MembershipCard, paymentCards: [CD_PaymentCard]?) -> ModuleState {
-        guard let plan = membershipCard.membershipPlan else {
-            fatalError("Membership card has no plan.")
-        }
+    func linkState(membershipCard: CD_MembershipCard, paymentCards: [CD_PaymentCard]?) -> ModuleState? {
+        guard let plan = membershipCard.membershipPlan else { return nil }
 
         guard plan.featureSet?.planCardType == .link else {
             switch plan.featureSet?.planCardType {
@@ -144,25 +127,15 @@ private extension BinkModuleView {
         case .authorised:
             let possiblyLinkedCard = paymentCards?.first(where: { !$0.linkedMembershipCards.isEmpty })
             guard membershipCard.linkedPaymentCards.isEmpty, !membershipCard.linkedPaymentCards.contains(possiblyLinkedCard as Any) else {
-                
-                // TODO: handle this
-                
                 // Link module 2.1
-//                let subtitleText = String(format: paymentCards.isEmpty ? "link_module_to_number_of_payment_card_message".localized : "link_module_to_number_of_payment_cards_message".localized, membershipCard.linkedPaymentCards.count, paymentCards.count)
-//                configure(imageName: "lcdModuleIconsLinkActive", titleText: "card_linked_status".localized, subtitleText: subtitleText, touchAction: .pll)
-                
-                return .pll
+                return .pll(membershipCard: membershipCard, paymentCards: paymentCards, error: false)
             }
             if paymentCards?.isEmpty == true {
                 // Link module 2.2
                 return .pllEmpty
             } else {
                 // Link module 2.3
-                
-                // TODO: Handle PLL correctly
-                
-//                configure(imageName: "lcdModuleIconsLinkError", titleText: "card_link_status".localized, subtitleText: "link_module_to_payment_cards_message".localized, touchAction: .pll)
-                return .pll
+                return .pll(membershipCard: membershipCard, paymentCards: paymentCards, error: true)
             }
         case .unauthorised:
             // Link module 2.5
@@ -184,8 +157,7 @@ private extension BinkModuleView {
                 // Link module 2.7
                 return .noReasonCode
             }
-        default:
-            return .genericError
+        default: return nil
         }
     }
     

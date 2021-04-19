@@ -20,14 +20,14 @@ enum ModuleState: Equatable {
     
     case login
     case loginChanges(type: ModuleType?, status: MembershipCardStatus?)
-    case transactions(transactionsAvailable: Bool, lastCheckedString: String?)
+    case transactions(transactionsAvailable: Bool, lastCheckedString: String?, formattedTitle: String?)
     case pending
     case loginUnavailable
     case signUp
     case patchGhostCard(type: ModuleType?)
     case registerGhostCard
     case pllEmpty
-    case pll
+    case pll(membershipCard: CD_MembershipCard?, paymentCards: [CD_PaymentCard]?, error: Bool)
     case unlinkable
     case genericError
     case aboutMembership
@@ -53,7 +53,10 @@ enum ModuleState: Equatable {
             return "lcdModuleIconsPointsLogin"
         case .pllEmpty:
             return "lcdModuleIconsLinkError"
-        case .pll:
+        case .pll(_, _, let error):
+            if error {
+                return "lcdModuleIconsLinkError"
+            }
             return "lcdModuleIconsLinkActive"
         case .unlinkable:
             return "lcdModuleIconsLinkInactive"
@@ -78,7 +81,10 @@ enum ModuleState: Equatable {
                 return "log_in_title".localized
             default: return ""
             }
-        case .transactions:
+        case .transactions(_, _, let formattedTitle):
+            if let title = formattedTitle {
+                return title
+            }
             return "plr_lcd_points_module_auth_title".localized
         case .pending:
             return "pending_title".localized
@@ -119,7 +125,7 @@ enum ModuleState: Equatable {
                 return "link_module_to_link_to_cards_message".localized
             default: return ""
             }
-        case .transactions(let transactionsAvailable, let lastChecked):
+        case .transactions(let transactionsAvailable, let lastChecked, _):
             switch transactionsAvailable {
             case true:
                 return "points_module_view_history_message".localized
@@ -144,8 +150,11 @@ enum ModuleState: Equatable {
             return "please_try_again_title".localized
         case .pllEmpty:
             return "link_module_to_payment_cards_message".localized
-        case .pll:
-            return ""
+        case .pll(let membershipCard, let paymentCards, let error):
+            if error {
+                return "link_module_to_payment_cards_message".localized
+            }
+            return String(format: paymentCards?.isEmpty == true ? "link_module_to_number_of_payment_card_message".localized : "link_module_to_number_of_payment_cards_message".localized, membershipCard?.linkedPaymentCards.count ?? 0, paymentCards?.count ?? 0)
         case .unlinkable:
             return "not_available_title".localized
         case .genericError:
