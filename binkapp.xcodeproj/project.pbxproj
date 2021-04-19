@@ -194,6 +194,7 @@
 		70F7EC2625CAF950005DE935 /* WebScrapingUtilityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2525CAF950005DE935 /* WebScrapingUtilityError.swift */; };
 		70F7EC2B25CAF97A005DE935 /* WebScrapingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2A25CAF97A005DE935 /* WebScrapingViewController.swift */; };
 		70F7EC3025CAF9A2005DE935 /* WebScrapingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2F25CAF9A2005DE935 /* WebScrapingResponse.swift */; };
+		70FD1DB2262D8E59003C0DA0 /* BinkModuleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FD1DB1262D8E59003C0DA0 /* BinkModuleType.swift */; };
 		9686E5CB25D1427D00CE87B1 /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 9686E5CA25D1427D00CE87B1 /* FacebookLogin */; };
 		9686E5CD25D1427D00CE87B1 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 9686E5CC25D1427D00CE87B1 /* FacebookCore */; };
 		96F22E002507C5AC0009951B /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 96F22DFF2507C5AC0009951B /* Sentry */; };
@@ -748,6 +749,7 @@
 		70F7EC2525CAF950005DE935 /* WebScrapingUtilityError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingUtilityError.swift; sourceTree = "<group>"; };
 		70F7EC2A25CAF97A005DE935 /* WebScrapingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingViewController.swift; sourceTree = "<group>"; };
 		70F7EC2F25CAF9A2005DE935 /* WebScrapingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingResponse.swift; sourceTree = "<group>"; };
+		70FD1DB1262D8E59003C0DA0 /* BinkModuleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkModuleType.swift; sourceTree = "<group>"; };
 		782FD7EAEC7253B4F80C33EF /* Pods-binkappTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.beta.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.beta.xcconfig"; sourceTree = "<group>"; };
 		96F22E012508B6060009951B /* SentryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentryService.swift; sourceTree = "<group>"; };
 		9AF638C55EA3C2FE09150516 /* Pods-binkappTests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.app store (internal).xcconfig"; sourceTree = "<group>"; };
@@ -1914,6 +1916,7 @@
 				B7D577B523180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift */,
 				B7D577B723180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift */,
 				BDFAA07A23E243EF00949271 /* LCDPlaceholderGenerator.swift */,
+				70FD1DB1262D8E59003C0DA0 /* BinkModuleType.swift */,
 			);
 			path = LoyaltyCardFullDetails;
 			sourceTree = "<group>";
@@ -3574,6 +3577,7 @@
 				EFA5F7622379BD520027AB80 /* PLRAccumulatorInactiveCell.swift in Sources */,
 				3C63ABCA22F9D52F00BE143B /* UIFont+binkapp.swift in Sources */,
 				EFA5F7332379A7C70027AB80 /* CD_AuthoriseField.swift in Sources */,
+				70FD1DB2262D8E59003C0DA0 /* BinkModuleType.swift in Sources */,
 				EFA5F7252379A7C70027AB80 /* CD_Card.swift in Sources */,
 				3CCC46C422FC652C008476E3 /* BarcodeViewController.swift in Sources */,
 				EFA5F7402379A7C70027AB80 /* _CD_PaymentCardCard.swift in Sources */,

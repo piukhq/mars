@@ -79,7 +79,7 @@ class LoyaltyCardFullDetailsViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func goToScreenForAction(action: BinkModuleView.BinkModuleAction, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) {
+    func goToScreenForAction(action: ModuleState, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) {
         switch action {
         case .login, .loginChanges:
             guard let membershipPlan = membershipCard.membershipPlan else { return }
@@ -143,7 +143,7 @@ class LoyaltyCardFullDetailsViewModel {
             let viewController = ViewControllerFactory.makePllViewController(membershipCard: membershipCard, journey: .existingCard, delegate: delegate)
             let navigationRequest = ModalNavigationRequest(viewController: viewController, dragToDismiss: action == .pllEmpty)
             Current.navigate.to(navigationRequest)
-        case .unLinkable:
+        case .unlinkable:
             let title = "unlinkable_pll_title".localized
             let description = "unlinkable_pll_description".localized
             let attributedString = ReusableModalConfiguration.makeAttributedString(title: title, description: description)
