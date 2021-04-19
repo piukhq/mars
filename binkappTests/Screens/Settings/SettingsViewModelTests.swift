@@ -55,7 +55,7 @@ class SettingsViewModelTests: XCTestCase {
     
     #if DEBUG
     func test_rowsCount_returnsCorrectCountForDebugSection() {
-        XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 5 + appearanceSection), 1)
+        XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 0 + appearanceSection), 1)
     }
     #endif
     

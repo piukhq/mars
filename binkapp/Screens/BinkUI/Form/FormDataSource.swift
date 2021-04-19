@@ -61,7 +61,7 @@ class FormDataSource: NSObject {
     /// We need the data source to hold a reference to the plan for some forms so that we can pass it through delegates to other objects
     private(set) var membershipPlan: CD_MembershipPlan?
     
-    private(set) var fields: [FormField] = []
+    var fields: [FormField] = []
     private(set) var checkboxes: [CheckboxView] = []
     private var cellTextFields: [Int: UITextField] = [:]
     private var selectedCheckboxIndex = 0
@@ -240,38 +240,8 @@ extension FormDataSource {
             }
         }
         
-        if formPurpose == .add || formPurpose == .ghostCard {
+        if formPurpose == .add || formPurpose == .addFailed || formPurpose == .ghostCard {
             model.account?.formattedAddFields(omitting: [.barcode])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
-                if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
-                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .add, delegate: self)
-                    checkboxes.append(checkbox)
-                } else {
-                    fields.append(
-                        FormField(
-                            title: field.column ?? "",
-                            placeholder: field.fieldDescription ?? "",
-                            validation: field.validation,
-                            fieldType: FormField.FieldInputType.fieldInputType(for: field.fieldInputType, commonName: FieldCommonName(rawValue: field.commonName ?? ""), choices: field.choicesArray),
-                            updated: updatedBlock,
-                            shouldChange: shouldChangeBlock,
-                            fieldExited: fieldExitedBlock,
-                            pickerSelected: pickerUpdatedBlock,
-                            columnKind: .add,
-                            forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
-                            fieldCommonName: field.fieldCommonName,
-                            alternatives: field.alternativeCommonNames(),
-                            dataSourceRefreshBlock: dataSourceRefreshBlock
-                        )
-                    )
-                }
-            }
-        }
-        
-        if formPurpose == .addFailed {
-            model.account?.formattedAddFields(omitting: [.barcode])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
-                guard FieldCommonName(rawValue: field.commonName ?? "") != .cardNumber else { return }
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(checked: false)
                     let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
