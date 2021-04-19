@@ -74,21 +74,8 @@ class AuthAndAddViewModel {
     var accountButtonShouldHide: Bool {
         return formPurpose != .add || formPurpose == .ghostCard
     }
-    
-    var cardNumberField: FormField?
-    
-    var dataSource: FormDataSource {
-        let datasource = FormDataSource(authAdd: getMembershipPlan(), formPurpose: formPurpose, prefilledValues: prefilledFormValues)
-        
-        if formPurpose == .addFailed {
-            /// Hide card number field for retry state
-            cardNumberField = datasource.fields.first(where: { $0.fieldCommonName == .cardNumber })
-            cardNumberField?.value = existingMembershipCard?.card?.membershipId
-            datasource.fields.removeAll(where: { $0.fieldCommonName == .cardNumber })
-        }
-        
-        return datasource
-    }
+
+    var dataSource: FormDataSource?
     
     init(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) {
         self.membershipPlan = membershipPlan
@@ -154,13 +141,12 @@ class AuthAndAddViewModel {
             return
         }
         
-        if let cardNumberField = cardNumberField {
+        if let cardNumberField = dataSource?.cardNumberField {
             addFieldToCard(formField: cardNumberField)
         }
         formFields.forEach { addFieldToCard(formField: $0) }
         checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
         
-
         guard let model = membershipCardPostModel else { return }
         BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardRequest(request: model, formPurpose: formPurpose))
         let scrapingCredentials = Current.pointsScrapingManager.makeCredentials(fromFormFields: formFields, membershipPlanId: membershipPlan.id)

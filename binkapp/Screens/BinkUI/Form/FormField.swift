@@ -151,7 +151,7 @@ class FormField {
     let fieldCommonName: FieldCommonName?
     let alternatives: [FieldCommonName]?
     let dataSourceRefreshBlock: DataSourceRefreshBlock?
-    var value: String?
+    private(set) var value: String?
     
     typealias ValueUpdatedBlock = (FormField, String?) -> Void
     typealias PickerUpdatedBlock = (FormField, [Any]) -> Void
