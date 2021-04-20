@@ -52,6 +52,7 @@ class AuthAndAddViewModel {
     private var existingMembershipCard: CD_MembershipCard?
     
     var formPurpose: FormPurpose
+    var dataSource: FormDataSource?
     
     var title: String {
         switch formPurpose {
@@ -74,8 +75,6 @@ class AuthAndAddViewModel {
     var accountButtonShouldHide: Bool {
         return formPurpose != .add || formPurpose == .ghostCard
     }
-
-    var dataSource: FormDataSource?
     
     init(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) {
         self.membershipPlan = membershipPlan
@@ -141,9 +140,7 @@ class AuthAndAddViewModel {
             return
         }
         
-        if let cardNumberField = dataSource?.cardNumberField {
-            addFieldToCard(formField: cardNumberField)
-        }
+        dataSource?.hiddenFields?.forEach { addFieldToCard(formField: $0) }
         formFields.forEach { addFieldToCard(formField: $0) }
         checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
         

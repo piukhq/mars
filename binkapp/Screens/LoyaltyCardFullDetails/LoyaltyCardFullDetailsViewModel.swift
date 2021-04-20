@@ -83,7 +83,8 @@ class LoyaltyCardFullDetailsViewModel {
         switch action {
         case .login, .loginChanges:
             guard let membershipPlan = membershipCard.membershipPlan else { return }
-            let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: membershipCard, prefilledFormValues: [FormDataSource.PrefilledValue(commonName: .cardNumber, value: membershipCard.card?.membershipId)])
+            let cardNumberPrefilledValue = FormDataSource.PrefilledValue(commonName: .cardNumber, value: membershipCard.card?.membershipId)
+            let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: membershipCard, prefilledFormValues: [cardNumberPrefilledValue])
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         case .transactions:

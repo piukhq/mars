@@ -88,7 +88,7 @@ class FormDataSource: NSObject {
         return values
     }
     
-    var cardNumberField: FormField?
+    var hiddenFields: [FormField]? = []
 }
 
 // MARK: - Add Payment Card
@@ -296,7 +296,7 @@ extension FormDataSource {
                     )
                     
                     if field.fieldCommonName == .cardNumber {
-                        cardNumberField = formField
+                        hiddenFields?.append(formField)
                     } else {
                         fields.append(formField)
                     }
