@@ -31,11 +31,13 @@ class AutomatedTesting_0_Login: XCTestCase {
         app.sheets.scrollViews.otherElements.buttons["Dev"].tap()
         app.buttons["Log in with email"].tap()
         
-        let emailTextfield = app.textFields["Enter email address"]
+        let emailTextfield = app.textFields["Email"]
         emailTextfield.tap()
         emailTextfield.typeText("binklogin@binktest.com")
-        app.buttons["next"].tap()
-        app.typeText("Binklogin123")
+        
+        let passwordtextfield = app.secureTextFields["Password"]
+        passwordtextfield.tap()
+        passwordtextfield.typeText("Binklogin123")
         app.buttons["done"].tap()
         app.buttons["Continue"].tap()
         
