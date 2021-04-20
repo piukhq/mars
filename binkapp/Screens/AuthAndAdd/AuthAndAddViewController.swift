@@ -32,10 +32,8 @@ class AuthAndAddViewController: BaseFormViewController {
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
         let dataSource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose, prefilledValues: viewModel.prefilledFormValues)
-
         super.init(title: "login".localized, description: "", dataSource: dataSource)
         dataSource.delegate = self
-        viewModel.dataSource = dataSource
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -100,7 +98,7 @@ class AuthAndAddViewController: BaseFormViewController {
 
     private func handlePrimaryButtonTap() {
         primaryButton.toggleLoading(isLoading: true)
-        try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes, completion: { [weak self] in
+        try? viewModel.addMembershipCard(with: dataSource.fields, hiddenFields: dataSource.hiddenFields, checkboxes: dataSource.checkboxes, completion: { [weak self] in
             self?.primaryButton.toggleLoading(isLoading: false)
         })
     }

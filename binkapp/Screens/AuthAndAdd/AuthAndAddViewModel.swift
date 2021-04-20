@@ -52,7 +52,6 @@ class AuthAndAddViewModel {
     private var existingMembershipCard: CD_MembershipCard?
     
     var formPurpose: FormPurpose
-    var dataSource: FormDataSource?
     
     var title: String {
         switch formPurpose {
@@ -134,13 +133,13 @@ class AuthAndAddViewModel {
         return membershipPlan
     }
 
-    func addMembershipCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, completion: @escaping () -> Void) throws {
+    func addMembershipCard(with formFields: [FormField], hiddenFields: [FormField]? = nil, checkboxes: [CheckboxView]? = nil, completion: @escaping () -> Void) throws {
         guard formPurpose != .ghostCard, formPurpose != .patchGhostCard else {
             try addGhostCard(with: formFields, checkboxes: checkboxes, existingMembershipCard: existingMembershipCard)
             return
         }
         
-        dataSource?.hiddenFields?.forEach { addFieldToCard(formField: $0) }
+        hiddenFields?.forEach { addFieldToCard(formField: $0) }
         formFields.forEach { addFieldToCard(formField: $0) }
         checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
         

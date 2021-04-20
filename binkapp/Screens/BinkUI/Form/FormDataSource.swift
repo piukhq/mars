@@ -62,6 +62,7 @@ class FormDataSource: NSObject {
     private(set) var membershipPlan: CD_MembershipPlan?
     
     private(set) var fields: [FormField] = []
+    private(set) var hiddenFields: [FormField]? = []
     private(set) var checkboxes: [CheckboxView] = []
     private var cellTextFields: [Int: UITextField] = [:]
     private var selectedCheckboxIndex = 0
@@ -87,8 +88,6 @@ class FormDataSource: NSObject {
         
         return values
     }
-    
-    var hiddenFields: [FormField]? = []
 }
 
 // MARK: - Add Payment Card
@@ -242,36 +241,7 @@ extension FormDataSource {
             }
         }
         
-        if formPurpose == .add || formPurpose == .ghostCard {
-            model.account?.formattedAddFields(omitting: [.barcode])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
-                if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
-                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .add, delegate: self)
-                    checkboxes.append(checkbox)
-                } else {
-                    fields.append(
-                        FormField(
-                            title: field.column ?? "",
-                            placeholder: field.fieldDescription ?? "",
-                            validation: field.validation,
-                            fieldType: FormField.FieldInputType.fieldInputType(for: field.fieldInputType, commonName: FieldCommonName(rawValue: field.commonName ?? ""), choices: field.choicesArray),
-                            updated: updatedBlock,
-                            shouldChange: shouldChangeBlock,
-                            fieldExited: fieldExitedBlock,
-                            pickerSelected: pickerUpdatedBlock,
-                            columnKind: .add,
-                            forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
-                            fieldCommonName: field.fieldCommonName,
-                            alternatives: field.alternativeCommonNames(),
-                            dataSourceRefreshBlock: dataSourceRefreshBlock
-                        )
-                    )
-                }
-            }
-        }
-        
-        if formPurpose == .addFailed {
+        if formPurpose == .add || formPurpose == .addFailed || formPurpose == .ghostCard {
             model.account?.formattedAddFields(omitting: [.barcode])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(checked: false)
@@ -295,9 +265,10 @@ extension FormDataSource {
                         dataSourceRefreshBlock: dataSourceRefreshBlock
                     )
                     
-                    if field.fieldCommonName == .cardNumber {
+                    switch (field.fieldCommonName, formPurpose) {
+                    case (.cardNumber, .addFailed):
                         hiddenFields?.append(formField)
-                    } else {
+                    default:
                         fields.append(formField)
                     }
                 }
