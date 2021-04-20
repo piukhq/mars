@@ -193,6 +193,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         textField.autocorrectionType = field.fieldType.autoCorrection()
         textField.autocapitalizationType = field.fieldType.capitalization()
         textField.clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
+        textField.accessibilityIdentifier = field.title
         formField = field
         configureTextFieldRightView(shouldDisplay: formField?.value == nil)
         validationLabel.isHidden = textField.text?.isEmpty == true ? true : field.isValid()
