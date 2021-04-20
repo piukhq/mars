@@ -168,6 +168,5 @@ private extension BinkModuleView {
         titleLabel.textColor = Current.themeManager.color(for: .text)
         subtitleLabel.text = state.subtitleText
         subtitleLabel.textColor = Current.themeManager.color(for: .text)
-//        state = touchAction
     }
 }
