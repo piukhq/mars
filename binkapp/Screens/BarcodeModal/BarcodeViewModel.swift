@@ -66,7 +66,7 @@ class BarcodeViewModel {
     }
     
     var isBarcodeAvailable: Bool {
-        return ((membershipCard.card?.barcode) != nil)
+        return membershipCard.card?.barcode != nil
     }
     
     var isCardNumberAvailable: Bool {
@@ -94,7 +94,15 @@ class BarcodeViewModel {
         self.membershipCard = membershipCard
     }
     
-    func barcodeImage(withSize size: CGSize) -> UIImage? {
+    var barcodeIsMoreSquareThanRectangle: Bool {
+        let image = barcodeImage(withSize: CGSize(width: 100, height: 100), drawInContainer: false)
+        if let size = image?.size {
+            return size.width - size.height < 20
+        }
+        return false
+    }
+    
+    func barcodeImage(withSize size: CGSize, drawInContainer: Bool = true) -> UIImage? {
         guard let barcodeString = membershipCard.card?.barcode else { return nil }
         
         let writer = ZXMultiFormatWriter()
@@ -114,7 +122,7 @@ class BarcodeViewModel {
             guard let cgImage = ZXImage(matrix: result).cgimage else { return }
             
             // If the resulting image is larger than the destination, draw the CGImage in a fixed container
-            if CGFloat(cgImage.width) > size.width {
+            if CGFloat(cgImage.width) > size.width && drawInContainer {
                 let renderer = UIGraphicsImageRenderer(size: size)
                 let img = renderer.image { ctx in
                     ctx.cgContext.draw(cgImage, in: CGRect(origin: .zero, size: size))

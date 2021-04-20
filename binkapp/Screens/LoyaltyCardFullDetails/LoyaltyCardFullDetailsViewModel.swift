@@ -22,6 +22,10 @@ class LoyaltyCardFullDetailsViewModel {
         return membershipCard.status?.status == .authorised
     }
     
+    var barcodeViewModel: BarcodeViewModel {
+        return BarcodeViewModel(membershipCard: membershipCard)
+    }
+    
     init(membershipCard: CD_MembershipCard, informationRowFactory: WalletCardDetailInformationRowFactory) {
         self.membershipCard = membershipCard
         self.informationRowFactory = informationRowFactory
@@ -69,6 +73,27 @@ class LoyaltyCardFullDetailsViewModel {
     
     var secondaryColourIsDark: Bool {
         return !(secondaryColor?.isLight() ?? false)
+    }
+    
+    var shouldShowBarcode: Bool {
+        return !(membershipCard.membershipPlan?.featureSet?.planCardType == .link) && barcodeViewModel.isBarcodeAvailable && barcodeViewModel.barcodeImage(withSize: .zero) != nil
+    }
+    
+    var barcodeButtonTitle: String {
+        var buttonTitle = "details_header_show_card_number".localized
+        
+        if shouldShowBarcode {
+            switch barcodeViewModel.barcodeType {
+            case .qr:
+                buttonTitle = "details_header_show_qr_code".localized
+            case .aztec:
+                buttonTitle = "details_header_show_aztec_code".localized
+            default:
+                buttonTitle = "details_header_show_barcode".localized
+            }
+        }
+
+        return buttonTitle
     }
         
     // MARK: - Public methods
