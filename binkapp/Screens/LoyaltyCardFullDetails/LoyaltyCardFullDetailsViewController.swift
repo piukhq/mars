@@ -341,7 +341,7 @@ private extension LoyaltyCardFullDetailsViewController {
     private func configureBarcodeViewForBrandHeader() {
         var barcode: BarcodeView
         switch (viewModel.barcodeViewModel.barcodeType, viewModel.barcodeViewModel.barcodeIsMoreSquareThanRectangle) {
-        case (.aztec, _), (.qr, _), (_, true):
+        case (.aztec, _), (.qr, _), (.dataMatrix, _), (_, true):
             let barcodeView: BarcodeViewCompact = .fromNib()
             barcode = barcodeView
             barcodeView.configure(viewModel: viewModel)

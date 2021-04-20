@@ -17,5 +17,9 @@ class BarcodeViewWide: BarcodeView {
         if let barcodeImage = viewModel.barcodeViewModel.barcodeImage(withSize: barcodeImageView.frame.size) {
             barcodeImageView.image = barcodeImage
         }
+        
+        if viewModel.barcodeViewModel.barcodeType == .pdf417 {
+            barcodeImageView.contentMode = .scaleAspectFit
+        }
     }
 }

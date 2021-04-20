@@ -95,8 +95,11 @@ class BarcodeViewModel {
     }
     
     var barcodeIsMoreSquareThanRectangle: Bool {
-        let image = barcodeImage(withSize: .zero, drawInContainer: false)
-        return image?.size.width ?? 0 < 120
+        let image = barcodeImage(withSize: CGSize(width: 100, height: 100), drawInContainer: false)
+        if let size = image?.size {
+            return size.width - size.height < 20
+        }
+        return false
     }
     
     func barcodeImage(withSize size: CGSize, drawInContainer: Bool = true) -> UIImage? {
