@@ -384,8 +384,8 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     func configureModules() {
-//        pointsModule.configure(with: BinkModuleViewModel(type: .points(membershipCard: viewModel.membershipCard), delegate: self)
-//        linkModule.configure(moduleType: .link(membershipCard: viewModel.membershipCard, paymentCards: viewModel.paymentCards), delegate: self)
+        pointsModule.configure(with: BinkModuleViewModel(type: .points(membershipCard: viewModel.membershipCard)), delegate: self)
+        linkModule.configure(with: BinkModuleViewModel(type: .link(membershipCard: viewModel.membershipCard, paymentCards: viewModel.paymentCards)), delegate: self)
     }
     
     @objc func showBarcodeButtonPressed() {

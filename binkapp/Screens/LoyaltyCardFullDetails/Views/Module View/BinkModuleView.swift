@@ -33,34 +33,3 @@ class BinkModuleView: CustomView {
         delegate?.binkModuleViewWasTapped(moduleView: self, withState: viewModel.state)
     }
 }
-
-/**
- 
- POINTS
- 
- login unavailable
- plr with transactions
- about membership
- pll with transactions and last checked
- pending
- sign up
- patch ghost card - account not registered
- login changes - account already exists
- login changes
- register ghost card
- no reason code
- 
- LINK
- unlinkable
- generic error
- pll linked
- pll no payment cards
- pll error
- login changes - unauthorised
- pending
- sign up
- patch ghost card - account not registered
- login changes - failed
- no reason code
-
- */
