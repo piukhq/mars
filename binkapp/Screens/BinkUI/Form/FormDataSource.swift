@@ -62,6 +62,10 @@ class FormDataSource: NSObject {
     private(set) var membershipPlan: CD_MembershipPlan?
     
     private(set) var fields: [FormField] = []
+    private var visibleFields: [FormField] {
+        return fields.filter { !$0.hidden }
+    }
+    
     private(set) var checkboxes: [CheckboxView] = []
     private var cellTextFields: [Int: UITextField] = [:]
     private var selectedCheckboxIndex = 0
@@ -262,13 +266,14 @@ extension FormDataSource {
                             forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
                             fieldCommonName: field.fieldCommonName,
                             alternatives: field.alternativeCommonNames(),
-                            dataSourceRefreshBlock: dataSourceRefreshBlock
+                            dataSourceRefreshBlock: dataSourceRefreshBlock,
+                            hidden: formPurpose == .addFailed ? true : false
                         )
                     )
                 }
             }
         }
-
+        
         if case .addFromScanner = formPurpose {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
@@ -589,13 +594,13 @@ extension FormDataSource: CheckboxViewDelegate {
 
 extension FormDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return fields.count
+        return visibleFields.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: FormCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
         
-        if let field = fields[safe: indexPath.item] {
+        if let field = visibleFields[safe: indexPath.item] {
             cell.configure(with: field, delegate: self)
             cellTextFields[indexPath.row] = cell.textField
         }
@@ -607,7 +612,7 @@ extension FormDataSource: UICollectionViewDataSource {
 extension FormDataSource: FormCollectionViewCellDelegate {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {
         delegate?.formCollectionViewCell(cell, didSelectField: didSelectField)
-
+        
         if cellTextFields.first(where: { $0.value == didSelectField })?.key == cellTextFields.count - 1 {
             didSelectField.returnKeyType = .done
         } else {
