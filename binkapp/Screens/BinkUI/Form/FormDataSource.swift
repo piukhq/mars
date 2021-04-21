@@ -62,7 +62,7 @@ class FormDataSource: NSObject {
     private(set) var membershipPlan: CD_MembershipPlan?
     
     private(set) var fields: [FormField] = []
-    private var formattedFields: [FormField] {
+    private var visibleFields: [FormField] {
         return fields.filter { !$0.hidden }
     }
     
@@ -594,13 +594,13 @@ extension FormDataSource: CheckboxViewDelegate {
 
 extension FormDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return formattedFields.count
+        return visibleFields.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: FormCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
         
-        if let field = formattedFields[safe: indexPath.item] {
+        if let field = visibleFields[safe: indexPath.item] {
             cell.configure(with: field, delegate: self)
             cellTextFields[indexPath.row] = cell.textField
         }
