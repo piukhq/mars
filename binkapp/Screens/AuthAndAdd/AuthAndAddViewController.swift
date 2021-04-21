@@ -98,7 +98,7 @@ class AuthAndAddViewController: BaseFormViewController {
 
     private func handlePrimaryButtonTap() {
         primaryButton.toggleLoading(isLoading: true)
-        try? viewModel.addMembershipCard(with: dataSource.fields, hiddenFields: dataSource.hiddenFields, checkboxes: dataSource.checkboxes, completion: { [weak self] in
+        try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes, completion: { [weak self] in
             self?.primaryButton.toggleLoading(isLoading: false)
         })
     }

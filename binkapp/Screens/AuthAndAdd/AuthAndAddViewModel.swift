@@ -133,13 +133,12 @@ class AuthAndAddViewModel {
         return membershipPlan
     }
 
-    func addMembershipCard(with formFields: [FormField], hiddenFields: [FormField]? = nil, checkboxes: [CheckboxView]? = nil, completion: @escaping () -> Void) throws {
+    func addMembershipCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, completion: @escaping () -> Void) throws {
         guard formPurpose != .ghostCard, formPurpose != .patchGhostCard else {
             try addGhostCard(with: formFields, checkboxes: checkboxes, existingMembershipCard: existingMembershipCard)
             return
         }
         
-        hiddenFields?.forEach { addFieldToCard(formField: $0) }
         formFields.forEach { addFieldToCard(formField: $0) }
         checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
         
