@@ -128,6 +128,7 @@
 		5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048322CE579B001BA964 /* binkappTests.swift */; };
 		700900D725C1DB7500548F50 /* LocalPointsCollection_DetectElement.js in Resources */ = {isa = PBXBuildFile; fileRef = 700900D625C1DB7500548F50 /* LocalPointsCollection_DetectElement.js */; };
 		70285D842588B674007B4298 /* BinkButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70285D832588B674007B4298 /* BinkButtonsView.swift */; };
+		702D0E3526306F8E0067E370 /* BinkModuleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D0E3426306F8E0067E370 /* BinkModuleViewModel.swift */; };
 		7061053125B7349600A16DA5 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7061053025B7349600A16DA5 /* ThemeManager.swift */; };
 		7061053925B8552C00A16DA5 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7061053825B8552C00A16DA5 /* Theme.swift */; };
 		7061054125B8555600A16DA5 /* Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7061054025B8555600A16DA5 /* Styling.swift */; };
@@ -678,6 +679,7 @@
 		700900D625C1DB7500548F50 /* LocalPointsCollection_DetectElement.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_DetectElement.js; sourceTree = "<group>"; };
 		70285D832588B674007B4298 /* BinkButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkButtonsView.swift; sourceTree = "<group>"; };
 		702B1F0725A479CA00C7563F /* binkapp - 5-1-21 - Membership plan image cta url.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 5-1-21 - Membership plan image cta url.xcdatamodel"; sourceTree = "<group>"; };
+		702D0E3426306F8E0067E370 /* BinkModuleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkModuleViewModel.swift; sourceTree = "<group>"; };
 		702E4CA925BAE51E00C4772F /* binkapp - 22-1-21 - Membership plan image dark mode url 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 22-1-21 - Membership plan image dark mode url 2.xcdatamodel"; sourceTree = "<group>"; };
 		7049B63C24AB52AA00661128 /* binkapp - 30-06-20 - Add field alternatives.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 30-06-20 - Add field alternatives.xcdatamodel"; sourceTree = "<group>"; };
 		7061053025B7349600A16DA5 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
@@ -1642,6 +1644,17 @@
 			path = Buttons;
 			sourceTree = "<group>";
 		};
+		702D0E3026306F760067E370 /* Module View */ = {
+			isa = PBXGroup;
+			children = (
+				70FD1DB1262D8E59003C0DA0 /* BinkModuleType.swift */,
+				B713662C232A63AA008A0ED7 /* BinkModuleView.swift */,
+				B713662E232A63BA008A0ED7 /* BinkModuleView.xib */,
+				702D0E3426306F8E0067E370 /* BinkModuleViewModel.swift */,
+			);
+			path = "Module View";
+			sourceTree = "<group>";
+		};
 		7051C7A7247E790C007B37EB /* PaymentScanner */ = {
 			isa = PBXGroup;
 			children = (
@@ -1916,7 +1929,6 @@
 				B7D577B523180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift */,
 				B7D577B723180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift */,
 				BDFAA07A23E243EF00949271 /* LCDPlaceholderGenerator.swift */,
-				70FD1DB1262D8E59003C0DA0 /* BinkModuleType.swift */,
 			);
 			path = LoyaltyCardFullDetails;
 			sourceTree = "<group>";
@@ -1924,12 +1936,11 @@
 		B7D577B923192BBD00C6B145 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				702D0E3026306F760067E370 /* Module View */,
 				B76659972320F68C00B327BE /* HyperlinkAlertController.swift */,
 				B76659982320F68C00B327BE /* HyperlinkAlertController.xib */,
 				B713662A2329374D008A0ED7 /* OfferTileView.swift */,
 				B71D51F82343692000BB3406 /* OfferTileView.xib */,
-				B713662C232A63AA008A0ED7 /* BinkModuleView.swift */,
-				B713662E232A63BA008A0ED7 /* BinkModuleView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3257,6 +3268,7 @@
 				EFA5F71A2379A7C70027AB80 /* CD_BaseObject.swift in Sources */,
 				BD458B38236B417D0029A538 /* LoginViewController.swift in Sources */,
 				EF4B46692346491E009A3651 /* PaymentCardDetailViewModel.swift in Sources */,
+				702D0E3526306F8E0067E370 /* BinkModuleViewModel.swift in Sources */,
 				BD458B4B236ED5B90029A538 /* AddEmailViewController.swift in Sources */,
 				BD9E4CCF236F8D6100C6F098 /* RenewTokenResponse.swift in Sources */,
 				EF758E0823225F35000D26A9 /* Database.swift in Sources */,

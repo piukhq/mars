@@ -79,8 +79,8 @@ class LoyaltyCardFullDetailsViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func goToScreenForAction(action: ModuleState, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) {
-        switch action {
+    func goToScreenForState(state: ModuleState, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) {
+        switch state {
         case .login, .loginChanges:
             guard let membershipPlan = membershipCard.membershipPlan else { return }
             let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: membershipCard)
@@ -141,7 +141,7 @@ class LoyaltyCardFullDetailsViewModel {
             Current.navigate.to(navigationRequest)
         case .pll, .pllEmpty:
             let viewController = ViewControllerFactory.makePllViewController(membershipCard: membershipCard, journey: .existingCard, delegate: delegate)
-            let navigationRequest = ModalNavigationRequest(viewController: viewController, dragToDismiss: action == .pllEmpty)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController, dragToDismiss: state == .pllEmpty)
             Current.navigate.to(navigationRequest)
         case .unlinkable:
             let title = "unlinkable_pll_title".localized
