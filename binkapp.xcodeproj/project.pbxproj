@@ -311,6 +311,11 @@
 		CE73F9AE2600B64E00D53BCF /* HeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE73F9AC2600B64E00D53BCF /* HeaderTableViewCell.xib */; };
 		CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */; };
 		CE990E13261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */; };
+		CEA16EC526249C6300D449E1 /* BarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA16EC426249C6300D449E1 /* BarcodeView.swift */; };
+		CEA16ED62624B0EE00D449E1 /* BarcodeViewWide.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA16ED52624B0EE00D449E1 /* BarcodeViewWide.swift */; };
+		CEA16EE02625879B00D449E1 /* BarcodeViewCompact.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA16EDF2625879B00D449E1 /* BarcodeViewCompact.xib */; };
+		CEA16EF526258C8E00D449E1 /* BarcodeViewWide.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA16EF426258C8E00D449E1 /* BarcodeViewWide.xib */; };
+		CEA16EFD2625B0F100D449E1 /* BarcodeViewCompact.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA16EFC2625B0F100D449E1 /* BarcodeViewCompact.swift */; };
 		CEA9057E25C81994000F69E1 /* BinkAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA9057D25C81994000F69E1 /* BinkAlertController.swift */; };
 		CEA905BE25C986E6000F69E1 /* CD_BaseImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA905BC25C986E6000F69E1 /* CD_BaseImage.swift */; };
 		CEA905BF25C986E6000F69E1 /* _CD_BaseImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA905BD25C986E6000F69E1 /* _CD_BaseImage.swift */; };
@@ -874,6 +879,11 @@
 		CE73F9AC2600B64E00D53BCF /* HeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderTableViewCell.xib; sourceTree = "<group>"; };
 		CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkCopyableLabel.swift; sourceTree = "<group>"; };
 		CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_1_LoyaltyCards.swift; sourceTree = "<group>"; };
+		CEA16EC426249C6300D449E1 /* BarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeView.swift; sourceTree = "<group>"; };
+		CEA16ED52624B0EE00D449E1 /* BarcodeViewWide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewWide.swift; sourceTree = "<group>"; };
+		CEA16EDF2625879B00D449E1 /* BarcodeViewCompact.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BarcodeViewCompact.xib; sourceTree = "<group>"; };
+		CEA16EF426258C8E00D449E1 /* BarcodeViewWide.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BarcodeViewWide.xib; sourceTree = "<group>"; };
+		CEA16EFC2625B0F100D449E1 /* BarcodeViewCompact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewCompact.swift; sourceTree = "<group>"; };
 		CEA9057D25C81994000F69E1 /* BinkAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkAlertController.swift; sourceTree = "<group>"; };
 		CEA905B825C9859A000F69E1 /* binkapp - 2-2-21 - Membership card image dark mode url .xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 2-2-21 - Membership card image dark mode url .xcdatamodel"; sourceTree = "<group>"; };
 		CEA905BC25C986E6000F69E1 /* CD_BaseImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_BaseImage.swift; sourceTree = "<group>"; };
@@ -1943,6 +1953,9 @@
 				B76659982320F68C00B327BE /* HyperlinkAlertController.xib */,
 				B713662A2329374D008A0ED7 /* OfferTileView.swift */,
 				B71D51F82343692000BB3406 /* OfferTileView.xib */,
+				B713662C232A63AA008A0ED7 /* BinkModuleView.swift */,
+				B713662E232A63BA008A0ED7 /* BinkModuleView.xib */,
+				CEA16EC926249D6700D449E1 /* Barcode Views */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2189,6 +2202,18 @@
 				CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */,
 			);
 			path = Logging;
+			sourceTree = "<group>";
+		};
+		CEA16EC926249D6700D449E1 /* Barcode Views */ = {
+			isa = PBXGroup;
+			children = (
+				CEA16EC426249C6300D449E1 /* BarcodeView.swift */,
+				CEA16ED52624B0EE00D449E1 /* BarcodeViewWide.swift */,
+				CEA16EF426258C8E00D449E1 /* BarcodeViewWide.xib */,
+				CEA16EDF2625879B00D449E1 /* BarcodeViewCompact.xib */,
+				CEA16EFC2625B0F100D449E1 /* BarcodeViewCompact.swift */,
+			);
+			path = "Barcode Views";
 			sourceTree = "<group>";
 		};
 		CEF389E9255D72B30063C718 /* Extensions */ = {
@@ -2950,6 +2975,7 @@
 				3CD3493A22F99E1D000C1F4D /* NunitoSans-Italic.ttf in Resources */,
 				BD01E123231FA38900D52713 /* WalletLoyaltyCardCollectionViewCell.xib in Resources */,
 				70C530DE260F4824007E2147 /* LocalPointsCollection_Navigate_Heathrow.js in Resources */,
+				CEA16EE02625879B00D449E1 /* BarcodeViewCompact.xib in Resources */,
 				3C71683524069F370058701E /* bink.der in Resources */,
 				3CCC46C522FC652C008476E3 /* BarcodeViewController.xib in Resources */,
 				EF4B46672346489C009A3651 /* PaymentCardDetailViewController.xib in Resources */,
@@ -2958,6 +2984,7 @@
 				EF99B025240E74860046D41E /* devPublicKey.der in Resources */,
 				70AA970D25E51F5400D10EC0 /* LocalPointsCollection_Points_Boots.js in Resources */,
 				3CD3493322F99E1D000C1F4D /* NunitoSans-BoldItalic.ttf in Resources */,
+				CEA16EF526258C8E00D449E1 /* BarcodeViewWide.xib in Resources */,
 				3C9CCD2F231695AE00FAF589 /* CheckboxView.xib in Resources */,
 				CE2CFE9125E3D48E00B1CB93 /* FeatureFlagsTableViewCell.xib in Resources */,
 				3CE24B2D2304014600B258C8 /* AddOrJoinViewController.xib in Resources */,
@@ -3241,6 +3268,7 @@
 				EF8B701A235DDC75006CE3DD /* OnboardingViewController.swift in Sources */,
 				BD3CB946232857BD005C37AE /* APIConstants.swift in Sources */,
 				EF5491202371D9C800FE17BE /* PaymentCardDetailAddLoyaltyCardCellViewModel.swift in Sources */,
+				CEA16ED62624B0EE00D449E1 /* BarcodeViewWide.swift in Sources */,
 				BD458B3E236B5C0E0029A538 /* LoginRegisterRequest.swift in Sources */,
 				3C05F27E240FC28300060818 /* PaymentCardDetailLinkLoyaltyCardCellViewModel.swift in Sources */,
 				EFEB5C0123853B7900E18743 /* WalletRefreshManager.swift in Sources */,
@@ -3296,6 +3324,7 @@
 				70E39806256E8F4F009AD8CB /* BinkViewController.swift in Sources */,
 				EF4C4781246017C80056CE17 /* ZendeskService.swift in Sources */,
 				EF8BF1F9234147E000D2E5F3 /* LinkedCardResponse.swift in Sources */,
+				CEA16EFD2625B0F100D449E1 /* BarcodeViewCompact.swift in Sources */,
 				B7136629232690F7008A0ED7 /* PLLScreenViewModel.swift in Sources */,
 				DB088545234FD8A30041A67A /* PLLScreenRepository.swift in Sources */,
 				BD553CCF2332615900DA7D2A /* PaymentCardCreateRequest.swift in Sources */,
@@ -3335,6 +3364,7 @@
 				CEF837E925DA7AB10066C77E /* FeatureFlagsTableViewController.swift in Sources */,
 				3C453CB72338E84F00287B56 /* PaymentWalletViewModel.swift in Sources */,
 				EF4B46662346489C009A3651 /* PaymentCardDetailViewController.swift in Sources */,
+				CEA16EC526249C6300D449E1 /* BarcodeView.swift in Sources */,
 				EF59A1312448B769001B60B8 /* APIErrorResponses.swift in Sources */,
 				EFEB5BF7237DCA5A00E18743 /* PLRAccumulatorCell.swift in Sources */,
 				7061054125B8555600A16DA5 /* Styling.swift in Sources */,
