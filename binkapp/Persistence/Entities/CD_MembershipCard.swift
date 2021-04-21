@@ -10,6 +10,10 @@ open class CD_MembershipCard: _CD_MembershipCard, WalletCardProtocol {
         return images.filtered(using: NSPredicate(format: "type == %@", NSNumber(value: type.rawValue))).first as? CD_MembershipCardImage
     }
     
+    var formattedLinkedPaymentCards: [CD_PaymentCard]? {
+        return linkedPaymentCards.allObjects as? [CD_PaymentCard]
+    }
+    
     var formattedTransactions: Set<CD_MembershipTransaction>? {
         return transactions as? Set<CD_MembershipTransaction>
     }
