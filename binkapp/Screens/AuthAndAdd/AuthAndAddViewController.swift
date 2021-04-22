@@ -31,8 +31,8 @@ class AuthAndAddViewController: BaseFormViewController {
     
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
-        let datasource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose, prefilledValues: viewModel.prefilledFormValues)
-        super.init(title: "login".localized, description: "", dataSource: datasource)
+        let dataSource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose, prefilledValues: viewModel.prefilledFormValues)
+        super.init(title: "login".localized, description: "", dataSource: dataSource)
         dataSource.delegate = self
     }
     
