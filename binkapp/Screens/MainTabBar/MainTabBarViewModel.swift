@@ -53,6 +53,7 @@ class MainTabBarViewModel {
     private func getTabBarAddButton() -> UITabBarItem {
         let item = UITabBarItem(title: nil, image: UIImage(named: "add"), tag: Buttons.addItem.rawValue)
         item.imageInsets = UIEdgeInsets(top: Constants.centerInsets, left: 0, bottom: -Constants.centerInsets, right: 0)
+        item.accessibilityIdentifier = "Browse brands"
         return item
     }
     

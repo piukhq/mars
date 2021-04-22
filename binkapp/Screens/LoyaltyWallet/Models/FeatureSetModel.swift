@@ -9,18 +9,12 @@ import Foundation
 import CoreData
 
 struct FeatureSetModel: Codable {
-    enum PlanCardType: Int, Codable {
-        case store
-        case view
-        case link
-    }
-
     let apiId: Int?
     let authorisationRequired: Bool?
     let transactionsAvailable: Bool?
     let digitalOnly: Bool?
     let hasPoints: Bool?
-    let cardType: PlanCardType?
+    let cardType: CD_FeatureSet.PlanCardType?
     let linkingSupport: [LinkingSupportType]?
     let hasVouchers: Bool?
     

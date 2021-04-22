@@ -56,10 +56,8 @@ extension UIDevice {
             return .iPhonePlusSize
         case 2340:
             return .iPhone12MiniSize
-        case 2426:
-            return .iPhone11ProSize
         case 2436:
-            return .iPhoneXSize
+            return .iPhone11ProSize
         case 2688:
             return .iPhone11ProMaxSize
         case 2778:

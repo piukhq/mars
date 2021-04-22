@@ -31,7 +31,10 @@ protocol WebScrapingUtilityDelegate: AnyObject {
 }
 
 class WebScrapingUtility: NSObject {
-    var isRunning = false
+    var isExecutingScript = false
+    private var isRunning: Bool {
+        return membershipCard != nil || agent != nil
+    }
     
     private let priorityWebview: WKWebView
     private var activeWebview: WKWebView?
@@ -74,6 +77,9 @@ class WebScrapingUtility: NSObject {
     }
     
     func start(agent: WebScrapable, membershipCard: CD_MembershipCard) throws {
+        /// If we have a membership card or agent, then we are currently in the process of scraping and should not be interrupted
+        guard !isRunning else { return }
+        
         self.agent = agent
         self.membershipCard = membershipCard
         
@@ -186,11 +192,11 @@ class WebScrapingUtility: NSObject {
     }
 
     private func runScript(_ script: String, completion: @escaping (Result<WebScrapingResponse, WebScrapingUtilityError>) -> Void) {
-        if isRunning { return }
-        isRunning = true
+        if isExecutingScript { return }
+        isExecutingScript = true
         
         activeWebview?.evaluateJavaScript(script) { [weak self] (response, error) in
-            self?.isRunning = false
+            self?.isExecutingScript = false
             
             guard error == nil else {
                 completion(.failure(.javascriptError))
