@@ -10,24 +10,66 @@ import XCTest
 @testable import binkapp
 
 class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
+    private var sut: BinkModuleViewModel!
+    
+    private var baseFeatureSetModel: FeatureSetModel!
+    private var baseMembershipPlanModel: MembershipPlanModel!
+    private var baseMembershipCardModel: MembershipCardModel!
+    
+    override func setUp() {
+        super.setUp()
+        
+        sut = nil
+        baseFeatureSetModel = nil
+        baseMembershipPlanModel = nil
+        baseMembershipCardModel = nil
+        
+        baseFeatureSetModel = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: nil, linkingSupport: nil, hasVouchers: nil)
+        
+        baseMembershipPlanModel = MembershipPlanModel(apiId: nil, status: nil, featureSet: baseFeatureSetModel, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+        
+        baseMembershipCardModel = MembershipCardModel(apiId: nil, membershipPlan: 1, membershipTransactions: nil, status: MembershipCardStatusModel(apiId: nil, state: .authorised, reasonCodes: nil), card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
+    }
+    
+    // MARK: Points module - PLR - Authed
+    
     func test_pointsModule_plrWithTransactions_stateReturnsCorrectly() {
-        let featureSet = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: true, digitalOnly: nil, hasPoints: nil, cardType: nil, linkingSupport: nil, hasVouchers: true)
+        baseFeatureSetModel.hasPoints = true
+        baseFeatureSetModel.transactionsAvailable = true
+        baseMembershipPlanModel.featureSet = baseFeatureSetModel
+        baseMembershipPlanModel.hasVouchers = true
         
-        let planModel = MembershipPlanModel(apiId: 1, status: nil, featureSet: featureSet, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: true, card: nil)
+        getMappedCard(with: baseMembershipPlanModel) { mappedCard in
+            self.sut = BinkModuleViewModel(type: .points(membershipCard: mappedCard))
+            
+            XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsActive")
+            XCTAssertEqual(self.sut.titleText, "plr_lcd_points_module_auth_title".localized)
+            XCTAssertEqual(self.sut.subtitleText, "points_module_view_history_message".localized)
+        }
+    }
+    
+    func test_pointsModule_plrNoTransactions_stateReturnsCorrectly() {
+        baseFeatureSetModel.hasPoints = true
+        baseMembershipPlanModel.featureSet = baseFeatureSetModel
+        baseMembershipPlanModel.hasVouchers = true
         
+        getMappedCard(with: baseMembershipPlanModel) { mappedCard in
+            self.sut = BinkModuleViewModel(type: .points(membershipCard: mappedCard))
+            
+            XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsActive")
+            XCTAssertEqual(self.sut.titleText, "plr_lcd_points_module_title".localized)
+            XCTAssertEqual(self.sut.subtitleText, "plr_lcd_points_module_description".localized)
+        }
+    }
+    
+    private func getMappedCard(with planModel: MembershipPlanModel, completion: @escaping (CD_MembershipCard) -> Void) {
         mapResponseToManagedObject(planModel, managedObjectType: CD_MembershipPlan.self) { [weak self] mappedPlan in
             guard let self = self else { return }
             
-            let cardModel = MembershipCardModel(apiId: nil, membershipPlan: nil, membershipTransactions: nil, status: MembershipCardStatusModel(apiId: nil, state: .authorised, reasonCodes: nil), card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
-            
-            self.mapResponseToManagedObject(cardModel, managedObjectType: CD_MembershipCard.self) { mappedCard in
+            self.mapResponseToManagedObject(self.baseMembershipCardModel, managedObjectType: CD_MembershipCard.self) { mappedCard in
                 mappedCard.membershipPlan = mappedPlan
                 
-                let viewModel = BinkModuleViewModel(type: .points(membershipCard: mappedCard))
-                
-                XCTAssertEqual(viewModel.imageName, "lcdModuleIconsPointsActive")
-                XCTAssertEqual(viewModel.titleText, "plr_lcd_points_module_auth_title".localized)
-                XCTAssertEqual(viewModel.subtitleText, "points_module_view_history_messages".localized)
+                completion(mappedCard)
             }
         }
     }

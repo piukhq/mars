@@ -11,12 +11,12 @@ import CoreData
 struct MembershipPlanModel: Codable {
     let apiId: Int?
     let status: String?
-    let featureSet: FeatureSetModel?
+    var featureSet: FeatureSetModel?
     let images: [MembershipPlanImageModel]?
     var account: MembershipPlanAccountModel?
     let balances: [BalanceModel]?
     var dynamicContent: [DynamicContentField]?
-    let hasVouchers: Bool?
+    var hasVouchers: Bool?
     let card: CardModel?
     
     enum CodingKeys: String, CodingKey {

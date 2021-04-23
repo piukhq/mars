@@ -11,9 +11,9 @@ import CoreData
 struct FeatureSetModel: Codable {
     let apiId: Int?
     let authorisationRequired: Bool?
-    let transactionsAvailable: Bool?
+    var transactionsAvailable: Bool?
     let digitalOnly: Bool?
-    let hasPoints: Bool?
+    var hasPoints: Bool?
     let cardType: CD_FeatureSet.PlanCardType?
     let linkingSupport: [LinkingSupportType]?
     let hasVouchers: Bool?

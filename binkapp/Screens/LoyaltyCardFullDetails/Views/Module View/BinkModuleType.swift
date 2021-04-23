@@ -19,7 +19,7 @@ enum ModuleState: Equatable {
     }
     
     case loginUnavailable
-    case plrTransactions(formattedBalanceTitle: String?)
+    case plrTransactions
     case aboutMembership
     case pllTransactions(transactionsAvailable: Bool?, formattedTitle: String?, lastChecked: String?)
     case pending
@@ -59,8 +59,8 @@ enum ModuleState: Equatable {
         switch self {
         case .loginUnavailable:
             return "history_title".localized
-        case .plrTransactions(let formattedBalanceTitle):
-            return formattedBalanceTitle ?? "plr_lcd_points_module_auth_title".localized
+        case .plrTransactions:
+            return "plr_lcd_points_module_auth_title".localized
         case .aboutMembership:
             return "plr_lcd_points_module_title".localized
         case .pllTransactions(_, let formattedTitle, _):
