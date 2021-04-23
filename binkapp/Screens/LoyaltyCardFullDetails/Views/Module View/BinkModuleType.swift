@@ -19,7 +19,7 @@ enum ModuleState: Equatable {
     }
     
     case loginUnavailable
-    case plrTransactions
+    case plrTransactions(formattedBalanceTitle: String?)
     case aboutMembership
     case pllTransactions(transactionsAvailable: Bool?, formattedTitle: String?, lastChecked: String?)
     case pending
@@ -38,23 +38,11 @@ enum ModuleState: Equatable {
         switch self {
         case .loginUnavailable:
             return "lcdModuleIconsPointsInactive"
-        case .plrTransactions:
-            return "lcdModuleIconsPointsActive"
-        case .aboutMembership:
-            return "lcdModuleIconsPointsActive"
-        case .pllTransactions:
+        case .plrTransactions, .aboutMembership, .pllTransactions:
             return "lcdModuleIconsPointsActive"
         case .pending:
             return "lcdModuleIconsPointsLoginPending"
-        case .signUp:
-            return "lcdModuleIconsPointsLogin"
-        case .patchGhostCard:
-            return "lcdModuleIconsPointsLogin"
-        case .loginChanges:
-            return "lcdModuleIconsPointsLogin"
-        case .registerGhostCard:
-            return "lcdModuleIconsPointsLogin"
-        case .noReasonCode:
+        case .signUp, .patchGhostCard, .loginChanges, .registerGhostCard, .noReasonCode:
             return "lcdModuleIconsPointsLogin"
         case .unlinkable:
             return "lcdModuleIconsLinkInactive"
@@ -62,9 +50,7 @@ enum ModuleState: Equatable {
             return "lcdModuleIconsLinkError"
         case .pll:
             return "lcdModuleIconsLinkActive"
-        case .pllNoPaymentCards:
-            return "lcdModuleIconsLinkError"
-        case .pllError:
+        case .pllNoPaymentCards, .pllError:
             return "lcdModuleIconsLinkError"
         }
     }
@@ -73,8 +59,8 @@ enum ModuleState: Equatable {
         switch self {
         case .loginUnavailable:
             return "history_title".localized
-        case .plrTransactions:
-            return "plr_lcd_points_module_auth_title".localized
+        case .plrTransactions(let formattedBalanceTitle):
+            return formattedBalanceTitle ?? "plr_lcd_points_module_auth_title".localized
         case .aboutMembership:
             return "plr_lcd_points_module_title".localized
         case .pllTransactions(_, let formattedTitle, _):
@@ -107,9 +93,7 @@ enum ModuleState: Equatable {
             return "link_module_error_title".localized
         case .pll:
             return "card_linked_status".localized
-        case .pllNoPaymentCards:
-            return "card_link_status".localized
-        case .pllError:
+        case .pllNoPaymentCards, .pllError:
             return "card_link_status".localized
         }
     }
@@ -130,8 +114,6 @@ enum ModuleState: Equatable {
             }
         case .pending:
             return "please_wait_title".localized
-        case .signUp:
-            return "please_try_again_title".localized
         case .patchGhostCard(let type):
             switch type {
             case .points:
@@ -152,9 +134,7 @@ enum ModuleState: Equatable {
             default:
                 return ""
             }
-        case .registerGhostCard:
-            return "please_try_again_title".localized
-        case .noReasonCode:
+        case .registerGhostCard, .noReasonCode, .signUp:
             return "please_try_again_title".localized
         case .unlinkable:
             return "not_available_title".localized
@@ -162,9 +142,7 @@ enum ModuleState: Equatable {
             return "error_title".localized
         case .pll(let linkedPaymentCards, let paymentCards):
             return String(format: paymentCards?.isEmpty == true ? "link_module_to_number_of_payment_card_message".localized : "link_module_to_number_of_payment_cards_message".localized, linkedPaymentCards?.count ?? 0, paymentCards?.count ?? 0)
-        case .pllNoPaymentCards:
-            return "link_module_to_payment_cards_message".localized
-        case .pllError:
+        case .pllNoPaymentCards, .pllError:
             return "link_module_to_payment_cards_message".localized
         }
     }

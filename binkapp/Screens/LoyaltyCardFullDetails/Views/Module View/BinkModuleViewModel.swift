@@ -44,35 +44,27 @@ private extension BinkModuleViewModel {
             return .loginUnavailable
         }
         
+        let hasTransactions = plan.featureSet?.transactionsAvailable == true
+        
         switch membershipCard.status?.status {
         case .authorised:
-            // PLR
-            if membershipCard.membershipPlan?.isPLR == true {
-                if membershipCard.membershipPlan?.featureSet?.transactionsAvailable?.boolValue == true {
-                    return .plrTransactions
-                } else {
-                    return .aboutMembership
-                }
-            }
-
             // Points module 1.1, 1.2
-            if let balances = membershipCard.balances.allObjects as? [CD_MembershipCardBalance], let balance = balances.first, let value = balance.value {
-                var titleText: String
-                let prefix = balance.prefix ?? ""
-                let suffix = balance.suffix ?? ""
-
-                let floatBalanceValue = balance.value?.floatValue ?? 0
-
-                if floatBalanceValue.hasDecimals {
-                    titleText = prefix + String(format: "%.02f", floatBalanceValue) + " " + suffix
-                } else {
-                    titleText = prefix + "\(value.intValue)" + " " + suffix
-                }
-
+            if let balances = membershipCard.balances.allObjects as? [CD_MembershipCardBalance], let balance = balances.first {
                 let transactionsAvailable = plan.featureSet?.transactionsAvailable?.boolValue == true
+                
+                if plan.isPLR {
+                    // PLR with balance
+                    return hasTransactions ? .plrTransactions(formattedBalanceTitle: balance.formattedBalance) : .aboutMembership
+                }
+                
                 let date = Date(timeIntervalSince1970: balance.updatedAt?.doubleValue ?? 0)
-                return .pllTransactions(transactionsAvailable: transactionsAvailable, formattedTitle: titleText, lastChecked: date.timeAgoString(short: true))
+                return .pllTransactions(transactionsAvailable: transactionsAvailable, formattedTitle: balance.formattedBalance, lastChecked: date.timeAgoString(short: true))
             } else {
+                if plan.isPLR == true {
+                    // PLR with no balance
+                    return hasTransactions ? .plrTransactions(formattedBalanceTitle: nil) : .aboutMembership
+                }
+                
                 return .pending
             }
         case .pending:
