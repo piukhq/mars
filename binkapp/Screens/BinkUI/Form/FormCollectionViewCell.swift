@@ -92,7 +92,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.font = UIFont.textFieldExplainer
-        label.text = "form_field_validation_error".localized
+        label.text = L10n.formFieldValidationError
         label.isHidden = true
         label.textColor = .binkDynamicRed
         label.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -295,7 +295,7 @@ extension FormCollectionViewCell: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let field = formField else { return }
-        validationLabel.text = field.validationErrorMessage != nil ? field.validationErrorMessage : "form_field_validation_error".localized
+        validationLabel.text = field.validationErrorMessage != nil ? field.validationErrorMessage : L10n.formFieldValidationError
         validationLabel.isHidden = field.isValid()
         isValidationLabelHidden = field.isValid()
         field.fieldWasExited()

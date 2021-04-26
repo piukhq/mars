@@ -107,7 +107,7 @@ class WebViewController: BinkViewController {
     }
     
     private func showErrorAlert() {
-        let alert = ViewControllerFactory.makeOkAlertViewController(title: "error_title".localized, message: "loading_error".localized)
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: L10n.loadingError)
         Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     

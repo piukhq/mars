@@ -10,13 +10,13 @@ import UIKit
 
 class RegisterViewController: BaseFormViewController, UserServiceProtocol {
     private lazy var continueButton: BinkButton = {
-        return BinkButton(type: .gradient, title: "continue_button_title".localized, enabled: false) { [weak self] in
+        return BinkButton(type: .gradient, title: L10n.continueButtonTitle, enabled: false) { [weak self] in
             self?.continueButtonTapped()
         }
     }()
         
     init() {
-        super.init(title: "register_title".localized, description: "register_subtitle".localized, dataSource: FormDataSource(accessForm: .register))
+        super.init(title: L10n.registerTitle, description: L10n.registerSubtitle, dataSource: FormDataSource(accessForm: .register))
         dataSource.delegate = self
     }
     
@@ -104,8 +104,8 @@ class RegisterViewController: BaseFormViewController, UserServiceProtocol {
     }
     
     private func showError() {
-        let alert = BinkAlertController(title: "error_title".localized, message: "register_failed".localized, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
+        let alert = BinkAlertController(title: L10n.errorTitle, message: L10n.registerFailed, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: L10n.ok, style: .default))
         present(alert, animated: true)
     }
 
