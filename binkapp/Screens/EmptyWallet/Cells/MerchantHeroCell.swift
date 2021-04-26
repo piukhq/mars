@@ -12,7 +12,7 @@ class MerchantHeroCell: UICollectionViewCell {
     private var imageView = UIImageView()
     private lazy var label: UILabel = {
         let label = UILabel()
-        label.text = "wallet_prompt_more_coming_soon".localized
+        label.text = L10n.walletPromptMoreComingSoon
         label.textAlignment = .center
         label.textColor = .white
         label.font = UIFont.statusLabel

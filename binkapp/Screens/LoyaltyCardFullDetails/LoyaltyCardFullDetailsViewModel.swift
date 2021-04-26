@@ -85,11 +85,11 @@ class LoyaltyCardFullDetailsViewModel {
         if shouldShowBarcode {
             switch barcodeViewModel.barcodeType {
             case .qr:
-                buttonTitle = "details_header_show_qr_code".localized
+                buttonTitle = L10n.detailsHeaderShowQrCode
             case .aztec:
-                buttonTitle = "details_header_show_aztec_code".localized
+                buttonTitle = L10n.detailsHeaderShowAztecCode
             default:
-                buttonTitle = "details_header_show_barcode".localized
+                buttonTitle = L10n.detailsHeaderShowBarcode
             }
         }
 
@@ -114,8 +114,8 @@ class LoyaltyCardFullDetailsViewModel {
             Current.navigate.to(navigationRequest)
         case .transactions:
             guard membershipCard.membershipPlan?.featureSet?.transactionsAvailable?.boolValue ?? false else {
-                let title = "transaction_history_not_supported_title".localized
-                let description = String(format: "transaction_history_not_supported_description".localized, membershipCard.membershipPlan?.account?.planName ?? "")
+                let title = L10n.transactionHistoryNotSupportedTitle
+                let description = L10n.transactionHistoryNotSupportedDescription(membershipCard.membershipPlan?.account?.planName ?? "")
                 let attributedTitle = NSMutableAttributedString(string: title + "\n", attributes: [.font: UIFont.headline])
                 let attributedDescription = NSMutableAttributedString(string: description, attributes: [.font: UIFont.bodyTextLarge])
                 let attributedString = NSMutableAttributedString()
@@ -137,16 +137,16 @@ class LoyaltyCardFullDetailsViewModel {
                 return
             }
             
-            let title = "generic_pending_module_title".localized
-            let description = "generic_pending_module_description".localized
+            let title = L10n.genericPendingModuleTitle
+            let description = L10n.genericPendingModuleDescription
             let attributedString = ReusableModalConfiguration.makeAttributedString(title: title, description: description)
             let configuration = ReusableModalConfiguration(text: attributedString)
             let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration)
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         case .loginUnavailable:
-            let title = "transaction_history_not_supported_title".localized
-            let description = String(format: "transaction_history_not_supported_description".localized, membershipCard.membershipPlan?.account?.planName ?? "")
+            let title = L10n.transactionHistoryNotSupportedTitle
+            let description = L10n.transactionHistoryNotSupportedDescription(membershipCard.membershipPlan?.account?.planName ?? "")
             let attributedString = ReusableModalConfiguration.makeAttributedString(title: title, description: description)
             let configuration = ReusableModalConfiguration(text: attributedString)
             let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration)
@@ -158,7 +158,7 @@ class LoyaltyCardFullDetailsViewModel {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         case .registerGhostCard:
-            let alert = ViewControllerFactory.makeOkAlertViewController(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: L10n.toBeImplementedMessage)
             Current.navigate.to(AlertNavigationRequest(alertController: alert))
         case .patchGhostCard:
             guard let membershipPlan = membershipCard.membershipPlan else { return }
@@ -170,8 +170,8 @@ class LoyaltyCardFullDetailsViewModel {
             let navigationRequest = ModalNavigationRequest(viewController: viewController, dragToDismiss: action == .pllEmpty)
             Current.navigate.to(navigationRequest)
         case .unLinkable:
-            let title = "unlinkable_pll_title".localized
-            let description = "unlinkable_pll_description".localized
+            let title = L10n.unlinkablePllTitle
+            let description = L10n.unlinkablePllDescription
             let attributedString = ReusableModalConfiguration.makeAttributedString(title: title, description: description)
             let configuration = ReusableModalConfiguration(text: attributedString)
             let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration)
@@ -185,7 +185,7 @@ class LoyaltyCardFullDetailsViewModel {
                 description += $0.description
             }
 
-            let attributedString = ReusableModalConfiguration.makeAttributedString(title: "error_title".localized, description: description)
+            let attributedString = ReusableModalConfiguration.makeAttributedString(title: L10n.errorTitle, description: description)
             let configuration = ReusableModalConfiguration(text: attributedString)
             let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration)
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
@@ -214,8 +214,8 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     func toSecurityAndPrivacyScreen() {
-        let title: String = "security_and_privacy_title".localized
-        let description: String = "security_and_privacy_description".localized
+        let title: String = L10n.securityAndPrivacyTitle
+        let description: String = L10n.securityAndPrivacyDescription
         let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
         let viewController = ViewControllerFactory.makeSecurityAndPrivacyViewController(configuration: configuration)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
@@ -271,7 +271,7 @@ extension LoyaltyCardFullDetailsViewModel {
     }
     
     func showDeleteConfirmationAlert() {
-        let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: "delete_card_confirmation".localized, deleteAction: { [weak self] in
+        let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: L10n.deleteCardConfirmation, deleteAction: { [weak self] in
             guard let self = self else { return }
             guard Current.apiClient.networkIsReachable else {
                 let alert = ViewControllerFactory.makeNoConnectivityAlertController()
