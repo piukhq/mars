@@ -119,22 +119,19 @@ class PointsScrapingManager {
     
     // MARK: - Add/Auth handling
     
+    private var newCardQueue: [CD_MembershipCard] = []
+    
     func enableLocalPointsScrapingForCardIfPossible(withRequest request: MembershipCardPostModel, credentials: WebScrapingCredentials, membershipCard: CD_MembershipCard) throws {
         guard planIdIsWebScrapable(request.membershipPlan) else { return }
         
         guard canEnableLocalPointsScrapingForCard(withRequest: request) else {
             throw PointsScrapingManagerError.failedToEnableMembershipCardForPointsScraping
         }
-        guard let planId = request.membershipPlan else {
-            throw PointsScrapingManagerError.failedToGetMembershipPlanFromRequest
-        }
-        guard let agent = agents.first(where: { $0.membershipPlanId == planId }) else {
-            throw PointsScrapingManagerError.failedToGetAgentForMembershipPlan
-        }
-
+        
         do {
             try storeCredentials(credentials, forMembershipCardId: membershipCard.id)
-            try webScrapingUtility?.start(agent: agent, membershipCard: membershipCard)
+            newCardQueue.append(membershipCard)
+            try addNextQueuedCard()
         } catch {
             self.transitionToFailed(membershipCard: membershipCard)
         }
@@ -142,6 +139,27 @@ class PointsScrapingManager {
     
     func disableLocalPointsScraping(forMembershipCardId cardId: String) {
         removeCredentials(forMembershipCardId: cardId)
+    }
+    
+    func addNextQueuedCard() throws {
+        guard !newCardQueue.isEmpty else { return }
+        guard let newCard = newCardQueue.first else { return }
+        guard webScrapingUtility?.isRunning == false else { return }
+        
+        guard let planIdString = newCard.membershipPlan?.id, let planId = Int(planIdString) else {
+            throw PointsScrapingManagerError.failedToGetMembershipPlanFromRequest
+        }
+        
+        guard let agent = agents.first(where: { $0.membershipPlanId == planId }) else {
+            throw PointsScrapingManagerError.failedToGetAgentForMembershipPlan
+        }
+        
+        do {
+            newCardQueue.removeAll(where: { $0 == newCard })
+            try webScrapingUtility?.start(agent: agent, membershipCard: newCard)
+        } catch {
+            self.transitionToFailed(membershipCard: newCard)
+        }
     }
     
     private func canEnableLocalPointsScrapingForCard(withRequest request: MembershipCardPostModel) -> Bool {

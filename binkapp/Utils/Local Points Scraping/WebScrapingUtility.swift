@@ -32,7 +32,7 @@ protocol WebScrapingUtilityDelegate: AnyObject {
 
 class WebScrapingUtility: NSObject {
     var isExecutingScript = false
-    private var isRunning: Bool {
+    var isRunning: Bool {
         return membershipCard != nil || agent != nil
     }
     
@@ -130,6 +130,8 @@ class WebScrapingUtility: NSObject {
         if activeWebview != priorityWebview {
             activeWebview = nil
         }
+        
+        try? Current.pointsScrapingManager.addNextQueuedCard()
     }
 
     private func resetIdlingTimer() {
