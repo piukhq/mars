@@ -316,12 +316,8 @@ class PaymentCardDetailViewModel {
         repository.linkMembershipCard(membershipCard, toPaymentCard: paymentCard) { [weak self] paymentCard, error in
             if let error = error, case .userFacingNetworkingError(let networkingError) = error {
                 if case .userFacingError(let userFacingError) = networkingError {
-                    let messagePrefix = "card_already_linked_message_prefix".localized
-                    let planName = membershipCard.membershipPlan?.account?.planName ?? ""
-                    let planNameCard = membershipCard.membershipPlan?.account?.planNameCard ?? ""
-                    let planDetails = "\(planName) \(planNameCard)"
-                    let formattedString = String(format: userFacingError.message, messagePrefix, planDetails, planDetails)
-                    let alert = ViewControllerFactory.makeOkAlertViewController(title: userFacingError.title, message: formattedString)
+                    let message = userFacingError.message(membershipPlan: membershipCard.membershipPlan)
+                    let alert = ViewControllerFactory.makeOkAlertViewController(title: userFacingError.title, message: message)
                     let navigationRequest = AlertNavigationRequest(alertController: alert)
                     Current.navigate.to(navigationRequest)
                     completion()

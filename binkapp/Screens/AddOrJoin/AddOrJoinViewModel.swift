@@ -74,13 +74,13 @@ class AddOrJoinViewModel {
     }
     
     func toNativeJoinUnavailable() {
-        let descriptionText = String(format: "native_join_unavailable_description".localized, membershipPlan.account?.companyName ?? "")
-        let screenText = "native_join_unavailable_title".localized + "\n" + descriptionText
+        let descriptionText = L10n.nativeJoinUnavailableDescription(membershipPlan.account?.companyName ?? "")
+        let screenText = L10n.nativeJoinUnavailableTitle + "\n" + descriptionText
         
         let attributedText = NSMutableAttributedString(string: screenText)
-        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: ("native_join_unavailable_title".localized).count)
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: (L10n.nativeJoinUnavailableTitle).count)
         )
-        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: ("native_join_unavailable_title".localized).count, length: descriptionText.count)
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: (L10n.nativeJoinUnavailableTitle).count, length: descriptionText.count)
         )
         
         var configurationModel: ReusableModalConfiguration
@@ -93,7 +93,7 @@ class AddOrJoinViewModel {
             return
         }
         
-        configurationModel = ReusableModalConfiguration(title: "", text: attributedText, primaryButtonTitle: "to_merchant_site_button".localized, primaryButtonAction: {
+        configurationModel = ReusableModalConfiguration(title: "", text: attributedText, primaryButtonTitle: L10n.toMerchantSiteButton, primaryButtonAction: {
             if let url = URL(string: planURL) {
                 let viewController = ViewControllerFactory.makeWebViewController(urlString: url.absoluteString)
                 let navigationRequest = ModalNavigationRequest(viewController: viewController)
@@ -113,7 +113,7 @@ class AddOrJoinViewModel {
     }
 
     private func toPaymentCardNeededScreen() {
-        let configuration = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "plr_payment_card_needed_title".localized, description: "plr_payment_card_needed_body".localized), primaryButtonTitle: "pll_screen_add_title".localized, primaryButtonAction: { [weak self] in
+        let configuration = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: L10n.plrPaymentCardNeededTitle, description: L10n.plrPaymentCardNeededBody), primaryButtonTitle: L10n.pllScreenAddTitle, primaryButtonAction: { [weak self] in
             guard let self = self else { return }
             Current.navigate.close {
                 self.toPaymentCardScanner()

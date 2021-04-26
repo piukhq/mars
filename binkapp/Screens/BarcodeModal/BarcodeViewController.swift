@@ -88,7 +88,7 @@ class BarcodeViewController: BinkViewController {
         } else {
             barcodeImageView.isHidden = true
             imageContainerView.isHidden = true
-            barcodeErrorLabel.text = "barcode_error".localized
+            barcodeErrorLabel.text = L10n.barcodeError
             barcodeErrorLabel.font = UIFont.bodyTextLarge
             barcodeErrorLabel.isHidden = viewModel.isBarcodeAvailable ? false : true
         }

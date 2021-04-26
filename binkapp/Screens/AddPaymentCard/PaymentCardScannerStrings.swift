@@ -9,9 +9,9 @@
 import CardScan
 
 class PaymentCardScannerStrings: ScanStringsDataSource {
-    func positionCard() -> String { return "payment_scanner_explainer_text".localized }
-    func widgetTitle() -> String { return "payment_scanner_widget_title".localized }
-    func widgetExplainerText() -> String { return "payment_scanner_widget_explainer_text".localized }
+    func positionCard() -> String { return L10n.paymentScannerExplainerText }
+    func widgetTitle() -> String { return L10n.paymentScannerWidgetTitle }
+    func widgetExplainerText() -> String { return L10n.paymentScannerWidgetExplainerText }
     func scanCard() -> String { return "" }
     func backButton() -> String { return " " }
     func skipButton() -> String { return " " }
