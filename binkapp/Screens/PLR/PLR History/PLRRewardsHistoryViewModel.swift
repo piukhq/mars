@@ -20,11 +20,11 @@ class PLRRewardsHistoryViewModel {
     }
 
     var titleText: String {
-        return "plr_history_title".localized
+        return L10n.plrHistoryTitle
     }
 
     var subtitleText: String {
-        return "plr_history_subtitle".localized
+        return L10n.plrHistorySubtitle
     }
     
     var vouchers: [CD_Voucher]? {
