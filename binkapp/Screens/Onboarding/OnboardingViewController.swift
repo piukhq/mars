@@ -320,7 +320,7 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate, ASAuthori
     
     private func handleLoginError() {
         Current.userManager.removeUser()
-        let navigationRequest = AlertNavigationRequest(alertController: ViewControllerFactory.makeOkAlertViewController(title: "error_title".localized, message: "login_error".localized))
+        let navigationRequest = AlertNavigationRequest(alertController: ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: L10n.loginError))
         Current.navigate.to(navigationRequest)
     }
 }
