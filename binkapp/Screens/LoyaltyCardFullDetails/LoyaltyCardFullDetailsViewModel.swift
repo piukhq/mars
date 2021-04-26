@@ -80,7 +80,7 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     var barcodeButtonTitle: String {
-        var buttonTitle = "details_header_show_card_number".localized
+        var buttonTitle = L10n.detailsHeaderShowCardNumber
         
         if shouldShowBarcode {
             switch barcodeViewModel.barcodeType {

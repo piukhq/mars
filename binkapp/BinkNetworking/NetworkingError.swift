@@ -67,13 +67,14 @@ enum UserFacingNetworkingError: String {
     var title: String {
         switch self {
         case .planAlreadyLinked:
-            return "card_already_linked_title".localized
+            return L10n.cardAlreadyLinkedTitle
         }
     }
     
     var message: String {
         switch self {
         case .planAlreadyLinked:
+//            return L10n.cardAlreadyLinkedMessage(L10n.cardAlreadyLinkedMessagePrefix, <#T##p2: Any##Any#>, <#T##p3: Any##Any#>)
             return "card_already_linked_message".localized
         }
     }
