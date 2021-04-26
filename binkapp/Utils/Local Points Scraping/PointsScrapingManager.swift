@@ -17,6 +17,15 @@ class PointsScrapingManager {
         case password
     }
     
+    class QueuedItem {
+        let card: CD_MembershipCard
+        var isProcessing = false
+        
+        init(card: CD_MembershipCard) {
+            self.card = card
+        }
+    }
+    
     // MARK: - Error handling
     
     enum PointsScrapingManagerError: BinkError {
@@ -69,6 +78,8 @@ class PointsScrapingManager {
         WaterstonesScrapingAgent()
     ]
     
+    var processingQueue: [QueuedItem] = []
+    
     func start() {
         webScrapingUtility = WebScrapingUtility(delegate: self)
     }
@@ -119,19 +130,17 @@ class PointsScrapingManager {
     
     // MARK: - Add/Auth handling
     
-    private var newCardQueue: [CD_MembershipCard] = []
-    
     func enableLocalPointsScrapingForCardIfPossible(withRequest request: MembershipCardPostModel, credentials: WebScrapingCredentials, membershipCard: CD_MembershipCard) throws {
         guard planIdIsWebScrapable(request.membershipPlan) else { return }
-        
         guard canEnableLocalPointsScrapingForCard(withRequest: request) else {
             throw PointsScrapingManagerError.failedToEnableMembershipCardForPointsScraping
         }
         
         do {
             try storeCredentials(credentials, forMembershipCardId: membershipCard.id)
-            newCardQueue.append(membershipCard)
-            try addNextQueuedCard()
+            
+            addQueuedItem(QueuedItem(card: membershipCard))
+            processQueuedItems()
         } catch {
             self.transitionToFailed(membershipCard: membershipCard)
         }
@@ -141,75 +150,45 @@ class PointsScrapingManager {
         removeCredentials(forMembershipCardId: cardId)
     }
     
-    func addNextQueuedCard() throws {
-        guard !newCardQueue.isEmpty else { return }
-        guard let newCard = newCardQueue.first else { return }
-        guard webScrapingUtility?.isRunning == false else { return }
-        
-        guard let planIdString = newCard.membershipPlan?.id, let planId = Int(planIdString) else {
-            throw PointsScrapingManagerError.failedToGetMembershipPlanFromRequest
-        }
-        
-        guard let agent = agents.first(where: { $0.membershipPlanId == planId }) else {
-            throw PointsScrapingManagerError.failedToGetAgentForMembershipPlan
-        }
-        
-        do {
-            newCardQueue.removeAll(where: { $0 == newCard })
-            try webScrapingUtility?.start(agent: agent, membershipCard: newCard)
-        } catch {
-            self.transitionToFailed(membershipCard: newCard)
-        }
-    }
-    
     private func canEnableLocalPointsScrapingForCard(withRequest request: MembershipCardPostModel) -> Bool {
         guard let planId = request.membershipPlan else { return false }
         return hasAgent(forMembershipPlanId: planId)
     }
     
-    // MARK: - Balance refreshing
+    // MARK: - Processing queue
     
-    private var balanceRefreshQueue: [CD_MembershipCard] = []
+    private func addQueuedItem(_ item: QueuedItem) {
+        if processingQueue.contains(where: { $0.card.id == item.card.id }) { return }
+        processingQueue.append(item)
+    }
+    
+    private func processQueuedItems() {
+        guard !processingQueue.isEmpty else { return }
+        
+        guard let itemToProcess = processingQueue.first(where: { $0.isProcessing == false }) else { return }
+        guard let planIdString = itemToProcess.card.membershipPlan?.id, let planId = Int(planIdString) else {
+            self.transitionToFailed(membershipCard: itemToProcess.card)
+            return
+        }
+        guard let agent = agents.first(where: { $0.membershipPlanId == planId }) else {
+            self.transitionToFailed(membershipCard: itemToProcess.card)
+            return
+        }
+
+        do {
+            try webScrapingUtility?.start(agent: agent, item: itemToProcess)
+        } catch {
+            self.transitionToFailed(membershipCard: itemToProcess.card)
+        }
+    }
     
     func refreshBalancesIfNecessary() {
         Current.remoteConfig.fetch { [weak self] in
             guard let self = self else { return }
             guard self.isMasterEnabled else { return }
             self.getRefreshableMembershipCards { refreshableCards in
-                self.balanceRefreshQueue = refreshableCards
-                self.continueBalanceRefresh()
-            }
-        }
-    }
-    
-    private func continueBalanceRefresh() {
-        if let newFirstObject = balanceRefreshQueue.first {
-            refreshBalance(membershipCard: newFirstObject)
-        }
-    }
-    
-    private func refreshNextBalanceIfNecessary() {
-        // Remove object from the top
-        if let firstObject = balanceRefreshQueue.first, let index = balanceRefreshQueue.firstIndex(of: firstObject) {
-            balanceRefreshQueue.remove(at: index)
-        }
-        
-        // Get the new first object if there is one and refresh it's balance
-        continueBalanceRefresh()
-    }
-    
-    private func refreshBalance(membershipCard: CD_MembershipCard) {
-        // TODO: Should we force to retry if any of these conditions fail? Otherwise, we will always have an outdated points balance
-        guard membershipCard.status?.status == .authorised else { return }
-        guard let planId = membershipCard.membershipPlan?.id else { return }
-        guard let agent = self.agents.first(where: { $0.membershipPlanId == Int(planId) }) else { return }
-        guard agentEnabled(agent) else { return }
-        
-        DispatchQueue.main.async {
-            do {
-                try self.webScrapingUtility?.start(agent: agent, membershipCard: membershipCard)
-            } catch {
-                self.transitionToFailed(membershipCard: membershipCard)
+                refreshableCards.forEach { self.addQueuedItem(QueuedItem(card: $0)) }
+                self.processQueuedItems()
             }
         }
     }
@@ -247,9 +226,12 @@ class PointsScrapingManager {
         return agents.contains(where: { $0.membershipPlanId == planId })
     }
     
-    private func pointsScrapingDidComplete() {
+    private func pointsScrapingDidComplete(for card: CD_MembershipCard) {
         NotificationCenter.default.post(name: .webScrapingUtilityDidComplete, object: nil)
-        refreshNextBalanceIfNecessary()
+        
+        /// Clear membership card from processing queue
+        processingQueue.removeAll(where: { $0.card.id == card.id })
+        processQueuedItems()
     }
 
     func isCurrentlyScraping(forMembershipCard card: CD_MembershipCard) -> Bool {
@@ -309,7 +291,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                     self.transitionToFailed(membershipCard: membershipCard)
                 }
 
-                self.pointsScrapingDidComplete()
+                self.pointsScrapingDidComplete(for: membershipCard)
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionSuccess(membershipCard: membershipCard))
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
             }
@@ -344,7 +326,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 // If this try fails, the card will be stuck in pending until deleted and readded
                 try? backgroundContext.save()
                 
-                self.pointsScrapingDidComplete()
+                self.pointsScrapingDidComplete(for: membershipCard)
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
             }
         }
