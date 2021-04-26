@@ -63,7 +63,7 @@ class BarcodeScannerViewController: BinkViewController {
 
     private lazy var explainerLabel: UILabel = {
         let label = UILabel()
-        label.text = "loyalty_scanner_explainer_text".localized
+        label.text = L10n.loyaltyScannerExplainerText
         label.font = .bodyTextLarge
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
