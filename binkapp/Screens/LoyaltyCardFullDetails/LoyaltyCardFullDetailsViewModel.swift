@@ -104,15 +104,15 @@ class LoyaltyCardFullDetailsViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func goToScreenForAction(action: BinkModuleView.BinkModuleAction, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) {
-        switch action {
-        case .login, .loginChanges:
+    func goToScreenForState(state: ModuleState, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) {
+        switch state {
+        case .loginChanges:
             guard let membershipPlan = membershipCard.membershipPlan else { return }
             let cardNumberPrefilledValue = FormDataSource.PrefilledValue(commonName: .cardNumber, value: membershipCard.card?.membershipId)
             let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: membershipCard, prefilledFormValues: [cardNumberPrefilledValue])
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
-        case .transactions:
+        case .plrTransactions, .pllTransactions:
             guard membershipCard.membershipPlan?.featureSet?.transactionsAvailable?.boolValue ?? false else {
                 let title = "transaction_history_not_supported_title".localized
                 let description = String(format: "transaction_history_not_supported_description".localized, membershipCard.membershipPlan?.account?.planName ?? "")
@@ -165,11 +165,11 @@ class LoyaltyCardFullDetailsViewModel {
             let viewController = ViewControllerFactory.makePatchGhostCardViewController(membershipPlan: membershipPlan, existingMembershipCard: membershipCard)
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
-        case .pll, .pllEmpty:
+        case .pll, .pllNoPaymentCards, .pllError:
             let viewController = ViewControllerFactory.makePllViewController(membershipCard: membershipCard, journey: .existingCard, delegate: delegate)
-            let navigationRequest = ModalNavigationRequest(viewController: viewController, dragToDismiss: action == .pllEmpty)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController, dragToDismiss: state == .pllNoPaymentCards)
             Current.navigate.to(navigationRequest)
-        case .unLinkable:
+        case .unlinkable:
             let title = "unlinkable_pll_title".localized
             let description = "unlinkable_pll_description".localized
             let attributedString = ReusableModalConfiguration.makeAttributedString(title: title, description: description)

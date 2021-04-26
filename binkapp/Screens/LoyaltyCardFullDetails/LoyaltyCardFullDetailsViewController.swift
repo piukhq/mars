@@ -418,8 +418,8 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     func configureModules() {
-        pointsModule.configure(moduleType: .points, membershipCard: viewModel.membershipCard, delegate: self)
-        linkModule.configure(moduleType: .link, membershipCard: viewModel.membershipCard, paymentCards: viewModel.paymentCards, delegate: self)
+        pointsModule.configure(with: BinkModuleViewModel(type: .points(membershipCard: viewModel.membershipCard)), delegate: self)
+        linkModule.configure(with: BinkModuleViewModel(type: .link(membershipCard: viewModel.membershipCard, paymentCards: viewModel.paymentCards)), delegate: self)
     }
     
     @objc func showBarcodeButtonPressed() {
@@ -457,8 +457,8 @@ extension LoyaltyCardFullDetailsViewController: CardDetailInformationRowFactoryD
 // MARK: - PointsModuleViewDelegate
 
 extension LoyaltyCardFullDetailsViewController: BinkModuleViewDelegate {
-    func binkModuleViewWasTapped(moduleView: BinkModuleView, withAction action: BinkModuleView.BinkModuleAction) {
-        viewModel.goToScreenForAction(action: action, delegate: self)
+    func binkModuleViewWasTapped(moduleView: BinkModuleView, withState state: ModuleState) {
+        viewModel.goToScreenForState(state: state, delegate: self)
     }
 }
 
