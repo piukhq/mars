@@ -97,9 +97,9 @@ enum ViewControllerFactory {
     static func makeAboutMembershipPlanViewController(membershipPlan: CD_MembershipPlan) -> ReusableTemplateViewController {
         var titleString = ""
         if let planName = membershipPlan.account?.planName {
-            titleString = String(format: "about_membership_plan_title".localized, planName)
+            titleString = L10n.aboutMembershipPlanTitle(planName)
         } else {
-            titleString = "about_membership_title".localized
+            titleString = L10n.aboutMembershipTitle
         }
         
         var descriptionString = ""
@@ -115,7 +115,7 @@ enum ViewControllerFactory {
         var configuration = ReusableModalConfiguration(text: attributedString)
         
         if let url = membershipPlan.account?.planURL {
-            configuration = ReusableModalConfiguration(text: attributedString, primaryButtonTitle: "go_to_site_button".localized, primaryButtonAction: {
+            configuration = ReusableModalConfiguration(text: attributedString, primaryButtonTitle: L10n.goToSiteButton, primaryButtonAction: {
                 /// Implemented navigation logic here instead of passing comletion block in via method property to reduce code repetition as it's called from multiple viewModels
                 let viewController = makeWebViewController(urlString: url)
                 let navigationRequest = ModalNavigationRequest(viewController: viewController)
@@ -188,18 +188,18 @@ enum ViewControllerFactory {
     
     static func makeDeleteConfirmationAlertController(message: String, deleteAction: @escaping EmptyCompletionBlock, onCancel: EmptyCompletionBlock? = nil) -> BinkAlertController {
         let alert = BinkAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: { _ in
+        alert.addAction(UIAlertAction(title: L10n.no, style: .cancel, handler: { _ in
             onCancel?()
         }))
-        alert.addAction(UIAlertAction(title: "yes".localized, style: .destructive, handler: { _ in
+        alert.addAction(UIAlertAction(title: L10n.yes, style: .destructive, handler: { _ in
             deleteAction()
         }))
         return alert
     }
     
     static func makeNoConnectivityAlertController(completion: EmptyCompletionBlock? = nil) -> BinkAlertController {
-        let alert = BinkAlertController(title: nil, message: "no_internet_connection_message".localized, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: { _ in
+        let alert = BinkAlertController(title: nil, message: L10n.noInternetConnectionMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: L10n.ok, style: .cancel, handler: { _ in
             if let completion = completion {
                 completion()
             }
@@ -209,7 +209,7 @@ enum ViewControllerFactory {
     
     static func makeOkAlertViewController(title: String?, message: String?, completion: EmptyCompletionBlock? = nil) -> BinkAlertController {
         let alert = BinkAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: { _ in
+        alert.addAction(UIAlertAction(title: L10n.ok, style: .cancel, handler: { _ in
             completion?()
         }))
         return alert
