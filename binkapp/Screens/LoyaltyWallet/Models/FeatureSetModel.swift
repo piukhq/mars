@@ -14,7 +14,7 @@ struct FeatureSetModel: Codable {
     var transactionsAvailable: Bool?
     let digitalOnly: Bool?
     var hasPoints: Bool?
-    let cardType: CD_FeatureSet.PlanCardType?
+    var cardType: CD_FeatureSet.PlanCardType?
     let linkingSupport: [LinkingSupportType]?
     let hasVouchers: Bool?
     
