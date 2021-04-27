@@ -29,18 +29,18 @@ class LoyaltyPlanView: CustomView {
     
     private func configureIcon(for planType: PlanType, cardType: CD_FeatureSet.PlanCardType) {
         switch planType {
-        case .storeCell: iconImageView.image = UIImage(named: "activeStore")
+        case .storeCell: iconImageView.image = Asset.activeStore.image
         case .viewCell:
             if cardType == .view || cardType == .link {
-                iconImageView.image = UIImage(named: "activeView")
+                iconImageView.image = Asset.activeView.image
             } else {
-                iconImageView.image = UIImage(named: "inactiveView")
+                iconImageView.image = Asset.inactiveView.image
             }
         case .linkCell:
             if cardType == .link {
-                iconImageView.image = UIImage(named: "activeLink")
+                iconImageView.image = Asset.activeLink.image
             } else {
-                iconImageView.image = UIImage(named: "inactiveLink")
+                iconImageView.image = Asset.inactiveLink.image
             }
         }
     }

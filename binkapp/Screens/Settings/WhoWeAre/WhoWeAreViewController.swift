@@ -31,7 +31,7 @@ class WhoWeAreViewController: BinkViewController {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "bink-icon-logo")
+        imageView.image = Asset.binkIconLogo.image
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 20
         return imageView

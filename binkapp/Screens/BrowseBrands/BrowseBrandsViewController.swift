@@ -155,7 +155,7 @@ class BrowseBrandsViewController: BinkViewController {
         let searchImageView = UIImageView(frame: CGRect(x: Constants.searchIconLeftPadding, y: Constants.searchIconTopPadding, width: Constants.searchIconSideSize, height: Constants.searchIconSideSize))
         
         searchImageView.contentMode = .scaleAspectFit
-        searchImageView.image = UIImage(named: "search")
+        searchImageView.image = Asset.search.image
         searchIconView.addSubview(searchImageView)
         
         searchTextField.leftView = searchIconView

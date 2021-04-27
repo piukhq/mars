@@ -78,7 +78,7 @@ class ThemeManager {
 
     func navBarAppearance(for traitCollection: UITraitCollection) -> UINavigationBarAppearance {
         let backInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
-        let backButtonImage = UIImage(named: "navbarIconsBack")?.withAlignmentRectInsets(backInsets)
+        let backButtonImage = Asset.navbarIconsBack.image.withAlignmentRectInsets(backInsets)
 
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()

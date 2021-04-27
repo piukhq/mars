@@ -56,8 +56,7 @@ class BarcodeScannerViewController: BinkViewController {
     }()
 
     private lazy var guideImageView: UIImageView = {
-        let image = UIImage(named: "scanner_guide")
-        let imageView = UIImageView(image: image)
+        let imageView = UIImageView(image: Asset.scannerGuide.image)
         return imageView
     }()
 
@@ -80,7 +79,7 @@ class BarcodeScannerViewController: BinkViewController {
     private lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "close"), for: .normal)
+        button.setImage(Asset.close.image, for: .normal)
         button.addTarget(self, action: #selector(close), for: .touchUpInside)
         return button
     }()

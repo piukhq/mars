@@ -26,7 +26,7 @@ enum ViewControllerFactory {
         viewController.themeDelegate = Current.themeManager
         viewController.allowSkip = allowSkip
         viewController.cornerColor = .white
-        viewController.torchButtonImage = UIImage(named: "payment_scanner_torch")
+        viewController.torchButtonImage = Asset.paymentScannerTorch.image
         viewController.stringDataSource = strings
         return viewController
     }
