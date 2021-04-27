@@ -297,7 +297,7 @@ private extension PLLScreenViewController {
         var buttons: [BinkButton] = [primaryButton]
         switch journey {
         case .newCard:
-            primaryButton.setTitle("done".localized)
+            primaryButton.setTitle(L10n.done)
 
             if !viewModel.hasActivePaymentCards {
                 secondaryButton.setTitle(L10n.pllScreenAddCardsButtonTitle)

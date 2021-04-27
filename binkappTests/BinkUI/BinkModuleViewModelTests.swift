@@ -337,8 +337,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .noReasonCode)
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsLogin")
-            XCTAssertEqual(self.sut.titleText, "error_title".localized)
-            XCTAssertEqual(self.sut.subtitleText, "please_try_again_title".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.errorTitle)
+            XCTAssertEqual(self.sut.subtitleText, L10n.pleaseTryAgainTitle)
         }
     }
     
@@ -350,8 +350,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .signUp)
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsLogin")
-            XCTAssertEqual(self.sut.titleText, "sign_up_failed_title".localized)
-            XCTAssertEqual(self.sut.subtitleText, "please_try_again_title".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.signUpFailedTitle)
+            XCTAssertEqual(self.sut.subtitleText, L10n.pleaseTryAgainTitle)
         }
     }
     
@@ -363,8 +363,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .patchGhostCard(type: .link(membershipCard: mappedCard, paymentCards: self.mappedPaymentCards)))
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsLogin")
-            XCTAssertEqual(self.sut.titleText, "register_gc_title".localized)
-            XCTAssertEqual(self.sut.subtitleText, "please_try_again_title".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.registerGcTitle)
+            XCTAssertEqual(self.sut.subtitleText, L10n.pleaseTryAgainTitle)
         }
     }
     
@@ -376,8 +376,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .loginChanges(type: .link(membershipCard: mappedCard, paymentCards: self.mappedPaymentCards), status: nil, reasonCode: nil))
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsLogin")
-            XCTAssertEqual(self.sut.titleText, "log_in_failed_title".localized)
-            XCTAssertEqual(self.sut.subtitleText, "please_try_again_title".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.logInFailedTitle)
+            XCTAssertEqual(self.sut.subtitleText, L10n.pleaseTryAgainTitle)
         }
     }
     

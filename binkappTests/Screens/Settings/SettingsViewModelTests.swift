@@ -25,7 +25,7 @@ class SettingsViewModelTests: XCTestCase {
     }
     
     func test_title_returnsCorrectTitle() {
-        XCTAssertEqual(sut.title, "settings_title".localized)
+        XCTAssertEqual(sut.title, L10n.settingsTitle)
     }
     
     func test_cellHeight_returnsCorrectHeight() {
@@ -60,29 +60,29 @@ class SettingsViewModelTests: XCTestCase {
     #endif
     
     func test_titleForSection_returnsCorrectTitleForAccountSection() {
-        XCTAssertEqual(sut.titleForSection(atIndex: 1), "settings_section_account_title".localized)
+        XCTAssertEqual(sut.titleForSection(atIndex: 1), L10n.settingsSectionAccountTitle)
     }
     
     func test_titleForSection_returnsCorrectTitleForAppearanceSection() {
         guard appearanceSection == 1 else { return }
-        XCTAssertEqual(sut.titleForSection(atIndex: 1), "settings_section_appearance_title".localized)
+        XCTAssertEqual(sut.titleForSection(atIndex: 1), L10n.settingsSectionAppearanceTitle)
     }
     
     func test_titleForSection_returnsCorrectTitleForSupportSection() {
-        XCTAssertEqual(sut.titleForSection(atIndex: 2 + appearanceSection), "settings_section_support_title".localized)
+        XCTAssertEqual(sut.titleForSection(atIndex: 2 + appearanceSection), L10n.settingsSectionSupportTitle)
     }
     
     func test_titleForSection_returnsCorrectTitleForAboutSection() {
-        XCTAssertEqual(sut.titleForSection(atIndex: 3 + appearanceSection), "settings_section_about_title".localized)
+        XCTAssertEqual(sut.titleForSection(atIndex: 3 + appearanceSection), L10n.settingsSectionAboutTitle)
     }
     
     func test_titleForSection_returnsCorrectTitleForLegalSection() {
-        XCTAssertEqual(sut.titleForSection(atIndex: 4 + appearanceSection), "settings_section_legal_title".localized)
+        XCTAssertEqual(sut.titleForSection(atIndex: 4 + appearanceSection), L10n.settingsSectionLegalTitle)
     }
     
     #if DEBUG
     func test_titleForSection_returnsCorrectTitleForDebugSection() {
-        XCTAssertEqual(sut.titleForSection(atIndex: 0), "settings_section_debug_title".localized)
+        XCTAssertEqual(sut.titleForSection(atIndex: 0), L10n.settingsSectionDebugTitle)
     }
     #endif
     
