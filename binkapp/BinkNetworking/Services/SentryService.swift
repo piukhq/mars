@@ -35,7 +35,7 @@ enum SentryService {
 
     static func start() {
         SentrySDK.start(options: [
-            "dsn": "https://de94701e62374e53bef78de0317b8089@sentry.uksouth.bink.sh/20",
+            "dsn": "https://a1f958affbf44716800bdf73443b37cf@o503751.ingest.sentry.io/5712794",
             "debug": isDebug, // Enabled debug when first installing is always helpful
             "environment": environment, // beta, or prod
             "release": Bundle.shortVersionNumber ?? ""
