@@ -48,7 +48,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     lazy var textFieldRightView: UIView = {
         let cameraButton = UIButton(type: .custom)
         cameraButton.imageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-        cameraButton.setImage(UIImage(named: "scan_icon"), for: .normal)
+        cameraButton.setImage(Asset.scanIcon.image, for: .normal)
         cameraButton.imageView?.contentMode = .scaleAspectFill
         cameraButton.addTarget(self, action: .handleScanButtonTap, for: .touchUpInside)
         cameraButton.translatesAutoresizingMaskIntoConstraints = false
