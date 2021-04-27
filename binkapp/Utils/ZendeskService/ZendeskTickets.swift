@@ -76,21 +76,21 @@ final class ZendeskTickets: NSObject, UITextFieldDelegate {
 
 extension UIAlertController {
     static func makeZendeskIdentityAlertController(firstNameTextField: @escaping (UITextField) -> Void, lastNameTextField: @escaping (UITextField) -> Void, okActionObject: (UIAlertAction) -> Void, okActionHandler: @escaping () -> Void, textFieldDelegate: UITextFieldDelegate?) -> BinkAlertController {
-        let alert = BinkAlertController(title: nil, message: "zendesk_identity_prompt_message".localized, preferredStyle: .alert)
+        let alert = BinkAlertController(title: nil, message: L10n.zendeskIdentityPromptMessage, preferredStyle: .alert)
         alert.addTextField { textField in
-            textField.placeholder = "zendesk_identity_prompt_first_name".localized
+            textField.placeholder = L10n.zendeskIdentityPromptFirstName
             textField.autocapitalizationType = .words
             textField.delegate = textFieldDelegate
             firstNameTextField(textField)
         }
         alert.addTextField { textField in
-            textField.placeholder = "zendesk_identity_prompt_last_name".localized
+            textField.placeholder = L10n.zendeskIdentityPromptLastName
             textField.autocapitalizationType = .words
             textField.delegate = textFieldDelegate
             lastNameTextField(textField)
         }
-        let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
-        let okAction = UIAlertAction(title: "ok".localized, style: .default) { _ in
+        let cancelAction = UIAlertAction(title: L10n.cancel, style: .cancel, handler: nil)
+        let okAction = UIAlertAction(title: L10n.ok, style: .default) { _ in
             let firstName = alert.textFields?[0].text
             let lastName = alert.textFields?[1].text
             let request = BinkNetworkRequest(endpoint: .me, method: .put, headers: nil, isUserDriven: false)

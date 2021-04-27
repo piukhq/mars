@@ -20,24 +20,24 @@ enum WalletPromptType {
         case .addPaymentCards:
             return "Add your payment cards"
         case .link:
-            return "wallet_prompt_link_title".localized
+            return L10n.walletPromptLinkTitle
         case .see:
-            return "wallet_prompt_see_title".localized
+            return L10n.walletPromptSeeTitle
         case .store:
-            return "wallet_prompt_store_title".localized
+            return L10n.walletPromptStoreTitle
         }
     }
 
     var body: String {
         switch self {
         case .addPaymentCards:
-            return "wallet_prompt_payment".localized
+            return L10n.walletPromptPayment
         case .link:
-            return "wallet_prompt_link_body".localized
+            return L10n.walletPromptLinkBody
         case .see:
-            return "wallet_prompt_see_body".localized
+            return L10n.walletPromptSeeBody
         case .store:
-            return "wallet_prompt_store_body".localized
+            return L10n.walletPromptStoreBody
         }
     }
 

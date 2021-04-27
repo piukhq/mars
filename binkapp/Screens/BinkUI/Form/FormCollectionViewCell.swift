@@ -48,7 +48,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     lazy var textFieldRightView: UIView = {
         let cameraButton = UIButton(type: .custom)
         cameraButton.imageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-        cameraButton.setImage(UIImage(named: "scan_icon"), for: .normal)
+        cameraButton.setImage(Asset.scanIcon.image, for: .normal)
         cameraButton.imageView?.contentMode = .scaleAspectFill
         cameraButton.addTarget(self, action: .handleScanButtonTap, for: .touchUpInside)
         cameraButton.translatesAutoresizingMaskIntoConstraints = false
@@ -92,7 +92,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.font = UIFont.textFieldExplainer
-        label.text = "form_field_validation_error".localized
+        label.text = L10n.formFieldValidationError
         label.isHidden = true
         label.textColor = .binkDynamicRed
         label.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -295,7 +295,7 @@ extension FormCollectionViewCell: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let field = formField else { return }
-        validationLabel.text = field.validationErrorMessage != nil ? field.validationErrorMessage : "form_field_validation_error".localized
+        validationLabel.text = field.validationErrorMessage != nil ? field.validationErrorMessage : L10n.formFieldValidationError
         validationLabel.isHidden = field.isValid()
         isValidationLabelHidden = field.isValid()
         field.fieldWasExited()

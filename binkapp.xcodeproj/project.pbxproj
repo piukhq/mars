@@ -320,6 +320,8 @@
 		CEA905BE25C986E6000F69E1 /* CD_BaseImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA905BC25C986E6000F69E1 /* CD_BaseImage.swift */; };
 		CEA905BF25C986E6000F69E1 /* _CD_BaseImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA905BD25C986E6000F69E1 /* _CD_BaseImage.swift */; };
 		CEACE7212543309E004DD27E /* BinkHTTPHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEACE7202543309E004DD27E /* BinkHTTPHeaders.swift */; };
+		CEC0ACBC2636AD0000845813 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBA2636AD0000845813 /* Assets.swift */; };
+		CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBB2636AD0000845813 /* Strings.swift */; };
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
 		CED69E6B253D7A5700A4CA21 /* HyperlinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */; };
 		CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF389EA255D72E90063C718 /* DateExtensionTests.swift */; };
@@ -889,6 +891,9 @@
 		CEA905BC25C986E6000F69E1 /* CD_BaseImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_BaseImage.swift; sourceTree = "<group>"; };
 		CEA905BD25C986E6000F69E1 /* _CD_BaseImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_BaseImage.swift; sourceTree = "<group>"; };
 		CEACE7202543309E004DD27E /* BinkHTTPHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkHTTPHeaders.swift; sourceTree = "<group>"; };
+		CEC0AC3B2636AAA400845813 /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
+		CEC0ACBA2636AD0000845813 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		CEC0ACBB2636AD0000845813 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardScannerStrings.swift; sourceTree = "<group>"; };
 		CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkLabel.swift; sourceTree = "<group>"; };
 		CEF389EA255D72E90063C718 /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
@@ -1541,6 +1546,8 @@
 		5ECE045F22CE5797001BA964 = {
 			isa = PBXGroup;
 			children = (
+				CEC0ACB92636AC5900845813 /* SwiftGen */,
+				CEC0AC3B2636AAA400845813 /* swiftgen.yml */,
 				706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */,
 				EF7F6E6423E47BFA00352DCF /* GoogleService-Info.plist */,
 				5ECE046A22CE5798001BA964 /* binkapp */,
@@ -2206,6 +2213,15 @@
 			path = "Barcode Views";
 			sourceTree = "<group>";
 		};
+		CEC0ACB92636AC5900845813 /* SwiftGen */ = {
+			isa = PBXGroup;
+			children = (
+				CEC0ACBA2636AD0000845813 /* Assets.swift */,
+				CEC0ACBB2636AD0000845813 /* Strings.swift */,
+			);
+			path = SwiftGen;
+			sourceTree = "<group>";
+		};
 		CEF389E9255D72B30063C718 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -2828,6 +2844,7 @@
 			buildConfigurationList = 5ECE049322CE579B001BA964 /* Build configuration list for PBXNativeTarget "binkapp" */;
 			buildPhases = (
 				A6FB365BDD4B37E2145DD8D9 /* [CP] Check Pods Manifest.lock */,
+				CEC0AEDE2637FC7600845813 /* SwiftGen */,
 				5ECE046422CE5798001BA964 /* Sources */,
 				5ECE046522CE5798001BA964 /* Frameworks */,
 				5ECE046622CE5798001BA964 /* Resources */,
@@ -3178,6 +3195,24 @@
 			shellPath = /bin/sh;
 			shellScript = "APP_PATH=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\n\necho \"$APP_PATH\"\n# This script loops through the frameworks embedded in the application and\n# removes unused architectures.\nfind \"$APP_PATH\" -name 'BarcodeGenerator.framework' -type d | while read -r FRAMEWORK\ndo\nFRAMEWORK_EXECUTABLE_NAME=$(defaults read \"$FRAMEWORK/Info.plist\" CFBundleExecutable)\nFRAMEWORK_EXECUTABLE_PATH=\"$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME\"\necho \"Executable is $FRAMEWORK_EXECUTABLE_PATH\"\n\nEXTRACTED_ARCHS=()\n\nfor ARCH in $ARCHS\ndo\necho \"Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME\"\nlipo -extract \"$ARCH\" \"$FRAMEWORK_EXECUTABLE_PATH\" -o \"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\"\nEXTRACTED_ARCHS+=(\"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\")\ndone\n\necho \"Merging extracted architectures: ${ARCHS}\"\nlipo -o \"$FRAMEWORK_EXECUTABLE_PATH-merged\" -create \"${EXTRACTED_ARCHS[@]}\"\nrm \"${EXTRACTED_ARCHS[@]}\"\n\necho \"Replacing original executable with thinned version\"\nrm \"$FRAMEWORK_EXECUTABLE_PATH\"\nmv \"$FRAMEWORK_EXECUTABLE_PATH-merged\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n\ndone\n";
 		};
+		CEC0AEDE2637FC7600845813 /* SwiftGen */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftGen;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ -f \"${PODS_ROOT}/SwiftGen/bin/swiftgen\" ]]; then\n  \"${PODS_ROOT}/SwiftGen/bin/swiftgen\"\nelse\n  echo \"warning: SwiftGen is not installed. Run 'pod install --repo-update' to install it.\"\nfi\n";
+		};
 		E9C9355DDE6B8A796F5CDFF8 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3321,6 +3356,7 @@
 				BDB01872232D9E7900BFFA18 /* FormCollectionViewCell.swift in Sources */,
 				EFA5F7132379A7C70027AB80 /* CD_MembershipCardImage.swift in Sources */,
 				EF51CCD7243B56150035BF02 /* LoyaltyScannerWidgetView.swift in Sources */,
+				CEC0ACBC2636AD0000845813 /* Assets.swift in Sources */,
 				CE54AF5D25F938720061838C /* BinkLoggerEvents.swift in Sources */,
 				B7D577B823180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift in Sources */,
 				EF8BF1EF233CBCE300D2E5F3 /* CAGradientLayerExtension.swift in Sources */,
@@ -3421,6 +3457,7 @@
 				3CEABFD02316AB88009B1122 /* MembershipCardBalanceModel.swift in Sources */,
 				EFA5F7392379A7C70027AB80 /* _CD_MembershipCardImage.swift in Sources */,
 				CE2CFE9025E3D48E00B1CB93 /* FeatureFlagsTableViewCell.swift in Sources */,
+				CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */,
 				3C61FCDE230AF0BB004721A3 /* AppsModel.swift in Sources */,
 				EFF5CD61244F34A8009021A4 /* WalletService.swift in Sources */,
 				EFA5F6C2237467CC0027AB80 /* NestedTableView.swift in Sources */,

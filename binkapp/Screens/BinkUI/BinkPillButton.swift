@@ -82,7 +82,7 @@ class BinkPillButton: BinkTrackableButton {
     private func title(forType buttonType: PillButtonType) -> String {
         switch buttonType {
         case .facebook:
-            return "continue_with_facebook_button".localized
+            return L10n.continueWithFacebookButton
         }
     }
     

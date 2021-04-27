@@ -34,21 +34,21 @@ class PLRRewardDetailViewModel {
     var headerString: String? {
         switch (voucherEarnType, voucherState) {
         case (.accumulator, .issued):
-            return String(format: "plr_voucher_detail_issued_header".localized, voucherAmountText)
+            return L10n.plrVoucherDetailIssuedHeader(voucherAmountText)
         case (.accumulator, .redeemed):
-            return String(format: "plr_voucher_detail_redeemed_header".localized, voucherAmountText)
+            return L10n.plrVoucherDetailRedeemedHeader(voucherAmountText)
         case (.accumulator, .expired):
-            return String(format: "plr_voucher_detail_expired_header".localized, voucherAmountText)
+            return L10n.plrVoucherDetailExpiredHeader(voucherAmountText)
         case (.stamps, .inProgress):
-            return "plr_stamp_voucher_detail_inprogress_header".localized
+            return L10n.plrStampVoucherDetailInprogressHeader
         case (.stamps, .issued):
-            return String(format: "plr_voucher_detail_issued_header".localized, voucherAmountText)
+            return L10n.plrVoucherDetailIssuedHeader(voucherAmountText)
         case (.stamps, .redeemed):
-            return "plr_stamp_voucher_detail_redeemed_header".localized
+            return L10n.plrStampVoucherDetailRedeemedHeader
         case (.stamps, .expired):
-            return "plr_stamp_voucher_detail_expired_header".localized
+            return L10n.plrStampVoucherDetailExpiredHeader
         case (.stamps, .cancelled), (.accumulator, .cancelled):
-            return "plr_stamp_voucher_detail_cancelled_header".localized
+            return L10n.plrStampVoucherDetailCancelledHeader
         default:
             return nil
         }
@@ -57,9 +57,9 @@ class PLRRewardDetailViewModel {
     var subtextString: String? {
         switch (voucherEarnType, voucherState) {
         case (.accumulator, .inProgress):
-            return String(format: "plr_voucher_detail_subtext_inprogress".localized, voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "", voucher.burn?.prefix ?? "", voucher.burn?.value?.twoDecimalPointString() ?? "", voucher.burn?.type ?? "")
+            return L10n.plrVoucherDetailSubtextInprogress(voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "", voucher.burn?.prefix ?? "", voucher.burn?.value?.twoDecimalPointString() ?? "", voucher.burn?.type ?? "")
         case (.accumulator, .issued):
-            return String(format: "plr_voucher_detail_subtext_issued".localized, voucher.burn?.prefix ?? "", voucher.burn?.value?.twoDecimalPointString() ?? "", voucher.burn?.suffix ?? "")
+            return L10n.plrVoucherDetailSubtextIssued(voucher.burn?.prefix ?? "", voucher.burn?.value?.twoDecimalPointString() ?? "", voucher.burn?.suffix ?? "")
             
         case (.stamps, .inProgress):
             return membershipPlan.dynamicContentValue(forColumn: .voucherStampsInProgressDetail)
@@ -77,19 +77,19 @@ class PLRRewardDetailViewModel {
     }
 
     var issuedDateString: String? {
-        return String.fromTimestamp(voucher.dateIssued?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_issued_date_prefix".localized)
+        return String.fromTimestamp(voucher.dateIssued?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: L10n.plrVoucherDetailIssuedDatePrefix)
     }
 
     var redeemedDateString: String? {
-        return String.fromTimestamp(voucher.dateRedeemed?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_redeemed_date_prefix".localized)
+        return String.fromTimestamp(voucher.dateRedeemed?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: L10n.plrVoucherDetailRedeemedDatePrefix)
     }
 
     var expiredDateString: String? {
         switch voucherState {
         case .expired, .cancelled:
-            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expired_date_prefix".localized)
+            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: L10n.plrVoucherDetailExpiredDatePrefix)
         case .issued:
-            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expires_date_prefix".localized)
+            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: L10n.plrVoucherDetailExpiresDatePrefix)
         default:
             return ""
         }

@@ -20,7 +20,7 @@ class SettingsViewModel {
     }
     
     var title: String {
-        return "settings_title".localized
+        return L10n.settingsTitle
     }
     
     var sectionsCount: Int {

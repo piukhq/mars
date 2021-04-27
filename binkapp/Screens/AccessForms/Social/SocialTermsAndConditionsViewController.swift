@@ -15,7 +15,7 @@ enum SocialLoginRequestType {
 
 class SocialTermsAndConditionsViewController: BaseFormViewController, UserServiceProtocol {
     private lazy var continueButton: BinkButton = {
-        return BinkButton(type: .gradient, title: "continue_button_title".localized, enabled: false) { [weak self] in
+        return BinkButton(type: .gradient, title: L10n.continueButtonTitle, enabled: false) { [weak self] in
             self?.continueButtonTapped()
         }
     }()
@@ -24,7 +24,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
     
     init(requestType: SocialLoginRequestType) {
         self.requestType = requestType
-        super.init(title: "social_tandcs_title".localized, description: "social_tandcs_subtitle".localized, dataSource: FormDataSource(accessForm: .socialTermsAndConditions))
+        super.init(title: L10n.socialTandcsTitle, description: L10n.socialTandcsSubtitle, dataSource: FormDataSource(accessForm: .socialTermsAndConditions))
         dataSource.delegate = self
     }
     
@@ -158,13 +158,13 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
         
         switch requestType {
         case .apple:
-            message = "social_tandcs_siwa_error".localized
+            message = L10n.socialTandcsSiwaError
         case .facebook:
-            message = "social_tandcs_facebook_error".localized
+            message = L10n.socialTandcsFacebookError
         }
         
-        let alert = BinkAlertController(title: "error_title".localized, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
+        let alert = BinkAlertController(title: L10n.errorTitle, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: L10n.ok, style: .default))
         present(alert, animated: true)
     }
 

@@ -12,7 +12,7 @@ class AddEmailViewController: BaseFormViewController {
     typealias AddEmailCompletion = (FacebookRequest) -> Void
 
     private lazy var continueButton: BinkButton = {
-        return BinkButton(type: .gradient, title: "continue_button_title".localized, enabled: false) { [weak self] in
+        return BinkButton(type: .gradient, title: L10n.continueButtonTitle, enabled: false) { [weak self] in
             self?.continueButtonTapped()
         }
     }()
@@ -23,7 +23,7 @@ class AddEmailViewController: BaseFormViewController {
     init(request: FacebookRequest, completion: @escaping AddEmailCompletion) {
         self.request = request
         self.completion = completion
-        super.init(title: "add_email_title".localized, description: "add_email_subtitle".localized, dataSource: FormDataSource(accessForm: .addEmail))
+        super.init(title: L10n.addEmailTitle, description: L10n.addEmailSubtitle, dataSource: FormDataSource(accessForm: .addEmail))
         dataSource.delegate = self
     }
     

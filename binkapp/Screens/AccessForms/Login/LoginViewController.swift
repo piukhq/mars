@@ -14,13 +14,13 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     }
 
     private lazy var continueButton: BinkButton = {
-        return BinkButton(type: .gradient, title: "continue_button_title".localized, enabled: false) { [weak self] in
+        return BinkButton(type: .gradient, title: L10n.continueButtonTitle, enabled: false) { [weak self] in
             self?.continueButtonTapped()
         }
     }()
 
     init() {
-        super.init(title: "login_title".localized, description: "login_subtitle".localized, dataSource: FormDataSource(accessForm: .login))
+        super.init(title: L10n.logInTitle, description: L10n.loginSubtitle, dataSource: FormDataSource(accessForm: .login))
         dataSource.delegate = self
     }
     
@@ -31,7 +31,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: "login_forgot_password".localized)])
+        stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: L10n.loginForgotPassword)])
         
         footerButtons = [continueButton]
     }
@@ -125,8 +125,8 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     }
     
     private func showError() {
-        let alert = BinkAlertController(title: "error_title".localized, message: "login_error".localized, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
+        let alert = BinkAlertController(title: L10n.errorTitle, message: L10n.loginError, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: L10n.ok, style: .default))
         present(alert, animated: true)
     }
 

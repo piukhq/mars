@@ -89,6 +89,7 @@ PODS:
   - nanopb/decode (2.30907.0)
   - nanopb/encode (2.30907.0)
   - PromisesObjC (1.2.12)
+  - SwiftGen (6.4.0)
   - SwiftLint (0.43.0)
   - SwiftyRSA (1.6.0):
     - SwiftyRSA/ObjC (= 1.6.0)
@@ -124,6 +125,7 @@ DEPENDENCIES:
   - JWTDecode (~> 2.6.0)
   - KeychainAccess (~> 4.2.2)
   - Keys (from `Pods/CocoaPodsKeys`)
+  - SwiftGen (~> 6.4)
   - SwiftLint (~> 0.43.0)
   - "SwiftyRSA (from `git@git.bink.com:Pantheon/iOS/SwiftyRSA.git`)"
   - ZendeskSupportSDK (~> 5.2.0)
@@ -151,6 +153,7 @@ SPEC REPOS:
     - KeychainAccess
     - nanopb
     - PromisesObjC
+    - SwiftGen
     - SwiftLint
     - ZendeskCommonUISDK
     - ZendeskCoreSDK
@@ -200,6 +203,7 @@ SPEC CHECKSUMS:
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
+  SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
   SwiftLint: 0c645fdc6feed3e390c1701ab3cc669f88b42752
   SwiftyRSA: 3b9c9179744217951facc6a3e9ae8d8c97061ffa
   ZendeskCommonUISDK: 92ca6b16956430a2cb61c89aeaa6ca123d1f81fd
@@ -211,6 +215,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: e100a7a0a1bb5d7d43abbde3338727d985a4986d
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: e7dee234f521f85be3001386cf2eb125dedc78a5
+PODFILE CHECKSUM: 688e1c20a795f083875094115e42be4f09c22d3d
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.10.0

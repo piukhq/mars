@@ -35,11 +35,11 @@ open class CD_Voucher: _CD_Voucher {
         
         switch (earnType, voucherState) {
         case (.stamps, .inProgress):
-            return String(format: displayValue.intValue > 1 ? "plr_stamp_voucher_headline_plural".localized : "plr_stamp_voucher_headline".localized, prefix, displayValueString)
+            return displayValue.intValue > 1 ? L10n.plrStampVoucherHeadlinePlural(prefix, displayValueString) : L10n.plrStampVoucherHeadline(prefix, displayValueString)
         case (.accumulator, .inProgress):
-            return String(format: "plr_accumulator_voucher_headline".localized, prefix, displayValueString, suffix)
+            return L10n.plrAccumulatorVoucherHeadline(prefix, displayValueString, suffix)
         case (_, .issued):
-            return "plr_issued_headline".localized
+            return L10n.plrIssuedHeadline
         default:
             return voucherState?.rawValue.capitalized
         }

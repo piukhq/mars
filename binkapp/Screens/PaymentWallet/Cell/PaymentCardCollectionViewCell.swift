@@ -208,7 +208,7 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
     }
     
     private func imageForLinkedStatus() -> UIImage? {
-        return viewModel.paymentCardIsLinkedToMembershipCards ? UIImage(named: "linked") : UIImage(named: "unlinked")
+        return viewModel.paymentCardIsLinkedToMembershipCards ? Asset.linked.image : Asset.unlinked.image
     }
     
     private func processGradient(type: PaymentCardType?) {

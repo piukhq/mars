@@ -37,9 +37,9 @@ class PLRCellViewModel {
     var voucherDescriptionText: String? {
         switch voucherEarnType {
         case .accumulator:
-            return String(format: "plr_voucher_accumulator_burn_description".localized, voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "")
+            return L10n.plrVoucherAccumulatorBurnDescription(voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "")
         case .stamps:
-            return String(format: "plr_voucher_stamp_burn_description".localized, voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "", voucher.earn?.suffix ?? "")
+            return L10n.plrVoucherStampBurnDescription(voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "", voucher.earn?.suffix ?? "")
         default:
             return ""
         }
@@ -82,9 +82,9 @@ class PLRCellViewModel {
         guard let type = earnType else { return nil }
         switch type {
         case .accumulator:
-            return "plr_voucher_accumulator_earn_value_title".localized
+            return L10n.plrVoucherAccumulatorEarnValueTitle
         case .stamps:
-            return "plr_voucher_stamp_earn_value_title".localized
+            return L10n.plrVoucherStampEarnValueTitle
         }
     }
 
@@ -107,7 +107,7 @@ class PLRCellViewModel {
         guard let type = earnType else { return nil }
         switch type {
         case .accumulator:
-            return "plr_voucher_earn_target_value_title".localized
+            return L10n.plrVoucherEarnTargetValueTitle
         default:
             return ""
         }
@@ -128,10 +128,10 @@ class PLRCellViewModel {
         switch voucherState {
         case .expired, .cancelled:
             guard voucher.expiryDate != 0 else { return nil }
-            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear, prefix: "plr_voucher_date_prefix".localized)
+            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear, prefix: L10n.plrVoucherDatePrefix)
         case .redeemed:
             guard voucher.dateRedeemed != 0 else { return nil }
-            return String.fromTimestamp(voucher.dateRedeemed?.doubleValue, withFormat: .dayShortMonthYear, prefix: "plr_voucher_date_prefix".localized)
+            return String.fromTimestamp(voucher.dateRedeemed?.doubleValue, withFormat: .dayShortMonthYear, prefix: L10n.plrVoucherDatePrefix)
         default:
             return nil
         }

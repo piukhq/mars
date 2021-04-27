@@ -113,13 +113,13 @@ private extension AppDelegate {
     }
 
     @objc func displayOutageError() {
-        let alert = ViewControllerFactory.makeOkAlertViewController(title: "error_title".localized, message: "communication_error".localized)
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: L10n.communicationError)
         let navigationRequest = AlertNavigationRequest(alertController: alert)
         Current.navigate.to(navigationRequest)
     }
 
     @objc func presentSSLPinningFailurePopup() {
-        let alert = ViewControllerFactory.makeOkAlertViewController(title: "ssl_pinning_failure_title".localized, message: "ssl_pinning_failure_text".localized)
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.sslPinningFailureTitle, message: L10n.sslPinningFailureText)
         let navigationRequest = AlertNavigationRequest(alertController: alert)
         Current.navigate.to(navigationRequest)
     }
