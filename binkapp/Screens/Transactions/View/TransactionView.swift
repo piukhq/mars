@@ -45,15 +45,15 @@ class TransactionView: CustomView {
             let value = abs(transactionValue)
             valueLabel.text = "-" + String(format: text, addDecimals ? Float(value) : value)
             valueLabel.textColor = .black
-            imageView.image = UIImage(named: "down")
+            imageView.image = Asset.down.image
         } else if transactionValue > 0 {
             valueLabel.text = "+" + String(format: text, addDecimals ? Float(transactionValue) : transactionValue)
             valueLabel.textColor = .greenOk
-            imageView.image = UIImage(named: "up")
+            imageView.image = Asset.up.image
         } else {
             valueLabel.text = String(format: text, addDecimals ? Float(transactionValue) : transactionValue)
             valueLabel.textColor = .amberPending
-            imageView.image = UIImage(named: "neutral_arrow")
+            imageView.image = Asset.neutralArrow.image
         }
     }
     

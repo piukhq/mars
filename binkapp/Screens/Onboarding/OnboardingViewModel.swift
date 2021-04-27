@@ -10,27 +10,27 @@ import UIKit
 
 class OnboardingViewModel {
     var signUpWithEmailButtonText: String {
-        return "signup_with_email_button".localized
+        return L10n.signupWithEmailButton
     }
 
     var loginWithEmailButtonText: String {
-        return "login_with_email_button".localized
+        return L10n.loginWithEmailButton
     }
     
     var facebookLoginErrorTitle: String {
-        return "error_title".localized
+        return L10n.errorTitle
     }
     
     var facebookLoginCancelledText: String {
-        return "facebook_cancelled".localized
+        return L10n.facebookCancelled
     }
     
     var facebookLoginErrorText: String {
-        return "facebook_error".localized
+        return L10n.facebookError
     }
     
     var facebookLoginOK: String {
-        return "ok".localized
+        return L10n.ok
     }
     
     func pushToSocialTermsAndConditions(requestType: SocialLoginRequestType) {

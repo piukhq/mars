@@ -27,7 +27,7 @@ extension Date {
                 return "\(days)d"
             }
             
-            return "\(days) \(days > 1 ? "days".localized : "day".localized)"
+            return "\(days) \(days > 1 ? L10n.days : L10n.day)"
         }
         
         if hours > 0 {
@@ -35,7 +35,7 @@ extension Date {
                 return "\(hours)h"
             }
             
-            return "\(hours) \(hours > 1 ? "hours".localized : "hour".localized)"
+            return "\(hours) \(hours > 1 ? L10n.hours : L10n.hour)"
         }
         
         if minutes >= 0 {
@@ -43,7 +43,7 @@ extension Date {
                 return "\(minutes)m"
             }
             
-            return "\(minutes) \(minutes > 1 ? "minutes".localized : "minute".localized)"
+            return "\(minutes) \(minutes > 1 ? L10n.minutes : L10n.minute)"
         }
     
         

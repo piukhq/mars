@@ -86,8 +86,8 @@ class WebViewController: BinkViewController {
     private func setBottomToolbar() {
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
                 
-        let backImage = UIImage(named: "forward")?.withHorizontallyFlippedOrientation()
-        let forwardImage = UIImage(named: "forward")
+        let backImage = Asset.forward.image.withHorizontallyFlippedOrientation()
+        let forwardImage = Asset.forward.image
         
         backButton = UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(goBack))
         forwardButton = UIBarButtonItem(image: forwardImage, style: .plain, target: self, action: #selector(goForward))
@@ -95,7 +95,7 @@ class WebViewController: BinkViewController {
         backButton.isEnabled = false
         forwardButton.isEnabled = false
         
-        let refreshButton = UIBarButtonItem(image: UIImage(named: "refresh"), style: .plain, target: self, action: #selector(refresh))
+        let refreshButton = UIBarButtonItem(image: Asset.refresh.image, style: .plain, target: self, action: #selector(refresh))
         
         navigationController?.setToolbarHidden(false, animated: true)
         setToolbarItems([refreshButton, flexibleSpace, flexibleSpace, flexibleSpace, flexibleSpace, backButton, flexibleSpace, forwardButton], animated: true)
@@ -107,7 +107,7 @@ class WebViewController: BinkViewController {
     }
     
     private func showErrorAlert() {
-        let alert = ViewControllerFactory.makeOkAlertViewController(title: "error_title".localized, message: "loading_error".localized)
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: L10n.loadingError)
         Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     

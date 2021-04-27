@@ -33,7 +33,7 @@ class PaymentCardDetailLoyaltyCardStatusCell: PaymentCardDetailTableViewCell {
     
     func configure(with paymentCard: CD_PaymentCard) {
         headerLabel.text = paymentCard.card?.nameOnCard
-        detailLabel.text = String(format: "pll_screen_card_ending".localized, paymentCard.card?.lastFour ?? "")
+        detailLabel.text = L10n.pllScreenCardEnding(paymentCard.card?.lastFour ?? "")
         statusLabel.text = paymentCard.paymentCardStatus.rawValue
         statusLabel.textColor = .amberPending
         headerLabel.textColor = Current.themeManager.color(for: .text)

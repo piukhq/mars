@@ -56,22 +56,22 @@ class PaymentCardDetailViewModel {
     var addedCardsTitle: String {
         switch paymentCardStatus {
         case .active:
-            return "pcd_active_card_title".localized
+            return L10n.pcdActiveCardTitle
         case .pending:
-            return paymentCard.isExpired ? "pcd_failed_card_title".localized : "pcd_pending_card_title".localized
+            return paymentCard.isExpired ? L10n.pcdFailedCardTitle : L10n.pcdPendingCardTitle
         case .failed:
-            return "pcd_failed_card_title".localized
+            return L10n.pcdFailedCardTitle
         }
     }
 
     var addedCardsDescription: String {
         switch paymentCardStatus {
         case .active:
-            return "pcd_active_card_description".localized
+            return L10n.pcdActiveCardDescription
         case .pending:
-            return paymentCard.isExpired ? "pcd_failed_card_description".localized : "pcd_pending_card_description".localized
+            return paymentCard.isExpired ? L10n.pcdFailedCardDescription : L10n.pcdPendingCardDescription
         case .failed:
-            return "pcd_failed_card_description".localized
+            return L10n.pcdFailedCardDescription
         }
     }
     
@@ -79,15 +79,15 @@ class PaymentCardDetailViewModel {
     var cardAddedDateString: String? {
         guard let timestamp = paymentCard.account?.formattedConsents?.first?.timestamp?.doubleValue else { return nil }
         guard let timestampString = String.fromTimestamp(timestamp, withFormat: .dayMonthYear) else { return nil }
-        return String(format: "pcd_pending_card_added".localized, timestampString)
+        return L10n.pcdPendingCardAdded(timestampString)
     }
 
     var otherCardsTitle: String {
-        return shouldShowAddedLoyaltyCardTableView ? "pcd_other_card_title_cards_added".localized : "pcd_other_card_title_no_cards_added".localized
+        return shouldShowAddedLoyaltyCardTableView ? L10n.pcdOtherCardTitleCardsAdded : L10n.pcdOtherCardTitleNoCardsAdded
     }
 
     var otherCardsDescription: String {
-        return shouldShowAddedLoyaltyCardTableView ? "pcd_other_card_description_cards_added".localized : "pcd_other_card_description_no_cards_added".localized
+        return shouldShowAddedLoyaltyCardTableView ? L10n.pcdOtherCardDescriptionCardsAdded : L10n.pcdOtherCardDescriptionNoCardsAdded
     }
 
     // MARK: - View configuration decisioning
@@ -251,8 +251,8 @@ class PaymentCardDetailViewModel {
     }
 
     func toSecurityAndPrivacyScreen() {
-        let title: String = "security_and_privacy_title".localized
-        let description: String = "security_and_privacy_description".localized
+        let title: String = L10n.securityAndPrivacyTitle
+        let description: String = L10n.securityAndPrivacyDescription
         let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
         let viewController = ViewControllerFactory.makeSecurityAndPrivacyViewController(configuration: configuration)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
@@ -266,7 +266,7 @@ class PaymentCardDetailViewModel {
     }
     
     func showDeleteConfirmationAlert() {
-        let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: "delete_card_confirmation".localized, deleteAction: { [weak self] in
+        let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: L10n.deleteCardConfirmation, deleteAction: { [weak self] in
             guard let self = self else { return }
             guard Current.apiClient.networkIsReachable else {
                 let alert = ViewControllerFactory.makeNoConnectivityAlertController()
@@ -316,12 +316,8 @@ class PaymentCardDetailViewModel {
         repository.linkMembershipCard(membershipCard, toPaymentCard: paymentCard) { [weak self] paymentCard, error in
             if let error = error, case .userFacingNetworkingError(let networkingError) = error {
                 if case .userFacingError(let userFacingError) = networkingError {
-                    let messagePrefix = "card_already_linked_message_prefix".localized
-                    let planName = membershipCard.membershipPlan?.account?.planName ?? ""
-                    let planNameCard = membershipCard.membershipPlan?.account?.planNameCard ?? ""
-                    let planDetails = "\(planName) \(planNameCard)"
-                    let formattedString = String(format: userFacingError.message, messagePrefix, planDetails, planDetails)
-                    let alert = ViewControllerFactory.makeOkAlertViewController(title: userFacingError.title, message: formattedString)
+                    let message = userFacingError.message(membershipPlan: membershipCard.membershipPlan)
+                    let alert = ViewControllerFactory.makeOkAlertViewController(title: userFacingError.title, message: message)
                     let navigationRequest = AlertNavigationRequest(alertController: alert)
                     Current.navigate.to(navigationRequest)
                     completion()

@@ -43,23 +43,23 @@ class MainTabBarViewModel {
     }
     
     private func getTabBarLoyaltyButton() -> UITabBarItem {
-        let item = UITabBarItem(title: nil, image: UIImage(named: "loyaltyInactive"), tag: Buttons.loyaltyItem.rawValue)
-        item.selectedImage = UIImage(named: "loyaltyActive")
+        let item = UITabBarItem(title: nil, image: Asset.loyaltyInactive.image, tag: Buttons.loyaltyItem.rawValue)
+        item.selectedImage = Asset.loyaltyActive.image
         item.title = "Loyalty"
         item.imageInsets = UIEdgeInsets(top: Constants.iconInsets, left: 0, bottom: -Constants.iconInsets, right: 0)
         return item
     }
     
     private func getTabBarAddButton() -> UITabBarItem {
-        let item = UITabBarItem(title: nil, image: UIImage(named: "add"), tag: Buttons.addItem.rawValue)
+        let item = UITabBarItem(title: nil, image: Asset.add.image, tag: Buttons.addItem.rawValue)
         item.imageInsets = UIEdgeInsets(top: Constants.centerInsets, left: 0, bottom: -Constants.centerInsets, right: 0)
         item.accessibilityIdentifier = "Browse brands"
         return item
     }
     
     private func getTabBarPaymentButton() -> UITabBarItem {
-        let item = UITabBarItem(title: nil, image: UIImage(named: "paymentInactive"), tag: Buttons.paymentItem.rawValue)
-        item.selectedImage = UIImage(named: "paymentActive")
+        let item = UITabBarItem(title: nil, image: Asset.paymentInactive.image, tag: Buttons.paymentItem.rawValue)
+        item.selectedImage = Asset.paymentActive.image
         item.title = "Payment"
         item.imageInsets = UIEdgeInsets(top: Constants.iconInsets, left: 0, bottom: -Constants.iconInsets, right: 0)
         return item

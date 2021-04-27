@@ -19,16 +19,16 @@ extension UIAlertController {
     static func cardScannerEnterManuallyAlertController(enterManuallyAction: @escaping () -> Void) -> BinkAlertController? {
         guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return nil }
         
-        let alert = BinkAlertController(title: "camera_denied_title".localized, message: "camera_denied_body".localized, preferredStyle: .alert)
-        let allowAction = UIAlertAction(title: "camera_denied_allow_access".localized, style: .default, handler: { _ in
+        let alert = BinkAlertController(title: L10n.cameraDeniedTitle, message: L10n.cameraDeniedBody, preferredStyle: .alert)
+        let allowAction = UIAlertAction(title: L10n.cameraDeniedAllowAccess, style: .default, handler: { _ in
             UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
         })
-        let enterManuallyAction = UIAlertAction(title: "camera_denied_manually_option".localized, style: .default) { _ in
+        let enterManuallyAction = UIAlertAction(title: L10n.cameraDeniedManuallyOption, style: .default) { _ in
             enterManuallyAction()
         }
         alert.addAction(enterManuallyAction)
         alert.addAction(allowAction)
-        alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: L10n.cancel, style: .cancel, handler: nil))
         
         return alert
     }
