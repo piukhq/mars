@@ -31,7 +31,9 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let cellFrame = loyaltyWalletViewController.collectionView.convert(collectionViewCellFrame ?? CGRect.zero, to: loyaltyWalletViewController.collectionView.superview)
         let navBarHeight = lcdViewController.navigationController?.navigationBar.frame.height ?? 0
         let statusBarHeight = loyaltyWalletViewController.view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-        let topBarHeight = navBarHeight + statusBarHeight
+        let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow })
+        let topInset = window?.safeAreaInsets.top ?? statusBarHeight
+        let topBarHeight = navBarHeight + topInset
         
         /// Primary Card
         let primaryCard = UIImageView()
