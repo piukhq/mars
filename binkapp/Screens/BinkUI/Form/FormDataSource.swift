@@ -300,6 +300,32 @@ extension FormDataSource {
                     )
                 }
             }
+            
+            // Local Points Collection
+            /// LPC merchants won't have auth fields returned in the API response; instead we get them from remote config
+            /// Add them to the fields here. Their values will never be sent to Bink in the POST request.
+            if let plan = membershipPlan, let lpcAuthFields = plan.lpcAuthFields {
+                lpcAuthFields.forEach { field in
+                    guard let fieldType = field.type else { return }
+                    guard let fieldCommonName = field.commonName else { return }
+
+                    fields.append(
+                        FormField(
+                            title: field.column ?? "",
+                            placeholder: field.fieldDescription ?? "",
+                            validation: field.validation,
+                            fieldType: FormField.FieldInputType.fieldInputType(for: InputType(rawValue: fieldType), commonName: FieldCommonName(rawValue: fieldCommonName), choices: field.choices),
+                            updated: updatedBlock,
+                            shouldChange: shouldChangeBlock,
+                            fieldExited: fieldExitedBlock,
+                            pickerSelected: pickerUpdatedBlock,
+                            columnKind: .lpcAuth,
+                            forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
+                            fieldCommonName: FieldCommonName(rawValue: fieldCommonName)
+                        )
+                    )
+                }
+            }
         } else if formPurpose != .signUp && formPurpose != .signUpFailed && formPurpose != .ghostCard && formPurpose != .patchGhostCard {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
