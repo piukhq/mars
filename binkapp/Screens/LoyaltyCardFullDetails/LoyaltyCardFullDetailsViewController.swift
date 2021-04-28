@@ -314,16 +314,16 @@ private extension LoyaltyCardFullDetailsViewController {
         guard let plan = viewModel.membershipCard.membershipPlan else { return }
         
         // Build Placeholder
-        if let hexStringColor = viewModel.membershipCard.card?.colour {
-            brandHeader.backgroundColor = UIColor(hexString: hexStringColor)
-            brandHeader.layoutIfNeeded()
+        if !viewModel.shouldShowBarcode, let hexStringColor = viewModel.membershipCard.card?.colour {
+            brandHeaderImageView.backgroundColor = UIColor(hexString: hexStringColor)
+            brandHeaderImageView.layoutIfNeeded()
             let placeholderName = plan.account?.planNameCard ?? plan.account?.planName ?? ""
-            let placeholder = LCDPlaceholderGenerator.generate(with: hexStringColor, planName: placeholderName, destSize: brandHeader.frame.size)
-            brandHeader.backgroundColor = UIColor(patternImage: placeholder)
+            let placeholder = LCDPlaceholderGenerator.generate(with: hexStringColor, planName: placeholderName, destSize: brandHeaderImageView.frame.size)
+            brandHeaderImageView.backgroundColor = UIColor(patternImage: placeholder)
         }
         
+        brandHeader.layoutIfNeeded()
         configureBrandHeader(with: plan)
-        
         configureSecondaryColorViewLayout()
     }
     
