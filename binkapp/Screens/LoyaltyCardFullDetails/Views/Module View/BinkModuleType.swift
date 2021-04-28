@@ -37,21 +37,21 @@ enum ModuleState: Equatable {
     var imageName: String {
         switch self {
         case .loginUnavailable:
-            return "lcdModuleIconsPointsInactive"
+            return Asset.lcdModuleIconsPointsInactive.name
         case .plrTransactions, .aboutMembership, .pllTransactions:
-            return "lcdModuleIconsPointsActive"
+            return Asset.lcdModuleIconsPointsActive.name
         case .pending:
-            return "lcdModuleIconsPointsLoginPending"
+            return Asset.lcdModuleIconsPointsLoginPending.name
         case .signUp, .patchGhostCard, .loginChanges, .registerGhostCard, .noReasonCode:
-            return "lcdModuleIconsPointsLogin"
+            return Asset.lcdModuleIconsPointsLogin.name
         case .unlinkable:
-            return "lcdModuleIconsLinkInactive"
+            return Asset.lcdModuleIconsLinkInactive.name
         case .genericError:
-            return "lcdModuleIconsLinkError"
+            return Asset.lcdModuleIconsLinkError.name
         case .pll:
-            return "lcdModuleIconsLinkActive"
+            return Asset.lcdModuleIconsLinkActive.name
         case .pllNoPaymentCards, .pllError:
-            return "lcdModuleIconsLinkError"
+            return Asset.lcdModuleIconsLinkError.name
         }
     }
     
