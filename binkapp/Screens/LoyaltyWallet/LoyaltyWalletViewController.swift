@@ -11,7 +11,6 @@ import DeepDiff
 import CardScan
 
 class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> {
-    let transition = LoyaltyWalletAnimator()
     var selectedIndexPath: IndexPath?
     
     override func configureCollectionView() {
@@ -29,7 +28,6 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarVisibility(true, animated: false)
-        navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -168,7 +166,7 @@ extension LoyaltyWalletViewController: UINavigationControllerDelegate {
         guard shouldUseTransition else { return nil }
         if let _ = fromVC as? LoyaltyWalletViewController {
             shouldUseTransition = false
-            return operation == .push ? transition : nil
+            return operation == .push ? LoyaltyWalletAnimator() : nil
         }
         return nil
     }
