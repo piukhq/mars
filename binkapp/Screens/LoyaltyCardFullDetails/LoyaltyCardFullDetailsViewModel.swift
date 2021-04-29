@@ -22,7 +22,7 @@ class LoyaltyCardFullDetailsViewModel {
         return membershipCard.status?.status == .authorised
     }
     
-    var barcodeViewModel: BarcodeViewModel
+    let barcodeViewModel: BarcodeViewModel
     
     init(membershipCard: CD_MembershipCard, informationRowFactory: WalletCardDetailInformationRowFactory) {
         self.membershipCard = membershipCard
