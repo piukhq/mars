@@ -169,7 +169,7 @@ extension WalletLoyaltyCardCollectionViewCell {
         case .delete:
             processGradient(.deleteSwipeGradientLeft, .deleteSwipeGradientRight)
         case .barcode:
-            processGradient(.barcodeSwipeGradientLeft, .barcodeSwipeGradientRight)
+            processGradient(.binkGradientBlueLeft, .binkGradientBlueRight)
         case .unset:
             break
         }
