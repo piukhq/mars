@@ -36,9 +36,7 @@ extension UIColor {
         return String(format: "#%06x", rgb)
     }
     
-    class var blueAccent: UIColor {
-        return UIColor(red: 67 / 255, green: 113 / 255, blue: 254 / 255, alpha: 1)
-    }
+    static let blueAccent = UIColor(hexString: "438086")
     
     class var binkPurple: UIColor {
         return UIColor(red: 180 / 255, green: 111 / 255, blue: 234 / 255, alpha: 1)
@@ -62,6 +60,7 @@ extension UIColor {
     
     static let binkGradientBlueLeft = UIColor(hexString: "194B53")
     static let binkGradientBlueRight = UIColor(hexString: "3D908F")
+    static let binkBlueTitleText = UIColor(hexString: "438086")
 
     // MARK: - Card swipe gradients
     static let barcodeSwipeGradientLeft = UIColor(red: 180 / 255.0, green: 111 / 255.0, blue: 234 / 255.0, alpha: 1.0)
