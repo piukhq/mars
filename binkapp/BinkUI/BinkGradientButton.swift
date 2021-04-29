@@ -31,7 +31,7 @@ class BinkGradientButton: BinkPillButton {
     override func layoutSubviews() {
         // We need to process the gradient before we process the shadow
         // So we call super.layoutSubviews last
-        processGradient(.binkPurple, .blueAccent)
+        processGradient(.binkGradientBlueLeft, .binkGradientBlueRight)
         super.layoutSubviews()
         setWhiteLayer()
     }

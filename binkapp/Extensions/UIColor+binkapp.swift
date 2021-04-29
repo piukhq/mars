@@ -59,6 +59,9 @@ extension UIColor {
     static var greyFifty: UIColor {
         return UIColor(red: 127 / 255, green: 127 / 255, blue: 127 / 255, alpha: 1.0)
     }
+    
+    static let binkGradientBlueLeft = UIColor(hexString: "194B53")
+    static let binkGradientBlueRight = UIColor(hexString: "3D908F")
 
     // MARK: - Card swipe gradients
     static let barcodeSwipeGradientLeft = UIColor(red: 180 / 255.0, green: 111 / 255.0, blue: 234 / 255.0, alpha: 1.0)
