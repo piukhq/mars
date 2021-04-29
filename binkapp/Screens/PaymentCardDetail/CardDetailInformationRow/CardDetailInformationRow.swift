@@ -76,7 +76,7 @@ class WalletCardDetailInformationRowFactory: CardDetailInformationRowFactory {
 
     func makeLoyaltyInformationRows(membershipCard: CD_MembershipCard) -> [CardDetailInformationRow] {
         guard let plan = membershipCard.membershipPlan else {
-            fatalError("Membership card has no associated plan. We should never be in this state.")
+            return []
         }
         if plan.isPLR {
             return [makeRewardsHistoryRow(), makeAboutPlanRow(membershipCard: membershipCard), makeSecurityAndPrivacyRow(), makeDeleteMembershipCardRow(membershipCard: membershipCard)]
