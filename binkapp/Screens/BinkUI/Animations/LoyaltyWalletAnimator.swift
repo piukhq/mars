@@ -136,6 +136,7 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             secondaryCard.removeFromSuperview()
             primaryCard.removeFromSuperview()
             barcodeView.removeFromSuperview()
+            barcodeTransitionView.removeFromSuperview()
             transitionContext.completeTransition(true)
         }
     }
