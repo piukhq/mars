@@ -11,6 +11,10 @@ import Foundation
 // swiftlint:disable force_unwrapping
 
 extension String {
+    var isBlank: Bool {
+      return allSatisfy({ $0.isWhitespace })
+    }
+    
     static func randomString(length: Int) -> String {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         return String((0..<length).map { _ in
