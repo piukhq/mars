@@ -12,7 +12,7 @@ import Foundation
 
 extension String {
     var isBlank: Bool {
-      return allSatisfy({ $0.isWhitespace })
+        return allSatisfy({ $0.isWhitespace })
     }
     
     static func randomString(length: Int) -> String {
@@ -21,7 +21,7 @@ extension String {
             return letters.randomElement()!
         })
     }
-
+    
     static func fromTimestamp(_ timestamp: Double?, withFormat format: DateFormat, prefix: String? = nil, suffix: String? = nil) -> String? {
         guard let timestamp = timestamp else { return nil }
         let date = Date(timeIntervalSince1970: timestamp)
@@ -29,11 +29,11 @@ extension String {
         formatter.dateFormat = format.rawValue
         return "\(prefix ?? "")\(formatter.string(from: date))\(suffix ?? "")"
     }
-
+    
     func toNSString() -> NSString {
         return self as NSString
     }
-
+    
     /// Convert a valid JSON string to a decoded Swift object.
     /// - Parameter objectType: The object type you are attempted to decode the JSON to. Passed in as String.self or [String].self.
     /// - Returns: An optional, fully typed decoded Swift object
