@@ -93,7 +93,7 @@ extension UIColor {
     static let visaPaymentCardGradients: [CGColor] = [UIColor.visaGradientLeft.cgColor, UIColor.visaGradientRight.cgColor]
     static let mastercardPaymentCardGradients: [CGColor] = [UIColor.mastercardGradientLeft.cgColor, UIColor.mastercardGradientRight.cgColor]
     static let amexPaymentCardGradients: [CGColor] = [UIColor.amexGradientLeft.cgColor, UIColor.amexGradientRight.cgColor]
-    static let unknownPaymentCardGradients: [CGColor] = [UIColor.unknownGradientLeft.cgColor, UIColor.unknownGradientRight.cgColor]
+    static let unknownPaymentCardGradients: [CGColor] = [UIColor.binkGradientBlueLeft.cgColor, UIColor.binkGradientBlueRight.cgColor]
     static let binkSwitchGradients: [CGColor] = [UIColor.binkGradientBlueLeft.cgColor, UIColor.binkGradientBlueRight.cgColor]
 
     // MARK: - Loyalty card secondary color helpers
