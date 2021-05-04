@@ -48,7 +48,8 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     }()
     
     private lazy var signInWithAppleEnabled: Bool = {
-        return APIConstants.isProduction && Current.isReleaseTypeBuild
+//        return APIConstants.isProduction && Current.isReleaseTypeBuild
+        return true
     }()
 
     private lazy var registerButton: BinkButton = {
