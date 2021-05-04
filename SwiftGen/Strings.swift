@@ -172,7 +172,7 @@ internal enum L10n {
   internal static let detailsHeaderShowQrCode = L10n.tr("Localizable", "details_header_show_qr_code")
   /// Done
   internal static let done = L10n.tr("Localizable", "done")
-  /// Email magic link
+  /// Log in with Magic Link
   internal static let emailMagicLink = L10n.tr("Localizable", "email_magic_link")
   /// Error
   internal static let errorTitle = L10n.tr("Localizable", "error_title")

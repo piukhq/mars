@@ -295,7 +295,7 @@
 
 "continue_button_title" = "Continue";
 "login_with_password" = "Log in with password";
-"email_magic_link" = "Email magic link";
+"email_magic_link" = "Log in with Magic Link";
 
 "add_email_title" = "Add email";
 "add_email_subtitle" = "Please add your email address below.";

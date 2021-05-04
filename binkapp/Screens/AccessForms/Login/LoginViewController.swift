@@ -25,7 +25,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         }
     }()
     
-    private var formPurpose: AccessForm = .magicLink
+    private var loginType: AccessForm = .magicLink
 
     init() {
         super.init(title: L10n.logInTitle, description: L10n.loginSubtitle, dataSource: FormDataSource(accessForm: .magicLink))
@@ -127,13 +127,13 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     }
     
     func updateDatasourceButtonTapped() {
-        formPurpose = formPurpose == .magicLink ? .emailPassword : .magicLink
+        loginType = loginType == .magicLink ? .emailPassword : .magicLink
         let emailAddress = dataSource.fields.first(where: { $0.fieldCommonName == .email })?.value
         let prefilledValues = FormDataSource.PrefilledValue(commonName: .email, value: emailAddress)
-        let newDataSource = FormDataSource(accessForm: formPurpose, prefilledValues: [prefilledValues])
+        let newDataSource = FormDataSource(accessForm: loginType, prefilledValues: [prefilledValues])
         self.dataSource = newDataSource
         self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
-        switchFormPurposeButton.setTitle(formPurpose == .magicLink ? L10n.loginWithPassword : L10n.emailMagicLink)
+        switchFormPurposeButton.setTitle(loginType == .magicLink ? L10n.loginWithPassword : L10n.emailMagicLink)
     }
     
     @objc func forgotPasswordTapped() {
