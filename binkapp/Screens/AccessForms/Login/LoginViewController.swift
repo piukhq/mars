@@ -132,6 +132,8 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         let prefilledValues = FormDataSource.PrefilledValue(commonName: .email, value: emailAddress)
         let newDataSource = FormDataSource(accessForm: formPurpose, prefilledValues: [prefilledValues])
         self.dataSource = newDataSource
+        self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
+        switchFormPurposeButton.setTitle(formPurpose == .magicLink ? L10n.loginWithPassword : L10n.emailMagicLink)
     }
     
     @objc func forgotPasswordTapped() {
