@@ -638,8 +638,6 @@ internal enum L10n {
   internal static let signUpPendingDescription = L10n.tr("Localizable", "sign_up_pending_description")
   /// Sign up pending
   internal static let signUpPendingTitle = L10n.tr("Localizable", "sign_up_pending_title")
-  /// Sign up with email
-  internal static let signupWithEmailButton = L10n.tr("Localizable", "signup_with_email_button")
   /// Sign in with Apple failed.
   internal static let socialTandcsSiwaError = L10n.tr("Localizable", "social_tandcs_siwa_error")
   /// One last step...

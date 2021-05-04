@@ -51,17 +51,17 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
         return APIConstants.isProduction && Current.isReleaseTypeBuild
     }()
 
-    private lazy var registerButton: BinkButton = {
-        return BinkButton(type: .gradient, title: viewModel.signUpWithEmailButtonText) { [weak self] in
-            self?.viewModel.pushToRegister()
-        }
-    }()
-
-    private lazy var loginButton: BinkButton = {
-        return BinkButton(type: .plain, title: viewModel.loginWithEmailButtonText) { [weak self] in
+    private lazy var loginWithEmailButton: BinkButton = {
+        return BinkButton(type: .gradient, title: viewModel.loginWithEmailButtonText) { [weak self] in
             self?.viewModel.pushToLogin()
         }
     }()
+
+//    private lazy var loginButton: BinkButton = {
+//        return BinkButton(type: .plain, title: viewModel.loginWithEmailButtonText) { [weak self] in
+//            self?.viewModel.pushToLogin()
+//        }
+//    }()
 
     lazy var signInWithAppleButton: ASAuthorizationAppleIDButton = {
         let button = ASAuthorizationAppleIDButton(type: .continue, style: .black)
@@ -147,7 +147,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
             pageControl.centerXAnchor.constraint(equalTo: learningContainer.centerXAnchor)
         ])
 
-        footerButtons = [registerButton, loginButton]
+        footerButtons = [loginWithEmailButton]
     }
 
     @objc private func handleAppleIdRequest() {
