@@ -140,6 +140,7 @@
 		706D203E24D96D35004BCCF3 /* GoogleService-Info-BETA.plist in Resources */ = {isa = PBXBuildFile; fileRef = 706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */; };
 		706D204224D97104004BCCF3 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D204124D97104004BCCF3 /* AnalyticsEvent.swift */; };
 		70840E6C2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70840E6B2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift */; };
+		70841DEB26417E2800AF5810 /* MagicLinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70841DEA26417E2800AF5810 /* MagicLinkModel.swift */; };
 		70907E0825C8683C007629BB /* LocalPointsCollection_Login_Tesco.js in Resources */ = {isa = PBXBuildFile; fileRef = 70907E0725C8683C007629BB /* LocalPointsCollection_Login_Tesco.js */; };
 		70907E0D25C878AE007629BB /* LocalPointsCollection_Login_Heathrow.js in Resources */ = {isa = PBXBuildFile; fileRef = 70907E0C25C878AE007629BB /* LocalPointsCollection_Login_Heathrow.js */; };
 		70907E1225C87B82007629BB /* LocalPointsCollection_Login_Superdrug.js in Resources */ = {isa = PBXBuildFile; fileRef = 70907E1125C87B82007629BB /* LocalPointsCollection_Login_Superdrug.js */; };
@@ -697,6 +698,7 @@
 		706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-BETA.plist"; sourceTree = "<group>"; };
 		706D204124D97104004BCCF3 /* AnalyticsEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
 		70840E6B2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperdrugPointsScrapingAgent.swift; sourceTree = "<group>"; };
+		70841DEA26417E2800AF5810 /* MagicLinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkModel.swift; sourceTree = "<group>"; };
 		70872F812475393900195679 /* Bink α.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bink α.entitlements"; sourceTree = "<group>"; };
 		70907E0725C8683C007629BB /* LocalPointsCollection_Login_Tesco.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Login_Tesco.js; sourceTree = "<group>"; };
 		70907E0C25C878AE007629BB /* LocalPointsCollection_Login_Heathrow.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Login_Heathrow.js; sourceTree = "<group>"; };
@@ -1719,6 +1721,22 @@
 			path = Superdrug;
 			sourceTree = "<group>";
 		};
+		70841DE826417E0900AF5810 /* Magic link */ = {
+			isa = PBXGroup;
+			children = (
+				70841DE926417E1300AF5810 /* Model */,
+			);
+			path = "Magic link";
+			sourceTree = "<group>";
+		};
+		70841DE926417E1300AF5810 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				70841DEA26417E2800AF5810 /* MagicLinkModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		7097489C24D088E3008D0E29 /* Objective-C */ = {
 			isa = PBXGroup;
 			children = (
@@ -2555,6 +2573,7 @@
 		EF8B7013235DDC36006CE3DD /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				70841DE826417E0900AF5810 /* Magic link */,
 				EF5884482360604B0011698D /* Views */,
 				EF8B7018235DDC75006CE3DD /* OnboardingViewController.swift */,
 				EF46E285235E007300BA2CAF /* OnboardingViewModel.swift */,
@@ -3597,6 +3616,7 @@
 				CE341F0C252DED1400577153 /* BinkPersonTableViewCell.swift in Sources */,
 				EF480C1F235754AD0060B7C1 /* WalletPrompt.swift in Sources */,
 				70840E6C2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift in Sources */,
+				70841DEB26417E2800AF5810 /* MagicLinkModel.swift in Sources */,
 				EFA5F71E2379A7C70027AB80 /* _CD_MembershipCardAccount.swift in Sources */,
 				BD9BAAD9232AF4AB00D2E1C4 /* DiffAware+Extension.swift in Sources */,
 				EFA5F7172379A7C70027AB80 /* CD_MembershipCard.swift in Sources */,
