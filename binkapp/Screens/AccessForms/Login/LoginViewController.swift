@@ -18,9 +18,15 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
             self?.continueButtonTapped()
         }
     }()
+    
+    private lazy var switchFormPurposeButton: BinkButton = {
+        BinkButton(type: .plain, title: L10n.loginWithPassword, enabled: true) { [weak self] in
+            self?.updateDatasourceButtonTapped()
+        }
+    }()
 
     init() {
-        super.init(title: L10n.logInTitle, description: L10n.loginSubtitle, dataSource: FormDataSource(accessForm: .login))
+        super.init(title: L10n.logInTitle, description: L10n.loginSubtitle, dataSource: FormDataSource(accessForm: .magicLink))
         dataSource.delegate = self
     }
     
@@ -33,7 +39,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         
         stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: L10n.loginForgotPassword)])
         
-        footerButtons = [continueButton]
+        footerButtons = [continueButton, switchFormPurposeButton]
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -116,6 +122,10 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
                 self?.handleLoginError()
             }
         }
+    }
+    
+    func updateDatasourceButtonTapped() {
+        
     }
     
     @objc func forgotPasswordTapped() {

@@ -162,9 +162,9 @@ enum ViewControllerFactory {
         return SocialTermsAndConditionsViewController(requestType: requestType)
     }
 
-    static func makeRegisterViewController() -> RegisterViewController {
-        return RegisterViewController()
-    }
+//    static func makeRegisterViewController() -> RegisterViewController {
+//        return RegisterViewController()
+//    }
 
     static func makeLoginViewController() -> LoginViewController {
         return LoginViewController()

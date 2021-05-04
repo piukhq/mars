@@ -18,7 +18,6 @@
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Splash iPhone 12" translatesAutoresizingMaskIntoConstraints="NO" id="kbS-FU-hV3">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="901"/>
-                                <color key="backgroundColor" red="0.062745098040000002" green="0.1843137255" blue="0.50980392159999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bink-logo-for-splash" translatesAutoresizingMaskIntoConstraints="NO" id="k6j-jm-gi7">
                                 <rect key="frame" x="87" y="397.5" width="240" height="101"/>
