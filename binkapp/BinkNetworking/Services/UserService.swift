@@ -22,6 +22,8 @@ enum UserServiceError: BinkError {
     case failedToSetPreferences
     case failedToRenewToken
     case customError(String)
+    case failedToSendMagicLink
+    case failedToGetMagicLinkAccessToken
     
     var domain: BinkErrorDomain {
         return .userService
@@ -57,6 +59,10 @@ enum UserServiceError: BinkError {
             return "Failed to renew token"
         case .customError(let message):
             return message
+        case .failedToSendMagicLink:
+            return "Failed to send magic link"
+        case .failedToGetMagicLinkAccessToken:
+            return "Failed to get magic link access token"
         }
     }
 }
@@ -281,6 +287,48 @@ extension UserServiceProtocol {
                     BinkLogger.error(UserLoggerError.renewTokenFailure, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion?(.failure(.failedToRenewToken))
+            }
+        }
+    }
+    
+    func requestMagicLink(email: String, completion: ServiceCompletionSuccessHandler<UserServiceError>? = nil) {
+        let request = BinkNetworkRequest(endpoint: .magicLinks, method: .post, isUserDriven: false)
+        Current.apiClient.performRequestWithNoResponse(request, body: try? MagicLinkRequestModel(email: email).asDictionary()) { (success, _, _) in
+            if success {
+                if #available(iOS 14.0, *) {
+                    BinkLogger.info(event: UserLoggerEvent.sentMagicLink)
+                }
+                completion?(success, nil)
+            } else {
+                if #available(iOS 14.0, *) {
+                    BinkLogger.info(event: UserLoggerError.failedToSendMagicLink)
+                }
+                completion?(success, .failedToSendMagicLink)
+            }
+        }
+    }
+    
+    func requestMagicLinkAccessToken(for temporaryToken: String, completion: ServiceCompletionResultHandler<MagicLinkAccessTokenResponseModel, UserServiceError>? = nil) {
+        let request = BinkNetworkRequest(endpoint: .magicLinksAccessTokens, method: .post, isUserDriven: false)
+        Current.apiClient.performRequestWithBody(request, body: MagicLinkAccessTokenRequestModel(token: temporaryToken), expecting: Safe<MagicLinkAccessTokenResponseModel>.self) { (result, _) in
+            switch result {
+            case .success(let response):
+                if #available(iOS 14.0, *) {
+                    BinkLogger.info(event: UserLoggerEvent.receivedMagicLinkAccessToken)
+                }
+                guard let safeResponse = response.value else {
+                    if #available(iOS 14.0, *) {
+                        BinkLogger.info(event: UserLoggerError.failedToReceiveMagicLinkAccessToken)
+                    }
+                    completion?(.failure(.failedToGetMagicLinkAccessToken))
+                    return
+                }
+                completion?(.success(safeResponse))
+            case .failure:
+                if #available(iOS 14.0, *) {
+                    BinkLogger.info(event: UserLoggerError.failedToReceiveMagicLinkAccessToken)
+                }
+                completion?(.failure(.failedToGetMagicLinkAccessToken))
             }
         }
     }
