@@ -464,13 +464,13 @@ extension FormDataSource {
 // MARK: - Login
 
 extension FormDataSource {
-    convenience init(accessForm: AccessForm) {
+    convenience init(accessForm: AccessForm, prefilledValues: [PrefilledValue]? = nil) {
         self.init()
         self.delegate = delegate
-        setupFields(accessForm: accessForm)
+        setupFields(accessForm: accessForm, prefilledValues: prefilledValues)
     }
     
-    private func setupFields(accessForm: AccessForm) {
+    private func setupFields(accessForm: AccessForm, prefilledValues: [PrefilledValue]?) {
         let updatedBlock: FormField.ValueUpdatedBlock = { [weak self] field, newValue in
             guard let self = self else { return }
             self.delegate?.formDataSource(self, changed: newValue, for: field)
@@ -497,7 +497,9 @@ extension FormDataSource {
                 fieldType: .email,
                 updated: updatedBlock,
                 shouldChange: shouldChangeBlock,
-                fieldExited: fieldExitedBlock
+                fieldExited: fieldExitedBlock,
+                forcedValue: prefilledValues?.first(where: { $0.commonName == .email })?.value,
+                fieldCommonName: .email
             )
             
             fields.append(emailField)

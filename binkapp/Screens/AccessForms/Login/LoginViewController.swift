@@ -24,6 +24,8 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
             self?.updateDatasourceButtonTapped()
         }
     }()
+    
+    private var formPurpose: AccessForm = .magicLink
 
     init() {
         super.init(title: L10n.logInTitle, description: L10n.loginSubtitle, dataSource: FormDataSource(accessForm: .magicLink))
@@ -125,7 +127,11 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     }
     
     func updateDatasourceButtonTapped() {
-        
+        formPurpose = formPurpose == .magicLink ? .emailPassword : .magicLink
+        let emailAddress = dataSource.fields.first(where: { $0.fieldCommonName == .email })?.value
+        let prefilledValues = FormDataSource.PrefilledValue(commonName: .email, value: emailAddress)
+        let newDataSource = FormDataSource(accessForm: formPurpose, prefilledValues: [prefilledValues])
+        self.dataSource = newDataSource
     }
     
     @objc func forgotPasswordTapped() {
