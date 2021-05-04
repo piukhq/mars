@@ -17,35 +17,19 @@ class OnboardingViewModel {
         return L10n.loginWithEmailButton
     }
     
-    var facebookLoginErrorTitle: String {
-        return L10n.errorTitle
-    }
-    
-    var facebookLoginCancelledText: String {
-        return L10n.facebookCancelled
-    }
-    
-    var facebookLoginErrorText: String {
-        return L10n.facebookError
-    }
-    
-    var facebookLoginOK: String {
-        return L10n.ok
-    }
-    
     func pushToSocialTermsAndConditions(requestType: SocialLoginRequestType) {
         let viewController = ViewControllerFactory.makeSocialTermsAndConditionsViewController(requestType: requestType)
         let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
     
-    func pushToAddEmail(request: FacebookRequest) {
-        let viewController = ViewControllerFactory.makeAddEmailViewController(request: request) { [weak self] request in
-            self?.pushToSocialTermsAndConditions(requestType: .facebook(request))
-        }
-        let navigationRequest = PushNavigationRequest(viewController: viewController)
-        Current.navigate.to(navigationRequest)
-    }
+//    func pushToAddEmail(request: FacebookRequest) {
+//        let viewController = ViewControllerFactory.makeAddEmailViewController(request: request) { [weak self] request in
+//            self?.pushToSocialTermsAndConditions(requestType: .facebook(request))
+//        }
+//        let navigationRequest = PushNavigationRequest(viewController: viewController)
+//        Current.navigate.to(navigationRequest)
+//    }
     
     func pushToRegister() {
         BinkAnalytics.track(OnboardingAnalyticsEvent.start(journey: .register))
