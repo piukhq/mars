@@ -70,6 +70,32 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     @objc func continueButtonTapped() {
         continueButton.toggleLoading(isLoading: true)
         
+        if loginType == .emailPassword {
+            performLogin()
+        }
+        
+        if loginType == .magicLink {
+            performMagicLinkRequest()
+        }
+    }
+    
+    func updateDatasourceButtonTapped() {
+        loginType = loginType == .magicLink ? .emailPassword : .magicLink
+        let emailAddress = dataSource.fields.first(where: { $0.fieldCommonName == .email })?.value
+        let prefilledValues = FormDataSource.PrefilledValue(commonName: .email, value: emailAddress)
+        self.dataSource = FormDataSource(accessForm: loginType, prefilledValues: [prefilledValues])
+        self.dataSource.delegate = self
+        self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
+        switchFormPurposeButton.setTitle(loginType == .magicLink ? L10n.loginWithPassword : L10n.emailMagicLink)
+    }
+    
+    @objc func forgotPasswordTapped() {
+        let viewController = ViewControllerFactory.makeForgottenPasswordViewController()
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+    }
+    
+    private func performLogin() {
         let fields = dataSource.currentFieldValues()
         
         let loginRequest: LoginRegisterRequest
@@ -126,20 +152,8 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         }
     }
     
-    func updateDatasourceButtonTapped() {
-        loginType = loginType == .magicLink ? .emailPassword : .magicLink
-        let emailAddress = dataSource.fields.first(where: { $0.fieldCommonName == .email })?.value
-        let prefilledValues = FormDataSource.PrefilledValue(commonName: .email, value: emailAddress)
-        let newDataSource = FormDataSource(accessForm: loginType, prefilledValues: [prefilledValues])
-        self.dataSource = newDataSource
-        self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
-        switchFormPurposeButton.setTitle(loginType == .magicLink ? L10n.loginWithPassword : L10n.emailMagicLink)
-    }
-    
-    @objc func forgotPasswordTapped() {
-        let viewController = ViewControllerFactory.makeForgottenPasswordViewController()
-        let navigationRequest = PushNavigationRequest(viewController: viewController)
-        Current.navigate.to(navigationRequest)
+    private func performMagicLinkRequest() {
+        
     }
     
     private func showError() {
