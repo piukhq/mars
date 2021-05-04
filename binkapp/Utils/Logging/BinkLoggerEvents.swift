@@ -93,7 +93,6 @@ enum UserLoggerEvent: String, BinkLoggerProtocol {
     case submittedForgotPasswordRequest = "Submitted forgot password request"
     case registeredUser = "Registered new user"
     case userLoggedIn = "User logged in"
-    case authFacebookUser = "Authorised user with Facebook"
     case signedInWithApple = "Signed in with Apple"
     case createdService = "Created service"
     case fetchedPreferences = "Fetched preferences"
