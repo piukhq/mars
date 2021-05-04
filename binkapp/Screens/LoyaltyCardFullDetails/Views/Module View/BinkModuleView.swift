@@ -1,6 +1,6 @@
 import UIKit
 
-protocol BinkModuleViewDelegate: class {
+protocol BinkModuleViewDelegate: AnyObject {
     func binkModuleViewWasTapped(moduleView: BinkModuleView, withState state: ModuleState)
 }
 

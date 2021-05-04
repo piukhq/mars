@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol PaymentCardCellDelegate: class {
+protocol PaymentCardCellDelegate: AnyObject {
     func paymentCardCellDidToggleSwitch(_ paymentCell: PaymentCardCell, cardIndex: Int)
 }
 

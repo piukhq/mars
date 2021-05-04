@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol LoyaltyButtonDelegate: class {
+protocol LoyaltyButtonDelegate: AnyObject {
     func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView)
 }
 
