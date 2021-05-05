@@ -32,11 +32,3 @@ struct MagicLinkRequestModel: Codable {
 struct MagicLinkAccessTokenRequestModel: Codable {
     let token: String
 }
-
-struct MagicLinkAccessTokenResponseModel: Codable {
-    let accessToken: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case accessToken = "access_token"
-    }
-}

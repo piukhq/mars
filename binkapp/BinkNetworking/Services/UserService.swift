@@ -153,9 +153,9 @@ extension UserServiceProtocol {
         }
     }
 
-    func registerUser(request: LoginRegisterRequest, completion: ServiceCompletionResultHandler<LoginRegisterResponse, UserServiceError>? = nil) {
+    func registerUser(request: LoginRegisterRequest, completion: ServiceCompletionResultHandler<LoginResponse, UserServiceError>? = nil) {
         let networtRequest = BinkNetworkRequest(endpoint: .register, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: Safe<LoginRegisterResponse>.self) { (result, rawResponse) in
+        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: Safe<LoginResponse>.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
@@ -175,9 +175,9 @@ extension UserServiceProtocol {
         }
     }
     
-    func login(request: LoginRegisterRequest, completion: ServiceCompletionResultHandler<LoginRegisterResponse, UserServiceError>? = nil) {
+    func login(request: LoginRegisterRequest, completion: ServiceCompletionResultHandler<LoginResponse, UserServiceError>? = nil) {
         let networtRequest = BinkNetworkRequest(endpoint: .login, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: Safe<LoginRegisterResponse>.self) { (result, rawResponse) in
+        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: Safe<LoginResponse>.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
@@ -197,9 +197,9 @@ extension UserServiceProtocol {
         }
     }
     
-    func authWithApple(request: SignInWithAppleRequest, completion: ServiceCompletionResultHandler<LoginRegisterResponse, UserServiceError>? = nil) {
+    func authWithApple(request: SignInWithAppleRequest, completion: ServiceCompletionResultHandler<LoginResponse, UserServiceError>? = nil) {
         let networtRequest = BinkNetworkRequest(endpoint: .apple, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: Safe<LoginRegisterResponse>.self) { (result, _) in
+        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: Safe<LoginResponse>.self) { (result, _) in
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
@@ -269,9 +269,9 @@ extension UserServiceProtocol {
         }
     }
     
-    func renewToken(_ currentToken: String, completion: ServiceCompletionResultHandler<RenewTokenResponse, UserServiceError>? = nil) {
+    func renewToken(_ currentToken: String, completion: ServiceCompletionResultHandler<LoginResponse, UserServiceError>? = nil) {
         let request = BinkNetworkRequest(endpoint: .renew, method: .post, headers: [.authorization(currentToken), .defaultContentType, .acceptWithAPIVersion()], isUserDriven: false)
-        Current.apiClient.performRequest(request, expecting: Safe<RenewTokenResponse>.self) { (result, rawResponse) in
+        Current.apiClient.performRequest(request, expecting: Safe<LoginResponse>.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
@@ -308,9 +308,9 @@ extension UserServiceProtocol {
         }
     }
     
-    func requestMagicLinkAccessToken(for temporaryToken: String, completion: ServiceCompletionResultHandler<MagicLinkAccessTokenResponseModel, UserServiceError>? = nil) {
+    func requestMagicLinkAccessToken(for temporaryToken: String, completion: ServiceCompletionResultHandler<LoginResponse, UserServiceError>? = nil) {
         let request = BinkNetworkRequest(endpoint: .magicLinksAccessTokens, method: .post, isUserDriven: false)
-        Current.apiClient.performRequestWithBody(request, body: MagicLinkAccessTokenRequestModel(token: temporaryToken), expecting: Safe<MagicLinkAccessTokenResponseModel>.self) { (result, _) in
+        Current.apiClient.performRequestWithBody(request, body: MagicLinkAccessTokenRequestModel(token: temporaryToken), expecting: Safe<LoginResponse>.self) { (result, _) in
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {

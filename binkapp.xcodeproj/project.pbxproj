@@ -237,7 +237,7 @@
 		BD25E6992388677E0027FF3E /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD25E6982388677E0027FF3E /* LoadingScreen.swift */; };
 		BD3CB946232857BD005C37AE /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CB945232857BD005C37AE /* APIConstants.swift */; };
 		BD458B38236B417D0029A538 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B37236B417D0029A538 /* LoginViewController.swift */; };
-		BD458B3C236B5B710029A538 /* LoginRegisterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B3B236B5B710029A538 /* LoginRegisterResponse.swift */; };
+		BD458B3C236B5B710029A538 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B3B236B5B710029A538 /* LoginResponse.swift */; };
 		BD458B3E236B5C0E0029A538 /* LoginRegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B3D236B5C0E0029A538 /* LoginRegisterRequest.swift */; };
 		BD458B40236C987F0029A538 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B3F236C987F0029A538 /* UserManager.swift */; };
 		BD458B42236CA3910029A538 /* LogoutResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B41236CA3910029A538 /* LogoutResponse.swift */; };
@@ -803,7 +803,7 @@
 		BD3CB9442328574A005C37AE /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		BD3CB945232857BD005C37AE /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
 		BD458B37236B417D0029A538 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		BD458B3B236B5B710029A538 /* LoginRegisterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterResponse.swift; sourceTree = "<group>"; };
+		BD458B3B236B5B710029A538 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		BD458B3D236B5C0E0029A538 /* LoginRegisterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterRequest.swift; sourceTree = "<group>"; };
 		BD458B3F236C987F0029A538 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		BD458B41236CA3910029A538 /* LogoutResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutResponse.swift; sourceTree = "<group>"; };
@@ -2041,7 +2041,7 @@
 		BD458B3A236B5B600029A538 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				BD458B3B236B5B710029A538 /* LoginRegisterResponse.swift */,
+				BD458B3B236B5B710029A538 /* LoginResponse.swift */,
 				BD458B3D236B5C0E0029A538 /* LoginRegisterRequest.swift */,
 				BD458B41236CA3910029A538 /* LogoutResponse.swift */,
 				BD9E4CC8236EF44900C6F098 /* SocialLoginRequest.swift */,
@@ -3344,7 +3344,7 @@
 				BD9E4CCF236F8D6100C6F098 /* RenewTokenResponse.swift in Sources */,
 				EF758E0823225F35000D26A9 /* Database.swift in Sources */,
 				BD9FB6B62338120700E5559A /* TransactionsViewController.swift in Sources */,
-				BD458B3C236B5B710029A538 /* LoginRegisterResponse.swift in Sources */,
+				BD458B3C236B5B710029A538 /* LoginResponse.swift in Sources */,
 				3C119BA12315332B0015CE91 /* LoyaltyPlanView.swift in Sources */,
 				CE73F9AD2600B64E00D53BCF /* HeaderTableViewCell.swift in Sources */,
 				EF2E881323351A6000F678F3 /* CoreDataRepositoryProtocol.swift in Sources */,

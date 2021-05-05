@@ -95,7 +95,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        DeepLinkUtility.handleDeepLink(for: url)
+        let deeplinkUtility = DeepLinkUtility()
+        deeplinkUtility.handleDeepLink(for: url)
         return true
     }
 }
