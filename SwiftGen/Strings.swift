@@ -140,8 +140,6 @@ internal enum L10n {
   internal static let communicationError = L10n.tr("Localizable", "communication_error")
   /// Continue
   internal static let continueButtonTitle = L10n.tr("Localizable", "continue_button_title")
-  /// Continue with Facebook
-  internal static let continueWithFacebookButton = L10n.tr("Localizable", "continue_with_facebook_button")
   /// Enter credentials
   internal static let credentialsTitle = L10n.tr("Localizable", "credentials_title")
   /// day
@@ -176,10 +174,6 @@ internal enum L10n {
   internal static let done = L10n.tr("Localizable", "done")
   /// Error
   internal static let errorTitle = L10n.tr("Localizable", "error_title")
-  /// Facebook login was cancelled.
-  internal static let facebookCancelled = L10n.tr("Localizable", "facebook_cancelled")
-  /// Facebook is currently unavailable.
-  internal static let facebookError = L10n.tr("Localizable", "facebook_error")
   /// Filters
   internal static let filtersButtonTitle = L10n.tr("Localizable", "filters_button_title")
   /// Find and join loyalty schemes
@@ -646,8 +640,6 @@ internal enum L10n {
   internal static let signUpPendingTitle = L10n.tr("Localizable", "sign_up_pending_title")
   /// Sign up with email
   internal static let signupWithEmailButton = L10n.tr("Localizable", "signup_with_email_button")
-  /// Continue with Facebook failed.
-  internal static let socialTandcsFacebookError = L10n.tr("Localizable", "social_tandcs_facebook_error")
   /// Sign in with Apple failed.
   internal static let socialTandcsSiwaError = L10n.tr("Localizable", "social_tandcs_siwa_error")
   /// One last step...

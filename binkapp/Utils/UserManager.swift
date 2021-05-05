@@ -8,7 +8,6 @@
 
 import Foundation
 import KeychainAccess
-import FBSDKLoginKit
 import Sentry
 import Firebase
 
@@ -142,12 +141,6 @@ class UserManager {
         currentEmailAddress = nil
         currentFirstName = nil
         currentLastName = nil
-        
-        // Logout of Facebook
-        if AccessToken.current != nil {
-            let loginManager = LoginManager()
-            loginManager.logOut()
-        }
     }
     
     func clearKeychainIfNecessary() {
