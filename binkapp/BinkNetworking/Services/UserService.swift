@@ -16,7 +16,6 @@ enum UserServiceError: BinkError {
     case failedToSubmitForgotPasswordRequest
     case failedToRegisterUser
     case failedToLogin
-    case failedToAuthWithFacebook
     case failedToAuthWithApple
     case failedToCreateService
     case failedToGetPreferences
@@ -46,8 +45,6 @@ enum UserServiceError: BinkError {
             return "Failed to register user"
         case .failedToLogin:
             return "Failed to login"
-        case .failedToAuthWithFacebook:
-            return "Failed to auth with facebook"
         case .failedToAuthWithApple:
             return "Failed to auth with apple"
         case .failedToCreateService:
@@ -190,28 +187,6 @@ extension UserServiceProtocol {
                     BinkLogger.error(UserLoggerError.userLoginFailure, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion?(.failure(.failedToLogin))
-            }
-        }
-    }
-    
-    func authWithFacebook(request: FacebookRequest, completion: ServiceCompletionResultHandler<LoginRegisterResponse, UserServiceError>? = nil) {
-        let networtRequest = BinkNetworkRequest(endpoint: .facebook, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: Safe<LoginRegisterResponse>.self) { (result, rawResponse) in
-            switch result {
-            case .success(let response):
-                if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(event: UserLoggerEvent.authFacebookUser, value: response.value?.uid ?? "")
-                }
-                guard let safeResponse = response.value else {
-                    completion?(.failure(.customError("Failed to decode facebook auth response")))
-                    return
-                }
-                completion?(.success(safeResponse))
-            case .failure:
-                if #available(iOS 14.0, *) {
-                    BinkLogger.error(UserLoggerError.facebookAuthFailure, value: rawResponse?.urlResponse?.statusCode.description)
-                }
-                completion?(.failure(.failedToAuthWithFacebook))
             }
         }
     }

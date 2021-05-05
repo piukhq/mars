@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol BrowseBrandsViewModelDelegate: class {
+protocol BrowseBrandsViewModelDelegate: AnyObject {
     func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan])
 }
 

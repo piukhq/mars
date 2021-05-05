@@ -84,7 +84,6 @@ enum UserLoggerError: String, BinkLoggerProtocol {
     case forgotPasswordRequestFailure = "Forgot password request submission failure"
     case userRegistrationFailure = "Failed to register user"
     case userLoginFailure = "Failed to login"
-    case facebookAuthFailure = "Failed to authorise user with Facebook"
     case createServiceFailure = "Failed to create service"
     case fetchPreferencesFailure = "Failed to fetch preferences"
     case setPreferencesFailure = "Failed to set preferences"

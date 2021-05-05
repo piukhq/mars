@@ -162,10 +162,6 @@ enum ViewControllerFactory {
         return SocialTermsAndConditionsViewController(requestType: requestType)
     }
 
-    static func makeAddEmailViewController(request: FacebookRequest, completion: @escaping AddEmailViewController.AddEmailCompletion) -> AddEmailViewController {
-        return AddEmailViewController(request: request, completion: completion)
-    }
-
     static func makeRegisterViewController() -> RegisterViewController {
         return RegisterViewController()
     }

@@ -8,18 +8,6 @@
 
 import Foundation
 
-struct FacebookRequest: Codable {
-    let accessToken: String
-    var email: String?
-    let userId: String
-    
-    enum CodingKeys: String, CodingKey {
-        case accessToken = "access_token"
-        case email
-        case userId = "user_id"
-    }
-}
-
 struct SignInWithAppleRequest: Codable {
     let authorizationCode: String
     
