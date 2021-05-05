@@ -14,7 +14,7 @@ class OnboardingViewModel {
     }
 
     var loginWithEmailButtonText: String {
-        return L10n.loginWithEmailButton
+        return "login_with_email_button".localized
     }
     
     func pushToSocialTermsAndConditions(requestType: SocialLoginRequestType) {
