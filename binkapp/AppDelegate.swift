@@ -93,6 +93,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         }
         Current.wallet.handleAppDidEnterBackground()
     }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        return true
+    }
 }
 
 private extension AppDelegate {
