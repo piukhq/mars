@@ -25,7 +25,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         }
     }()
     
-    private var attributedDescription: NSMutableAttributedString = {
+    private var magicLinkattributedDescription: NSMutableAttributedString = {
         let attributedDescription = NSMutableAttributedString(string: L10n.magicLinkDescription, attributes: [.font: UIFont.bodyTextLarge])
         let baseDescription = NSString(string: attributedDescription.string)
         let magicLinkRange = baseDescription.range(of: L10n.whatIsMagicLinkHyperlink)
@@ -40,7 +40,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     private var loginType: AccessForm = .magicLink
 
     init() {
-        super.init(title: L10n.magicLinkTitle, description: "", attributedDescription: attributedDescription, dataSource: FormDataSource(accessForm: .magicLink))
+        super.init(title: L10n.magicLinkTitle, description: "", attributedDescription: magicLinkattributedDescription, dataSource: FormDataSource(accessForm: .magicLink))
         dataSource.delegate = self
     }
     
@@ -111,7 +111,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         
         if loginType == .magicLink {
             titleLabel.text = L10n.magicLinkTitle
-            textView.attributedText = attributedDescription
+            textView.attributedText = magicLinkattributedDescription
             descriptionLabel.text = nil
         } else {
             titleLabel.text = L10n.loginTitle
