@@ -10,7 +10,7 @@ import UIKit
 
 class BinkPillButton: BinkTrackableButton {
     enum PillButtonType {
-        case facebook
+        case defaultCase
     }
 
     var hasShadow = true
@@ -74,15 +74,15 @@ class BinkPillButton: BinkTrackableButton {
 
     private func backgroundColor(forType buttonType: PillButtonType) -> UIColor {
         switch buttonType {
-        case .facebook:
-            return .facebookButton
+        default:
+            return Current.themeManager.color(for: .walletCardBackground)
         }
     }
 
     private func title(forType buttonType: PillButtonType) -> String {
         switch buttonType {
-        case .facebook:
-            return "continue_with_facebook_button".localized
+        default:
+            return ""
         }
     }
     

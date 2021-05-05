@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 import Firebase
-import FBSDKCoreKit
 import AlamofireNetworkActivityLogger
 import CardScan
 import Keys
@@ -42,9 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         BinkAnalytics.beginSessionTracking()
         ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyProduction)
         #endif
-
-        // Facebook
-        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
 
         // Device storage
         StorageUtility.start()
@@ -96,11 +92,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
             BinkLogger.info(event: AppLoggerEvent.appEnteredBackground)
         }
         Current.wallet.handleAppDidEnterBackground()
-    }
-
-    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        // Facebook
-        ApplicationDelegate.shared.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 }
 
