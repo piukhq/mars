@@ -37,7 +37,7 @@ class BaseFormViewController: BinkViewController, Form {
     }()
     
     lazy var stackScrollView: StackScrollView = {
-        let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [titleLabel, descriptionLabel, collectionView], adjustForKeyboard: true)
+        let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [titleLabel, descriptionLabel, textView, collectionView], adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .clear
         stackView.margin = UIEdgeInsets(top: 0, left: Constants.horizontalInset, bottom: 0, right: Constants.horizontalInset)
@@ -65,6 +65,17 @@ class BaseFormViewController: BinkViewController, Form {
         return description
     }()
     
+    lazy var textView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.isScrollEnabled = false
+        textView.isUserInteractionEnabled = true
+        textView.isEditable = false
+        textView.textContainerInset = UIEdgeInsets(top: -5, left: -5, bottom: 0, right: -5)
+        textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
+        return textView
+    }()
+    
     private lazy var layout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.estimatedItemSize = CGSize(width: 1, height: 1) // To invoke automatic self sizing
@@ -84,11 +95,14 @@ class BaseFormViewController: BinkViewController, Form {
     
     // MARK: - Initialisation
     
-    init(title: String, description: String, dataSource: FormDataSource) {
+    init(title: String, description: String, attributedDescription: NSMutableAttributedString? = nil, dataSource: FormDataSource) {
         self.dataSource = dataSource
         super.init(nibName: nil, bundle: nil)
         titleLabel.text = title
         descriptionLabel.text = description
+        if let attrDescription = attributedDescription {
+            textView.attributedText = attrDescription
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -117,6 +131,7 @@ class BaseFormViewController: BinkViewController, Form {
         super.configureForCurrentTheme()
         titleLabel.textColor = Current.themeManager.color(for: .text)
         descriptionLabel.textColor = Current.themeManager.color(for: .text)
+        textView.textColor = Current.themeManager.color(for: .text)
     }
     
     private func configureLayout() {

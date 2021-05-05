@@ -25,10 +25,22 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         }
     }()
     
+    private var attributedDescription: NSMutableAttributedString = {
+        let attributedDescription = NSMutableAttributedString(string: L10n.magicLinkDescription, attributes: [.font: UIFont.bodyTextLarge])
+        let baseDescription = NSString(string: attributedDescription.string)
+        let magicLinkRange = baseDescription.range(of: L10n.whatIsMagicLinkHyperlink)
+        attributedDescription.addAttributes([.link: "https://help.bink.com/hc/en-gb/categories/360002202520-Frequently-Asked-Questions"], range: magicLinkRange)
+        
+        let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 18.0) ?? UIFont()]
+        let noteRange = baseDescription.range(of: L10n.magicLinkDescriptionNoteHighlight)
+        attributedDescription.addAttributes(attributes, range: noteRange)
+        return attributedDescription
+    }()
+    
     private var loginType: AccessForm = .magicLink
 
     init() {
-        super.init(title: L10n.magicLinkTitle, description: L10n.magicLinkDescription, dataSource: FormDataSource(accessForm: .magicLink))
+        super.init(title: L10n.magicLinkTitle, description: "", attributedDescription: attributedDescription, dataSource: FormDataSource(accessForm: .magicLink))
         dataSource.delegate = self
     }
     
@@ -39,7 +51,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: L10n.loginForgotPassword)])
+//        stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: L10n.loginForgotPassword)])
         
         footerButtons = [continueButton, switchFormPurposeButton]
     }
@@ -49,19 +61,19 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         setScreenName(trackedScreen: .login)
     }
     
-    private func hyperlinkButton(title: String) -> UIButton {
-        let button = UIButton(type: .custom)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        let attrString = NSAttributedString(
-            string: title,
-            attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
-        )
-        button.setAttributedTitle(attrString, for: .normal)
-        button.contentHorizontalAlignment = .left
-        button.heightAnchor.constraint(equalToConstant: Constants.hyperlinkHeight).isActive = true
-        button.addTarget(self, action: .forgotPasswordTapped, for: .touchUpInside)
-        return button
-    }
+//    private func hyperlinkButton(title: String) -> UIButton {
+//        let button = UIButton(type: .custom)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        let attrString = NSAttributedString(
+//            string: title,
+//            attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
+//        )
+//        button.setAttributedTitle(attrString, for: .normal)
+//        button.contentHorizontalAlignment = .left
+//        button.heightAnchor.constraint(equalToConstant: Constants.hyperlinkHeight).isActive = true
+//        button.addTarget(self, action: .forgotPasswordTapped, for: .touchUpInside)
+//        return button
+//    }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
         continueButton.enabled = fullFormIsValid
@@ -99,9 +111,11 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         
         if loginType == .magicLink {
             titleLabel.text = L10n.magicLinkTitle
-            descriptionLabel.text = L10n.magicLinkDescription
+            textView.attributedText = attributedDescription
+            descriptionLabel.text = nil
         } else {
             titleLabel.text = L10n.loginTitle
+            textView.text = nil
             descriptionLabel.text = L10n.loginSubtitle
         }
     }

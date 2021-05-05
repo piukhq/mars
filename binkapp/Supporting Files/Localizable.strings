@@ -321,6 +321,8 @@
 
 "magic_link_title" = "Magic Link";
 "magic_link_description" = "Get a link sent to your inbox so you can register or access your account instantly!\nWhat is Magic Link?\n\nNote: You must open the link on this mobile device in order to be logged in.";
+"what_is_magic_link_hyperlink" = "What is Magic Link?";
+"magic_link_description_note_highlight" = "Note:";
 
 "tandcs_title" = "I agree to Bink's Terms and Conditions";
 "tandcs_description" = "Please read the Bink Privacy Policy for further details of how your data will be processed";
