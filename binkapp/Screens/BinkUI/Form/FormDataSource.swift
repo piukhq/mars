@@ -549,28 +549,7 @@ extension FormDataSource {
             fields.append(bundleIDField)
         }
         
-//        if accessForm == .register {
-//            let manualValidation: FormField.ManualValidateBlock = { [weak self] field in
-//                guard let self = self, let delegate = self.delegate else { return false }
-//                return delegate.formDataSource(self, manualValidate: field)
-//            }
-//            
-//            let confirmPasswordField = FormField(
-//                title: L10n.accessFormConfirmPasswordTitle,
-//                placeholder: L10n.accessFormConfirmPasswordPlaceholder,
-//                validation: nil,
-//                validationErrorMessage: L10n.accessFormConfirmPasswordValidation,
-//                fieldType: .confirmPassword,
-//                updated: updatedBlock,
-//                shouldChange: shouldChangeBlock,
-//                fieldExited: fieldExitedBlock,
-//                manualValidate: manualValidation
-//            )
-//            
-//            fields.append(confirmPasswordField)
-//        }
-        
-        if accessForm == .socialTermsAndConditions {
+        if accessForm == .socialTermsAndConditions || accessForm == .emailPassword || accessForm == .magicLink {
             let attributedTCs = NSMutableAttributedString(string: L10n.tandcsTitle + "\n" + L10n.tandcsDescription, attributes: [.font: UIFont.bodyTextSmall])
             let baseTCs = NSString(string: attributedTCs.string)
             let tcsRange = baseTCs.range(of: L10n.tandcsLink)

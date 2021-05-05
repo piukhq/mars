@@ -77,6 +77,15 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         if loginType == .magicLink {
             performMagicLinkRequest()
         }
+        
+//        
+//        let configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "Magic Link failed", description: "Please atempt magic link sign in again"), primaryButtonTitle: "Magic Link", primaryButtonAction:  {
+//            print("ello")
+//        })
+//        let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configurationModel)
+//        let navigationRequest = PushNavigationRequest(viewController: viewController)
+//        Current.navigate.to(navigationRequest)
+
     }
     
     func updateDatasourceButtonTapped() {
