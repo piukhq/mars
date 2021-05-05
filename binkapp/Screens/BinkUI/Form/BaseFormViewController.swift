@@ -79,6 +79,7 @@ class BaseFormViewController: BinkViewController, Form {
         didSet {
             collectionView.dataSource = dataSource
             collectionView.reloadData()
+            configureCheckboxes()
         }
     }
     
@@ -130,6 +131,11 @@ class BaseFormViewController: BinkViewController, Form {
     
     private func configureCheckboxes() {
         guard !dataSource.checkboxes.isEmpty else { return }
+        for subview in stackScrollView.arrangedSubviews {
+            if subview.isKind(of: CheckboxView.self) {
+                subview.removeFromSuperview()
+            }
+        }
         stackScrollView.add(arrangedSubviews: dataSource.checkboxes)
     }
     
