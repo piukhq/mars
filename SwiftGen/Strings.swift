@@ -136,6 +136,10 @@ internal enum L10n {
   internal static let cardNumberTitle = L10n.tr("Localizable", "card_number_title")
   /// One of these payment cards are
   internal static let cardsAlreadyLinkedMessagePrefix = L10n.tr("Localizable", "cards_already_linked_message_prefix")
+  /// We have just emailed a link to %@. Click the link and you will be signed in.\nNote: You must open the link on this mobile device in order to be logged in.
+  internal static func checkInboxDescription(_ p1: Any) -> String {
+    return L10n.tr("Localizable", "check_inbox_description", String(describing: p1))
+  }
   /// There was a problem communicating with the server. Please try again later.
   internal static let communicationError = L10n.tr("Localizable", "communication_error")
   /// Continue
@@ -212,6 +216,10 @@ internal enum L10n {
   internal static let infoTitle = L10n.tr("Localizable", "info_title")
   /// Learn more about how it works
   internal static let learnMore = L10n.tr("Localizable", "learn_more")
+  /// To keep your account safe, links are only valid for a short period of time. Enter your email again and we will send you another!
+  internal static let linkExpiredDescription = L10n.tr("Localizable", "link_expired_description")
+  /// Link expired
+  internal static let linkExpiredTitle = L10n.tr("Localizable", "link_expired_title")
   /// Link error
   internal static let linkModuleErrorTitle = L10n.tr("Localizable", "link_module_error_title")
   /// To link to cards
@@ -654,6 +662,10 @@ internal enum L10n {
   internal static let socialTandcsSubtitle = L10n.tr("Localizable", "social_tandcs_subtitle")
   /// Terms and conditions
   internal static let socialTandcsTitle = L10n.tr("Localizable", "social_tandcs_title")
+  /// There was a problem authenticating you. Please try again.
+  internal static let somethingWentWrongDescription = L10n.tr("Localizable", "something_went_wrong_description")
+  /// Something went wrong
+  internal static let somethingWentWrongTitle = L10n.tr("Localizable", "something_went_wrong_title")
   /// Connection error. Please try again.
   internal static let sslPinningFailureText = L10n.tr("Localizable", "ssl_pinning_failure_text")
   /// Error

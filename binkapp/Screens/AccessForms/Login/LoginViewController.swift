@@ -8,6 +8,12 @@
 
 import UIKit
 
+enum MagicLinkStatus {
+    case checkInbox
+    case expired
+    case failed
+}
+
 class LoginViewController: BaseFormViewController, UserServiceProtocol {
     private enum Constants {
         static let hyperlinkHeight: CGFloat = 54.0
@@ -89,15 +95,6 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         if loginType == .magicLink {
             performMagicLinkRequest()
         }
-        
-//        
-//        let configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "Magic Link failed", description: "Please atempt magic link sign in again"), primaryButtonTitle: "Magic Link", primaryButtonAction:  {
-//            print("ello")
-//        })
-//        let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configurationModel)
-//        let navigationRequest = PushNavigationRequest(viewController: viewController)
-//        Current.navigate.to(navigationRequest)
-
     }
     
     func updateDatasourceButtonTapped() {
@@ -190,6 +187,35 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         requestMagicLink(email: fields["email"]!) { (success, error) in
             print(success)
         }
+        navigateToStatusScreen(for: .expired)
+    }
+    
+    private func navigateToStatusScreen(for status: MagicLinkStatus) {
+        var configurationModel: ReusableModalConfiguration
+        
+        switch status {
+        case .checkInbox:
+            let emailAddress = dataSource.fields.first(where: { $0.fieldCommonName == .email })?.value
+            configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "Check your inbox!", description: L10n.checkInboxDescription(emailAddress ?? "your email address")))
+        case .expired:
+            configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: L10n.linkExpiredTitle, description: L10n.linkExpiredDescription), primaryButtonTitle: L10n.retryTitle, primaryButtonAction: {
+                Current.navigate.back()
+            }, secondaryButtonTitle: L10n.cancel) {
+                Current.navigate.back(toRoot: true, animated: true)
+            }
+        case .failed:
+            configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: L10n.somethingWentWrongTitle, description: L10n.somethingWentWrongDescription), primaryButtonTitle: L10n.retryTitle, primaryButtonAction: {
+                Current.navigate.back()
+            }, secondaryButtonTitle: L10n.cancel) {
+                Current.navigate.back(toRoot: true, animated: true)
+            }
+        }
+        
+
+        let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configurationModel)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        continueButton.toggleLoading(isLoading: false)
+        Current.navigate.to(navigationRequest)
     }
     
     private func showError() {
