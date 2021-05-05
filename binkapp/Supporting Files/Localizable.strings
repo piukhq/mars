@@ -313,11 +313,14 @@
 "register_failed" = "Registration failed.";
 
 "login_title" = "Log in with email";
-"login_subtitle" = "Welcome back!";
+"login_subtitle" = "Use your email address and password to log in to the app.";
 "login_error" =  "Incorrect email/password. Please try again.";
 "login_forgot_password" = "Forgot password";
 "forgot_password_description" = "Please enter your email address and if it is associated with a Bink account, then a password reset email will be sent";
 "fogrot_password_popup_text" = "If the email address you entered is associated with a Bink account, then a password reset email will be sent.";
+
+"magic_link_title" = "Magic Link";
+"magic_link_description" = "Get a link sent to your inbox so you can register or access your account instantly!\nWhat is Magic Link?\n\nNote: You must open the link on this mobile device in order to be logged in.";
 
 "tandcs_title" = "I agree to Bink's Terms and Conditions";
 "tandcs_description" = "Please read the Bink Privacy Policy for further details of how your data will be processed";

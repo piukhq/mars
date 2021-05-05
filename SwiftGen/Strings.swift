@@ -244,7 +244,7 @@ internal enum L10n {
   internal static let loginError = L10n.tr("Localizable", "login_error")
   /// Forgot password
   internal static let loginForgotPassword = L10n.tr("Localizable", "login_forgot_password")
-  /// Welcome back!
+  /// Use your email address and password to log in to the app.
   internal static let loginSubtitle = L10n.tr("Localizable", "login_subtitle")
   /// Log in with email
   internal static let loginTitle = L10n.tr("Localizable", "login_title")
@@ -264,6 +264,10 @@ internal enum L10n {
   internal static let loyaltyScannerWidgetTitleEnterManuallyText = L10n.tr("Localizable", "loyalty_scanner_widget_title_enter_manually_text")
   /// Unrecognised barcode
   internal static let loyaltyScannerWidgetTitleUnrecognizedBarcodeText = L10n.tr("Localizable", "loyalty_scanner_widget_title_unrecognized_barcode_text")
+  /// Get a link sent to your inbox so you can register or access your account instantly!\nWhat is Magic Link?\n\nNote: You must open the link on this mobile device in order to be logged in.
+  internal static let magicLinkDescription = L10n.tr("Localizable", "magic_link_description")
+  /// Magic Link
+  internal static let magicLinkTitle = L10n.tr("Localizable", "magic_link_title")
   /// Opt in to receive marketing messages
   internal static let marketingTitle = L10n.tr("Localizable", "marketing_title")
   /// minute

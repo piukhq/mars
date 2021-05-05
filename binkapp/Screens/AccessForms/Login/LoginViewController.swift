@@ -28,7 +28,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     private var loginType: AccessForm = .magicLink
 
     init() {
-        super.init(title: L10n.logInTitle, description: L10n.loginSubtitle, dataSource: FormDataSource(accessForm: .magicLink))
+        super.init(title: L10n.magicLinkTitle, description: L10n.magicLinkDescription, dataSource: FormDataSource(accessForm: .magicLink))
         dataSource.delegate = self
     }
     
@@ -96,6 +96,14 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         self.dataSource.delegate = self
         self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
         switchFormPurposeButton.setTitle(loginType == .magicLink ? L10n.loginWithPassword : L10n.emailMagicLink)
+        
+        if loginType == .magicLink {
+            titleLabel.text = L10n.magicLinkTitle
+            descriptionLabel.text = L10n.magicLinkDescription
+        } else {
+            titleLabel.text = L10n.loginTitle
+            descriptionLabel.text = L10n.loginSubtitle
+        }
     }
     
     @objc func forgotPasswordTapped() {
