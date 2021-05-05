@@ -323,7 +323,9 @@
 "magic_link_description" = "Get a link sent to your inbox so you can register or access your account instantly!\nWhat is Magic Link?\n\nNote: You must open the link on this mobile device in order to be logged in.";
 "what_is_magic_link_hyperlink" = "What is Magic Link?";
 "magic_link_description_note_highlight" = "Note:";
-"check_inbox_description" = "We have just emailed a link to %@. Click the link and you will be signed in.\nNote: You must open the link on this mobile device in order to be logged in.";
+"check_inbox_title" = "Check your inbox!";
+"check_inbox_description" = "We have just emailed a link to %@. Click the link and you will be signed in.\n\nNote: You must open the link on this mobile device in order to be logged in.";
+"nil_email_address" = "your email address";
 "link_expired_title" = "Link expired";
 "link_expired_description" = "To keep your account safe, links are only valid for a short period of time. Enter your email again and we will send you another!";
 "something_went_wrong_title" = "Something went wrong";

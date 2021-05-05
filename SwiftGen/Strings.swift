@@ -136,10 +136,12 @@ internal enum L10n {
   internal static let cardNumberTitle = L10n.tr("Localizable", "card_number_title")
   /// One of these payment cards are
   internal static let cardsAlreadyLinkedMessagePrefix = L10n.tr("Localizable", "cards_already_linked_message_prefix")
-  /// We have just emailed a link to %@. Click the link and you will be signed in.\nNote: You must open the link on this mobile device in order to be logged in.
+  /// We have just emailed a link to %@. Click the link and you will be signed in.\n\nNote: You must open the link on this mobile device in order to be logged in.
   internal static func checkInboxDescription(_ p1: Any) -> String {
     return L10n.tr("Localizable", "check_inbox_description", String(describing: p1))
   }
+  /// Check your inbox!
+  internal static let checkInboxTitle = L10n.tr("Localizable", "check_inbox_title")
   /// There was a problem communicating with the server. Please try again later.
   internal static let communicationError = L10n.tr("Localizable", "communication_error")
   /// Continue
@@ -290,6 +292,8 @@ internal enum L10n {
   }
   /// Sign up not supported
   internal static let nativeJoinUnavailableTitle = L10n.tr("Localizable", "native_join_unavailable_title")
+  /// your email address
+  internal static let nilEmailAddress = L10n.tr("Localizable", "nil_email_address")
   /// No
   internal static let no = L10n.tr("Localizable", "no")
   /// I don't have an account

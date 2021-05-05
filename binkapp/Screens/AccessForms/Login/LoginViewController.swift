@@ -187,7 +187,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         requestMagicLink(email: fields["email"]!) { (success, error) in
             print(success)
         }
-        navigateToStatusScreen(for: .expired)
+        navigateToStatusScreen(for: .checkInbox)
     }
     
     private func navigateToStatusScreen(for status: MagicLinkStatus) {
@@ -196,7 +196,20 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         switch status {
         case .checkInbox:
             let emailAddress = dataSource.fields.first(where: { $0.fieldCommonName == .email })?.value
-            configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "Check your inbox!", description: L10n.checkInboxDescription(emailAddress ?? "your email address")))
+            let attributedString = NSMutableAttributedString()
+            let attributedTitle = NSAttributedString(string: L10n.checkInboxTitle + "\n", attributes: [NSAttributedString.Key.font: UIFont.headline])
+            let attributedBody = NSMutableAttributedString(string: L10n.checkInboxDescription(emailAddress ?? L10n.nilEmailAddress), attributes: [.font: UIFont.bodyTextLarge])
+            
+            let baseBody = NSString(string: attributedBody.string)
+            let noteRange = baseBody.range(of: L10n.magicLinkDescriptionNoteHighlight)
+            let emailRange = baseBody.range(of: emailAddress ?? "")
+            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 18.0) ?? UIFont()]
+            attributedBody.addAttributes(attributes, range: noteRange)
+            attributedBody.addAttributes(attributes, range: emailRange)
+            
+            attributedString.append(attributedTitle)
+            attributedString.append(attributedBody)
+            configurationModel = ReusableModalConfiguration(title: "", text: attributedString)
         case .expired:
             configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: L10n.linkExpiredTitle, description: L10n.linkExpiredDescription), primaryButtonTitle: L10n.retryTitle, primaryButtonAction: {
                 Current.navigate.back()
@@ -211,7 +224,6 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
             }
         }
         
-
         let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configurationModel)
         let navigationRequest = PushNavigationRequest(viewController: viewController)
         continueButton.toggleLoading(isLoading: false)
