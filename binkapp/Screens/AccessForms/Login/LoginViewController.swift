@@ -153,7 +153,12 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     }
     
     private func performMagicLinkRequest() {
-        
+        let fields = dataSource.currentFieldValues()
+
+        // TODO: This should take a request object
+        requestMagicLink(email: fields["email"]!) { (success, error) in
+            print(success)
+        }
     }
     
     private func showError() {
