@@ -254,6 +254,8 @@ internal enum L10n {
   internal static let loginError = L10n.tr("Localizable", "login_error")
   /// Forgot password
   internal static let loginForgotPassword = L10n.tr("Localizable", "login_forgot_password")
+  /// Issues logging in?
+  internal static let loginIssues = L10n.tr("Localizable", "login_issues")
   /// Use your email address and password to log in to the app.
   internal static let loginSubtitle = L10n.tr("Localizable", "login_subtitle")
   /// Log in with email

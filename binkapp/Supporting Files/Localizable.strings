@@ -312,6 +312,7 @@
 "register_subtitle" = "All it takes is an email and password.";
 "register_failed" = "Registration failed.";
 
+"login_issues" = "Issues logging in?";
 "login_title" = "Log in with email";
 "login_subtitle" = "Use your email address and password to log in to the app.";
 "login_error" =  "Incorrect email/password. Please try again.";

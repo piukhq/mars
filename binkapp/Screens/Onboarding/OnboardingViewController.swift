@@ -48,7 +48,8 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     }()
     
     private lazy var signInWithAppleEnabled: Bool = {
-        return APIConstants.isProduction && Current.isReleaseTypeBuild
+//        return APIConstants.isProduction && Current.isReleaseTypeBuild
+        return true
     }()
 
     private lazy var loginWithEmailButton: BinkButton = {
@@ -57,11 +58,11 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
         }
     }()
 
-//    private lazy var loginButton: BinkButton = {
-//        return BinkButton(type: .plain, title: viewModel.loginWithEmailButtonText) { [weak self] in
-//            self?.viewModel.pushToLogin()
-//        }
-//    }()
+    private lazy var issuesLoggingInButton: BinkButton = {
+        return BinkButton(type: .plain, title: L10n.loginIssues) { [weak self] in
+            
+        }
+    }()
 
     lazy var signInWithAppleButton: ASAuthorizationAppleIDButton = {
         let button = ASAuthorizationAppleIDButton(type: .continue, style: .black)
@@ -147,7 +148,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
             pageControl.centerXAnchor.constraint(equalTo: learningContainer.centerXAnchor)
         ])
 
-        footerButtons = [loginWithEmailButton]
+        footerButtons = [loginWithEmailButton, issuesLoggingInButton]
     }
 
     @objc private func handleAppleIdRequest() {
