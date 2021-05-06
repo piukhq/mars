@@ -11,7 +11,6 @@ import DTTJailbreakDetection
 
 class RootStateMachine: NSObject, UserServiceProtocol {
     private var window: UIWindow?
-    private lazy var migrationController = UserMigrationController()
     
     func launch(withWindow window: UIWindow) {
         self.window = window
@@ -30,22 +29,7 @@ class RootStateMachine: NSObject, UserServiceProtocol {
     }
     
     private func handleUnauthenticated() {
-        if migrationController.shouldMigrate {
-            // Move to splash
-            let loading = LoadingScreen()
-            moveTo(loading)
-            migrationController.renewTokenFromLegacyAppIfPossible { success in
-                DispatchQueue.main.async { [weak self] in
-                    if success {
-                        self?.handleLogin()
-                    } else {
-                        self?.moveTo(ViewControllerFactory.makeOnboardingViewController())
-                    }
-                }
-            }
-        } else {
-            moveTo(ViewControllerFactory.makeOnboardingViewController())
-        }
+        moveTo(ViewControllerFactory.makeOnboardingViewController())
     }
 
     func handleLogin() {

@@ -254,8 +254,6 @@
 		BD9BAAD9232AF4AB00D2E1C4 /* DiffAware+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9BAAD8232AF4AB00D2E1C4 /* DiffAware+Extension.swift */; };
 		BD9E4CC7236EE67900C6F098 /* SocialTermsAndConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CC6236EE67900C6F098 /* SocialTermsAndConditionsViewController.swift */; };
 		BD9E4CC9236EF44900C6F098 /* SocialLoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CC8236EF44900C6F098 /* SocialLoginRequest.swift */; };
-		BD9E4CCB236F091B00C6F098 /* UserMigrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CCA236F091B00C6F098 /* UserMigrationController.swift */; };
-		BD9E4CCF236F8D6100C6F098 /* RenewTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CCE236F8D6000C6F098 /* RenewTokenResponse.swift */; };
 		BD9E4CD1237014D300C6F098 /* RootStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CD0237014D300C6F098 /* RootStateMachine.swift */; };
 		BD9E4CD623738B4900C6F098 /* PreferenceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CD523738B4700C6F098 /* PreferenceResponse.swift */; };
 		BD9E4CD823740A7500C6F098 /* PreferenceChangeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CD723740A7500C6F098 /* PreferenceChangeResponse.swift */; };
@@ -821,9 +819,7 @@
 		BD9BAAD8232AF4AB00D2E1C4 /* DiffAware+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiffAware+Extension.swift"; sourceTree = "<group>"; };
 		BD9E4CC6236EE67900C6F098 /* SocialTermsAndConditionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialTermsAndConditionsViewController.swift; sourceTree = "<group>"; };
 		BD9E4CC8236EF44900C6F098 /* SocialLoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginRequest.swift; sourceTree = "<group>"; };
-		BD9E4CCA236F091B00C6F098 /* UserMigrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMigrationController.swift; sourceTree = "<group>"; };
 		BD9E4CCC236F095800C6F098 /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
-		BD9E4CCE236F8D6000C6F098 /* RenewTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenewTokenResponse.swift; sourceTree = "<group>"; };
 		BD9E4CD0237014D300C6F098 /* RootStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStateMachine.swift; sourceTree = "<group>"; };
 		BD9E4CD523738B4700C6F098 /* PreferenceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceResponse.swift; sourceTree = "<group>"; };
 		BD9E4CD723740A7500C6F098 /* PreferenceChangeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceChangeResponse.swift; sourceTree = "<group>"; };
@@ -1470,7 +1466,6 @@
 				3C05A9DF2327D35100620583 /* PortraitNavigationController.swift */,
 				EF4B46612344A73D009A3651 /* HapticFeedbackUtil.swift */,
 				BD458B3F236C987F0029A538 /* UserManager.swift */,
-				BD9E4CCA236F091B00C6F098 /* UserMigrationController.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2045,7 +2040,6 @@
 				BD458B3D236B5C0E0029A538 /* LoginRegisterRequest.swift */,
 				BD458B41236CA3910029A538 /* LogoutResponse.swift */,
 				BD9E4CC8236EF44900C6F098 /* SocialLoginRequest.swift */,
-				BD9E4CCE236F8D6000C6F098 /* RenewTokenResponse.swift */,
 				BD9E4CD523738B4700C6F098 /* PreferenceResponse.swift */,
 				BD9E4CD723740A7500C6F098 /* PreferenceChangeResponse.swift */,
 			);
@@ -3341,7 +3335,6 @@
 				BD458B38236B417D0029A538 /* LoginViewController.swift in Sources */,
 				EF4B46692346491E009A3651 /* PaymentCardDetailViewModel.swift in Sources */,
 				702D0E3526306F8E0067E370 /* BinkModuleViewModel.swift in Sources */,
-				BD9E4CCF236F8D6100C6F098 /* RenewTokenResponse.swift in Sources */,
 				EF758E0823225F35000D26A9 /* Database.swift in Sources */,
 				BD9FB6B62338120700E5559A /* TransactionsViewController.swift in Sources */,
 				BD458B3C236B5B710029A538 /* LoginResponse.swift in Sources */,
@@ -3654,7 +3647,6 @@
 				3C48E7E6232A5E6700ADE410 /* DateExtension.swift in Sources */,
 				EFA5F73D2379A7C70027AB80 /* _CD_MembershipPlanImage.swift in Sources */,
 				BD9FB6B223380C0900E5559A /* Encodable+Extension.swift in Sources */,
-				BD9E4CCB236F091B00C6F098 /* UserMigrationController.swift in Sources */,
 				3CEABFCC2316AB65009B1122 /* MembershipCardStatusModel.swift in Sources */,
 				EFA5F7122379A7C70027AB80 /* _CD_Balance.swift in Sources */,
 				EFA5F73E2379A7C70027AB80 /* CD_MembershipCardBalance.swift in Sources */,

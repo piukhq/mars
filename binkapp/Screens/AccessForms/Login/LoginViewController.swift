@@ -59,7 +59,8 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         
 //        stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: L10n.loginForgotPassword)])
         
-        footerButtons = [continueButton, switchLoginTypeButton]
+        footerButtons = [
+            continueButton, switchLoginTypeButton]
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -185,12 +186,17 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
 
         // TODO: This should take a request object
         requestMagicLink(email: fields["email"]!) { (success, error) in
-            print(success)
+            if let error = error {
+                // TODO: Handle error
+                print(error.localizedDescription)
+            }
+            
+            self.navigateToStatusScreen(for: .checkInbox)
         }
-        navigateToStatusScreen(for: .checkInbox)
     }
     
     private func navigateToStatusScreen(for status: MagicLinkStatus) {
+        // TODO: Can we move this logic elsewhere?
         var configurationModel: ReusableModalConfiguration
         
         switch status {
