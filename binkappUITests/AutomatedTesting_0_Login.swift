@@ -1,6 +1,6 @@
 //
 //  AutomatedTesting_0_Login.swift
-//  binkappUITests
+//  binkappUITests 
 //
 //  Created by Sean Williams on 27/11/2020.
 //  Copyright © 2020 Bink. All rights reserved.
