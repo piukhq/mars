@@ -18,6 +18,12 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
             self?.continueButtonTapped()
         }
     }()
+    
+    private lazy var loginIssuesButton: BinkButton = {
+        return BinkButton(type: .plain, title: "issues_logging_in".localized, enabled: true) { [weak self] in
+            
+        }
+    }()
 
     init() {
         super.init(title: "login_title".localized, description: "login_subtitle".localized, dataSource: FormDataSource(accessForm: .login))
@@ -33,7 +39,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         
         stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: "login_forgot_password".localized)])
         
-        footerButtons = [continueButton]
+        footerButtons = [continueButton, loginIssuesButton]
     }
     
     override func viewDidAppear(_ animated: Bool) {
