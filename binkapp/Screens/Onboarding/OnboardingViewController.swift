@@ -166,7 +166,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     private func configureUI() {
         if signInWithAppleEnabled, let buttonsView = footerButtonsView {
             signInWithAppleButton.layer.applyDefaultBinkShadow()
-            buttonsView.insertAdditionalViews([signInWithAppleButton])
+            buttonsView.insertAdditionalViews([signInWithAppleButton], at: 2)
             NSLayoutConstraint.activate([
                 signInWithAppleButton.heightAnchor.constraint(equalToConstant: 55),
                 signInWithAppleButton.widthAnchor.constraint(equalTo: buttonsView.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
