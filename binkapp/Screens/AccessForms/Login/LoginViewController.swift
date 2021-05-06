@@ -21,7 +21,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     
     private lazy var loginIssuesButton: BinkButton = {
         return BinkButton(type: .plain, title: "issues_logging_in".localized, enabled: true) { [weak self] in
-            
+            self?.presentLoginIssuesScreen()
         }
     }()
 
@@ -128,6 +128,12 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         let viewController = ViewControllerFactory.makeForgottenPasswordViewController()
         let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
+    }
+    
+    func presentLoginIssuesScreen() {
+        let viewController = ViewControllerFactory.makeWebViewController(urlString: "https://help.bink.com/hc/en-gb/categories/360002202520-Frequently-Asked-Questions")
+        let request = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(request)
     }
     
     private func showError() {
