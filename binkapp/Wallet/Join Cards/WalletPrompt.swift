@@ -86,7 +86,7 @@ enum WalletPromptType {
     var iconImageName: String? {
         switch self {
         case .addPaymentCards:
-            return "payment"
+            return Asset.payment.name
         default:
             return nil
         }

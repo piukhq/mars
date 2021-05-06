@@ -31,7 +31,7 @@ struct DynamicActionViewModel {
     var headerViewImageName: String? {
         switch dynamicAction.type {
         case .xmas:
-            return "bink-logo-christmas"
+            return Asset.binkLogoChristmas.name
         case .none:
             return nil
         }

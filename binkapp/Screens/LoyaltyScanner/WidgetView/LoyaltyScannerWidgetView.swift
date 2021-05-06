@@ -51,6 +51,7 @@ class LoyaltyScannerWidgetView: CustomView {
         explainerLabel.font = .bodyTextLarge
         explainerLabel.numberOfLines = 2
         explainerLabel.textColor = Current.themeManager.color(for: .text)
+        imageView.tintColor = .green
 
         setState(state)
     }
@@ -96,9 +97,9 @@ extension LoyaltyScannerWidgetView {
         var imageName: String {
             switch self {
             case .enterManually:
-                return "loyalty_scanner_enter_manually"
+                return Asset.loyaltyScannerEnterManually.name
             case .unrecognizedBarcode, .timeout:
-                return "loyalty_scanner_error"
+                return Asset.loyaltyScannerError.name
             }
         }
     }
