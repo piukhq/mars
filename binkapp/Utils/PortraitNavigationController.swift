@@ -9,7 +9,7 @@
 import UIKit
 
 class PortraitNavigationController: UINavigationController {
-    private var isModallyPresented: Bool = false
+    private var isModallyPresented = false
     private var statusBarStyle: UIStatusBarStyle = .default
     
     private lazy var backButton: UIBarButtonItem = {

@@ -38,11 +38,11 @@ enum OnboardingLearningType: Int {
     var learningImageName: String {
         switch self {
         case .pll:
-            return "onboarding1"
+            return Asset.onboarding1.name
         case .wallet:
-            return "onboarding2"
+            return Asset.onboarding2.name
         case .barcodeOrCollect:
-            return "onboarding3"
+            return Asset.onboarding3.name
         }
     }
 
