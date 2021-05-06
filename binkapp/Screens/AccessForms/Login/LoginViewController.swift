@@ -25,9 +25,9 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         }
     }()
     
-    private lazy var switchFormPurposeButton: BinkButton = {
+    private lazy var switchLoginTypeButton: BinkButton = {
         BinkButton(type: .plain, title: L10n.loginWithPassword, enabled: true) { [weak self] in
-            self?.updateDatasourceButtonTapped()
+            self?.switchLoginTypeButtonHandler()
         }
     }()
     
@@ -59,7 +59,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         
 //        stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: L10n.loginForgotPassword)])
         
-        footerButtons = [continueButton, switchFormPurposeButton]
+        footerButtons = [continueButton, switchLoginTypeButton]
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -97,14 +97,14 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         }
     }
     
-    func updateDatasourceButtonTapped() {
+    private func switchLoginTypeButtonHandler() {
         loginType = loginType == .magicLink ? .emailPassword : .magicLink
         let emailAddress = dataSource.fields.first(where: { $0.fieldCommonName == .email })?.value
         let prefilledValues = FormDataSource.PrefilledValue(commonName: .email, value: emailAddress)
-        self.dataSource = FormDataSource(accessForm: loginType, prefilledValues: [prefilledValues])
-        self.dataSource.delegate = self
-        self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
-        switchFormPurposeButton.setTitle(loginType == .magicLink ? L10n.loginWithPassword : L10n.emailMagicLink)
+        dataSource = FormDataSource(accessForm: loginType, prefilledValues: [prefilledValues])
+        dataSource.delegate = self
+        formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
+        switchLoginTypeButton.setTitle(loginType == .magicLink ? L10n.loginWithPassword : L10n.emailMagicLink)
         
         if loginType == .magicLink {
             titleLabel.text = L10n.magicLinkTitle
@@ -241,14 +241,17 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         continueButton.toggleLoading(isLoading: false)
         showError()
     }
+    
+    override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
+        let viewController = ViewControllerFactory.makeWebViewController(urlString: URL.absoluteString)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+    }
 }
 
 extension LoginViewController: FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
         return true
-    }
-    
-    func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView) {
     }
 }
 

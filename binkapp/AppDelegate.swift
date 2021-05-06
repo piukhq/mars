@@ -94,7 +94,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         Current.wallet.handleAppDidEnterBackground()
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        let deeplinkUtility = DeepLinkUtility()
+        deeplinkUtility.handleDeepLink(for: url)
         return true
     }
 }

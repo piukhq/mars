@@ -160,6 +160,7 @@
 		70A61D16263095060073A08A /* BinkModuleViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A61D15263095060073A08A /* BinkModuleViewModelTests.swift */; };
 		70A61D532630A23C0073A08A /* BinkModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A61D512630A23B0073A08A /* BinkModuleView.swift */; };
 		70A61D542630A23C0073A08A /* BinkModuleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70A61D522630A23B0073A08A /* BinkModuleView.xib */; };
+		70AA71B02642B0560088FEC7 /* DeepLinkUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA71AF2642B0560088FEC7 /* DeepLinkUtility.swift */; };
 		70AA970825E51E1E00D10EC0 /* LocalPointsCollection_Login_Boots.js in Resources */ = {isa = PBXBuildFile; fileRef = 70AA970725E51E1E00D10EC0 /* LocalPointsCollection_Login_Boots.js */; };
 		70AA970D25E51F5400D10EC0 /* LocalPointsCollection_Points_Boots.js in Resources */ = {isa = PBXBuildFile; fileRef = 70AA970C25E51F5400D10EC0 /* LocalPointsCollection_Points_Boots.js */; };
 		70B316E724E6AF2800D86DE5 /* Navigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B316E624E6AF2800D86DE5 /* Navigate.swift */; };
@@ -236,7 +237,7 @@
 		BD25E6992388677E0027FF3E /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD25E6982388677E0027FF3E /* LoadingScreen.swift */; };
 		BD3CB946232857BD005C37AE /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CB945232857BD005C37AE /* APIConstants.swift */; };
 		BD458B38236B417D0029A538 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B37236B417D0029A538 /* LoginViewController.swift */; };
-		BD458B3C236B5B710029A538 /* LoginRegisterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B3B236B5B710029A538 /* LoginRegisterResponse.swift */; };
+		BD458B3C236B5B710029A538 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B3B236B5B710029A538 /* LoginResponse.swift */; };
 		BD458B3E236B5C0E0029A538 /* LoginRegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B3D236B5C0E0029A538 /* LoginRegisterRequest.swift */; };
 		BD458B40236C987F0029A538 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B3F236C987F0029A538 /* UserManager.swift */; };
 		BD458B42236CA3910029A538 /* LogoutResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B41236CA3910029A538 /* LogoutResponse.swift */; };
@@ -720,6 +721,7 @@
 		70A61D15263095060073A08A /* BinkModuleViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkModuleViewModelTests.swift; sourceTree = "<group>"; };
 		70A61D512630A23B0073A08A /* BinkModuleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinkModuleView.swift; sourceTree = "<group>"; };
 		70A61D522630A23B0073A08A /* BinkModuleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BinkModuleView.xib; sourceTree = "<group>"; };
+		70AA71AF2642B0560088FEC7 /* DeepLinkUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkUtility.swift; sourceTree = "<group>"; };
 		70AA970725E51E1E00D10EC0 /* LocalPointsCollection_Login_Boots.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Login_Boots.js; sourceTree = "<group>"; };
 		70AA970C25E51F5400D10EC0 /* LocalPointsCollection_Points_Boots.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Points_Boots.js; sourceTree = "<group>"; };
 		70B316E624E6AF2800D86DE5 /* Navigate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigate.swift; sourceTree = "<group>"; };
@@ -801,7 +803,7 @@
 		BD3CB9442328574A005C37AE /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		BD3CB945232857BD005C37AE /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
 		BD458B37236B417D0029A538 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		BD458B3B236B5B710029A538 /* LoginRegisterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterResponse.swift; sourceTree = "<group>"; };
+		BD458B3B236B5B710029A538 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		BD458B3D236B5C0E0029A538 /* LoginRegisterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterRequest.swift; sourceTree = "<group>"; };
 		BD458B3F236C987F0029A538 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		BD458B41236CA3910029A538 /* LogoutResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutResponse.swift; sourceTree = "<group>"; };
@@ -1442,6 +1444,7 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				70C8029D2642B231005700A2 /* Deep Linking */,
 				70A2ED9F261DED1D00889914 /* Safe Decoding */,
 				CE539DFB25F0EB8C00BDA5EF /* Logging */,
 				70C3931B25D6E45A0065FDDE /* Feature Toggling */,
@@ -1800,6 +1803,14 @@
 			path = "Feature Toggling";
 			sourceTree = "<group>";
 		};
+		70C8029D2642B231005700A2 /* Deep Linking */ = {
+			isa = PBXGroup;
+			children = (
+				70AA71AF2642B0560088FEC7 /* DeepLinkUtility.swift */,
+			);
+			path = "Deep Linking";
+			sourceTree = "<group>";
+		};
 		70CA2F03256E79B0008E0A81 /* Dynamic Actions */ = {
 			isa = PBXGroup;
 			children = (
@@ -2030,7 +2041,7 @@
 		BD458B3A236B5B600029A538 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				BD458B3B236B5B710029A538 /* LoginRegisterResponse.swift */,
+				BD458B3B236B5B710029A538 /* LoginResponse.swift */,
 				BD458B3D236B5C0E0029A538 /* LoginRegisterRequest.swift */,
 				BD458B41236CA3910029A538 /* LogoutResponse.swift */,
 				BD9E4CC8236EF44900C6F098 /* SocialLoginRequest.swift */,
@@ -3333,7 +3344,7 @@
 				BD9E4CCF236F8D6100C6F098 /* RenewTokenResponse.swift in Sources */,
 				EF758E0823225F35000D26A9 /* Database.swift in Sources */,
 				BD9FB6B62338120700E5559A /* TransactionsViewController.swift in Sources */,
-				BD458B3C236B5B710029A538 /* LoginRegisterResponse.swift in Sources */,
+				BD458B3C236B5B710029A538 /* LoginResponse.swift in Sources */,
 				3C119BA12315332B0015CE91 /* LoyaltyPlanView.swift in Sources */,
 				CE73F9AD2600B64E00D53BCF /* HeaderTableViewCell.swift in Sources */,
 				EF2E881323351A6000F678F3 /* CoreDataRepositoryProtocol.swift in Sources */,
@@ -3370,6 +3381,7 @@
 				EFA81025240565750000D21D /* CD_PlanDynamicContent.swift in Sources */,
 				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
 				EF54911C2371CB3300FE17BE /* PaymentCardDetailTableViewCell.swift in Sources */,
+				70AA71B02642B0560088FEC7 /* DeepLinkUtility.swift in Sources */,
 				EFA5F7352379A7C70027AB80 /* CD_MembershipCardAmount.swift in Sources */,
 				BDD9C8A7233D07D1003CD616 /* UICollectionViewExtension.swift in Sources */,
 				EFA5F72F2379A7C70027AB80 /* _CD_App.swift in Sources */,
