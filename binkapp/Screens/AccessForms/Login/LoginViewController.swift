@@ -44,6 +44,8 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     }()
     
     private var loginType: AccessForm = .magicLink
+    
+    private let loginController = LoginController()
 
     init() {
         super.init(title: L10n.magicLinkTitle, description: "", attributedDescription: magicLinkattributedDescription, dataSource: FormDataSource(accessForm: .magicLink))
@@ -59,8 +61,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         
 //        stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: L10n.loginForgotPassword)])
         
-        footerButtons = [
-            continueButton, switchLoginTypeButton]
+        footerButtons = [continueButton, switchLoginTypeButton]
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -145,50 +146,25 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
             )
         }
 
-        login(request: loginRequest) { [weak self] result in
-            switch result {
-            case .success(let response):
-                guard let email = response.email else {
-                    self?.handleLoginError()
-                    return
-                }
-                Current.userManager.setNewUser(with: response)
-                
-                self?.createService(params: APIConstants.makeServicePostRequest(email: email), completion: { (success, _) in
-                    guard success else {
-                        self?.handleLoginError()
-                        return
-                    }
-                    
-                    self?.getUserProfile(completion: { result in
-                        guard let response = try? result.get() else {
-                            BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
-                            return
-                        }
-                        Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
-                        BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
-                    })
-                    
-                    self?.continueButton.toggleLoading(isLoading: false)
-                    Current.rootStateMachine.handleLogin()
-                    BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
-                    BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
-                })
-            case .failure:
-                BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
-                self?.handleLoginError()
+        loginController.login(with: loginRequest) { success in
+            guard success else {
+                self.handleLoginError()
+                return
             }
         }
     }
     
     private func performMagicLinkRequest() {
         let fields = dataSource.currentFieldValues()
-
-        // TODO: This should take a request object
-        requestMagicLink(email: fields["email"]!) { (success, error) in
-            if let error = error {
-                // TODO: Handle error
-                print(error.localizedDescription)
+        guard let email = fields["email"] else {
+            handleLoginError()
+            return
+        }
+        
+        requestMagicLink(email: email) { (success, _) in
+            guard success else {
+                self.handleLoginError()
+                return
             }
             
             self.navigateToStatusScreen(for: .checkInbox)

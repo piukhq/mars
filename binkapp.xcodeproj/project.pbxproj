@@ -195,6 +195,7 @@
 		70E8E37B2566DE430027A244 /* PLLScreenViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E37A2566DE430027A244 /* PLLScreenViewModelTests.swift */; };
 		70E8E4AA256712D80027A244 /* CoreDataTestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E4A5256712AF0027A244 /* CoreDataTestable.swift */; };
 		70E8E5A72567FB690027A244 /* OptionalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E5A62567FB690027A244 /* OptionalExtension.swift */; };
+		70EB83882644410A00DD8935 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EB83872644410A00DD8935 /* LoginController.swift */; };
 		70F7EC1B25CAC657005DE935 /* LocalPointsCollection_Points_Morrisons.js in Resources */ = {isa = PBXBuildFile; fileRef = 70F7EC1A25CAC656005DE935 /* LocalPointsCollection_Points_Morrisons.js */; };
 		70F7EC2125CAF932005DE935 /* WebScrapable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2025CAF932005DE935 /* WebScrapable.swift */; };
 		70F7EC2625CAF950005DE935 /* WebScrapingUtilityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2525CAF950005DE935 /* WebScrapingUtilityError.swift */; };
@@ -755,6 +756,7 @@
 		70E8E37A2566DE430027A244 /* PLLScreenViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenViewModelTests.swift; sourceTree = "<group>"; };
 		70E8E4A5256712AF0027A244 /* CoreDataTestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTestable.swift; sourceTree = "<group>"; };
 		70E8E5A62567FB690027A244 /* OptionalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalExtension.swift; sourceTree = "<group>"; };
+		70EB83872644410A00DD8935 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		70F7EC1A25CAC656005DE935 /* LocalPointsCollection_Points_Morrisons.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Points_Morrisons.js; sourceTree = "<group>"; };
 		70F7EC2025CAF932005DE935 /* WebScrapable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapable.swift; sourceTree = "<group>"; };
 		70F7EC2525CAF950005DE935 /* WebScrapingUtilityError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingUtilityError.swift; sourceTree = "<group>"; };
@@ -1641,6 +1643,7 @@
 			isa = PBXGroup;
 			children = (
 				BD458B37236B417D0029A538 /* LoginViewController.swift */,
+				70EB83872644410A00DD8935 /* LoginController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -3505,6 +3508,7 @@
 				3CF054CE22FD7DC80069E98A /* UIView+Extension.swift in Sources */,
 				EF7B65D6232FDB8A0025D167 /* FieldChoice.swift in Sources */,
 				EFA5F7552379AAB20027AB80 /* _CD_VoucherBurn.swift in Sources */,
+				70EB83882644410A00DD8935 /* LoginController.swift in Sources */,
 				EFBDB103237B1468002D7898 /* CALayerExtension.swift in Sources */,
 				EFA5F7212379A7C70027AB80 /* _CD_FieldChoice.swift in Sources */,
 				BDD9C83C233BE493003CD616 /* MembershipPlanImageModel.swift in Sources */,
