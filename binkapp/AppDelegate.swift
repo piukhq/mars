@@ -93,6 +93,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         }
         Current.wallet.handleAppDidEnterBackground()
     }
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb, let url = userActivity.webpageURL, let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+            return false
+        }
+        
+        guard let queryItems = components.queryItems else { return false }
+        for item in queryItems {
+            if item.name == "token" {
+                let alert = ViewControllerFactory.makeOkAlertViewController(title: "Token found", message: item.value ?? "")
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
+            }
+        }
+        
+        return false
+    }
 }
 
 private extension AppDelegate {
