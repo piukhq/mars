@@ -74,6 +74,7 @@
             </constraints>
             <size key="customSize" width="441" height="108"/>
             <connections>
+                <outlet property="containerView" destination="BEu-lG-SFr" id="x6x-bK-IN1"/>
                 <outlet property="iconImageView" destination="7Nh-9a-8bB" id="nkq-oD-fDX"/>
                 <outlet property="subtitleLabel" destination="z5i-wj-QPK" id="7oG-JO-vtf"/>
                 <outlet property="titleLabel" destination="F2m-nI-ptV" id="LQe-Od-eHP"/>

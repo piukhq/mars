@@ -49,8 +49,8 @@ class BrowseBrandsViewController: BinkViewController {
     }()
     
     private lazy var scanLoyaltyCardCell: ScanLoyaltyCardCollectionViewCell = {
-        let cell = ScanLoyaltyCardCollectionViewCell(frame: scanButtonView.frame)
-        scanButtonView.addSubview(cell)
+        let cell: ScanLoyaltyCardCollectionViewCell = .fromNib()
+        cell.frame = CGRect(x: Constants.marginPadding, y: 0, width: view.frame.width - (Constants.marginPadding * 3), height: scanButtonView.frame.height)
         return cell
     }()
     
@@ -91,6 +91,8 @@ class BrowseBrandsViewController: BinkViewController {
         configureSearchTextField()
         configureCollectionView()
         
+        scanButtonView.addSubview(scanLoyaltyCardCell)
+                
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
     }
