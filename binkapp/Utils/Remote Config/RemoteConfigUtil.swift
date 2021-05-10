@@ -46,6 +46,9 @@ class RemoteConfigUtil {
     
     private let remoteConfig = RemoteConfig.remoteConfig()
     
+    /// A tool based on the app_configuration object in remote config
+    let appConfiguration = RemoteAppConfigurationUtil()
+    
     func configure() {
         setupRemoteConfig()
     }
@@ -95,5 +98,15 @@ class RemoteConfigUtil {
 
     func objectForConfigKey<T: Codable>(_ configKey: RemoteConfigKey, forObjectType objectType: T.Type) -> T? {
         return remoteConfig.configValue(forKey: configKey.formattedKey).stringValue?.asDecodedObject(ofType: objectType)
+    }
+}
+
+struct RemoteAppConfigurationUtil {
+    private var appConfiguration: AppConfiguration? {
+        return Current.remoteConfig.objectForConfigKey(.appConfiguration, forObjectType: AppConfiguration.self)
+    }
+    
+    var shouldPromptUpdate: Bool {
+        return true
     }
 }
