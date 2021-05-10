@@ -8,11 +8,17 @@
 
 import UIKit
 
-class ScanLoyaltyCardCollectionViewCell: UICollectionViewCell {
-
+class ScanLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell {
+    @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        setupShadow()
+        iconImageView.image = Asset.binkIconLogo.image
+        CAGradientLayer.makeGradient(for: containerView, firstColor: .binkGradientBlueRight, secondColor: .binkGradientBlueLeft, startPoint: CGPoint(x: 0.7, y: 0.0))
+        
+        // soryt localized strings
     }
-
 }
