@@ -101,12 +101,38 @@ class RemoteConfigUtil {
     }
 }
 
-struct RemoteAppConfigurationUtil {
-    private var appConfiguration: AppConfiguration? {
-        return Current.remoteConfig.objectForConfigKey(.appConfiguration, forObjectType: AppConfiguration.self)
+struct RemoteAppConfigurationUtil {    
+    private var recommendedLiveVersion: String? {
+        let appConfiguration = Current.remoteConfig.objectForConfigKey(.appConfiguration, forObjectType: AppConfiguration.self)
+        return appConfiguration?.recommendedLiveAppVersion?.iOS
     }
     
     var shouldPromptUpdate: Bool {
-        return true
+        // Break recommended version into components
+        guard let recommendedLiveVersion = recommendedLiveVersion else { return false }
+        guard let components = VersionComponent.components(from: recommendedLiveVersion, expecting: [.major, .minor, .patch]) else { return false }
+        
+        // If recommended major is higher than local, return true
+        // If recommended major is lower than local, return false
+        guard let recommendedMajor = VersionComponent.value(component: .major, from: components), let currentMajor = Bundle.majorVersion else { return false }
+        if recommendedMajor > currentMajor { return true }
+        if currentMajor > recommendedMajor { return false }
+        // If recommended major is the same as local, move to minor
+        
+        // If recommended minor is higher than local, return true
+        // If recommended minor is lower than local, return false
+        guard let recommendedMinor = VersionComponent.value(component: .minor, from: components), let currentMinor = Bundle.minorVersion else { return false }
+        if recommendedMinor > currentMinor { return true }
+        if currentMinor > recommendedMinor { return false }
+        // If recommended minor is the same as local, move to patch
+        
+        // If recommended patch is higher than local, return true
+        // If recommended patch is lower than local, return false
+        guard let recommendedPatch = VersionComponent.value(component: .patch, from: components), let currentPatch = Bundle.patchVersion else { return false }
+        if recommendedPatch > currentPatch { return true }
+        if currentPatch > recommendedPatch { return false }
+        
+        // If recommended patch is the same as local, return false
+        return false
     }
 }
