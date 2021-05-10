@@ -66,8 +66,12 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
                 <constraint firstItem="jpz-VD-l7V" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="033-Ac-F19"/>
+                <constraint firstItem="jpz-VD-l7V" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="eTJ-wA-emX"/>
+                <constraint firstItem="jpz-VD-l7V" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ecs-lS-wpD"/>
                 <constraint firstItem="jpz-VD-l7V" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="kqN-IS-CTm"/>
                 <constraint firstAttribute="bottom" secondItem="jpz-VD-l7V" secondAttribute="bottom" id="lq8-zH-P4B"/>
+                <constraint firstAttribute="trailing" secondItem="jpz-VD-l7V" secondAttribute="trailing" id="o6u-hM-F4D"/>
+                <constraint firstAttribute="bottom" secondItem="jpz-VD-l7V" secondAttribute="bottom" id="oeu-9i-TGZ"/>
                 <constraint firstAttribute="trailing" secondItem="jpz-VD-l7V" secondAttribute="trailing" id="rgc-Hd-x39"/>
             </constraints>
             <size key="customSize" width="400" height="100"/>
