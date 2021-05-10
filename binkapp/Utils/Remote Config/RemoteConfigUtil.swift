@@ -18,6 +18,7 @@ class RemoteConfigUtil {
         case dynamicActions
         case betaFeatures
         case betaUsers
+        case appConfiguration
         
         var formattedKey: String {
             let isDebug = !APIConstants.isProduction
@@ -37,6 +38,8 @@ class RemoteConfigUtil {
                 return "beta_features"
             case .betaUsers:
                 return "beta_users"
+            case .appConfiguration:
+                return "app_configuration"
             }
         }
     }
