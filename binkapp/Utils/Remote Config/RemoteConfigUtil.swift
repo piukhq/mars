@@ -46,8 +46,10 @@ class RemoteConfigUtil {
     
     private let remoteConfig = RemoteConfig.remoteConfig()
     
+    private(set) var hasPerformedFetch = false
+    
     /// A tool based on the app_configuration object in remote config
-    let appConfiguration = RemoteAppConfigurationUtil()
+    var appConfiguration = RemoteAppConfigurationUtil()
     
     func configure() {
         setupRemoteConfig()
@@ -67,6 +69,7 @@ class RemoteConfigUtil {
     }
     
     private func handleRemoteConfigFetch() {
+        hasPerformedFetch = true
         Current.featureManager.getFeaturesFromRemoteConfig()
         appConfiguration.promptRecommendedUpdateIfNecessary()
     }
@@ -103,10 +106,22 @@ class RemoteConfigUtil {
 }
 
 struct RemoteAppConfigurationUtil {
-    func promptRecommendedUpdateIfNecessary() {
-        guard shouldPromptUpdate else { return }
+    private var canShowPrompt = true
+    
+    mutating func promptRecommendedUpdateIfNecessary() {
+        // We must have performed a remote config fetch, and we must have not have prompted already
+        
+        guard Current.remoteConfig.hasPerformedFetch else { return }
+        guard canShowPrompt else { return }
+        guard updateIsRecommended else { return }
+        
+        canShowPrompt = false
+        
         let alert = BinkAlertController(title: "App Update Available", message: "Get the latest version of the Bink app (\(recommendedLiveVersion ?? "")).", preferredStyle: .alert)
-        let openAppStoreAction = UIAlertAction(title: "Open App Store", style: .default, handler: nil)
+        let openAppStoreAction = UIAlertAction(title: "Open App Store", style: .default) { _ in
+            guard let url = URL(string: "https://apps.apple.com/gb/app/bink-loyalty-rewards-wallet/id1142153931"), UIApplication.shared.canOpenURL(url) else { return }
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
         let maybeLaterAction = UIAlertAction(title: "Maybe later", style: .default, handler: nil)
         let skipVersionAction = UIAlertAction(title: "Skip this version", style: .default, handler: nil)
         alert.addAction(openAppStoreAction)
@@ -121,7 +136,7 @@ struct RemoteAppConfigurationUtil {
         return appConfiguration?.recommendedLiveAppVersion?.iOS
     }
     
-    private var shouldPromptUpdate: Bool {
+    private var updateIsRecommended: Bool {
         // Break recommended version into components
         guard let recommendedLiveVersion = recommendedLiveVersion else { return false }
         guard let components = VersionComponent.components(from: recommendedLiveVersion, expecting: [.major, .minor, .patch]) else { return false }
