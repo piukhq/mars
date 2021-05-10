@@ -83,10 +83,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         
         configureLoadingIndicator()
         checkForZendeskUpdates()
-        
-        if Current.remoteConfig.appConfiguration.shouldPromptUpdate {
-            print("")
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

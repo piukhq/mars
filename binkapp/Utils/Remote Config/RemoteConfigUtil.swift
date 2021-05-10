@@ -68,6 +68,7 @@ class RemoteConfigUtil {
     
     private func handleRemoteConfigFetch() {
         Current.featureManager.getFeaturesFromRemoteConfig()
+        appConfiguration.promptRecommendedUpdateIfNecessary()
     }
     
     func fetch(completion: (() -> Void)? = nil) {
@@ -101,13 +102,26 @@ class RemoteConfigUtil {
     }
 }
 
-struct RemoteAppConfigurationUtil {    
+struct RemoteAppConfigurationUtil {
+    func promptRecommendedUpdateIfNecessary() {
+        guard shouldPromptUpdate else { return }
+        let alert = BinkAlertController(title: "App Update Available", message: "Get the latest version of the Bink app (\(recommendedLiveVersion ?? "")).", preferredStyle: .alert)
+        let openAppStoreAction = UIAlertAction(title: "Open App Store", style: .default, handler: nil)
+        let maybeLaterAction = UIAlertAction(title: "Maybe later", style: .default, handler: nil)
+        let skipVersionAction = UIAlertAction(title: "Skip this version", style: .default, handler: nil)
+        alert.addAction(openAppStoreAction)
+        alert.addAction(maybeLaterAction)
+        alert.addAction(skipVersionAction)
+        let request = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(request)
+    }
+    
     private var recommendedLiveVersion: String? {
         let appConfiguration = Current.remoteConfig.objectForConfigKey(.appConfiguration, forObjectType: AppConfiguration.self)
         return appConfiguration?.recommendedLiveAppVersion?.iOS
     }
     
-    var shouldPromptUpdate: Bool {
+    private var shouldPromptUpdate: Bool {
         // Break recommended version into components
         guard let recommendedLiveVersion = recommendedLiveVersion else { return false }
         guard let components = VersionComponent.components(from: recommendedLiveVersion, expecting: [.major, .minor, .patch]) else { return false }
