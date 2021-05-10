@@ -550,6 +550,10 @@ internal enum L10n {
   internal static let scanACardDescription = L10n.tr("Localizable", "scan_a_card_description")
   /// Scan and link your payment card
   internal static let scanAndLinkDescription = L10n.tr("Localizable", "scan_and_link_description")
+  /// Scan loyalty card
+  internal static let scanButtonTitle = L10n.tr("Localizable", "scan_button_title")
+  /// Quickly add a card you already have
+  internal static let scanUttonSubtitle = L10n.tr("Localizable", "scan_utton_subtitle")
   /// Search
   internal static let search = L10n.tr("Localizable", "search")
   /// Is my Data Secure?

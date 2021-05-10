@@ -16,9 +16,12 @@ class ScanLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupShadow()
-        iconImageView.image = Asset.binkIconLogo.image
-        CAGradientLayer.makeGradient(for: containerView, firstColor: .binkGradientBlueRight, secondColor: .binkGradientBlueLeft, startPoint: CGPoint(x: 0.7, y: 0.0))
         
-        // soryt localized strings
+        titleLabel.text = L10n.scanButtonTitle
+        subtitleLabel.text = L10n.scanUttonSubtitle
+        iconImageView.image = Asset.scanQuick.image
+        CAGradientLayer.makeGradient(for: contentView, firstColor: .binkGradientBlueRight, secondColor: .binkGradientBlueLeft, startPoint: CGPoint(x: 1.0, y: 0.0))
+        
+        
     }
 }

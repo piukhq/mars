@@ -245,7 +245,7 @@ class BrowseBrandsViewController: BinkViewController {
             }
             self.view.layoutIfNeeded()
         }) { [weak self] _ in
-            self?.tableView.contentInset.top = self?.filterViewHeight ?? 0.0
+//            self?.tableView.contentInset.top = self?.filterViewHeight ?? 0.0
             self?.filtersButton?.isEnabled = true
             self?.filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
         }
@@ -342,6 +342,7 @@ extension BrowseBrandsViewController: UITextFieldDelegate {
 
 extension BrowseBrandsViewController: BrowseBrandsViewModelDelegate {
     func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan]) {
+        tableView.contentInset = Constants.contentInset
         tableView.reloadData()
     }
 }
