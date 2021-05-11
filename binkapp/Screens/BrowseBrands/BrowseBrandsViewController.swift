@@ -330,7 +330,6 @@ extension BrowseBrandsViewController: UITextFieldDelegate {
 
 extension BrowseBrandsViewController: BrowseBrandsViewModelDelegate {
     func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan]) {
-//        tableView.contentInset = Constants.contentInset
         tableView.reloadData()
     }
 }

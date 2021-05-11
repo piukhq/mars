@@ -14,7 +14,6 @@ class ScanLoyaltyCardButton: UIView {
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var button: UIButton!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         titleLabel.text = L10n.scanButtonTitle
@@ -27,6 +26,23 @@ class ScanLoyaltyCardButton: UIView {
     }
     
     @IBAction func buttonTapped(_ sender: Any) {
-//        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(delegate: <#T##BarcodeScannerViewControllerDelegate?#>)
+        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(delegate: self)
+        PermissionsUtility.launchLoyaltyScanner(viewController) {
+            let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: false)
+            Current.navigate.to(navigationRequest)
+        }
+    }
+}
+
+extension ScanLoyaltyCardButton: BarcodeScannerViewControllerDelegate {
+    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
+        let prefilledValues = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
+        let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, existingMembershipCard: nil, prefilledFormValues: [prefilledValues])
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+    }
+    
+    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
+        Current.navigate.back()
     }
 }
