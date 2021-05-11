@@ -34,7 +34,7 @@ extension InAppReviewable {
     }
 
     private var canRequestReview: Bool {
-        if !CommandLine.arguments.contains("UI-testing") {
+        if !UIApplication.isRunningUITests {
             #if DEBUG
             guard Current.userDefaults.bool(forDefaultsKey: .applyInAppReviewRules) else { return true }
             #endif

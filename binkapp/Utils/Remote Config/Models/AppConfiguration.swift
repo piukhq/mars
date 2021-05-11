@@ -30,6 +30,9 @@ class RemoteAppConfigurationUtil {
     private var canShowRecommendedUpdatePrompt = true
     
     func promptRecommendedUpdateIfNecessary() {
+        /// Don't show prompt if running UI tests
+        if UIApplication.isRunningUITests { return }
+        
         /// We must have performed a remote config fetch, and we must have not have prompted already
         guard Current.remoteConfig.hasPerformedFetch else { return }
         guard canShowRecommendedUpdatePrompt else { return }
