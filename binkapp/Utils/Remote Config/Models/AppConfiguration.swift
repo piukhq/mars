@@ -40,8 +40,7 @@ class RemoteAppConfigurationUtil {
         guard updateIsRecommended else { return }
         if recommendedVersionWasSkipped { return }
         
-        guard let versionString = recommendedLiveVersion?.versionString else { return }
-        let alert = ViewControllerFactory.makeRecommendedAppUpdateAlertController(recommendedVersionString: versionString) { [weak self] in
+        let alert = ViewControllerFactory.makeRecommendedAppUpdateAlertController { [weak self] in
             self?.skipVersion()
             BinkAnalytics.track(RecommendedAppUpdateAnalyticsEvent.skipThisVersion)
         }
