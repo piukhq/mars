@@ -211,6 +211,27 @@ enum ViewControllerFactory {
         return alert
     }
     
+    static func makeRecommendedAppUpdateAlertController(recommendedVersionString: String, skipVersionHandler: @escaping () -> Void) -> BinkAlertController {
+        let alert = BinkAlertController(title: "App Update Available", message: "Get the latest version of the Bink app (\(recommendedVersionString)).", preferredStyle: .alert)
+        
+        let openAppStoreAction = UIAlertAction(title: "Open App Store", style: .default) { _ in
+            guard let url = URL(string: "https://apps.apple.com/gb/app/bink-loyalty-rewards-wallet/id1142153931"), UIApplication.shared.canOpenURL(url) else { return }
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+        
+        let maybeLaterAction = UIAlertAction(title: "Maybe later", style: .default, handler: nil)
+        
+        let skipVersionAction = UIAlertAction(title: "Skip this version", style: .default) { _ in
+            skipVersionHandler()
+        }
+        
+        alert.addAction(openAppStoreAction)
+        alert.addAction(maybeLaterAction)
+        alert.addAction(skipVersionAction)
+        
+        return alert
+    }
+    
     static func makeWebViewController(urlString: String) -> WebViewController {
         return WebViewController(urlString: urlString)
     }

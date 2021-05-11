@@ -27,55 +27,45 @@ struct AppConfiguration: Codable {
 }
 
 class RemoteAppConfigurationUtil {
-    private var canShowPrompt = true
+    private var canShowRecommendedUpdatePrompt = true
     
     func promptRecommendedUpdateIfNecessary() {
         /// We must have performed a remote config fetch, and we must have not have prompted already
         guard Current.remoteConfig.hasPerformedFetch else { return }
-        guard canShowPrompt else { return }
+        guard canShowRecommendedUpdatePrompt else { return }
         
         /// By calling this here, if there is no update recommended at launch, but this changes on remote config before the app is relaunched,
         /// this stops a pull-to-refresh triggering the alert.
-        canShowPrompt = false
+        canShowRecommendedUpdatePrompt = false
         guard updateIsRecommended else { return }
-        guard !recommendedVersionWasSkipped else { return }
+        if recommendedVersionWasSkipped { return }
         
-        let alert = BinkAlertController(title: "App Update Available", message: "Get the latest version of the Bink app (\(recommendedLiveVersion ?? "")).", preferredStyle: .alert)
-        let openAppStoreAction = UIAlertAction(title: "Open App Store", style: .default) { _ in
-            guard let url = URL(string: "https://apps.apple.com/gb/app/bink-loyalty-rewards-wallet/id1142153931"), UIApplication.shared.canOpenURL(url) else { return }
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        guard let versionString = recommendedLiveVersion?.versionString else { return }
+        let alert = ViewControllerFactory.makeRecommendedAppUpdateAlertController(recommendedVersionString: versionString) { [weak self] in
+            self?.skipVersion()
         }
-        let maybeLaterAction = UIAlertAction(title: "Maybe later", style: .default, handler: nil)
-        let skipVersionAction = UIAlertAction(title: "Skip this version", style: .default) { [weak self] _ in
-            guard let self = self else { return }
-            guard let version = AppVersion(versionString: self.recommendedLiveVersion) else { return }
-            self.skipVersion(version)
-        }
-        alert.addAction(openAppStoreAction)
-        alert.addAction(maybeLaterAction)
-        alert.addAction(skipVersionAction)
+        
         let request = AlertNavigationRequest(alertController: alert)
         Current.navigate.to(request)
     }
     
-    private var recommendedLiveVersion: String? {
+    private var recommendedLiveVersion: AppVersion? {
         let appConfiguration = Current.remoteConfig.objectForConfigKey(.appConfiguration, forObjectType: AppConfiguration.self)
-        return appConfiguration?.recommendedLiveAppVersion?.iOS
+        return AppVersion(versionString: appConfiguration?.recommendedLiveAppVersion?.iOS)
     }
     
     private var updateIsRecommended: Bool {
-        guard let recommendedLiveVersion = AppVersion(versionString: recommendedLiveVersion) else { return false }
-        return recommendedLiveVersion.isMoreRecentThanCurrentVersion
+        return recommendedLiveVersion?.isMoreRecentThanCurrentVersion == true
     }
     
     private var recommendedVersionWasSkipped: Bool {
         guard let skippedVersions = Current.userDefaults.value(forDefaultsKey: .skippedRecommendedVersions) as? [String] else { return false }
-        guard let versionString = recommendedLiveVersion else { return false }
+        guard let versionString = recommendedLiveVersion?.versionString else { return false }
         return skippedVersions.contains(versionString)
     }
     
-    private func skipVersion(_ version: AppVersion) {
-        let versionString = version.versionString
+    private func skipVersion() {
+        guard let versionString = recommendedLiveVersion?.versionString else { return }
         var skippedVersions = Current.userDefaults.value(forDefaultsKey: .skippedRecommendedVersions) as? [String]
         skippedVersions?.append(versionString)
         Current.userDefaults.set(skippedVersions ?? [versionString], forDefaultsKey: .skippedRecommendedVersions)
