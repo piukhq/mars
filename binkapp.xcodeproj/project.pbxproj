@@ -132,6 +132,8 @@
 		7061053125B7349600A16DA5 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7061053025B7349600A16DA5 /* ThemeManager.swift */; };
 		7061053925B8552C00A16DA5 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7061053825B8552C00A16DA5 /* Theme.swift */; };
 		7061054125B8555600A16DA5 /* Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7061054025B8555600A16DA5 /* Styling.swift */; };
+		706157BF26499CC60002701E /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706157BE26499CC60002701E /* AppVersion.swift */; };
+		706157C8264A84AF0002701E /* AppVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706157C7264A84AF0002701E /* AppVersionTests.swift */; };
 		70661B88250792DB006DB009 /* BootsPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */; };
 		70661B93250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70661B92250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift */; };
 		706D203924D851BA004BCCF3 /* _CD_CardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D203724D851BA004BCCF3 /* _CD_CardAccount.swift */; };
@@ -199,6 +201,7 @@
 		70F7EC2B25CAF97A005DE935 /* WebScrapingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2A25CAF97A005DE935 /* WebScrapingViewController.swift */; };
 		70F7EC3025CAF9A2005DE935 /* WebScrapingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2F25CAF9A2005DE935 /* WebScrapingResponse.swift */; };
 		70FD1DB2262D8E59003C0DA0 /* BinkModuleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FD1DB1262D8E59003C0DA0 /* BinkModuleType.swift */; };
+		70FF2B6F2649543200A64DD3 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FF2B6E2649543200A64DD3 /* AppConfiguration.swift */; };
 		96F22E002507C5AC0009951B /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 96F22DFF2507C5AC0009951B /* Sentry */; };
 		96F22E022508B6060009951B /* SentryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F22E012508B6060009951B /* SentryService.swift */; };
 		9B0A103BBA0F62048017D0B8 /* Pods_binkappTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 352CBEDF33DDEB7B603C909B /* Pods_binkappTests.framework */; };
@@ -689,6 +692,8 @@
 		7061053025B7349600A16DA5 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		7061053825B8552C00A16DA5 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		7061054025B8555600A16DA5 /* Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styling.swift; sourceTree = "<group>"; };
+		706157BE26499CC60002701E /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
+		706157C7264A84AF0002701E /* AppVersionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionTests.swift; sourceTree = "<group>"; };
 		70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootsPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70661B92250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorrisonsPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		706D203624D85125004BCCF3 /* binkapp - 03-08-20 - Card accounts uuid.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 03-08-20 - Card accounts uuid.xcdatamodel"; sourceTree = "<group>"; };
@@ -759,6 +764,7 @@
 		70F7EC2A25CAF97A005DE935 /* WebScrapingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingViewController.swift; sourceTree = "<group>"; };
 		70F7EC2F25CAF9A2005DE935 /* WebScrapingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingResponse.swift; sourceTree = "<group>"; };
 		70FD1DB1262D8E59003C0DA0 /* BinkModuleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkModuleType.swift; sourceTree = "<group>"; };
+		70FF2B6E2649543200A64DD3 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		782FD7EAEC7253B4F80C33EF /* Pods-binkappTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.beta.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.beta.xcconfig"; sourceTree = "<group>"; };
 		96F22E012508B6060009951B /* SentryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentryService.swift; sourceTree = "<group>"; };
 		9AF638C55EA3C2FE09150516 /* Pods-binkappTests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.app store (internal).xcconfig"; sourceTree = "<group>"; };
@@ -1440,6 +1446,7 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				706157BD26499CB30002701E /* App Version */,
 				70A2ED9F261DED1D00889914 /* Safe Decoding */,
 				CE539DFB25F0EB8C00BDA5EF /* Logging */,
 				70C3931B25D6E45A0065FDDE /* Feature Toggling */,
@@ -1586,6 +1593,7 @@
 		5ECE048222CE579B001BA964 /* binkappTests */ = {
 			isa = PBXGroup;
 			children = (
+				706157C6264A848A0002701E /* Recommended App Update */,
 				70D6863C257152D700403448 /* Dynamic Actions */,
 				CE387A3925656E75006BAC11 /* BinkUI */,
 				CEF389E9255D72B30063C718 /* Extensions */,
@@ -1675,6 +1683,21 @@
 			path = Theming;
 			sourceTree = "<group>";
 		};
+		706157BD26499CB30002701E /* App Version */ = {
+			isa = PBXGroup;
+			children = (
+				706157BE26499CC60002701E /* AppVersion.swift */,
+			);
+			path = "App Version";
+			sourceTree = "<group>";
+		};
+		706157C6264A848A0002701E /* Recommended App Update */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Recommended App Update";
+			sourceTree = "<group>";
+		};
 		70661B85250792B6006DB009 /* Tesco */ = {
 			isa = PBXGroup;
 			children = (
@@ -1730,6 +1753,7 @@
 		7097489E24D32A42008D0E29 /* Remote Config */ = {
 			isa = PBXGroup;
 			children = (
+				70FF2B6D2649541B00A64DD3 /* Models */,
 				7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */,
 			);
 			path = "Remote Config";
@@ -1880,6 +1904,14 @@
 				700900D625C1DB7500548F50 /* LocalPointsCollection_DetectElement.js */,
 			);
 			path = Scripts;
+			sourceTree = "<group>";
+		};
+		70FF2B6D2649541B00A64DD3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				70FF2B6E2649543200A64DD3 /* AppConfiguration.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		AF06D86448D661A8F4142F87 /* Persistence */ = {
@@ -2531,6 +2563,7 @@
 			children = (
 				EF7F6E6023E4288C00352DCF /* StorageUtilityTests.swift */,
 				70E867742489303F001ED282 /* SecureUtilityTests.swift */,
+				706157C7264A84AF0002701E /* AppVersionTests.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -3334,6 +3367,7 @@
 				70E39806256E8F4F009AD8CB /* BinkViewController.swift in Sources */,
 				EF4C4781246017C80056CE17 /* ZendeskService.swift in Sources */,
 				EF8BF1F9234147E000D2E5F3 /* LinkedCardResponse.swift in Sources */,
+				706157BF26499CC60002701E /* AppVersion.swift in Sources */,
 				CEA16EFD2625B0F100D449E1 /* BarcodeViewCompact.swift in Sources */,
 				B7136629232690F7008A0ED7 /* PLLScreenViewModel.swift in Sources */,
 				DB088545234FD8A30041A67A /* PLLScreenRepository.swift in Sources */,
@@ -3520,6 +3554,7 @@
 				DB8DE35A2373130100F07F11 /* Bundle+binkapp.swift in Sources */,
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
 				EFA5F7452379A7C70027AB80 /* _CD_PaymentCardAccountConsents.swift in Sources */,
+				70FF2B6F2649543200A64DD3 /* AppConfiguration.swift in Sources */,
 				EFA5F7312379A7C70027AB80 /* CD_Balance.swift in Sources */,
 				CE3A54DE253E0F27007989FE /* ZendeskTickets.swift in Sources */,
 				EFEB5BFF2382984B00E18743 /* HyperlinkButton.swift in Sources */,
@@ -3654,6 +3689,7 @@
 			files = (
 				70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */,
 				70D6863E257152F300403448 /* DynamicActionsTests.swift in Sources */,
+				706157C8264A84AF0002701E /* AppVersionTests.swift in Sources */,
 				CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */,
 				EF7F6E6123E4288C00352DCF /* StorageUtilityTests.swift in Sources */,
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
