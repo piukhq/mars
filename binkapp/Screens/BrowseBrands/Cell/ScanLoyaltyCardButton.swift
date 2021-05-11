@@ -27,5 +27,6 @@ class ScanLoyaltyCardButton: UIView {
     }
     
     @IBAction func buttonTapped(_ sender: Any) {
+//        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(delegate: <#T##BarcodeScannerViewControllerDelegate?#>)
     }
 }

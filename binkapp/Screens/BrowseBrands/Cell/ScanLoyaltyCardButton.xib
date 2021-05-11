@@ -8,8 +8,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="NunitoSans-Bold.ttf">
-            <string>NunitoSans-Bold</string>
+        <array key="NunitoSans-ExtraBold.ttf">
+            <string>NunitoSans-ExtraBold</string>
         </array>
         <array key="NunitoSans-Regular.ttf">
             <string>NunitoSans-Regular</string>
@@ -32,23 +32,23 @@
                             </connections>
                         </button>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Nh-9a-8bB">
-                            <rect key="frame" x="20" y="14" width="60" height="60"/>
+                            <rect key="frame" x="20" y="19" width="50" height="50"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="60" id="cIB-Ek-IOM"/>
-                                <constraint firstAttribute="height" constant="60" id="iim-V3-fbb"/>
+                                <constraint firstAttribute="width" constant="50" id="cIB-Ek-IOM"/>
+                                <constraint firstAttribute="height" constant="50" id="iim-V3-fbb"/>
                             </constraints>
                         </imageView>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Gd0-gW-RD8">
-                            <rect key="frame" x="90" y="21.5" width="331" height="45.5"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="-4" translatesAutoresizingMaskIntoConstraints="NO" id="Gd0-gW-RD8">
+                            <rect key="frame" x="80" y="22" width="341" height="44"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan loyalty card" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F2m-nI-ptV">
-                                    <rect key="frame" x="0.0" y="0.0" width="141" height="25"/>
-                                    <fontDescription key="fontDescription" name="NunitoSans-Bold" family="Nunito Sans" pointSize="18"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="160.5" height="27.5"/>
+                                    <fontDescription key="fontDescription" name="NunitoSans-ExtraBold" family="Nunito Sans" pointSize="20"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Quickly add a card you already have" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="z5i-wj-QPK">
-                                    <rect key="frame" x="0.0" y="25" width="240.5" height="20.5"/>
+                                    <rect key="frame" x="0.0" y="23.5" width="240.5" height="20.5"/>
                                     <fontDescription key="fontDescription" name="NunitoSans-Regular" family="Nunito Sans" pointSize="15"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
