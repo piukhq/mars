@@ -11,7 +11,7 @@ import AVFoundation
 
 struct BarcodeScannerViewModel {
     let plan: CD_MembershipPlan?
-    var isScanning: Bool = false
+    var isScanning = false
     
     var hasPlan: Bool {
         return plan != nil
@@ -51,6 +51,7 @@ class BarcodeScannerViewController: BinkViewController {
     private var timer: Timer?
     private var canPresentScanError = true
     private var shouldShowNavigationBar = false
+    private var hasPreviouslyScanned = false
 
     private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .regular))
@@ -284,7 +285,9 @@ class BarcodeScannerViewController: BinkViewController {
 extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         timer?.invalidate()
-        
+        guard !hasPreviouslyScanned else { return }
+        hasPreviouslyScanned = true
+
         //TODO: Tidy this up by splitting to other functions
 
         if let object = metadataObjects.first {
@@ -325,6 +328,7 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                                 let action = UIAlertAction(title: "OK", style: .cancel) { _ in
                                     DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: {
                                         self.canPresentScanError = true
+                                        self.hasPreviouslyScanned = false
                                     })
                                 }
                                 alert.addAction(action)
