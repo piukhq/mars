@@ -11,5 +11,8 @@ import Foundation
 extension Bundle {
     static let shortVersionNumber = main.infoDictionary?["CFBundleShortVersionString"] as? String
     static let bundleVersion = main.infoDictionary?["CFBundleVersion"] as? String
-    static let currentVersion = AppVersion(versionString: shortVersionNumber)
+    static let currentVersion: AppVersion? = {
+        guard let versionString = shortVersionNumber else { return nil }
+        return AppVersion(versionString: versionString)
+    }()
 }

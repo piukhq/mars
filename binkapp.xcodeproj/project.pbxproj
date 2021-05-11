@@ -133,6 +133,7 @@
 		7061053925B8552C00A16DA5 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7061053825B8552C00A16DA5 /* Theme.swift */; };
 		7061054125B8555600A16DA5 /* Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7061054025B8555600A16DA5 /* Styling.swift */; };
 		706157BF26499CC60002701E /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706157BE26499CC60002701E /* AppVersion.swift */; };
+		706157C8264A84AF0002701E /* AppVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706157C7264A84AF0002701E /* AppVersionTests.swift */; };
 		70661B88250792DB006DB009 /* BootsPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */; };
 		70661B93250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70661B92250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift */; };
 		706D203924D851BA004BCCF3 /* _CD_CardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D203724D851BA004BCCF3 /* _CD_CardAccount.swift */; };
@@ -692,6 +693,7 @@
 		7061053825B8552C00A16DA5 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		7061054025B8555600A16DA5 /* Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styling.swift; sourceTree = "<group>"; };
 		706157BE26499CC60002701E /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
+		706157C7264A84AF0002701E /* AppVersionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionTests.swift; sourceTree = "<group>"; };
 		70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootsPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70661B92250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorrisonsPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		706D203624D85125004BCCF3 /* binkapp - 03-08-20 - Card accounts uuid.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 03-08-20 - Card accounts uuid.xcdatamodel"; sourceTree = "<group>"; };
@@ -1591,6 +1593,7 @@
 		5ECE048222CE579B001BA964 /* binkappTests */ = {
 			isa = PBXGroup;
 			children = (
+				706157C6264A848A0002701E /* Recommended App Update */,
 				70D6863C257152D700403448 /* Dynamic Actions */,
 				CE387A3925656E75006BAC11 /* BinkUI */,
 				CEF389E9255D72B30063C718 /* Extensions */,
@@ -1686,6 +1689,13 @@
 				706157BE26499CC60002701E /* AppVersion.swift */,
 			);
 			path = "App Version";
+			sourceTree = "<group>";
+		};
+		706157C6264A848A0002701E /* Recommended App Update */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Recommended App Update";
 			sourceTree = "<group>";
 		};
 		70661B85250792B6006DB009 /* Tesco */ = {
@@ -2553,6 +2563,7 @@
 			children = (
 				EF7F6E6023E4288C00352DCF /* StorageUtilityTests.swift */,
 				70E867742489303F001ED282 /* SecureUtilityTests.swift */,
+				706157C7264A84AF0002701E /* AppVersionTests.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -3678,6 +3689,7 @@
 			files = (
 				70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */,
 				70D6863E257152F300403448 /* DynamicActionsTests.swift in Sources */,
+				706157C8264A84AF0002701E /* AppVersionTests.swift in Sources */,
 				CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */,
 				EF7F6E6123E4288C00352DCF /* StorageUtilityTests.swift in Sources */,
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,

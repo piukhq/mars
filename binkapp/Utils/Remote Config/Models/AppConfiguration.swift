@@ -52,11 +52,13 @@ class RemoteAppConfigurationUtil {
     
     private var recommendedLiveVersion: AppVersion? {
         let appConfiguration = Current.remoteConfig.objectForConfigKey(.appConfiguration, forObjectType: AppConfiguration.self)
-        return AppVersion(versionString: appConfiguration?.recommendedLiveAppVersion?.iOS)
+        guard let versionString = appConfiguration?.recommendedLiveAppVersion?.iOS else { return nil }
+        return AppVersion(versionString: versionString)
     }
     
     private var updateIsRecommended: Bool {
-        return recommendedLiveVersion?.isMoreRecentThanCurrentVersion == true
+        guard let currentVersion = Bundle.currentVersion else { return false }
+        return recommendedLiveVersion?.isMoreRecentThanVersion(currentVersion) == true
     }
     
     private var recommendedVersionWasSkipped: Bool {

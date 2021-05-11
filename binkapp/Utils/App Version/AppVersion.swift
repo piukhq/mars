@@ -8,49 +8,63 @@
 
 import Foundation
 
-struct AppVersion {
-    let versionString: String
+class AppVersion {
     let major: Int?
     let minor: Int?
     let patch: Int?
     
-    enum VersionComponent: Int {
+    lazy var versionString = readableVersionString
+    
+    enum VersionComponent: Int, CaseIterable {
         case major
         case minor
         case patch
     }
     
-    init?(versionString: String?) {
-        guard let versionString = versionString else { return nil }
-        let components = versionString.components(separatedBy: ".")
-        self.versionString = versionString
-        self.major = components[safe: VersionComponent.major.rawValue]?.toInt()
+    init?(versionString: String) {
+        /// Only accept the components matching our supported Version Components
+        let components = Array(versionString.components(separatedBy: ".").prefix(VersionComponent.allCases.count))
+        
+        /// We must be able to atleast parse a major number from the version string, otherwise return nil
+        guard let major = components[safe: VersionComponent.major.rawValue]?.toInt() else { return nil }
+        self.major = major
+        
         self.minor = components[safe: VersionComponent.minor.rawValue]?.toInt()
         self.patch = components[safe: VersionComponent.patch.rawValue]?.toInt()
     }
     
-    var isMoreRecentThanCurrentVersion: Bool {
-        /// If current major is lower, return true
-        /// If current major is higher, return fals
-        guard let currentMajor = Bundle.currentVersion?.major, let major = self.major else { return false }
-        if major > currentMajor { return true }
-        if currentMajor > major { return false }
-        /// If current major is the same, move to minor
+    private lazy var readableVersionString: String = {
+        var readableVersionString: [String] = []
+        let components = [major, minor, patch]
+        components.forEach { component in
+            guard let component = component else { return }
+            readableVersionString.append("\(component)")
+        }
+        return readableVersionString.joined(separator: ".")
+    }()
+    
+    func isMoreRecentThanVersion(_ version: AppVersion) -> Bool {
+        /// If comparison major is lower, return true
+        /// If comparison major is higher, return false
+        guard let comparisonMajor = version.major, let major = self.major else { return false }
+        if major > comparisonMajor { return true }
+        if comparisonMajor > major { return false }
+        /// If comparison major is the same, move to minor
         
-        /// If current minor is lower, return true
-        /// If current minor is higher, return false
-        guard let currentMinor = Bundle.currentVersion?.minor, let minor = self.minor else { return false }
-        if minor > currentMinor { return true }
-        if currentMinor > minor { return false }
-        /// If current minor is the same, move to patch
+        /// If comparison minor is lower, return true
+        /// If comparison minor is higher, return false
+        guard let comparisonMinor = version.minor, let minor = self.minor else { return false }
+        if minor > comparisonMinor { return true }
+        if comparisonMinor > minor { return false }
+        /// If comparison minor is the same, move to patch
         
-        /// If current patch is lower, return true
-        /// If current patch is higher, return false
-        guard let currentPatch = Bundle.currentVersion?.patch, let patch = self.patch else { return false }
-        if patch > currentPatch { return true }
-        if currentPatch > patch { return false }
+        /// If comparison patch is lower, return true
+        /// If comparison patch is higher, return false
+        guard let comparisonPatch = version.patch, let patch = self.patch else { return false }
+        if patch > comparisonPatch { return true }
+        if comparisonPatch > patch { return false }
         
-        /// If current patch is the same, return false
+        /// If comparison patch is the same, return false
         return false
     }
 }
