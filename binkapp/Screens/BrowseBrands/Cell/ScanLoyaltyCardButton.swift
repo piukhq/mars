@@ -1,5 +1,5 @@
 //
-//  ScanLoyaltyCardCollectionViewCell.swift
+//  ScanLoyaltyCardButton.swift
 //  binkapp
 //
 //  Created by Sean Williams on 10/05/2021.
@@ -8,20 +8,24 @@
 
 import UIKit
 
-class ScanLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell {
+class ScanLoyaltyCardButton: UIView {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
+    @IBOutlet weak var button: UIButton!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        setupShadow()
-        
         titleLabel.text = L10n.scanButtonTitle
         subtitleLabel.text = L10n.scanUttonSubtitle
         iconImageView.image = Asset.scanQuick.image
-        CAGradientLayer.makeGradient(for: contentView, firstColor: .binkGradientBlueRight, secondColor: .binkGradientBlueLeft, startPoint: CGPoint(x: 1.0, y: 0.0))
-        
-        
+        CAGradientLayer.makeGradient(for: self, firstColor: .binkGradientBlueRight, secondColor: .binkGradientBlueLeft, startPoint: CGPoint(x: 1.0, y: 0.0))
+
+        layer.cornerRadius = 10
+        layer.masksToBounds = true
+    }
+    
+    @IBAction func buttonTapped(_ sender: Any) {
     }
 }

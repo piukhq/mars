@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="NunitoSans-Bold.ttf">
+            <string>NunitoSans-Bold</string>
+        </array>
+        <array key="NunitoSans-Regular.ttf">
+            <string>NunitoSans-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="ldd-GO-xwU" customClass="ScanLoyaltyCardButton" customModule="binkapp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="441" height="88"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BEu-lG-SFr" userLabel="Container View">
+                    <rect key="frame" x="0.0" y="0.0" width="441" height="88"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TLE-Og-mb4">
+                            <rect key="frame" x="0.0" y="0.0" width="441" height="88"/>
+                            <connections>
+                                <action selector="buttonTapped:" destination="ldd-GO-xwU" eventType="touchUpInside" id="dpb-Vr-hDc"/>
+                            </connections>
+                        </button>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Nh-9a-8bB">
+                            <rect key="frame" x="20" y="14" width="60" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="60" id="cIB-Ek-IOM"/>
+                                <constraint firstAttribute="height" constant="60" id="iim-V3-fbb"/>
+                            </constraints>
+                        </imageView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Gd0-gW-RD8">
+                            <rect key="frame" x="90" y="21.5" width="331" height="45.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan loyalty card" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F2m-nI-ptV">
+                                    <rect key="frame" x="0.0" y="0.0" width="141" height="25"/>
+                                    <fontDescription key="fontDescription" name="NunitoSans-Bold" family="Nunito Sans" pointSize="18"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Quickly add a card you already have" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="z5i-wj-QPK">
+                                    <rect key="frame" x="0.0" y="25" width="240.5" height="20.5"/>
+                                    <fontDescription key="fontDescription" name="NunitoSans-Regular" family="Nunito Sans" pointSize="15"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Gd0-gW-RD8" firstAttribute="centerY" secondItem="7Nh-9a-8bB" secondAttribute="centerY" id="00G-SG-QA3"/>
+                        <constraint firstAttribute="bottom" secondItem="TLE-Og-mb4" secondAttribute="bottom" id="1CS-cj-ubW"/>
+                        <constraint firstItem="7Nh-9a-8bB" firstAttribute="centerY" secondItem="BEu-lG-SFr" secondAttribute="centerY" id="CLJ-wL-jZg"/>
+                        <constraint firstItem="Gd0-gW-RD8" firstAttribute="leading" secondItem="7Nh-9a-8bB" secondAttribute="trailing" constant="10" id="JsT-fG-0EG"/>
+                        <constraint firstItem="TLE-Og-mb4" firstAttribute="top" secondItem="BEu-lG-SFr" secondAttribute="top" id="Lte-pP-A0D"/>
+                        <constraint firstItem="7Nh-9a-8bB" firstAttribute="leading" secondItem="BEu-lG-SFr" secondAttribute="leading" constant="20" id="VpY-SY-Ri0"/>
+                        <constraint firstAttribute="trailing" secondItem="TLE-Og-mb4" secondAttribute="trailing" id="bh1-X6-BZE"/>
+                        <constraint firstAttribute="height" constant="88" id="cmx-Qf-Aoh"/>
+                        <constraint firstItem="TLE-Og-mb4" firstAttribute="leading" secondItem="BEu-lG-SFr" secondAttribute="leading" id="hLo-4c-d1u"/>
+                        <constraint firstAttribute="trailing" secondItem="Gd0-gW-RD8" secondAttribute="trailing" constant="20" id="iPB-iy-JJr"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="yO8-jg-i7t"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="BEu-lG-SFr" firstAttribute="top" secondItem="ldd-GO-xwU" secondAttribute="top" id="JHx-js-xJ6"/>
+                <constraint firstItem="BEu-lG-SFr" firstAttribute="leading" secondItem="yO8-jg-i7t" secondAttribute="leading" id="Sat-4c-F6X"/>
+                <constraint firstItem="BEu-lG-SFr" firstAttribute="trailing" secondItem="yO8-jg-i7t" secondAttribute="trailing" id="XNq-hG-np6"/>
+                <constraint firstAttribute="bottom" secondItem="BEu-lG-SFr" secondAttribute="bottom" id="yKz-Rg-uAv"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="button" destination="TLE-Og-mb4" id="ujJ-Iy-2hf"/>
+                <outlet property="iconImageView" destination="7Nh-9a-8bB" id="sMj-5D-ZfC"/>
+                <outlet property="subtitleLabel" destination="z5i-wj-QPK" id="fLN-yn-gnF"/>
+                <outlet property="titleLabel" destination="F2m-nI-ptV" id="du4-Au-lSz"/>
+            </connections>
+            <point key="canvasLocation" x="412.31884057971018" y="-128.57142857142856"/>
+        </view>
+    </objects>
+</document>
