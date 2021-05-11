@@ -26,9 +26,9 @@ class ScanLoyaltyCardButton: UIView {
     }
     
     @IBAction func buttonTapped(_ sender: Any) {
-        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(delegate: self)
+        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(showNavigationBar: true, delegate: self)
         PermissionsUtility.launchLoyaltyScanner(viewController) {
-            let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: false)
+            let navigationRequest = PushNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         }
     }

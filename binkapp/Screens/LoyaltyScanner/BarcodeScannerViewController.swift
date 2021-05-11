@@ -50,6 +50,7 @@ class BarcodeScannerViewController: BinkViewController {
     private var rectOfInterest = CGRect.zero
     private var timer: Timer?
     private var canPresentScanError = true
+    private var shouldShowNavigationBar = false
 
     private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .regular))
@@ -86,9 +87,10 @@ class BarcodeScannerViewController: BinkViewController {
 
     private var viewModel: BarcodeScannerViewModel
 
-    init(viewModel: BarcodeScannerViewModel, delegate: BarcodeScannerViewControllerDelegate?) {
+    init(viewModel: BarcodeScannerViewModel, showNavigationBar: Bool = false, delegate: BarcodeScannerViewControllerDelegate?) {
         self.viewModel = viewModel
         self.delegate = delegate
+        self.shouldShowNavigationBar = showNavigationBar
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -137,19 +139,27 @@ class BarcodeScannerViewController: BinkViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
-        
-        view.addSubview(cancelButton)
-        NSLayoutConstraint.activate([
-            cancelButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
-            cancelButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -4),
-            cancelButton.heightAnchor.constraint(equalToConstant: Constants.closeButtonSize.height),
-            cancelButton.widthAnchor.constraint(equalToConstant: Constants.closeButtonSize.width)
-        ])
+        if !shouldShowNavigationBar {
+            navigationController?.setNavigationBarHidden(true, animated: false)
+            
+            view.addSubview(cancelButton)
+            NSLayoutConstraint.activate([
+                cancelButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
+                cancelButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -4),
+                cancelButton.heightAnchor.constraint(equalToConstant: Constants.closeButtonSize.height),
+                cancelButton.widthAnchor.constraint(equalToConstant: Constants.closeButtonSize.width)
+            ])
+        }
+
 
         if !viewModel.isScanning {
             startScanning()
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

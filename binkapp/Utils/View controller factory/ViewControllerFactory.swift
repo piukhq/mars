@@ -12,9 +12,9 @@ import CardScan
 enum ViewControllerFactory {
     // MARK: - Adding Cards
     
-    static func makeLoyaltyScannerViewController(forPlan plan: CD_MembershipPlan? = nil, delegate: BarcodeScannerViewControllerDelegate?) -> BarcodeScannerViewController {
+    static func makeLoyaltyScannerViewController(forPlan plan: CD_MembershipPlan? = nil, showNavigationBar: Bool = false, delegate: BarcodeScannerViewControllerDelegate?) -> BarcodeScannerViewController {
         let viewModel = BarcodeScannerViewModel(plan: plan)
-        return BarcodeScannerViewController(viewModel: viewModel, delegate: delegate)
+        return BarcodeScannerViewController(viewModel: viewModel, showNavigationBar: showNavigationBar, delegate: delegate)
     }
     
     static func makeBrowseBrandsViewController(section: Int? = nil) -> BrowseBrandsViewController {
