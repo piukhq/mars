@@ -13,16 +13,25 @@ class ScanLoyaltyCardButton: UIView {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var gradientView: UIView!
+    
+    private let cornerRadius: CGFloat = 10.0
     
     override func awakeFromNib() {
         super.awakeFromNib()
         titleLabel.text = L10n.scanButtonTitle
         subtitleLabel.text = L10n.scanUttonSubtitle
         iconImageView.image = Asset.scanQuick.image
-        CAGradientLayer.makeGradient(for: self, firstColor: .binkGradientBlueRight, secondColor: .binkGradientBlueLeft, startPoint: CGPoint(x: 1.0, y: 0.0))
+        CAGradientLayer.makeGradient(for: gradientView, firstColor: .binkGradientBlueRight, secondColor: .binkGradientBlueLeft, startPoint: CGPoint(x: 1.0, y: 0.0))
 
-        layer.cornerRadius = 10
-        layer.masksToBounds = true
+        layer.cornerRadius = cornerRadius
+        clipsToBounds = false
+        layer.applyDefaultBinkShadow()
+        layer.shouldRasterize = true
+        layer.rasterizationScale = UIScreen.main.scale
+        
+        gradientView.layer.cornerRadius = cornerRadius
+        gradientView.clipsToBounds = true
     }
     
     @IBAction func buttonTapped(_ sender: Any) {
