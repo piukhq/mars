@@ -217,9 +217,12 @@ enum ViewControllerFactory {
         let openAppStoreAction = UIAlertAction(title: "Open App Store", style: .default) { _ in
             guard let url = URL(string: "https://apps.apple.com/gb/app/bink-loyalty-rewards-wallet/id1142153931"), UIApplication.shared.canOpenURL(url) else { return }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            BinkAnalytics.track(RecommendedAppUpdateAnalyticsEvent.openAppStore)
         }
         
-        let maybeLaterAction = UIAlertAction(title: "Maybe later", style: .default, handler: nil)
+        let maybeLaterAction = UIAlertAction(title: "Maybe later", style: .default) { _ in
+            BinkAnalytics.track(RecommendedAppUpdateAnalyticsEvent.maybeLater)
+        }
         
         let skipVersionAction = UIAlertAction(title: "Skip this version", style: .default) { _ in
             skipVersionHandler()
