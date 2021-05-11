@@ -24,8 +24,6 @@ class BrowseBrandsViewController: BinkViewController {
     @IBOutlet private weak var searchTextFieldContainer: UIView!
     @IBOutlet private weak var topStackView: UIStackView!
     @IBOutlet private weak var noMatchesLabelTopConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var scanButtonView: UIView!
-    @IBOutlet private weak var scanButtonViewTopConstraint: NSLayoutConstraint!
     
     private var filtersVisible = false
     private var selectedCollectionViewIndexPaths: [IndexPath] = []
@@ -46,12 +44,6 @@ class BrowseBrandsViewController: BinkViewController {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.itemSize = CGSize(width: (self.view.frame.width - (Constants.marginPadding * 2)) / 2, height: Constants.filterCellHeight)
         return layout
-    }()
-    
-    private lazy var scanLoyaltyCardCell: ScanLoyaltyCardCollectionViewCell = {
-        let cell: ScanLoyaltyCardCollectionViewCell = .fromNib()
-        cell.frame = CGRect(x: Constants.marginPadding, y: 0, width: view.frame.width - (Constants.marginPadding * 3), height: scanButtonView.frame.height)
-        return cell
     }()
     
     private var filterViewHeight: CGFloat {
@@ -90,8 +82,6 @@ class BrowseBrandsViewController: BinkViewController {
         
         configureSearchTextField()
         configureCollectionView()
-        
-        scanButtonView.addSubview(scanLoyaltyCardCell)
                 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
@@ -211,15 +201,14 @@ class BrowseBrandsViewController: BinkViewController {
         filtersButton?.isEnabled = false
         filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .disabled)
         
-//        if !self.noMatchesLabel.isHidden {
-//            self.noMatchesLabelTopConstraint.constant = 0.0
-//        }
-        scanButtonViewTopConstraint.constant = 10.0
+        if !self.noMatchesLabel.isHidden {
+            self.noMatchesLabelTopConstraint.constant = 0.0
+        }
 
         let frame = self.collectionView.frame
         UIView.animate(withDuration: 0.3, animations: {
             self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: 0)
-            self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY)
+            self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY + self.filterViewHeight)
             self.view.layoutIfNeeded()
         }) { [weak self] _ in
             self?.tableView.contentInset.top = 0.0
@@ -229,23 +218,22 @@ class BrowseBrandsViewController: BinkViewController {
     }
     
     private func displayFilters(with contentOffsetY: CGFloat) {
-//        if !self.noMatchesLabel.isHidden {
-//            self.noMatchesLabelTopConstraint.constant = self.filterViewHeight
-//        }
-        scanButtonViewTopConstraint.constant = filterViewHeight
+        if !self.noMatchesLabel.isHidden {
+            self.noMatchesLabelTopConstraint.constant = self.filterViewHeight
+        }
 
         filtersButton?.isEnabled = false
         filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .disabled)
         let frame = self.collectionView.frame
         UIView.animate(withDuration: 0.3, animations: {
             self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: self.view.frame.width - (Constants.marginPadding * 2), height: self.filterViewHeight)
-            self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY)
+            self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY - self.filterViewHeight)
             UIView.performWithoutAnimation {
                 self.collectionView.performBatchUpdates(nil, completion: nil)
             }
             self.view.layoutIfNeeded()
         }) { [weak self] _ in
-//            self?.tableView.contentInset.top = self?.filterViewHeight ?? 0.0
+            self?.tableView.contentInset.top = self?.filterViewHeight ?? 0.0
             self?.filtersButton?.isEnabled = true
             self?.filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
         }
@@ -253,7 +241,7 @@ class BrowseBrandsViewController: BinkViewController {
     
     private func switchTableWithNoMatchesLabel() {
         tableView.isHidden = viewModel.shouldShowNoResultsLabel
-//        noMatchesLabelTopConstraint.constant = filtersVisible ? filterViewHeight : 0.0
+        noMatchesLabelTopConstraint.constant = filtersVisible ? filterViewHeight : 0.0
         noMatchesLabel.isHidden = !viewModel.shouldShowNoResultsLabel
     }
     
@@ -342,7 +330,7 @@ extension BrowseBrandsViewController: UITextFieldDelegate {
 
 extension BrowseBrandsViewController: BrowseBrandsViewModelDelegate {
     func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan]) {
-        tableView.contentInset = Constants.contentInset
+//        tableView.contentInset = Constants.contentInset
         tableView.reloadData()
     }
 }
