@@ -36,6 +36,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     private let dotView = UIView()
 
     var orderingManager = WalletOrderingManager()
+    private var distanceFromCenterOfCell: CGFloat?
     
     // We only want to use transition when tapping a wallet card cell and not when adding a new card
     var shouldUseTransition = false
@@ -257,21 +258,25 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
         switch gesture.state {
         case .began:
-            guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
-                break
-            }
+            guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else { break }
+            let selectedCell = collectionView.cellForItem(at: selectedIndexPath)
+            let centerY = (selectedCell?.bounds.size.height ?? 0) / 2
+            let gestureLocationInCell = gesture.location(in: selectedCell)
+            distanceFromCenterOfCell = centerY - gestureLocationInCell.y
+            
             orderingManager.start()
             collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
         case .changed:
             if let bounds = gesture.view?.bounds {
                 let gestureLocation = gesture.location(in: gesture.view)
                 let centerX: CGFloat = bounds.size.width / 2
-                let updatedLocation = CGPoint(x: centerX, y: gestureLocation.y)
+                let updatedLocation = CGPoint(x: centerX, y: gestureLocation.y + (distanceFromCenterOfCell ?? 0))
                 collectionView.updateInteractiveMovementTargetPosition(updatedLocation)
             }
         case .ended:
             orderingManager.stop()
             collectionView.endInteractiveMovement()
+            distanceFromCenterOfCell = nil
         default:
             orderingManager.stop()
             collectionView.cancelInteractiveMovement()
