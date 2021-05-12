@@ -136,6 +136,8 @@ class BarcodeScannerViewController: BinkViewController {
             widgetView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.widgetViewLeftRightPadding),
             widgetView.heightAnchor.constraint(equalToConstant: Constants.widgetViewHeight)
         ])
+        
+        navigationController?.setNavigationBarVisibility(false)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -156,6 +158,11 @@ class BarcodeScannerViewController: BinkViewController {
         if !viewModel.isScanning {
             startScanning()
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarVisibility(true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
