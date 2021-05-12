@@ -184,8 +184,8 @@ extension WalletLoyaltyCardCollectionViewCell {
             barcodeButton.isHidden = false
             deleteButton.isHidden = true
         case .unset:
-            barcodeButton.isHidden = true
-            deleteButton.isHidden = true
+            barcodeButton.isHidden = false
+            deleteButton.isHidden = false
         }
     }
     
