@@ -160,14 +160,10 @@ class BarcodeScannerViewController: BinkViewController {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarVisibility(true)
-    }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         stopScanning()
+        navigationController?.setNavigationBarVisibility(true)
     }
 
     override func configureForCurrentTheme() {
