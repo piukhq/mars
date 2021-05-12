@@ -13,7 +13,7 @@ class HeaderTableViewCell: UITableViewCell {
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet weak var stackView: UIStackView!
     
-    private lazy var scanLoyaltyCardCell: ScanLoyaltyCardButton = {
+    private lazy var scanLoyaltyCardButton: ScanLoyaltyCardButton = {
         let cell: ScanLoyaltyCardButton = .fromNib()
         cell.frame = CGRect(x: 0, y: 0, width: frame.width, height: 88)
         return cell
@@ -32,7 +32,7 @@ class HeaderTableViewCell: UITableViewCell {
         selectedBackgroundView = binkTableViewCellSelectedBackgroundView()
         
         if section == 0 {
-            stackView.insertArrangedSubview(scanLoyaltyCardCell, at: 0)
+            stackView.insertArrangedSubview(scanLoyaltyCardButton, at: 0)
             stackView.insertArrangedSubview(spacer, at: 1)
         }
     }

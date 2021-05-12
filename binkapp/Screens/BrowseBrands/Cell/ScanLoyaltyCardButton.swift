@@ -9,11 +9,11 @@
 import UIKit
 
 class ScanLoyaltyCardButton: UIView {
-    @IBOutlet weak var iconImageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var button: UIButton!
-    @IBOutlet weak var gradientView: UIView!
+    @IBOutlet private weak var iconImageView: UIImageView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var subtitleLabel: UILabel!
+    @IBOutlet private weak var button: UIButton!
+    @IBOutlet private weak var gradientView: UIView!
     
     private let cornerRadius: CGFloat = 10.0
     
@@ -25,17 +25,19 @@ class ScanLoyaltyCardButton: UIView {
         CAGradientLayer.makeGradient(for: gradientView, firstColor: .binkGradientBlueRight, secondColor: .binkGradientBlueLeft, startPoint: CGPoint(x: 1.0, y: 0.0))
 
         layer.cornerRadius = cornerRadius
+        layer.cornerCurve = .continuous
         clipsToBounds = false
         layer.applyDefaultBinkShadow()
         layer.shouldRasterize = true
         layer.rasterizationScale = UIScreen.main.scale
         
         gradientView.layer.cornerRadius = cornerRadius
+        gradientView.layer.cornerCurve = .continuous
         gradientView.clipsToBounds = true
     }
     
     @IBAction func buttonTapped(_ sender: Any) {
-        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(showNavigationBar: true, delegate: self)
+        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(hideNavigationBar: false, delegate: self)
         PermissionsUtility.launchLoyaltyScanner(viewController) {
             let navigationRequest = PushNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)

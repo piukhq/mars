@@ -50,8 +50,8 @@ class BarcodeScannerViewController: BinkViewController {
     private var rectOfInterest = CGRect.zero
     private var timer: Timer?
     private var canPresentScanError = true
-    private var shouldShowNavigationBar = false
-    private var hasPreviouslyScanned = false
+    private var hideNavigationBar = true
+    private var shouldAllowScanning = true
 
     private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .regular))
@@ -88,10 +88,10 @@ class BarcodeScannerViewController: BinkViewController {
 
     private var viewModel: BarcodeScannerViewModel
 
-    init(viewModel: BarcodeScannerViewModel, showNavigationBar: Bool = false, delegate: BarcodeScannerViewControllerDelegate?) {
+    init(viewModel: BarcodeScannerViewModel, hideNavigationBar: Bool = true, delegate: BarcodeScannerViewControllerDelegate?) {
         self.viewModel = viewModel
         self.delegate = delegate
-        self.shouldShowNavigationBar = showNavigationBar
+        self.hideNavigationBar = hideNavigationBar
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -140,7 +140,7 @@ class BarcodeScannerViewController: BinkViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if !shouldShowNavigationBar {
+        if hideNavigationBar {
             navigationController?.setNavigationBarHidden(true, animated: false)
             
             view.addSubview(cancelButton)
@@ -285,8 +285,8 @@ class BarcodeScannerViewController: BinkViewController {
 extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         timer?.invalidate()
-        guard !hasPreviouslyScanned else { return }
-        hasPreviouslyScanned = true
+        guard shouldAllowScanning else { return }
+        shouldAllowScanning = false
 
         //TODO: Tidy this up by splitting to other functions
 
@@ -328,7 +328,7 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                                 let action = UIAlertAction(title: "OK", style: .cancel) { _ in
                                     DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: {
                                         self.canPresentScanError = true
-                                        self.hasPreviouslyScanned = false
+                                        self.shouldAllowScanning = true
                                     })
                                 }
                                 alert.addAction(action)
