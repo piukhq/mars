@@ -20,7 +20,7 @@ class AuthAndAddViewController: BaseFormViewController {
         brandHeader.heightAnchor.constraint(equalToConstant: 110).isActive = true
         return brandHeader
     }()
-
+    
     private lazy var primaryButton: BinkButton = {
         return BinkButton(type: .gradient, title: viewModel.buttonTitle, enabled: dataSource.fullFormIsValid) { [weak self] in
             self?.handlePrimaryButtonTap()
@@ -95,7 +95,7 @@ class AuthAndAddViewController: BaseFormViewController {
         descriptionLabel.font = UIFont.bodyTextLarge
         descriptionLabel.isHidden = viewModel.getDescription() == nil
     }
-
+    
     private func handlePrimaryButtonTap() {
         primaryButton.toggleLoading(isLoading: true)
         try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes, completion: { [weak self] in
