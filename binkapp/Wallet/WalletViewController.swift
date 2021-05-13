@@ -65,8 +65,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         NotificationCenter.default.addObserver(self, selector: #selector(stopRefreshing), name: .outageSilentFail, object: nil)
 
         refreshControl.addTarget(self, action: #selector(reloadWallet), for: .valueChanged)
-        
-        navigationItem.titleView = UIImageView(image: UIImage(named: "bink_top_logo"))
 
         configureCollectionView()
     }
@@ -113,7 +111,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     
     private func configureNavigationItem(hasSupportUpdates: Bool) {
         self.hasSupportUpdates = hasSupportUpdates
-        let settingsIcon = UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal)
+        let settingsIcon = Asset.settings.image.withRenderingMode(.alwaysOriginal)
         let settingsBarButton = UIBarButtonItem(image: settingsIcon, style: .plain, target: self, action: #selector(settingsButtonTapped))
         navigationItem.rightBarButtonItem = settingsBarButton
         

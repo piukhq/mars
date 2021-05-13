@@ -12,14 +12,14 @@ class ForgotPasswordViewController: BaseFormViewController {
     private let viewModel: ForgotPasswordViewModel
 
     private lazy var continueButton: BinkButton = {
-        return BinkButton(type: .gradient, title: "continue_button_title".localized, enabled: false) { [weak self] in
+        return BinkButton(type: .gradient, title: L10n.continueButtonTitle, enabled: false) { [weak self] in
             self?.continueButtonTapped()
         }
     }()
     
     init(viewModel: ForgotPasswordViewModel) {
         self.viewModel = viewModel
-        super.init(title: "login_forgot_password".localized, description: "forgot_password_description".localized, dataSource: FormDataSource(accessForm: .forgottenPassword))
+        super.init(title: L10n.loginForgotPassword, description: L10n.forgotPasswordDescription, dataSource: FormDataSource(accessForm: .forgottenPassword))
         dataSource.delegate = self
     }
     

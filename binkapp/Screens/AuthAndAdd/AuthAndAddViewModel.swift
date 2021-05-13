@@ -55,19 +55,19 @@ class AuthAndAddViewModel {
     
     var title: String {
         switch formPurpose {
-        case .signUp, .signUpFailed: return String(format: "sign_up_new_card_title".localized, membershipPlan.account?.planName ?? "a new card")
-        case .add, .addFromScanner: return "credentials_title".localized
-        case .addFailed: return "log_in_title".localized
-        case .ghostCard, .patchGhostCard: return "register_ghost_card_title".localized
+        case .signUp, .signUpFailed: return L10n.signUpNewCardTitle(membershipPlan.account?.planName ?? "a new card")
+        case .add, .addFromScanner: return L10n.credentialsTitle
+        case .addFailed: return L10n.logInTitle
+        case .ghostCard, .patchGhostCard: return L10n.registerGhostCardTitle
         }
     }
     
     var buttonTitle: String {
         switch formPurpose {
-        case .signUp: return "sign_up_button_title".localized
-        case .add, .addFromScanner: return "pll_screen_add_title".localized
-        case .ghostCard: return "register_card_title".localized
-        case .signUpFailed, .addFailed, .patchGhostCard: return "log_in_title".localized
+        case .signUp: return L10n.signUpButtonTitle
+        case .add, .addFromScanner: return L10n.pllScreenAddTitle
+        case .ghostCard: return L10n.registerCardTitle
+        case .signUpFailed, .addFailed, .patchGhostCard: return L10n.logInTitle
         }
     }
     
@@ -87,12 +87,12 @@ class AuthAndAddViewModel {
         switch formPurpose {
         case .add, .addFromScanner:
             guard let companyName = membershipPlan.account?.companyName else { return nil }
-            return String(format: "auth_screen_description".localized, companyName)
+            return L10n.authScreenDescription(companyName)
         case .signUp:
             if let planSummary = membershipPlan.account?.planSummary {
                 return planSummary
             } else if let planNameCard = membershipPlan.account?.planNameCard {
-                return String(format: "sign_up_new_card_description".localized, planNameCard)
+                return L10n.signUpNewCardDescription(planNameCard)
             }
             return nil
         case .ghostCard, .patchGhostCard:
@@ -100,7 +100,7 @@ class AuthAndAddViewModel {
                 return description
             }
             guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
-            return String(format: "register_ghost_card_description".localized, planNameCard)
+            return L10n.registerGhostCardDescription(planNameCard)
         case .addFailed, .signUpFailed:
             return getDescriptionForOtherLogin()
         }
@@ -115,10 +115,9 @@ class AuthAndAddViewModel {
         
         if hasPoints() {
             guard let transactionsAvailable = membershipPlan.featureSet?.transactionsAvailable else {
-                return String(format: "only_points_log_in_description".localized, planNameCard)
+                return L10n.onlyPointsLogInDescription(planNameCard)
             }
-            
-            return transactionsAvailable.boolValue ? String(format: "points_and_transactions_log_in_description".localized, planNameCard) : String(format: "only_points_log_in_description".localized, planNameCard)
+            return transactionsAvailable.boolValue ? L10n.pointsAndTransactionsLogInDescription(planNameCard) : L10n.onlyPointsLogInDescription(planNameCard)
         } else {
             return ""
         }
@@ -141,7 +140,7 @@ class AuthAndAddViewModel {
         
         formFields.forEach { addFieldToCard(formField: $0) }
         checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
-
+        
         guard let model = membershipCardPostModel else { return }
         BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardRequest(request: model, formPurpose: formPurpose))
         let scrapingCredentials = Current.pointsScrapingManager.makeCredentials(fromFormFields: formFields, membershipPlanId: membershipPlan.id)
@@ -168,7 +167,7 @@ class AuthAndAddViewModel {
                 Current.navigate.to(tabNavigationRequest)
             }
             }, onError: { [weak self] error in
-                self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
+                self?.displaySimplePopup(title: L10n.errorTitle, message: error?.localizedDescription)
                 completion()
         })
     }
@@ -209,7 +208,7 @@ class AuthAndAddViewModel {
                 Current.navigate.close()
             }
         }) { (error) in
-            self.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
+            self.displaySimplePopup(title: L10n.errorTitle, message: error?.localizedDescription)
         }
     }
     

@@ -17,19 +17,50 @@ struct SettingsRow {
     typealias VoidClosure = () -> Void
     
     enum RowType: String {
-        case preferences = "settings_row_preferences_title"
-        case logout = "settings_row_logout_title"
-        case faq = "settings_row_faqs_title"
-        case contactUs = "settings_row_contact_title"
-        case rateThisApp = "settings_row_rateapp_title"
-        case securityAndPrivacy = "settings_row_security_title"
-        case howItWorks = "settings_row_howitworks_title"
-        case privacyPolicy = "settings_row_privacypolicy_title"
-        case termsAndConditions = "settings_row_termsandconditions_title"
-        case debug = "settings_section_debug_title"
-        case whoWeAre = "settings_who_we_are_title"
-        case theme = "settings_row_theme_title"
-        case featureFlags = "settings_row_featureflags_title"
+        case preferences
+        case logout
+        case faq
+        case contactUs
+        case rateThisApp
+        case securityAndPrivacy
+        case howItWorks
+        case privacyPolicy
+        case termsAndConditions
+        case debug
+        case whoWeAre
+        case theme
+        case featureFlags
+        
+        var title: String {
+            switch self {
+            case .preferences:
+                return L10n.settingsRowPreferencesTitle
+            case .logout:
+                return L10n.settingsRowLogoutTitle
+            case .faq:
+                return L10n.settingsRowFaqsTitle
+            case .contactUs:
+                return L10n.settingsRowContactTitle
+            case .rateThisApp:
+                return L10n.settingsRowRateappTitle
+            case .securityAndPrivacy:
+                return L10n.settingsRowSecurityTitle
+            case .howItWorks:
+                return L10n.settingsRowHowitworksTitle
+            case .privacyPolicy:
+                return L10n.settingsRowPrivacypolicyTitle
+            case .termsAndConditions:
+                return L10n.settingsRowTermsandconditionsTitle
+            case .debug:
+                return L10n.settingsSectionDebugTitle
+            case .whoWeAre:
+                return L10n.settingsWhoWeAreTitle
+            case .theme:
+                return L10n.settingsRowThemeTitle
+            case .featureFlags:
+                return L10n.settingsRowFeatureflagsTitle
+            }
+        }
     }
     
     enum RowAction {
@@ -55,7 +86,7 @@ struct SettingsRow {
     let type: RowType
     
     var title: String {
-        return type.rawValue.localized
+        return type.title
     }
     
     let subtitle: String?

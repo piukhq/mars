@@ -95,50 +95,50 @@ class PLRRewardDetailViewModelTests: XCTestCase, CoreDataTestable {
     func test_headerString_for_issued_state() {
         Self.accumulatorVoucherResponse.state = .issued
         mapAccumulatorVoucher()
-        let headerString = String(format: "plr_voucher_detail_issued_header".localized, Self.baseAccumulatorSut.voucherAmountText)
+        let headerString = L10n.plrVoucherDetailIssuedHeader(Self.baseAccumulatorSut.voucherAmountText)
         XCTAssertEqual(Self.baseAccumulatorSut.headerString, headerString)
         
         Self.stampsVoucherResponse.state = .issued
         mapStampsVoucher()
-        let stampsHeaderString = String(format: "plr_voucher_detail_issued_header".localized, Self.baseStampsSut.voucherAmountText)
+        let stampsHeaderString = L10n.plrVoucherDetailIssuedHeader(Self.baseStampsSut.voucherAmountText)
         XCTAssertEqual(Self.baseStampsSut.headerString, stampsHeaderString)
     }
 
     func test_headerString_for_redeemed_state() {
         mapAccumulatorVoucher()
-        let headerString = String(format: "plr_voucher_detail_redeemed_header".localized, Self.baseAccumulatorSut.voucherAmountText)
+        let headerString = L10n.plrVoucherDetailRedeemedHeader(Self.baseAccumulatorSut.voucherAmountText)
         Self.accumulatorVoucherResponse.state = .redeemed
         mapAccumulatorVoucher()
         XCTAssertEqual(Self.baseAccumulatorSut.headerString, headerString)
 
         Self.stampsVoucherResponse.state = .redeemed
         mapStampsVoucher()
-        XCTAssertEqual(Self.baseStampsSut.headerString, "plr_stamp_voucher_detail_redeemed_header".localized)
+        XCTAssertEqual(Self.baseStampsSut.headerString, L10n.plrStampVoucherDetailRedeemedHeader)
     }
 
     func test_headerString_for_expired_state() {
         mapAccumulatorVoucher()
-        let headerString = String(format: "plr_voucher_detail_expired_header".localized, Self.baseAccumulatorSut.voucherAmountText)
+        let headerString = L10n.plrVoucherDetailExpiredHeader(Self.baseAccumulatorSut.voucherAmountText)
         Self.accumulatorVoucherResponse.state = .expired
         mapAccumulatorVoucher()
         XCTAssertEqual(Self.baseAccumulatorSut.headerString, headerString)
 
         Self.stampsVoucherResponse.state = .expired
         mapStampsVoucher()
-        XCTAssertEqual(Self.baseStampsSut.headerString, "plr_stamp_voucher_detail_expired_header".localized)
+        XCTAssertEqual(Self.baseStampsSut.headerString, L10n.plrStampVoucherDetailExpiredHeader)
     }
 
     func test_headerString_for_inProgress_state() {
         Self.stampsVoucherResponse.state = .inProgress
         mapStampsVoucher()
-        let headerString = String(format: "plr_stamp_voucher_detail_inprogress_header".localized, Self.baseStampsSut.voucherAmountText)
+        let headerString = String(format: L10n.plrStampVoucherDetailInprogressHeader, Self.baseStampsSut.voucherAmountText)
         XCTAssertEqual(Self.baseStampsSut.headerString, headerString)
     }
 
     func test_headerString_for_cancelled_state() {
         Self.accumulatorVoucherResponse.state = .cancelled
         mapAccumulatorVoucher()
-        let headerString = String(format: "plr_stamp_voucher_detail_cancelled_header".localized, Self.baseAccumulatorSut.voucherAmountText)
+        let headerString = String(format: L10n.plrStampVoucherDetailCancelledHeader, Self.baseAccumulatorSut.voucherAmountText)
         XCTAssertEqual(Self.baseAccumulatorSut.headerString, headerString)
 
         Self.stampsVoucherResponse.state = .cancelled
@@ -190,29 +190,29 @@ class PLRRewardDetailViewModelTests: XCTestCase, CoreDataTestable {
 
     func test_issuedDateString_is_correctly_formatted() {
         mapStampsVoucher()
-        var dateIssuedString = String.fromTimestamp((Self.stampsVoucher.dateIssued as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_issued_date_prefix".localized)
+        var dateIssuedString = String.fromTimestamp((Self.stampsVoucher.dateIssued as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: L10n.plrVoucherDetailIssuedDatePrefix)
         XCTAssertEqual(Self.baseStampsSut.issuedDateString, dateIssuedString)
 
         mapAccumulatorVoucher()
-        dateIssuedString = String.fromTimestamp((Self.accumulatorVoucher.dateIssued as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_issued_date_prefix".localized)
+        dateIssuedString = String.fromTimestamp((Self.accumulatorVoucher.dateIssued as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: L10n.plrVoucherDetailIssuedDatePrefix)
         XCTAssertEqual(Self.baseAccumulatorSut.issuedDateString, dateIssuedString)
     }
 
     func test_redeemedDateString_is_correct() {
         mapStampsVoucher()
-        var dateRedeemedString = String.fromTimestamp((Self.stampsVoucher.dateRedeemed as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_redeemed_date_prefix".localized)
+        var dateRedeemedString = String.fromTimestamp((Self.stampsVoucher.dateRedeemed as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: L10n.plrVoucherDetailRedeemedDatePrefix)
         XCTAssertEqual(Self.baseStampsSut.redeemedDateString, dateRedeemedString)
 
         mapAccumulatorVoucher()
-        dateRedeemedString = String.fromTimestamp((Self.accumulatorVoucher.dateRedeemed as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_redeemed_date_prefix".localized)
+        dateRedeemedString = String.fromTimestamp((Self.accumulatorVoucher.dateRedeemed as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: L10n.plrVoucherDetailRedeemedDatePrefix)
         XCTAssertEqual(Self.baseAccumulatorSut.redeemedDateString, dateRedeemedString)
     }
 
     func test_expiredDateString_is_correct() {
         Self.stampsVoucherResponse.state = .expired
         mapStampsVoucher()
-        let formattedExpiryDate = String.fromTimestamp((Self.stampsVoucher.expiryDate as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expired_date_prefix".localized)
-        let formattedExpiresDate = String.fromTimestamp((Self.stampsVoucher.expiryDate as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expires_date_prefix".localized)
+        let formattedExpiryDate = String.fromTimestamp((Self.stampsVoucher.expiryDate as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: L10n.plrVoucherDetailExpiredDatePrefix)
+        let formattedExpiresDate = String.fromTimestamp((Self.stampsVoucher.expiryDate as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: L10n.plrVoucherDetailExpiresDatePrefix)
 
         XCTAssertEqual(Self.baseStampsSut.expiredDateString, formattedExpiryDate)
 

@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol BrowseBrandsViewModelDelegate: class {
+protocol BrowseBrandsViewModelDelegate: AnyObject {
     func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan])
 }
 
@@ -65,11 +65,11 @@ class BrowseBrandsViewModel {
     func getSectionTitleText(section: Int) -> String {
         switch section {
         case 0:
-            return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? "store_title".localized  : "see_title".localized) : "pll_title".localized
+            return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? L10n.storeTitle  : L10n.seeTitle) : L10n.pllTitle
         case 1:
-            return getPllMembershipPlans().isEmpty ? "store_title".localized : (getSeeMembershipPlans().isEmpty ? "store_title".localized : "see_title".localized)
+            return getPllMembershipPlans().isEmpty ? L10n.storeTitle : (getSeeMembershipPlans().isEmpty ? L10n.storeTitle : L10n.seeTitle)
         case 2:
-            return "store_title".localized
+            return L10n.storeTitle
         default:
             return ""
         }
@@ -79,11 +79,11 @@ class BrowseBrandsViewModel {
         var descriptionText: String
         switch section {
         case 0:
-            descriptionText = getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? "store_description".localized : "see_description".localized) : "pll_description".localized
+            descriptionText = getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? L10n.storeDescription : L10n.seeDescription) : L10n.pllDescription
         case 1:
-            descriptionText = getPllMembershipPlans().isEmpty ? "store_description".localized : (getSeeMembershipPlans().isEmpty ? "store_description".localized : "see_description".localized)
+            descriptionText = getPllMembershipPlans().isEmpty ? L10n.storeDescription : (getSeeMembershipPlans().isEmpty ? L10n.storeDescription : L10n.seeDescription)
         case 2:
-            descriptionText = "store_description".localized
+            descriptionText = L10n.storeDescription
         default:
             return nil
         }
@@ -91,7 +91,7 @@ class BrowseBrandsViewModel {
         let attributedText = NSMutableAttributedString(string: descriptionText, attributes: [.font: UIFont.bodyTextLarge])
         
         if section == 0 && !getPllMembershipPlans().isEmpty {
-            let automaticallyRange = NSString(string: attributedText.string).range(of: "pll_description_highlight_automatically".localized)
+            let automaticallyRange = NSString(string: attributedText.string).range(of: L10n.pllDescriptionHighlightAutomatically)
             attributedText.addAttributes([.font: UIFont.bodyTextBold], range: automaticallyRange)
         }
         

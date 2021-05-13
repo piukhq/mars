@@ -46,7 +46,7 @@ class PaymentWalletViewModel: WalletViewModel {
     }
     
     func showDeleteConfirmationAlert(card: CD_PaymentCard, onCancel: @escaping () -> Void) {
-        let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: "delete_card_confirmation".localized, deleteAction: { [weak self] in
+        let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: L10n.deleteCardConfirmation, deleteAction: { [weak self] in
             guard let self = self else { return }
             guard Current.apiClient.networkIsReachable else {
                 let alert = ViewControllerFactory.makeNoConnectivityAlertController()

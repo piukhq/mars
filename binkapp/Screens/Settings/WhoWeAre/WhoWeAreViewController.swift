@@ -31,7 +31,7 @@ class WhoWeAreViewController: BinkViewController {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "bink-icon-logo")
+        imageView.image = Asset.binkIconLogo.image
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 20
         return imageView
@@ -51,7 +51,7 @@ class WhoWeAreViewController: BinkViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-        label.text = "who_we_are_title".localized
+        label.text = L10n.whoWeAreTitle
         label.font = UIFont.headline
         return label
     }()
@@ -60,7 +60,7 @@ class WhoWeAreViewController: BinkViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-        label.text = "who_we_are_body".localized
+        label.text = L10n.whoWeAreBody
         label.font = UIFont.bodyTextLarge
         label.numberOfLines = 0
         return label

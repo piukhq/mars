@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol FormCollectionViewCellDelegate: class {
+protocol FormCollectionViewCellDelegate: AnyObject {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField)
     func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField)
     func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell)
@@ -48,7 +48,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     lazy var textFieldRightView: UIView = {
         let cameraButton = UIButton(type: .custom)
         cameraButton.imageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-        cameraButton.setImage(UIImage(named: "scan_icon"), for: .normal)
+        cameraButton.setImage(Asset.scanIcon.image, for: .normal)
         cameraButton.imageView?.contentMode = .scaleAspectFill
         cameraButton.addTarget(self, action: .handleScanButtonTap, for: .touchUpInside)
         cameraButton.translatesAutoresizingMaskIntoConstraints = false
@@ -92,7 +92,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.font = UIFont.textFieldExplainer
-        label.text = "form_field_validation_error".localized
+        label.text = L10n.formFieldValidationError
         label.isHidden = true
         label.textColor = .binkDynamicRed
         label.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -193,7 +193,6 @@ class FormCollectionViewCell: UICollectionViewCell {
         textField.autocorrectionType = field.fieldType.autoCorrection()
         textField.autocapitalizationType = field.fieldType.capitalization()
         textField.clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
-        textField.accessibilityIdentifier = field.title
         formField = field
         configureTextFieldRightView(shouldDisplay: formField?.value == nil)
         validationLabel.isHidden = textField.text?.isEmpty == true ? true : field.isValid()
@@ -209,11 +208,13 @@ class FormCollectionViewCell: UICollectionViewCell {
             let datePicker = UIDatePicker()
             datePicker.datePickerMode = .date
             datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
-            
+
             if #available(iOS 14.0, *) {
-                datePicker.preferredDatePickerStyle = .wheels
+                datePicker.preferredDatePickerStyle = .inline
+                datePicker.backgroundColor = Current.themeManager.color(for: .viewBackground)
+                datePicker.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 400)
             }
-            
+
             textField.inputView = datePicker
             pickerSelectedChoice = datePicker.date.getFormattedString(format: .dayShortMonthYearWithSlash)
             formField?.updateValue(pickerSelectedChoice)
@@ -293,7 +294,7 @@ extension FormCollectionViewCell: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let field = formField else { return }
-        validationLabel.text = field.validationErrorMessage != nil ? field.validationErrorMessage : "form_field_validation_error".localized
+        validationLabel.text = field.validationErrorMessage != nil ? field.validationErrorMessage : L10n.formFieldValidationError
         validationLabel.isHidden = field.isValid()
         isValidationLabelHidden = field.isValid()
         field.fieldWasExited()

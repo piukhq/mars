@@ -20,7 +20,7 @@ struct PaymentCardDetailAddLoyaltyCardCellViewModel: PaymentCardDetailCellViewMo
     }
 
     var detailText: String? {
-        return "pcd_you_can_link".localized
+        return L10n.pcdYouCanLink
     }
 
     func toAddOrJoin() {

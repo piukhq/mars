@@ -31,7 +31,7 @@ struct DynamicActionViewModel {
     var headerViewImageName: String? {
         switch dynamicAction.type {
         case .xmas:
-            return "bink-logo-christmas"
+            return Asset.binkLogoChristmas.name
         case .none:
             return nil
         }
@@ -114,7 +114,7 @@ class DynamicActionHeaderView: CustomView {
 extension CAEmitterLayer {
     static func addSnowfallLayer(to view: UIView) {
         let flakeEmitterCell = CAEmitterCell()
-        flakeEmitterCell.contents = UIImage(named: "snowflake")?.cgImage
+        flakeEmitterCell.contents = Asset.snowflake.image.cgImage
         flakeEmitterCell.scale = 0.06
         flakeEmitterCell.scaleRange = 0.3
         flakeEmitterCell.emissionRange = .pi

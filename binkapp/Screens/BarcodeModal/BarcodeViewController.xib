@@ -28,14 +28,15 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pfc-LG-qkr">
-                    <rect key="frame" x="0.0" y="64" width="414" height="246"/>
+                    <rect key="frame" x="0.0" y="64" width="414" height="303"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F3Z-f4-lSw">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="246"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="303"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bink-logo" translatesAutoresizingMaskIntoConstraints="NO" id="W07-ft-Vcs">
-                                    <rect key="frame" x="20" y="0.0" width="374" height="246"/>
+                                    <rect key="frame" x="20" y="0.0" width="374" height="303"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <accessibility key="accessibilityConfiguration" identifier="Barcode imageview"/>
                                 </imageView>
                             </subviews>
@@ -51,7 +52,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </stackView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="bEh-RB-7fs">
-                    <rect key="frame" x="20" y="330" width="374" height="251.66666666666663"/>
+                    <rect key="frame" x="20" y="387.00000000000006" width="374" height="251.66666666666669"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uTg-VR-lQ4">
                             <rect key="frame" x="0.0" y="0.0" width="374" height="150"/>
@@ -69,7 +70,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xaV-ek-2XU" customClass="BinkCopyableLabel" customModule="binkapp" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="170.33333333333331" width="374" height="20.333333333333343"/>
+                            <rect key="frame" x="0.0" y="170.33333333333337" width="374" height="20.333333333333343"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -109,6 +110,6 @@
         </view>
     </objects>
     <resources>
-        <image name="bink-logo" width="474" height="246"/>
+        <image name="bink-logo" width="1772" height="1181"/>
     </resources>
 </document>

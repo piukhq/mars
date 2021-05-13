@@ -21,10 +21,10 @@ struct SettingsFactory {
         // MARK: - Debug
         
         #if DEBUG
-        let debugSection = SettingsSection(title: "settings_section_debug_title".localized, rows: [
+        let debugSection = SettingsSection(title: L10n.settingsSectionDebugTitle, rows: [
             SettingsRow(
                 type: .debug,
-                subtitle: "settings_section_debug_subtitle".localized,
+                subtitle: L10n.settingsSectionDebugSubtitle,
                 action: .pushToViewController(viewController: DebugMenuTableViewController.self),
                 actionRequired: rowsWithActionRequired?.contains(.debug) ?? false
             )
@@ -35,7 +35,7 @@ struct SettingsFactory {
         
         // MARK: - Account
         
-        let accountSection = SettingsSection(title: "settings_section_account_title".localized, rows: [
+        let accountSection = SettingsSection(title: L10n.settingsSectionAccountTitle, rows: [
             SettingsRow(
                 type: .preferences,
                 action: .pushToViewController(viewController: PreferencesViewController.self),
@@ -57,21 +57,21 @@ struct SettingsFactory {
             subtitle: nil,
             action: .customAction(action: {
                 let ac = BinkAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                let systemAction = UIAlertAction(title: "settings_theme_system_title".localized, style: .default, handler: { _ in
+                let systemAction = UIAlertAction(title: L10n.settingsThemeSystemTitle, style: .default, handler: { _ in
                     Current.themeManager.setTheme(Theme(type: .system))
                 })
                 if let _ = systemAction.value(forKey: "checked") as? Bool {
                     systemAction.setValue(Current.themeManager.currentTheme.type == .system, forKey: "checked")
                 }
                 
-                let lightAction = UIAlertAction(title: "settings_theme_light_title".localized, style: .default, handler: { _ in
+                let lightAction = UIAlertAction(title: L10n.settingsThemeLightTitle, style: .default, handler: { _ in
                     Current.themeManager.setTheme(Theme(type: .light))
                 })
                 if let _ = lightAction.value(forKey: "checked") as? Bool {
                     lightAction.setValue(Current.themeManager.currentTheme.type == .light, forKey: "checked")
                 }
                 
-                let darkAction = UIAlertAction(title: "settings_theme_dark_title".localized, style: .default, handler: { _ in
+                let darkAction = UIAlertAction(title: L10n.settingsThemeDarkTitle, style: .default, handler: { _ in
                     Current.themeManager.setTheme(Theme(type: .dark))
                 })
                 if let _ = darkAction.value(forKey: "checked") as? Bool {
@@ -81,7 +81,7 @@ struct SettingsFactory {
                 ac.addAction(systemAction)
                 ac.addAction(lightAction)
                 ac.addAction(darkAction)
-                ac.addAction(UIAlertAction(title: "settings_theme_cancel_title".localized, style: .cancel))
+                ac.addAction(UIAlertAction(title: L10n.settingsThemeCancelTitle, style: .cancel))
                 
                 let navigationRequest = AlertNavigationRequest(alertController: ac)
                 Current.navigate.to(navigationRequest)
@@ -89,7 +89,7 @@ struct SettingsFactory {
             actionRequired: rowsWithActionRequired?.contains(.theme) ?? false
         )
         
-        var appearanceSection = SettingsSection(title: "settings_section_appearance_title".localized, rows: [])
+        var appearanceSection = SettingsSection(title: L10n.settingsSectionAppearanceTitle, rows: [])
         
         if Current.featureManager.isFeatureEnabled(.themes) {
             appearanceSection.rows.append(themeSettingsRow)
@@ -101,16 +101,16 @@ struct SettingsFactory {
         
         // MARK: - Support and feedback
         
-        let supportSection = SettingsSection(title: "settings_section_support_title".localized, rows: [
+        let supportSection = SettingsSection(title: L10n.settingsSectionSupportTitle, rows: [
             SettingsRow(
                 type: .faq,
-                subtitle: "settings_row_faqs_subtitle".localized,
+                subtitle: L10n.settingsRowFaqsSubtitle,
                 action: .launchSupport(service: .faq),
                 actionRequired: rowsWithActionRequired?.contains(.faq) ?? false
             ),
             SettingsRow(
                 type: .contactUs,
-                subtitle: "settings_row_contact_subtitle".localized,
+                subtitle: L10n.settingsRowContactSubtitle,
                 action: .launchSupport(service: .contactUs),
                 actionRequired: rowsWithActionRequired?.contains(.contactUs) ?? false
             ),
@@ -128,16 +128,16 @@ struct SettingsFactory {
         
         // MARK: - About
         
-        let aboutSection = SettingsSection(title: "settings_section_about_title".localized, rows: [
+        let aboutSection = SettingsSection(title: L10n.settingsSectionAboutTitle, rows: [
             SettingsRow(
                 type: .securityAndPrivacy,
-                subtitle: "settings_row_security_subtitle".localized,
+                subtitle: L10n.settingsRowSecuritySubtitle,
                 action: .pushToReusable(screen: .securityAndPrivacy),
                 actionRequired: rowsWithActionRequired?.contains(.securityAndPrivacy) ?? false
             ),
             SettingsRow(
                 type: .howItWorks,
-                subtitle: "settings_row_howitworks_subtitle".localized,
+                subtitle: L10n.settingsRowHowitworksSubtitle,
                 action: .pushToReusable(screen: .howItWorks),
                 actionRequired: rowsWithActionRequired?.contains(.howItWorks) ?? false
             ),
@@ -152,7 +152,7 @@ struct SettingsFactory {
         
         // MARK: - Legal
         
-        let legalSection = SettingsSection(title: "settings_section_legal_title".localized, rows: [
+        let legalSection = SettingsSection(title: L10n.settingsSectionLegalTitle, rows: [
             SettingsRow(
                 type: .privacyPolicy,
                 action: .pushToReusable(screen: .privacyPolicy),
@@ -169,7 +169,7 @@ struct SettingsFactory {
         
         // MARK: - Beta
         
-        let betaSection = SettingsSection(title: "settings_section_beta_title".localized, rows: [
+        let betaSection = SettingsSection(title: L10n.settingsSectionBetaTitle, rows: [
             SettingsRow(
                 type: .featureFlags,
                 action: .pushToViewController(viewController: FeatureFlagsTableViewController.self),

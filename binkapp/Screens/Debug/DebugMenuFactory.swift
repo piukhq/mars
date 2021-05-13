@@ -20,7 +20,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeEndpointRow(), makeAllowCustomBundleClientOnLoginRow(), makeSecondaryColorRow(), makeLPCDebugModeRow(), makeForceCrashRow(), makeResponseCodeVisualiserRow(), makeInAppReviewRow(), makePLLPromptCounterRow(), makeSeePromptCounterRow(), makeStorePromptCounterRow()])
+        return DebugMenuSection(title: L10n.debugMenuToolsSectionTitle, rows: [makeEndpointRow(), makeAllowCustomBundleClientOnLoginRow(), makeSecondaryColorRow(), makeLPCDebugModeRow(), makeForceCrashRow(), makeResponseCodeVisualiserRow(), makeInAppReviewRow(), makePLLPromptCounterRow(), makeSeePromptCounterRow(), makeStorePromptCounterRow()])
     }
     
     private func makeEndpointRow() -> DebugMenuRow {

@@ -119,7 +119,10 @@
 
 "about_custom_title" = "About %@";
 
-"details_header_show_barcode" = "Tap card to show barcode";
+"barcode_view_title" = "Card number:";
+"details_header_show_barcode" = "Tap to enlarge barcode";
+"details_header_show_qr_code" = "Tap to enlarge QR code";
+"details_header_show_aztec_code" = "Tap to enlarge Aztec code";
 "details_header_show_card_number" = "Tap to show card number";
 
 "about_membership_title" = "About membership";
@@ -259,9 +262,8 @@
 "preferences_update_fail" = "We can't update your preferences at the moment. Please try again later.";
 
 // MARK: - Buttons
-"continue_with_facebook_button" = "Continue with Facebook";
 "signup_with_email_button" = "Sign up with email";
-"login_with_email_button" = "Log in with email";
+"login_with_email_button" = "Log in";
 
 // MARK: - Onboarding
 "onboarding_slide1_header" = "Payment linked loyalty. Magic!";
@@ -270,8 +272,6 @@
 "onboarding_slide2_body" = "Store all your loyalty cards in a single digital wallet. View your rewards and points balances any time, anywhere.";
 "onboarding_slide3_header" = "Never miss out";
 "onboarding_slide3_body" = "Show your loyalty cards’ barcodes on screen, or collect points instantly when you pay. Whichever way, you’re always covered.";
-"facebook_error" = "Facebook is currently unavailable.";
-"facebook_cancelled" = "Facebook login was cancelled.";
 
 // MARK: - PCD
 
@@ -300,7 +300,6 @@
 "add_email_subtitle" = "Please add your email address below.";
 "social_tandcs_title" = "Terms and conditions";
 "social_tandcs_subtitle" = "One last step...";
-"social_tandcs_facebook_error" = "Continue with Facebook failed.";
 "social_tandcs_siwa_error" = "Sign in with Apple failed.";
 
 "preferences_prompt" = "Make sure you’re the first to know about available rewards, offers and updates!\nYou can opt out at any time.";
@@ -312,12 +311,13 @@
 "register_subtitle" = "All it takes is an email and password.";
 "register_failed" = "Registration failed.";
 
-"login_title" = "Log in with email";
+"login_title" = "Log in";
 "login_subtitle" = "Welcome back!";
 "login_error" =  "Incorrect email/password. Please try again.";
 "login_forgot_password" = "Forgot password";
 "forgot_password_description" = "Please enter your email address and if it is associated with a Bink account, then a password reset email will be sent";
 "fogrot_password_popup_text" = "If the email address you entered is associated with a Bink account, then a password reset email will be sent.";
+"issues_logging_in" = "Issues logging in?";
 
 "tandcs_title" = "I agree to Bink's Terms and Conditions";
 "tandcs_description" = "Please read the Bink Privacy Policy for further details of how your data will be processed";

@@ -67,15 +67,22 @@ enum UserFacingNetworkingError: String {
     var title: String {
         switch self {
         case .planAlreadyLinked:
-            return "card_already_linked_title".localized
+            return L10n.cardAlreadyLinkedTitle
         }
     }
     
     var message: String {
         switch self {
-        case .planAlreadyLinked:
-            return "card_already_linked_message".localized
+        default:
+            return ""
         }
+    }
+    
+    func message(membershipPlan: CD_MembershipPlan?) -> String {
+        let planName = membershipPlan?.account?.planName ?? ""
+        let planNameCard = membershipPlan?.account?.planNameCard ?? ""
+        let planDetails = "\(planName) \(planNameCard)"
+        return L10n.cardAlreadyLinkedMessage(L10n.cardAlreadyLinkedMessagePrefix, planDetails, planDetails)
     }
     
     static func errorForKey(_ errorKey: String) -> UserFacingNetworkingError? {

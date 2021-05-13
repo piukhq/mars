@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol LoyaltyButtonDelegate: class {
+protocol LoyaltyButtonDelegate: AnyObject {
     func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView)
 }
 
@@ -31,7 +31,7 @@ class BrandHeaderView: CustomView {
         
         if let planName = membershipPlan.account?.planName {
             loyaltyPlanButton.setTitle("\(planName) info", for: .normal)
-            loyaltyPlanButton.setImage(UIImage(named: "iconsChevronRight")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            loyaltyPlanButton.setImage(Asset.iconsChevronRight.image.withRenderingMode(.alwaysTemplate), for: .normal)            
         } else {
             loyaltyPlanButton.isHidden = true
         }

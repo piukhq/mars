@@ -13,12 +13,12 @@ struct MembershipCardModel: Codable {
     let apiId: Int?
     let membershipPlan: Int?
     let membershipTransactions: [MembershipTransaction]?
-    let status: MembershipCardStatusModel?
+    var status: MembershipCardStatusModel?
     var card: CardModel?
     let images: [MembershipCardImageModel]?
     var account: MembershipCardAccountModel?
-    let paymentCards: [LinkedCardResponse]?
-    let balances: [MembershipCardBalanceModel]?
+    var paymentCards: [LinkedCardResponse]?
+    var balances: [MembershipCardBalanceModel]?
     let vouchers: [VoucherModel]?
     
     enum CodingKeys: String, CodingKey {

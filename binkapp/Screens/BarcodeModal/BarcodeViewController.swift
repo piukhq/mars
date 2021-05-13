@@ -88,19 +88,19 @@ class BarcodeViewController: BinkViewController {
         } else {
             barcodeImageView.isHidden = true
             imageContainerView.isHidden = true
-            barcodeErrorLabel.text = "barcode_error".localized
+            barcodeErrorLabel.text = L10n.barcodeError
             barcodeErrorLabel.font = UIFont.bodyTextLarge
             barcodeErrorLabel.isHidden = viewModel.isBarcodeAvailable ? false : true
         }
                 
         barcodeLabel.font = UIFont.headline
-        barcodeLabel.text = viewModel.isBarcodeAvailable ? "barcode_title".localized : nil
+        barcodeLabel.text = viewModel.isBarcodeAvailable ? L10n.barcodeTitle : nil
         
         barcodeNumberLabel.font = UIFont.subtitle
         barcodeNumberLabel.text = viewModel.barcodeNumber
         
         titleLabel.font = UIFont.headline
-        titleLabel.text = "card_number_title".localized
+        titleLabel.text = L10n.cardNumberTitle
         
         numberLabel.font = UIFont.subtitle
         numberLabel.textColor = .blueAccent
@@ -112,12 +112,12 @@ class BarcodeViewController: BinkViewController {
         switch viewModel.barcodeUse {
         case .loyaltyCard:
             if viewModel.isBarcodeAvailable {
-                descriptionLabel.text = "barcode_card_description".localized
+                descriptionLabel.text = L10n.barcodeCardDescription
             } else {
-                descriptionLabel.text = "barcode_card_number_description".localized
+                descriptionLabel.text = L10n.barcodeCardNumberDescription
             }
         case .coupon:
-            descriptionLabel.text = "barcode_coupon_description".localized
+            descriptionLabel.text = L10n.barcodeCouponDescription
         }
 
         hasDrawnBarcode = true

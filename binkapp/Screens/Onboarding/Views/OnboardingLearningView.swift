@@ -16,33 +16,33 @@ enum OnboardingLearningType: Int {
     var headerText: String {
         switch self {
         case .pll:
-            return "onboarding_slide1_header".localized
+            return L10n.onboardingSlide1Header
         case .wallet:
-            return "onboarding_slide2_header".localized
+            return L10n.onboardingSlide2Header
         case .barcodeOrCollect:
-            return "onboarding_slide3_header".localized
+            return L10n.onboardingSlide3Header
         }
     }
 
     var bodyText: String {
         switch self {
         case .pll:
-            return "onboarding_slide1_body".localized
+            return L10n.onboardingSlide1Body
         case .wallet:
-            return "onboarding_slide2_body".localized
+            return L10n.onboardingSlide2Body
         case .barcodeOrCollect:
-            return "onboarding_slide3_body".localized
+            return L10n.onboardingSlide3Body
         }
     }
 
     var learningImageName: String {
         switch self {
         case .pll:
-            return "onboarding1"
+            return Asset.onboarding1.name
         case .wallet:
-            return "onboarding2"
+            return Asset.onboarding2.name
         case .barcodeOrCollect:
-            return "onboarding3"
+            return Asset.onboarding3.name
         }
     }
 

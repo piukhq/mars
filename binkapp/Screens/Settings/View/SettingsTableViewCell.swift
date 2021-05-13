@@ -73,7 +73,7 @@ class SettingsTableViewCell: UITableViewCell {
     }()
     
     private lazy var chevron: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "iconsChevronRight"))
+        let imageView = UIImageView(image: Asset.iconsChevronRight.image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .center
         contentView.addSubview(imageView)

@@ -42,7 +42,7 @@ class BrandTableViewCell: UITableViewCell {
         let isPLL = plan.featureSet?.planCardType == .link
         descriptionLabel.isHidden = !isPLL
         descriptionLabel.font = UIFont.bodyTextSmall
-        descriptionLabel.text = "can_be_linked_description".localized
+        descriptionLabel.text = L10n.canBeLinkedDescription
         descriptionLabel.textColor = Current.themeManager.color(for: .text)
 
         existingBrandIcon.isHidden = !brandExists

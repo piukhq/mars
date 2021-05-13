@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 import Firebase
-import FBSDKCoreKit
 import AlamofireNetworkActivityLogger
 import CardScan
 import Keys
@@ -27,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyDev)
         #endif
         
-        if CommandLine.arguments.contains("enable-testing") {
+        if CommandLine.arguments.contains("UI-testing") {
             configureAppForTesting()
         }
         
@@ -42,9 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         BinkAnalytics.beginSessionTracking()
         ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyProduction)
         #endif
-
-        // Facebook
-        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
 
         // Device storage
         StorageUtility.start()
@@ -97,11 +93,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         }
         Current.wallet.handleAppDidEnterBackground()
     }
-
-    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        // Facebook
-        ApplicationDelegate.shared.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
-    }
 }
 
 private extension AppDelegate {
@@ -113,13 +104,13 @@ private extension AppDelegate {
     }
 
     @objc func displayOutageError() {
-        let alert = ViewControllerFactory.makeOkAlertViewController(title: "error_title".localized, message: "communication_error".localized)
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: L10n.communicationError)
         let navigationRequest = AlertNavigationRequest(alertController: alert)
         Current.navigate.to(navigationRequest)
     }
 
     @objc func presentSSLPinningFailurePopup() {
-        let alert = ViewControllerFactory.makeOkAlertViewController(title: "ssl_pinning_failure_title".localized, message: "ssl_pinning_failure_text".localized)
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.sslPinningFailureTitle, message: L10n.sslPinningFailureText)
         let navigationRequest = AlertNavigationRequest(alertController: alert)
         Current.navigate.to(navigationRequest)
     }

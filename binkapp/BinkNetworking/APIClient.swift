@@ -264,7 +264,7 @@ private extension APIClient {
                         completion?(.failure(.userFacingError(userFacingNetworkingError)), networkResponseData)
                         return
                     } else {
-                        completion?(.failure(.customError(errorMessage ?? "went_wrong".localized)), networkResponseData)
+                        completion?(.failure(.customError(errorMessage ?? L10n.wentWrong)), networkResponseData)
                         return
                     }
                 }
