@@ -55,14 +55,14 @@ class AddPaymentCardViewModel {
     }
 
     func toPaymentTermsAndConditions(acceptAction: @escaping BinkButtonAction, declineAction: @escaping BinkButtonAction) {
-        let description = "terms_and_conditions_description".localized
-        let titleAttributedString = NSMutableAttributedString(string: "terms_and_conditions_title".localized + "\n", attributes: [
+        let description = L10n.termsAndConditionsDescription
+        let titleAttributedString = NSMutableAttributedString(string: L10n.termsAndConditionsTitle + "\n", attributes: [
             .font: UIFont.headline
         ])
         let descriptionAttributedString = NSMutableAttributedString(string: description, attributes: [
             .font: UIFont.bodyTextLarge
         ])
-        let urlString = "privacy_policy".localized
+        let urlString = L10n.privacyPolicy
         if let urlRange = description.range(of: urlString) {
             let nsRange = NSRange(urlRange, in: description)
             descriptionAttributedString.addAttribute(.link, value: "https://bink.com/privacy-policy/", range: nsRange)
@@ -72,15 +72,15 @@ class AddPaymentCardViewModel {
         attributedText.append(titleAttributedString)
         attributedText.append(descriptionAttributedString)
         
-        let configurationModel = ReusableModalConfiguration(title: "terms_and_conditions_title".localized, text: attributedText, primaryButtonTitle: "i_accept".localized, primaryButtonAction: acceptAction, secondaryButtonTitle: "i_decline".localized, secondaryButtonAction: declineAction)
+        let configurationModel = ReusableModalConfiguration(title: L10n.termsAndConditionsTitle, text: attributedText, primaryButtonTitle: L10n.iAccept, primaryButtonAction: acceptAction, secondaryButtonTitle: L10n.iDecline, secondaryButtonAction: declineAction)
         let viewController = ViewControllerFactory.makePaymentTermsAndConditionsViewController(configurationModel: configurationModel)
         let navigationRequest = ModalNavigationRequest(viewController: viewController, dragToDismiss: false, hideCloseButton: true)
         Current.navigate.to(navigationRequest)
     }
     
     func toPrivacyAndSecurity() {
-        let title: String = "security_and_privacy_title".localized
-        let description: String = "security_and_privacy_description".localized
+        let title: String = L10n.securityAndPrivacyTitle
+        let description: String = L10n.securityAndPrivacyDescription
         let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
         let viewController = ViewControllerFactory.makeSecurityAndPrivacyViewController(configuration: configuration)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
@@ -115,7 +115,7 @@ class AddPaymentCardViewModel {
     }
 
     func displayError() {
-        let alert = ViewControllerFactory.makeOkAlertViewController(title: "add_payment_error_title".localized, message: "add_payment_error_message".localized)
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.addPaymentErrorTitle, message: L10n.addPaymentErrorMessage)
         Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     

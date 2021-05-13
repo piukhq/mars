@@ -41,17 +41,17 @@ class PreferencesViewController: BinkViewController {
     private func configureUI() {
         navigationItem.leftBarButtonItem?.title = nil
         
-        titleLabel.text = "settings_row_preferences_title".localized
+        titleLabel.text = L10n.settingsRowPreferencesTitle
         titleLabel.font = UIFont.headline
         
         errorLabel.font = UIFont.bodyTextSmall
         errorLabel.textColor = .red
         
-        let attributedString = NSMutableAttributedString(string: "preferences_screen_description".localized, attributes: [.font: UIFont.bodyTextLarge])
+        let attributedString = NSMutableAttributedString(string: L10n.preferencesScreenDescription, attributes: [.font: UIFont.bodyTextLarge])
         let base = NSString(string: attributedString.string)
-        let rewardsRange = base.range(of: "preferences_prompt_highlight_rewards".localized)
-        let offersRange = base.range(of: "preferences_prompt_highlight_offers".localized)
-        let updatesRange = base.range(of: "preferences_prompt_highlight_updates".localized)
+        let rewardsRange = base.range(of: L10n.preferencesPromptHighlightRewards)
+        let offersRange = base.range(of: L10n.preferencesPromptHighlightOffers)
+        let updatesRange = base.range(of: L10n.preferencesPromptHighlightUpdates)
         
         let attributes: [NSAttributedString.Key: Any]  = [.font: UIFont.subtitle]
         
@@ -64,7 +64,7 @@ class PreferencesViewController: BinkViewController {
         viewModel.getPreferences(onSuccess: { [weak self] (preferences) in
             self?.createCheckboxes(preferences: preferences)
         }) { [weak self] in
-            self?.errorLabel.text = "preferences_retrieve_fail".localized
+            self?.errorLabel.text = L10n.preferencesRetrieveFail
             self?.errorLabel.isHidden = false
         }
     }
@@ -74,7 +74,7 @@ class PreferencesViewController: BinkViewController {
             let checked: Bool = $0.value == "1"
             let checkboxView = CheckboxView(checked: checked)
             let attributedString = $0.slug == "marketing-bink" ?
-                NSMutableAttributedString(string: "preferences_marketing_checkbox".localized, attributes: [.font: UIFont.bodyTextSmall]) :
+                NSMutableAttributedString(string: L10n.preferencesMarketingCheckbox, attributes: [.font: UIFont.bodyTextSmall]) :
                 NSMutableAttributedString(string: $0.label ?? "", attributes: [.font: UIFont.bodyTextSmall])
             checkboxView.configure(title: attributedString, columnName: $0.slug ?? "", columnKind: .add, delegate: self)
             
@@ -100,7 +100,7 @@ extension PreferencesViewController: CheckboxViewDelegate {
             self?.errorLabel.isHidden = true
         }) { [weak self] _ in
             checkboxView.reset()
-            self?.errorLabel.text = "preferences_update_fail".localized
+            self?.errorLabel.text = L10n.preferencesUpdateFail
             self?.errorLabel.isHidden = false
         }
     }

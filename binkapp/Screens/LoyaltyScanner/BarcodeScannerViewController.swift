@@ -56,14 +56,13 @@ class BarcodeScannerViewController: BinkViewController {
     }()
 
     private lazy var guideImageView: UIImageView = {
-        let image = UIImage(named: "scanner_guide")
-        let imageView = UIImageView(image: image)
+        let imageView = UIImageView(image: Asset.scannerGuide.image)
         return imageView
     }()
 
     private lazy var explainerLabel: UILabel = {
         let label = UILabel()
-        label.text = "loyalty_scanner_explainer_text".localized
+        label.text = L10n.loyaltyScannerExplainerText
         label.font = .bodyTextLarge
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
@@ -80,7 +79,7 @@ class BarcodeScannerViewController: BinkViewController {
     private lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "close"), for: .normal)
+        button.setImage(Asset.close.image, for: .normal)
         button.addTarget(self, action: #selector(close), for: .touchUpInside)
         return button
     }()

@@ -10,7 +10,7 @@ import UIKit
 
 class BinkPillButton: BinkTrackableButton {
     enum PillButtonType {
-        case defaultCase
+        case unusedPlaceholder
     }
 
     var hasShadow = true

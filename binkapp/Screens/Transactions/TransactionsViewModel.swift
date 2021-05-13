@@ -13,16 +13,16 @@ struct TransactionsViewModel {
     
     var title: String {
         if transactions.isEmpty {
-            return "transaction_history_unavailable_title".localized
+            return L10n.transactionHistoryUnavailableTitle
         }
-        return "points_history_title".localized
+        return L10n.pointsHistoryTitle
     }
     
     var description: String {
         if transactions.isEmpty {
-            return "transaction_history_unavailable_description".localized
+            return L10n.transactionHistoryUnavailableDescription
         }
-        return "recent_transaction_history_subtitle".localized
+        return L10n.recentTransactionHistorySubtitle
     }
 
     private var storedMostRecentTransaction: MembershipCardStoredMostRecentTransaction? {

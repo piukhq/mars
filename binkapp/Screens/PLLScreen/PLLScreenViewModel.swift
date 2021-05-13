@@ -53,15 +53,15 @@ class PLLScreenViewModel {
     }
     
     var titleText: String {
-        return "pll_screen_link_title".localized
+        return L10n.pllScreenLinkTitle
     }
     
     var primaryMessageText: String {
-        return isEmptyPll ? "pll_screen_link_message".localized : String(format: "pll_screen_add_message".localized, membershipCard.membershipPlan?.account?.planNameCard ?? "")
+        return isEmptyPll ? L10n.pllScreenLinkMessage : L10n.pllScreenAddMessage(membershipCard.membershipPlan?.account?.planNameCard ?? "")
     }
     
     var secondaryMessageText: String {
-        return "pll_screen_secondary_message".localized
+        return L10n.pllScreenSecondaryMessage
     }
     
     var shouldAllowDismiss: Bool {
@@ -98,7 +98,7 @@ class PLLScreenViewModel {
             guard let error = error else { return }
             if case .userFacingNetworkingError(let networkingError) = error {
                 if case .userFacingError(let userFacingError) = networkingError {
-                    let messagePrefix = self?.changedLinkCards.count == 1 ? "card_already_linked_message_prefix".localized : "cards_already_linked_message_prefix".localized
+                    let messagePrefix = self?.changedLinkCards.count == 1 ? L10n.cardAlreadyLinkedMessagePrefix : L10n.cardsAlreadyLinkedMessagePrefix
                     let planName = self?.membershipCard.membershipPlan?.account?.planName ?? ""
                     let planNameCard = self?.membershipCard.membershipPlan?.account?.planNameCard ?? ""
                     let planDetails = "\(planName) \(planNameCard)"

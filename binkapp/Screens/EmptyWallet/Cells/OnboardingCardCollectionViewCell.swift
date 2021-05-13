@@ -51,7 +51,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toBrowseBrands)))
         
         if case .link = walletPrompt.type {
-            CAGradientLayer.makeGradient(for: headerView, firstColor: .binkPurple, secondColor: .blueAccent, startPoint: CGPoint(x: 0.7, y: 0.0))
+            CAGradientLayer.makeGradient(for: headerView, firstColor: .binkGradientBlueRight, secondColor: .binkGradientBlueLeft, startPoint: CGPoint(x: 0.7, y: 0.0))
             titleLabel.textColor = .white
             descriptionLabel.textColor = .white
 

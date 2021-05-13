@@ -24,17 +24,17 @@ struct CardDetailInformationRow {
             switch self {
             case .about(let card):
                 if let planName = card.membershipPlan?.account?.planName {
-                    return String(format: "about_custom_title".localized, planName)
+                    return L10n.aboutCustomTitle(planName)
                 } else {
-                    return "info_title".localized
+                    return L10n.infoTitle
                 }
             case .securityAndPrivacy:
                 return "Security and privacy"
             case .deleteMembershipCard(let card):
                 if let planNameCard = card.membershipPlan?.account?.planNameCard {
-                    return String(format: "delete_card_plan_title".localized, planNameCard)
+                    return L10n.deleteCardPlanTitle(planNameCard)
                 } else {
-                    return "delete_card_title".localized
+                    return L10n.deleteCardTitle
                 }
             case .deletePaymentCard:
                 return "Delete this card"
@@ -76,7 +76,7 @@ class WalletCardDetailInformationRowFactory: CardDetailInformationRowFactory {
 
     func makeLoyaltyInformationRows(membershipCard: CD_MembershipCard) -> [CardDetailInformationRow] {
         guard let plan = membershipCard.membershipPlan else {
-            fatalError("Membership card has no associated plan. We should never be in this state.")
+            return []
         }
         if plan.isPLR {
             return [makeRewardsHistoryRow(), makeAboutPlanRow(membershipCard: membershipCard), makeSecurityAndPrivacyRow(), makeDeleteMembershipCardRow(membershipCard: membershipCard)]

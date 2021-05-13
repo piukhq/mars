@@ -76,13 +76,13 @@ struct WalletLoyaltyCardCellViewModel {
     }
 
     var linkStatusText: String? {
-        guard !shouldShowRetryStatus else { return "retry_title".localized }
-        guard cardStatus != .pending else { return "pending_title".localized }
+        guard !shouldShowRetryStatus else { return L10n.retryTitle }
+        guard cardStatus != .pending else { return L10n.pendingTitle }
         switch (planCardType, hasLinkedPaymentCards) {
         case (.link, true):
-            return "card_linked_status".localized
+            return L10n.cardLinkedStatus
         case (.link, false):
-            return "card_link_now_status".localized
+            return L10n.cardLinkNowStatus
         default:
             return nil
         }
@@ -95,9 +95,9 @@ struct WalletLoyaltyCardCellViewModel {
         guard cardStatus != .pending else { return "" }
         switch (planCardType, hasLinkedPaymentCards) {
         case (.link, true):
-            return "linked_status_image_name".localized
+            return L10n.linkedStatusImageName
         case (.link, false):
-            return "unlinked_status_image_name".localized
+            return L10n.unlinkedStatusImageName
         default:
             return ""
         }
@@ -107,10 +107,10 @@ struct WalletLoyaltyCardCellViewModel {
 
     var pointsValueText: String? {
         guard cardStatus != .pending else {
-            return "pending_title".localized
+            return L10n.pendingTitle
         }
         guard !shouldShowRetryStatus else {
-            return "retry_title".localized
+            return L10n.retryTitle
         }
 
         // PLR
@@ -123,7 +123,7 @@ struct WalletLoyaltyCardCellViewModel {
         }
         
         if cardStatus == .authorised && membershipCard.balances.isEmpty {
-            return "pending_title".localized
+            return L10n.pendingTitle
         }
 
         let floatBalanceValue = balance?.value?.floatValue ?? 0
@@ -145,9 +145,9 @@ struct WalletLoyaltyCardCellViewModel {
             if let earnType = membershipCard.vouchersEarnType {
                 switch earnType {
                 case .accumulator:
-                    return "plr_loyalty_card_subtitle_accumulator".localized
+                    return L10n.plrLoyaltyCardSubtitleAccumulator
                 case .stamps:
-                    return "plr_loyalty_card_subtitle_stamps".localized
+                    return L10n.plrLoyaltyCardSubtitleStamps
                 }
             }
         }

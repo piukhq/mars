@@ -10,11 +10,11 @@ import UIKit
 
 class OnboardingViewModel {
     var signUpWithEmailButtonText: String {
-        return "signup_with_email_button".localized
+        return L10n.signupWithEmailButton
     }
 
     var loginWithEmailButtonText: String {
-        return "login_with_email_button".localized
+        return L10n.loginWithEmailButton
     }
     
     func pushToSocialTermsAndConditions(requestType: SocialLoginRequestType) {
@@ -22,14 +22,6 @@ class OnboardingViewModel {
         let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
-    
-//    func pushToAddEmail(request: FacebookRequest) {
-//        let viewController = ViewControllerFactory.makeAddEmailViewController(request: request) { [weak self] request in
-//            self?.pushToSocialTermsAndConditions(requestType: .facebook(request))
-//        }
-//        let navigationRequest = PushNavigationRequest(viewController: viewController)
-//        Current.navigate.to(navigationRequest)
-//    }
     
     func pushToRegister() {
         BinkAnalytics.track(OnboardingAnalyticsEvent.start(journey: .register))

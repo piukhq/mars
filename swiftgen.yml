@@ -1,0 +1,12 @@
+strings:
+  inputs: binkapp/Supporting Files/
+  outputs:
+    - templateName: structured-swift5
+      output: SwiftGen/Strings.swift
+xcassets:
+  inputs:
+    - binkapp/Supporting Files/Resources/Assets.xcassets
+  outputs:
+    - templateName: swift5
+      output: SwiftGen/Assets.swift
+

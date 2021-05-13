@@ -9,13 +9,12 @@
 import UIKit
 
 enum SocialLoginRequestType {
-    case facebook(FacebookRequest)
     case apple(SignInWithAppleRequest)
 }
 
 class SocialTermsAndConditionsViewController: BaseFormViewController, UserServiceProtocol {
     private lazy var continueButton: BinkButton = {
-        return BinkButton(type: .gradient, title: "continue_button_title".localized, enabled: false) { [weak self] in
+        return BinkButton(type: .gradient, title: L10n.continueButtonTitle, enabled: false) { [weak self] in
             self?.continueButtonTapped()
         }
     }()
@@ -24,7 +23,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
     
     init(requestType: SocialLoginRequestType) {
         self.requestType = requestType
-        super.init(title: "social_tandcs_title".localized, description: "social_tandcs_subtitle".localized, dataSource: FormDataSource(accessForm: .socialTermsAndConditions))
+        super.init(title: L10n.socialTandcsTitle, description: L10n.socialTandcsSubtitle, dataSource: FormDataSource(accessForm: .socialTermsAndConditions))
         dataSource.delegate = self
     }
     
@@ -51,51 +50,8 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
         continueButton.toggleLoading(isLoading: true)
         
         switch requestType {
-        case .facebook(let request):
-            loginWithFacebook(request: request, preferenceCheckboxes: preferenceCheckboxes)
         case .apple(let request):
             loginWithApple(request: request, preferenceCheckboxes: preferenceCheckboxes)
-        }
-    }
-    
-    // FIXME: To avoid the code duplicate below, in future we need to build the Facebook and Apple request objects from a common object type
-    
-    private func loginWithFacebook(request: FacebookRequest, preferenceCheckboxes: [CheckboxView]) {
-        authWithFacebook(request: request) { [weak self] result in
-            switch result {
-            case .success(let response):
-                guard let email = response.email else {
-                    self?.handleAuthError()
-                    return
-                }
-                Current.userManager.setNewUser(with: response)
-                
-                self?.createService(params: APIConstants.makeServicePostRequest(email: email)) { (success, _) in
-                    guard success else {
-                        self?.handleAuthError()
-                        return
-                    }
-                    
-                    self?.getUserProfile(completion: { result in
-                        guard let response = try? result.get() else {
-                            BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
-                            return
-                        }
-                        Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
-                        BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
-                    })
-                    
-                    Current.rootStateMachine.handleLogin()
-                    self?.updatePreferences(checkboxes: preferenceCheckboxes)
-                    self?.continueButton.toggleLoading(isLoading: false)
-                    
-                    BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
-                    BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
-                }
-            case .failure:
-                BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
-                self?.handleAuthError()
-            }
         }
     }
     
@@ -158,13 +114,11 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
         
         switch requestType {
         case .apple:
-            message = "social_tandcs_siwa_error".localized
-        case .facebook:
-            message = "social_tandcs_facebook_error".localized
+            message = L10n.socialTandcsSiwaError
         }
         
-        let alert = BinkAlertController(title: "error_title".localized, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
+        let alert = BinkAlertController(title: L10n.errorTitle, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: L10n.ok, style: .default))
         present(alert, animated: true)
     }
 

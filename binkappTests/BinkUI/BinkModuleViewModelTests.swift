@@ -57,8 +57,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .loginUnavailable)
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsInactive")
-            XCTAssertEqual(self.sut.titleText, "history_title".localized)
-            XCTAssertEqual(self.sut.subtitleText, "not_available_title".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.historyTitle)
+            XCTAssertEqual(self.sut.subtitleText, L10n.notAvailableTitle)
         }
     }
     
@@ -74,8 +74,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .plrTransactions)
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsActive")
-            XCTAssertEqual(self.sut.titleText, "plr_lcd_points_module_auth_title".localized)
-            XCTAssertEqual(self.sut.subtitleText, "points_module_view_history_message".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.plrLcdPointsModuleAuthTitle)
+            XCTAssertEqual(self.sut.subtitleText, L10n.pointsModuleViewHistoryMessage)
         }
     }
     
@@ -88,8 +88,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .aboutMembership)
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsActive")
-            XCTAssertEqual(self.sut.titleText, "plr_lcd_points_module_title".localized)
-            XCTAssertEqual(self.sut.subtitleText, "plr_lcd_points_module_description".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.plrLcdPointsModuleTitle)
+            XCTAssertEqual(self.sut.subtitleText, L10n.plrLcdPointsModuleDescription)
         }
     }
     
@@ -108,7 +108,7 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             XCTAssertEqual(self.sut.state, .pllTransactions(transactionsAvailable: nil, formattedTitle: nil, lastChecked: nil))
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsActive")
             XCTAssertEqual(self.sut.titleText, "£1.23 ")
-            XCTAssertEqual(self.sut.subtitleText, "points_module_view_history_message".localized)
+            XCTAssertEqual(self.sut.subtitleText, L10n.pointsModuleViewHistoryMessage)
         }
     }
     
@@ -122,7 +122,7 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             XCTAssertEqual(self.sut.state, .pllTransactions(transactionsAvailable: nil, formattedTitle: nil, lastChecked: nil))
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsActive")
             XCTAssertEqual(self.sut.titleText, "£1.23 ")
-            XCTAssertNotEqual(self.sut.subtitleText, "points_module_view_history_message".localized)
+            XCTAssertNotEqual(self.sut.subtitleText, L10n.pointsModuleViewHistoryMessage)
         }
     }
     
@@ -136,8 +136,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .pending)
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsLoginPending")
-            XCTAssertEqual(self.sut.titleText, "pending_title".localized)
-            XCTAssertEqual(self.sut.subtitleText, "please_wait_title".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.pendingTitle)
+            XCTAssertEqual(self.sut.subtitleText, L10n.pleaseWaitTitle)
         }
     }
     
@@ -151,8 +151,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .noReasonCode)
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsLogin")
-            XCTAssertEqual(self.sut.titleText, "error_title".localized)
-            XCTAssertEqual(self.sut.subtitleText, "please_try_again_title".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.errorTitle)
+            XCTAssertEqual(self.sut.subtitleText, L10n.pleaseTryAgainTitle)
         }
     }
     
@@ -164,8 +164,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .noReasonCode)
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsLogin")
-            XCTAssertEqual(self.sut.titleText, "error_title".localized)
-            XCTAssertEqual(self.sut.subtitleText, "please_try_again_title".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.errorTitle)
+            XCTAssertEqual(self.sut.subtitleText, L10n.pleaseTryAgainTitle)
         }
     }
     
@@ -177,8 +177,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .signUp)
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsLogin")
-            XCTAssertEqual(self.sut.titleText, "sign_up_failed_title".localized)
-            XCTAssertEqual(self.sut.subtitleText, "please_try_again_title".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.signUpFailedTitle)
+            XCTAssertEqual(self.sut.subtitleText, L10n.pleaseTryAgainTitle)
         }
     }
     
@@ -190,8 +190,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .signUp)
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsLogin")
-            XCTAssertEqual(self.sut.titleText, "sign_up_failed_title".localized)
-            XCTAssertEqual(self.sut.subtitleText, "please_try_again_title".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.signUpFailedTitle)
+            XCTAssertEqual(self.sut.subtitleText, L10n.pleaseTryAgainTitle)
         }
     }
     
@@ -203,8 +203,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .patchGhostCard(type: .points(membershipCard: mappedCard)))
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsLogin")
-            XCTAssertEqual(self.sut.titleText, "register_gc_title".localized)
-            XCTAssertEqual(self.sut.subtitleText, "points_module_to_see_history".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.registerGcTitle)
+            XCTAssertEqual(self.sut.subtitleText, L10n.pointsModuleToSeeHistory)
         }
     }
     
@@ -216,8 +216,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .patchGhostCard(type: .points(membershipCard: mappedCard)))
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsLogin")
-            XCTAssertEqual(self.sut.titleText, "register_gc_title".localized)
-            XCTAssertEqual(self.sut.subtitleText, "points_module_to_see_history".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.registerGcTitle)
+            XCTAssertEqual(self.sut.subtitleText, L10n.pointsModuleToSeeHistory)
         }
     }
     
@@ -229,8 +229,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .loginChanges(type: .points(membershipCard: mappedCard), status: nil, reasonCode: nil))
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsLogin")
-            XCTAssertEqual(self.sut.titleText, "points_module_account_exists_status".localized)
-            XCTAssertEqual(self.sut.subtitleText, "points_module_log_in".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.pointsModuleAccountExistsStatus)
+            XCTAssertEqual(self.sut.subtitleText, L10n.pointsModuleLogIn)
         }
     }
     
@@ -242,8 +242,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .loginChanges(type: .points(membershipCard: mappedCard), status: nil, reasonCode: nil))
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsLogin")
-            XCTAssertEqual(self.sut.titleText, "points_module_account_exists_status".localized)
-            XCTAssertEqual(self.sut.subtitleText, "points_module_log_in".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.pointsModuleAccountExistsStatus)
+            XCTAssertEqual(self.sut.subtitleText, L10n.pointsModuleLogIn)
         }
     }
     
@@ -258,8 +258,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .unlinkable)
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsLinkInactive")
-            XCTAssertEqual(self.sut.titleText, "card_linking_status".localized)
-            XCTAssertEqual(self.sut.subtitleText, "not_available_title".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.cardLinkingStatus)
+            XCTAssertEqual(self.sut.subtitleText, L10n.notAvailableTitle)
         }
     }
     
@@ -272,8 +272,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .unlinkable)
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsLinkInactive")
-            XCTAssertEqual(self.sut.titleText, "card_linking_status".localized)
-            XCTAssertEqual(self.sut.subtitleText, "not_available_title".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.cardLinkingStatus)
+            XCTAssertEqual(self.sut.subtitleText, L10n.notAvailableTitle)
         }
     }
     
@@ -285,8 +285,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
         
         XCTAssertEqual(sut.state, .pllNoPaymentCards)
         XCTAssertEqual(sut.imageName, "lcdModuleIconsLinkError")
-        XCTAssertEqual(sut.titleText, "card_link_status".localized)
-        XCTAssertEqual(sut.subtitleText, "link_module_to_payment_cards_message".localized)
+        XCTAssertEqual(sut.titleText, L10n.cardLinkStatus)
+        XCTAssertEqual(sut.subtitleText, L10n.linkModuleToPaymentCardsMessage)
     }
     
     func test_linkModule_authorised_paymentCards_noLinkedCards_stateReturnsCorrectly() {
@@ -294,8 +294,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
         
         XCTAssertEqual(sut.state, .pllError)
         XCTAssertEqual(sut.imageName, "lcdModuleIconsLinkError")
-        XCTAssertEqual(sut.titleText, "card_link_status".localized)
-        XCTAssertEqual(sut.subtitleText, "link_module_to_payment_cards_message".localized)
+        XCTAssertEqual(sut.titleText, L10n.cardLinkStatus)
+        XCTAssertEqual(sut.subtitleText, L10n.linkModuleToPaymentCardsMessage)
     }
     
     func test_linkModule_authorised_singlePaymentCard_singleLinkedCard_stateReturnsCorrectly() {
@@ -307,8 +307,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .pll(linkedPaymentCards: mappedCard.formattedLinkedPaymentCards, paymentCards: self.mappedPaymentCards))
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsLinkActive")
-            XCTAssertEqual(self.sut.titleText, "card_linked_status".localized)
-            XCTAssertEqual(self.sut.subtitleText, String(format: "link_module_to_number_of_payment_cards_message".localized, 1, 1))
+            XCTAssertEqual(self.sut.titleText, L10n.cardLinkedStatus)
+            XCTAssertEqual(self.sut.subtitleText, L10n.linkModuleToNumberOfPaymentCardsMessage(1, 1))
         }
     }
     
@@ -322,8 +322,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .loginChanges(type: .points(membershipCard: mappedCard), status: nil, reasonCode: nil))
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsLogin")
-            XCTAssertEqual(self.sut.titleText, "log_in_title".localized)
-            XCTAssertEqual(self.sut.subtitleText, "link_module_to_link_to_cards_message".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.logInTitle)
+            XCTAssertEqual(self.sut.subtitleText, L10n.linkModuleToLinkToCardsMessage)
         }
     }
     
@@ -337,8 +337,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .noReasonCode)
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsLogin")
-            XCTAssertEqual(self.sut.titleText, "error_title".localized)
-            XCTAssertEqual(self.sut.subtitleText, "please_try_again_title".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.errorTitle)
+            XCTAssertEqual(self.sut.subtitleText, L10n.pleaseTryAgainTitle)
         }
     }
     
@@ -350,8 +350,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .signUp)
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsLogin")
-            XCTAssertEqual(self.sut.titleText, "sign_up_failed_title".localized)
-            XCTAssertEqual(self.sut.subtitleText, "please_try_again_title".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.signUpFailedTitle)
+            XCTAssertEqual(self.sut.subtitleText, L10n.pleaseTryAgainTitle)
         }
     }
     
@@ -363,8 +363,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .patchGhostCard(type: .link(membershipCard: mappedCard, paymentCards: self.mappedPaymentCards)))
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsLogin")
-            XCTAssertEqual(self.sut.titleText, "register_gc_title".localized)
-            XCTAssertEqual(self.sut.subtitleText, "please_try_again_title".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.registerGcTitle)
+            XCTAssertEqual(self.sut.subtitleText, L10n.pleaseTryAgainTitle)
         }
     }
     
@@ -376,8 +376,8 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
             
             XCTAssertEqual(self.sut.state, .loginChanges(type: .link(membershipCard: mappedCard, paymentCards: self.mappedPaymentCards), status: nil, reasonCode: nil))
             XCTAssertEqual(self.sut.imageName, "lcdModuleIconsPointsLogin")
-            XCTAssertEqual(self.sut.titleText, "log_in_failed_title".localized)
-            XCTAssertEqual(self.sut.subtitleText, "please_try_again_title".localized)
+            XCTAssertEqual(self.sut.titleText, L10n.logInFailedTitle)
+            XCTAssertEqual(self.sut.subtitleText, L10n.pleaseTryAgainTitle)
         }
     }
     

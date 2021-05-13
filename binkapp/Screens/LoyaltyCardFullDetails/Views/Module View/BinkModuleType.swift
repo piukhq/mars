@@ -37,113 +37,115 @@ enum ModuleState: Equatable {
     var imageName: String {
         switch self {
         case .loginUnavailable:
-            return "lcdModuleIconsPointsInactive"
+            return Asset.lcdModuleIconsPointsInactive.name
         case .plrTransactions, .aboutMembership, .pllTransactions:
-            return "lcdModuleIconsPointsActive"
+            return Asset.lcdModuleIconsPointsActive.name
         case .pending:
-            return "lcdModuleIconsPointsLoginPending"
+            return Asset.lcdModuleIconsPointsLoginPending.name
         case .signUp, .patchGhostCard, .loginChanges, .registerGhostCard, .noReasonCode:
-            return "lcdModuleIconsPointsLogin"
+            return Asset.lcdModuleIconsPointsLogin.name
         case .unlinkable:
-            return "lcdModuleIconsLinkInactive"
+            return Asset.lcdModuleIconsLinkInactive.name
         case .genericError:
-            return "lcdModuleIconsLinkError"
+            return Asset.lcdModuleIconsLinkError.name
         case .pll:
-            return "lcdModuleIconsLinkActive"
+            return Asset.lcdModuleIconsLinkActive.name
         case .pllNoPaymentCards, .pllError:
-            return "lcdModuleIconsLinkError"
+            return Asset.lcdModuleIconsLinkError.name
         }
     }
     
     var titleText: String {
         switch self {
         case .loginUnavailable:
-            return "history_title".localized
+            return L10n.historyTitle
         case .plrTransactions:
-            return "plr_lcd_points_module_auth_title".localized
+            return L10n.plrLcdPointsModuleAuthTitle
         case .aboutMembership:
-            return "plr_lcd_points_module_title".localized
+            return L10n.plrLcdPointsModuleTitle
         case .pllTransactions(_, let formattedTitle, _):
             return formattedTitle ?? ""
         case .pending:
-            return "pending_title".localized
+            return L10n.pendingTitle
         case .signUp:
-            return "sign_up_failed_title".localized
+            return L10n.signUpFailedTitle
         case .patchGhostCard:
-            return "register_gc_title".localized
+            return L10n.registerGcTitle
         case .loginChanges(let type, let status, let reasonCode):
             switch (type, status, reasonCode) {
             case (.points, _, .accountAlreadyExists):
-                return "points_module_account_exists_status".localized
+                return L10n.pointsModuleAccountExistsStatus
             case (.points, _, _):
-                return "points_module_retry_log_in_status".localized
+                return L10n.pointsModuleRetryLogInStatus
             case (.link, .unauthorised, _):
-                return "log_in_title".localized
+                return L10n.logInTitle
             case (.link, .failed, _):
-                return "log_in_failed_title".localized
+                return L10n.logInFailedTitle
             default: return ""
             }
         case .registerGhostCard:
-            return "registration_failed_title".localized
+            return L10n.registrationFailedTitle
         case .noReasonCode:
-            return "error_title".localized
+            return L10n.errorTitle
         case .unlinkable:
-            return "card_linking_status".localized
+            return L10n.cardLinkingStatus
         case .genericError:
-            return "link_module_error_title".localized
+            return L10n.linkModuleErrorTitle
         case .pll:
-            return "card_linked_status".localized
+            return L10n.cardLinkedStatus
         case .pllNoPaymentCards, .pllError:
-            return "card_link_status".localized
+            return L10n.cardLinkStatus
         }
     }
     
     var subtitleText: String {
         switch self {
         case .loginUnavailable:
-            return "not_available_title".localized
+            return L10n.notAvailableTitle
         case .plrTransactions:
-            return "points_module_view_history_message".localized
+            return L10n.pointsModuleViewHistoryMessage
         case .aboutMembership:
-            return "plr_lcd_points_module_description".localized
+            return L10n.plrLcdPointsModuleDescription
         case .pllTransactions(let transactionsAvailable, _, let lastChecked):
             if transactionsAvailable == true {
-                return "points_module_view_history_message".localized
+                return L10n.pointsModuleViewHistoryMessage
             } else {
-                return "\("points_module_last_checked".localized) \(lastChecked ?? "")"
+                return "\(L10n.pointsModuleLastChecked) \(lastChecked ?? "")"
             }
         case .pending:
-            return "please_wait_title".localized
+            return L10n.pleaseWaitTitle
         case .patchGhostCard(let type):
             switch type {
             case .points:
-                return "points_module_to_see_history".localized
+                return L10n.pointsModuleToSeeHistory
             case .link:
-                return "please_try_again_title".localized
+                return L10n.pleaseTryAgainTitle
             }
         case .loginChanges(let type, let status, let reasonCode):
             switch (type, status, reasonCode) {
             case (.points, _, .accountAlreadyExists):
-                return "points_module_log_in".localized
+                return L10n.pointsModuleLogIn
             case (.points, _, _):
-                return "points_module_to_see_history".localized
+                return L10n.pointsModuleToSeeHistory
             case (.link, .unauthorised, _):
-                return "link_module_to_link_to_cards_message".localized
+                return L10n.linkModuleToLinkToCardsMessage
             case (.link, .failed, _):
-                return "please_try_again_title".localized
+                return L10n.pleaseTryAgainTitle
             default:
                 return ""
             }
         case .registerGhostCard, .noReasonCode, .signUp:
-            return "please_try_again_title".localized
+            return L10n.pleaseTryAgainTitle
         case .unlinkable:
-            return "not_available_title".localized
+            return L10n.notAvailableTitle
         case .genericError:
-            return "error_title".localized
+            return L10n.errorTitle
         case .pll(let linkedPaymentCards, let paymentCards):
-            return String(format: paymentCards?.isEmpty == true ? "link_module_to_number_of_payment_card_message".localized : "link_module_to_number_of_payment_cards_message".localized, linkedPaymentCards?.count ?? 0, paymentCards?.count ?? 0)
+            let linkedPaymentCardsCount = linkedPaymentCards?.count ?? 0
+            let paymentCardsCount = paymentCards?.count ?? 0
+            return paymentCards?.isEmpty == true ? L10n.linkModuleToNumberOfPaymentCardMessage(linkedPaymentCardsCount, paymentCardsCount) : L10n.linkModuleToNumberOfPaymentCardsMessage(linkedPaymentCardsCount, paymentCardsCount)
         case .pllNoPaymentCards, .pllError:
-            return "link_module_to_payment_cards_message".localized
+            return L10n.linkModuleToPaymentCardsMessage
         }
     }
     

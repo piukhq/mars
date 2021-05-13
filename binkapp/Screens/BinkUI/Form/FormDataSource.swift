@@ -295,6 +295,32 @@ extension FormDataSource {
                     )
                 }
             }
+            
+            // Local Points Collection
+            /// LPC merchants won't have auth fields returned in the API response; instead we get them from remote config
+            /// Add them to the fields here. Their values will never be sent to Bink in the POST request.
+            if let plan = membershipPlan, let lpcAuthFields = plan.lpcAuthFields {
+                lpcAuthFields.forEach { field in
+                    guard let fieldType = field.type else { return }
+                    guard let fieldCommonName = field.commonName else { return }
+
+                    fields.append(
+                        FormField(
+                            title: field.column ?? "",
+                            placeholder: field.fieldDescription ?? "",
+                            validation: field.validation,
+                            fieldType: FormField.FieldInputType.fieldInputType(for: InputType(rawValue: fieldType), commonName: FieldCommonName(rawValue: fieldCommonName), choices: field.choices),
+                            updated: updatedBlock,
+                            shouldChange: shouldChangeBlock,
+                            fieldExited: fieldExitedBlock,
+                            pickerSelected: pickerUpdatedBlock,
+                            columnKind: .lpcAuth,
+                            forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
+                            fieldCommonName: FieldCommonName(rawValue: fieldCommonName)
+                        )
+                    )
+                }
+            }
         } else if formPurpose != .signUp && formPurpose != .signUpFailed && formPurpose != .ghostCard && formPurpose != .patchGhostCard {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
@@ -459,10 +485,10 @@ extension FormDataSource {
         
         if accessForm != .socialTermsAndConditions {
             let emailField = FormField(
-                title: "access_form_email_title".localized,
-                placeholder: "access_form_email_placeholder".localized,
+                title: L10n.accessFormEmailTitle,
+                placeholder: L10n.accessFormEmailPlaceholder,
                 validation: "^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$",
-                validationErrorMessage: "access_form_email_validation".localized,
+                validationErrorMessage: L10n.accessFormEmailValidation,
                 fieldType: .email,
                 updated: updatedBlock,
                 shouldChange: shouldChangeBlock,
@@ -476,10 +502,10 @@ extension FormDataSource {
         
         if accessForm == .login || accessForm == .register {
             let passwordField = FormField(
-                title: "access_form_password_title".localized,
-                placeholder: "access_form_password_placeholder".localized,
+                title: L10n.accessFormPasswordTitle,
+                placeholder: L10n.accessFormPasswordPlaceholder,
                 validation: "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}$",
-                validationErrorMessage: "access_form_password_validation".localized,
+                validationErrorMessage: L10n.accessFormPasswordValidation,
                 fieldType: .sensitive,
                 updated: updatedBlock,
                 shouldChange: shouldChangeBlock,
@@ -523,10 +549,10 @@ extension FormDataSource {
             }
             
             let confirmPasswordField = FormField(
-                title: "access_form_confirm_password_title".localized,
-                placeholder: "access_form_confirm_password_placeholder".localized,
+                title: L10n.accessFormConfirmPasswordTitle,
+                placeholder: L10n.accessFormConfirmPasswordPlaceholder,
                 validation: nil,
-                validationErrorMessage: "access_form_confirm_password_validation".localized,
+                validationErrorMessage: L10n.accessFormConfirmPasswordValidation,
                 fieldType: .confirmPassword,
                 updated: updatedBlock,
                 shouldChange: shouldChangeBlock,
@@ -538,22 +564,22 @@ extension FormDataSource {
         }
         
         if accessForm == .socialTermsAndConditions || accessForm == .register {
-            let attributedTCs = NSMutableAttributedString(string: "tandcs_title".localized + "\n" + "tandcs_description".localized, attributes: [.font: UIFont.bodyTextSmall])
+            let attributedTCs = NSMutableAttributedString(string: L10n.tandcsTitle + "\n" + L10n.tandcsDescription, attributes: [.font: UIFont.bodyTextSmall])
             let baseTCs = NSString(string: attributedTCs.string)
-            let tcsRange = baseTCs.range(of: "tandcs_link".localized)
-            let privacyPolicyRange = baseTCs.range(of: "ppolicy_link".localized)
+            let tcsRange = baseTCs.range(of: L10n.tandcsLink)
+            let privacyPolicyRange = baseTCs.range(of: L10n.ppolicyLink)
             attributedTCs.addAttributes([.link: "https://bink.com/terms-and-conditions/"], range: tcsRange)
             attributedTCs.addAttributes([.link: "https://bink.com/privacy-policy/"], range: privacyPolicyRange)
             
             let termsAndConditions = CheckboxView(checked: false)
-            termsAndConditions.configure(title: attributedTCs, columnName: "tandcs_link".localized, columnKind: .none, delegate: self)
+            termsAndConditions.configure(title: attributedTCs, columnName: L10n.tandcsLink, columnKind: .none, delegate: self)
             checkboxes.append(termsAndConditions)
         
-            let attributedMarketing = NSMutableAttributedString(string: "marketing_title".localized + "\n" + "preferences_prompt".localized, attributes: [.font: UIFont.bodyTextSmall])
+            let attributedMarketing = NSMutableAttributedString(string: L10n.marketingTitle + "\n" + L10n.preferencesPrompt, attributes: [.font: UIFont.bodyTextSmall])
             let baseMarketing = NSString(string: attributedMarketing.string)
-            let rewardsRange = baseMarketing.range(of: "preferences_prompt_highlight_rewards".localized)
-            let offersRange = baseMarketing.range(of: "preferences_prompt_highlight_offers".localized)
-            let updatesRange = baseMarketing.range(of: "preferences_prompt_highlight_updates".localized)
+            let rewardsRange = baseMarketing.range(of: L10n.preferencesPromptHighlightRewards)
+            let offersRange = baseMarketing.range(of: L10n.preferencesPromptHighlightOffers)
+            let updatesRange = baseMarketing.range(of: L10n.preferencesPromptHighlightUpdates)
             
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 14.0) ?? UIFont()]
             

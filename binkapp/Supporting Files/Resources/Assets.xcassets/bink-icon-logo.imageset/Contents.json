@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "bink-icon-logo.png",
+      "filename" : "App Store iOS-2.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "App Store iOS-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "App Store iOS.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

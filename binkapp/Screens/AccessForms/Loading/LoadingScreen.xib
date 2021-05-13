@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,9 +19,8 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Splash screen" translatesAutoresizingMaskIntoConstraints="NO" id="9HT-af-Za2">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Splash iPhone 12 Max" translatesAutoresizingMaskIntoConstraints="NO" id="9HT-af-Za2">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </imageView>
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="DPc-Po-Hz4">
                     <rect key="frame" x="146.5" y="406.5" width="82" height="74"/>
@@ -30,17 +30,31 @@
                     </constraints>
                     <color key="color" red="0.89808243509999997" green="0.89793330429999996" blue="0.90196251869999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 </activityIndicatorView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bink-logo-for-splash" translatesAutoresizingMaskIntoConstraints="NO" id="uBQ-Ol-Q9S">
+                    <rect key="frame" x="91.5" y="270" width="192" height="127"/>
+                </imageView>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <viewLayoutGuide key="safeArea" id="6sa-wg-ihA"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="DPc-Po-Hz4" firstAttribute="centerY" secondItem="zLi-YY-wHE" secondAttribute="centerY" constant="110" id="4pN-bL-wto"/>
+                <constraint firstItem="9HT-af-Za2" firstAttribute="top" secondItem="zLi-YY-wHE" secondAttribute="top" id="9ET-Jx-kuI"/>
+                <constraint firstItem="DPc-Po-Hz4" firstAttribute="top" secondItem="uBQ-Ol-Q9S" secondAttribute="bottom" constant="9.5" id="B6h-ji-cdR"/>
+                <constraint firstAttribute="bottom" secondItem="9HT-af-Za2" secondAttribute="bottom" id="Ffx-Em-azT"/>
+                <constraint firstItem="9HT-af-Za2" firstAttribute="centerX" secondItem="DPc-Po-Hz4" secondAttribute="centerX" id="HUY-bK-psF"/>
+                <constraint firstItem="9HT-af-Za2" firstAttribute="leading" secondItem="6sa-wg-ihA" secondAttribute="leading" id="Uzy-il-RHX"/>
                 <constraint firstItem="DPc-Po-Hz4" firstAttribute="centerX" secondItem="zLi-YY-wHE" secondAttribute="centerX" id="aov-Yi-YVc"/>
+                <constraint firstItem="uBQ-Ol-Q9S" firstAttribute="centerY" secondItem="9HT-af-Za2" secondAttribute="centerY" id="m2a-5L-32z"/>
+                <constraint firstItem="9HT-af-Za2" firstAttribute="centerX" secondItem="uBQ-Ol-Q9S" secondAttribute="centerX" id="qVk-Q9-OOa"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="6sa-wg-ihA"/>
             <point key="canvasLocation" x="-382" y="498"/>
         </view>
     </objects>
     <resources>
-        <image name="Splash screen" width="414" height="896"/>
+        <image name="Splash iPhone 12 Max" width="428" height="926"/>
+        <image name="bink-logo-for-splash" width="192" height="101"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
