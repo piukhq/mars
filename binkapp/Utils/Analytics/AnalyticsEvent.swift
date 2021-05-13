@@ -52,7 +52,6 @@ enum OnboardingAnalyticsEvent: BinkAnalyticsEvent {
         case login = "LOGIN"
         case register = "REGISTER"
         case apple = "APPLE"
-        case facebook = "FACEBOOK"
     }
     
     var name: String {

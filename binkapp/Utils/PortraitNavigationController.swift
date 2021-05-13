@@ -9,7 +9,7 @@
 import UIKit
 
 class PortraitNavigationController: UINavigationController {
-    private var isModallyPresented: Bool = false
+    private var isModallyPresented = false
     private var statusBarStyle: UIStatusBarStyle = .default
     
     private lazy var backButton: UIBarButtonItem = {
@@ -17,7 +17,7 @@ class PortraitNavigationController: UINavigationController {
     }()
     
     private lazy var closeButton: UIBarButtonItem = {
-        return UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(close))
+        return UIBarButtonItem(image: Asset.close.image, style: .plain, target: self, action: #selector(close))
     }()
     
     // TODO: When we kill off iOS 12 support, remove the init overrides and just use a custom init

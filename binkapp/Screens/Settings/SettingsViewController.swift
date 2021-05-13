@@ -107,15 +107,15 @@ class SettingsViewController: BinkViewController {
     }
     
     private func toSecurityAndPrivacyVC() {
-        let title: String = "settings_row_security_title".localized
-        let description: String = "security_and_privacy_description".localized
+        let title: String = L10n.settingsRowSecurityTitle
+        let description: String = L10n.securityAndPrivacyDescription
         let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
         viewModel.pushReusableModal(configurationModel: configuration)
     }
     
     private func toHowItWorksVC() {
-        let title: String = "how_it_works_title".localized
-        let description: String = "how_it_works_description".localized
+        let title: String = L10n.howItWorksTitle
+        let description: String = L10n.howItWorksDescription
         let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
         viewModel.pushReusableModal(configurationModel: configuration)
     }

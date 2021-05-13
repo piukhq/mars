@@ -286,9 +286,9 @@ private extension PLLScreenViewController {
         
         activePaymentCardsTableView.isHidden = !viewModel.shouldShowActivePaymentCards
         
-        pendingCardsTitleLabel.text = "pll_screen_pending_cards_title".localized
+        pendingCardsTitleLabel.text = L10n.pllScreenPendingCardsTitle
         pendingCardsTitleLabel.textColor = Current.themeManager.color(for: .text)
-        pendingCardsDetailLabel.text = "pll_screen_pending_cards_detail".localized
+        pendingCardsDetailLabel.text = L10n.pllScreenPendingCardsDetail
         pendingCardsDetailLabel.textColor = Current.themeManager.color(for: .text)
         pendingCardsTitleLabel.isHidden = !viewModel.shouldShowPendingPaymentCards
         pendingCardsDetailLabel.isHidden = !viewModel.shouldShowPendingPaymentCards
@@ -297,14 +297,14 @@ private extension PLLScreenViewController {
         var buttons: [BinkButton] = [primaryButton]
         switch journey {
         case .newCard:
-            primaryButton.setTitle("done".localized)
+            primaryButton.setTitle(L10n.done)
 
             if !viewModel.hasActivePaymentCards {
-                secondaryButton.setTitle("pll_screen_add_cards_button_title".localized)
+                secondaryButton.setTitle(L10n.pllScreenAddCardsButtonTitle)
                 buttons.append(secondaryButton)
             }
         case .existingCard:
-            primaryButton.setTitle(viewModel.isEmptyPll ? "pll_screen_add_cards_button_title".localized : "done".localized)
+            primaryButton.setTitle(viewModel.isEmptyPll ? L10n.pllScreenAddCardsButtonTitle : L10n.done)
         }
         footerButtons = buttons
         footerButtonsView.layoutIfNeeded()

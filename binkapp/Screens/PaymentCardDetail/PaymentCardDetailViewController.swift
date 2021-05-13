@@ -172,7 +172,7 @@ private extension PaymentCardDetailViewController {
     
     func configureUI() {
         addedCardsTitleLabel.text = viewModel.addedCardsTitle
-        viewModel.paymentCardIsActive ? addedCardsDescriptionLabel.text = viewModel.addedCardsDescription : addedCardsDescriptionLabel.configure(viewModel.addedCardsDescription, withHyperlink: "pcd_pending_card_hyperlink".localized, delegate: self)
+        viewModel.paymentCardIsActive ? addedCardsDescriptionLabel.text = viewModel.addedCardsDescription : addedCardsDescriptionLabel.configure(viewModel.addedCardsDescription, withHyperlink: L10n.pcdPendingCardHyperlink, delegate: self)
         
         otherCardsTitleLabel.text = viewModel.otherCardsTitle
         otherCardsDescriptionLabel.text = viewModel.otherCardsDescription

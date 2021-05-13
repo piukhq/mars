@@ -29,38 +29,38 @@ class LoyaltyPlanView: CustomView {
     
     private func configureIcon(for planType: PlanType, cardType: CD_FeatureSet.PlanCardType) {
         switch planType {
-        case .storeCell: iconImageView.image = UIImage(named: "activeStore")
+        case .storeCell: iconImageView.image = Asset.activeStore.image
         case .viewCell:
             if cardType == .view || cardType == .link {
-                iconImageView.image = UIImage(named: "activeView")
+                iconImageView.image = Asset.activeView.image
             } else {
-                iconImageView.image = UIImage(named: "inactiveView")
+                iconImageView.image = Asset.inactiveView.image
             }
         case .linkCell:
             if cardType == .link {
-                iconImageView.image = UIImage(named: "activeLink")
+                iconImageView.image = Asset.activeLink.image
             } else {
-                iconImageView.image = UIImage(named: "inactiveLink")
+                iconImageView.image = Asset.inactiveLink.image
             }
         }
     }
     
     private func configureTitle(for planType: PlanType) {
         switch planType {
-        case .storeCell: titleLabel.text = "add_join_screen_store_title".localized
-        case .viewCell: titleLabel.text = "add_join_screen_view_title".localized
-        case .linkCell: titleLabel.text = "add_join_screen_link_title".localized
+        case .storeCell: titleLabel.text = L10n.addJoinScreenStoreTitle
+        case .viewCell: titleLabel.text = L10n.addJoinScreenViewTitle
+        case .linkCell: titleLabel.text = L10n.addJoinScreenLinkTitle
         }
     }
     
     private func configureDescription(for planType: PlanType, cardType: CD_FeatureSet.PlanCardType) {
         switch planType {
         case .storeCell:
-            descriptionLabel.text = "add_join_screen_store_description".localized
+            descriptionLabel.text = L10n.addJoinScreenStoreDescription
         case .viewCell:
-            descriptionLabel.text = cardType.rawValue > 0 ? "add_join_screen_view_description".localized : "add_join_screen_view_description_inactive".localized
+            descriptionLabel.text = cardType.rawValue > 0 ? L10n.addJoinScreenViewDescription : L10n.addJoinScreenViewDescriptionInactive
         case .linkCell:
-            descriptionLabel.text = cardType.rawValue > 1 ? "add_join_screen_link_description".localized : "add_join_screen_link_description_inactive".localized
+            descriptionLabel.text = cardType.rawValue > 1 ? L10n.addJoinScreenLinkDescription : L10n.addJoinScreenLinkDescriptionInactive
         }
     }
     

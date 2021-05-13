@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FBSDKLoginKit
 import AuthenticationServices
 
 class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
@@ -50,12 +49,6 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     
     private lazy var signInWithAppleEnabled: Bool = {
         return APIConstants.isProduction && Current.isReleaseTypeBuild
-    }()
-
-    private lazy var facebookButton: BinkButton = {
-        return BinkButton(type: .pill(.facebook)) { [weak self] in
-            self?.handleFacebookButtonPressed()
-        }
     }()
 
     private lazy var registerButton: BinkButton = {
@@ -154,7 +147,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
             pageControl.centerXAnchor.constraint(equalTo: learningContainer.centerXAnchor)
         ])
 
-        footerButtons = [facebookButton, registerButton, loginButton]
+        footerButtons = [registerButton, loginButton]
     }
 
     @objc private func handleAppleIdRequest() {
@@ -199,39 +192,6 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
         tap.numberOfTapsRequired = 3
         learningContainer.addGestureRecognizer(tap)
         #endif
-    }
-
-    // MARK: Button handlers
-
-    private func handleFacebookButtonPressed() {
-        guard Current.apiClient.networkIsReachable else {
-            let alert = ViewControllerFactory.makeNoConnectivityAlertController()
-            let navigationRequest = AlertNavigationRequest(alertController: alert)
-            Current.navigate.to(navigationRequest)
-            return
-        }
-    
-        BinkAnalytics.track(OnboardingAnalyticsEvent.start(journey: .facebook))
-        
-        FacebookLoginController.login(with: self, onSuccess: { [weak self] facebookRequest in
-            // If we have no email address, push them onto the add email screen
-            guard facebookRequest.email != nil else {
-                self?.viewModel.pushToAddEmail(request: facebookRequest)
-                return
-            }
-            
-            self?.viewModel.pushToSocialTermsAndConditions(requestType: .facebook(facebookRequest))
-        }) { [weak self] isCancelled in
-            self?.showError(isCancelled)
-        }
-    }
-    
-    func showError(_ isCancelled: Bool) {
-        let message = isCancelled ? viewModel.facebookLoginCancelledText : viewModel.facebookLoginErrorText
-        
-        let alert = BinkAlertController(title: viewModel.facebookLoginErrorTitle, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: viewModel.facebookLoginOK, style: .default))
-        present(alert, animated: true)
     }
 
     // MARK: - Scroll view delegate & handlers
@@ -320,7 +280,7 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate, ASAuthori
     
     private func handleLoginError() {
         Current.userManager.removeUser()
-        let navigationRequest = AlertNavigationRequest(alertController: ViewControllerFactory.makeOkAlertViewController(title: "error_title".localized, message: "login_error".localized))
+        let navigationRequest = AlertNavigationRequest(alertController: ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: L10n.loginError))
         Current.navigate.to(navigationRequest)
     }
 }

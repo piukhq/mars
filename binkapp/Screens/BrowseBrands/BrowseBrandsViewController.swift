@@ -78,7 +78,7 @@ class BrowseBrandsViewController: BinkViewController {
         viewModel.delegate = self
         
         noMatchesLabel.font = UIFont.bodyTextLarge
-        noMatchesLabel.text = "no_matches".localized
+        noMatchesLabel.text = L10n.noMatches
         
         configureSearchTextField()
         configureCollectionView()
@@ -92,13 +92,13 @@ class BrowseBrandsViewController: BinkViewController {
         
         navigationController?.setNavigationBarHidden(false, animated: true)
         
-        filtersButton = UIBarButtonItem(title: "filters_button_title".localized, style: .plain, target: self, action: #selector(filtersButtonTapped))
+        filtersButton = UIBarButtonItem(title: L10n.filtersButtonTitle, style: .plain, target: self, action: #selector(filtersButtonTapped))
         filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.systemGray, .font: UIFont.linkTextButtonNormal], for: .highlighted)
         filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
         
         navigationItem.leftBarButtonItem = filtersButton
         
-        self.title = "browse_brands_title".localized
+        self.title = L10n.browseBrandsTitle
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -142,7 +142,7 @@ class BrowseBrandsViewController: BinkViewController {
     }
     
     private func configureSearchTextField() {
-        searchTextField.placeholder = "search".localized
+        searchTextField.placeholder = L10n.search
         searchTextField.font = .textFieldInput
         searchTextField.textColor = .greyFifty
         searchTextField.clearButtonMode = .whileEditing
@@ -155,7 +155,7 @@ class BrowseBrandsViewController: BinkViewController {
         let searchImageView = UIImageView(frame: CGRect(x: Constants.searchIconLeftPadding, y: Constants.searchIconTopPadding, width: Constants.searchIconSideSize, height: Constants.searchIconSideSize))
         
         searchImageView.contentMode = .scaleAspectFit
-        searchImageView.image = UIImage(named: "search")
+        searchImageView.image = Asset.search.image
         searchIconView.addSubview(searchImageView)
         
         searchTextField.leftView = searchIconView

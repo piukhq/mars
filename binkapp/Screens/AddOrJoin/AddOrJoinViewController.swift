@@ -14,13 +14,13 @@ class AddOrJoinViewController: BinkViewController {
     private let viewModel: AddOrJoinViewModel
 
     private lazy var addCardButton: BinkButton = {
-        return BinkButton(type: .gradient, title: "add_my_card_button".localized) { [weak self] in
+        return BinkButton(type: .gradient, title: L10n.addMyCardButton) { [weak self] in
             self?.viewModel.toAuthAndAddScreen()
         }
     }()
 
     private lazy var getNewCardButton: BinkButton = {
-        return BinkButton(type: .gradient, title: "get_new_card_button".localized) { [weak self] in
+        return BinkButton(type: .gradient, title: L10n.getNewCardButton) { [weak self] in
             self?.viewModel.didSelectAddNewCard()
         }
     }()

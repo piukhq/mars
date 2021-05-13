@@ -48,7 +48,7 @@ class AddPaymentCardViewController: BaseFormViewController {
         super.viewDidLoad()
         
         stackScrollView.insert(arrangedSubview: card, atIndex: 0, customSpacing: Constants.cardPadding)
-        stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: "security_and_privacy_title".localized)])
+        stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: L10n.securityAndPrivacyTitle)])
         configureLayout()
         
         navigationController?.setNavigationBarHidden(false, animated: true)

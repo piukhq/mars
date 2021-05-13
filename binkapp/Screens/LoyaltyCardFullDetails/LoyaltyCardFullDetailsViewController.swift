@@ -33,13 +33,24 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         return stackView
     }()
     
-    lazy var brandHeader: UIImageView = {
+    lazy var brandHeader: UIView = {
+        let headerView = UIView()
+        headerView.isUserInteractionEnabled = true
+        headerView.layer.cornerRadius = Constants.cornerRadius
+        headerView.clipsToBounds = false
+        headerView.layer.applyDefaultBinkShadow()
+        headerView.layer.shouldRasterize = true
+        headerView.layer.rasterizationScale = UIScreen.main.scale
+        headerView.addSubview(brandHeaderImageView)
+        return headerView
+    }()
+    
+    lazy var brandHeaderImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.isUserInteractionEnabled = true
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = Constants.cornerRadius
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.applyDefaultBinkShadow()
+        imageView.layer.cornerRadius = Constants.cornerRadius
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -193,11 +204,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
         
         guard let plan = viewModel.membershipCard.membershipPlan else { return }
-        if viewModel.isMembershipCardAuthorised {
-            brandHeader.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
-        } else {
-            brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
-        }
+        configureBrandHeader(with: plan)
 
         let plrVoucherCells = stackScrollView.arrangedSubviews.filter { $0.isKind(of: PLRBaseCollectionViewCell.self) }
         if let voucherCells = plrVoucherCells as? [PLRBaseCollectionViewCell], let vouchers = viewModel.vouchers {
@@ -252,9 +259,7 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.add(arrangedSubview: brandHeaderBarcodeButtonPadding)
         
         if viewModel.membershipCard.card?.barcode != nil || viewModel.membershipCard.card?.membershipId != nil {
-            let showBarcode = viewModel.membershipCard.card?.barcode != nil
-            let buttonTitle = showBarcode ? "details_header_show_barcode".localized : "details_header_show_card_number".localized
-            showBarcodeButton.setTitle(buttonTitle, for: .normal)
+            showBarcodeButton.setTitle(viewModel.barcodeButtonTitle, for: .normal)
             stackScrollView.add(arrangedSubview: showBarcodeButton)
             let gestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(showBarcodeButtonPressed))
             brandHeader.addGestureRecognizer(gestureRecogniser)
@@ -302,7 +307,6 @@ private extension LoyaltyCardFullDetailsViewController {
         }
         
         stackScrollView.add(arrangedSubview: separator)
-        
         stackScrollView.add(arrangedSubview: informationTableView)
         
         configureLayout()
@@ -310,20 +314,48 @@ private extension LoyaltyCardFullDetailsViewController {
         guard let plan = viewModel.membershipCard.membershipPlan else { return }
         
         // Build Placeholder
-        if let hexStringColor = viewModel.membershipCard.card?.colour {
-            brandHeader.backgroundColor = UIColor(hexString: hexStringColor)
-            brandHeader.layoutIfNeeded()
+        if !viewModel.shouldShowBarcode, let hexStringColor = viewModel.membershipCard.card?.colour {
+            brandHeaderImageView.backgroundColor = UIColor(hexString: hexStringColor)
+            brandHeaderImageView.layoutIfNeeded()
             let placeholderName = plan.account?.planNameCard ?? plan.account?.planName ?? ""
-            let placeholder = LCDPlaceholderGenerator.generate(with: hexStringColor, planName: placeholderName, destSize: brandHeader.frame.size)
-            brandHeader.backgroundColor = UIColor(patternImage: placeholder)
-        }
-        if viewModel.isMembershipCardAuthorised {
-            brandHeader.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
-        } else {
-            brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
+            let placeholder = LCDPlaceholderGenerator.generate(with: hexStringColor, planName: placeholderName, destSize: brandHeaderImageView.frame.size)
+            brandHeaderImageView.backgroundColor = UIColor(patternImage: placeholder)
         }
         
+        brandHeader.layoutIfNeeded()
+        configureBrandHeader(with: plan)
         configureSecondaryColorViewLayout()
+    }
+    
+    private func configureBrandHeader(with membershipPlan: CD_MembershipPlan) {
+        switch (viewModel.isMembershipCardAuthorised, viewModel.shouldShowBarcode) {
+        case (true, true), (false, true):
+            configureBarcodeViewForBrandHeader()
+        case (true, false):
+            brandHeaderImageView.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
+        case (false, false):
+            brandHeaderImageView.setImage(forPathType: .membershipPlanHero(plan: membershipPlan), animated: true)
+        }
+    }
+    
+    private func configureBarcodeViewForBrandHeader() {
+        var barcode: BarcodeView
+        switch (viewModel.barcodeViewModel.barcodeType, viewModel.barcodeViewModel.barcodeIsMoreSquareThanRectangle) {
+        case (.aztec, _), (.qr, _), (.dataMatrix, _), (_, true):
+            let barcodeView: BarcodeViewCompact = .fromNib()
+            barcode = barcodeView
+            barcodeView.configure(viewModel: viewModel)
+        default:
+            let barcodeView: BarcodeViewWide = .fromNib()
+            barcode = barcodeView
+            barcodeView.configure(viewModel: viewModel)
+        }
+        
+        barcode.translatesAutoresizingMaskIntoConstraints = false
+        brandHeader.addSubview(barcode)
+        barcode.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
+        barcode.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
+        barcode.layoutIfNeeded()
     }
     
     private func setupCellForType<T: PLRBaseCollectionViewCell>(_ cellType: T.Type, voucher: CD_Voucher) {
@@ -353,7 +385,9 @@ private extension LoyaltyCardFullDetailsViewController {
             modulesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
             separator.heightAnchor.constraint(equalToConstant: CGFloat.onePointScaled()),
             separator.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor)
+            informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            brandHeaderImageView.heightAnchor.constraint(equalTo: brandHeader.heightAnchor),
+            brandHeaderImageView.widthAnchor.constraint(equalTo: brandHeader.widthAnchor)
         ])
     }
     
@@ -384,8 +418,8 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     func configureModules() {
-        pointsModule.configure(moduleType: .points, membershipCard: viewModel.membershipCard, delegate: self)
-        linkModule.configure(moduleType: .link, membershipCard: viewModel.membershipCard, paymentCards: viewModel.paymentCards, delegate: self)
+        pointsModule.configure(with: BinkModuleViewModel(type: .points(membershipCard: viewModel.membershipCard)), delegate: self)
+        linkModule.configure(with: BinkModuleViewModel(type: .link(membershipCard: viewModel.membershipCard, paymentCards: viewModel.paymentCards)), delegate: self)
     }
     
     @objc func showBarcodeButtonPressed() {
@@ -423,8 +457,8 @@ extension LoyaltyCardFullDetailsViewController: CardDetailInformationRowFactoryD
 // MARK: - PointsModuleViewDelegate
 
 extension LoyaltyCardFullDetailsViewController: BinkModuleViewDelegate {
-    func binkModuleViewWasTapped(moduleView: BinkModuleView, withAction action: BinkModuleView.BinkModuleAction) {
-        viewModel.goToScreenForAction(action: action, delegate: self)
+    func binkModuleViewWasTapped(moduleView: BinkModuleView, withState state: ModuleState) {
+        viewModel.goToScreenForState(state: state, delegate: self)
     }
 }
 

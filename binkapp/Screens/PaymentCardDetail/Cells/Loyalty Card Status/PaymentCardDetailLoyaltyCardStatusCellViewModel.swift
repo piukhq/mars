@@ -24,7 +24,7 @@ struct PaymentCardDetailLoyaltyCardStatusCellViewModel: PaymentCardDetailCellVie
         case .unauthorised, .failed, .pending:
             return nil
         default:
-            return "pdc_you_can_link".localized
+            return L10n.pcdYouCanLink
         }
     }
 
@@ -35,7 +35,7 @@ struct PaymentCardDetailLoyaltyCardStatusCellViewModel: PaymentCardDetailCellVie
     var statusText: String? {
         switch status?.status {
         case .unauthorised, .failed:
-            return "retry_title".localized
+            return L10n.retryTitle
         default:
             return status?.status?.rawValue.capitalized
         }

@@ -76,23 +76,27 @@ class WebScrapingUtility: NSObject {
         super.init()
     }
     
-    func start(agent: WebScrapable, membershipCard: CD_MembershipCard) throws {
+    func start(agent: WebScrapable, item: PointsScrapingManager.QueuedItem) throws {
         /// If we have a membership card or agent, then we are currently in the process of scraping and should not be interrupted
         guard !isRunning else { return }
         
         self.agent = agent
-        self.membershipCard = membershipCard
         
         guard let url = URL(string: agent.scrapableUrlString) else {
             throw WebScrapingUtilityError.agentProvidedInvalidUrl
         }
         
+        self.membershipCard = item.card
+        item.isProcessing = true
+        
         let request = URLRequest(url: url)
         
         activeWebview = appropriateWebview()
         
-        activeWebview?.navigationDelegate = self
-        activeWebview?.load(request)
+        DispatchQueue.main.async {
+            self.activeWebview?.navigationDelegate = self
+            self.activeWebview?.load(request)
+        }
 
         resetIdlingTimer()
     }

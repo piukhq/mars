@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol PreferencesDelegate: class {
+protocol PreferencesDelegate: AnyObject {
     func didReceivePreferences()
 }
 
