@@ -18,6 +18,12 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
             self?.continueButtonTapped()
         }
     }()
+    
+    private lazy var loginIssuesButton: BinkButton = {
+        return BinkButton(type: .plain, title: L10n.issuesLoggingIn, enabled: true) { [weak self] in
+            self?.presentLoginIssuesScreen()
+        }
+    }()
 
     init() {
         super.init(title: L10n.logInTitle, description: L10n.loginSubtitle, dataSource: FormDataSource(accessForm: .login))
@@ -33,7 +39,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         
         stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: L10n.loginForgotPassword)])
         
-        footerButtons = [continueButton]
+        footerButtons = [continueButton, loginIssuesButton]
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -122,6 +128,12 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         let viewController = ViewControllerFactory.makeForgottenPasswordViewController()
         let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
+    }
+    
+    func presentLoginIssuesScreen() {
+        let viewController = ViewControllerFactory.makeWebViewController(urlString: "https://help.bink.com/hc/en-gb/categories/360002202520-Frequently-Asked-Questions")
+        let request = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(request)
     }
     
     private func showError() {

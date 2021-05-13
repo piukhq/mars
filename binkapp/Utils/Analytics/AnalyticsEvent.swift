@@ -475,3 +475,26 @@ enum DynamicActionsAnalyticsEvent: BinkAnalyticsEvent {
         }
     }
 }
+
+// MARK: - Recommended App Update
+
+enum RecommendedAppUpdateAnalyticsEvent: BinkAnalyticsEvent {
+    case openAppStore
+    case maybeLater
+    case skipThisVersion
+
+    var name: String {
+        return "recommended_app_update_action"
+    }
+
+    var data: [String: Any]? {
+        switch self {
+        case .openAppStore:
+            return ["user_action": "open_app_store"]
+        case .maybeLater:
+            return ["user_action": "maybe_later"]
+        case .skipThisVersion:
+            return ["user_action": "skip_this_version"]
+        }
+    }
+}

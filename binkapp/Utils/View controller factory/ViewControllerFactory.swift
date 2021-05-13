@@ -211,6 +211,30 @@ enum ViewControllerFactory {
         return alert
     }
     
+    static func makeRecommendedAppUpdateAlertController(skipVersionHandler: @escaping () -> Void) -> BinkAlertController {
+        let alert = BinkAlertController(title: L10n.recommendedAppUpdateTitle, message: L10n.recommendedAppUpdateMessage, preferredStyle: .alert)
+        
+        let openAppStoreAction = UIAlertAction(title: L10n.recommendedAppUpdateAppStoreAction, style: .cancel) { _ in
+            guard let url = URL(string: "https://apps.apple.com/gb/app/bink-loyalty-rewards-wallet/id1142153931"), UIApplication.shared.canOpenURL(url) else { return }
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            BinkAnalytics.track(RecommendedAppUpdateAnalyticsEvent.openAppStore)
+        }
+        
+        let maybeLaterAction = UIAlertAction(title: L10n.recommendedAppUpdateMaybeLaterAction, style: .default) { _ in
+            BinkAnalytics.track(RecommendedAppUpdateAnalyticsEvent.maybeLater)
+        }
+        
+        let skipVersionAction = UIAlertAction(title: L10n.recommendedAppUpdateSkipVersionAction, style: .default) { _ in
+            skipVersionHandler()
+        }
+        
+        alert.addAction(openAppStoreAction)
+        alert.addAction(maybeLaterAction)
+        alert.addAction(skipVersionAction)
+        
+        return alert
+    }
+    
     static func makeWebViewController(urlString: String) -> WebViewController {
         return WebViewController(urlString: urlString)
     }

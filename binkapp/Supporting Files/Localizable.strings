@@ -264,6 +264,7 @@
 // MARK: - Buttons
 "signup_with_email_button" = "Sign up with email";
 "login_with_email_button" = "Log in with email";
+"login_with_email_button" = "Log in";
 
 // MARK: - Onboarding
 "onboarding_slide1_header" = "Payment linked loyalty. Magic!";
@@ -311,12 +312,13 @@
 "register_subtitle" = "All it takes is an email and password.";
 "register_failed" = "Registration failed.";
 
-"login_title" = "Log in with email";
+"login_title" = "Log in";
 "login_subtitle" = "Welcome back!";
 "login_error" =  "Incorrect email/password. Please try again.";
 "login_forgot_password" = "Forgot password";
 "forgot_password_description" = "Please enter your email address and if it is associated with a Bink account, then a password reset email will be sent";
 "fogrot_password_popup_text" = "If the email address you entered is associated with a Bink account, then a password reset email will be sent.";
+"issues_logging_in" = "Issues logging in?";
 
 "tandcs_title" = "I agree to Bink's Terms and Conditions";
 "tandcs_description" = "Please read the Bink Privacy Policy for further details of how your data will be processed";
@@ -431,6 +433,13 @@
 // MARK: - Who We Are
 "who_we_are_title" = "Who we are";
 "who_we_are_body" = "Below are a list of people that have been instrumental in developing the app you now hold in your hands.";
+
+// MARK: - Recommended App Update
+"recommended_app_update_title" = "App Update Available";
+"recommended_app_update_message" = "Get the latest version of the Bink app.";
+"recommended_app_update_app_store_action" = "Open App Store";
+"recommended_app_update_maybe_later_action" = "Maybe later";
+"recommended_app_update_skip_version_action" = "Skip this version";
 
 // MARK: - Browse Brands
 "scan_button_title" = "Scan loyalty card";

@@ -1,6 +1,6 @@
 //
 //  AutomatedTesting_0_Login.swift
-//  binkappUITests
+//  binkappUITests 
 //
 //  Created by Sean Williams on 27/11/2020.
 //  Copyright © 2020 Bink. All rights reserved.
@@ -22,20 +22,20 @@ class AutomatedTesting_0_Login: XCTestCase {
     
     func test0_loginScreenOnAppLaunch_exists() {
         let buttonsQuery = app.buttons
-        XCTAssertTrue(buttonsQuery.staticTexts["Log in with email"].waitForExistence(timeout: 20), "Login button does not exist")
+        XCTAssertTrue(buttonsQuery.staticTexts["Log in"].waitForExistence(timeout: 20), "Login button does not exist")
     }
     
     func test2_loginWithEmailAndPassword() {
         app.scrollViews["Learning scrollview"].tap(withNumberOfTaps: 3, numberOfTouches: 1)
         app.tables.staticTexts["Environment Base URL"].tap()
         app.sheets.scrollViews.otherElements.buttons["Dev"].tap()
-        app.buttons["Log in with email"].tap()
+        app.buttons["Log in"].tap()
         
-        let emailTextfield = app.textFields["Email"]
+        let emailTextfield = app.textFields["Enter email address"]
         emailTextfield.tap()
         emailTextfield.typeText("binklogin@binktest.com")
         
-        let passwordtextfield = app.secureTextFields["Password"]
+        let passwordtextfield = app.secureTextFields["Enter password"]
         passwordtextfield.tap()
         passwordtextfield.typeText("Binklogin123")
         app.buttons["done"].tap()

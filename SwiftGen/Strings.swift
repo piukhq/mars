@@ -208,6 +208,8 @@ internal enum L10n {
   internal static let iDecline = L10n.tr("Localizable", "i_decline")
   /// Info
   internal static let infoTitle = L10n.tr("Localizable", "info_title")
+  /// Issues logging in?
+  internal static let issuesLoggingIn = L10n.tr("Localizable", "issues_logging_in")
   /// Learn more about how it works
   internal static let learnMore = L10n.tr("Localizable", "learn_more")
   /// Link error
@@ -244,9 +246,9 @@ internal enum L10n {
   internal static let loginForgotPassword = L10n.tr("Localizable", "login_forgot_password")
   /// Welcome back!
   internal static let loginSubtitle = L10n.tr("Localizable", "login_subtitle")
-  /// Log in with email
+  /// Log in
   internal static let loginTitle = L10n.tr("Localizable", "login_title")
-  /// Log in with email
+  /// Log in
   internal static let loginWithEmailButton = L10n.tr("Localizable", "login_with_email_button")
   /// Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pellentesque, nisi ut sagittis luctus, justo orci porttitor nulla, ac ultricies sem mi quis nunc. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur placerat sagittis tortor quis vehicula. Fusce et aliquam tellus, eu semper sem. Proin eu eleifend nunc. Aliquam id lacus faucibus, euismod orci in, tempor felis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam finibus commodo dui sit amet imperdiet. Phasellus tincidunt elementum euismod. Aliquam lobortis sapien in justo varius pulvinar. Morbi ac placerat sem. Maecenas ut auctor purus.Etiam quis blandit sapien. Nam urna quam, tempus ut massa sed, blandit ultrices neque. Sed sagittis vel quam ac interdum. Nunc tempus eros eget leo volutpat, ac sodales ex scelerisque. Aenean vel nibh lacus. Sed convallis faucibus euismod. Sed diam dui, commodo blandit tempus in, faucibus quis ligula. Integer condimentum mollis bibendum. Nullam feugiat rutrum mauris a luctus. Morbi dignissim, orci ac tempor bibendum, augue diam pharetra massa, vel commodo leo sem sed nisl. Pellentesque egestas egestas quam, nec laoreet dolor. Curabitur commodo scelerisque nisl ac mollis. Morbi egestas arcu nec convallis mollis.
   internal static let loremIpsum = L10n.tr("Localizable", "lorem_ipsum")
@@ -518,6 +520,16 @@ internal enum L10n {
   internal static let privacyPolicy = L10n.tr("Localizable", "privacy_policy")
   /// Your recent transaction history.
   internal static let recentTransactionHistorySubtitle = L10n.tr("Localizable", "recent_transaction_history_subtitle")
+  /// Open App Store
+  internal static let recommendedAppUpdateAppStoreAction = L10n.tr("Localizable", "recommended_app_update_app_store_action")
+  /// Maybe later
+  internal static let recommendedAppUpdateMaybeLaterAction = L10n.tr("Localizable", "recommended_app_update_maybe_later_action")
+  /// Get the latest version of the Bink app.
+  internal static let recommendedAppUpdateMessage = L10n.tr("Localizable", "recommended_app_update_message")
+  /// Skip this version
+  internal static let recommendedAppUpdateSkipVersionAction = L10n.tr("Localizable", "recommended_app_update_skip_version_action")
+  /// App Update Available
+  internal static let recommendedAppUpdateTitle = L10n.tr("Localizable", "recommended_app_update_title")
   /// Register card
   internal static let registerCardTitle = L10n.tr("Localizable", "register_card_title")
   /// Registration failed.
