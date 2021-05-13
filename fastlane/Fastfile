@@ -105,20 +105,20 @@ platform :ios do
       changelog: "No tests notes"
     )
 
-    push_to_git_remote(
-      remote: "origin",
-      local_branch: ENV["BITRISE_GIT_BRANCH"],
-      remote_branch: ENV["BITRISE_GIT_BRANCH"],
-    )
+    # push_to_git_remote(
+    #   remote: "origin",
+    #   local_branch: ENV["BITRISE_GIT_BRANCH"],
+    #   remote_branch: ENV["BITRISE_GIT_BRANCH"],
+    # )
 
     beta_dsym
   end
 
   desc "Increment the build number and commit to git"
   lane :bump do |options|
-    increment_build_number
+    # increment_build_number
     clean_build_artifacts
-    commit_version_bump
+    # commit_version_bump
   end
 
   desc "Submit dysm to Sentry for Firebase App Distribution"
