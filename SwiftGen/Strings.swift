@@ -520,6 +520,16 @@ internal enum L10n {
   internal static let privacyPolicy = L10n.tr("Localizable", "privacy_policy")
   /// Your recent transaction history.
   internal static let recentTransactionHistorySubtitle = L10n.tr("Localizable", "recent_transaction_history_subtitle")
+  /// Open App Store
+  internal static let recommendedAppUpdateAppStoreAction = L10n.tr("Localizable", "recommended_app_update_app_store_action")
+  /// Maybe later
+  internal static let recommendedAppUpdateMaybeLaterAction = L10n.tr("Localizable", "recommended_app_update_maybe_later_action")
+  /// Get the latest version of the Bink app.
+  internal static let recommendedAppUpdateMessage = L10n.tr("Localizable", "recommended_app_update_message")
+  /// Skip this version
+  internal static let recommendedAppUpdateSkipVersionAction = L10n.tr("Localizable", "recommended_app_update_skip_version_action")
+  /// App Update Available
+  internal static let recommendedAppUpdateTitle = L10n.tr("Localizable", "recommended_app_update_title")
   /// Register card
   internal static let registerCardTitle = L10n.tr("Localizable", "register_card_title")
   /// Registration failed.
