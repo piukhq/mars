@@ -46,6 +46,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="descriptionLabel" destination="Gv6-Ec-Zat" id="TRZ-Wo-dl5"/>
+                <outlet property="stackView" destination="ejR-3O-P51" id="4xG-XC-osn"/>
                 <outlet property="titleLabel" destination="doD-8N-fHO" id="hL3-5I-eDN"/>
             </connections>
             <point key="canvasLocation" x="-346.37681159420293" y="172.09821428571428"/>

@@ -28,6 +28,7 @@ internal enum Asset {
   internal static let visa = ImageAsset(name: "visa")
   internal static let existingSchemeIcon = ImageAsset(name: "existing_scheme_icon")
   internal static let `right` = ImageAsset(name: "right")
+  internal static let scanQuick = ImageAsset(name: "scan-quick")
   internal static let neutralArrow = ImageAsset(name: "neutral_arrow")
   internal static let loyaltyScannerEnterManually = ImageAsset(name: "loyalty_scanner_enter_manually")
   internal static let loyaltyScannerError = ImageAsset(name: "loyalty_scanner_error")
