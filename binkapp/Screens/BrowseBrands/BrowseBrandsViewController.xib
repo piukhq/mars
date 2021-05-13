@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,7 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BrowseBrandsViewController" customModule="binkapp" customModuleProvider="target">
             <connections>
                 <outlet property="noMatchesLabel" destination="wZU-1d-SYO" id="zCu-vQ-qAU"/>
-                <outlet property="noMatchesLabelTopConstraint" destination="5OQ-j5-hGu" id="a9r-Qr-U07"/>
+                <outlet property="noMatchesLabelTopConstraint" destination="7Do-nJ-pJB" id="6JQ-bc-aBG"/>
                 <outlet property="searchTextField" destination="Cu4-Iv-pDu" id="IGg-E6-KMY"/>
                 <outlet property="searchTextFieldContainer" destination="V71-or-ZOr" id="lUR-SV-1la"/>
                 <outlet property="tableView" destination="1MC-ks-eDc" id="wd1-uP-rhH"/>
@@ -48,7 +48,7 @@
                                         <constraint firstAttribute="height" constant="40" id="ZrJ-EU-TCa"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
+                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                 </textField>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -67,16 +67,17 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="ccM-nf-ZMN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4tc-3l-0Zu"/>
-                <constraint firstItem="wZU-1d-SYO" firstAttribute="top" secondItem="ccM-nf-ZMN" secondAttribute="bottom" id="5OQ-j5-hGu"/>
+                <constraint firstItem="wZU-1d-SYO" firstAttribute="top" secondItem="ccM-nf-ZMN" secondAttribute="bottom" id="7Do-nJ-pJB"/>
                 <constraint firstItem="wZU-1d-SYO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Csj-ZI-w8E"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="1MC-ks-eDc" secondAttribute="bottom" constant="-34" id="Nog-2y-qQE"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="1MC-ks-eDc" secondAttribute="trailing" id="RTb-MF-O5L"/>
                 <constraint firstItem="ccM-nf-ZMN" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="bCz-hm-3d3"/>
                 <constraint firstItem="1MC-ks-eDc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="hId-fZ-Z73"/>
                 <constraint firstItem="wZU-1d-SYO" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="lSJ-Fs-5vv"/>
                 <constraint firstItem="ccM-nf-ZMN" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="lmh-JR-au4"/>
                 <constraint firstItem="1MC-ks-eDc" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="obq-Vm-0Lw"/>
+                <constraint firstItem="1MC-ks-eDc" firstAttribute="top" secondItem="ccM-nf-ZMN" secondAttribute="bottom" id="qvB-Ep-aKz"/>
                 <constraint firstAttribute="bottom" secondItem="1MC-ks-eDc" secondAttribute="bottom" id="tGh-dY-p2u"/>
-                <constraint firstItem="1MC-ks-eDc" firstAttribute="top" secondItem="ccM-nf-ZMN" secondAttribute="bottom" id="yMw-w8-qE3"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="153.34821428571428"/>
         </view>

@@ -263,6 +263,7 @@
 
 // MARK: - Buttons
 "signup_with_email_button" = "Sign up with email";
+"login_with_email_button" = "Log in with email";
 "login_with_email_button" = "Log in";
 
 // MARK: - Onboarding
@@ -439,3 +440,8 @@
 "recommended_app_update_app_store_action" = "Open App Store";
 "recommended_app_update_maybe_later_action" = "Maybe later";
 "recommended_app_update_skip_version_action" = "Skip this version";
+
+// MARK: - Browse Brands
+"scan_button_title" = "Scan loyalty card";
+"scan_utton_subtitle" = "Quickly add a card you already have";
+
