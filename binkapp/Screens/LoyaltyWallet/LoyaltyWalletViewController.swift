@@ -54,7 +54,6 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
             let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
             guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else { return cell }
             cell.configureWithWalletPrompt(walletPrompt)
-            
             return cell
         }
     }
