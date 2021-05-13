@@ -20,7 +20,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     }()
     
     private lazy var loginIssuesButton: BinkButton = {
-        return BinkButton(type: .plain, title: "issues_logging_in".localized, enabled: true) { [weak self] in
+        return BinkButton(type: .plain, title: L10n.issuesLoggingIn, enabled: true) { [weak self] in
             self?.presentLoginIssuesScreen()
         }
     }()
