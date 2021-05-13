@@ -105,11 +105,11 @@ platform :ios do
       changelog: "No tests notes"
     )
 
-    push_to_git_remote(
-      remote: "origin",
-      local_branch: ENV["BITRISE_GIT_BRANCH"],
-      remote_branch: ENV["BITRISE_GIT_BRANCH"],
-    )
+    # push_to_git_remote(
+    #   remote: "origin",
+    #   local_branch: ENV["BITRISE_GIT_BRANCH"],
+    #   remote_branch: ENV["BITRISE_GIT_BRANCH"],
+    # )
 
     beta_dsym
   end
