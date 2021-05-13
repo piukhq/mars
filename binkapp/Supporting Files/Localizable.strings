@@ -433,4 +433,9 @@
 "who_we_are_title" = "Who we are";
 "who_we_are_body" = "Below are a list of people that have been instrumental in developing the app you now hold in your hands.";
 
-
+// MARK: - Recommended App Update
+"recommended_app_update_title" = "App Update Available";
+"recommended_app_update_message" = "Get the latest version of the Bink app.";
+"recommended_app_update_app_store_action" = "Open App Store";
+"recommended_app_update_maybe_later_action" = "Maybe later";
+"recommended_app_update_skip_version_action" = "Skip this version";
