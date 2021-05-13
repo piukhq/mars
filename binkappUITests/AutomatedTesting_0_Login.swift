@@ -34,8 +34,10 @@ class AutomatedTesting_0_Login: XCTestCase {
         let emailTextfield = app.textFields["Enter email address"]
         emailTextfield.tap()
         emailTextfield.typeText("binklogin@binktest.com")
-        app.buttons["next"].tap()
-        app.typeText("Binklogin123")
+        
+        let passwordtextfield = app.secureTextFields["Enter password"]
+        passwordtextfield.tap()
+        passwordtextfield.typeText("Binklogin123")
         app.buttons["done"].tap()
         app.buttons["Continue"].tap()
         
