@@ -145,12 +145,12 @@ class BaseFormViewController: BinkViewController, Form {
     }
     
     private func configureCheckboxes() {
-        guard !dataSource.checkboxes.isEmpty else { return }
         for subview in stackScrollView.arrangedSubviews {
             if subview.isKind(of: CheckboxView.self) {
                 subview.removeFromSuperview()
             }
         }
+        guard !dataSource.checkboxes.isEmpty else { return }
         stackScrollView.add(arrangedSubviews: dataSource.checkboxes)
     }
     

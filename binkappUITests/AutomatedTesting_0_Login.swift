@@ -22,14 +22,14 @@ class AutomatedTesting_0_Login: XCTestCase {
     
     func test0_loginScreenOnAppLaunch_exists() {
         let buttonsQuery = app.buttons
-        XCTAssertTrue(buttonsQuery.staticTexts["Log in"].waitForExistence(timeout: 20), "Login button does not exist")
+        XCTAssertTrue(buttonsQuery.staticTexts["Login with email"].waitForExistence(timeout: 20), "Login button does not exist")
     }
     
     func test2_loginWithEmailAndPassword() {
         app.scrollViews["Learning scrollview"].tap(withNumberOfTaps: 3, numberOfTouches: 1)
         app.tables.staticTexts["Environment Base URL"].tap()
         app.sheets.scrollViews.otherElements.buttons["Dev"].tap()
-        app.buttons["Log in with email"].tap()
+        app.buttons["Login with email"].tap()
         app.buttons["Login with password"].tap()
         
         let emailTextfield = app.textFields["Enter email address"]

@@ -544,7 +544,7 @@ extension FormDataSource {
             fields.append(bundleIDField)
         }
         
-        if accessForm == .socialTermsAndConditions || accessForm == .emailPassword || accessForm == .magicLink {
+        if accessForm == .magicLink {
             let attributedTCs = NSMutableAttributedString(string: L10n.tandcsTitle + "\n" + L10n.tandcsDescription, attributes: [.font: UIFont.bodyTextSmall])
             let baseTCs = NSString(string: attributedTCs.string)
             let tcsRange = baseTCs.range(of: L10n.tandcsLink)
@@ -553,6 +553,7 @@ extension FormDataSource {
             attributedTCs.addAttributes([.link: "https://bink.com/privacy-policy/"], range: privacyPolicyRange)
             
             let termsAndConditions = CheckboxView(checked: false)
+            termsAndConditions.accessibilityIdentifier = "Terms and conditions"
             termsAndConditions.configure(title: attributedTCs, columnName: L10n.tandcsLink, columnKind: .none, delegate: self)
             checkboxes.append(termsAndConditions)
         
