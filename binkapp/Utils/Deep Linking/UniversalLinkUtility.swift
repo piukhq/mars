@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import JWTDecode
 
 class UniversalLinkUtility {
     enum LinkType: String {
@@ -31,15 +30,6 @@ class UniversalLinkUtility {
     }
     
     private func handleMagicLink(token: String) {
-        // Check token for expiry
-        guard let decodedToken = try? decode(jwt: token), let tokenExpiry = decodedToken.body["exp"] as? TimeInterval else {
-            loginController.handleMagicLinkFailed()
-            return
-        }
-        guard Date().isBefore(date: Date(timeIntervalSince1970: tokenExpiry), toGranularity: .second) else {
-            loginController.handleMagicLinkExpiredToken()
-            return
-        }
         loginController.exchangeMagicLinkToken(token: token) { [weak self] error in
             if let error = error {
                 switch error {
