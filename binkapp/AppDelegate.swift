@@ -94,19 +94,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         Current.wallet.handleAppDidEnterBackground()
     }
     
-    // MARK: - Deep/Universal Link Handling
-    
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        let deeplinkUtility = DeepLinkUtility()
-        deeplinkUtility.handleDeepLink(for: url) { success in
-            // handle error if necessary
-        }
-        return true
-    }
+    // MARK: - Universal Link Handling
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         guard userActivity.activityType == NSUserActivityTypeBrowsingWeb, let url = userActivity.webpageURL, let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
             return false
+        }
+        
+        let universalLinkUtility = UniversalLinkUtility()
+        universalLinkUtility.handleLink(for: url) { success in
+            // TODO: Handle success or failure
         }
         
         guard let queryItems = components.queryItems else { return false }

@@ -163,6 +163,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         
         requestMagicLink(email: email) { (success, _) in
             guard success else {
+                // TODO: Handle this properly
                 self.handleLoginError()
                 return
             }
