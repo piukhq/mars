@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import JWTDecode
 
 class UniversalLinkUtility {
     enum LinkType: String {
@@ -15,7 +16,7 @@ class UniversalLinkUtility {
     
     private let loginController = LoginController()
     
-    func handleLink(for url: URL, completion: @escaping (Bool) -> Void) {
+    func handleLink(for url: URL) {
         guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return }
         guard let queryItems = urlComponents.queryItems else { return }
         
@@ -24,12 +25,30 @@ class UniversalLinkUtility {
             guard let value = item.value else { return }
             switch linkType {
             case .magicLinkToken:
-                handleMagicLink(token: value, completion: completion)
+                handleMagicLink(token: value)
             }
         }
     }
     
-    private func handleMagicLink(token: String, completion: @escaping (Bool) -> Void) {
-        loginController.exchangeMagicLinkToken(token: token, completion: completion)
+    private func handleMagicLink(token: String) {
+        // Check token for expiry
+        guard let decodedToken = try? decode(jwt: token), let tokenExpiry = decodedToken.body["exp"] as? TimeInterval else {
+            loginController.handleMagicLinkFailed()
+            return
+        }
+        guard Date().isBefore(date: Date(timeIntervalSince1970: tokenExpiry), toGranularity: .second) else {
+            loginController.handleMagicLinkExpiredToken()
+            return
+        }
+        loginController.exchangeMagicLinkToken(token: token) { [weak self] error in
+            if let error = error {
+                switch error {
+                case .magicLinkExpired:
+                    self?.loginController.handleMagicLinkExpiredToken()
+                default:
+                    self?.loginController.handleMagicLinkFailed()
+                }
+            }
+        }
     }
 }

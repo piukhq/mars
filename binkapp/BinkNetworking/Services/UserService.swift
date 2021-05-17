@@ -23,6 +23,7 @@ enum UserServiceError: BinkError {
     case failedToRenewToken
     case customError(String)
     case failedToSendMagicLink
+    case magicLinkExpired
     case failedToGetMagicLinkAccessToken
     
     var domain: BinkErrorDomain {
@@ -61,6 +62,8 @@ enum UserServiceError: BinkError {
             return message
         case .failedToSendMagicLink:
             return "Failed to send magic link"
+        case .magicLinkExpired:
+            return "Magic link expired"
         case .failedToGetMagicLinkAccessToken:
             return "Failed to get magic link access token"
         }
@@ -308,9 +311,9 @@ extension UserServiceProtocol {
         }
     }
     
-    func requestMagicLinkAccessToken(for temporaryToken: String, completion: ServiceCompletionResultHandler<LoginResponse, UserServiceError>? = nil) {
+    func requestMagicLinkAccessToken(for temporaryToken: String, completion: ServiceCompletionResultRawResponseHandler<LoginResponse, UserServiceError>? = nil) {
         let request = BinkNetworkRequest(endpoint: .magicLinksAccessTokens, method: .post, isUserDriven: false)
-        Current.apiClient.performRequestWithBody(request, body: MagicLinkAccessTokenRequestModel(token: temporaryToken), expecting: Safe<LoginResponse>.self) { (result, _) in
+        Current.apiClient.performRequestWithBody(request, body: MagicLinkAccessTokenRequestModel(token: temporaryToken), expecting: Safe<LoginResponse>.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
@@ -320,15 +323,15 @@ extension UserServiceProtocol {
                     if #available(iOS 14.0, *) {
                         BinkLogger.info(event: UserLoggerError.failedToReceiveMagicLinkAccessToken)
                     }
-                    completion?(.failure(.failedToGetMagicLinkAccessToken))
+                    completion?(.failure(.failedToGetMagicLinkAccessToken), rawResponse)
                     return
                 }
-                completion?(.success(safeResponse))
+                completion?(.success(safeResponse), rawResponse)
             case .failure:
                 if #available(iOS 14.0, *) {
                     BinkLogger.info(event: UserLoggerError.failedToReceiveMagicLinkAccessToken)
                 }
-                completion?(.failure(.failedToGetMagicLinkAccessToken))
+                completion?(.failure(.failedToGetMagicLinkAccessToken), rawResponse)
             }
         }
     }

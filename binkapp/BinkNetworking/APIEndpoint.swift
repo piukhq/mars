@@ -75,7 +75,7 @@ enum APIEndpoint: Equatable {
     /// There are cases where an endpoint requires authorization, but shouldn't respond to a 401 response code such as .logout.
     var shouldRespondToUnauthorizedStatus: Bool {
         switch self {
-        case .logout:
+        case .logout, .magicLinks, .magicLinksAccessTokens:
             return false
         default: return true
         }

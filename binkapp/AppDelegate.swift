@@ -18,6 +18,8 @@ import SafariServices
 class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     var window: UIWindow?
     var stateMachine: RootStateMachine?
+    
+    let universalLinkUtility = UniversalLinkUtility()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         #if DEBUG
@@ -97,23 +99,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     // MARK: - Universal Link Handling
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb, let url = userActivity.webpageURL, let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb, let url = userActivity.webpageURL else {
             return false
         }
         
-        let universalLinkUtility = UniversalLinkUtility()
-        universalLinkUtility.handleLink(for: url) { success in
-            // TODO: Handle success or failure
-        }
-        
-        guard let queryItems = components.queryItems else { return false }
-        for item in queryItems {
-            if item.name == "token" {
-                let alert = ViewControllerFactory.makeOkAlertViewController(title: "Token found", message: item.value ?? "")
-                let navigationRequest = AlertNavigationRequest(alertController: alert)
-                Current.navigate.to(navigationRequest)
-            }
-        }
+        universalLinkUtility.handleLink(for: url)
         
         return false
     }

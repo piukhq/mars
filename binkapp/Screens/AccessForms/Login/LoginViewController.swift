@@ -18,7 +18,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     private enum Constants {
         static let hyperlinkHeight: CGFloat = 54.0
     }
-
+    
     private lazy var continueButton: BinkButton = {
         return BinkButton(type: .gradient, title: L10n.continueButtonTitle, enabled: false) { [weak self] in
             self?.continueButtonTapped()
@@ -46,7 +46,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     private var loginType: AccessForm = .magicLink
     
     private let loginController = LoginController()
-
+    
     init() {
         super.init(title: L10n.magicLinkTitle, description: "", attributedDescription: magicLinkattributedDescription, dataSource: FormDataSource(accessForm: .magicLink))
         dataSource.delegate = self
@@ -59,7 +59,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: L10n.loginForgotPassword)])
+        //        stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: L10n.loginForgotPassword)])
         
         footerButtons = [continueButton, switchLoginTypeButton]
     }
@@ -69,19 +69,19 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         setScreenName(trackedScreen: .login)
     }
     
-//    private func hyperlinkButton(title: String) -> UIButton {
-//        let button = UIButton(type: .custom)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        let attrString = NSAttributedString(
-//            string: title,
-//            attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
-//        )
-//        button.setAttributedTitle(attrString, for: .normal)
-//        button.contentHorizontalAlignment = .left
-//        button.heightAnchor.constraint(equalToConstant: Constants.hyperlinkHeight).isActive = true
-//        button.addTarget(self, action: .forgotPasswordTapped, for: .touchUpInside)
-//        return button
-//    }
+    //    private func hyperlinkButton(title: String) -> UIButton {
+    //        let button = UIButton(type: .custom)
+    //        button.translatesAutoresizingMaskIntoConstraints = false
+    //        let attrString = NSAttributedString(
+    //            string: title,
+    //            attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
+    //        )
+    //        button.setAttributedTitle(attrString, for: .normal)
+    //        button.contentHorizontalAlignment = .left
+    //        button.heightAnchor.constraint(equalToConstant: Constants.hyperlinkHeight).isActive = true
+    //        button.addTarget(self, action: .forgotPasswordTapped, for: .touchUpInside)
+    //        return button
+    //    }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
         continueButton.enabled = fullFormIsValid
@@ -145,9 +145,9 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
                 password: fields["password"]
             )
         }
-
-        loginController.login(with: loginRequest) { success in
-            guard success else {
+        
+        loginController.login(with: loginRequest) { error in
+            if error != nil {
                 self.handleLoginError()
                 return
             }
@@ -157,60 +157,21 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     private func performMagicLinkRequest() {
         let fields = dataSource.currentFieldValues()
         guard let email = fields["email"] else {
-            handleLoginError()
+            loginController.handleMagicLinkFailed()
             return
         }
         
-        requestMagicLink(email: email) { (success, _) in
+        requestMagicLink(email: email) { [weak self] (success, _) in
+            guard let self = self else { return }
+            self.continueButton.toggleLoading(isLoading: false)
+            
             guard success else {
-                // TODO: Handle this properly
-                self.handleLoginError()
+                self.loginController.handleMagicLinkFailed()
                 return
             }
             
-            self.navigateToStatusScreen(for: .checkInbox)
+            self.loginController.handleMagicLinkCheckInbox(formDataSource: self.dataSource)
         }
-    }
-    
-    private func navigateToStatusScreen(for status: MagicLinkStatus) {
-        // TODO: Can we move this logic elsewhere?
-        var configurationModel: ReusableModalConfiguration
-        
-        switch status {
-        case .checkInbox:
-            let emailAddress = dataSource.fields.first(where: { $0.fieldCommonName == .email })?.value
-            let attributedString = NSMutableAttributedString()
-            let attributedTitle = NSAttributedString(string: L10n.checkInboxTitle + "\n", attributes: [NSAttributedString.Key.font: UIFont.headline])
-            let attributedBody = NSMutableAttributedString(string: L10n.checkInboxDescription(emailAddress ?? L10n.nilEmailAddress), attributes: [.font: UIFont.bodyTextLarge])
-            
-            let baseBody = NSString(string: attributedBody.string)
-            let noteRange = baseBody.range(of: L10n.magicLinkDescriptionNoteHighlight)
-            let emailRange = baseBody.range(of: emailAddress ?? "")
-            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 18.0) ?? UIFont()]
-            attributedBody.addAttributes(attributes, range: noteRange)
-            attributedBody.addAttributes(attributes, range: emailRange)
-            
-            attributedString.append(attributedTitle)
-            attributedString.append(attributedBody)
-            configurationModel = ReusableModalConfiguration(title: "", text: attributedString)
-        case .expired:
-            configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: L10n.linkExpiredTitle, description: L10n.linkExpiredDescription), primaryButtonTitle: L10n.retryTitle, primaryButtonAction: {
-                Current.navigate.back()
-            }, secondaryButtonTitle: L10n.cancel) {
-                Current.navigate.back(toRoot: true, animated: true)
-            }
-        case .failed:
-            configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: L10n.somethingWentWrongTitle, description: L10n.somethingWentWrongDescription), primaryButtonTitle: L10n.retryTitle, primaryButtonAction: {
-                Current.navigate.back()
-            }, secondaryButtonTitle: L10n.cancel) {
-                Current.navigate.back(toRoot: true, animated: true)
-            }
-        }
-        
-        let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configurationModel)
-        let navigationRequest = PushNavigationRequest(viewController: viewController)
-        continueButton.toggleLoading(isLoading: false)
-        Current.navigate.to(navigationRequest)
     }
     
     private func showError() {
@@ -218,7 +179,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         alert.addAction(UIAlertAction(title: L10n.ok, style: .default))
         present(alert, animated: true)
     }
-
+    
     private func handleLoginError() {
         Current.userManager.removeUser()
         continueButton.toggleLoading(isLoading: false)

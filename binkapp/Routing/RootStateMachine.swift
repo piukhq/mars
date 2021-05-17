@@ -11,6 +11,7 @@ import DTTJailbreakDetection
 
 class RootStateMachine: NSObject, UserServiceProtocol {
     private var window: UIWindow?
+    private var loadingCompleteViewController: UIViewController?
     
     func launch(withWindow window: UIWindow) {
         self.window = window
@@ -31,6 +32,19 @@ class RootStateMachine: NSObject, UserServiceProtocol {
     private func handleUnauthenticated() {
         moveTo(ViewControllerFactory.makeOnboardingViewController())
     }
+    
+    /// Presents a loading screen on the key window
+    /// - Parameter viewController: The view controller that should return to view once loading is complete.
+    func startLoading(from viewController: UIViewController? = nil) {
+        loadingCompleteViewController = viewController
+        let loading = LoadingScreen()
+        moveTo(loading)
+    }
+    
+    func stopLoading() {
+        moveTo(loadingCompleteViewController)
+        loadingCompleteViewController = nil
+    }
 
     func handleLogin() {
         let tabBarController = MainTabBarViewController(viewModel: MainTabBarViewModel())
@@ -39,9 +53,7 @@ class RootStateMachine: NSObject, UserServiceProtocol {
     
     /// User driven logout that triggers API call and clears local storage
     @objc func handleLogout() {
-        let loading = LoadingScreen()
-        moveTo(loading)
-
+        startLoading()
         defer {
             clearLocalStorage { [weak self] in
                 self?.completeLogout()
