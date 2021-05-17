@@ -94,12 +94,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         Current.wallet.handleAppDidEnterBackground()
     }
     
+    // MARK: - Deep/Universal Link Handling
+    
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         let deeplinkUtility = DeepLinkUtility()
         deeplinkUtility.handleDeepLink(for: url) { success in
             // handle error if necessary
         }
         return true
+    }
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb, let url = userActivity.webpageURL, let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+            return false
+        }
+        
+        guard let queryItems = components.queryItems else { return false }
+        for item in queryItems {
+            if item.name == "token" {
+                let alert = ViewControllerFactory.makeOkAlertViewController(title: "Token found", message: item.value ?? "")
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
+            }
+        }
+        
+        return false
     }
 }
 
