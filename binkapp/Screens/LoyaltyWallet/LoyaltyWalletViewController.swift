@@ -54,26 +54,12 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
                 self.collectionView.deleteItems(at: indexPath)
             }
         }) { _ in
-            let existingWalletPrompts = self.viewModel.walletPrompts ?? []
+            let walletPromptsCount = self.viewModel.walletPromptsCount
             self.setupWalletPrompts()
-            let newWalletPrompt = existingWalletPrompts.difference(from: self.viewModel.walletPrompts ?? [])
             
-            if let itemIndex = newWalletPrompt.first?.type.index {
-                self.collectionView.performBatchUpdates {
-                    self.collectionView.insertItems(at: [IndexPath(item: itemIndex, section: 1)])
-                } completion: { _ in
-                    self.collectionView.reloadData()
-                }
+            if walletPromptsCount != self.viewModel.walletPromptsCount {
+                self.collectionView.reloadData()
             }
-
-            
-//            if !newWalletPrompt.isEmpty {
-//                self.collectionView.performBatchUpdates {
-//                    self.collectionView.insertItems(at: [IndexPath(item: 0, section: 1)])
-//                } completion: { _ in
-//                    self.collectionView.reloadData()
-//                }
-//            }
             self.viewModel.indexPathOfCardToDelete = nil
         }
     }
