@@ -221,7 +221,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return section == 0 ? viewModel.cardCount : viewModel.walletPrompts?.count ?? 0
+        return section == 0 ? viewModel.cardCount : viewModel.walletPromptsCount
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

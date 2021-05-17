@@ -9,7 +9,7 @@
 import Foundation
 import CardScan
 
-enum WalletPromptType {
+enum WalletPromptType: Hashable {
     case addPaymentCards
     case link(plans: [CD_MembershipPlan])
     case see(plans: [CD_MembershipPlan])
@@ -91,6 +91,19 @@ enum WalletPromptType {
             return nil
         }
     }
+    
+    var index: Int? {
+        switch self {
+        case .addPaymentCards:
+            return nil
+        case .link:
+            return 0
+        case .see:
+            return 1
+        case .store:
+            return 2
+        }
+    }
 }
 
 protocol WalletPromptProtocol {
@@ -101,7 +114,15 @@ protocol WalletPromptProtocol {
     init(type: WalletPromptType)
 }
 
-class WalletPrompt: WalletPromptProtocol {
+class WalletPrompt: WalletPromptProtocol, Hashable {
+    static func == (lhs: WalletPrompt, rhs: WalletPrompt) -> Bool {
+        return lhs.type == rhs.type
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(type)
+    }
+    
     let type: WalletPromptType
 
     required init(type: WalletPromptType) {
