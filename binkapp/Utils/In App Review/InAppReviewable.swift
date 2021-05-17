@@ -34,7 +34,7 @@ extension InAppReviewable {
     }
 
     private var canRequestReview: Bool {
-        if !CommandLine.arguments.contains("UI-testing") {
+        if !UIApplication.isRunningUITests {
             #if DEBUG
             guard Current.userDefaults.bool(forDefaultsKey: .applyInAppReviewRules) else { return true }
             #endif
@@ -61,7 +61,7 @@ extension InAppReviewable {
 
     private var reviewRequestedForCurrentMinorVersion: Bool {
         /// Can we identify the current minor version?
-        guard let currentMinorVersion = Bundle.minorVersion else {
+        guard let currentMinorVersion = Bundle.currentVersion?.minor else {
             fatalError("Could not read minor version.")
         }
 
@@ -89,7 +89,7 @@ extension InAppReviewable {
     }
 
     private func setUpdatedRequestedMinorVersions() {
-        guard let currentMinorVersion = Bundle.minorVersion else { return }
+        guard let currentMinorVersion = Bundle.currentVersion?.minor else { return }
         let requestedMinorVersionsDefaultsValues = Current.userDefaults.value(forDefaultsKey: .inAppReviewRequestedMinorVersions)
         var requestedMinorVersions = requestedMinorVersionsDefaultsValues as? [Int]
         requestedMinorVersions?.append(currentMinorVersion)

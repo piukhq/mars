@@ -62,10 +62,6 @@ class FormDataSource: NSObject {
     private(set) var membershipPlan: CD_MembershipPlan?
     
     private(set) var fields: [FormField] = []
-    private var visibleFields: [FormField] {
-        return fields.filter { !$0.hidden }
-    }
-    
     private(set) var checkboxes: [CheckboxView] = []
     private var cellTextFields: [Int: UITextField] = [:]
     private var selectedCheckboxIndex = 0
@@ -266,8 +262,7 @@ extension FormDataSource {
                             forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
                             fieldCommonName: field.fieldCommonName,
                             alternatives: field.alternativeCommonNames(),
-                            dataSourceRefreshBlock: dataSourceRefreshBlock,
-                            hidden: formPurpose == .addFailed ? true : false
+                            dataSourceRefreshBlock: dataSourceRefreshBlock
                         )
                     )
                 }
@@ -601,13 +596,13 @@ extension FormDataSource: CheckboxViewDelegate {
 
 extension FormDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return visibleFields.count
+        return fields.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: FormCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
         
-        if let field = visibleFields[safe: indexPath.item] {
+        if let field = fields[safe: indexPath.item] {
             cell.configure(with: field, delegate: self)
             cellTextFields[indexPath.row] = cell.textField
         }

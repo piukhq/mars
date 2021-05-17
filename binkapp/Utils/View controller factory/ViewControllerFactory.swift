@@ -12,9 +12,9 @@ import CardScan
 enum ViewControllerFactory {
     // MARK: - Adding Cards
     
-    static func makeLoyaltyScannerViewController(forPlan plan: CD_MembershipPlan? = nil, delegate: BarcodeScannerViewControllerDelegate?) -> BarcodeScannerViewController {
+    static func makeLoyaltyScannerViewController(forPlan plan: CD_MembershipPlan? = nil, hideNavigationBar: Bool = true, delegate: BarcodeScannerViewControllerDelegate?) -> BarcodeScannerViewController {
         let viewModel = BarcodeScannerViewModel(plan: plan)
-        return BarcodeScannerViewController(viewModel: viewModel, delegate: delegate)
+        return BarcodeScannerViewController(viewModel: viewModel, hideNavigationBar: hideNavigationBar, delegate: delegate)
     }
     
     static func makeBrowseBrandsViewController(section: Int? = nil) -> BrowseBrandsViewController {
@@ -208,6 +208,30 @@ enum ViewControllerFactory {
         alert.addAction(UIAlertAction(title: L10n.ok, style: .cancel, handler: { _ in
             completion?()
         }))
+        return alert
+    }
+    
+    static func makeRecommendedAppUpdateAlertController(skipVersionHandler: @escaping () -> Void) -> BinkAlertController {
+        let alert = BinkAlertController(title: L10n.recommendedAppUpdateTitle, message: L10n.recommendedAppUpdateMessage, preferredStyle: .alert)
+        
+        let openAppStoreAction = UIAlertAction(title: L10n.recommendedAppUpdateAppStoreAction, style: .cancel) { _ in
+            guard let url = URL(string: "https://apps.apple.com/gb/app/bink-loyalty-rewards-wallet/id1142153931"), UIApplication.shared.canOpenURL(url) else { return }
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            BinkAnalytics.track(RecommendedAppUpdateAnalyticsEvent.openAppStore)
+        }
+        
+        let maybeLaterAction = UIAlertAction(title: L10n.recommendedAppUpdateMaybeLaterAction, style: .default) { _ in
+            BinkAnalytics.track(RecommendedAppUpdateAnalyticsEvent.maybeLater)
+        }
+        
+        let skipVersionAction = UIAlertAction(title: L10n.recommendedAppUpdateSkipVersionAction, style: .default) { _ in
+            skipVersionHandler()
+        }
+        
+        alert.addAction(openAppStoreAction)
+        alert.addAction(maybeLaterAction)
+        alert.addAction(skipVersionAction)
+        
         return alert
     }
     

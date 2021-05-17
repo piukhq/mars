@@ -174,6 +174,12 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         }
     }
     
+    func presentLoginIssuesScreen() {
+        let viewController = ViewControllerFactory.makeWebViewController(urlString: "https://help.bink.com/hc/en-gb/categories/360002202520-Frequently-Asked-Questions")
+        let request = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(request)
+    }
+    
     private func showError() {
         let alert = BinkAlertController(title: L10n.errorTitle, message: L10n.loginError, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: L10n.ok, style: .default))

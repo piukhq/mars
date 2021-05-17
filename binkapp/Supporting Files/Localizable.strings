@@ -319,6 +319,7 @@
 "login_forgot_password" = "Forgot password";
 "forgot_password_description" = "Please enter your email address and if it is associated with a Bink account, then a password reset email will be sent";
 "fogrot_password_popup_text" = "If the email address you entered is associated with a Bink account, then a password reset email will be sent.";
+"issues_logging_in" = "Issues logging in?";
 
 "magic_link_title" = "Magic Link";
 "magic_link_description" = "Get a link sent to your inbox so you can register or access your account instantly!\nWhat is Magic Link?\n\nNote: You must open the link on this mobile device in order to be logged in.";
@@ -446,4 +447,14 @@
 "who_we_are_title" = "Who we are";
 "who_we_are_body" = "Below are a list of people that have been instrumental in developing the app you now hold in your hands.";
 
+// MARK: - Recommended App Update
+"recommended_app_update_title" = "App Update Available";
+"recommended_app_update_message" = "Get the latest version of the Bink app.";
+"recommended_app_update_app_store_action" = "Open App Store";
+"recommended_app_update_maybe_later_action" = "Maybe later";
+"recommended_app_update_skip_version_action" = "Skip this version";
+
+// MARK: - Browse Brands
+"scan_button_title" = "Scan loyalty card";
+"scan_utton_subtitle" = "Quickly add a card you already have";
 
