@@ -192,7 +192,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         viewModel.reloadWallet()
     }
 
-    @objc private func refresh() {
+    @objc func refresh() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.refreshControl.endRefreshing()

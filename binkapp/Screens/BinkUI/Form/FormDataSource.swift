@@ -61,7 +61,7 @@ class FormDataSource: NSObject {
     /// We need the data source to hold a reference to the plan for some forms so that we can pass it through delegates to other objects
     private(set) var membershipPlan: CD_MembershipPlan?
     
-    private(set) var fields: [FormField] = []
+    var fields: [FormField] = []
     private(set) var checkboxes: [CheckboxView] = []
     private var cellTextFields: [Int: UITextField] = [:]
     private var selectedCheckboxIndex = 0
