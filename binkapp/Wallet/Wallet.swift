@@ -92,8 +92,8 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
 
     /// Refresh from our local data
     /// Useful for calling after card deletions
-    func refreshLocal(completion: EmptyCompletionBlock? = nil) {
-        loadWallets(forType: .localReactive, reloadPlans: false, isUserDriven: false, completion: { (success, _) in
+    func refreshLocal(cardDeleted: Bool = false, completion: EmptyCompletionBlock? = nil) {
+        loadWallets(forType: .localReactive, reloadPlans: false, isUserDriven: false, cardDeleted: cardDeleted, completion: { (success, _) in
             guard success else {
                 return
             }
@@ -122,7 +122,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
 
     // MARK: - Private
 
-    private func loadWallets(forType type: FetchType, reloadPlans: Bool, isUserDriven: Bool, completion: ServiceCompletionSuccessHandler<WalletServiceError>? = nil) {
+    private func loadWallets(forType type: FetchType, reloadPlans: Bool, isUserDriven: Bool, cardDeleted: Bool = false, completion: ServiceCompletionSuccessHandler<WalletServiceError>? = nil) {
         let dispatchGroup = DispatchGroup()
         let forceRefresh = type == .reload
 
@@ -149,7 +149,11 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
         }
 
         dispatchGroup.notify(queue: .main) {
-            NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
+            if cardDeleted {
+                NotificationCenter.default.post(name: .didDeleteWalletCard, object: nil)
+            } else {
+                NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
+            }
             completion?(true, nil)
         }
     }

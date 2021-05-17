@@ -16,6 +16,7 @@ protocol WalletViewModel {
     var cardCount: Int { get }
     var walletPromptsCount: Int { get }
     var walletPrompts: [WalletPrompt]? { get }
+    var indexPathOfCardToDelete: [IndexPath]? { get }
     func promptCard(forIndexPath indexPath: IndexPath) -> WalletPrompt?
     func reloadWallet()
     func refreshLocalWallet()
@@ -34,7 +35,7 @@ extension WalletViewModel {
     }
 
     func promptCard(forIndexPath indexPath: IndexPath) -> WalletPrompt? {
-        return walletPrompts?[safe: indexPath.row - cardCount]
+        return walletPrompts?[safe: indexPath.row]
     }
 
     func reloadWallet() {

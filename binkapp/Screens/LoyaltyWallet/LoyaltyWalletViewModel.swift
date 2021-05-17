@@ -16,13 +16,13 @@ class LoyaltyWalletViewModel: WalletViewModel {
     
     private let repository = LoyaltyWalletRepository()
 
-    var walletPrompts: [WalletPrompt]? {
-        return WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty)
-    }
+    var walletPrompts: [WalletPrompt]?
     
     var cards: [CD_MembershipCard]? {
         return Current.wallet.membershipCards
     }
+    
+    var indexPathOfCardToDelete: [IndexPath]?
     
     func toBarcodeViewController(indexPath: IndexPath, completion: @escaping () -> Void) {
         guard let card = cards?[indexPath.row] else {
@@ -52,7 +52,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
                 if #available(iOS 14.0, *) {
                     BinkLogger.infoPrivateHash(event: LoyaltyCardLoggerEvent.loyaltyCardDeleted, value: card.id)
                 }
-                Current.wallet.refreshLocal()
+                Current.wallet.refreshLocal(cardDeleted: true)
             }
         }, onCancel: onCancel)
         

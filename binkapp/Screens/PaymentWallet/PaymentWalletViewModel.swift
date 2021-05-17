@@ -14,13 +14,13 @@ class PaymentWalletViewModel: WalletViewModel {
 
     private let repository = PaymentWalletRepository()
 
-    var walletPrompts: [WalletPrompt]? {
-        return WalletPromptFactory.makeWalletPrompts(forWallet: .payment)
-    }
+    var walletPrompts: [WalletPrompt]?
 
     var cards: [CD_PaymentCard]? {
         return Current.wallet.paymentCards
     }
+    
+    var indexPathOfCardToDelete: [IndexPath]?
 
     func toCardDetail(for card: CD_PaymentCard) {
         let viewController = ViewControllerFactory.makePaymentCardDetailViewController(paymentCard: card)
@@ -59,7 +59,7 @@ class PaymentWalletViewModel: WalletViewModel {
                 if #available(iOS 14.0, *) {
                     BinkLogger.infoPrivateHash(event: PaymentCardLoggerEvent.paymentCardDeleted, value: card.id)
                 }
-                Current.wallet.refreshLocal()
+                Current.wallet.refreshLocal(cardDeleted: true)
             }
             }, onCancel: onCancel)
         
