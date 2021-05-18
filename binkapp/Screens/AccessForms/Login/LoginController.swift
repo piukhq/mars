@@ -16,7 +16,9 @@ class LoginController: UserServiceProtocol {
     }
     
     func exchangeMagicLinkToken(token: String, completion: @escaping (UserServiceError?) -> Void) {
+        /// We know that if we don't successfully login, we should fallback to the onboarding screen once loading completes.
         Current.rootStateMachine.startLoading(from: ViewControllerFactory.makeOnboardingViewController())
+        
         requestMagicLinkAccessToken(for: token) { [weak self] (result, rawResponse) in
             self?.handleResult(result, completion: { error in
                 if let error = error {
@@ -33,6 +35,10 @@ class LoginController: UserServiceProtocol {
     }
     
     private func handleResult(_ result: Result<LoginResponse, UserServiceError>, completion: @escaping (UserServiceError?) -> Void) {
+        
+        /// Remove any current user object regardless of success or failure.
+        Current.userManager.removeUser()
+        
         switch result {
         case .success(let response):
             guard let email = response.email else {
