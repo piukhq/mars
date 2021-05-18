@@ -15,12 +15,12 @@ class LoginController: UserServiceProtocol {
         }
     }
     
-    func exchangeMagicLinkToken(token: String, completion: @escaping (UserServiceError?) -> Void) {
+    func exchangeMagicLinkToken(token: String, withPreferences preferences: [String: String], completion: @escaping (UserServiceError?) -> Void) {
         /// We know that if we don't successfully login, we should fallback to the onboarding screen once loading completes.
         Current.rootStateMachine.startLoading(from: ViewControllerFactory.makeOnboardingViewController())
         
         requestMagicLinkAccessToken(for: token) { [weak self] (result, rawResponse) in
-            self?.handleResult(result, completion: { error in
+            self?.handleResult(result, withPreferences: preferences, completion: { error in
                 if let error = error {
                     if rawResponse?.urlResponse?.statusCode == 401 {
                         completion(.magicLinkExpired)

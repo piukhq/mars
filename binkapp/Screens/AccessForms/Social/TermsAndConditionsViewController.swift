@@ -58,7 +58,7 @@ class TermsAndConditionsViewController: BaseFormViewController, UserServiceProto
                 }
             }
         case .magicLink(let shortLivedToken):
-            Current.loginController.exchangeMagicLinkToken(token: shortLivedToken) { error in
+            Current.loginController.exchangeMagicLinkToken(token: shortLivedToken, withPreferences: preferenceValues) { error in
                 if let error = error {
                     switch error {
                     case .magicLinkExpired:
@@ -91,7 +91,7 @@ class TermsAndConditionsViewController: BaseFormViewController, UserServiceProto
         case .apple:
             message = L10n.socialTandcsSiwaError
         default:
-            message = "Something went wrong"
+            message = L10n.loginError
         }
         
         let alert = BinkAlertController(title: L10n.errorTitle, message: message, preferredStyle: .alert)
