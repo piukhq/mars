@@ -13,7 +13,7 @@ class OnboardingViewModel {
         return L10n.loginWithEmailButton
     }
     
-    func pushToSocialTermsAndConditions(requestType: SocialLoginRequestType) {
+    func pushToSocialTermsAndConditions(requestType: LoginRequestType) {
         let viewController = ViewControllerFactory.makeSocialTermsAndConditionsViewController(requestType: requestType)
         let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)

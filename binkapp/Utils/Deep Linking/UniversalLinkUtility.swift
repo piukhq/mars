@@ -13,8 +13,6 @@ class UniversalLinkUtility {
         case magicLinkToken = "token"
     }
     
-    private let loginController = LoginController()
-    
     func handleLink(for url: URL) {
         guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return }
         guard let queryItems = urlComponents.queryItems else { return }
@@ -30,15 +28,10 @@ class UniversalLinkUtility {
     }
     
     private func handleMagicLink(token: String) {
-        loginController.exchangeMagicLinkToken(token: token) { [weak self] error in
-            if let error = error {
-                switch error {
-                case .magicLinkExpired:
-                    self?.loginController.handleMagicLinkExpiredToken()
-                default:
-                    self?.loginController.handleMagicLinkFailed()
-                }
-            }
-        }
+        Current.rootStateMachine.handleMagicLink()
+        
+        let tAndCViewController = ViewControllerFactory.makeSocialTermsAndConditionsViewController(requestType: .magicLink(shortLivedToken: token))
+        let navigationRequest = PushNavigationRequest(viewController: tAndCViewController)
+        Current.navigate.to(navigationRequest)
     }
 }

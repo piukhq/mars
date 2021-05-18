@@ -256,7 +256,7 @@
 		BD99D2DF2350E4BD00823FC4 /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99D2DE2350E4BC00823FC4 /* SettingsSection.swift */; };
 		BD99D2E22354945100823FC4 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99D2E12354945000823FC4 /* SettingsTableViewCell.swift */; };
 		BD9BAAD9232AF4AB00D2E1C4 /* DiffAware+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9BAAD8232AF4AB00D2E1C4 /* DiffAware+Extension.swift */; };
-		BD9E4CC7236EE67900C6F098 /* SocialTermsAndConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CC6236EE67900C6F098 /* SocialTermsAndConditionsViewController.swift */; };
+		BD9E4CC7236EE67900C6F098 /* TermsAndConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CC6236EE67900C6F098 /* TermsAndConditionsViewController.swift */; };
 		BD9E4CC9236EF44900C6F098 /* SocialLoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CC8236EF44900C6F098 /* SocialLoginRequest.swift */; };
 		BD9E4CD1237014D300C6F098 /* RootStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CD0237014D300C6F098 /* RootStateMachine.swift */; };
 		BD9E4CD623738B4900C6F098 /* PreferenceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CD523738B4700C6F098 /* PreferenceResponse.swift */; };
@@ -827,7 +827,7 @@
 		BD99D2DE2350E4BC00823FC4 /* SettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
 		BD99D2E12354945000823FC4 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		BD9BAAD8232AF4AB00D2E1C4 /* DiffAware+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiffAware+Extension.swift"; sourceTree = "<group>"; };
-		BD9E4CC6236EE67900C6F098 /* SocialTermsAndConditionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialTermsAndConditionsViewController.swift; sourceTree = "<group>"; };
+		BD9E4CC6236EE67900C6F098 /* TermsAndConditionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndConditionsViewController.swift; sourceTree = "<group>"; };
 		BD9E4CC8236EF44900C6F098 /* SocialLoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginRequest.swift; sourceTree = "<group>"; };
 		BD9E4CCC236F095800C6F098 /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		BD9E4CD0237014D300C6F098 /* RootStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStateMachine.swift; sourceTree = "<group>"; };
@@ -2111,7 +2111,7 @@
 		BD458B49236ED5A30029A538 /* Social */ = {
 			isa = PBXGroup;
 			children = (
-				BD9E4CC6236EE67900C6F098 /* SocialTermsAndConditionsViewController.swift */,
+				BD9E4CC6236EE67900C6F098 /* TermsAndConditionsViewController.swift */,
 			);
 			path = Social;
 			sourceTree = "<group>";
@@ -3337,7 +3337,7 @@
 				EF3BC90D234750F900FE52ED /* Wallet.swift in Sources */,
 				70BD4BD224B77500006E4E3D /* TescoPointsScrapingAgent.swift in Sources */,
 				B766599E23214A4600B327BE /* WalletLoyaltyCardCollectionViewCell.swift in Sources */,
-				BD9E4CC7236EE67900C6F098 /* SocialTermsAndConditionsViewController.swift in Sources */,
+				BD9E4CC7236EE67900C6F098 /* TermsAndConditionsViewController.swift in Sources */,
 				EF4B46622344A73D009A3651 /* HapticFeedbackUtil.swift in Sources */,
 				EF6921722469A8A90049875B /* DebugSecondaryPlanColorViewController.swift in Sources */,
 				70B316E724E6AF2800D86DE5 /* Navigate.swift in Sources */,

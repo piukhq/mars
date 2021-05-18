@@ -45,8 +45,6 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     
     private var loginType: AccessForm = .magicLink
     
-    private let loginController = LoginController()
-    
     init() {
         super.init(title: L10n.magicLinkTitle, description: "", attributedDescription: magicLinkattributedDescription, dataSource: FormDataSource(accessForm: .magicLink))
         dataSource.delegate = self
@@ -146,7 +144,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
             )
         }
         
-        loginController.login(with: loginRequest) { error in
+        Current.loginController.login(with: loginRequest) { error in
             if error != nil {
                 self.handleLoginError()
                 return
@@ -157,7 +155,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     private func performMagicLinkRequest() {
         let fields = dataSource.currentFieldValues()
         guard let email = fields["email"] else {
-            loginController.handleMagicLinkFailed()
+            Current.loginController.handleMagicLinkFailed()
             return
         }
         
@@ -166,11 +164,11 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
             self.continueButton.toggleLoading(isLoading: false)
             
             guard success else {
-                self.loginController.handleMagicLinkFailed()
+                Current.loginController.handleMagicLinkFailed()
                 return
             }
             
-            self.loginController.handleMagicLinkCheckInbox(formDataSource: self.dataSource)
+            Current.loginController.handleMagicLinkCheckInbox(formDataSource: self.dataSource)
         }
     }
     

@@ -34,7 +34,13 @@ class LoginController: UserServiceProtocol {
         }
     }
     
-    private func handleResult(_ result: Result<LoginResponse, UserServiceError>, completion: @escaping (UserServiceError?) -> Void) {
+    func loginWithApple(request: SignInWithAppleRequest, withPreferences preferences: [String: String], completion: @escaping (UserServiceError?) -> Void) {
+        authWithApple(request: request) { [weak self] result in
+            self?.handleResult(result, withPreferences: preferences, completion: completion)
+        }
+    }
+    
+    private func handleResult(_ result: Result<LoginResponse, UserServiceError>, withPreferences preferences: [String: String]? = nil, completion: @escaping (UserServiceError?) -> Void) {
         
         /// Remove any current user object regardless of success or failure.
         Current.userManager.removeUser()
@@ -66,6 +72,11 @@ class LoginController: UserServiceProtocol {
                 })
                 
                 Current.rootStateMachine.handleLogin()
+                
+                if let preferences = preferences {
+                    self?.setPreferences(params: preferences)
+                }
+                
                 BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
                 BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
                 

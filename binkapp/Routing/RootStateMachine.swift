@@ -45,6 +45,12 @@ class RootStateMachine: NSObject, UserServiceProtocol {
         moveTo(loadingCompleteViewController)
         loadingCompleteViewController = nil
     }
+    
+    func handleMagicLink() {
+        /// We know that if we don't successfully login, we should fallback to the onboarding screen with no user once loading completes.
+        handleUnauthenticated()
+        Current.userManager.removeUser()
+    }
 
     func handleLogin() {
         let tabBarController = MainTabBarViewController(viewModel: MainTabBarViewModel())

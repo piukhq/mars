@@ -43,7 +43,7 @@ enum AccessForm {
     case emailPassword
     case forgottenPassword
     case addEmail
-    case socialTermsAndConditions
+    case termsAndConditions
 }
 
 class FormDataSource: NSObject {
@@ -483,7 +483,7 @@ extension FormDataSource {
         
         // Email
         
-        if accessForm != .socialTermsAndConditions {
+        if accessForm != .termsAndConditions {
             let emailField = FormField(
                 title: L10n.accessFormEmailTitle,
                 placeholder: L10n.accessFormEmailPlaceholder,
@@ -544,7 +544,7 @@ extension FormDataSource {
             fields.append(bundleIDField)
         }
         
-        if accessForm == .magicLink {
+        if accessForm == .termsAndConditions {
             let attributedTCs = NSMutableAttributedString(string: L10n.tandcsTitle + "\n" + L10n.tandcsDescription, attributes: [.font: UIFont.bodyTextSmall])
             let baseTCs = NSString(string: attributedTCs.string)
             let tcsRange = baseTCs.range(of: L10n.tandcsLink)
