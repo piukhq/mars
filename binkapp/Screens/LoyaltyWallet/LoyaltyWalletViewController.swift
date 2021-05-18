@@ -49,18 +49,35 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     }
     
     @objc func deleteCard() {
-        self.collectionView.performBatchUpdates({
+        self.collectionView.performBatchUpdates({ [weak self] in
             if let indexPath = viewModel.indexPathOfCardToDelete {
-                self.collectionView.deleteItems(at: indexPath)
+                self?.collectionView.deleteItems(at: indexPath)
             }
-        }) { _ in
-            let walletPromptsCount = self.viewModel.walletPromptsCount
-            self.setupWalletPrompts()
+        }) { [weak self] _ in
+            let previousWalletPrompts = self?.viewModel.walletPrompts
+            self?.setupWalletPrompts()
             
-            if walletPromptsCount != self.viewModel.walletPromptsCount {
-                self.collectionView.reloadData()
+            let walletPrompts = self?.viewModel.walletPrompts ?? []
+            if let newWalletPrompt = previousWalletPrompts?.difference(from: walletPrompts).first {
+                var insertIndex = 0
+                
+                if case .see = newWalletPrompt.type {
+                    insertIndex = walletPrompts.contains(where: { $0.index == 0 }) ? 1 : 0
+                }
+                
+                if case .store = newWalletPrompt.type {
+                    insertIndex = walletPrompts.count == 1 ? 0 : walletPrompts.count - 1
+                }
+                
+                self?.collectionView.performBatchUpdates {
+                    self?.collectionView.insertItems(at: [IndexPath(item: insertIndex, section: 1)])
+                } completion: { _ in
+                    /// Reload required to update cell size for link prompt
+                    self?.collectionView.reloadData()
+                }
             }
-            self.viewModel.indexPathOfCardToDelete = nil
+
+            self?.viewModel.indexPathOfCardToDelete = nil
         }
     }
 
