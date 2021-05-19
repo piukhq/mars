@@ -9,7 +9,7 @@
 import Foundation
 import CardScan
 
-enum WalletPromptType: Hashable {
+enum WalletPromptType {
     case addPaymentCards
     case link(plans: [CD_MembershipPlan])
     case see(plans: [CD_MembershipPlan])
