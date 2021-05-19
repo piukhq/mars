@@ -91,19 +91,6 @@ enum WalletPromptType: Hashable {
             return nil
         }
     }
-    
-    var index: Int? {
-        switch self {
-        case .addPaymentCards:
-            return nil
-        case .link:
-            return 0
-        case .see:
-            return 1
-        case .store:
-            return 2
-        }
-    }
 }
 
 protocol WalletPromptProtocol {
@@ -114,15 +101,7 @@ protocol WalletPromptProtocol {
     init(type: WalletPromptType)
 }
 
-class WalletPrompt: WalletPromptProtocol, Hashable {
-    static func == (lhs: WalletPrompt, rhs: WalletPrompt) -> Bool {
-        return lhs.type == rhs.type
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(type)
-    }
-
+class WalletPrompt: WalletPromptProtocol {
     let type: WalletPromptType
 
     required init(type: WalletPromptType) {
@@ -155,9 +134,5 @@ class WalletPrompt: WalletPromptProtocol, Hashable {
     
     var maxNumberOfPlansToDisplay: Int {
         return type.maxNumberOfPlansToDisplay
-    }
-    
-    var index: Int? {
-        return type.index
     }
 }

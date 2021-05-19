@@ -23,9 +23,6 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         super.viewDidLoad()
         navigationController?.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(setupWalletPrompts), name: .didLoadLocalWallet, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(setupWalletPrompts), name: .didLoadWallet, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(deleteCard), name: .didDeleteWalletCard, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,43 +38,6 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     @objc private func handlePointsScrapingUpdate() {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
-        }
-    }
-    
-    @objc func setupWalletPrompts() {
-        viewModel.walletPrompts = WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty)
-    }
-    
-    @objc func deleteCard() {
-        self.collectionView.performBatchUpdates({ [weak self] in
-            if let indexPath = viewModel.indexPathOfCardToDelete {
-                self?.collectionView.deleteItems(at: indexPath)
-            }
-        }) { [weak self] _ in
-            let previousWalletPrompts = self?.viewModel.walletPrompts
-            self?.setupWalletPrompts()
-            
-            let walletPrompts = self?.viewModel.walletPrompts ?? []
-            if let newWalletPrompt = previousWalletPrompts?.difference(from: walletPrompts).first {
-                var insertIndex = 0
-                
-                if case .see = newWalletPrompt.type {
-                    insertIndex = walletPrompts.contains(where: { $0.index == 0 }) ? 1 : 0
-                }
-                
-                if case .store = newWalletPrompt.type {
-                    insertIndex = walletPrompts.count == 1 ? 0 : walletPrompts.count - 1
-                }
-                
-                self?.collectionView.performBatchUpdates {
-                    self?.collectionView.insertItems(at: [IndexPath(item: insertIndex, section: 1)])
-                } completion: { _ in
-                    /// Reload required to update cell size for link prompt
-                    self?.collectionView.reloadData()
-                }
-            }
-
-            self?.viewModel.indexPathOfCardToDelete = nil
         }
     }
 
@@ -168,7 +128,7 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
     
     func promptForDelete(with index: IndexPath, cell: WalletLoyaltyCardCollectionViewCell) {
         guard let card = viewModel.cards?[index.row] else { return }
-        viewModel.indexPathOfCardToDelete = [index]
+        indexPathOfCardToDelete = index
         viewModel.showDeleteConfirmationAlert(card: card) {
             cell.set(to: .closed)
         }

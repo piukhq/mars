@@ -12,8 +12,7 @@ import CardScan
 class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> {
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupWalletPrompts()
-        NotificationCenter.default.addObserver(self, selector: #selector(deleteCard), name: .didDeleteWalletCard, object: nil)
+        viewModel.setupWalletPrompts()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -24,20 +23,6 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
     override func configureCollectionView() {
         super.configureCollectionView()
         collectionView.register(PaymentCardCollectionViewCell.self, asNib: true)
-    }
-    
-    func setupWalletPrompts() {
-        viewModel.walletPrompts = WalletPromptFactory.makeWalletPrompts(forWallet: .payment)
-    }
-    
-    @objc func deleteCard() {
-        self.collectionView.performBatchUpdates({
-            if let indexPath = viewModel.indexPathOfCardToDelete {
-                self.collectionView.deleteItems(at: indexPath)
-            }
-        }) { _ in
-            self.viewModel.indexPathOfCardToDelete = nil
-        }
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -105,7 +90,7 @@ extension PaymentWalletViewController: WalletPaymentCardCollectionViewCellDelega
 
     func promptForDelete(with index: IndexPath, cell: PaymentCardCollectionViewCell) {
         guard let card = viewModel.cards?[index.row] else { return }
-        viewModel.indexPathOfCardToDelete = [index]
+        indexPathOfCardToDelete = index
         viewModel.showDeleteConfirmationAlert(card: card) {
             cell.set(to: .closed)
         }
