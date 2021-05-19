@@ -71,6 +71,7 @@ extension UserDefaults: BinkUserDefaults {
         case hasSupportUpdates
         case featureFlags
         case skippedRecommendedVersions
+        case prefilledFormValues
         
         var keyValue: String {
             switch self {
@@ -106,6 +107,8 @@ extension UserDefaults: BinkUserDefaults {
                 return "featureFlags"
             case .skippedRecommendedVersions:
                 return "skippedRecommendedVersions"
+            case .prefilledFormValues:
+                return "prefilledFormValues"
             }
         }
     }

@@ -28,6 +28,7 @@ class PrefillFormValuesViewController: BaseFormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         footerButtons.append(saveButton)
+        saveButton.enabled = true
         
         getAllFields { fields in
             self.dataSource.setupPrefillValueFields(fields)
@@ -36,11 +37,9 @@ class PrefillFormValuesViewController: BaseFormViewController {
     }
     
     @objc func saveButtonTapped() {
-        print("SAAAAVE")
-    }
-    
-    override func formValidityUpdated(fullFormIsValid: Bool) {
-        saveButton.enabled = fullFormIsValid
+        let values = dataSource.currentFieldValues()
+        Current.userDefaults.set(values, forDefaultsKey: .prefilledFormValues)
+        Current.navigate.close()
     }
 }
 
@@ -50,7 +49,6 @@ extension PrefillFormValuesViewController: FormDataSourceDelegate {
     }
     
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool {
-        // TODO: If there is a value, use field's validation, if not then return true as all fields should be optional
         return true
     }
 }
@@ -82,7 +80,14 @@ extension FormDataSource {
             return delegate.formDataSource(self, manualValidate: field)
         }
         
+        let prefilledValues = Current.userDefaults.value(forDefaultsKey: .prefilledFormValues) as? [String: String]
+        
         enrolFields.forEach { field in
+            var forcedValue: String? = ""
+            if let column = field.column?.lowercased() {
+                forcedValue = prefilledValues?[column]
+            }
+                
             fields.append(
                 FormField(
                     title: field.column ?? "",
@@ -94,6 +99,7 @@ extension FormDataSource {
                     fieldExited: fieldExitedBlock,
                     columnKind: .enrol,
                     manualValidate: manualValidateBlock,
+                    forcedValue: forcedValue,
                     fieldCommonName: field.fieldCommonName
                 )
             )
@@ -111,7 +117,9 @@ extension PrefillFormValuesViewController: CoreDataRepositoryProtocol {
                 return
             }
             
-            for enrolField in enrolFields {
+            let validFields = enrolFields.filter { $0.fieldInputType == .textfield }
+            
+            for enrolField in validFields {
                 if !fields.contains(where: { enrolField.fieldCommonName == $0.fieldCommonName }) {
                     fields.append(enrolField)
                 }
