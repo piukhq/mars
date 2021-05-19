@@ -13,7 +13,6 @@ class PrefillFormValuesViewController: BaseFormViewController {
         let dataSource = FormDataSource()
         super.init(title: "Prefill Form Values", description: "Enter values here to be prefilled into future forms.", dataSource: dataSource)
         self.dataSource.delegate = self
-        dataSource.setupPrefillValueFields()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -30,7 +29,10 @@ class PrefillFormValuesViewController: BaseFormViewController {
         super.viewDidLoad()
         footerButtons.append(saveButton)
         
-        getAllFields()
+        getAllFields { fields in
+            self.dataSource.setupPrefillValueFields(fields)
+            self.collectionView.reloadData()
+        }
     }
     
     @objc func saveButtonTapped() {
@@ -47,7 +49,9 @@ extension PrefillFormValuesViewController: FormDataSourceDelegate {
         return true
     }
     
-    func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView) {
+    func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool {
+        // TODO: If there is a value, use field's validation, if not then return true as all fields should be optional
+        return true
     }
 }
 
@@ -57,7 +61,7 @@ extension PrefillFormValuesViewController: FormCollectionViewCellDelegate {
 }
 
 extension FormDataSource {
-    func setupPrefillValueFields() {
+    func setupPrefillValueFields(_ enrolFields: [CD_EnrolField]) {
         let updatedBlock: FormField.ValueUpdatedBlock = { [weak self] field, newValue in
             guard let self = self else { return }
             self.delegate?.formDataSource(self, changed: newValue, for: field)
@@ -68,69 +72,52 @@ extension FormDataSource {
             return delegate.formDataSource(self, textField: textField, shouldChangeTo: newValue, in: range, for: field)
         }
         
-//        let pickerUpdatedBlock: FormField.PickerUpdatedBlock = { [weak self] field, options in
-//            guard let self = self else { return }
-//            self.delegate?.formDataSource(self, selected: options, for: field)
-//        }
-        
         let fieldExitedBlock: FormField.FieldExitedBlock = { [weak self] field in
             guard let self = self else { return }
             self.delegate?.formDataSource(self, fieldDidExit: field)
         }
-
-//        let manualValidateBlock: FormField.ManualValidateBlock = { [weak self] field in
-//            guard let self = self, let delegate = self.delegate else { return false }
-//            return delegate.formDataSource(self, manualValidate: field)
-//        }
         
-//        let emailField = FormField(title: "Email",
-//                                   placeholder: "Enter email address",
-//                                   validation: nil,
-//                                   validationErrorMessage: nil,
-//                                   fieldType: .email,
-//                                   value: nil,
-//                                   updated: updatedBlock,
-//                                   shouldChange: shouldChangeBlock,
-//                                   fieldExited: fieldExitedBlock,
-//                                   pickerSelected: pickerUpdatedBlock,
-//                                   columnKind: nil,
-//                                   manualValidate: manualValidateBlock,
-//                                   forcedValue: nil,
-//                                   isReadOnly: false,
-//                                   fieldCommonName: .email,
-//                                   alternatives: nil,
-//                                   dataSourceRefreshBlock: nil)
+        let manualValidateBlock: FormField.ManualValidateBlock = { [weak self] field in
+            guard let self = self, let delegate = self.delegate else { return false }
+            return delegate.formDataSource(self, manualValidate: field)
+        }
         
-        
-        
-        let emailField = FormField(
-            title: L10n.accessFormEmailTitle,
-            placeholder: L10n.accessFormEmailPlaceholder,
-            validation: "^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$",
-            validationErrorMessage: L10n.accessFormEmailValidation,
-            fieldType: .email,
-            updated: updatedBlock,
-            shouldChange: shouldChangeBlock,
-            fieldExited: fieldExitedBlock,
-            fieldCommonName: .email
-        )
-        
-        fields = [emailField]
+        enrolFields.forEach { field in
+            fields.append(
+                FormField(
+                    title: field.column ?? "",
+                    placeholder: field.fieldDescription ?? "",
+                    validation: field.validation,
+                    fieldType: FormField.FieldInputType.fieldInputType(for: field.fieldInputType, commonName: field.fieldCommonName, choices: field.choicesArray),
+                    updated: updatedBlock,
+                    shouldChange: shouldChangeBlock,
+                    fieldExited: fieldExitedBlock,
+                    columnKind: .enrol,
+                    manualValidate: manualValidateBlock,
+                    fieldCommonName: field.fieldCommonName
+                )
+            )
+        }
     }
 }
 
 extension PrefillFormValuesViewController: CoreDataRepositoryProtocol {
-    func getAllFields() {
-        // Get all fields and then map an array of all common names
-        fetchCoreDataObjects(forObjectType: CD_AddField.self) { addFields in
-            print(addFields!)
+    func getAllFields(completion: @escaping ([CD_EnrolField]) -> Void) {
+        // POC for enrol fields
+        fetchCoreDataObjects(forObjectType: CD_EnrolField.self) { enrolFields in
+            var fields: [CD_EnrolField] = []
+            guard let enrolFields = enrolFields else {
+                completion(fields)
+                return
+            }
+            
+            for enrolField in enrolFields {
+                if !fields.contains(where: { enrolField.fieldCommonName == $0.fieldCommonName }) {
+                    fields.append(enrolField)
+                }
+            }
+            
+            completion(fields)
         }
-//        fetchCoreDataObjects(forObjectType: CD_MembershipCard.self) { objects in
-//            let scrapableCards = objects?.filter {
-//                guard let planIdString = $0.membershipPlan?.id, let planId = Int(planIdString) else { return false }
-//                return self.hasAgent(forMembershipPlanId: planId)
-//            }
-//            completion(scrapableCards)
-//        }
     }
 }
