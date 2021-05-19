@@ -64,7 +64,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         field.heightAnchor.constraint(equalToConstant: Constants.textFieldHeight).isActive = true
         field.addTarget(self, action: .textFieldUpdated, for: .editingChanged)
         field.setContentCompressionResistancePriority(.required, for: .vertical)
-        field.inputAccessoryView = inputAccessory
+        field.inputAccessoryView = PrefilledValuesFormInputAccessory()
         field.smartQuotesType = .no // This stops the "smart" apostrophe setting. The default breaks field regex validation
         return field
     }()

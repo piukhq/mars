@@ -129,3 +129,82 @@ extension PrefillFormValuesViewController: CoreDataRepositoryProtocol {
         }
     }
 }
+
+class PrefilledValuesFormInputAccessory: UIToolbar, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+//    let bar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+//    let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+//    let done = UIBarButtonItem(title: "Done", style: .plain, target: self, action: .accessoryDoneTouchUpInside)
+//    bar.items = [flexSpace, done]
+//    bar.sizeToFit()
+//    return bar
+    
+    init() {
+        super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100))
+        sizeToFit()
+        configure()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    lazy var collectionViewLayout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.estimatedItemSize = CGSize(width: 1, height: 1)
+        return layout
+    }()
+    
+    lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        return collectionView
+    }()
+    
+    private func configure() {
+        collectionView.register(PrefilledFormValueInputCell.self, asNib: false)
+        addSubview(collectionView)
+        collectionView.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+        collectionView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: PrefilledFormValueInputCell = collectionView.dequeue(indexPath: indexPath)
+        let emails: [String] = ["nickjf89@icloud.com", "nfarrant@bink.com", "nick@vowzahq.com"]
+        cell.configureWithValue(emails.randomElement() ?? "")
+        return cell
+    }
+}
+
+class PrefilledFormValueInputCell: UICollectionViewCell {
+    private lazy var label: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(label)
+        label.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+        label.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
+        label.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
+        return label
+    }()
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        label.text = nil
+    }
+    
+    func configureWithValue(_ value: String) {
+        label.text = value
+        backgroundColor = .systemGray5
+        layer.cornerCurve = .continuous
+        layer.cornerRadius = 4
+    }
+}
