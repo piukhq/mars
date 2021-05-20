@@ -37,8 +37,27 @@ class PrefillFormValuesViewController: BaseFormViewController {
     }
     
     @objc func saveButtonTapped() {
-        let values = dataSource.currentFieldValues()
-        Current.userDefaults.set(values, forDefaultsKey: .prefilledFormValues)
+        let persistedPrefillValues = Current.userDefaults.value(forDefaultsKey: .prefilledFormValues) as? [String: [String]]
+        var newPrefillValues: [String: [String]] = persistedPrefillValues ?? [:]
+        let fieldValues = dataSource.currentFieldValues()
+        
+        for key in fieldValues.keys {
+            /// If the key already exists in the prefilled values, append the new value if unique
+            if var object = newPrefillValues[key] {
+                if let value = fieldValues[key], !object.contains(value) {
+                    object.append(value)
+                    newPrefillValues[key] = object
+                }
+            } else {
+                /// If the key doesn't exist, add it
+                if let value = fieldValues[key] {
+                    newPrefillValues[key] = [value]
+                }
+            }
+        }
+        
+        print("PREFILL: \(newPrefillValues)")
+        Current.userDefaults.set(newPrefillValues, forDefaultsKey: .prefilledFormValues)
         Current.navigate.close()
     }
 }
@@ -80,12 +99,12 @@ extension FormDataSource {
             return delegate.formDataSource(self, manualValidate: field)
         }
         
-        let prefilledValues = Current.userDefaults.value(forDefaultsKey: .prefilledFormValues) as? [String: String]
+        let prefilledValues = Current.userDefaults.value(forDefaultsKey: .prefilledFormValues) as? [String: [String]]
         
         enrolFields.forEach { field in
             var forcedValue: String? = ""
             if let column = field.column?.lowercased() {
-                forcedValue = prefilledValues?[column]
+                forcedValue = prefilledValues?[column]?.sorted().first
             }
                 
             fields.append(
@@ -169,12 +188,8 @@ class PrefilledValuesFormInputAccessory: UIToolbar, UICollectionViewDataSource, 
     }()
     
     var prefilledValues: [String]? {
-        let allPrefilledValues = Current.userDefaults.value(forDefaultsKey: .prefilledFormValues) as? [String: String]
-        let value = allPrefilledValues?[field.title.lowercased()]
-        if let value = value {
-            return [value]
-        }
-        return nil
+        let allPrefilledValues = Current.userDefaults.value(forDefaultsKey: .prefilledFormValues) as? [String: [String]]
+        return allPrefilledValues?[field.title.lowercased()]?.sorted()
     }
     
     private func configure() {
