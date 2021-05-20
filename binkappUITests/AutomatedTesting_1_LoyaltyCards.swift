@@ -21,11 +21,11 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
     }
     
     func test_0_addIcelandCard_isSuccessful() {
-        sleep(10)
+//        sleep(10)
         app.buttons["Browse brands"].tap()
-        sleep(10)
-        app.tables.staticTexts["Iceland"].tap()
-        sleep(10)
+//        sleep(10)
+        app.tables.cells["Iceland"].tap()
+//        sleep(10)
         app.buttons["Add my card"].tap()
         let cardNumberTextfield = app.textFields["You'll usually find this on the front of your loyalty card."]
         cardNumberTextfield.tap()
@@ -42,7 +42,7 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
         let backButton = app.navigationBars["binkapp.LoyaltyCardFullDetailsView"].buttons["Back"]
         backButton.tap()
         
-        sleep(60)
+//        sleep(60)
 
         // Pull to refresh
         let icelandCell = app.staticTexts["Iceland"]

@@ -28,6 +28,8 @@ class BrandTableViewCell: UITableViewCell {
     }
     
     func configure(plan: CD_MembershipPlan, brandName: String, brandExists: Bool) {
+        accessibilityIdentifier = brandName
+
         logoImageView.backgroundColor = .clear
         logoImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
         backgroundColor = Current.themeManager.color(for: .viewBackground)
