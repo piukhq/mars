@@ -80,19 +80,19 @@ struct PaymentCardCreateRequest: Codable {
         let paymentMethodResponse = spreedlyResponse.transaction?.paymentMethod
 
         guard let firstSix = SecureUtility.encryptedSensitiveFieldValue(paymentMethodResponse?.firstSix) else {
-            SentryService.triggerException(.invalidPayload(.failedToEncryptFirstSix))
+            SentryService.triggerException(.invalidPaymentCardPayload(.failedToEncryptFirstSix))
             return nil
         }
         guard let lastFour = SecureUtility.encryptedSensitiveFieldValue(paymentMethodResponse?.lastFour) else {
-            SentryService.triggerException(.invalidPayload(.failedToEncryptLastFour))
+            SentryService.triggerException(.invalidPaymentCardPayload(.failedToEncryptLastFour))
             return nil
         }
         guard let month = SecureUtility.encryptedSensitiveFieldValue("\(paymentMethodResponse?.month ?? 0)") else {
-            SentryService.triggerException(.invalidPayload(.failedToEncryptMonth))
+            SentryService.triggerException(.invalidPaymentCardPayload(.failedToEncryptMonth))
             return nil
         }
         guard let year = SecureUtility.encryptedSensitiveFieldValue("\(paymentMethodResponse?.year ?? 0)") else {
-            SentryService.triggerException(.invalidPayload(.failedToEncryptYear))
+            SentryService.triggerException(.invalidPaymentCardPayload(.failedToEncryptYear))
             return nil
         }
 
