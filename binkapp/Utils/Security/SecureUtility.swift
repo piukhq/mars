@@ -23,6 +23,7 @@ enum SecureUtility {
             if #available(iOS 14.0, *) {
                 BinkLogger.error(AppLoggerError.stringEncryption, value: error.localizedDescription)
             }
+            SentryService.triggerException(.invalidLoyaltyCardPayload(.failedToEncyptPassword))
             return nil
         }
     }

@@ -148,10 +148,7 @@ enum SentryException {
     private var userInfo: [String: Any] {
         var info: [String: Any] = [NSLocalizedDescriptionKey: localizedDescription]
         switch self {
-        case .invalidLoyaltyCardPayload:
-            info["user_journey"] = domain.userJourney
-            return info
-        case .invalidPaymentCardPayload(let reason):
+        case .invalidPaymentCardPayload(let reason), .invalidLoyaltyCardPayload(let reason):
             info["reason"] = reason.rawValue
             return info
         case .tokenisationServiceRejectedRequest(let networkResponse), .apiRejectedPaymentCardRequest(let networkResponse), .apiRejectedLoyaltyCardRequest(let networkResponse):
