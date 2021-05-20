@@ -130,15 +130,17 @@ extension PrefillFormValuesViewController: CoreDataRepositoryProtocol {
     }
 }
 
+protocol PrefilledValuesFormInputAccessoryDelegate: AnyObject {
+    func inputAccessory(_ inputAccessory: PrefilledValuesFormInputAccessory, didSelectValue value: String)
+}
+
 class PrefilledValuesFormInputAccessory: UIToolbar, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-//    let bar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-//    let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-//    let done = UIBarButtonItem(title: "Done", style: .plain, target: self, action: .accessoryDoneTouchUpInside)
-//    bar.items = [flexSpace, done]
-//    bar.sizeToFit()
-//    return bar
+    private let field: FormField
+    private weak var valueDelegate: PrefilledValuesFormInputAccessoryDelegate?
     
-    init() {
+    init(field: FormField, delegate: PrefilledValuesFormInputAccessoryDelegate) {
+        self.field = field
+        self.valueDelegate = delegate
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100))
         sizeToFit()
         configure()
@@ -166,6 +168,15 @@ class PrefilledValuesFormInputAccessory: UIToolbar, UICollectionViewDataSource, 
         return collectionView
     }()
     
+    var prefilledValues: [String]? {
+        let allPrefilledValues = Current.userDefaults.value(forDefaultsKey: .prefilledFormValues) as? [String: String]
+        let value = allPrefilledValues?[field.title.lowercased()]
+        if let value = value {
+            return [value]
+        }
+        return nil
+    }
+    
     private func configure() {
         collectionView.register(PrefilledFormValueInputCell.self, asNib: false)
         addSubview(collectionView)
@@ -174,14 +185,20 @@ class PrefilledValuesFormInputAccessory: UIToolbar, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return prefilledValues?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: PrefilledFormValueInputCell = collectionView.dequeue(indexPath: indexPath)
-        let emails: [String] = ["nickjf89@icloud.com", "nfarrant@bink.com", "nick@vowzahq.com"]
-        cell.configureWithValue(emails.randomElement() ?? "")
+        guard let value = prefilledValues?[indexPath.row] else { return cell }
+        cell.configureWithValue(value)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let value = prefilledValues?[indexPath.row] {
+            valueDelegate?.inputAccessory(self, didSelectValue: value)
+        }
     }
 }
 
