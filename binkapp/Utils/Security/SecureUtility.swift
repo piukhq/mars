@@ -11,7 +11,7 @@ import Keys
 import SwiftyRSA
 
 enum SecureUtility {
-    static func encryptedSensitiveFieldValue(_ value: String?) -> String? {
+    static func encryptedSensitiveFieldValue(_ value: String?, for walletType: WalletCardType = .loyalty) -> String? {
         guard let value = value else { return nil }
         guard let publicKeyName = publicKeyName() else { return nil }
         do {
@@ -23,7 +23,9 @@ enum SecureUtility {
             if #available(iOS 14.0, *) {
                 BinkLogger.error(AppLoggerError.stringEncryption, value: error.localizedDescription)
             }
-            SentryService.triggerException(.invalidLoyaltyCardPayload(.failedToEncyptPassword))
+            if walletType == .loyalty {
+                SentryService.triggerException(.invalidLoyaltyCardPayload(.failedToEncyptPassword))
+            }
             return nil
         }
     }
