@@ -42,6 +42,7 @@
 "add_payment_card_title" = "Add payment card";
 "add_payment_error_title" = "Error Adding Card";
 "add_payment_error_message" = "There was a problem adding your payment card. Please try again.";
+"add_loyalty_card_error_message" = "There was a problem adding your loyalty card. Please try again.";
 "scan_and_link_description" = "Scan and link your payment card";
 "card_linked_status" = "Linked";
 "card_link_now_status" = "Link now";

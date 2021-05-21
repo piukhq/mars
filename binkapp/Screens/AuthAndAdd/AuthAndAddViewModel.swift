@@ -142,6 +142,13 @@ class AuthAndAddViewModel {
         checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
         
         guard let model = membershipCardPostModel else { return }
+        
+        guard model.account?.hasValidPayload == true else {
+            displaySimplePopup(title: L10n.errorTitle, message: L10n.addLoyaltyCardErrorMessage)
+            completion()
+            return
+        }
+        
         BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardRequest(request: model, formPurpose: formPurpose))
         let scrapingCredentials = Current.pointsScrapingManager.makeCredentials(fromFormFields: formFields, membershipPlanId: membershipPlan.id)
         
@@ -235,56 +242,48 @@ class AuthAndAddViewModel {
         self.fieldsViews = fields
     }
     
+    private func encryptSensitiveField(_ value: String?) -> String? {
+        if let encryptedValue = SecureUtility.encryptedSensitiveFieldValue(value) {
+            return encryptedValue
+        } else {
+            SentryService.triggerException(.invalidLoyaltyCardPayload(.failedToEncyptPassword))
+        }
+        return nil
+    }
+    
     func addFieldToCard(formField: FormField) {
         let isSensitive = formField.fieldType == .sensitive
         switch formField.columnKind {
         case .add:
             let addFieldsArray = membershipCardPostModel?.account?.addFields
             if let existingField = addFieldsArray?.first(where: { $0.column == formField.title }) {
-                if isSensitive {
-                    existingField.value = SecureUtility.encryptedSensitiveFieldValue(formField.value)
-                } else {
-                    existingField.value = formField.value
-                }
+                existingField.value = isSensitive ? encryptSensitiveField(formField.value) : formField.value
             } else {
-                let model = PostModel(column: formField.title, value: isSensitive ? SecureUtility.encryptedSensitiveFieldValue(formField.value) : formField.value)
+                let model = PostModel(column: formField.title, value: isSensitive ? encryptSensitiveField(formField.value) : formField.value)
                 membershipCardPostModel?.account?.addField(model, to: .add)
             }
         case .auth:
             let authoriseFieldsArray = membershipCardPostModel?.account?.authoriseFields
             if let existingField = authoriseFieldsArray?.first(where: { $0.column == formField.title }) {
-                if isSensitive {
-                    existingField.value = SecureUtility.encryptedSensitiveFieldValue(formField.value)
-                } else {
-                    existingField.value = formField.value
-                }
+                existingField.value = isSensitive ? encryptSensitiveField(formField.value) : formField.value
             } else {
-                let model = PostModel(column: formField.title, value: isSensitive ? SecureUtility.encryptedSensitiveFieldValue(formField.value) : formField.value)
+                let model = PostModel(column: formField.title, value: isSensitive ? encryptSensitiveField(formField.value) : formField.value)
                 membershipCardPostModel?.account?.addField(model, to: .auth)
             }
         case .enrol:
             let enrolFieldsArray = membershipCardPostModel?.account?.enrolFields
             if let existingField = enrolFieldsArray?.first(where: { $0.column == formField.title }) {
-                if isSensitive {
-                    existingField.value = SecureUtility.encryptedSensitiveFieldValue(formField.value)
-                } else {
-                    existingField.value = formField.value
-                }
+                existingField.value = isSensitive ? encryptSensitiveField(formField.value) : formField.value
             } else {
-                let model = PostModel(column: formField.title, value: isSensitive ? SecureUtility.encryptedSensitiveFieldValue(formField.value) : formField.value)
+                let model = PostModel(column: formField.title, value: isSensitive ? encryptSensitiveField(formField.value) : formField.value)
                 membershipCardPostModel?.account?.addField(model, to: .enrol)
             }
-            
         case .register:
             let registrationFieldsArray = membershipCardPostModel?.account?.registrationFields
             if let existingField = registrationFieldsArray?.first(where: { $0.column == formField.title }) {
-                if isSensitive {
-                    existingField.value = SecureUtility.encryptedSensitiveFieldValue(formField.value)
-                } else {
-                    existingField.value = formField.value
-                }
+                existingField.value = isSensitive ? encryptSensitiveField(formField.value) : formField.value
             } else {
-                let model = PostModel(column: formField.title, value: isSensitive ? SecureUtility.encryptedSensitiveFieldValue(formField.value) : formField.value)
+                let model = PostModel(column: formField.title, value: isSensitive ? encryptSensitiveField(formField.value) : formField.value)
                 membershipCardPostModel?.account?.addField(model, to: .registration)
             }
         default:

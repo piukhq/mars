@@ -60,6 +60,8 @@ internal enum L10n {
   internal static let addJoinScreenViewDescriptionInactive = L10n.tr("Localizable", "add_join_screen_view_description_inactive")
   /// View
   internal static let addJoinScreenViewTitle = L10n.tr("Localizable", "add_join_screen_view_title")
+  /// There was a problem adding your loyalty card. Please try again.
+  internal static let addLoyaltyCardErrorMessage = L10n.tr("Localizable", "add_loyalty_card_error_message")
   /// Add loyalty card
   internal static let addLoyaltyCardTitle = L10n.tr("Localizable", "add_loyalty_card_title")
   /// Add my card
