@@ -142,6 +142,13 @@ class AuthAndAddViewModel {
         checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
         
         guard let model = membershipCardPostModel else { return }
+        
+        guard model.account?.hasValidPayload == true else {
+            displaySimplePopup(title: L10n.errorTitle, message: L10n.addLoyaltyCardErrorMessage)
+            completion()
+            return
+        }
+        
         BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardRequest(request: model, formPurpose: formPurpose))
         let scrapingCredentials = Current.pointsScrapingManager.makeCredentials(fromFormFields: formFields, membershipPlanId: membershipPlan.id)
         

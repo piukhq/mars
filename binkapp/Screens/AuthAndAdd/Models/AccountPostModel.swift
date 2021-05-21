@@ -30,6 +30,15 @@ struct AccountPostModel: Codable {
     var enrolFields: [PostModel]?
     var registrationFields: [PostModel]?
     
+    var hasValidPayload: Bool {       
+        guard !(addFields?.contains(where: { $0.value.isNilOrEmpty }) == true) else { return false }
+        guard !(authoriseFields?.contains(where: { $0.value.isNilOrEmpty }) == true) else { return false }
+        guard !(enrolFields?.contains(where: { $0.value.isNilOrEmpty }) == true) else { return false }
+        guard !(registrationFields?.contains(where: { $0.value.isNilOrEmpty }) == true) else { return false }
+        
+        return true
+    }
+    
     enum CodingKeys: String, CodingKey {
         case addFields = "add_fields"
         case authoriseFields = "authorise_fields"
