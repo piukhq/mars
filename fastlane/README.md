@@ -36,6 +36,11 @@ Retrieve and force update all the certificates for all targets and configures yo
 fastlane ios beta
 ```
 Submit branch to TestFlight
+### ios bump
+```
+fastlane ios bump
+```
+Increment the build number and commit to git
 ### ios beta_dsym
 ```
 fastlane ios beta_dsym
