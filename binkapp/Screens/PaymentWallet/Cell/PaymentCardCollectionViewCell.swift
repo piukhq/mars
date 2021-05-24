@@ -269,7 +269,7 @@ extension PaymentCardCollectionViewCell {
         case .barcode:
             deleteButton.isHidden = true
         case .unset:
-            deleteButton.isHidden = true
+            deleteButton.isHidden = false
         }
     }
     

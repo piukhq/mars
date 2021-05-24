@@ -24,7 +24,6 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
 
     private var hasLaunched = false
 
-    private(set) var shouldDisplayWalletPrompts: Bool?
     var shouldDisplayLoadingIndicator: Bool {
         let shouldDisplay = !Current.userDefaults.bool(forDefaultsKey: .hasLaunchedWallet)
         Current.userDefaults.set(true, forDefaultsKey: .hasLaunchedWallet)
@@ -149,8 +148,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             dispatchGroup.leave()
         }
 
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            self?.shouldDisplayWalletPrompts = type == .reload || type == .localReactive
+        dispatchGroup.notify(queue: .main) {
             NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
             completion?(true, nil)
         }

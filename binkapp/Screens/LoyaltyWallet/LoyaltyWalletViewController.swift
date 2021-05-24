@@ -42,7 +42,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row < viewModel.cardCount {
+        if indexPath.section == 0 {
             let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
             guard let membershipCard = viewModel.cards?[indexPath.row] else { return cell }
             let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
@@ -54,14 +54,13 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
             let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
             guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else { return cell }
             cell.configureWithWalletPrompt(walletPrompt)
-            
             return cell
         }
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let cell = collectionView.cellForItem(at: indexPath) else {
-            if indexPath.row < viewModel.cardCount {
+            if indexPath.section == 0 {
                 /// Wallet cards
                 return LayoutHelper.WalletDimensions.cardSize
             } else {
@@ -129,7 +128,7 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
     
     func promptForDelete(with index: IndexPath, cell: WalletLoyaltyCardCollectionViewCell) {
         guard let card = viewModel.cards?[index.row] else { return }
-                
+        indexPathOfCardToDelete = index
         viewModel.showDeleteConfirmationAlert(card: card) {
             cell.set(to: .closed)
         }
