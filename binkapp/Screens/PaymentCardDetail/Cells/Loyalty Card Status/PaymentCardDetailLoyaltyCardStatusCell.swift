@@ -18,16 +18,21 @@ class PaymentCardDetailLoyaltyCardStatusCell: PaymentCardDetailTableViewCell {
         setSeparatorDefaultWidth()
     }
     
-    func configureWithViewModel(_ viewModel: PaymentCardDetailLoyaltyCardStatusCellViewModel) {
+    func configureWithViewModel(_ viewModel: PaymentCardDetailLoyaltyCardStatusCellViewModel, indexPath: IndexPath) {
         headerLabel.text = viewModel.headerText
         headerLabel.textColor = Current.themeManager.color(for: .text)
         detailLabel.text = viewModel.detailText
         detailLabel.textColor = Current.themeManager.color(for: .text)
         statusLabel.text = viewModel.statusText
         statusLabel.textColor = textColor(forStatus: viewModel.status)
+        tag = indexPath.row
         
         guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
-        iconImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
+        ImageService.getImage(forPathType: .membershipPlanIcon(plan: membershipPlan), traitCollection: traitCollection) { image in
+            if self.tag == indexPath.row {
+                self.iconImageView.image = image
+            }
+        }
         selectedBackgroundView = binkTableViewCellSelectedBackgroundView()
     }
     

@@ -20,7 +20,15 @@ final class ImageService {
         case membershipPlanTier(card: CD_MembershipCard)
         case membershipPlanOfferTile(url: String)
     }
-
+    
+    /// Retrieve an image returned in a completion handler
+    static func getImage(forPathType pathType: PathType, policy: StorageUtility.ExpiryPolicy = .week, traitCollection: UITraitCollection, completion: @escaping (UIImage?) -> Void) {
+        let imageService = ImageService()
+        imageService.retrieveImage(forPathType: pathType, policy: policy, traitCollection: traitCollection) { retrievedImage in
+            completion(retrievedImage)
+        }
+    }
+    
     fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy, traitCollection: UITraitCollection? = nil, completion: @escaping ImageCompletionHandler) {
         guard let imagePath = path(forType: pathType, traitCollection: traitCollection) else { return }
 
@@ -104,14 +112,6 @@ final class ImageService {
             case .failure:
                 completion(nil)
             }
-        }
-    }
-    
-    /// Retrieve an image returned in a completion handler
-    static func getImage(forPathType pathType: ImageService.PathType, policy: StorageUtility.ExpiryPolicy = .week, completion: @escaping (UIImage?) -> Void) {
-        let imageService = ImageService()
-        imageService.retrieveImage(forPathType: pathType, policy: policy) { retrievedImage in
-            completion(retrievedImage)
         }
     }
 }

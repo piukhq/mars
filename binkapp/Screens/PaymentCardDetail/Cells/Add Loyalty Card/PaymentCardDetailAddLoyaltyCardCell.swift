@@ -18,14 +18,19 @@ class PaymentCardDetailAddLoyaltyCardCell: PaymentCardDetailTableViewCell {
         setSeparatorDefaultWidth()
     }
 
-    func configureWithViewModel(_ viewModel: PaymentCardDetailAddLoyaltyCardCellViewModel) {
+    func configureWithViewModel(_ viewModel: PaymentCardDetailAddLoyaltyCardCellViewModel, indexPath: IndexPath) {
         self.viewModel = viewModel
+        tag = indexPath.row
         headerLabel.text = viewModel.headerText
         headerLabel.textColor = Current.themeManager.color(for: .text)
         detailLabel.text = viewModel.detailText
         detailLabel.textColor = Current.themeManager.color(for: .text)
         addCardButton.configure(title: L10n.pcdAddCardButtonTitle, hasShadow: false)
-        iconImageView.setImage(forPathType: .membershipPlanIcon(plan: viewModel.membershipPlan))
+        ImageService.getImage(forPathType: .membershipPlanIcon(plan: viewModel.membershipPlan), traitCollection: traitCollection) { image in
+            if self.tag == indexPath.row {
+                self.iconImageView.image = image
+            }
+        }
         selectedBackgroundView = binkTableViewCellSelectedBackgroundView()
     }
 

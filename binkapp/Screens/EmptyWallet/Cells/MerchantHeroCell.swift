@@ -29,12 +29,13 @@ class MerchantHeroCell: UICollectionViewCell {
         label.removeFromSuperview()
     }
     
-    func configure(with membershipPlan: CD_MembershipPlan?, walletPrompt: WalletPrompt, showMorePlansCell: Bool) {
+    func configure(with membershipPlan: CD_MembershipPlan?, walletPrompt: WalletPrompt, showMorePlansCell: Bool, indexPath: IndexPath) {
         guard let membershipPlan = membershipPlan else { return }
         let hexStringColor = membershipPlan.card?.colour ?? ""
         backgroundColor = UIColor(hexString: hexStringColor)
         layoutIfNeeded()
         imageView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
+        tag = indexPath.row
         
         if case .link = walletPrompt.type {
             let placeholderName = membershipPlan.account?.planName ?? membershipPlan.account?.planNameCard ?? ""
@@ -42,7 +43,11 @@ class MerchantHeroCell: UICollectionViewCell {
             backgroundColor = UIColor(patternImage: placeholder)
             layer.cornerRadius = 0
             imageView.layer.cornerRadius = 0
-            imageView.setImage(forPathType: .membershipPlanAlternativeHero(plan: membershipPlan))
+            ImageService.getImage(forPathType: .membershipPlanAlternativeHero(plan: membershipPlan), traitCollection: traitCollection) { image in
+                if self.tag == indexPath.row {
+                    self.imageView.image = image
+                }
+            }
         } else {
             if showMorePlansCell {
                 imageView.frame = CGRect(x: 10, y: 10, width: frame.width - 20, height: frame.height - 20)
@@ -51,7 +56,11 @@ class MerchantHeroCell: UICollectionViewCell {
                 imageView.contentMode = .scaleAspectFit
                 imageView.tintColor = .white
             } else {
-                imageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
+                ImageService.getImage(forPathType: .membershipPlanIcon(plan: membershipPlan), traitCollection: traitCollection) { image in
+                    if self.tag == indexPath.row {
+                        self.imageView.image = image
+                    }
+                }
                 backgroundColor = .clear
                 imageView.contentMode = .scaleAspectFill
             }

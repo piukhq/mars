@@ -27,9 +27,14 @@ class BrandTableViewCell: UITableViewCell {
         descriptionLabel.isHidden = true
     }
     
-    func configure(plan: CD_MembershipPlan, brandName: String, brandExists: Bool) {
+    func configure(plan: CD_MembershipPlan, brandName: String, brandExists: Bool, indexPath: IndexPath) {
+        tag = indexPath.row
         logoImageView.backgroundColor = .clear
-        logoImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
+        ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: traitCollection) { image in
+            if self.tag == indexPath.row {
+                self.logoImageView.image = image
+            }
+        }
         backgroundColor = Current.themeManager.color(for: .viewBackground)
         
         disclosureIndicatorImageView.tintColor = Current.themeManager.color(for: .text)
