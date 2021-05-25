@@ -274,7 +274,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
         guard let membershipPlan = viewModel.getMembershipPlan(for: indexPath) else { return cell }
         
         if let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
-            cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists)
+            cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists, indexPath: indexPath)
         }
         
         if tableView.cellAtIndexPathIsLastInSection(indexPath) {
