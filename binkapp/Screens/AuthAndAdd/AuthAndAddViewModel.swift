@@ -347,17 +347,17 @@ class AuthAndAddViewModel {
         
         do {
             let contents = try String(contentsOf: url)
-//            print(contents)
+            print(contents)
             
             let data = Data(contents.utf8)
             if let attributedString = try? NSMutableAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-                
                 // Format all text
                 attributedString.addAttribute(.font, value: UIFont.bodyTextSmall, range: NSRange(location: 0, length: attributedString.string.count - 1))
                 
                 // Format title
                 let titleString = contents.slice(from: "<h1>", to: "</h1>")
-                if let titleRange = attributedString.string.range(of: titleString ?? "") {
+                let formattedTitle = titleString?.replacingOccurrences(of: "&amp;", with: "&")
+                if let titleRange = attributedString.string.range(of: formattedTitle ?? "") {
                     let nsTitleRange = NSRange(titleRange, in: attributedString.string)
                     attributedString.addAttribute(.font, value: UIFont.headline, range: nsTitleRange)
                 }
@@ -365,7 +365,6 @@ class AuthAndAddViewModel {
                 // Format subtitles
                 let paragraphs = contents.components(separatedBy: "<h2>")
                 for paragraph in paragraphs {
-//                    print(paragraph)
                     let finalParagraph = "<h2>" + paragraph
                     print(finalParagraph)
                     print("______________________")
