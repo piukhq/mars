@@ -351,30 +351,33 @@ class AuthAndAddViewModel {
             
             let data = Data(contents.utf8)
             if let attributedString = try? NSMutableAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-                /// Get ranges of all h1 tags
                 
-                let titleString = contents.slice(from: "<h1>", to: "</h1>")
-                print(titleString as Any)
-                
-//                let subHeadings = contents.slice(from: "<h2>", to: "</h2>")
-//                print(subHeadings as Any)
-                
-                let paragraphs = contents.components(separatedBy: "<h2>")
-                print(paragraphs.count)
-                for para in paragraphs {
-                    print(para)
-                    print("______________________")
-                }
-                
-                // Set all text
+                // Format all text
                 attributedString.addAttribute(.font, value: UIFont.bodyTextSmall, range: NSRange(location: 0, length: attributedString.string.count - 1))
                 
+                // Format title
+                let titleString = contents.slice(from: "<h1>", to: "</h1>")
+                if let titleRange = attributedString.string.range(of: titleString ?? "") {
+                    let nsTitleRange = NSRange(titleRange, in: attributedString.string)
+                    attributedString.addAttribute(.font, value: UIFont.headline, range: nsTitleRange)
+                }
                 
-                // Set title
-                let titleRange = attributedString.string.range(of: titleString ?? "")!
-                let nsTitleRange = NSRange(titleRange, in: attributedString.string)
-                attributedString.addAttribute(.font, value: UIFont.headline, range: nsTitleRange)
+                // Format subtitles
+                let paragraphs = contents.components(separatedBy: "<h2>")
+                for paragraph in paragraphs {
+//                    print(paragraph)
+                    let finalParagraph = "<h2>" + paragraph
+                    print(finalParagraph)
+                    print("______________________")
+                    
+                    let subtitle = finalParagraph.slice(from: "<h2>", to: "</h2>")
+                    if let subtitleRange = attributedString.string.range(of: subtitle ?? "") {
+                        let nsSubtitleRange = NSRange(subtitleRange, in: attributedString.string)
+                        attributedString.addAttribute(.font, value: UIFont.subtitle, range: nsSubtitleRange)
+                    }
+                }
                 
+                // Present modal
                 let modalConfig = ReusableModalConfiguration(text: attributedString)
                 let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: modalConfig)
                 let navigationRequest = ModalNavigationRequest(viewController: viewController)
