@@ -30,9 +30,9 @@ class BrandTableViewCell: UITableViewCell {
     func configure(plan: CD_MembershipPlan, brandName: String, brandExists: Bool, indexPath: IndexPath) {
         tag = indexPath.row
         logoImageView.backgroundColor = .clear
-        ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: traitCollection) { image in
-            if self.tag == indexPath.row {
-                self.logoImageView.image = image
+        ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: traitCollection) { [weak self] image in
+            if self?.tag == indexPath.row {
+                self?.logoImageView.image = image
             }
         }
         backgroundColor = Current.themeManager.color(for: .viewBackground)

@@ -26,9 +26,9 @@ class PaymentCardDetailAddLoyaltyCardCell: PaymentCardDetailTableViewCell {
         detailLabel.text = viewModel.detailText
         detailLabel.textColor = Current.themeManager.color(for: .text)
         addCardButton.configure(title: L10n.pcdAddCardButtonTitle, hasShadow: false)
-        ImageService.getImage(forPathType: .membershipPlanIcon(plan: viewModel.membershipPlan), traitCollection: traitCollection) { image in
-            if self.tag == indexPath.row {
-                self.iconImageView.image = image
+        ImageService.getImage(forPathType: .membershipPlanIcon(plan: viewModel.membershipPlan), traitCollection: traitCollection) { [weak self] image in
+            if self?.tag == indexPath.row {
+                self?.iconImageView.image = image
             }
         }
         selectedBackgroundView = binkTableViewCellSelectedBackgroundView()
