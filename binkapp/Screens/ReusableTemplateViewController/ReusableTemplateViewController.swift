@@ -11,7 +11,26 @@ import Firebase
 
 class ReusableTemplateViewController: BinkViewController {
     @IBOutlet private weak var textView: UITextView!
-
+    
+    lazy var stackScrollView: StackScrollView = {
+        let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [brandImageView, textView], adjustForKeyboard: true)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.backgroundColor = .clear
+        stackView.margin = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.customPadding(20, after: brandImageView)
+        view.addSubview(stackView)
+        return stackView
+    }()
+    
+    lazy var brandImageView: UIImageView = {
+       let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
     private let viewModel: ReusableModalViewModel
     
     init(viewModel: ReusableModalViewModel) {
@@ -50,14 +69,20 @@ class ReusableTemplateViewController: BinkViewController {
         textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 140, right: 0)
         textView.attributedText = viewModel.text
         textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
-        textView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
-            textView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            textView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 25),
-            textView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -25),
-            textView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            brandImageView.heightAnchor.constraint(equalToConstant: 100)
         ])
+        
+        guard let membershipPlan = viewModel.membershipPlan else {
+            brandImageView.isHidden = true
+            return
+        }
+        brandImageView.setImage(forPathType: .membershipPlanAlternativeHero(plan: membershipPlan))
     }
 
     private func configureButtons() {

@@ -376,8 +376,6 @@ class AuthAndAddViewModel {
                 print(finalParagraph)
                 print("______________________")
                 
-//                finalParagraph = finalParagraph.replacingOccurrences(of: "”", with: "\"")
-                
                 if let attributedString = try? NSMutableAttributedString(data: Data(finalParagraph.utf8), options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
 
                     
@@ -398,45 +396,10 @@ class AuthAndAddViewModel {
             
             
             // Present modal
-            let modalConfig = ReusableModalConfiguration(text: mutableAttributedString)
+            let modalConfig = ReusableModalConfiguration(text: mutableAttributedString, membershipPlan: membershipPlan)
             let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: modalConfig)
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
-            
-//            let data = Data(contents.utf8)
-//            if let attributedString = try? NSMutableAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-//                // Format all text
-//                attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
-//
-//                // Format title
-//                let titleString = contents.slice(from: "<h1>", to: "</h1>")
-//                let formattedTitle = titleString?.replacingOccurrences(of: "&amp;", with: "&")
-//                if let titleRange = attributedString.string.range(of: formattedTitle ?? "") {
-//                    let nsTitleRange = NSRange(titleRange, in: attributedString.string)
-//                    attributedString.addAttribute(.font, value: UIFont.headline, range: nsTitleRange)
-//                }
-//
-//                // Format subtitles
-//                let paragraphs = contents.components(separatedBy: "<h2>")
-//                for paragraph in paragraphs {
-//                    let finalParagraph = "<h2>" + paragraph
-//                    print(finalParagraph)
-//                    print("______________________")
-//
-//                    let subtitle = finalParagraph.slice(from: "<h2>", to: "</h2>")
-//                    print(subtitle as Any)
-//                    if let subtitleRange = attributedString.string.range(of: subtitle ?? "") {
-//                        let nsSubtitleRange = NSRange(subtitleRange, in: attributedString.string)
-//                        attributedString.addAttribute(.font, value: UIFont.subtitle, range: nsSubtitleRange)
-//                    }
-//                }
-//
-//                // Present modal
-//                let modalConfig = ReusableModalConfiguration(text: attributedString)
-//                let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: modalConfig)
-//                let navigationRequest = ModalNavigationRequest(viewController: viewController)
-//                Current.navigate.to(navigationRequest)
-//            }
         } catch {
             print("Contents could not be loaded")
             // Show alert
