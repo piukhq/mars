@@ -340,15 +340,15 @@ class AuthAndAddViewModel {
     func openWebView(withUrlString url: URL) {
         // TODO: - Change name of function
         
-//        let urlString = url.absoluteString
-//        let viewController = ViewControllerFactory.makeWebViewController(urlString: urlString)
-//        let navigationRequest = ModalNavigationRequest(viewController: viewController)
-//        Current.navigate.to(navigationRequest)
-        
         do {
-            let contents = try String(contentsOf: url)
+            var contents = try String(contentsOf: url)
             var mutableAttributedString = NSMutableAttributedString()
+            let newLine = NSAttributedString(string: "\n")
 //            print(contents)
+            
+            contents = contents.replacingOccurrences(of: "“", with: "\"")
+            contents = contents.replacingOccurrences(of: "”", with: "\"")
+            contents = contents.replacingOccurrences(of: "–", with: "-")
             
             // First Paragraph
             let firstParagraph = contents.slice(from: "<h1>", to: "<h2>") ?? ""
@@ -365,31 +365,24 @@ class AuthAndAddViewModel {
                 }
 
                 mutableAttributedString = attributedString
+                mutableAttributedString.append(newLine)
             }
             
             
-                // Remaining paragraphs
+            // Remaining paragraphs
             let paragraphs = contents.components(separatedBy: "<h2>")
             for paragraph in paragraphs.dropFirst() {
                 let finalParagraph = "<h2>" + paragraph
                 print(finalParagraph)
                 print("______________________")
                 
+//                finalParagraph = finalParagraph.replacingOccurrences(of: "”", with: "\"")
+                
                 if let attributedString = try? NSMutableAttributedString(data: Data(finalParagraph.utf8), options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+
+                    
                     // Format all text
                     attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
-                    
-//                    // Format title
-//                    if let titleString = paragraph.slice(from: "<h1>", to: "</h1>") {
-//                        let formattedTitle = titleString.replacingOccurrences(of: "&amp;", with: "&")
-//                        if let titleRange = attributedString.string.range(of: formattedTitle) {
-//                            let nsTitleRange = NSRange(titleRange, in: attributedString.string)
-//                            attributedString.addAttribute(.font, value: UIFont.headline, range: nsTitleRange)
-//
-//                            mutableAttributedString = attributedString
-//                            break
-//                        }
-//                    }
                     
                     // Format subtitle
                     let subtitle = finalParagraph.slice(from: "<h2>", to: "</h2>")
@@ -399,6 +392,7 @@ class AuthAndAddViewModel {
                     }
 
                     mutableAttributedString.append(attributedString)
+                    mutableAttributedString.append(newLine)
                 }
             }
             
@@ -445,6 +439,7 @@ class AuthAndAddViewModel {
 //            }
         } catch {
             print("Contents could not be loaded")
+            // Show alert
         }
     }
     
