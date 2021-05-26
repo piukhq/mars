@@ -348,7 +348,7 @@ class AuthAndAddViewModel {
         do {
             let contents = try String(contentsOf: url)
             var mutableAttributedString = NSMutableAttributedString()
-            print(contents)
+//            print(contents)
             
             // First Paragraph
             let firstParagraph = contents.slice(from: "<h1>", to: "<h2>") ?? ""
@@ -363,14 +363,14 @@ class AuthAndAddViewModel {
                     let nsTitleRange = NSRange(titleRange, in: attributedString.string)
                     attributedString.addAttribute(.font, value: UIFont.headline, range: nsTitleRange)
                 }
-                
+
                 mutableAttributedString = attributedString
             }
             
             
                 // Remaining paragraphs
             let paragraphs = contents.components(separatedBy: "<h2>")
-            for paragraph in paragraphs {
+            for paragraph in paragraphs.dropFirst() {
                 let finalParagraph = "<h2>" + paragraph
                 print(finalParagraph)
                 print("______________________")
@@ -379,13 +379,25 @@ class AuthAndAddViewModel {
                     // Format all text
                     attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
                     
+//                    // Format title
+//                    if let titleString = paragraph.slice(from: "<h1>", to: "</h1>") {
+//                        let formattedTitle = titleString.replacingOccurrences(of: "&amp;", with: "&")
+//                        if let titleRange = attributedString.string.range(of: formattedTitle) {
+//                            let nsTitleRange = NSRange(titleRange, in: attributedString.string)
+//                            attributedString.addAttribute(.font, value: UIFont.headline, range: nsTitleRange)
+//
+//                            mutableAttributedString = attributedString
+//                            break
+//                        }
+//                    }
+                    
                     // Format subtitle
                     let subtitle = finalParagraph.slice(from: "<h2>", to: "</h2>")
                     if let subtitleRange = attributedString.string.range(of: subtitle ?? "") {
                         let nsSubtitleRange = NSRange(subtitleRange, in: attributedString.string)
                         attributedString.addAttribute(.font, value: UIFont.subtitle, range: nsSubtitleRange)
                     }
-                    
+
                     mutableAttributedString.append(attributedString)
                 }
             }
