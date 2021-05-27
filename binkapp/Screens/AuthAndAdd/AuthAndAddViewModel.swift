@@ -349,28 +349,31 @@ class AuthAndAddViewModel {
             contents = contents.replacingOccurrences(of: "“", with: "\"")
             contents = contents.replacingOccurrences(of: "”", with: "\"")
             contents = contents.replacingOccurrences(of: "–", with: "-")
+//            contents = contents.replacingOccurrences(of: "Â", with: "")
             
             // First Paragraph
             let firstParagraph = contents.slice(from: "<h1>", to: "<h2>") ?? ""
-            if let attributedString = try? NSMutableAttributedString(data: Data(firstParagraph.utf8), options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-                if !attributedString.string.isEmpty {
-                    // Format all text
-                    attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
+            if let htmlData = NSString(string: firstParagraph).data(using: String.Encoding.unicode.rawValue) {
+                if let attributedString = try? NSMutableAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+                    if !attributedString.string.isEmpty {
+                        // Format all text
+                        attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
 
-                    // Format title
-                    let titleString = contents.slice(from: "<h1>", to: "</h1>")
-                    var formattedTitle = titleString?.replacingOccurrences(of: "&amp;", with: "&")
-                    formattedTitle = formattedTitle?.replacingOccurrences(of: "  ", with: " ")
-                    if let titleRange = attributedString.string.range(of: formattedTitle ?? "") {
-                        let nsTitleRange = NSRange(titleRange, in: attributedString.string)
-                        attributedString.addAttribute(.font, value: UIFont.headline, range: nsTitleRange)
+                        // Format title
+                        let titleString = contents.slice(from: "<h1>", to: "</h1>")
+                        var formattedTitle = titleString?.replacingOccurrences(of: "&amp;", with: "&")
+                        formattedTitle = formattedTitle?.replacingOccurrences(of: "  ", with: " ")
+                        if let titleRange = attributedString.string.range(of: formattedTitle ?? "") {
+                            let nsTitleRange = NSRange(titleRange, in: attributedString.string)
+                            attributedString.addAttribute(.font, value: UIFont.headline, range: nsTitleRange)
+                        }
+
+                        mutableAttributedString = attributedString
+                        mutableAttributedString.append(newLine)
                     }
-
-                    mutableAttributedString = attributedString
-                    mutableAttributedString.append(newLine)
                 }
             }
-            
+
             // Remaining paragraphs
             var hasFormattedHThreeSubtitles = false
             
@@ -378,38 +381,40 @@ class AuthAndAddViewModel {
             if contents.contains("<h2>") {
                 let paragraphs = contents.components(separatedBy: "<h2>")
                 for paragraph in paragraphs.dropFirst() {
-                    let finalParagraph = "<h2>" + paragraph
-                    print(finalParagraph)
+                    let formattedParagraph = "<h2>" + paragraph
+                    print(formattedParagraph)
                     print("______________________")
                     
-                    if let attributedString = try? NSMutableAttributedString(data: Data(finalParagraph.utf8), options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-                        // Format all text
-                        attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
-                        
-                        // Format H2 subtitle
-                        var subtitle = finalParagraph.slice(from: "<h2>", to: "</h2>")
-                        subtitle = subtitle?.replacingOccurrences(of: "    ", with: " ")
-                        subtitle = subtitle?.replacingOccurrences(of: "&amp;", with: "&")
+                    if let htmlData = NSString(string: formattedParagraph).data(using: String.Encoding.unicode.rawValue) {
+                        if let attributedString = try? NSMutableAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+                            // Format all text
+                            attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
+                            
+                            // Format H2 subtitle
+                            var subtitle = formattedParagraph.slice(from: "<h2>", to: "</h2>")
+                            subtitle = subtitle?.replacingOccurrences(of: "    ", with: " ")
+                            subtitle = subtitle?.replacingOccurrences(of: "&amp;", with: "&")
 
-                        if let subtitleRange = attributedString.string.range(of: subtitle ?? "") {
-                            let nsSubtitleRange = NSRange(subtitleRange, in: attributedString.string)
-                            attributedString.addAttribute(.font, value: UIFont.subtitle, range: nsSubtitleRange)
-                        }
-                        
-                        // Format H3 subtitle
-                        let paragraphsHThree = contents.components(separatedBy: "<h3>")
-                        paragraphsHThree.forEach {
-                            let formattedParagraph = "<h3>" + $0
-                            let subtitleHThree = formattedParagraph.slice(from: "<h3>", to: "</h3>")
-                            if let subtitleRange = attributedString.string.range(of: subtitleHThree ?? "") {
+                            if let subtitleRange = attributedString.string.range(of: subtitle ?? "") {
                                 let nsSubtitleRange = NSRange(subtitleRange, in: attributedString.string)
-                                attributedString.addAttribute(.font, value: UIFont.linkTextButtonNormal, range: nsSubtitleRange)
+                                attributedString.addAttribute(.font, value: UIFont.subtitle, range: nsSubtitleRange)
                             }
-                            hasFormattedHThreeSubtitles = true
-                        }
+                            
+                            // Format H3 subtitle
+                            let paragraphsHThree = contents.components(separatedBy: "<h3>")
+                            paragraphsHThree.forEach {
+                                let formattedParagraph = "<h3>" + $0
+                                let subtitleHThree = formattedParagraph.slice(from: "<h3>", to: "</h3>")
+                                if let subtitleRange = attributedString.string.range(of: subtitleHThree ?? "") {
+                                    let nsSubtitleRange = NSRange(subtitleRange, in: attributedString.string)
+                                    attributedString.addAttribute(.font, value: UIFont.linkTextButtonNormal, range: nsSubtitleRange)
+                                }
+                                hasFormattedHThreeSubtitles = true
+                            }
 
-                        mutableAttributedString.append(attributedString)
-                        mutableAttributedString.append(newLine)
+                            mutableAttributedString.append(attributedString)
+                            mutableAttributedString.append(newLine)
+                        }
                     }
                 }
             }
@@ -418,41 +423,45 @@ class AuthAndAddViewModel {
             if contents.contains("<h3>") && !hasFormattedHThreeSubtitles {
                 let paragraphs = contents.components(separatedBy: "<h3>")
                 for paragraph in paragraphs {
-                    let finalParagraph = "<h3>" + paragraph
-                    if let attributedString = try? NSMutableAttributedString(data: Data(finalParagraph.utf8), options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-                        // Format all text
-                        attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
-                        
-                        // Format subtitle
-                        let subtitle = finalParagraph.slice(from: "<h3>", to: "</h3>")
-                        if let subtitleRange = attributedString.string.range(of: subtitle ?? "") {
-                            let nsSubtitleRange = NSRange(subtitleRange, in: attributedString.string)
-                            attributedString.addAttribute(.font, value: UIFont.subtitle, range: nsSubtitleRange)
-                        }
+                    let formattedParagraph = "<h3>" + paragraph
+                    if let htmlData = NSString(string: formattedParagraph).data(using: String.Encoding.unicode.rawValue) {
+                        if let attributedString = try? NSMutableAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+                            // Format all text
+                            attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
+                            
+                            // Format subtitle
+                            let subtitle = formattedParagraph.slice(from: "<h3>", to: "</h3>")
+                            if let subtitleRange = attributedString.string.range(of: subtitle ?? "") {
+                                let nsSubtitleRange = NSRange(subtitleRange, in: attributedString.string)
+                                attributedString.addAttribute(.font, value: UIFont.subtitle, range: nsSubtitleRange)
+                            }
 
-                        mutableAttributedString.append(attributedString)
-                        mutableAttributedString.append(newLine)
+                            mutableAttributedString.append(attributedString)
+                            mutableAttributedString.append(newLine)
+                        }
                     }
                 }
             }
             
             // If we have reached this point and the string is empty, we have no H2 or H3 tags.
-            // Format entire contents and H1
+            // Format entire contents and possible H1s
             if mutableAttributedString.string.isEmpty {
-                if let attributedString = try? NSMutableAttributedString(data: Data(contents.utf8), options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-                    if !attributedString.string.isEmpty {
-                        // Format all text
-                        attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
+                if let htmlData = NSString(string: contents).data(using: String.Encoding.unicode.rawValue) {
+                    if let attributedString = try? NSMutableAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+                        if !attributedString.string.isEmpty {
+                            // Format all text
+                            attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
 
-                        // Format title
-                        let titleString = contents.slice(from: "<h1>", to: "</h1>")
-                        let formattedTitle = titleString?.replacingOccurrences(of: "&amp;", with: "&")
-                        if let titleRange = attributedString.string.range(of: formattedTitle ?? "") {
-                            let nsTitleRange = NSRange(titleRange, in: attributedString.string)
-                            attributedString.addAttribute(.font, value: UIFont.headline, range: nsTitleRange)
+                            // Format title
+                            let titleString = contents.slice(from: "<h1>", to: "</h1>")
+                            let formattedTitle = titleString?.replacingOccurrences(of: "&amp;", with: "&")
+                            if let titleRange = attributedString.string.range(of: formattedTitle ?? "") {
+                                let nsTitleRange = NSRange(titleRange, in: attributedString.string)
+                                attributedString.addAttribute(.font, value: UIFont.headline, range: nsTitleRange)
+                            }
+
+                            mutableAttributedString = attributedString
                         }
-
-                        mutableAttributedString = attributedString
                     }
                 }
             }
