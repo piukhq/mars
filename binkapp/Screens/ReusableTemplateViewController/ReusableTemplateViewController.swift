@@ -26,7 +26,7 @@ class ReusableTemplateViewController: BinkViewController {
     }()
     
     lazy var brandImageView: UIImageView = {
-       let imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         return imageView

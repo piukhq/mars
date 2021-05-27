@@ -60,7 +60,11 @@ class AuthAndAddViewController: BaseFormViewController {
         initialContentOffset = stackScrollView.contentOffset
         switch viewModel.formPurpose {
         case .add, .addFailed, .addFromScanner: setScreenName(trackedScreen: .addAuthForm)
-        case .signUp, .signUpFailed: setScreenName(trackedScreen: .enrolForm)
+        case .signUp, .signUpFailed:
+            setScreenName(trackedScreen: .enrolForm)
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                self?.viewModel.configureAttributedStrings()
+            }
         case .ghostCard, .patchGhostCard: setScreenName(trackedScreen: .registrationForm)
         }
     }
