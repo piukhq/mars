@@ -337,19 +337,38 @@ class AuthAndAddViewModel {
         Current.navigate.to(navigationRequest)
     }
     
+    private func configureLinks(in paragraph: String, for attributedString: NSMutableAttributedString) {
+        if let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue) {
+            let matches = detector.matches(in: paragraph, options: [], range: NSRange(location: 0, length: paragraph.utf16.count))
+            
+            for match in matches {
+                guard let range = Range(match.range, in: paragraph) else { continue }
+                let urlString = paragraph[range]
+                if let urlRange = attributedString.string.range(of: urlString) {
+                    let nsRange = NSRange(urlRange, in: attributedString.string)
+                    var formattedURLString = urlString
+                    if urlString.contains("@") {
+                        formattedURLString = "mailto:" + formattedURLString
+                    } else {
+                        if !urlString.hasPrefix("http") {
+                            formattedURLString = "https://" + formattedURLString
+                        }
+                    }
+                    
+                    if let URL = URL(string: String(formattedURLString)) {
+                        attributedString.addAttribute(.link, value: URL, range: nsRange)
+                    }
+                }
+            }
+        }
+    }
+    
     func openWebView(withUrlString url: URL) {
         // TODO: - Change name of function
-        
         do {
-            var contents = try String(contentsOf: url)
+            let contents = try String(contentsOf: url)
             var mutableAttributedString = NSMutableAttributedString()
             let newLine = NSAttributedString(string: "\n")
-//            print(contents)
-            
-            contents = contents.replacingOccurrences(of: "“", with: "\"")
-            contents = contents.replacingOccurrences(of: "”", with: "\"")
-            contents = contents.replacingOccurrences(of: "–", with: "-")
-//            contents = contents.replacingOccurrences(of: "Â", with: "")
             
             // First Paragraph
             let firstParagraph = contents.slice(from: "<h1>", to: "<h2>") ?? ""
@@ -367,7 +386,8 @@ class AuthAndAddViewModel {
                             let nsTitleRange = NSRange(titleRange, in: attributedString.string)
                             attributedString.addAttribute(.font, value: UIFont.headline, range: nsTitleRange)
                         }
-
+                        
+                        configureLinks(in: firstParagraph, for: attributedString)
                         mutableAttributedString = attributedString
                         mutableAttributedString.append(newLine)
                     }
@@ -382,9 +402,6 @@ class AuthAndAddViewModel {
                 let paragraphs = contents.components(separatedBy: "<h2>")
                 for paragraph in paragraphs.dropFirst() {
                     let formattedParagraph = "<h2>" + paragraph
-                    print(formattedParagraph)
-                    print("______________________")
-                    
                     if let htmlData = NSString(string: formattedParagraph).data(using: String.Encoding.unicode.rawValue) {
                         if let attributedString = try? NSMutableAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
                             // Format all text
@@ -411,7 +428,9 @@ class AuthAndAddViewModel {
                                 }
                                 hasFormattedHThreeSubtitles = true
                             }
-
+                            
+                            configureLinks(in: paragraph, for: attributedString)
+                            
                             mutableAttributedString.append(attributedString)
                             mutableAttributedString.append(newLine)
                         }
@@ -435,7 +454,8 @@ class AuthAndAddViewModel {
                                 let nsSubtitleRange = NSRange(subtitleRange, in: attributedString.string)
                                 attributedString.addAttribute(.font, value: UIFont.subtitle, range: nsSubtitleRange)
                             }
-
+                            
+                            configureLinks(in: paragraph, for: attributedString)
                             mutableAttributedString.append(attributedString)
                             mutableAttributedString.append(newLine)
                         }
@@ -459,7 +479,8 @@ class AuthAndAddViewModel {
                                 let nsTitleRange = NSRange(titleRange, in: attributedString.string)
                                 attributedString.addAttribute(.font, value: UIFont.headline, range: nsTitleRange)
                             }
-
+                            
+                            configureLinks(in: contents, for: attributedString)
                             mutableAttributedString = attributedString
                         }
                     }
