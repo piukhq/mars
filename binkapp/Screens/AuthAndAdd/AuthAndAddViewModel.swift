@@ -359,7 +359,8 @@ class AuthAndAddViewModel {
 
                     // Format title
                     let titleString = contents.slice(from: "<h1>", to: "</h1>")
-                    let formattedTitle = titleString?.replacingOccurrences(of: "&amp;", with: "&")
+                    var formattedTitle = titleString?.replacingOccurrences(of: "&amp;", with: "&")
+                    formattedTitle = formattedTitle?.replacingOccurrences(of: "  ", with: " ")
                     if let titleRange = attributedString.string.range(of: formattedTitle ?? "") {
                         let nsTitleRange = NSRange(titleRange, in: attributedString.string)
                         attributedString.addAttribute(.font, value: UIFont.headline, range: nsTitleRange)
@@ -373,6 +374,7 @@ class AuthAndAddViewModel {
             // Remaining paragraphs
             var hasFormattedHThreeSubtitles = false
             
+            // Split paragraphs by H2 tags
             if contents.contains("<h2>") {
                 let paragraphs = contents.components(separatedBy: "<h2>")
                 for paragraph in paragraphs.dropFirst() {
@@ -381,13 +383,14 @@ class AuthAndAddViewModel {
                     print("______________________")
                     
                     if let attributedString = try? NSMutableAttributedString(data: Data(finalParagraph.utf8), options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-
                         // Format all text
                         attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
                         
                         // Format H2 subtitle
                         var subtitle = finalParagraph.slice(from: "<h2>", to: "</h2>")
                         subtitle = subtitle?.replacingOccurrences(of: "    ", with: " ")
+                        subtitle = subtitle?.replacingOccurrences(of: "&amp;", with: "&")
+
                         if let subtitleRange = attributedString.string.range(of: subtitle ?? "") {
                             let nsSubtitleRange = NSRange(subtitleRange, in: attributedString.string)
                             attributedString.addAttribute(.font, value: UIFont.subtitle, range: nsSubtitleRange)
@@ -411,6 +414,7 @@ class AuthAndAddViewModel {
                 }
             }
             
+            // Split paragraphs by H3 tags
             if contents.contains("<h3>") && !hasFormattedHThreeSubtitles {
                 let paragraphs = contents.components(separatedBy: "<h3>")
                 for paragraph in paragraphs {
@@ -432,6 +436,26 @@ class AuthAndAddViewModel {
                 }
             }
             
+            // If we have reached this point and the string is empty, we have no H2 or H3 tags.
+            // Format entire contents and H1
+            if mutableAttributedString.string.isEmpty {
+                if let attributedString = try? NSMutableAttributedString(data: Data(contents.utf8), options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+                    if !attributedString.string.isEmpty {
+                        // Format all text
+                        attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
+
+                        // Format title
+                        let titleString = contents.slice(from: "<h1>", to: "</h1>")
+                        let formattedTitle = titleString?.replacingOccurrences(of: "&amp;", with: "&")
+                        if let titleRange = attributedString.string.range(of: formattedTitle ?? "") {
+                            let nsTitleRange = NSRange(titleRange, in: attributedString.string)
+                            attributedString.addAttribute(.font, value: UIFont.headline, range: nsTitleRange)
+                        }
+
+                        mutableAttributedString = attributedString
+                    }
+                }
+            }
             
             // Present modal
             let modalConfig = ReusableModalConfiguration(text: mutableAttributedString, membershipPlan: membershipPlan)
