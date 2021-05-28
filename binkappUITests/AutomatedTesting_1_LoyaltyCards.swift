@@ -88,29 +88,29 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
     }
     
     func test_4_cardsAreVisibleAfterPullToRefresh_isTrue() {
-        let bAndQCell = app.staticTexts["B&Q"]
+        let bAndQCell = app.collectionViews.cells["B&Q"]
         let start = bAndQCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
         let finish = bAndQCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 50))
         start.press(forDuration: 0, thenDragTo: finish)
         
         sleep(10)
         
-        XCTAssertTrue(app.staticTexts["B&Q"].exists)
-        XCTAssertTrue(app.staticTexts["Iceland"].exists)
+        XCTAssertTrue(app.collectionViews.cells["B&Q"].exists)
+        XCTAssertTrue(app.collectionViews.cells["Iceland"].exists)
     }
     
     func test_5_deleteLoyaltyCards_isSuccessful() {
-        app.staticTexts["B&Q"].tap()
-        app.staticTexts["Remove this card from Bink"].tap()
+        app.collectionViews.cells["B&Q"].tap()
+        app.tables.cells["Delete B&Q Club Card"].tap()
         app.buttons["Yes"].tap()
         
         sleep(10)
 
-        app.staticTexts["Iceland"].tap()
-        app.staticTexts["Remove this card from Bink"].tap()
+        app.collectionViews.cells["Iceland"].tap()
+        app.tables.cells["Delete Card"].tap()
         app.buttons["Yes"].tap()
         
-        XCTAssertFalse(app.staticTexts["B&Q"].waitForExistence(timeout: 10))
-        XCTAssertFalse(app.staticTexts["Iceland"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.collectionViews.cells["B&Q"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.collectionViews.cells["Iceland"].waitForExistence(timeout: 10))
     }
 }
