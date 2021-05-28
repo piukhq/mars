@@ -346,19 +346,22 @@ class AuthAndAddViewModel {
             
             for match in matches {
                 guard let range = Range(match.range, in: paragraph) else { continue }
-                let urlString = paragraph[range]
+                var urlString = paragraph[range]
                 if let urlRange = attributedString.string.range(of: urlString) {
                     let nsRange = NSRange(urlRange, in: attributedString.string)
-                    var formattedURLString = urlString
                     if urlString.contains("@") {
-                        formattedURLString = "mailto:" + formattedURLString
+                        urlString = "mailto:" + urlString
                     } else {
                         if !urlString.hasPrefix("http") {
-                            formattedURLString = "https://" + formattedURLString
+                            if urlString.hasPrefix("www") {
+                                urlString = "https://" + urlString
+                            } else {
+                                urlString = "https://www." + urlString
+                            }
                         }
                     }
                     
-                    if let URL = URL(string: String(formattedURLString)) {
+                    if let URL = URL(string: String(urlString)) {
                         attributedString.addAttribute(.link, value: URL, range: nsRange)
                     }
                 }
