@@ -126,7 +126,7 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
             cell.configureWithPlaceholder(walletPrompt: walletPrompt)
         } else {
             let shouldShowMorePlansCell = plans.count > maxPlansToDisplay && indexPath.row == (maxPlansToDisplay - 1) ? true : false
-            cell.configure(with: plans[safe: indexPath.row], walletPrompt: walletPrompt, showMorePlansCell: shouldShowMorePlansCell)
+            cell.configure(with: plans[safe: indexPath.row], walletPrompt: walletPrompt, showMorePlansCell: shouldShowMorePlansCell, indexPath: indexPath)
         }
                 
         return cell

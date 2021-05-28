@@ -23,9 +23,10 @@ class PaymentCardDetailLinkLoyaltyCardCell: PaymentCardDetailTableViewCell {
         setSeparatorDefaultWidth()
     }
 
-    func configureWithViewModel(_ viewModel: PaymentCardDetailLinkLoyaltyCardCellViewModel, delegate: PaymentCardDetailLinkLoyaltyCardCellDelegate?) {
+    func configureWithViewModel(_ viewModel: PaymentCardDetailLinkLoyaltyCardCellViewModel, indexPath: IndexPath, delegate: PaymentCardDetailLinkLoyaltyCardCellDelegate?) {
         self.viewModel = viewModel
         self.delegate = delegate
+        tag = indexPath.row
 
         headerLabel.text = viewModel.headerText
         headerLabel.textColor = Current.themeManager.color(for: .text)
@@ -34,7 +35,11 @@ class PaymentCardDetailLinkLoyaltyCardCell: PaymentCardDetailTableViewCell {
         linkToggle.isOn = viewModel.isLinked
         
         guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
-        iconImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
+        ImageService.getImage(forPathType: .membershipPlanIcon(plan: membershipPlan), traitCollection: traitCollection) { [weak self] image in
+            if self?.tag == indexPath.row {
+                self?.iconImageView.image = image
+            }
+        }
         selectedBackgroundView = binkTableViewCellSelectedBackgroundView()
     }
 
