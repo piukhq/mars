@@ -57,11 +57,11 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
     }
     
     func test_1_addBAndQCard_isSuccessful() {
-//        sleep(10)
+        sleep(10)
         app.buttons["Browse brands"].tap()
-//        sleep(10)
+        sleep(10)
         app.tables.cells["B&Q"].tap()
-//        sleep(10)
+        sleep(10)
         app.buttons["Add my card"].tap()
         let cardNumberTextfield = app.textFields["Card number"]
         cardNumberTextfield.tap()
@@ -74,15 +74,15 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
     }
     
     func test_2_viewIcelandBarcode_isSuccessful() {
-        app.staticTexts["Iceland"].tap()
-        app.staticTexts["Tap to show card number"].tap()
+        app.collectionViews.cells["Iceland"].tap()
+        app.buttons["Show barcode button"].tap()
         let imageView = app.images["Barcode imageview"]
         XCTAssertTrue(imageView.waitForExistence(timeout: 10))
     }
     
     func test_3_viewBAndQBarcode_isSuccessful() {
-        app.staticTexts["B&Q"].tap()
-        app.staticTexts["Tap to enlarge barcode"].tap()
+        app.collectionViews.cells["B&Q"].tap()
+        app.buttons["Show barcode button"].tap()
         let imageView = app.images["Barcode imageview"]
         XCTAssertTrue(imageView.waitForExistence(timeout: 10))
     }
