@@ -57,20 +57,20 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
     }
     
     func test_1_addBAndQCard_isSuccessful() {
-        sleep(10)
+//        sleep(10)
         app.buttons["Browse brands"].tap()
-        sleep(10)
-        app.tables.staticTexts["B&Q"].tap()
-        sleep(10)
+//        sleep(10)
+        app.tables.cells["B&Q"].tap()
+//        sleep(10)
         app.buttons["Add my card"].tap()
-        let cardNumberTextfield = app.textFields.element
+        let cardNumberTextfield = app.textFields["Card number"]
         cardNumberTextfield.tap()
         cardNumberTextfield.typeText("6356661234567891")
 
         app.toolbars["Toolbar"].buttons["Done"].tap()
         app.buttons["Add card"].tap()
 
-        XCTAssertTrue(app.staticTexts["Tap to enlarge barcode"].waitForExistence(timeout: 30))
+        XCTAssertTrue(app.buttons["Show barcode button"].waitForExistence(timeout: 30))
     }
     
     func test_2_viewIcelandBarcode_isSuccessful() {
