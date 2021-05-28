@@ -38,7 +38,7 @@ class AutomatedTesting_0_Login: XCTestCase {
         passwordtextfield.tap()
         passwordtextfield.typeText("Binklogin123")
         app.buttons["done"].tap()
-        app.buttons["Continue"].tap()
+        app.buttons["Continue"].tap() 
         
         let paymentTabBarButton = app.buttons["Payment"]
         XCTAssertTrue(paymentTabBarButton.waitForExistence(timeout: 30))

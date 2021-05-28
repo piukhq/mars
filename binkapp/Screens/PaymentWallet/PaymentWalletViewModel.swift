@@ -14,12 +14,14 @@ class PaymentWalletViewModel: WalletViewModel {
 
     private let repository = PaymentWalletRepository()
 
-    var walletPrompts: [WalletPrompt]? {
-        return WalletPromptFactory.makeWalletPrompts(forWallet: .payment)
-    }
+    var walletPrompts: [WalletPrompt]?
 
     var cards: [CD_PaymentCard]? {
         return Current.wallet.paymentCards
+    }
+    
+    func setupWalletPrompts() {
+        walletPrompts = WalletPromptFactory.makeWalletPrompts(forWallet: .payment)
     }
 
     func toCardDetail(for card: CD_PaymentCard) {

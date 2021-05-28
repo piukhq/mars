@@ -60,6 +60,8 @@ internal enum L10n {
   internal static let addJoinScreenViewDescriptionInactive = L10n.tr("Localizable", "add_join_screen_view_description_inactive")
   /// View
   internal static let addJoinScreenViewTitle = L10n.tr("Localizable", "add_join_screen_view_title")
+  /// There was a problem adding your loyalty card. Please try again.
+  internal static let addLoyaltyCardErrorMessage = L10n.tr("Localizable", "add_loyalty_card_error_message")
   /// Add loyalty card
   internal static let addLoyaltyCardTitle = L10n.tr("Localizable", "add_loyalty_card_title")
   /// Add my card
@@ -728,7 +730,7 @@ internal enum L10n {
   internal static let walletPromptStoreTitle = L10n.tr("Localizable", "wallet_prompt_store_title")
   /// Something went wrong.
   internal static let wentWrong = L10n.tr("Localizable", "went_wrong")
-  /// Below are a list of people that have been instrumental in developing the app you now hold in your hands.
+  /// Below is a list of people that have been instrumental in developing the app you now hold in your hands.
   internal static let whoWeAreBody = L10n.tr("Localizable", "who_we_are_body")
   /// Who we are
   internal static let whoWeAreTitle = L10n.tr("Localizable", "who_we_are_title")

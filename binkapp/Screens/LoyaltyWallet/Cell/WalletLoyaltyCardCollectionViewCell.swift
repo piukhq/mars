@@ -108,14 +108,19 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         cardLinkStatusLabel.font = .statusLabel
     }
     
-    func configureUIWithViewModel(viewModel: WalletLoyaltyCardCellViewModel, delegate: WalletLoyaltyCardCollectionViewCellDelegate) {
+    func configureUIWithViewModel(viewModel: WalletLoyaltyCardCellViewModel, indexPath: IndexPath, delegate: WalletLoyaltyCardCollectionViewCellDelegate) {
         self.viewModel = viewModel
         self.delegate = delegate
+        tag = indexPath.row
         
         guard let plan = viewModel.membershipPlan else { return }
+        ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: traitCollection) { [weak self] image in
+            if self?.tag == indexPath.row {
+                self?.cardIconImageView.image = image
+            }
+        }
         accessibilityIdentifier = plan.account?.companyName
-        cardIconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
-        
+
         /// Brand colours
         let primaryBrandColor = UIColor(hexString: viewModel.brandColorHex ?? "")
         rectangleView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
@@ -185,8 +190,8 @@ extension WalletLoyaltyCardCollectionViewCell {
             barcodeButton.isHidden = false
             deleteButton.isHidden = true
         case .unset:
-            barcodeButton.isHidden = true
-            deleteButton.isHidden = true
+            barcodeButton.isHidden = false
+            deleteButton.isHidden = false
         }
     }
     
@@ -322,6 +327,11 @@ extension WalletLoyaltyCardCollectionViewCell {
         
         UIView.animate(withDuration: 0.3) {
             block()
+        } completion: { _ in
+            if self.swipeState == .closed {
+                CAGradientLayer.removeGradientLayer(for: self.contentView)
+                self.swipeGradientLayer = nil
+            }
         }
     }
 }

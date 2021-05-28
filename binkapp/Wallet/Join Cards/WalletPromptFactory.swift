@@ -17,8 +17,12 @@ enum WalletPromptFactory {
     
     static func makeWalletPrompts(forWallet walletType: WalletType) -> [WalletPrompt] {
         var walletPrompts: [WalletPrompt] = []
+        
+        if walletType == .payment {
+            walletPrompts.append(WalletPrompt(type: .addPaymentCards))
+        }
 
-        guard Current.wallet.shouldDisplayWalletPrompts == true else {
+        guard Current.wallet.membershipPlans?.isEmpty == false else {
             return walletPrompts
         }
 
@@ -57,7 +61,6 @@ enum WalletPromptFactory {
                 }
             }
             
-            
             // Store
             if !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .store }) {
                 var storePlans = plans.filter { $0.featureSet?.planCardType == .store }
@@ -68,11 +71,6 @@ enum WalletPromptFactory {
                 
                 walletPrompts.append(WalletPrompt(type: .store(plans: storePlans)))
             }
-        }
-
-        /// Add payment card prompt to payment wallet only
-        if walletType == .payment {
-            walletPrompts.append(WalletPrompt(type: .addPaymentCards))
         }
 
         return walletPrompts
