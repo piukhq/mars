@@ -113,6 +113,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         self.delegate = delegate
         
         guard let plan = viewModel.membershipPlan else { return }
+        accessibilityIdentifier = plan.account?.companyName
         cardIconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
         
         /// Brand colours
