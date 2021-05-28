@@ -112,7 +112,7 @@ class AuthAndAddViewController: BaseFormViewController {
     }
     
     override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
-        viewModel.openWebView(withUrlString: URL)
+        viewModel.presentPlanDocumentsModal(withUrl: URL)
     }
 }
 
