@@ -186,9 +186,9 @@ class PointsScrapingManager {
         Current.remoteConfig.fetch { [weak self] in
             guard let self = self else { return }
             guard self.isMasterEnabled else { return }
-            self.getRefreshableMembershipCards { refreshableCards in
-                refreshableCards.forEach { self.addQueuedItem(QueuedItem(card: $0)) }
-                self.processQueuedItems()
+            self.getRefreshableMembershipCards { [weak self] refreshableCards in
+                refreshableCards.forEach { self?.addQueuedItem(QueuedItem(card: $0)) }
+                self?.processQueuedItems()
             }
         }
     }
