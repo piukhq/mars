@@ -13,7 +13,9 @@ class PortraitNavigationController: UINavigationController {
     private var statusBarStyle: UIStatusBarStyle = .default
     
     private lazy var backButton: UIBarButtonItem = {
-        return UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        let back = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        back.accessibilityIdentifier = "back"
+        return back
     }()
     
     private lazy var closeButton: UIBarButtonItem = {

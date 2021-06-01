@@ -119,7 +119,8 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
                 self?.cardIconImageView.image = image
             }
         }
-        
+        accessibilityIdentifier = plan.account?.companyName
+
         /// Brand colours
         let primaryBrandColor = UIColor(hexString: viewModel.brandColorHex ?? "")
         rectangleView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)

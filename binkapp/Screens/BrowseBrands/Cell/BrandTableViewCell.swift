@@ -29,6 +29,8 @@ class BrandTableViewCell: UITableViewCell {
     
     func configure(plan: CD_MembershipPlan, brandName: String, brandExists: Bool, indexPath: IndexPath) {
         tag = indexPath.hashValue
+        accessibilityIdentifier = brandName
+
         logoImageView.backgroundColor = .clear
         ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: traitCollection) { [weak self] image in
             if self?.tag == indexPath.hashValue {
