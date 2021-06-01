@@ -64,7 +64,6 @@ class FormCollectionViewCell: UICollectionViewCell {
         field.heightAnchor.constraint(equalToConstant: Constants.textFieldHeight).isActive = true
         field.addTarget(self, action: .textFieldUpdated, for: .editingChanged)
         field.setContentCompressionResistancePriority(.required, for: .vertical)
-        field.inputAccessoryView = inputAccessory
         field.smartQuotesType = .no // This stops the "smart" apostrophe setting. The default breaks field regex validation
         return field
     }()
@@ -193,6 +192,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         textField.autocorrectionType = field.fieldType.autoCorrection()
         textField.autocapitalizationType = field.fieldType.capitalization()
         textField.clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
+        textField.inputAccessoryView = PrefilledValuesFormInputAccessory(field: field, delegate: self)
         formField = field
         configureTextFieldRightView(shouldDisplay: formField?.value == nil)
         validationLabel.isHidden = textField.text?.isEmpty == true ? true : field.isValid()
@@ -324,6 +324,13 @@ extension FormCollectionViewCell: FormMultipleChoiceInputDelegate {
         formField?.updateValue(newValue)
         textField.text = newValue
         if let options = backingData { formField?.pickerDidSelect(options) }
+    }
+}
+
+extension FormCollectionViewCell: PrefilledValuesFormInputAccessoryDelegate {
+    func inputAccessory(_ inputAccessory: PrefilledValuesFormInputAccessory, didSelectValue value: String) {
+        formField?.updateValue(value)
+        textField.text = value
     }
 }
 

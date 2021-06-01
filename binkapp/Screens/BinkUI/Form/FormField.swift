@@ -183,19 +183,18 @@ class FormField {
     }
     
     func isValid() -> Bool {
-        // If our value is unset then  we do not pass the validation check
-        guard let value = value else { return false }
-
         // If the field has manual validation, apply it
         if let validateBlock = manualValidate {
             return validateBlock(self)
         }
         
+        // If our value is unset then we do not pass the validation check
+        guard let value = value else { return false }
+        
         if fieldType == .paymentCardNumber {
             return PaymentCardType.validate(fullPan: value)
         } else {
             guard let validation = validation else { return !value.isEmpty || !value.isBlank }
-            
             
             let predicate = NSPredicate(format: "SELF MATCHES %@", validation)
             return predicate.evaluate(with: value)
