@@ -510,7 +510,7 @@ internal enum L10n {
   internal static let preferencesPromptHighlightOffers = L10n.tr("Localizable", "preferences_prompt_highlight_offers")
   /// rewards
   internal static let preferencesPromptHighlightRewards = L10n.tr("Localizable", "preferences_prompt_highlight_rewards")
-  /// updates
+  /// updates!
   internal static let preferencesPromptHighlightUpdates = L10n.tr("Localizable", "preferences_prompt_highlight_updates")
   /// Cannot retrieve your preferences at the moment. Please try again later.
   internal static let preferencesRetrieveFail = L10n.tr("Localizable", "preferences_retrieve_fail")

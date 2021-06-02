@@ -307,7 +307,7 @@
 "preferences_prompt" = "Make sure you’re the first to know about available rewards, offers and updates!\nYou can opt out at any time.";
 "preferences_prompt_highlight_rewards" = "rewards";
 "preferences_prompt_highlight_offers" = "offers";
-"preferences_prompt_highlight_updates" = "updates";
+"preferences_prompt_highlight_updates" = "updates!";
 
 "register_title" = "Sign up with email";
 "register_subtitle" = "All it takes is an email and password.";
