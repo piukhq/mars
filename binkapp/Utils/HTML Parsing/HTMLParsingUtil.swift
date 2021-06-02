@@ -48,6 +48,8 @@ enum HTMLParsingUtil {
         }
     }
     
+    private static var hasFormattedHThreeSubtitles = false
+    
     private static func configureAttributes(in htmlString: String, attributedString: NSMutableAttributedString, headerTag: HTMLHeaderTag, shouldConfigureBodyText: Bool = true) {
         if shouldConfigureBodyText {
             attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
@@ -66,44 +68,50 @@ enum HTMLParsingUtil {
         configureLinks(in: htmlString, for: attributedString)
     }
     
-    static func makeAttributedStringFromHTML(url: URL) -> NSMutableAttributedString? {
-        guard let contents = try? String(contentsOf: url) else { return nil }
-        var mutableAttributedString = NSMutableAttributedString()
+    private static func buildParagraphForAttributedString(paragraph: String, stringFromHTML: String, mutableAttributedString: inout NSMutableAttributedString, headerTag: HTMLHeaderTag) {
         let newLine = NSAttributedString(string: "\n")
-        
-        // First Paragraph
-        let firstParagraph = contents.slice(from: HTMLHeaderTag.h1.openingTag, to: HTMLHeaderTag.h2.openingTag) ?? ""
-        if let htmlData = NSString(string: firstParagraph).data(using: String.Encoding.unicode.rawValue) {
+
+        if let htmlData = NSString(string: paragraph).data(using: String.Encoding.unicode.rawValue) {
             if let attributedString = try? NSMutableAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
                 if !attributedString.string.isEmpty {
-                    configureAttributes(in: contents, attributedString: attributedString, headerTag: .h1)
-                    mutableAttributedString = attributedString
+                    configureAttributes(in: stringFromHTML, attributedString: attributedString, headerTag: headerTag)
+                    
+                    // If configuring H2 paragraphs, configure H3s
+                    if headerTag == .h2 {
+                        let paragraphsHThree = paragraph.components(separatedBy: HTMLHeaderTag.h3.openingTag)
+                        paragraphsHThree.forEach {
+                            configureAttributes(in: HTMLHeaderTag.h3.openingTag + $0, attributedString: attributedString, headerTag: .h3, shouldConfigureBodyText: false)
+                            hasFormattedHThreeSubtitles = true
+                        }
+                    }
+                    
+                    if headerTag == .h1 {
+                        mutableAttributedString = attributedString
+                    } else {
+                        mutableAttributedString.append(attributedString)
+                    }
                     mutableAttributedString.append(newLine)
                 }
             }
         }
+    }
+    
+    static func makeAttributedStringFromHTML(url: URL) -> NSMutableAttributedString? {
+        guard let contents = try? String(contentsOf: url) else { return nil }
+        var mutableAttributedString = NSMutableAttributedString()
+        hasFormattedHThreeSubtitles = false
         
-        var hasFormattedHThreeSubtitles = false
+        // First Paragraph
+        let firstParagraph = contents.slice(from: HTMLHeaderTag.h1.openingTag, to: HTMLHeaderTag.h2.openingTag) ?? ""
+        buildParagraphForAttributedString(paragraph: firstParagraph, stringFromHTML: contents, mutableAttributedString: &mutableAttributedString, headerTag: .h1)
+        
         
         // Split paragraphs by H2 tags
         if contents.contains(HTMLHeaderTag.h2.openingTag) {
             let paragraphs = contents.components(separatedBy: HTMLHeaderTag.h2.openingTag)
             for paragraph in paragraphs.dropFirst() {
                 let formattedParagraph = HTMLHeaderTag.h2.openingTag + paragraph
-                if let htmlData = NSString(string: formattedParagraph).data(using: String.Encoding.unicode.rawValue) {
-                    if let attributedString = try? NSMutableAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-                        configureAttributes(in: formattedParagraph, attributedString: attributedString, headerTag: .h2)
-                        
-                        let paragraphsHThree = contents.components(separatedBy: HTMLHeaderTag.h3.openingTag)
-                        paragraphsHThree.forEach {
-                            configureAttributes(in: HTMLHeaderTag.h3.openingTag + $0, attributedString: attributedString, headerTag: .h3, shouldConfigureBodyText: false)
-                            hasFormattedHThreeSubtitles = true
-                        }
-                        
-                        mutableAttributedString.append(attributedString)
-                        mutableAttributedString.append(newLine)
-                    }
-                }
+                buildParagraphForAttributedString(paragraph: formattedParagraph, stringFromHTML: formattedParagraph, mutableAttributedString: &mutableAttributedString, headerTag: .h2)
             }
         }
         
@@ -112,27 +120,14 @@ enum HTMLParsingUtil {
             let paragraphs = contents.components(separatedBy: HTMLHeaderTag.h3.openingTag)
             for paragraph in paragraphs {
                 let formattedParagraph = HTMLHeaderTag.h3.openingTag + paragraph
-                if let htmlData = NSString(string: formattedParagraph).data(using: String.Encoding.unicode.rawValue) {
-                    if let attributedString = try? NSMutableAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-                        configureAttributes(in: formattedParagraph, attributedString: attributedString, headerTag: .h3)
-                        mutableAttributedString.append(attributedString)
-                        mutableAttributedString.append(newLine)
-                    }
-                }
+                buildParagraphForAttributedString(paragraph: formattedParagraph, stringFromHTML: formattedParagraph, mutableAttributedString: &mutableAttributedString, headerTag: .h3)
             }
         }
         
         // If we have reached this point and the string is empty, we have no H2 or H3 tags.
         // Format entire contents and possible H1s
         if mutableAttributedString.string.isEmpty {
-            if let htmlData = NSString(string: contents).data(using: String.Encoding.unicode.rawValue) {
-                if let attributedString = try? NSMutableAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-                    if !attributedString.string.isEmpty {
-                        configureAttributes(in: contents, attributedString: attributedString, headerTag: .h1)
-                        mutableAttributedString = attributedString
-                    }
-                }
-            }
+            buildParagraphForAttributedString(paragraph: contents, stringFromHTML: contents, mutableAttributedString: &mutableAttributedString, headerTag: .h1)
         }
         
         return mutableAttributedString
