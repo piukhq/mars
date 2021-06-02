@@ -79,7 +79,7 @@
 "add_my_card_button" = "Add my card";
 "get_new_card_button" = "Get a new card";
 
-"auth_screen_description" = "Please enter your %@ credentials below to add this card to your wallet";
+"auth_screen_description" = "Please enter your %@ credentials below to add this card to your wallet.";
 
 "pll_title" = "Link to your Payment Cards";
 "see_title" = "See your balance";

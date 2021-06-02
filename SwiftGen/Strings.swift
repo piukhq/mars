@@ -74,7 +74,7 @@ internal enum L10n {
   internal static let addPaymentErrorTitle = L10n.tr("Localizable", "add_payment_error_title")
   /// All
   internal static let allTitle = L10n.tr("Localizable", "all_title")
-  /// Please enter your %@ credentials below to add this card to your wallet
+  /// Please enter your %@ credentials below to add this card to your wallet.
   internal static func authScreenDescription(_ p1: Any) -> String {
     return L10n.tr("Localizable", "auth_screen_description", String(describing: p1))
   }
