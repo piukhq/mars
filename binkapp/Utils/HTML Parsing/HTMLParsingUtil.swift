@@ -9,6 +9,39 @@
 import UIKit
 
 enum HTMLParsingUtil {
+    enum HTMLHeaderTag: String {
+        case h1
+        case h2
+        case h3
+        
+        var openingTag: String {
+            switch self {
+            case .h1:
+                return "<h1>"
+            case .h2:
+                return "<h2>"
+            case .h3:
+                return "<h3>"
+            }
+        }
+        
+        var closingTag: String {
+            switch self {
+            case .h1:
+                return "</h1>"
+            case .h2:
+                return "</h2>"
+            case .h3:
+                return "</h3>"
+            }
+        }
+    }
+    private static func fixIncorrectHTMLOccurences(in string: inout String?) {
+        string = string?.replacingOccurrences(of: "    ", with: " ")
+        string = string?.replacingOccurrences(of: "&amp;", with: "&")
+        string = string?.replacingOccurrences(of: "  ", with: " ")
+    }
+    
     static func makeAttributedStringFromHTML(url: URL) -> NSMutableAttributedString? {
         if let contents = try? String(contentsOf: url) {
             var mutableAttributedString = NSMutableAttributedString()
@@ -23,10 +56,10 @@ enum HTMLParsingUtil {
                         attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
                         
                         // Format title
-                        let titleString = contents.slice(from: "<h1>", to: "</h1>")
-                        var formattedTitle = titleString?.replacingOccurrences(of: "&amp;", with: "&")
-                        formattedTitle = formattedTitle?.replacingOccurrences(of: "  ", with: " ")
-                        if let titleRange = attributedString.string.range(of: formattedTitle ?? "") {
+                        var titleString = contents.slice(from: "<h1>", to: "</h1>")
+                        fixIncorrectHTMLOccurences(in: &titleString)
+                        
+                        if let titleRange = attributedString.string.range(of: titleString ?? "") {
                             let nsTitleRange = NSRange(titleRange, in: attributedString.string)
                             attributedString.addAttribute(.font, value: UIFont.headline, range: nsTitleRange)
                         }
@@ -53,8 +86,7 @@ enum HTMLParsingUtil {
                             
                             // Format H2 subtitle
                             var subtitle = formattedParagraph.slice(from: "<h2>", to: "</h2>")
-                            subtitle = subtitle?.replacingOccurrences(of: "    ", with: " ")
-                            subtitle = subtitle?.replacingOccurrences(of: "&amp;", with: "&")
+                            fixIncorrectHTMLOccurences(in: &subtitle)
                             
                             if let subtitleRange = attributedString.string.range(of: subtitle ?? "") {
                                 let nsSubtitleRange = NSRange(subtitleRange, in: attributedString.string)
@@ -66,6 +98,7 @@ enum HTMLParsingUtil {
                             paragraphsHThree.forEach {
                                 let formattedParagraph = "<h3>" + $0
                                 let subtitleHThree = formattedParagraph.slice(from: "<h3>", to: "</h3>")
+                                
                                 if let subtitleRange = attributedString.string.range(of: subtitleHThree ?? "") {
                                     let nsSubtitleRange = NSRange(subtitleRange, in: attributedString.string)
                                     attributedString.addAttribute(.font, value: UIFont.linkTextButtonNormal, range: nsSubtitleRange)
@@ -117,9 +150,10 @@ enum HTMLParsingUtil {
                             attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
                             
                             // Format title
-                            let titleString = contents.slice(from: "<h1>", to: "</h1>")
-                            let formattedTitle = titleString?.replacingOccurrences(of: "&amp;", with: "&")
-                            if let titleRange = attributedString.string.range(of: formattedTitle ?? "") {
+                            var titleString = contents.slice(from: "<h1>", to: "</h1>")
+                            fixIncorrectHTMLOccurences(in: &titleString)
+                            
+                            if let titleRange = attributedString.string.range(of: titleString ?? "") {
                                 let nsTitleRange = NSRange(titleRange, in: attributedString.string)
                                 attributedString.addAttribute(.font, value: UIFont.headline, range: nsTitleRange)
                             }

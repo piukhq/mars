@@ -346,14 +346,12 @@ class AuthAndAddViewModel {
             if planDocument?.name?.contains("policy") == true {
                 if let urlString = planDocument?.url, let url = URL(string: urlString) {
                     privacyPolicy = HTMLParsingUtil.makeAttributedStringFromHTML(url: url)
-                    print(privacyPolicy as Any)
                 }
             }
             
             if planDocument?.name?.contains("conditions") == true {
                 if let urlString = planDocument?.url, let url = URL(string: urlString) {
                     termsAndConditions = HTMLParsingUtil.makeAttributedStringFromHTML(url: url)
-                    print(termsAndConditions as Any)
                 }
             }
         }
