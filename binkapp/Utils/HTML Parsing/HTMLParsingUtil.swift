@@ -36,10 +36,21 @@ enum HTMLParsingUtil {
             }
         }
     }
+    
     private static func fixIncorrectHTMLOccurences(in string: inout String?) {
         string = string?.replacingOccurrences(of: "    ", with: " ")
         string = string?.replacingOccurrences(of: "&amp;", with: "&")
         string = string?.replacingOccurrences(of: "  ", with: " ")
+    }
+    
+    private static func addFontAttributeToHeader(in htmlString: String, attributedString: NSMutableAttributedString, headerTag: HTMLHeaderTag, font: UIFont) {
+        var titleString = htmlString.slice(from: headerTag.openingTag, to: headerTag.closingTag)
+        fixIncorrectHTMLOccurences(in: &titleString)
+        
+        if let titleRange = attributedString.string.range(of: titleString ?? "") {
+            let nsTitleRange = NSRange(titleRange, in: attributedString.string)
+            attributedString.addAttribute(.font, value: font, range: nsTitleRange)
+        }
     }
     
     static func makeAttributedStringFromHTML(url: URL) -> NSMutableAttributedString? {
@@ -48,21 +59,12 @@ enum HTMLParsingUtil {
             let newLine = NSAttributedString(string: "\n")
             
             // First Paragraph
-            let firstParagraph = contents.slice(from: "<h1>", to: "<h2>") ?? ""
+            let firstParagraph = contents.slice(from: HTMLHeaderTag.h1.openingTag, to: HTMLHeaderTag.h2.openingTag) ?? ""
             if let htmlData = NSString(string: firstParagraph).data(using: String.Encoding.unicode.rawValue) {
                 if let attributedString = try? NSMutableAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
                     if !attributedString.string.isEmpty {
-                        // Format all text
                         attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
-                        
-                        // Format title
-                        var titleString = contents.slice(from: "<h1>", to: "</h1>")
-                        fixIncorrectHTMLOccurences(in: &titleString)
-                        
-                        if let titleRange = attributedString.string.range(of: titleString ?? "") {
-                            let nsTitleRange = NSRange(titleRange, in: attributedString.string)
-                            attributedString.addAttribute(.font, value: UIFont.headline, range: nsTitleRange)
-                        }
+                        addFontAttributeToHeader(in: contents, attributedString: attributedString, headerTag: .h1, font: .headline)
                         
                         configureLinks(in: firstParagraph, for: attributedString)
                         mutableAttributedString = attributedString
@@ -75,34 +77,18 @@ enum HTMLParsingUtil {
             var hasFormattedHThreeSubtitles = false
             
             // Split paragraphs by H2 tags
-            if contents.contains("<h2>") {
-                let paragraphs = contents.components(separatedBy: "<h2>")
+            if contents.contains(HTMLHeaderTag.h2.openingTag) {
+                let paragraphs = contents.components(separatedBy: HTMLHeaderTag.h2.openingTag)
                 for paragraph in paragraphs.dropFirst() {
-                    let formattedParagraph = "<h2>" + paragraph
+                    let formattedParagraph = HTMLHeaderTag.h2.openingTag + paragraph
                     if let htmlData = NSString(string: formattedParagraph).data(using: String.Encoding.unicode.rawValue) {
                         if let attributedString = try? NSMutableAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-                            // Format all text
                             attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
+                            addFontAttributeToHeader(in: formattedParagraph, attributedString: attributedString, headerTag: .h2, font: .subtitle)
                             
-                            // Format H2 subtitle
-                            var subtitle = formattedParagraph.slice(from: "<h2>", to: "</h2>")
-                            fixIncorrectHTMLOccurences(in: &subtitle)
-                            
-                            if let subtitleRange = attributedString.string.range(of: subtitle ?? "") {
-                                let nsSubtitleRange = NSRange(subtitleRange, in: attributedString.string)
-                                attributedString.addAttribute(.font, value: UIFont.subtitle, range: nsSubtitleRange)
-                            }
-                            
-                            // Format H3 subtitle
-                            let paragraphsHThree = contents.components(separatedBy: "<h3>")
+                            let paragraphsHThree = contents.components(separatedBy: HTMLHeaderTag.h3.openingTag)
                             paragraphsHThree.forEach {
-                                let formattedParagraph = "<h3>" + $0
-                                let subtitleHThree = formattedParagraph.slice(from: "<h3>", to: "</h3>")
-                                
-                                if let subtitleRange = attributedString.string.range(of: subtitleHThree ?? "") {
-                                    let nsSubtitleRange = NSRange(subtitleRange, in: attributedString.string)
-                                    attributedString.addAttribute(.font, value: UIFont.linkTextButtonNormal, range: nsSubtitleRange)
-                                }
+                                addFontAttributeToHeader(in: HTMLHeaderTag.h3.openingTag + $0, attributedString: attributedString, headerTag: .h3, font: .linkTextButtonNormal)
                                 hasFormattedHThreeSubtitles = true
                             }
                             
@@ -116,23 +102,16 @@ enum HTMLParsingUtil {
             }
             
             // Split paragraphs by H3 tags
-            if contents.contains("<h3>") && !hasFormattedHThreeSubtitles {
-                let paragraphs = contents.components(separatedBy: "<h3>")
+            if contents.contains(HTMLHeaderTag.h3.openingTag) && !hasFormattedHThreeSubtitles {
+                let paragraphs = contents.components(separatedBy: HTMLHeaderTag.h3.openingTag)
                 for paragraph in paragraphs {
-                    let formattedParagraph = "<h3>" + paragraph
+                    let formattedParagraph = HTMLHeaderTag.h3.openingTag + paragraph
                     if let htmlData = NSString(string: formattedParagraph).data(using: String.Encoding.unicode.rawValue) {
                         if let attributedString = try? NSMutableAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-                            // Format all text
                             attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
-                            
-                            // Format subtitle
-                            let subtitle = formattedParagraph.slice(from: "<h3>", to: "</h3>")
-                            if let subtitleRange = attributedString.string.range(of: subtitle ?? "") {
-                                let nsSubtitleRange = NSRange(subtitleRange, in: attributedString.string)
-                                attributedString.addAttribute(.font, value: UIFont.subtitle, range: nsSubtitleRange)
-                            }
-                            
+                            addFontAttributeToHeader(in: formattedParagraph, attributedString: attributedString, headerTag: .h3, font: .subtitle)
                             configureLinks(in: paragraph, for: attributedString)
+                            
                             mutableAttributedString.append(attributedString)
                             mutableAttributedString.append(newLine)
                         }
@@ -146,19 +125,10 @@ enum HTMLParsingUtil {
                 if let htmlData = NSString(string: contents).data(using: String.Encoding.unicode.rawValue) {
                     if let attributedString = try? NSMutableAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
                         if !attributedString.string.isEmpty {
-                            // Format all text
                             attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
-                            
-                            // Format title
-                            var titleString = contents.slice(from: "<h1>", to: "</h1>")
-                            fixIncorrectHTMLOccurences(in: &titleString)
-                            
-                            if let titleRange = attributedString.string.range(of: titleString ?? "") {
-                                let nsTitleRange = NSRange(titleRange, in: attributedString.string)
-                                attributedString.addAttribute(.font, value: UIFont.headline, range: nsTitleRange)
-                            }
-                            
+                            addFontAttributeToHeader(in: contents, attributedString: attributedString, headerTag: .h1, font: .headline)
                             configureLinks(in: contents, for: attributedString)
+                            
                             mutableAttributedString = attributedString
                         }
                     }
