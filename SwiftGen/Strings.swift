@@ -572,7 +572,7 @@ internal enum L10n {
   internal static let search = L10n.tr("Localizable", "search")
   /// Is my Data Secure?
   internal static let securityAndPrivacyAlertTitle = L10n.tr("Localizable", "security_and_privacy_alert_title")
-  /// Bink takes the security of your information extremely seriously and uses a range of best in class methods to protect your information.\nBink is a registered PCI Level 1 Service Provider for the protection of sensitive first party data and personally identifiable information.
+  /// Bink takes the security of your information extremely seriously and uses a range of best in class methods to protect your information.\n\nBink is a registered PCI Level 1 Service Provider for the protection of sensitive first party data and personally identifiable information.
   internal static let securityAndPrivacyDescription = L10n.tr("Localizable", "security_and_privacy_description")
   /// How we protect your data
   internal static let securityAndPrivacyMessage = L10n.tr("Localizable", "security_and_privacy_message")
