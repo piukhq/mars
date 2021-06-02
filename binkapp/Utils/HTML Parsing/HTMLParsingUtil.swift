@@ -68,13 +68,39 @@ enum HTMLParsingUtil {
         configureLinks(in: htmlString, for: attributedString)
     }
     
-    private static func buildParagraphForAttributedString(paragraph: String, stringFromHTML: String, mutableAttributedString: inout NSMutableAttributedString, headerTag: HTMLHeaderTag) {
+    private static func configureLinks(in paragraph: String, for attributedString: NSMutableAttributedString) {
+        guard let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue) else { return }
+        let matches = detector.matches(in: paragraph, options: [], range: NSRange(location: 0, length: paragraph.utf16.count))
+        
+        for match in matches {
+            guard let range = Range(match.range, in: paragraph) else { continue }
+            var urlString = paragraph[range]
+            guard let urlRange = attributedString.string.range(of: urlString) else { return }
+            if urlString.contains("@") {
+                urlString = "mailto:" + urlString
+            } else {
+                if !urlString.hasPrefix("http") {
+                    if urlString.hasPrefix("www") {
+                        urlString = "https://" + urlString
+                    } else {
+                        urlString = "https://www." + urlString
+                    }
+                }
+            }
+            
+            if let URL = URL(string: String(urlString)) {
+                attributedString.addAttribute(.link, value: URL, range: NSRange(urlRange, in: attributedString.string))
+            }
+        }
+    }
+    
+    private static func buildParagraphForAttributedString(paragraph: String, configureAttributesInString: String, mutableAttributedString: inout NSMutableAttributedString, headerTag: HTMLHeaderTag) {
         let newLine = NSAttributedString(string: "\n")
 
         if let htmlData = NSString(string: paragraph).data(using: String.Encoding.unicode.rawValue) {
             if let attributedString = try? NSMutableAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
                 if !attributedString.string.isEmpty {
-                    configureAttributes(in: stringFromHTML, attributedString: attributedString, headerTag: headerTag)
+                    configureAttributes(in: configureAttributesInString, attributedString: attributedString, headerTag: headerTag)
                     
                     // If configuring H2 paragraphs, configure H3s
                     if headerTag == .h2 {
@@ -103,7 +129,7 @@ enum HTMLParsingUtil {
         
         // First Paragraph
         let firstParagraph = contents.slice(from: HTMLHeaderTag.h1.openingTag, to: HTMLHeaderTag.h2.openingTag) ?? ""
-        buildParagraphForAttributedString(paragraph: firstParagraph, stringFromHTML: contents, mutableAttributedString: &mutableAttributedString, headerTag: .h1)
+        buildParagraphForAttributedString(paragraph: firstParagraph, configureAttributesInString: contents, mutableAttributedString: &mutableAttributedString, headerTag: .h1)
         
         
         // Split paragraphs by H2 tags
@@ -111,7 +137,7 @@ enum HTMLParsingUtil {
             let paragraphs = contents.components(separatedBy: HTMLHeaderTag.h2.openingTag)
             for paragraph in paragraphs.dropFirst() {
                 let formattedParagraph = HTMLHeaderTag.h2.openingTag + paragraph
-                buildParagraphForAttributedString(paragraph: formattedParagraph, stringFromHTML: formattedParagraph, mutableAttributedString: &mutableAttributedString, headerTag: .h2)
+                buildParagraphForAttributedString(paragraph: formattedParagraph, configureAttributesInString: formattedParagraph, mutableAttributedString: &mutableAttributedString, headerTag: .h2)
             }
         }
         
@@ -120,42 +146,16 @@ enum HTMLParsingUtil {
             let paragraphs = contents.components(separatedBy: HTMLHeaderTag.h3.openingTag)
             for paragraph in paragraphs {
                 let formattedParagraph = HTMLHeaderTag.h3.openingTag + paragraph
-                buildParagraphForAttributedString(paragraph: formattedParagraph, stringFromHTML: formattedParagraph, mutableAttributedString: &mutableAttributedString, headerTag: .h3)
+                buildParagraphForAttributedString(paragraph: formattedParagraph, configureAttributesInString: formattedParagraph, mutableAttributedString: &mutableAttributedString, headerTag: .h3)
             }
         }
         
         // If we have reached this point and the string is empty, we have no H2 or H3 tags.
         // Format entire contents and possible H1s
         if mutableAttributedString.string.isEmpty {
-            buildParagraphForAttributedString(paragraph: contents, stringFromHTML: contents, mutableAttributedString: &mutableAttributedString, headerTag: .h1)
+            buildParagraphForAttributedString(paragraph: contents, configureAttributesInString: contents, mutableAttributedString: &mutableAttributedString, headerTag: .h1)
         }
         
         return mutableAttributedString
-    }
-    
-    private static func configureLinks(in paragraph: String, for attributedString: NSMutableAttributedString) {
-        guard let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue) else { return }
-        let matches = detector.matches(in: paragraph, options: [], range: NSRange(location: 0, length: paragraph.utf16.count))
-        
-        for match in matches {
-            guard let range = Range(match.range, in: paragraph) else { continue }
-            var urlString = paragraph[range]
-            guard let urlRange = attributedString.string.range(of: urlString) else { return }
-            if urlString.contains("@") {
-                urlString = "mailto:" + urlString
-            } else {
-                if !urlString.hasPrefix("http") {
-                    if urlString.hasPrefix("www") {
-                        urlString = "https://" + urlString
-                    } else {
-                        urlString = "https://www." + urlString
-                    }
-                }
-            }
-            
-            if let URL = URL(string: String(urlString)) {
-                attributedString.addAttribute(.link, value: URL, range: NSRange(urlRange, in: attributedString.string))
-            }
-        }
     }
 }
