@@ -10,20 +10,9 @@ import UIKit
 
 enum HTMLParsingUtil {
     enum HTMLHeaderTag: String {
-        case h1
-        case h2
-        case h3
-        
-        var openingTag: String {
-            switch self {
-            case .h1:
-                return "<h1>"
-            case .h2:
-                return "<h2>"
-            case .h3:
-                return "<h3>"
-            }
-        }
+        case h1 = "<h1>"
+        case h2 = "<h2>"
+        case h3 = "<h3>"
         
         var closingTag: String {
             switch self {
@@ -35,7 +24,7 @@ enum HTMLParsingUtil {
                 return "</h3>"
             }
         }
-        
+
         var font: UIFont {
             switch self {
             case .h1:
@@ -55,7 +44,7 @@ enum HTMLParsingUtil {
             attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: 0, length: attributedString.string.count - 1))
         }
         
-        var headerString = htmlString.slice(from: headerTag.openingTag, to: headerTag.closingTag)
+        var headerString = htmlString.slice(from: headerTag.rawValue, to: headerTag.closingTag)
         headerString = headerString?.replacingOccurrences(of: "    ", with: " ")
         headerString = headerString?.replacingOccurrences(of: "&amp;", with: "&")
         headerString = headerString?.replacingOccurrences(of: "  ", with: " ")
@@ -104,9 +93,9 @@ enum HTMLParsingUtil {
                     
                     // If configuring H2 paragraphs, configure H3s
                     if headerTag == .h2 {
-                        let paragraphsHThree = paragraph.components(separatedBy: HTMLHeaderTag.h3.openingTag)
+                        let paragraphsHThree = paragraph.components(separatedBy: HTMLHeaderTag.h3.rawValue)
                         paragraphsHThree.forEach {
-                            configureAttributes(in: HTMLHeaderTag.h3.openingTag + $0, attributedString: attributedString, headerTag: .h3, shouldConfigureBodyText: false)
+                            configureAttributes(in: HTMLHeaderTag.h3.rawValue + $0, attributedString: attributedString, headerTag: .h3, shouldConfigureBodyText: false)
                             hasFormattedHThreeSubtitles = true
                         }
                     }
@@ -121,37 +110,34 @@ enum HTMLParsingUtil {
             }
         }
     }
+
+    private static func configureParagraphs(separatedByHeaderTags headerTag: HTMLHeaderTag, in section: String, mutableAttributedString: inout NSMutableAttributedString) {
+        var paragraphs = section.components(separatedBy: headerTag.rawValue)
+        if headerTag == .h2 {
+            paragraphs.removeFirst(1)
+        }
+        paragraphs.forEach {
+            buildParagraphForAttributedString(paragraph: headerTag.rawValue + $0, configureAttributesInString: headerTag.rawValue + $0, mutableAttributedString: &mutableAttributedString, headerTag: headerTag)
+        }
+    }
     
     static func makeAttributedStringFromHTML(url: URL) -> NSMutableAttributedString? {
         guard let contents = try? String(contentsOf: url) else { return nil }
         var mutableAttributedString = NSMutableAttributedString()
         hasFormattedHThreeSubtitles = false
         
-        // First Paragraph
-        let firstParagraph = contents.slice(from: HTMLHeaderTag.h1.openingTag, to: HTMLHeaderTag.h2.openingTag) ?? ""
+        let firstParagraph = contents.slice(from: HTMLHeaderTag.h1.rawValue, to: HTMLHeaderTag.h2.rawValue) ?? ""
         buildParagraphForAttributedString(paragraph: firstParagraph, configureAttributesInString: contents, mutableAttributedString: &mutableAttributedString, headerTag: .h1)
         
-        
-        // Split paragraphs by H2 tags
-        if contents.contains(HTMLHeaderTag.h2.openingTag) {
-            let paragraphs = contents.components(separatedBy: HTMLHeaderTag.h2.openingTag)
-            for paragraph in paragraphs.dropFirst() {
-                let formattedParagraph = HTMLHeaderTag.h2.openingTag + paragraph
-                buildParagraphForAttributedString(paragraph: formattedParagraph, configureAttributesInString: formattedParagraph, mutableAttributedString: &mutableAttributedString, headerTag: .h2)
-            }
+        if contents.contains(HTMLHeaderTag.h2.rawValue) {
+            configureParagraphs(separatedByHeaderTags: .h2, in: contents, mutableAttributedString: &mutableAttributedString)
         }
         
-        // Split paragraphs by H3 tags
-        if contents.contains(HTMLHeaderTag.h3.openingTag) && !hasFormattedHThreeSubtitles {
-            let paragraphs = contents.components(separatedBy: HTMLHeaderTag.h3.openingTag)
-            for paragraph in paragraphs {
-                let formattedParagraph = HTMLHeaderTag.h3.openingTag + paragraph
-                buildParagraphForAttributedString(paragraph: formattedParagraph, configureAttributesInString: formattedParagraph, mutableAttributedString: &mutableAttributedString, headerTag: .h3)
-            }
+        if contents.contains(HTMLHeaderTag.h3.rawValue) && !hasFormattedHThreeSubtitles {
+            configureParagraphs(separatedByHeaderTags: .h3, in: contents, mutableAttributedString: &mutableAttributedString)
         }
         
-        // If we have reached this point and the string is empty, we have no H2 or H3 tags.
-        // Format entire contents and possible H1s
+        // If we have reached this point and the string is empty, we have no H2 or H3 tags. Format entire contents and possible H1s
         if mutableAttributedString.string.isEmpty {
             buildParagraphForAttributedString(paragraph: contents, configureAttributesInString: contents, mutableAttributedString: &mutableAttributedString, headerTag: .h1)
         }
