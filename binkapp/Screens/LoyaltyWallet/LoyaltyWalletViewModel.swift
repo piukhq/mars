@@ -16,12 +16,14 @@ class LoyaltyWalletViewModel: WalletViewModel {
     
     private let repository = LoyaltyWalletRepository()
 
-    var walletPrompts: [WalletPrompt]? {
-        return WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty)
-    }
+    var walletPrompts: [WalletPrompt]?
     
     var cards: [CD_MembershipCard]? {
         return Current.wallet.membershipCards
+    }
+    
+    func setupWalletPrompts() {
+        walletPrompts = WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty)
     }
     
     func toBarcodeViewController(indexPath: IndexPath, completion: @escaping () -> Void) {

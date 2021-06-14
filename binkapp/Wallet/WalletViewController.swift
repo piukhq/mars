@@ -36,9 +36,11 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     private let dotView = UIView()
 
     var orderingManager = WalletOrderingManager()
+    private var distanceFromCenterOfCell: CGFloat?
     
     // We only want to use transition when tapping a wallet card cell and not when adding a new card
     var shouldUseTransition = false
+    var indexPathOfCardToDelete: IndexPath?
 
     let viewModel: T
 
@@ -197,6 +199,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             guard let self = self else { return }
             self.refreshControl.endRefreshing()
         }
+        viewModel.setupWalletPrompts()
         collectionView.reloadData()
     }
     
@@ -205,7 +208,12 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     }
 
     @objc private func refreshLocal() {
-        collectionView.reloadData()
+        if let indexPath = indexPathOfCardToDelete {
+            deleteCard(at: indexPath)
+        } else {
+            viewModel.setupWalletPrompts()
+            collectionView.reloadData()
+        }
     }
     
     @objc private func stopRefreshing() {
@@ -214,13 +222,27 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             collectionView.reloadData()
         }
     }
-
+    
+    private func deleteCard(at indexPath: IndexPath) {
+        self.collectionView.performBatchUpdates({ [weak self] in
+            self?.collectionView.deleteItems(at: [indexPath])
+        }) { [weak self] _ in
+            self?.viewModel.setupWalletPrompts()
+            self?.collectionView.reloadData()
+            self?.indexPathOfCardToDelete = nil
+        }
+    }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return 2
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.cardCount + viewModel.walletPromptsCount
+        return section == 0 ? viewModel.cardCount : viewModel.walletPromptsCount
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return section == 0 ? .zero : UIEdgeInsets(top: 15.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -257,21 +279,25 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
         switch gesture.state {
         case .began:
-            guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
-                break
-            }
+            guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else { break }
+            let selectedCell = collectionView.cellForItem(at: selectedIndexPath)
+            let centerY = (selectedCell?.bounds.size.height ?? 0) / 2
+            let gestureLocationInCell = gesture.location(in: selectedCell)
+            distanceFromCenterOfCell = centerY - gestureLocationInCell.y
+            
             orderingManager.start()
             collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
         case .changed:
             if let bounds = gesture.view?.bounds {
                 let gestureLocation = gesture.location(in: gesture.view)
                 let centerX: CGFloat = bounds.size.width / 2
-                let updatedLocation = CGPoint(x: centerX, y: gestureLocation.y)
+                let updatedLocation = CGPoint(x: centerX, y: gestureLocation.y + (distanceFromCenterOfCell ?? 0))
                 collectionView.updateInteractiveMovementTargetPosition(updatedLocation)
             }
         case .ended:
             orderingManager.stop()
             collectionView.endInteractiveMovement()
+            distanceFromCenterOfCell = nil
         default:
             orderingManager.stop()
             collectionView.cancelInteractiveMovement()

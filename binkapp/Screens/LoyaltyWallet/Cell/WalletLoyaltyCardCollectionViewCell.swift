@@ -184,8 +184,8 @@ extension WalletLoyaltyCardCollectionViewCell {
             barcodeButton.isHidden = false
             deleteButton.isHidden = true
         case .unset:
-            barcodeButton.isHidden = true
-            deleteButton.isHidden = true
+            barcodeButton.isHidden = false
+            deleteButton.isHidden = false
         }
     }
     
@@ -321,6 +321,11 @@ extension WalletLoyaltyCardCollectionViewCell {
         
         UIView.animate(withDuration: 0.3) {
             block()
+        } completion: { _ in
+            if self.swipeState == .closed {
+                CAGradientLayer.removeGradientLayer(for: self.contentView)
+                self.swipeGradientLayer = nil
+            }
         }
     }
 }

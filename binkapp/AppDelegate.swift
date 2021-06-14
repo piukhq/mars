@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyDev)
         #endif
         
-        if CommandLine.arguments.contains("UI-testing") {
+        if UIApplication.isRunningUITests {
             configureAppForTesting()
         }
         

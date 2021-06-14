@@ -87,6 +87,7 @@ class WhoWeAreViewController: BinkViewController {
         BinkTeamMember(name: "Carmen Muntean"),
         BinkTeamMember(name: "Dorin Pop"),
         BinkTeamMember(name: "Karl Sigiscar"),
+        BinkTeamMember(name: "Greta Simanauskaite"),
         BinkTeamMember(name: "Paul Tiritieu"),
         BinkTeamMember(name: "Sean Williams"),
         BinkTeamMember(name: "Max Woodhams")
