@@ -102,19 +102,15 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var plansCount = walletPrompt?.membershipPlans?.count ?? 0
         
-        switch walletPrompt?.type {
-        case .link:
+        if case .link = walletPrompt?.type {
             if !(plansCount % 2 == 0) {
                 plansCount += 1 /// Add extra item for coming soon cell
             }
-        case .see, .store:
-            if plansCount > maxPlansToDisplay {
-                plansCount = maxPlansToDisplay
-            }
-        default:
-            return 0
         }
         
+        if plansCount > maxPlansToDisplay {
+            plansCount = maxPlansToDisplay
+        }
         return plansCount
     }
     
