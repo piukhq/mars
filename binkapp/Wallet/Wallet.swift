@@ -107,6 +107,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
 
     func handleLogout() {
         hasLaunched = false
+        membershipCards = nil
     }
 
     var hasPaymentCards: Bool {
