@@ -14,6 +14,15 @@ struct BinkTeamMember: Identifiable {
 }
 
 struct WhoWeAreSwiftUIView: View {
+    enum Constants {
+        static let horizontalPadding: CGFloat = 25.0
+        static let cellWidth: CGFloat = UIScreen.main.bounds.width - (horizontalPadding * 2)
+        static let cellHeight: CGFloat = 80
+        static let cornerRadius: CGFloat = 20
+        static let imageSize: CGFloat = 142
+        static let textStackPadding: CGFloat = 40.0
+        static let topPadding: CGFloat = 40.0
+    }
     var teamMembers = [
         BinkTeamMember(name: "Paul Batty"),
         BinkTeamMember(name: "Nick Farrant"),
@@ -34,10 +43,10 @@ struct WhoWeAreSwiftUIView: View {
             VStack(alignment: .center, spacing: 0, content: {
                 Image(Asset.binkIconLogo.name)
                     .resizable()
-                    .frame(width: 142.0, height: 142.0)
-                    .cornerRadius(20)
+                    .frame(width: Constants.imageSize, height: Constants.imageSize)
+                    .cornerRadius(Constants.cornerRadius)
                 MainTextStack()
-                    .padding(.top, 40.0)
+                    .padding(.top, Constants.textStackPadding)
                 
                 ForEach(teamMembers) { teamMember in
                     VStack(alignment: .leading, spacing: 0, content: {
@@ -45,10 +54,10 @@ struct WhoWeAreSwiftUIView: View {
                         Divider()
                     })
                 }
-                .padding(.horizontal, 25.0)
+                .padding(.horizontal, Constants.horizontalPadding)
             })
         })
-        .padding(.top, 10.0)
+        .padding(.top, Constants.topPadding)
     }
     
     struct TeamMemberRow: View {
@@ -56,7 +65,7 @@ struct WhoWeAreSwiftUIView: View {
         
         var body: some View {
             Text(teamMember.name)
-                .frame(width: .infinity, height: 80, alignment: .leading)
+                .frame(width: Constants.cellWidth, height: Constants.cellHeight, alignment: .leading)
                 .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
         }
     }
@@ -65,14 +74,14 @@ struct WhoWeAreSwiftUIView: View {
         var body: some View {
             VStack(alignment: .leading, spacing: 3, content: {
                 Text(L10n.whoWeAreTitle)
-                    .font(.custom(UIFont.headline.fontName, size: 25.0))
+                    .font(.custom(UIFont.headline.fontName, size: Constants.horizontalPadding))
                 Text(L10n.whoWeAreBody)
                     .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
                     .lineLimit(nil)
                     .multilineTextAlignment(.leading)
             })
             .background(Color.white)
-            .padding(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 25))
+            .padding(EdgeInsets(top: 0, leading: Constants.horizontalPadding, bottom: 0, trailing: Constants.horizontalPadding))
             .frame(width: UIScreen.main.bounds.width, alignment: .leading)
         }
     }
