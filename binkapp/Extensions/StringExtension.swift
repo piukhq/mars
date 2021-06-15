@@ -42,4 +42,8 @@ extension String {
         guard let decodedObject = try? JSONDecoder().decode(objectType, from: data) else { return nil }
         return decodedObject
     }
+    
+    func toInt() -> Int? {
+        return Int(self)
+    }
 }

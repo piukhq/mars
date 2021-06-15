@@ -18,6 +18,7 @@ class RemoteConfigUtil {
         case dynamicActions
         case betaFeatures
         case betaUsers
+        case appConfiguration
         
         var formattedKey: String {
             let isDebug = !APIConstants.isProduction
@@ -37,11 +38,18 @@ class RemoteConfigUtil {
                 return "beta_features"
             case .betaUsers:
                 return "beta_users"
+            case .appConfiguration:
+                return "app_configuration"
             }
         }
     }
     
     private let remoteConfig = RemoteConfig.remoteConfig()
+    
+    private(set) var hasPerformedFetch = false
+    
+    /// A tool based on the app_configuration object in remote config
+    var appConfiguration = RemoteAppConfigurationUtil()
     
     func configure() {
         setupRemoteConfig()
@@ -61,7 +69,9 @@ class RemoteConfigUtil {
     }
     
     private func handleRemoteConfigFetch() {
+        hasPerformedFetch = true
         Current.featureManager.getFeaturesFromRemoteConfig()
+        appConfiguration.promptRecommendedUpdateIfNecessary()
     }
     
     func fetch(completion: (() -> Void)? = nil) {

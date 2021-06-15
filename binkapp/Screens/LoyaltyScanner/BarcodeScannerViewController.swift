@@ -11,7 +11,7 @@ import AVFoundation
 
 struct BarcodeScannerViewModel {
     let plan: CD_MembershipPlan?
-    var isScanning: Bool = false
+    var isScanning = false
     
     var hasPlan: Bool {
         return plan != nil
@@ -50,6 +50,8 @@ class BarcodeScannerViewController: BinkViewController {
     private var rectOfInterest = CGRect.zero
     private var timer: Timer?
     private var canPresentScanError = true
+    private var hideNavigationBar = true
+    private var shouldAllowScanning = true
 
     private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .regular))
@@ -86,9 +88,10 @@ class BarcodeScannerViewController: BinkViewController {
 
     private var viewModel: BarcodeScannerViewModel
 
-    init(viewModel: BarcodeScannerViewModel, delegate: BarcodeScannerViewControllerDelegate?) {
+    init(viewModel: BarcodeScannerViewModel, hideNavigationBar: Bool = true, delegate: BarcodeScannerViewControllerDelegate?) {
         self.viewModel = viewModel
         self.delegate = delegate
+        self.hideNavigationBar = hideNavigationBar
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -133,19 +136,24 @@ class BarcodeScannerViewController: BinkViewController {
             widgetView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.widgetViewLeftRightPadding),
             widgetView.heightAnchor.constraint(equalToConstant: Constants.widgetViewHeight)
         ])
+        
+        navigationController?.setNavigationBarVisibility(false)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
-        
-        view.addSubview(cancelButton)
-        NSLayoutConstraint.activate([
-            cancelButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
-            cancelButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -4),
-            cancelButton.heightAnchor.constraint(equalToConstant: Constants.closeButtonSize.height),
-            cancelButton.widthAnchor.constraint(equalToConstant: Constants.closeButtonSize.width)
-        ])
+        if hideNavigationBar {
+            navigationController?.setNavigationBarHidden(true, animated: false)
+            
+            view.addSubview(cancelButton)
+            NSLayoutConstraint.activate([
+                cancelButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
+                cancelButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -4),
+                cancelButton.heightAnchor.constraint(equalToConstant: Constants.closeButtonSize.height),
+                cancelButton.widthAnchor.constraint(equalToConstant: Constants.closeButtonSize.width)
+            ])
+        }
+
 
         if !viewModel.isScanning {
             startScanning()
@@ -155,6 +163,7 @@ class BarcodeScannerViewController: BinkViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         stopScanning()
+        navigationController?.setNavigationBarVisibility(true)
     }
 
     override func configureForCurrentTheme() {
@@ -279,7 +288,9 @@ class BarcodeScannerViewController: BinkViewController {
 extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         timer?.invalidate()
-        
+        guard shouldAllowScanning else { return }
+        shouldAllowScanning = false
+
         //TODO: Tidy this up by splitting to other functions
 
         if let object = metadataObjects.first {
@@ -320,6 +331,7 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                                 let action = UIAlertAction(title: "OK", style: .cancel) { _ in
                                     DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: {
                                         self.canPresentScanError = true
+                                        self.shouldAllowScanning = true
                                     })
                                 }
                                 alert.addAction(action)

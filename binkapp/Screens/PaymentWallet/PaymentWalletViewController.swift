@@ -12,6 +12,7 @@ import CardScan
 class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> {
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.setupWalletPrompts()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -25,7 +26,7 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row == viewModel.cardCount {
+        if indexPath.section == 1 {
             let cell: WalletPromptCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
             guard let walletPrompt = viewModel.walletPrompts?.first else {
                 return cell
@@ -50,7 +51,7 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row < viewModel.cardCount {
+        if indexPath.section == 0 {
             guard let card = viewModel.cards?[indexPath.row] else {
                 return
             }
@@ -89,6 +90,7 @@ extension PaymentWalletViewController: WalletPaymentCardCollectionViewCellDelega
 
     func promptForDelete(with index: IndexPath, cell: PaymentCardCollectionViewCell) {
         guard let card = viewModel.cards?[index.row] else { return }
+        indexPathOfCardToDelete = index
         viewModel.showDeleteConfirmationAlert(card: card) {
             cell.set(to: .closed)
         }

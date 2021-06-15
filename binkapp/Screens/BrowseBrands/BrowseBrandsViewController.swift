@@ -82,7 +82,7 @@ class BrowseBrandsViewController: BinkViewController {
         
         configureSearchTextField()
         configureCollectionView()
-        
+                
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
     }
@@ -204,6 +204,7 @@ class BrowseBrandsViewController: BinkViewController {
         if !self.noMatchesLabel.isHidden {
             self.noMatchesLabelTopConstraint.constant = 0.0
         }
+
         let frame = self.collectionView.frame
         UIView.animate(withDuration: 0.3, animations: {
             self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: 0)
@@ -220,6 +221,7 @@ class BrowseBrandsViewController: BinkViewController {
         if !self.noMatchesLabel.isHidden {
             self.noMatchesLabelTopConstraint.constant = self.filterViewHeight
         }
+
         filtersButton?.isEnabled = false
         filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .disabled)
         let frame = self.collectionView.frame

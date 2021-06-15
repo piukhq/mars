@@ -60,6 +60,8 @@ internal enum L10n {
   internal static let addJoinScreenViewDescriptionInactive = L10n.tr("Localizable", "add_join_screen_view_description_inactive")
   /// View
   internal static let addJoinScreenViewTitle = L10n.tr("Localizable", "add_join_screen_view_title")
+  /// There was a problem adding your loyalty card. Please try again.
+  internal static let addLoyaltyCardErrorMessage = L10n.tr("Localizable", "add_loyalty_card_error_message")
   /// Add loyalty card
   internal static let addLoyaltyCardTitle = L10n.tr("Localizable", "add_loyalty_card_title")
   /// Add my card
@@ -520,6 +522,16 @@ internal enum L10n {
   internal static let privacyPolicy = L10n.tr("Localizable", "privacy_policy")
   /// Your recent transaction history.
   internal static let recentTransactionHistorySubtitle = L10n.tr("Localizable", "recent_transaction_history_subtitle")
+  /// Open App Store
+  internal static let recommendedAppUpdateAppStoreAction = L10n.tr("Localizable", "recommended_app_update_app_store_action")
+  /// Maybe later
+  internal static let recommendedAppUpdateMaybeLaterAction = L10n.tr("Localizable", "recommended_app_update_maybe_later_action")
+  /// Get the latest version of the Bink app.
+  internal static let recommendedAppUpdateMessage = L10n.tr("Localizable", "recommended_app_update_message")
+  /// Skip this version
+  internal static let recommendedAppUpdateSkipVersionAction = L10n.tr("Localizable", "recommended_app_update_skip_version_action")
+  /// App Update Available
+  internal static let recommendedAppUpdateTitle = L10n.tr("Localizable", "recommended_app_update_title")
   /// Register card
   internal static let registerCardTitle = L10n.tr("Localizable", "register_card_title")
   /// Registration failed.
@@ -552,6 +564,10 @@ internal enum L10n {
   internal static let scanACardDescription = L10n.tr("Localizable", "scan_a_card_description")
   /// Scan and link your payment card
   internal static let scanAndLinkDescription = L10n.tr("Localizable", "scan_and_link_description")
+  /// Scan loyalty card
+  internal static let scanButtonTitle = L10n.tr("Localizable", "scan_button_title")
+  /// Quickly add a card you already have
+  internal static let scanUttonSubtitle = L10n.tr("Localizable", "scan_utton_subtitle")
   /// Search
   internal static let search = L10n.tr("Localizable", "search")
   /// Is my Data Secure?
@@ -714,7 +730,7 @@ internal enum L10n {
   internal static let walletPromptStoreTitle = L10n.tr("Localizable", "wallet_prompt_store_title")
   /// Something went wrong.
   internal static let wentWrong = L10n.tr("Localizable", "went_wrong")
-  /// Below are a list of people that have been instrumental in developing the app you now hold in your hands.
+  /// Below is a list of people that have been instrumental in developing the app you now hold in your hands.
   internal static let whoWeAreBody = L10n.tr("Localizable", "who_we_are_body")
   /// Who we are
   internal static let whoWeAreTitle = L10n.tr("Localizable", "who_we_are_title")
