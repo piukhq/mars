@@ -1553,7 +1553,6 @@
 		5ECE045F22CE5797001BA964 = {
 			isa = PBXGroup;
 			children = (
-				701E2C492677567E003F903B /* DebugMenuView.swift */,
 				CEC0ACB92636AC5900845813 /* SwiftGen */,
 				CEC0AC3B2636AAA400845813 /* swiftgen.yml */,
 				706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */,
@@ -1581,18 +1580,19 @@
 		5ECE046A22CE5798001BA964 /* binkapp */ = {
 			isa = PBXGroup;
 			children = (
-				70872F812475393900195679 /* Bink α.entitlements */,
-				BDD9C8A4233C0476003CD616 /* Info.plist */,
 				5ECE046B22CE5798001BA964 /* AppDelegate.swift */,
+				70872F812475393900195679 /* Bink α.entitlements */,
 				3C25BE012301A0F600E931EE /* BinkNetworking */,
 				3CF054D322FDABCA0069E98A /* BinkUI */,
 				EF59A12B244744C6001B60B8 /* Error Handling */,
 				B7E2EC0622E5ED1800BB201A /* Extensions */,
+				BDD9C8A4233C0476003CD616 /* Info.plist */,
 				EF8B700D23585BF0006CE3DD /* Mocks */,
 				AF06D86448D661A8F4142F87 /* Persistence */,
 				3C873FD122F073B500FA3031 /* Routing */,
 				5ECE049F22CE57F5001BA964 /* Screens */,
 				EFCB2C172329366A0060F73B /* Supporting Files */,
+				70A499DB267916D100F648F0 /* SwiftUI Views */,
 				3CF029F422F45B48009A0E61 /* Utils */,
 				EF3BC90B234750ED00FE52ED /* Wallet */,
 			);
@@ -1774,6 +1774,14 @@
 				70A2EDA0261DED3200889914 /* SafeDecoding.swift */,
 			);
 			path = "Safe Decoding";
+			sourceTree = "<group>";
+		};
+		70A499DB267916D100F648F0 /* SwiftUI Views */ = {
+			isa = PBXGroup;
+			children = (
+				701E2C492677567E003F903B /* DebugMenuView.swift */,
+			);
+			path = "SwiftUI Views";
 			sourceTree = "<group>";
 		};
 		70A4EE7624BDBA1F00FA33B1 /* Permissions */ = {
