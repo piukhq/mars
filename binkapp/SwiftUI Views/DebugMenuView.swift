@@ -57,14 +57,6 @@ struct DebugMenuView: View {
     }
 }
 
-struct NameView: View {
-    let title: String
-    
-    var body: some View {
-        Text(title)
-    }
-}
-
 @available(iOS 14.0, *)
 struct DebugRow: View {
     enum RowType: String {
@@ -226,13 +218,6 @@ struct NavigationDebugRow<Destination: View>: View {
 }
 
 @available(iOS 14.0, *)
-struct DebugMenuView_Previews: PreviewProvider {
-    static var previews: some View {
-        DebugMenuView()
-    }
-}
-
-@available(iOS 14.0, *)
 struct SwatchView: View {
     private let plans: [CD_MembershipPlan] = Current.wallet.membershipPlans ?? []
     
@@ -259,5 +244,12 @@ struct SwatchView: View {
             }
         }
         .navigationTitle("Secondary plan colours")
+    }
+}
+
+@available(iOS 14.0, *)
+struct DebugMenuView_Previews: PreviewProvider {
+    static var previews: some View {
+        DebugMenuView()
     }
 }
