@@ -10,7 +10,7 @@ import UIKit
 import MessageUI
 import ZendeskCoreSDK
 import SupportSDK
-
+import SwiftUI
 
 protocol SettingsViewControllerDelegate: AnyObject {
     func settingsViewControllerDidDismiss(_ settingsViewController: SettingsViewController)
@@ -195,8 +195,9 @@ extension SettingsViewController: UITableViewDelegate {
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
                 case is WhoWeAreViewController.Type:
-                    let viewController = WhoWeAreViewController()
-                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+                    let whoWeAreSwiftUIVIew = WhoWeAreSwiftUIView()
+                    let hostingViewController = UIHostingController(rootView: whoWeAreSwiftUIVIew)
+                    let navigationRequest = PushNavigationRequest(viewController: hostingViewController)
                     Current.navigate.to(navigationRequest)
                 case is FeatureFlagsTableViewController.Type:
                     let viewController = FeatureFlagsTableViewController(viewModel: FeatureFlagsViewModel(), delegate: self)

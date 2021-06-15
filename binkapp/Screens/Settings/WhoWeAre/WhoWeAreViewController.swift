@@ -8,8 +8,7 @@
 
 import UIKit
 
-
-struct BinkTeamMember {
+struct BinkTeamMembers {
     let name: String
 }
 
@@ -78,19 +77,19 @@ class WhoWeAreViewController: BinkViewController {
         return tableView
     }()
     
-    let teamMembers: [BinkTeamMember] = [
-        BinkTeamMember(name: "Paul Batty"),
-        BinkTeamMember(name: "Nick Farrant"),
-        BinkTeamMember(name: "Susanne King"),
-        BinkTeamMember(name: "Srikalyani Kotha"),
-        BinkTeamMember(name: "Marius Lobontiu"),
-        BinkTeamMember(name: "Carmen Muntean"),
-        BinkTeamMember(name: "Dorin Pop"),
-        BinkTeamMember(name: "Karl Sigiscar"),
-        BinkTeamMember(name: "Greta Simanauskaite"),
-        BinkTeamMember(name: "Paul Tiritieu"),
-        BinkTeamMember(name: "Sean Williams"),
-        BinkTeamMember(name: "Max Woodhams")
+    let teamMembers: [BinkTeamMembers] = [
+        BinkTeamMembers(name: "Paul Batty"),
+        BinkTeamMembers(name: "Nick Farrant"),
+        BinkTeamMembers(name: "Susanne King"),
+        BinkTeamMembers(name: "Srikalyani Kotha"),
+        BinkTeamMembers(name: "Marius Lobontiu"),
+        BinkTeamMembers(name: "Carmen Muntean"),
+        BinkTeamMembers(name: "Dorin Pop"),
+        BinkTeamMembers(name: "Karl Sigiscar"),
+        BinkTeamMembers(name: "Greta Simanauskaite"),
+        BinkTeamMembers(name: "Paul Tiritieu"),
+        BinkTeamMembers(name: "Sean Williams"),
+        BinkTeamMembers(name: "Max Woodhams")
     ]
     
     

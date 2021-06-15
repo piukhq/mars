@@ -16,7 +16,7 @@ class BinkPersonTableViewCell: UITableViewCell {
         setSeparatorDefaultWidth()
     }
 
-    func configure(with teamMember: BinkTeamMember) {
+    func configure(with teamMember: BinkTeamMembers) {
         backgroundColor = .clear
         titleLabel.text = teamMember.name
         titleLabel.textColor = Current.themeManager.color(for: .text)
