@@ -54,4 +54,17 @@ extension String {
             }
         }
     }
+    
+    func ranges(of subString: String) -> [NSRange] {
+        var ranges: [NSRange] = []
+        var range = NSRange(location: 0, length: count)
+        while range.location != NSNotFound {
+            range = (self as NSString).range(of: subString, options: .caseInsensitive, range: range)
+            if range.location != NSNotFound {
+                ranges.append(range)
+                range = NSRange(location: range.location + range.length, length: count - (range.location + range.length))
+            }
+        }
+        return ranges
+    }
 }

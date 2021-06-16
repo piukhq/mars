@@ -46,6 +46,7 @@ enum HTMLParsingUtil {
         
         var headerString = htmlString.slice(from: headerTag.rawValue, to: headerTag.closingTag)
         headerString = headerString?.replacingOccurrences(of: "    ", with: " ")
+        headerString = headerString?.replacingOccurrences(of: "   ", with: " ")
         headerString = headerString?.replacingOccurrences(of: "&amp;", with: "&")
         headerString = headerString?.replacingOccurrences(of: "  ", with: " ")
         
@@ -64,21 +65,24 @@ enum HTMLParsingUtil {
         for match in matches {
             guard let range = Range(match.range, in: paragraph) else { continue }
             var urlString = paragraph[range]
-            guard let urlRange = attributedString.string.range(of: urlString) else { return }
-            if urlString.contains("@") {
-                urlString = "mailto:" + urlString
-            } else {
-                if !urlString.hasPrefix("http") {
-                    if urlString.hasPrefix("www") {
-                        urlString = "https://" + urlString
-                    } else {
-                        urlString = "https://www." + urlString
+            let ranges = attributedString.string.ranges(of: String(urlString))
+            
+            for nsRange in ranges {
+                if urlString.contains("@") {
+                    urlString = "mailto:" + urlString
+                } else {
+                    if !urlString.hasPrefix("http") {
+                        if urlString.hasPrefix("www") {
+                            urlString = "https://" + urlString
+                        } else {
+                            urlString = "https://www." + urlString
+                        }
                     }
                 }
-            }
-            
-            if let URL = URL(string: String(urlString)) {
-                attributedString.addAttribute(.link, value: URL, range: NSRange(urlRange, in: attributedString.string))
+                
+                if let URL = URL(string: String(urlString)) {
+                    attributedString.addAttribute(.link, value: URL, range: nsRange)
+                }
             }
         }
     }
