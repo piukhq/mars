@@ -194,11 +194,6 @@ extension SettingsViewController: UITableViewDelegate {
                     let viewController = PreferencesViewController(viewModel: PreferencesViewModel())
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
-                case is WhoWeAreViewController.Type:
-                    let whoWeAreSwiftUIVIew = WhoWeAreSwiftUIView()
-                    let hostingViewController = UIHostingController(rootView: whoWeAreSwiftUIVIew)
-                    let navigationRequest = PushNavigationRequest(viewController: hostingViewController)
-                    Current.navigate.to(navigationRequest)
                 case is FeatureFlagsTableViewController.Type:
                     let viewController = FeatureFlagsTableViewController(viewModel: FeatureFlagsViewModel(), delegate: self)
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
@@ -207,6 +202,13 @@ extension SettingsViewController: UITableViewDelegate {
                     if #available(iOS 14.0, *) {
                         BinkLogger.error(AppLoggerError.unsupportedViewController)
                     }
+                }
+            case let .pushToSwiftUIView(swiftUIView: swiftUIView):
+                switch swiftUIView {
+                case .whoWeAre:
+                    let hostingViewController = UIHostingController(rootView: WhoWeAreSwiftUIView())
+                    let navigationRequest = PushNavigationRequest(viewController: hostingViewController)
+                    Current.navigate.to(navigationRequest)
                 }
             case .pushToReusable(let screen):
                 switch screen {

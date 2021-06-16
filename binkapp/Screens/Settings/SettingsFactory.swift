@@ -143,7 +143,7 @@ struct SettingsFactory {
             ),
             SettingsRow(
                 type: .whoWeAre,
-                action: .pushToViewController(viewController: WhoWeAreViewController.self),
+                action: .pushToSwiftUIView(swiftUIView: .whoWeAre),
                 actionRequired: rowsWithActionRequired?.contains(.whoWeAre) ?? false
             )
         ])

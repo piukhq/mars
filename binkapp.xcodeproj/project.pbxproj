@@ -293,9 +293,6 @@
 		CE2CFE5E25E3C5CB00B1CB93 /* MerchantHeroCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CFE5D25E3C5CB00B1CB93 /* MerchantHeroCell.swift */; };
 		CE2CFE9025E3D48E00B1CB93 /* FeatureFlagsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CFE8E25E3D48D00B1CB93 /* FeatureFlagsTableViewCell.swift */; };
 		CE2CFE9125E3D48E00B1CB93 /* FeatureFlagsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2CFE8F25E3D48D00B1CB93 /* FeatureFlagsTableViewCell.xib */; };
-		CE341ED7252DC01A00577153 /* WhoWeAreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE341ED6252DC01A00577153 /* WhoWeAreViewController.swift */; };
-		CE341F0C252DED1400577153 /* BinkPersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE341F0A252DED1400577153 /* BinkPersonTableViewCell.swift */; };
-		CE341F0D252DED1400577153 /* BinkPersonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE341F0B252DED1400577153 /* BinkPersonTableViewCell.xib */; };
 		CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE38784A2562EEDA006BAC11 /* BarcodeViewModelTests.swift */; };
 		CE3878BE2563ED9A006BAC11 /* BarcodeViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878BD2563ED9A006BAC11 /* BarcodeViewControllerTests.swift */; };
 		CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */; };
@@ -865,9 +862,6 @@
 		CE2CFE5D25E3C5CB00B1CB93 /* MerchantHeroCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantHeroCell.swift; sourceTree = "<group>"; };
 		CE2CFE8E25E3D48D00B1CB93 /* FeatureFlagsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsTableViewCell.swift; sourceTree = "<group>"; };
 		CE2CFE8F25E3D48D00B1CB93 /* FeatureFlagsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeatureFlagsTableViewCell.xib; sourceTree = "<group>"; };
-		CE341ED6252DC01A00577153 /* WhoWeAreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoWeAreViewController.swift; sourceTree = "<group>"; };
-		CE341F0A252DED1400577153 /* BinkPersonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkPersonTableViewCell.swift; sourceTree = "<group>"; };
-		CE341F0B252DED1400577153 /* BinkPersonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BinkPersonTableViewCell.xib; sourceTree = "<group>"; };
 		CE38784A2562EEDA006BAC11 /* BarcodeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewModelTests.swift; sourceTree = "<group>"; };
 		CE3878BD2563ED9A006BAC11 /* BarcodeViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewControllerTests.swift; sourceTree = "<group>"; };
 		CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPromptTests.swift; sourceTree = "<group>"; };
@@ -2180,20 +2174,9 @@
 		CE341ED5252DBFB100577153 /* WhoWeAre */ = {
 			isa = PBXGroup;
 			children = (
-				CE341F11252DED2900577153 /* View */,
-				CE341ED6252DC01A00577153 /* WhoWeAreViewController.swift */,
 				CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */,
 			);
 			path = WhoWeAre;
-			sourceTree = "<group>";
-		};
-		CE341F11252DED2900577153 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				CE341F0A252DED1400577153 /* BinkPersonTableViewCell.swift */,
-				CE341F0B252DED1400577153 /* BinkPersonTableViewCell.xib */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		CE3878492562EEB3006BAC11 /* Barcode */ = {
@@ -3047,7 +3030,6 @@
 				3CD3493922F99E1D000C1F4D /* NunitoSans-SemiBoldItalic.ttf in Resources */,
 				EFEF54A9246EB52900A630F3 /* PLRStampViewCell.xib in Resources */,
 				70907E3425C883D3007629BB /* LocalPointsCollection_Points_Template.js in Resources */,
-				CE341F0D252DED1400577153 /* BinkPersonTableViewCell.xib in Resources */,
 				EFF59F25234DEE8E00CF3992 /* DetailNavigationTitleView.xib in Resources */,
 				EFA5F7632379BD520027AB80 /* PLRAccumulatorInactiveCell.xib in Resources */,
 				EFA5F76B2379BD790027AB80 /* PLRStampsInactiveCell.xib in Resources */,
@@ -3363,7 +3345,6 @@
 				EF2E881323351A6000F678F3 /* CoreDataRepositoryProtocol.swift in Sources */,
 				EFA5F70F2379A7C70027AB80 /* CD_MembershipPlanImage.swift in Sources */,
 				EF94AF1423E05B5D00AAA039 /* ImageService.swift in Sources */,
-				CE341ED7252DC01A00577153 /* WhoWeAreViewController.swift in Sources */,
 				70E86777248E6BE5001ED282 /* SettingsTableViewFooter.swift in Sources */,
 				EF8F0486238D583300BD708B /* CD_LinkingSupport.swift in Sources */,
 				EF94AF0823D9B89B00AAA039 /* Anaytics.swift in Sources */,
@@ -3641,7 +3622,6 @@
 				3CCC46C722FC6540008476E3 /* BarcodeViewModel.swift in Sources */,
 				EFA5F73A2379A7C70027AB80 /* _CD_BaseObject.swift in Sources */,
 				BD99D2DA234FDF6F00823FC4 /* SettingsViewModel.swift in Sources */,
-				CE341F0C252DED1400577153 /* BinkPersonTableViewCell.swift in Sources */,
 				EF480C1F235754AD0060B7C1 /* WalletPrompt.swift in Sources */,
 				70840E6C2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift in Sources */,
 				EFA5F71E2379A7C70027AB80 /* _CD_MembershipCardAccount.swift in Sources */,
