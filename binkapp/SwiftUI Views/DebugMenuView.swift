@@ -106,7 +106,7 @@ struct ToggleDebugRow: View {
         self.title = title
         self.subtitle = subtitle
         self.userDefaultsKey = defaultsKey
-        self.isEnabled = Current.userDefaults.bool(forDefaultsKey: defaultsKey)
+        _isEnabled = State(initialValue: Current.userDefaults.bool(forDefaultsKey: defaultsKey))
     }
     
     var body: some View {
@@ -134,8 +134,8 @@ struct StepperDebugRow: View {
     
     init(label: String, value: Int, handler: @escaping (Int) -> Void) {
         self.label = label
-        self.stepperValue = Double(value)
         self.valueHandler = handler
+        _stepperValue = State(initialValue: Double(value))
     }
     
     var body: some View {
@@ -183,7 +183,7 @@ struct PickerDebugRow: View {
     
     init(type: RowType) {
         self.type = type
-        self.selection = type.initialValue
+        _selection = State(initialValue: type.initialValue)
     }
     
     var body: some View {
