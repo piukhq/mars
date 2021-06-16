@@ -32,7 +32,7 @@ class AutomatedTesting_0_Login: XCTestCase {
             app.sheets.scrollViews.otherElements.buttons["Dev"].tap()
         } else {
             app.buttons["Select Environment"].tap()
-            app.buttons["api.staging.gb.bink.com"].tap()
+            app.buttons["api.gb.bink.com"].tap()
             app.scrollViews["Learning scrollview"].tap(withNumberOfTaps: 3, numberOfTouches: 1)
             app.buttons["Select Environment"].tap()
             app.buttons["api.dev.gb.bink.com"].tap()
