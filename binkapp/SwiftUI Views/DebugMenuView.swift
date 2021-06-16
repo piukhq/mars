@@ -118,7 +118,7 @@ struct ToggleDebugRow: View {
                     .font(.subheadline)
             }
         }
-        .toggleStyle(SwitchToggleStyle(tint: Color(red: 61/255, green: 144/255, blue: 143/255)))
+        .toggleStyle(SwitchToggleStyle(tint: Color(.binkGradientBlueRight)))
         .onChange(of: isEnabled) { enabled in
             Current.userDefaults.set(enabled, forDefaultsKey: userDefaultsKey)
         }
@@ -194,7 +194,7 @@ struct PickerDebugRow: View {
                 }
             }
             .pickerStyle(MenuPickerStyle())
-            .foregroundColor(Color(red: 61/255, green: 144/255, blue: 143/255))
+            .foregroundColor(Color(.binkGradientBlueRight))
             .onChange(of: selection, perform: { value in
                 type.handleSelection(value)
             })
