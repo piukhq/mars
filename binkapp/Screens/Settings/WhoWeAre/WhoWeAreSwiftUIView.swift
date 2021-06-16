@@ -58,6 +58,7 @@ struct WhoWeAreSwiftUIView: View {
             })
         })
         .padding(.top, Constants.topPadding)
+        .background(Color(Current.themeManager.color(for: .viewBackground)))
     }
     
     struct TeamMemberRow: View {
@@ -80,7 +81,7 @@ struct WhoWeAreSwiftUIView: View {
                     .lineLimit(nil)
                     .multilineTextAlignment(.leading)
             })
-            .background(Color.white)
+            .background(Color.clear)
             .padding(EdgeInsets(top: 0, leading: Constants.horizontalPadding, bottom: 0, trailing: Constants.horizontalPadding))
             .frame(width: UIScreen.main.bounds.width, alignment: .leading)
         }
