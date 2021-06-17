@@ -66,7 +66,9 @@ class PointsScrapingManager {
         return Current.remoteConfig.boolValueForConfigKey(.localPointsCollectionMasterEnabled)
     }
     
-    var isDebugMode = false
+    var isDebugMode: Bool {
+        return Current.userDefaults.bool(forDefaultsKey: .lpcDebugMode)
+    }
     
     let agents: [WebScrapable] = [
         TescoScrapingAgent(),

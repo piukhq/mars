@@ -94,7 +94,8 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
             let viewController = DebugSecondaryPlanColorViewController()
             navigationController?.pushViewController(viewController, animated: true)
         case .lpcDebugMode:
-            Current.pointsScrapingManager.isDebugMode.toggle()
+            let toggled = !Current.userDefaults.bool(forDefaultsKey: .lpcDebugMode)
+            Current.userDefaults.set(toggled, forDefaultsKey: .lpcDebugMode)
             tableView.reloadData()
         case .responseCodeVisualiser:
             let shouldShow = Current.userDefaults.bool(forDefaultsKey: .responseCodeVisualiser)
