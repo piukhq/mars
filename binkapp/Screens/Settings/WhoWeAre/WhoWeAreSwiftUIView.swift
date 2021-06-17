@@ -41,6 +41,7 @@ struct WhoWeAreSwiftUIView: View {
     var body: some View {
         ScrollView(content: {
             VStack(alignment: .center, spacing: 0, content: {
+                Spacer(minLength: Constants.topPadding)
                 Image(Asset.binkIconLogo.name)
                     .resizable()
                     .frame(width: Constants.imageSize, height: Constants.imageSize)
@@ -55,10 +56,11 @@ struct WhoWeAreSwiftUIView: View {
                     })
                 }
                 .padding(.horizontal, Constants.horizontalPadding)
+                Spacer(minLength: Constants.topPadding)
             })
         })
-        .padding(.top, Constants.topPadding)
         .background(Color(Current.themeManager.color(for: .viewBackground)))
+        .edgesIgnoringSafeArea(.bottom)
     }
     
     struct TeamMemberRow: View {

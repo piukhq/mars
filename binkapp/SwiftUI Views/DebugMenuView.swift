@@ -202,6 +202,8 @@ struct PickerDebugRow: View {
             Spacer()
             
             Text(selection)
+                .lineLimit(1)
+                .truncationMode(.tail)
                 .foregroundColor(.gray)
         }
     }
