@@ -20,6 +20,7 @@ struct FeatureFlagsSwiftUIView: View {
                 }
                 .navigationBarTitle("Feature Flags")
             }
+            .listStyle(InsetGroupedListStyle())
         }.navigationTitle("Feature Flags")
     }
 }
@@ -28,14 +29,24 @@ struct FeatureFlagsSwiftUIView: View {
 struct FeatureFlagCell: View {
     var feature: Feature
     
+    @State private var isEnabled: Bool
+    
+    init(feature: Feature) {
+        self.feature = feature
+        _isEnabled = State(initialValue: feature.isEnabled)
+    }
+    
     var body: some View {
-        Toggle(isOn: .constant(true), label: {
+        Toggle(isOn: $isEnabled, label: {
             VStack(alignment: .leading, spacing: nil, content: {
                 Text(feature.title ?? "").font(.subheadline).fontWeight(.semibold)
                 Text(feature.description ?? "").font(.footnote).fontWeight(.light).lineLimit(1)
             })
         })
         .toggleStyle(SwitchToggleStyle(tint: Color(.binkGradientBlueRight)))
+        .onChange(of: isEnabled, perform: { enabled in
+            Current.featureManager.toggle(feature, enabled: enabled)
+        })
     }
 }
 
