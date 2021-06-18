@@ -12,11 +12,16 @@ import SwiftUI
 struct DebugMenuView: View {
     private let hasUser = Current.userManager.hasCurrentUser
     
+    init() {
+        UITableView.appearance().backgroundColor = UIColor(Color(Current.themeManager.color(for: .insetGroupedTableBackground)))
+    }
+    
     var body: some View {
         List {
             Section(header: Text("Networking"), footer: Text("You will be logged out when switching environments.")) {
                 PickerDebugRow(type: .environment)
             }
+            .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
             
             Section(header: Text("Tools")) {
                 ToggleDebugRow(title: "Allow custom bundle/client on login", defaultsKey: .allowCustomBundleClientOnLogin)
@@ -28,6 +33,7 @@ struct DebugMenuView: View {
                     NavigationDebugRow(title: "Loyalty plan colour swatches", destination: SwatchView())
                 }
             }
+            .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
             
             if hasUser {
                 Section(header: Text("Wallet modifiers"), footer: Text("Mock the number of plans shown in the loyalty wallet prompts. App must be relaunched to reset these.")) {
@@ -46,11 +52,13 @@ struct DebugMenuView: View {
                         Current.wallet.refreshLocal()
                     }
                 }
+                .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
             }
             
             Section(footer: Text("This will immediately crash the application.")) {
                 DebugRow(rowType: .forceCrash, destructive: true)
             }
+            .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
         }
         .listStyle(InsetGroupedListStyle())
         .navigationTitle("Debug menu")

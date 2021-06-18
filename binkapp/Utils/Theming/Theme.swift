@@ -41,4 +41,8 @@ struct Theme {
     var barColor: UIColor {
         return Styling.Colors.bar
     }
+    
+    var insetGroupedTableBackgroundColor: UIColor {
+        return Styling.Colors.insetGroupedTable
+    }
 }
