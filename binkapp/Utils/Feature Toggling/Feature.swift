@@ -12,7 +12,8 @@ enum FeatureType: String, Codable {
     case themes
 }
 
-struct Feature: Codable {
+struct Feature: Codable, Identifiable {
+    var id = UUID()
     let slug: String?
     let type: FeatureType?
     let title: String?

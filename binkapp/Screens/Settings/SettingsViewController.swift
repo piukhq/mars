@@ -195,7 +195,12 @@ extension SettingsViewController: UITableViewDelegate {
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
                 case is FeatureFlagsTableViewController.Type:
-                    let viewController = FeatureFlagsTableViewController(viewModel: FeatureFlagsViewModel(), delegate: self)
+                    var viewController: UIViewController
+                    if #available(iOS 14.0, *) {
+                        viewController = UIHostingController(rootView: FeatureFlagsSwiftUIView())
+                    } else {
+                        viewController = FeatureFlagsTableViewController(viewModel: FeatureFlagsViewModel(), delegate: self)
+                    }
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
                 default:
