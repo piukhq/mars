@@ -197,7 +197,7 @@ extension SettingsViewController: UITableViewDelegate {
                 case is FeatureFlagsTableViewController.Type:
                     var viewController: UIViewController
                     if #available(iOS 14.0, *) {
-                        viewController = UIHostingController(rootView: FeatureFlagsSwiftUIView())
+                        viewController = UIHostingController(rootView: FeatureFlagsSwiftUIView(delegate: self))
                     } else {
                         viewController = FeatureFlagsTableViewController(viewModel: FeatureFlagsViewModel(), delegate: self)
                     }

@@ -11,6 +11,11 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct FeatureFlagsSwiftUIView: View {
     private let features = Current.featureManager.features ?? []
+    private weak var delegate: FeatureFlagsViewControllerDelegate?
+    
+    init(delegate: FeatureFlagsViewControllerDelegate? = nil) {
+        self.delegate = delegate
+    }
     
     var body: some View {
         NavigationView {
@@ -22,6 +27,9 @@ struct FeatureFlagsSwiftUIView: View {
             }
             .listStyle(InsetGroupedListStyle())
         }.navigationTitle("Feature Flags")
+        .onDisappear {
+            delegate?.featureFlagsViewControllerDidDismiss()
+        }
     }
 }
 
