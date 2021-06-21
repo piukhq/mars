@@ -22,10 +22,7 @@ class FeatureFlagsViewModel {
 
 protocol FeatureFlagsViewControllerDelegate: AnyObject {
     func featureFlagsViewControllerDidDismiss(_ featureFlagsViewController: FeatureFlagsTableViewController)
-}
-
-extension FeatureFlagsViewControllerDelegate {
-    func featureFlagsViewControllerDidDismiss(_ featureFlagsViewController: FeatureFlagsTableViewController? = nil) {}
+    func featureFlagsViewDidDismiss()
 }
 
 class FeatureFlagsTableViewController: BinkTableViewController {
