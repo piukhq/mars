@@ -54,11 +54,9 @@ struct FeatureFlagCell: View {
         Toggle(isOn: $isEnabled, label: {
             VStack(alignment: .leading, spacing: nil) {
                 Text(feature.title ?? "")
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
+                    .font(.custom(UIFont.linkTextButtonNormal.fontName, size: UIFont.linkTextButtonNormal.pointSize))
                 Text(feature.description ?? "")
-                    .font(.footnote)
-                    .fontWeight(.light)
+                    .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
                     .lineLimit(1)
             }
         })
