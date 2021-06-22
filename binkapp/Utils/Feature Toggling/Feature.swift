@@ -13,7 +13,7 @@ enum FeatureType: String, Codable {
 }
 
 struct Feature: Codable, Identifiable {
-    var id = UUID()
+    let id = UUID()
     let slug: String?
     let type: FeatureType?
     let title: String?

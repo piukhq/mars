@@ -13,7 +13,6 @@ struct FeatureFlagsSwiftUIView: View {
     private let features = Current.featureManager.features ?? []
     private weak var delegate: FeatureFlagsViewControllerDelegate?
     
-    @Environment(\.presentationMode) private var presentation
     @ObservedObject private var themeManager = Current.themeManager
     
     init(delegate: FeatureFlagsViewControllerDelegate? = nil) {
@@ -32,7 +31,7 @@ struct FeatureFlagsSwiftUIView: View {
         }
         .listStyle(InsetGroupedListStyle())
         .background(Color(themeManager.color(for: .insetGroupedTableBackground)))
-        .ignoresSafeArea()
+        .ignoresSafeArea(.all, edges: .bottom)
         .navigationTitle("Feature Flags")
         .onDisappear {
             delegate?.featureFlagsViewDidDismiss()
@@ -42,7 +41,7 @@ struct FeatureFlagsSwiftUIView: View {
 
 @available(iOS 14.0, *)
 struct FeatureFlagCell: View {
-    var feature: Feature
+    private var feature: Feature
 
     @State private var isEnabled: Bool
     
@@ -53,10 +52,15 @@ struct FeatureFlagCell: View {
     
     var body: some View {
         Toggle(isOn: $isEnabled, label: {
-            VStack(alignment: .leading, spacing: nil, content: {
-                Text(feature.title ?? "").font(.subheadline).fontWeight(.semibold)
-                Text(feature.description ?? "").font(.footnote).fontWeight(.light).lineLimit(1)
-            })
+            VStack(alignment: .leading, spacing: nil) {
+                Text(feature.title ?? "")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                Text(feature.description ?? "")
+                    .font(.footnote)
+                    .fontWeight(.light)
+                    .lineLimit(1)
+            }
         })
         .toggleStyle(SwitchToggleStyle(tint: Color(.binkGradientBlueRight)))
         .onChange(of: isEnabled, perform: { enabled in
