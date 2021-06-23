@@ -49,20 +49,8 @@ struct QuickLaunchEntryView: View {
         if hasCurrentUser {
             Text("Has user")
         } else {
-            HStack(alignment: .center, spacing: 0) {
-                Image("bink-logo")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .padding(.all, 13.0)
-                Text("Tap to sign in to Bink")
-                    .font(.subheadline)
-                    .fontWeight(.medium)
-                    .multilineTextAlignment(.trailing)
-                    .padding(.horizontal, 16.0)
-            }
-            .padding(.vertical, 11.0)
-            .background(Color("WidgetBackground"))
-        }        
+            UnauthenticatedSwiftUIView()
+        }
 //        Text(entry.date, style: .time)
     }
 }

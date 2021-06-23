@@ -10,7 +10,19 @@ import SwiftUI
 
 struct UnauthenticatedSwiftUIView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack(alignment: .center, spacing: 0) {
+            Image("bink-logo")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .padding(.all, 19.0)
+            Text("Tap to sign in to Bink")
+                .font(.subheadline)
+                .fontWeight(.medium)
+                .multilineTextAlignment(.trailing)
+                .padding(.horizontal, 16.0)
+        }
+        .padding(.vertical, 9.0)
+        .background(Color("WidgetBackground"))
     }
 }
 
