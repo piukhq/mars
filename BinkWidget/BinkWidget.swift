@@ -49,22 +49,20 @@ struct QuickLaunchEntryView: View {
         if hasCurrentUser {
             Text("Has user")
         } else {
-            HStack(alignment: .center, spacing: nil) {
+            HStack(alignment: .center, spacing: 0) {
                 Image("bink-logo")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .padding(.all, 13.0)
-                    
                 Text("Tap to sign in to Bink")
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .multilineTextAlignment(.trailing)
-                    .padding(.leading, 16.0)
+                    .padding(.horizontal, 16.0)
             }
-            .padding()
-        }
-        // else show sign in view
-        
+            .padding(.vertical, 11.0)
+            .background(Color("WidgetBackground"))
+        }        
 //        Text(entry.date, style: .time)
     }
 }
@@ -87,5 +85,6 @@ struct BinkWidget_Previews: PreviewProvider {
     static var previews: some View {
         QuickLaunchEntryView(entry: WidgetContent(date: Date()))
             .previewContext(WidgetPreviewContext(family: .systemMedium))
+            .preferredColorScheme(.dark)
     }
 }
