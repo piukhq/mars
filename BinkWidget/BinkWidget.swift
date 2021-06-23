@@ -11,22 +11,23 @@ import SwiftUI
 
 struct QuickLaunchProvider: TimelineProvider {
     func placeholder(in context: Context) -> WidgetContent {
-        WidgetContent(date: Date())
+        WidgetContent(date: Date(), hasCurrentUser: true)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (WidgetContent) -> Void) {
-        let entry = WidgetContent(date: Date())
+        let entry = WidgetContent(date: Date(), hasCurrentUser: true)
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
+        let hasCurrentUser = UserDefaults(suiteName: "group.com.bink.wallet")?.bool(forKey: "hasCurrentUser") ?? false
         var entries: [WidgetContent] = []
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate) ?? Date()
-            let entry = WidgetContent(date: entryDate)
+            let entryDate = Calendar.current.date(byAdding: .second, value: hourOffset, to: currentDate) ?? Date()
+            let entry = WidgetContent(date: entryDate, hasCurrentUser: hasCurrentUser)
             entries.append(entry)
         }
 
@@ -37,21 +38,47 @@ struct QuickLaunchProvider: TimelineProvider {
 
 struct WidgetContent: TimelineEntry {
     let date: Date
+    let hasCurrentUser: Bool
+    let walletCards: [MembershipCard] = []
+}
+
+struct MembershipCard {
+    let image: UIImage
+    let backGroundColor: UIColor
+    let cardNumber: String
 }
 
 struct QuickLaunchEntryView: View {
-    var entry: QuickLaunchProvider.Entry
+    var model: QuickLaunchProvider.Entry
+    
+    var twoColumnGrid = [GridItem(.flexible()), GridItem(.flexible())]
+    var symbols = ["keyboard", "hifispeaker.fill", "printer.fill", "tv.fill"]
     
     var body: some View {
-        let hasCurrentUser = UserDefaults(suiteName: "group.com.bink.wallet")?.bool(forKey: "hasCurrentUser") ?? false
-        
-        // if signed in show wallet cards
-        if hasCurrentUser {
-            Text("Has user")
+        if model.hasCurrentUser {
+            LazyVGrid(columns: twoColumnGrid, spacing: 33) {
+                ForEach(symbols, id: \.self) { _ in
+                    HStack(alignment: .center, spacing: 30) {
+                        Image("hn")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding(.leading, 3.0)
+                            .frame(width: 36.0, height: 36.0)
+                        Text("..5776")
+                            .foregroundColor(Color.white)
+                    }
+                    .background(
+                        RoundedRectangle(cornerRadius: 10.0)
+                            .frame(minWidth: 153, maxWidth: .infinity, minHeight: 65)
+                            .foregroundColor(.black)
+                    )
+                }
+            }
+            .padding(.all, 9.0)
+//            .background(Color(.darkGray))
         } else {
             UnauthenticatedSwiftUIView()
         }
-//        Text(entry.date, style: .time)
     }
 }
 
@@ -61,7 +88,7 @@ struct BinkWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: QuickLaunchProvider()) { entry in
-            QuickLaunchEntryView(entry: entry)
+            QuickLaunchEntryView(model: entry)
         }
         .configurationDisplayName("Bink quick launch")
         .description("Quickly access your favourite loyalty cards.")
@@ -71,8 +98,8 @@ struct BinkWidget: Widget {
 
 struct BinkWidget_Previews: PreviewProvider {
     static var previews: some View {
-        QuickLaunchEntryView(entry: WidgetContent(date: Date()))
+        QuickLaunchEntryView(model: WidgetContent(date: Date(), hasCurrentUser: true))
             .previewContext(WidgetPreviewContext(family: .systemMedium))
-            .preferredColorScheme(.dark)
+            .preferredColorScheme(.light)
     }
 }

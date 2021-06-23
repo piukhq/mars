@@ -22,7 +22,7 @@ struct UnauthenticatedSwiftUIView: View {
                 .padding(.horizontal, 16.0)
         }
         .padding(.vertical, 9.0)
-        .background(Color("WidgetBackground"))
+        .background(Color("UnAuthWidgetBackground"))
     }
 }
 
