@@ -49,8 +49,7 @@ struct MembershipCard {
 }
 
 struct QuickLaunchEntryView: View {
-    var model: QuickLaunchProvider.Entry
-    
+    let model: QuickLaunchProvider.Entry
     var twoColumnGrid = [GridItem(.flexible()), GridItem(.flexible())]
     var symbols = ["keyboard", "hifispeaker.fill", "printer.fill", "tv.fill"]
     
@@ -58,24 +57,27 @@ struct QuickLaunchEntryView: View {
         if model.hasCurrentUser {
             LazyVGrid(columns: twoColumnGrid, spacing: 33) {
                 ForEach(symbols, id: \.self) { _ in
-                    HStack(alignment: .center, spacing: 30) {
+                    HStack(alignment: .center, spacing: 42.0) {
                         Image("hn")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .padding(.leading, 3.0)
                             .frame(width: 36.0, height: 36.0)
-                        Text("..5776")
+                        Text("••5776")
+                            .font(.footnote)
+                            .fontWeight(.semibold)
                             .foregroundColor(Color.white)
                     }
                     .background(
-                        RoundedRectangle(cornerRadius: 10.0)
+                        RoundedRectangle(cornerRadius: 14.0)
                             .frame(minWidth: 153, maxWidth: .infinity, minHeight: 65)
                             .foregroundColor(.black)
                     )
                 }
             }
+            .frame(height: 160)
             .padding(.all, 9.0)
-//            .background(Color(.darkGray))
+            .background(Color("WidgetBackground"))
         } else {
             UnauthenticatedSwiftUIView()
         }
