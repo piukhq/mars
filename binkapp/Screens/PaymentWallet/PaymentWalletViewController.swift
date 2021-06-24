@@ -27,29 +27,23 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
         collectionView.register(PaymentCardCollectionViewCell.self, asNib: true)
     }
     
-    override func makeDataSource() -> WalletDataSource {
-        let dataSource = WalletDataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, dataSourceItem in
-            guard let self = self else { fatalError("Could not get self") }
-            switch indexPath.section {
-            case WalletDataSourceSection.cards.rawValue:
-                let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-                guard let paymentCard = dataSourceItem as? CD_PaymentCard else { return cell }
-                let cellViewModel = PaymentCardCellViewModel(paymentCard: paymentCard)
-                cell.configureWithViewModel(cellViewModel, delegate: self)
-                return cell
-            case WalletDataSourceSection.prompts.rawValue:
-                let cell: WalletPromptCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-                guard let walletPrompt = dataSourceItem as? WalletPrompt else { return cell }
-                cell.configureWithWalletPrompt(walletPrompt)
-                return cell
-            default:
-                fatalError("Invalid datasource section")
-            }
+    override func cellHandler(for section: WalletDataSourceSection, dataSourceItem: AnyHashable, indexPath: IndexPath) -> UICollectionViewCell {
+        switch section {
+        case .cards:
+            let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+            guard let paymentCard = dataSourceItem as? CD_PaymentCard else { return cell }
+            let cellViewModel = PaymentCardCellViewModel(paymentCard: paymentCard)
+            cell.configureWithViewModel(cellViewModel, delegate: self)
+            return cell
+        case .prompts:
+            let cell: WalletPromptCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+            guard let walletPrompt = dataSourceItem as? WalletPrompt else { return cell }
+            cell.configureWithWalletPrompt(walletPrompt)
+            return cell
         }
-        return dataSource
     }
     
-    override func appendItemsToSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
+    override func setSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
         snapshot.appendItems(viewModel.cards ?? [], toSection: .cards)
         snapshot.appendItems(viewModel.walletPrompts ?? [], toSection: .prompts)
     }
