@@ -13,37 +13,6 @@ import CardScan
 class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> {
     var selectedIndexPath: IndexPath?
     
-    override func makeDataSource() -> WalletDataSource {
-        let dataSource = WalletDataSource(collectionView: collectionView) { collectionView, indexPath, membershipCard in
-            if indexPath.section == WalletDataSourceSection.cards.rawValue {
-                let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-                guard let membershipCard = self.viewModel.cards?[indexPath.row] else { return cell }
-                let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
-                cell.configureUIWithViewModel(viewModel: cellViewModel, indexPath: indexPath, delegate: self)
-
-                return cell
-            } else {
-                // Wallet prompts
-                let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-                guard let walletPrompt = self.viewModel.promptCard(forIndexPath: indexPath) else { return cell }
-                cell.configureWithWalletPrompt(walletPrompt)
-                return cell
-            }
-        }
-        return dataSource
-    }
-    
-    override func appendItemsToSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
-        snapshot.appendItems(viewModel.cards ?? [], toSection: .cards)
-        snapshot.appendItems(viewModel.walletPrompts ?? [], toSection: .prompts)
-    }
-    
-    override func configureCollectionView() {
-        super.configureCollectionView()
-        collectionView.register(WalletLoyaltyCardCollectionViewCell.self, asNib: true)
-        collectionView.register(OnboardingCardCollectionViewCell.self, asNib: true)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.delegate = self
@@ -62,10 +31,43 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         setScreenName(trackedScreen: .loyaltyWallet)
     }
     
+    override func makeDataSource() -> WalletDataSource {
+        let dataSource = WalletDataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, dataSourceItem in
+            guard let self = self else { fatalError("Could not get self") }
+            switch indexPath.section {
+            case WalletDataSourceSection.cards.rawValue:
+                let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+                guard let membershipCard = dataSourceItem as? CD_MembershipCard else { return cell }
+                let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
+                cell.configureUIWithViewModel(viewModel: cellViewModel, indexPath: indexPath, delegate: self)
+                return cell
+            case WalletDataSourceSection.prompts.rawValue:
+                let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+                guard let walletPrompt = dataSourceItem as? WalletPrompt else { return cell }
+                cell.configureWithWalletPrompt(walletPrompt)
+                return cell
+            default:
+                fatalError("Invalid datasource section")
+            }
+        }
+        return dataSource
+    }
+    
+    override func appendItemsToSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
+        snapshot.appendItems(viewModel.cards ?? [], toSection: .cards)
+        snapshot.appendItems(viewModel.walletPrompts ?? [], toSection: .prompts)
+    }
+    
     @objc private func handlePointsScrapingUpdate() {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
+    }
+    
+    override func configureCollectionView() {
+        super.configureCollectionView()
+        collectionView.register(WalletLoyaltyCardCollectionViewCell.self, asNib: true)
+        collectionView.register(OnboardingCardCollectionViewCell.self, asNib: true)
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

@@ -13,6 +13,8 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.setupWalletPrompts()
+        
+        applySnapshot()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -24,27 +26,33 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
         super.configureCollectionView()
         collectionView.register(PaymentCardCollectionViewCell.self, asNib: true)
     }
-
-//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        if indexPath.section == 1 {
-//            let cell: WalletPromptCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-//            guard let walletPrompt = viewModel.walletPrompts?.first else {
-//                return cell
-//            }
-//            cell.configureWithWalletPrompt(walletPrompt)
-//            return cell
-//        } else {
-//            let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-//            guard let paymentCard = viewModel.cards?[safe: indexPath.row] else {
-//                return cell
-//            }
-//
-//            let cellViewModel = PaymentCardCellViewModel(paymentCard: paymentCard)
-//            cell.configureWithViewModel(cellViewModel, delegate: self)
-//
-//            return cell
-//        }
-//    }
+    
+    override func makeDataSource() -> WalletDataSource {
+        let dataSource = WalletDataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, dataSourceItem in
+            guard let self = self else { fatalError("Could not get self") }
+            switch indexPath.section {
+            case WalletDataSourceSection.cards.rawValue:
+                let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+                guard let paymentCard = dataSourceItem as? CD_PaymentCard else { return cell }
+                let cellViewModel = PaymentCardCellViewModel(paymentCard: paymentCard)
+                cell.configureWithViewModel(cellViewModel, delegate: self)
+                return cell
+            case WalletDataSourceSection.prompts.rawValue:
+                let cell: WalletPromptCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+                guard let walletPrompt = dataSourceItem as? WalletPrompt else { return cell }
+                cell.configureWithWalletPrompt(walletPrompt)
+                return cell
+            default:
+                fatalError("Invalid datasource section")
+            }
+        }
+        return dataSource
+    }
+    
+    override func appendItemsToSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
+        snapshot.appendItems(viewModel.cards ?? [], toSection: .cards)
+        snapshot.appendItems(viewModel.walletPrompts ?? [], toSection: .prompts)
+    }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return LayoutHelper.WalletDimensions.cardSize
