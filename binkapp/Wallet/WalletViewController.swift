@@ -75,7 +75,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     
     // We only want to use transition when tapping a wallet card cell and not when adding a new card
     var shouldUseTransition = false
-    var indexPathOfCardToDelete: IndexPath?
 
     let viewModel: T
 
@@ -104,6 +103,8 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         refreshControl.addTarget(self, action: #selector(reloadWallet), for: .valueChanged)
 
         configureCollectionView()
+        
+        applySnapshot()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -244,31 +245,14 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     }
 
     @objc func refreshLocal() {
-        if let indexPath = indexPathOfCardToDelete {
-            deleteCard(at: indexPath)
-        } else {
-            viewModel.setupWalletPrompts()
-//            collectionView.reloadData()
-            applySnapshot()
-        }
+        viewModel.setupWalletPrompts()
+        applySnapshot()
     }
     
     @objc func stopRefreshing() {
         if let navigationBar = self.navigationController?.navigationBar {
             refreshControl.programaticallyEndRefreshing(in: self.collectionView, with: navigationBar)
-//            collectionView.reloadData()
             applySnapshot()
-        }
-    }
-    
-    private func deleteCard(at indexPath: IndexPath) {
-        self.collectionView.performBatchUpdates({ [weak self] in
-            self?.collectionView.deleteItems(at: [indexPath])
-        }) { [weak self] _ in
-            self?.viewModel.setupWalletPrompts()
-//            self?.collectionView.reloadData()
-            self?.applySnapshot()
-            self?.indexPathOfCardToDelete = nil
         }
     }
    

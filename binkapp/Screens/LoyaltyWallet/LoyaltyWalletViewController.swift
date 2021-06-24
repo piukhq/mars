@@ -17,8 +17,6 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         super.viewDidLoad()
         navigationController?.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
-        
-        applySnapshot()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -134,7 +132,6 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
     
     func promptForDelete(with index: IndexPath, cell: WalletLoyaltyCardCollectionViewCell) {
         guard let card = viewModel.cards?[index.row] else { return }
-        indexPathOfCardToDelete = index
         viewModel.showDeleteConfirmationAlert(card: card) {
             cell.set(to: .closed)
         }

@@ -13,8 +13,6 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.setupWalletPrompts()
-        
-        applySnapshot()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -92,7 +90,6 @@ extension PaymentWalletViewController: WalletPaymentCardCollectionViewCellDelega
 
     func promptForDelete(with index: IndexPath, cell: PaymentCardCollectionViewCell) {
         guard let card = viewModel.cards?[index.row] else { return }
-        indexPathOfCardToDelete = index
         viewModel.showDeleteConfirmationAlert(card: card) {
             cell.set(to: .closed)
         }
