@@ -25,26 +25,26 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
         collectionView.register(PaymentCardCollectionViewCell.self, asNib: true)
     }
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.section == 1 {
-            let cell: WalletPromptCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-            guard let walletPrompt = viewModel.walletPrompts?.first else {
-                return cell
-            }
-            cell.configureWithWalletPrompt(walletPrompt)
-            return cell
-        } else {
-            let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-            guard let paymentCard = viewModel.cards?[safe: indexPath.row] else {
-                return cell
-            }
-
-            let cellViewModel = PaymentCardCellViewModel(paymentCard: paymentCard)
-            cell.configureWithViewModel(cellViewModel, delegate: self)
-
-            return cell
-        }
-    }
+//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        if indexPath.section == 1 {
+//            let cell: WalletPromptCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+//            guard let walletPrompt = viewModel.walletPrompts?.first else {
+//                return cell
+//            }
+//            cell.configureWithWalletPrompt(walletPrompt)
+//            return cell
+//        } else {
+//            let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+//            guard let paymentCard = viewModel.cards?[safe: indexPath.row] else {
+//                return cell
+//            }
+//
+//            let cellViewModel = PaymentCardCellViewModel(paymentCard: paymentCard)
+//            cell.configureWithViewModel(cellViewModel, delegate: self)
+//
+//            return cell
+//        }
+//    }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return LayoutHelper.WalletDimensions.cardSize
@@ -68,10 +68,10 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
         resetAllSwipeStates()
     }
 
-    override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        guard let paymentCard = viewModel.cards?[sourceIndexPath.row] else { return }
-        Current.wallet.reorderPaymentCard(paymentCard, from: sourceIndexPath.row, to: destinationIndexPath.row)
-    }
+//    override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+//        guard let paymentCard = viewModel.cards?[sourceIndexPath.row] else { return }
+//        Current.wallet.reorderPaymentCard(paymentCard, from: sourceIndexPath.row, to: destinationIndexPath.row)
+//    }
 }
 
 extension PaymentWalletViewController: WalletPaymentCardCollectionViewCellDelegate {

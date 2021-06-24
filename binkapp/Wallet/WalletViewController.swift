@@ -14,7 +14,34 @@ enum WalletViewControllerConstants {
     static let dotViewTopPadding: CGFloat = 3
 }
 
-class WalletViewController<T: WalletViewModel>: BinkViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, InAppReviewable {
+enum WalletDataSourceSection: Int, CaseIterable {
+    case cards
+    case prompts
+}
+
+typealias WalletDataSourceItem = AnyHashable
+typealias WalletDataSource = UICollectionViewDiffableDataSource<WalletDataSourceSection, WalletDataSourceItem>
+typealias WalletDataSourceSnapshot = NSDiffableDataSourceSnapshot<WalletDataSourceSection, WalletDataSourceItem>
+
+class WalletViewController<T: WalletViewModel>: BinkViewController, UICollectionViewDelegateFlowLayout, InAppReviewable {
+    
+    private lazy var dataSource = makeDataSource()
+
+    func makeDataSource() -> WalletDataSource {
+        fatalError("Each wallet subclass should override this to provide specific behaviours.")
+    }
+    
+    func appendItemsToSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
+        fatalError("Each wallet subclass should override this to append specific wallet items")
+    }
+    
+    func applySnapshot(animatingDifferences: Bool = true) {
+        var snapshot = WalletDataSourceSnapshot()
+        snapshot.appendSections(WalletDataSourceSection.allCases)
+        appendItemsToSnapshot(&snapshot)
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    }
+    
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -170,7 +197,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         view.addSubview(collectionView)
         collectionView.addSubview(refreshControl)
         
-        collectionView.dataSource = self
+        collectionView.dataSource = dataSource
         collectionView.delegate = self
         
         NSLayoutConstraint.activate([
@@ -194,32 +221,35 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         viewModel.reloadWallet()
     }
 
-    @objc private func refresh() {
+    @objc func refresh() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.refreshControl.endRefreshing()
         }
         viewModel.setupWalletPrompts()
-        collectionView.reloadData()
+//        collectionView.reloadData()
+        applySnapshot()
     }
     
-    @objc private func refreshPostClear() {
+    @objc func refreshPostClear() {
         viewModel.refreshLocalWallet()
     }
 
-    @objc private func refreshLocal() {
+    @objc func refreshLocal() {
         if let indexPath = indexPathOfCardToDelete {
             deleteCard(at: indexPath)
         } else {
             viewModel.setupWalletPrompts()
-            collectionView.reloadData()
+//            collectionView.reloadData()
+            applySnapshot()
         }
     }
     
-    @objc private func stopRefreshing() {
+    @objc func stopRefreshing() {
         if let navigationBar = self.navigationController?.navigationBar {
             refreshControl.programaticallyEndRefreshing(in: self.collectionView, with: navigationBar)
-            collectionView.reloadData()
+//            collectionView.reloadData()
+            applySnapshot()
         }
     }
     
@@ -228,28 +258,17 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             self?.collectionView.deleteItems(at: [indexPath])
         }) { [weak self] _ in
             self?.viewModel.setupWalletPrompts()
-            self?.collectionView.reloadData()
+//            self?.collectionView.reloadData()
+            self?.applySnapshot()
             self?.indexPathOfCardToDelete = nil
         }
     }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return section == 0 ? viewModel.cardCount : viewModel.walletPromptsCount
-    }
-    
+   
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return section == 0 ? .zero : UIEdgeInsets(top: 15.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        fatalError("Subclasses should override this method")
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         fatalError("Subclasses should override this method")
     }
 
@@ -261,10 +280,10 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         fatalError("Subclass should override this.")
     }
 
-    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        guard let cell = collectionView.cellForItem(at: indexPath) else { return false }
-        return !cell.isKind(of: WalletPromptCollectionViewCell.self) && !cell.isKind(of: OnboardingCardCollectionViewCell.self)
-    }
+//    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+//        guard let cell = collectionView.cellForItem(at: indexPath) else { return false }
+//        return !cell.isKind(of: WalletPromptCollectionViewCell.self) && !cell.isKind(of: OnboardingCardCollectionViewCell.self)
+//    }
 
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath, toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
         guard let cell = collectionView.cellForItem(at: proposedIndexPath) else { return proposedIndexPath }
@@ -307,7 +326,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     override func configureForCurrentTheme() {
         super.configureForCurrentTheme()
         refreshControl.tintColor = Current.themeManager.color(for: .text)
-        collectionView.reloadData()
+//        collectionView.reloadData()
         collectionView.indicatorStyle = Current.themeManager.scrollViewIndicatorStyle(for: traitCollection)
     }
 }

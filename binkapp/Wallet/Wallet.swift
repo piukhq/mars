@@ -19,7 +19,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     var foregroundRefreshCount = 0
 
     private(set) var membershipPlans: [CD_MembershipPlan]?
-    private(set) var membershipCards: [CD_MembershipCard]?
+    var membershipCards: [CD_MembershipCard]?
     private(set) var paymentCards: [CD_PaymentCard]?
 
     private var hasLaunched = false

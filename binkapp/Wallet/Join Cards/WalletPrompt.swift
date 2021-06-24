@@ -101,7 +101,15 @@ protocol WalletPromptProtocol {
     init(type: WalletPromptType)
 }
 
-class WalletPrompt: WalletPromptProtocol {
+class WalletPrompt: WalletPromptProtocol, Hashable {
+    static func == (lhs: WalletPrompt, rhs: WalletPrompt) -> Bool {
+        return lhs.title == rhs.title && lhs.body == rhs.body
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(title)
+    }
+    
     let type: WalletPromptType
 
     required init(type: WalletPromptType) {

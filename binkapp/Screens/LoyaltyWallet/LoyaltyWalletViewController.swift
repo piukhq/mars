@@ -13,6 +13,31 @@ import CardScan
 class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> {
     var selectedIndexPath: IndexPath?
     
+    override func makeDataSource() -> WalletDataSource {
+        let dataSource = WalletDataSource(collectionView: collectionView) { collectionView, indexPath, membershipCard in
+            if indexPath.section == WalletDataSourceSection.cards.rawValue {
+                let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+                guard let membershipCard = self.viewModel.cards?[indexPath.row] else { return cell }
+                let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
+                cell.configureUIWithViewModel(viewModel: cellViewModel, indexPath: indexPath, delegate: self)
+
+                return cell
+            } else {
+                // Wallet prompts
+                let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+                guard let walletPrompt = self.viewModel.promptCard(forIndexPath: indexPath) else { return cell }
+                cell.configureWithWalletPrompt(walletPrompt)
+                return cell
+            }
+        }
+        return dataSource
+    }
+    
+    override func appendItemsToSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
+        snapshot.appendItems(viewModel.cards ?? [], toSection: .cards)
+        snapshot.appendItems(viewModel.walletPrompts ?? [], toSection: .prompts)
+    }
+    
     override func configureCollectionView() {
         super.configureCollectionView()
         collectionView.register(WalletLoyaltyCardCollectionViewCell.self, asNib: true)
@@ -23,6 +48,8 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         super.viewDidLoad()
         navigationController?.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
+        
+        applySnapshot()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,23 +65,6 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     @objc private func handlePointsScrapingUpdate() {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
-        }
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.section == 0 {
-            let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-            guard let membershipCard = viewModel.cards?[indexPath.row] else { return cell }
-            let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
-            cell.configureUIWithViewModel(viewModel: cellViewModel, indexPath: indexPath, delegate: self)
-            
-            return cell
-        } else {
-            // Wallet prompts
-            let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-            guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else { return cell }
-            cell.configureWithWalletPrompt(walletPrompt)
-            return cell
         }
     }
     
@@ -80,7 +90,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
             shouldUseTransition = true
             viewModel.toCardDetail(for: card)
         }
-        
+
         selectedIndexPath = indexPath
         resetAllSwipeStates()
     }

@@ -1,7 +1,7 @@
 import Foundation
 
 @objc(CD_MembershipCard)
-open class CD_MembershipCard: _CD_MembershipCard, WalletCardProtocol {
+open class CD_MembershipCard: _CD_MembershipCard, WalletCardProtocol {   
     var type: WalletCardType {
         return .loyalty
     }

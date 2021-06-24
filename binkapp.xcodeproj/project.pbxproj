@@ -130,6 +130,7 @@
 		701E2C4A2677567E003F903B /* DebugMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701E2C492677567E003F903B /* DebugMenuView.swift */; };
 		70285D842588B674007B4298 /* BinkButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70285D832588B674007B4298 /* BinkButtonsView.swift */; };
 		702D0E3526306F8E0067E370 /* BinkModuleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D0E3426306F8E0067E370 /* BinkModuleViewModel.swift */; };
+		7033092D2683498E007B95FE /* NewWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7033092C2683498D007B95FE /* NewWalletViewController.swift */; };
 		7061053125B7349600A16DA5 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7061053025B7349600A16DA5 /* ThemeManager.swift */; };
 		7061053925B8552C00A16DA5 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7061053825B8552C00A16DA5 /* Theme.swift */; };
 		7061054125B8555600A16DA5 /* Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7061054025B8555600A16DA5 /* Styling.swift */; };
@@ -690,6 +691,7 @@
 		702B1F0725A479CA00C7563F /* binkapp - 5-1-21 - Membership plan image cta url.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 5-1-21 - Membership plan image cta url.xcdatamodel"; sourceTree = "<group>"; };
 		702D0E3426306F8E0067E370 /* BinkModuleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkModuleViewModel.swift; sourceTree = "<group>"; };
 		702E4CA925BAE51E00C4772F /* binkapp - 22-1-21 - Membership plan image dark mode url 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 22-1-21 - Membership plan image dark mode url 2.xcdatamodel"; sourceTree = "<group>"; };
+		7033092C2683498D007B95FE /* NewWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWalletViewController.swift; sourceTree = "<group>"; };
 		7049B63C24AB52AA00661128 /* binkapp - 30-06-20 - Add field alternatives.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 30-06-20 - Add field alternatives.xcdatamodel"; sourceTree = "<group>"; };
 		7061053025B7349600A16DA5 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		7061053825B8552C00A16DA5 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -2315,6 +2317,7 @@
 				EF1110532354D4BE009A4438 /* WalletCardCollectionViewCell.swift */,
 				EF480C192355F9470060B7C1 /* WalletViewController.swift */,
 				EFEB5C0023853B7900E18743 /* WalletRefreshManager.swift */,
+				7033092C2683498D007B95FE /* NewWalletViewController.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -3556,6 +3559,7 @@
 				EF8BF1FD2341480800D2E5F3 /* PaymentCardAccountConsentsResponse.swift in Sources */,
 				DB8DE35A2373130100F07F11 /* Bundle+binkapp.swift in Sources */,
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
+				7033092D2683498E007B95FE /* NewWalletViewController.swift in Sources */,
 				EFA5F7452379A7C70027AB80 /* _CD_PaymentCardAccountConsents.swift in Sources */,
 				70FF2B6F2649543200A64DD3 /* AppConfiguration.swift in Sources */,
 				EFA5F7312379A7C70027AB80 /* CD_Balance.swift in Sources */,
