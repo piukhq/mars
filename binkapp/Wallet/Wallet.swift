@@ -7,6 +7,13 @@
 //
 
 import Foundation
+import UIKit
+
+extension FileManager {
+    static func sharedContainerURL() -> URL {
+        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.bink.wallet")!
+    }
+}
 
 class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     private enum FetchType {
@@ -19,7 +26,11 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     var foregroundRefreshCount = 0
 
     private(set) var membershipPlans: [CD_MembershipPlan]?
-    private(set) var membershipCards: [CD_MembershipCard]?
+    private(set) var membershipCards: [CD_MembershipCard]? {
+        didSet {
+            writeContents()
+        }
+    }
     private(set) var paymentCards: [CD_PaymentCard]?
 
     private var hasLaunched = false
@@ -36,6 +47,36 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     var storePromptDebugCellCount: Int?
 
     // MARK: - Public
+        
+        func writeContents() {
+            var widgetCards: [MembershipCardWidget] = []
+            
+            for membershipCard in membershipCards ?? [] {
+                guard let plan = membershipCard.membershipPlan else { return }
+//                let imageURL = ImageService().path(forType: .membershipPlanIcon(plan: plan), traitCollection: nil)
+                var image: UIImage?
+                ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil) { retrievedImage in
+                    image = retrievedImage
+                }
+                
+                let color = UIColor(hexString: membershipCard.membershipPlan?.card?.colour ?? "")
+                let membershipCardWidget = MembershipCardWidget(id: "", imageData: image?.pngData(), backgroundColor: membershipCard.membershipPlan?.card?.colour ?? "", isLight: color.isLight(), cardNumber: membershipCard.card?.barcode ?? membershipCard.card?.membershipId ?? "0000")
+                widgetCards.append(membershipCardWidget)
+            }
+            let widgetContent = WidgetContent(hasCurrentUser: Current.userManager.hasCurrentUser, walletCards: widgetCards)
+            
+            let archiveURL = FileManager.sharedContainerURL().appendingPathComponent("contents.json")
+            print(">>> \(archiveURL)")
+            let encoder = JSONEncoder()
+            if let dataToSave = try? encoder.encode(widgetContent) {
+                do {
+                    try dataToSave.write(to: archiveURL)
+                } catch {
+                    print("Error: Can't write contents")
+                    return
+                }
+            }
+        }
 
     /// On launch, we want to return our locally persisted wallet before we go and get a refreshed copy.
     /// Should only be called once, when the tab bar is loaded and our wallet view controllers can listen for notifications.
