@@ -25,30 +25,6 @@ typealias WalletDataSourceSnapshot = NSDiffableDataSourceSnapshot<WalletDataSour
 
 class WalletViewController<T: WalletViewModel>: BinkViewController, UICollectionViewDelegateFlowLayout, InAppReviewable {
     private lazy var dataSource = makeDataSource()
-
-    private func makeDataSource() -> WalletDataSource {
-        let dataSource = WalletDataSource(collectionView: collectionView) { [weak self] _, indexPath, dataSourceItem in
-            guard let self = self else { fatalError("Failed to get self") }
-            guard let section = WalletDataSourceSection(rawValue: indexPath.section) else { fatalError("Failed to get section") }
-            return self.cellHandler(for: section, dataSourceItem: dataSourceItem, indexPath: indexPath)
-        }
-        return dataSource
-    }
-    
-    func cellHandler(for section: WalletDataSourceSection, dataSourceItem: AnyHashable, indexPath: IndexPath) -> UICollectionViewCell {
-        fatalError("Each wallet subclass should override this to provide specific behaviours.")
-    }
-    
-    func setSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
-        fatalError("Each wallet subclass should override this to append specific wallet items")
-    }
-    
-    func applySnapshot(animatingDifferences: Bool = true) {
-        var snapshot = WalletDataSourceSnapshot()
-        snapshot.appendSections(WalletDataSourceSection.allCases)
-        setSnapshot(&snapshot)
-        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
-    }
     
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -104,7 +80,17 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
 
         configureCollectionView()
         
-        applySnapshot()
+        applySnapshot(animatingDifferences: false)
+        
+        if #available(iOS 14.0, *) {
+            dataSource.reorderingHandlers.canReorderItem = { [weak self] item in
+                return self?.dataSource.indexPath(for: item)?.section == WalletDataSourceSection.cards.rawValue
+            }
+            
+            dataSource.reorderingHandlers.didReorder = { transaction in
+                print(transaction)
+            }
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -320,6 +306,32 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         refreshControl.tintColor = Current.themeManager.color(for: .text)
 //        collectionView.reloadData()
         collectionView.indicatorStyle = Current.themeManager.scrollViewIndicatorStyle(for: traitCollection)
+    }
+    
+    // MARK: - Diffable data source
+    
+    private func makeDataSource() -> WalletDataSource {
+        let dataSource = WalletDataSource(collectionView: collectionView) { [weak self] _, indexPath, dataSourceItem in
+            guard let self = self else { fatalError("Failed to get self") }
+            guard let section = WalletDataSourceSection(rawValue: indexPath.section) else { fatalError("Failed to get section") }
+            return self.cellHandler(for: section, dataSourceItem: dataSourceItem, indexPath: indexPath)
+        }
+        return dataSource
+    }
+    
+    func cellHandler(for section: WalletDataSourceSection, dataSourceItem: AnyHashable, indexPath: IndexPath) -> UICollectionViewCell {
+        fatalError("Each wallet subclass should override this to provide specific behaviours.")
+    }
+    
+    func setSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
+        fatalError("Each wallet subclass should override this to append specific wallet items")
+    }
+    
+    func applySnapshot(animatingDifferences: Bool = true) {
+        var snapshot = WalletDataSourceSnapshot()
+        snapshot.appendSections(WalletDataSourceSection.allCases)
+        setSnapshot(&snapshot)
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
 }
 
