@@ -376,8 +376,10 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             return self?.diffableDataSource.indexPath(for: item)?.section == WalletDataSourceSection.cards.rawValue
         }
         
-        diffableDataSource.reorderingHandlers.didReorder = { transaction in
-            print(transaction)
+        diffableDataSource.reorderingHandlers.didReorder = { [weak self] transaction in
+            guard let reorderedCards = transaction.finalSnapshot.itemIdentifiers(inSection: .cards) as? [WalletCard] else { return }
+            let reorderedIds = reorderedCards.compactMap { $0.id }
+            self?.viewModel.setLocalCardOrder(reorderedIds)
         }
     }
 }

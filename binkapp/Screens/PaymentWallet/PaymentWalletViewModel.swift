@@ -68,4 +68,8 @@ class PaymentWalletViewModel: WalletViewModel {
         let navigationRequest = AlertNavigationRequest(alertController: alert)
         Current.navigate.to(navigationRequest)
     }
+    
+    func setLocalCardOrder(_ order: [String]) {
+        Current.wallet.setLocalWalletOrder(order, for: .payment)
+    }
 }

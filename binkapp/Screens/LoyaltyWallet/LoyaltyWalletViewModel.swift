@@ -67,4 +67,8 @@ class LoyaltyWalletViewModel: WalletViewModel {
         let navigationRequest = AlertNavigationRequest(alertController: alert, completion: completion)
         Current.navigate.to(navigationRequest)
     }
+    
+    func setLocalCardOrder(_ order: [String]) {
+        Current.wallet.setLocalWalletOrder(order, for: .loyalty)
+    }
 }

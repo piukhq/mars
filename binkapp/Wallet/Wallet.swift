@@ -317,7 +317,7 @@ extension Wallet {
         return Current.userDefaults.value(forDefaultsKey: .localWalletOrder(userId: userId, walletType: walletType)) as? [String]
     }
 
-    private func setLocalWalletOrder(_ newValue: [String]?, for walletType: WalletType) {
+    func setLocalWalletOrder(_ newValue: [String]?, for walletType: WalletType) {
         guard let order = newValue else { return }
         guard let userId = Current.userManager.currentUserId else { return }
         Current.userDefaults.set(order, forDefaultsKey: .localWalletOrder(userId: userId, walletType: walletType))
