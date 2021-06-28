@@ -86,6 +86,7 @@ struct SettingsRow {
     
     enum SwiftUIView {
         case whoWeAre
+        case featureFlags
     }
     
     let type: RowType

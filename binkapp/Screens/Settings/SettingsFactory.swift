@@ -168,14 +168,21 @@ struct SettingsFactory {
         sections.append(legalSection)
         
         // MARK: - Beta
+        let action: SettingsRow.RowAction
+        
+        if #available(iOS 14.0, *) {
+            action = .pushToSwiftUIView(swiftUIView: .featureFlags)
+        } else {
+            action = .pushToViewController(viewController: FeatureFlagsTableViewController.self)
+        }
         
         let betaSection = SettingsSection(title: L10n.settingsSectionBetaTitle, rows: [
             SettingsRow(
                 type: .featureFlags,
-                action: .pushToViewController(viewController: FeatureFlagsTableViewController.self),
+                action: action,
                 actionRequired: rowsWithActionRequired?.contains(.featureFlags) ?? false)
         ])
-                
+        
         /// Only show beta section if user ID is contained in beta list group in remote config
         if Current.featureManager.shouldShowInSettings {
             sections.append(betaSection)
