@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import WidgetKit
 
 extension FileManager {
     static func sharedContainerURL() -> URL {
@@ -50,10 +51,8 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
         
         func writeContents() {
             var widgetCards: [MembershipCardWidget] = []
-            
             for membershipCard in membershipCards ?? [] {
                 guard let plan = membershipCard.membershipPlan else { return }
-//                let imageURL = ImageService().path(forType: .membershipPlanIcon(plan: plan), traitCollection: nil)
                 var image: UIImage?
                 ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil) { retrievedImage in
                     image = retrievedImage
@@ -63,14 +62,17 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
                 let membershipCardWidget = MembershipCardWidget(id: "", imageData: image?.pngData(), backgroundColor: membershipCard.membershipPlan?.card?.colour ?? "", isLight: color.isLight(), cardNumber: membershipCard.card?.barcode ?? membershipCard.card?.membershipId ?? "0000")
                 widgetCards.append(membershipCardWidget)
             }
-            let widgetContent = WidgetContent(hasCurrentUser: Current.userManager.hasCurrentUser, walletCards: widgetCards)
             
+            let widgetContent = WidgetContent(hasCurrentUser: Current.userManager.hasCurrentUser, walletCards: widgetCards)
             let archiveURL = FileManager.sharedContainerURL().appendingPathComponent("contents.json")
             print(">>> \(archiveURL)")
             let encoder = JSONEncoder()
             if let dataToSave = try? encoder.encode(widgetContent) {
                 do {
                     try dataToSave.write(to: archiveURL)
+                    if #available(iOS 14.0, *) {
+                        WidgetCenter.shared.reloadTimelines(ofKind: "com.bink.QuickLaunch")
+                    }
                 } catch {
                     print("Error: Can't write contents")
                     return

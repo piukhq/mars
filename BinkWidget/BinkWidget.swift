@@ -28,7 +28,7 @@ struct QuickLaunchProvider: TimelineProvider {
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
 //        let hasCurrentUser = UserDefaults(suiteName: "group.com.bink.wallet")?.bool(forKey: "hasCurrentUser") ?? false
         let entries = readContents()
-
+        
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
 //        let currentDate = Date()
 //        for hourOffset in 0 ..< 5 {
@@ -157,8 +157,6 @@ extension UIColor {
 // TODO: - Add to shared file and remove from wallet and here
 extension FileManager {
   static func sharedContainerURL() -> URL {
-    return FileManager.default.containerURL(
-      forSecurityApplicationGroupIdentifier: "group.your.prefix.emitron.contents"
-    )!
-  }
+    return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.bink.wallet")!
+}
 }
