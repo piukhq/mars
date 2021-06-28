@@ -234,10 +234,14 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     }
     
     @objc private func refreshLocal() {
-        if let indexPath = indexPathOfCardToDelete {
-            deleteCard(at: indexPath)
-        } else {
+        if #available(iOS 14.0, *) {
             reloadCollectionView(animated: true)
+        } else {
+            if let indexPath = indexPathOfCardToDelete {
+                deleteCard(at: indexPath)
+            } else {
+                reloadCollectionView(animated: true)
+            }
         }
     }
     
