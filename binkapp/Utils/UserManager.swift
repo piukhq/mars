@@ -89,6 +89,7 @@ class UserManager {
             if let loginRegisterResponse = response as? LoginRegisterResponse {
                 try setEmail(with: loginRegisterResponse)
             }
+            UserDefaults(suiteName: "group.com.bink.wallet")?.set(true, forDefaultsKey: .hasCurrentUser)
         } catch {
             if #available(iOS 14.0, *) {
                 BinkLogger.error(UserLoggerError.setNewUser, value: error.localizedDescription)
