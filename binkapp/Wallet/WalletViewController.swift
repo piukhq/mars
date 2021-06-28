@@ -198,9 +198,9 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         ])
     }
     
-    func reloadCollectionView() {
+    func reloadCollectionView(animated: Bool = false) {
         if #available(iOS 14.0, *) {
-            applySnapshot()
+            applySnapshot(animatingDifferences: animated)
         } else {
             collectionView.reloadData()
         }
@@ -225,7 +225,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             self.refreshControl.endRefreshing()
         }
         viewModel.setupWalletPrompts()
-        reloadCollectionView()
+        reloadCollectionView(animated: true)
     }
     
     @objc private func refreshPostClear() {
@@ -237,14 +237,14 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             deleteCard(at: indexPath)
         } else {
             viewModel.setupWalletPrompts()
-            reloadCollectionView()
+            reloadCollectionView(animated: true)
         }
     }
     
     @objc private func stopRefreshing() {
         if let navigationBar = self.navigationController?.navigationBar {
             refreshControl.programaticallyEndRefreshing(in: self.collectionView, with: navigationBar)
-            reloadCollectionView()
+            reloadCollectionView(animated: true)
         }
     }
     
@@ -253,7 +253,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             self?.collectionView.deleteItems(at: [indexPath])
         }) { [weak self] _ in
             self?.viewModel.setupWalletPrompts()
-            self?.reloadCollectionView()
+            self?.reloadCollectionView(animated: true)
             self?.indexPathOfCardToDelete = nil
         }
     }
@@ -332,6 +332,9 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     override func configureForCurrentTheme() {
         super.configureForCurrentTheme()
         refreshControl.tintColor = Current.themeManager.color(for: .text)
+        
+        /// This should never be set to animated: true as it will crash
+        /// in the payment wallet due to the cells not being registered yet.
         reloadCollectionView()
         collectionView.indicatorStyle = Current.themeManager.scrollViewIndicatorStyle(for: traitCollection)
     }
