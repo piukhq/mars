@@ -10,12 +10,6 @@ import Foundation
 import UIKit
 import WidgetKit
 
-extension FileManager {
-    static func sharedContainerURL() -> URL {
-        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.bink.wallet")!
-    }
-}
-
 class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     private enum FetchType {
         case localLaunch // Specifically used on launch to perform desired behaviour not needed at any other time
@@ -50,16 +44,17 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     // MARK: - Public
         
         func writeContents() {
+            guard let walletCards = membershipCards else { return }
             var widgetCards: [MembershipCardWidget] = []
-            for membershipCard in membershipCards ?? [] {
-                guard let plan = membershipCard.membershipPlan else { return }
+            for (i, membershipCard) in walletCards.enumerated() {
+                guard let plan = membershipCard.membershipPlan, i < 4 else { break }
+                
                 var image: UIImage?
                 ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil) { retrievedImage in
                     image = retrievedImage
                 }
 
-                let color = UIColor(hexString: membershipCard.membershipPlan?.card?.colour ?? "")
-                let membershipCardWidget = MembershipCardWidget(id: "", imageData: image?.pngData(), backgroundColor: membershipCard.membershipPlan?.card?.colour ?? "", isLight: color.isLight(), cardNumber: membershipCard.card?.barcode ?? membershipCard.card?.membershipId ?? "0000")
+                let membershipCardWidget = MembershipCardWidget(id: "", imageData: image?.pngData(), backgroundColor: membershipCard.membershipPlan?.card?.colour)
                 widgetCards.append(membershipCardWidget)
             }
             

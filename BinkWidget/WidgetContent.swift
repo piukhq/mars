@@ -19,7 +19,5 @@ struct WidgetContent: TimelineEntry, Codable {
 struct MembershipCardWidget: Hashable, Codable {
     let id: String
     let imageData: Data?
-    let backgroundColor: String
-    let isLight: Bool
-    let cardNumber: String
+    let backgroundColor: String?
 }

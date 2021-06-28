@@ -59,12 +59,9 @@ class UserManager {
     var hasCurrentUser: Bool {
         // We can safely assume that if we have no token, we have no user
         guard let token = currentToken, !token.isEmpty else {
-            UserDefaults(suiteName: "group.com.bink.wallet")?.set(false, forDefaultsKey: .hasCurrentUser)
             return false
         }
         
-        // Store in shared container
-        UserDefaults(suiteName: "group.com.bink.wallet")?.set(true, forDefaultsKey: .hasCurrentUser)
         return true
     }
     
