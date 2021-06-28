@@ -10,26 +10,26 @@ import WidgetKit
 import SwiftUI
 
 let previewWalletCards: [MembershipCardWidget] = [
-    MembershipCardWidget(id: "1", imageData: nil, backgroundColor: nil),
-    MembershipCardWidget(id: "2", imageData: nil, backgroundColor: "#bed633"),
-    MembershipCardWidget(id: "3", imageData: nil, backgroundColor: "#bed633")
-//    MembershipCardWidget(id: "4", imageData: nil, backgroundColor: "#bed633"),
+//    MembershipCardWidget(id: "1", imageData: nil, backgroundColor: nil),
+//    MembershipCardWidget(id: "2", imageData: nil, backgroundColor: "#bed633"),
+//    MembershipCardWidget(id: "3", imageData: nil, backgroundColor: "#bed633"),
+    MembershipCardWidget(id: "addCard", imageData: nil, backgroundColor: nil)
 //    MembershipCardWidget(id: "5", imageData: nil, backgroundColor: "#bed633")
 ]
 
 struct QuickLaunchProvider: TimelineProvider {
     func placeholder(in context: Context) -> WidgetContent {
-        WidgetContent(hasCurrentUser: true, walletCards: previewWalletCards)
+        WidgetContent(walletCards: previewWalletCards)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (WidgetContent) -> Void) {
-        let entry = WidgetContent(hasCurrentUser: true, walletCards: previewWalletCards)
+        let entry = WidgetContent(walletCards: previewWalletCards)
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         let entries = readContents()
-//        let entries = [WidgetContent(hasCurrentUser: true, walletCards: previewWalletCards)]
+        
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
     }
@@ -54,47 +54,51 @@ struct QuickLaunchProvider: TimelineProvider {
 
 struct QuickLaunchEntryView: View {
     let model: QuickLaunchProvider.Entry
-    var twoColumnGrid = [GridItem(.flexible(), alignment: .topLeading), GridItem(.flexible(), alignment: .topTrailing)]
+    var twoColumnGrid = [GridItem(.flexible(), alignment: .topLeading), GridItem(.flexible())]
     let hasCurrentUser = UserDefaults(suiteName: "group.com.bink.wallet")?.bool(forKey: "hasCurrentUser") ?? false
     
     var body: some View {
         if hasCurrentUser {
             LazyVGrid(columns: twoColumnGrid, alignment: .leading, spacing: 5) {
                 ForEach(model.walletCards, id: \.self) { membershipCard in
+                    let backgroundColor: UIColor = membershipCard.id == "addCard" ? .clear : UIColor(hexString: membershipCard.backgroundColor ?? "#009190")
+                    
                     HStack(alignment: .center, spacing: 0) {
-                        if let imageData = membershipCard.imageData, let uiImage = UIImage(data: imageData) {
-                            Image(uiImage: uiImage)
+                        if membershipCard.id == "addCard" {
+                            Spacer()
+                            Image(systemName: "plus")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .padding(.leading, 3.0)
-                                .frame(width: 36.0, height: 36.0)
+                                .frame(width: 20.0, height: 36.0)
+                                .foregroundColor(.white)
                             Spacer()
                         } else {
-                            RoundedRectangle(cornerRadius: 5)
-                                .frame(width: 36, height: 36, alignment: .center)
-                                .foregroundColor(Color(UIColor(hexString: "#FFFFFF", alpha: 0.5)))
-                            Spacer()
+                            if let imageData = membershipCard.imageData, let uiImage = UIImage(data: imageData) {
+                                Image(uiImage: uiImage)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .padding(.leading, 3.0)
+                                    .frame(width: 36.0, height: 36.0)
+                                Spacer()
+                            } else {
+                                RoundedRectangle(cornerRadius: 5)
+                                    .frame(width: 36, height: 36, alignment: .center)
+                                    .foregroundColor(Color(UIColor(hexString: "#FFFFFF", alpha: 0.5)))
+                                Spacer()
+                            }
                         }
                     }
                     .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(Color.gray, lineWidth: membershipCard.id == "addCard" ? 1 : 0)
+                    )
                     .background(
                         RoundedRectangle(cornerRadius: 12.0)
                             .frame(minWidth: 153, maxWidth: .infinity, minHeight: 64)
-                            .foregroundColor(Color(UIColor(hexString: membershipCard.backgroundColor ?? "#009190")))
+                            .foregroundColor(Color(backgroundColor))
                     )
                 }
-                
-//                if model.walletCards.count < 4 {
-//                    Image(systemName: "plus")
-//                        .foregroundColor(.white)
-//                        .background(
-//                            RoundedRectangle(cornerRadius: 14)
-//                                .frame(minWidth: 153, maxWidth: .infinity, minHeight: 64)
-//                                .foregroundColor(.clear)
-//                                .border(Color.gray, width: 1)
-//                                .cornerRadius(12)
-//                        )
-//                }
             }
             .frame(height: 160.0)
             .padding(.all, 11.0)
@@ -121,7 +125,7 @@ struct BinkWidget: Widget {
 
 struct BinkWidget_Previews: PreviewProvider {
     static var previews: some View {
-        QuickLaunchEntryView(model: WidgetContent(date: Date(), hasCurrentUser: true, walletCards: previewWalletCards))
+        QuickLaunchEntryView(model: WidgetContent(walletCards: previewWalletCards))
             .previewContext(WidgetPreviewContext(family: .systemMedium))
             .preferredColorScheme(.light)
     }

@@ -12,7 +12,6 @@ import WidgetKit
 
 struct WidgetContent: TimelineEntry, Codable {
     var date = Date()
-    let hasCurrentUser: Bool
     let walletCards: [MembershipCardWidget]
 }
 

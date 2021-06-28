@@ -58,7 +58,12 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
                 widgetCards.append(membershipCardWidget)
             }
             
-            let widgetContent = WidgetContent(hasCurrentUser: Current.userManager.hasCurrentUser, walletCards: widgetCards)
+            if widgetCards.count < 4 {
+                let addCard = MembershipCardWidget(id: "addCard", imageData: nil, backgroundColor: nil)
+                widgetCards.append(addCard)
+            }
+            
+            let widgetContent = WidgetContent(walletCards: widgetCards)
             let archiveURL = FileManager.sharedContainerURL().appendingPathComponent("contents.json")
             print(">>> \(archiveURL)")
             let encoder = JSONEncoder()
