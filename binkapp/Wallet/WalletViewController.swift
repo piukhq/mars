@@ -199,6 +199,8 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     }
     
     func reloadCollectionView(animated: Bool = false) {
+        viewModel.setupWalletPrompts()
+        
         if #available(iOS 14.0, *) {
             applySnapshot(animatingDifferences: animated)
         } else {
@@ -224,7 +226,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             guard let self = self else { return }
             self.refreshControl.endRefreshing()
         }
-        viewModel.setupWalletPrompts()
         reloadCollectionView(animated: true)
     }
     
@@ -236,7 +237,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         if let indexPath = indexPathOfCardToDelete {
             deleteCard(at: indexPath)
         } else {
-            viewModel.setupWalletPrompts()
             reloadCollectionView(animated: true)
         }
     }
@@ -252,7 +252,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         self.collectionView.performBatchUpdates({ [weak self] in
             self?.collectionView.deleteItems(at: [indexPath])
         }) { [weak self] _ in
-            self?.viewModel.setupWalletPrompts()
             self?.reloadCollectionView(animated: true)
             self?.indexPathOfCardToDelete = nil
         }

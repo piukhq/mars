@@ -9,9 +9,7 @@
 import UIKit
 import CardScan
 
-class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> {
-    private var didSetupPrompts = false
-    
+class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> {    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -78,11 +76,6 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
     // MARK: - Diffable datasource
     
     override func setSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
-        if !didSetupPrompts {
-            viewModel.setupWalletPrompts()
-            didSetupPrompts.toggle()
-        }
-        
         snapshot.appendItems(viewModel.cards ?? [], toSection: .cards)
         snapshot.appendItems(viewModel.walletPrompts ?? [], toSection: .prompts)
     }
