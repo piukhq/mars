@@ -6,7 +6,6 @@
 //  Copyright © 2021 Bink. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import SwiftUI
 import WidgetKit

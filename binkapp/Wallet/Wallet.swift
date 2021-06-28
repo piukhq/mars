@@ -58,7 +58,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
                 ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil) { retrievedImage in
                     image = retrievedImage
                 }
-                
+
                 let color = UIColor(hexString: membershipCard.membershipPlan?.card?.colour ?? "")
                 let membershipCardWidget = MembershipCardWidget(id: "", imageData: image?.pngData(), backgroundColor: membershipCard.membershipPlan?.card?.colour ?? "", isLight: color.isLight(), cardNumber: membershipCard.card?.barcode ?? membershipCard.card?.membershipId ?? "0000")
                 widgetCards.append(membershipCardWidget)
