@@ -55,9 +55,10 @@ struct QuickLaunchProvider: TimelineProvider {
 struct QuickLaunchEntryView: View {
     let model: QuickLaunchProvider.Entry
     var twoColumnGrid = [GridItem(.flexible(), alignment: .topLeading), GridItem(.flexible(), alignment: .topTrailing)]
+    let hasCurrentUser = UserDefaults(suiteName: "group.com.bink.wallet")?.bool(forKey: "hasCurrentUser") ?? false
     
     var body: some View {
-        if model.hasCurrentUser {
+        if hasCurrentUser {
             LazyVGrid(columns: twoColumnGrid, alignment: .leading, spacing: 5) {
                 ForEach(model.walletCards, id: \.self) { membershipCard in
                     HStack(alignment: .center, spacing: 0) {

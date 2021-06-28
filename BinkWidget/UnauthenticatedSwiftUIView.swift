@@ -16,7 +16,7 @@ struct UnauthenticatedSwiftUIView: View {
                 .aspectRatio(contentMode: .fit)
                 .padding(.all, 19.0)
             Text("Tap to sign in to Bink")
-                .font(.subheadline)
+                .font(.system(size: 12))
                 .fontWeight(.medium)
                 .multilineTextAlignment(.trailing)
                 .padding(.horizontal, 16.0)
