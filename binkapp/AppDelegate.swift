@@ -93,6 +93,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         }
         Current.wallet.handleAppDidEnterBackground()
     }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        print("OPEN URL: \(url)")
+        
+        let id = url.absoluteString.dropFirst(21)
+        guard let membershipCard = Current.wallet.membershipCards?.first(where: { $0.id == String(id) }) else { return false }
+        let viewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: membershipCard)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+        return false
+    }
 }
 
 private extension AppDelegate {

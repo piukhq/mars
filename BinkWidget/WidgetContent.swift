@@ -19,4 +19,7 @@ struct MembershipCardWidget: Hashable, Codable {
     let id: String
     let imageData: Data?
     let backgroundColor: String?
+    var url: URL? {
+        return URL(string: "quicklaunch-widget://" + id)
+    }
 }

@@ -77,6 +77,7 @@ struct WalletCardView: View {
                 .frame(minWidth: 153, maxWidth: .infinity, minHeight: 64)
                 .foregroundColor(Color(UIColor(hexString: membershipCard.backgroundColor ?? "#009190")))
         )
+        .widgetURL(membershipCard.url)
     }
 }
 
@@ -101,6 +102,7 @@ struct AddCardView: View {
                 .frame(minWidth: 153, maxWidth: .infinity, minHeight: 64)
                 .foregroundColor(Color(.clear))
         )
+//        .widgetURL()
     }
 }
 
@@ -147,6 +149,8 @@ struct QuickLaunchEntryView: View {
 //                    }
                     if membershipCard.id == "addCard" {
                         AddCardView()
+//                    } else if membershipCard.id == "spacer" {
+//                        Spacer().frame(width: 20, height: 36, alignment: .center)
                     } else {
                         WalletCardView(membershipCard: membershipCard)
                     }
