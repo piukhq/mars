@@ -11,9 +11,9 @@ import SwiftUI
 
 let previewWalletCards: [MembershipCardWidget] = [
     MembershipCardWidget(id: "1", imageData: nil, backgroundColor: nil),
-    MembershipCardWidget(id: "2", imageData: nil, backgroundColor: "#bed633"),
+//    MembershipCardWidget(id: "2", imageData: nil, backgroundColor: "#bed633"),
 //    MembershipCardWidget(id: "3", imageData: nil, backgroundColor: "#bed633"),
-    MembershipCardWidget(id: "addCard", imageData: nil, backgroundColor: nil)
+//    MembershipCardWidget(id: "addCard", imageData: nil, backgroundColor: nil)
 //    MembershipCardWidget(id: "5", imageData: nil, backgroundColor: "#bed633")
 ]
 
@@ -104,6 +104,30 @@ struct AddCardView: View {
     }
 }
 
+struct SpacerView: View {
+    var body: some View {
+        HStack(alignment: .center, spacing: 0) {
+            Spacer()
+//            Image(systemName: "plus")
+//                .resizable()
+//                .aspectRatio(contentMode: .fit)
+//                .frame(width: 20.0, height: 36.0)
+//                .foregroundColor(.white)
+            Spacer().frame(width: 20, height: 36, alignment: .center)
+        }
+        .padding()
+//        .overlay(
+//            RoundedRectangle(cornerRadius: 12)
+//                .stroke(Color.gray, lineWidth: 1)
+//        )
+        .background(
+            RoundedRectangle(cornerRadius: 12.0)
+                .frame(minWidth: 153, maxWidth: .infinity, minHeight: 64)
+                .foregroundColor(Color(.clear))
+        )
+    }
+}
+
 struct QuickLaunchEntryView: View {
     let model: QuickLaunchProvider.Entry
     var twoColumnGrid = [GridItem(.flexible(), alignment: .topLeading), GridItem(.flexible())]
@@ -113,51 +137,19 @@ struct QuickLaunchEntryView: View {
         if hasCurrentUser {
             LazyVGrid(columns: twoColumnGrid, alignment: .leading, spacing: 5) {
                 ForEach(model.walletCards, id: \.self) { membershipCard in
+//                    switch membershipCard.id {
+//                    case "addCard":
+//                        AddCardView()
+//                    case "spacer":
+//                        SpacerView()
+//                    default:
+//                        WalletCardView(membershipCard: membershipCard)
+//                    }
                     if membershipCard.id == "addCard" {
                         AddCardView()
                     } else {
                         WalletCardView(membershipCard: membershipCard)
                     }
-
-                    
-                    
-//                    let backgroundColor: UIColor = membershipCard.id == "addCard" ? .clear : UIColor(hexString: membershipCard.backgroundColor ?? "#009190")
-                    
-//                    HStack(alignment: .center, spacing: 0) {
-//                        if membershipCard.id == "addCard" {
-//                            Spacer()
-//                            Image(systemName: "plus")
-//                                .resizable()
-//                                .aspectRatio(contentMode: .fit)
-//                                .frame(width: 20.0, height: 36.0)
-//                                .foregroundColor(.white)
-//                            Spacer()
-//                        } else {
-//                            if let imageData = membershipCard.imageData, let uiImage = UIImage(data: imageData) {
-//                                Image(uiImage: uiImage)
-//                                    .resizable()
-//                                    .aspectRatio(contentMode: .fit)
-//                                    .padding(.leading, 3.0)
-//                                    .frame(width: 36.0, height: 36.0)
-//                                Spacer()
-//                            } else {
-//                                RoundedRectangle(cornerRadius: 5)
-//                                    .frame(width: 36, height: 36, alignment: .center)
-//                                    .foregroundColor(Color(UIColor(hexString: "#FFFFFF", alpha: 0.5)))
-//                                Spacer()
-//                            }
-//                        }
-//                    }
-//                    .padding()
-//                    .overlay(
-//                        RoundedRectangle(cornerRadius: 12)
-//                            .stroke(Color.gray, lineWidth: membershipCard.id == "addCard" ? 1 : 0)
-//                    )
-//                    .background(
-//                        RoundedRectangle(cornerRadius: 12.0)
-//                            .frame(minWidth: 153, maxWidth: .infinity, minHeight: 64)
-//                            .foregroundColor(Color(backgroundColor))
-//                    )
                 }
             }
             .frame(height: 160.0)
