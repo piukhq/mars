@@ -126,6 +126,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
                     self.navigateToWidgetDestination(urlPath: urlPath)
                 }
             } else {
+                let mainTabBar = topViewController as? MainTabBarViewController
+                let nav = mainTabBar?.viewControllers?.first as? PortraitNavigationController
+                let currentViewController = nav?.viewControllers.last
+                if currentViewController?.isKind(of: LoyaltyCardFullDetailsViewController.self) == true && mainTabBar?.selectedIndex == 0 {
+                    let lcd = currentViewController as? LoyaltyCardFullDetailsViewController
+                    if lcd?.viewModel.membershipCard.id == urlPath { return }
+                }
+
                 self.navigateToWidgetDestination(urlPath: urlPath)
             }
         }
