@@ -18,7 +18,7 @@ import SafariServices
 class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     var window: UIWindow?
     var stateMachine: RootStateMachine?
-//    let widgetController = WidgetController()
+    let widgetController = WidgetController()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         #if DEBUG
@@ -95,48 +95,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         Current.wallet.handleAppDidEnterBackground()
     }
     
-    fileprivate func navigateToWidgetDestination(urlPath: String) {
-        let navigationRequest = TabBarNavigationRequest(tab: .loyalty, popToRoot: true, backgroundPushNavigationRequest: nil) {
-            if urlPath == "addCard" {
-                let viewController = ViewControllerFactory.makeBrowseBrandsViewController()
-                let navigationRequest = ModalNavigationRequest(viewController: viewController)
-                Current.navigate.to(navigationRequest)
-            } else {
-                guard let membershipCard = Current.wallet.membershipCards?.first(where: { $0.id == urlPath }) else { return }
-                let viewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: membershipCard)
-                let navigationRequest = PushNavigationRequest(viewController: viewController)
-                Current.navigate.to(navigationRequest)
-            }
-        }
-        Current.navigate.to(navigationRequest)
-    }
-    
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        guard let urlPath = url.host?.removingPercentEncoding, UIViewController.topMostViewController()?.isShieldView == true else { return false }
-//        widgetController.handleUrlFOrWidgetType
-        
-        Current.navigate.closeShieldView {
-            guard let topViewController = UIViewController.topMostViewController() else { return }
-            if topViewController.isModal {
-                let nav = topViewController as? PortraitNavigationController
-                let rootViewController = nav?.viewControllers.last
-                if rootViewController?.isKind(of: BrowseBrandsViewController.self) == true && urlPath == "addCard" { return }
-                
-                Current.navigate.close(animated: true) {
-                    self.navigateToWidgetDestination(urlPath: urlPath)
-                }
-            } else {
-                let mainTabBar = topViewController as? MainTabBarViewController
-                let nav = mainTabBar?.viewControllers?.first as? PortraitNavigationController
-                let currentViewController = nav?.viewControllers.last
-                if currentViewController?.isKind(of: LoyaltyCardFullDetailsViewController.self) == true && mainTabBar?.selectedIndex == 0 {
-                    let lcd = currentViewController as? LoyaltyCardFullDetailsViewController
-                    if lcd?.viewModel.membershipCard.id == urlPath { return }
-                }
-
-                self.navigateToWidgetDestination(urlPath: urlPath)
-            }
-        }
+        guard let urlPath = url.host?.removingPercentEncoding else { return false }
+        widgetController.handleURLForWidgetType(type: .quickLaunch, urlPath: urlPath)
         return true
     }
 }

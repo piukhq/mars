@@ -10,6 +10,10 @@ import UIKit
 import SwiftUI
 import WidgetKit
 
+enum WidgetUrlPath: String {
+    case addCard = "addCard"
+}
+
 struct WidgetContent: TimelineEntry, Codable {
     var date = Date()
     let walletCards: [MembershipCardWidget]

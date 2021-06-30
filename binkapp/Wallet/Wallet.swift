@@ -23,7 +23,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     private(set) var membershipPlans: [CD_MembershipPlan]?
     private(set) var membershipCards: [CD_MembershipCard]? {
         didSet {
-            writeContents()
+            WidgetController().writeContentsToDisc(membershipCards: membershipCards)
         }
     }
     private(set) var paymentCards: [CD_PaymentCard]?
@@ -42,57 +42,6 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     var storePromptDebugCellCount: Int?
 
     // MARK: - Public
-        
-        func writeContents() {
-            guard let walletCards = membershipCards else { return }
-            var widgetCards: [MembershipCardWidget] = []
-            for (i, membershipCard) in walletCards.enumerated() {
-                guard let plan = membershipCard.membershipPlan, i < 4 else { break }
-                
-                var image: UIImage?
-                ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil) { retrievedImage in
-                    image = retrievedImage
-                }
-
-                let membershipCardWidget = MembershipCardWidget(id: membershipCard.id, imageData: image?.pngData(), backgroundColor: membershipCard.membershipPlan?.card?.colour)
-                widgetCards.append(membershipCardWidget)
-            }
-            
-            if widgetCards.count < 4 {
-                let addCard = MembershipCardWidget(id: "addCard", imageData: nil, backgroundColor: nil)
-                let spacerZero = MembershipCardWidget(id: "spacerZero", imageData: nil, backgroundColor: nil)
-                let spacerOne = MembershipCardWidget(id: "spacerOne", imageData: nil, backgroundColor: nil)
-                var spacerCards: [MembershipCardWidget] = []
-
-                if widgetCards.count == 1 {
-                    spacerCards.append(spacerZero)
-                }
-
-                if widgetCards.isEmpty {
-                    spacerCards.append(spacerZero)
-                    spacerCards.append(spacerOne)
-                }
-                
-                widgetCards.append(addCard)
-                widgetCards.append(contentsOf: spacerCards)
-            }
-            
-            let widgetContent = WidgetContent(walletCards: widgetCards)
-            let archiveURL = FileManager.sharedContainerURL().appendingPathComponent("contents.json")
-            print(">>> \(archiveURL)")
-            let encoder = JSONEncoder()
-            if let dataToSave = try? encoder.encode(widgetContent) {
-                do {
-                    try dataToSave.write(to: archiveURL)
-                    if #available(iOS 14.0, *) {
-                        WidgetCenter.shared.reloadTimelines(ofKind: "com.bink.QuickLaunch")
-                    }
-                } catch {
-                    print("Error: Can't write contents")
-                    return
-                }
-            }
-        }
 
     /// On launch, we want to return our locally persisted wallet before we go and get a refreshed copy.
     /// Should only be called once, when the tab bar is loaded and our wallet view controllers can listen for notifications.
