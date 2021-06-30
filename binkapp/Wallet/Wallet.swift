@@ -60,20 +60,21 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             
             if widgetCards.count < 4 {
                 let addCard = MembershipCardWidget(id: "addCard", imageData: nil, backgroundColor: nil)
-//                let spacerCard = MembershipCardWidget(id: "spacer", imageData: nil, backgroundColor: nil)
-//                var spacerCards: [MembershipCardWidget] = []
-//
-//                if widgetCards.count == 1 {
-//                    spacerCards.append(spacerCard)
-//                }
-//
-//                if widgetCards.isEmpty {
-//                    spacerCards.append(spacerCard)
-//                    spacerCards.append(spacerCard)
-//                }
+                let spacerZero = MembershipCardWidget(id: "spacerZero", imageData: nil, backgroundColor: nil)
+                let spacerOne = MembershipCardWidget(id: "spacerOne", imageData: nil, backgroundColor: nil)
+                var spacerCards: [MembershipCardWidget] = []
+
+                if widgetCards.count == 1 {
+                    spacerCards.append(spacerZero)
+                }
+
+                if widgetCards.isEmpty {
+                    spacerCards.append(spacerZero)
+                    spacerCards.append(spacerOne)
+                }
                 
                 widgetCards.append(addCard)
-//                widgetCards.append(contentsOf: spacerCards)
+                widgetCards.append(contentsOf: spacerCards)
             }
             
             let widgetContent = WidgetContent(walletCards: widgetCards)

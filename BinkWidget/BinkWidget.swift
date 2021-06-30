@@ -121,19 +121,9 @@ struct AddCardView: View {
 struct SpacerView: View {
     var body: some View {
         HStack(alignment: .center, spacing: 0) {
-            Spacer()
-//            Image(systemName: "plus")
-//                .resizable()
-//                .aspectRatio(contentMode: .fit)
-//                .frame(width: 20.0, height: 36.0)
-//                .foregroundColor(.white)
             Spacer().frame(width: 20, height: 36, alignment: .center)
         }
         .padding()
-//        .overlay(
-//            RoundedRectangle(cornerRadius: 12)
-//                .stroke(Color.gray, lineWidth: 1)
-//        )
         .background(
             RoundedRectangle(cornerRadius: 12.0)
                 .frame(minWidth: 153, maxWidth: .infinity, minHeight: 64)
@@ -151,19 +141,12 @@ struct QuickLaunchEntryView: View {
         if hasCurrentUser {
             LazyVGrid(columns: twoColumnGrid, alignment: .leading, spacing: 5) {
                 ForEach(model.walletCards, id: \.self.id) { membershipCard in
-//                    switch membershipCard.id {
-//                    case "addCard":
-//                        AddCardView()
-//                    case "spacer":
-//                        SpacerView()
-//                    default:
-//                        WalletCardView(membershipCard: membershipCard)
-//                    }
-                    if membershipCard.id == "addCard" {
+                    switch membershipCard.id {
+                    case "addCard":
                         AddCardView(membershipCard: membershipCard)
-//                    } else if membershipCard.id == "spacer" {
-//                        Spacer().frame(width: 20, height: 36, alignment: .center)
-                    } else {
+                    case "spacerZero", "spacerOne":
+                        SpacerView()
+                    default:
                         WalletCardView(membershipCard: membershipCard)
                     }
                 }
