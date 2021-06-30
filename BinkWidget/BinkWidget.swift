@@ -28,7 +28,7 @@ struct QuickLaunchProvider: TimelineProvider {
     func getSnapshot(in context: Context, completion: @escaping (WidgetContent) -> Void) {
         // Widget gallery
         let realContent = readContents()[0]
-        if realContent.walletCards.isEmpty {
+        if realContent.walletCards.first?.id == WidgetUrlPath.addCard.rawValue {
             completion(WidgetContent(walletCards: previewWalletCards))
         } else {
             completion(realContent)
@@ -142,9 +142,9 @@ struct QuickLaunchEntryView: View {
             LazyVGrid(columns: twoColumnGrid, alignment: .leading, spacing: 5) {
                 ForEach(model.walletCards, id: \.self.id) { membershipCard in
                     switch membershipCard.id {
-                    case "addCard":
+                    case WidgetUrlPath.addCard.rawValue:
                         AddCardView(membershipCard: membershipCard)
-                    case "spacerZero", "spacerOne":
+                    case WidgetUrlPath.spacerZero.rawValue, WidgetUrlPath.spacerOne.rawValue:
                         SpacerView()
                     default:
                         WalletCardView(membershipCard: membershipCard)

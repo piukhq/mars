@@ -11,7 +11,9 @@ import SwiftUI
 import WidgetKit
 
 enum WidgetUrlPath: String {
-    case addCard = "addCard"
+    case addCard
+    case spacerZero
+    case spacerOne
 }
 
 struct WidgetContent: TimelineEntry, Codable {

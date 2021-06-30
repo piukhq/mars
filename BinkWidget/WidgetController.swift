@@ -75,8 +75,8 @@ class WidgetController {
         
         if widgetCards.count < 4 {
             let addCard = MembershipCardWidget(id: WidgetUrlPath.addCard.rawValue, imageData: nil, backgroundColor: nil)
-            let spacerZero = MembershipCardWidget(id: "spacerZero", imageData: nil, backgroundColor: nil)
-            let spacerOne = MembershipCardWidget(id: "spacerOne", imageData: nil, backgroundColor: nil)
+            let spacerZero = MembershipCardWidget(id: WidgetUrlPath.spacerZero.rawValue, imageData: nil, backgroundColor: nil)
+            let spacerOne = MembershipCardWidget(id: WidgetUrlPath.spacerOne.rawValue, imageData: nil, backgroundColor: nil)
             var spacerCards: [MembershipCardWidget] = []
 
             if widgetCards.count == 1 {
