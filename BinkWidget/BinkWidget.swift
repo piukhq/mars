@@ -10,21 +10,29 @@ import WidgetKit
 import SwiftUI
 
 let previewWalletCards: [MembershipCardWidget] = [
-    MembershipCardWidget(id: "1", imageData: nil, backgroundColor: nil),
-//    MembershipCardWidget(id: "2", imageData: nil, backgroundColor: "#bed633"),
-//    MembershipCardWidget(id: "3", imageData: nil, backgroundColor: "#bed633"),
-//    MembershipCardWidget(id: "addCard", imageData: nil, backgroundColor: nil)
-//    MembershipCardWidget(id: "5", imageData: nil, backgroundColor: "#bed633")
+    MembershipCardWidget(id: "addCard", imageData: UIImage(named: "hn")?.pngData(), backgroundColor: "#000000"),
+    MembershipCardWidget(id: "addCard", imageData: UIImage(named: "wasabi")?.pngData(), backgroundColor: "#bed633"),
+    MembershipCardWidget(id: "addCard", imageData: nil, backgroundColor: nil)
 ]
 
 struct QuickLaunchProvider: TimelineProvider {
     func placeholder(in context: Context) -> WidgetContent {
-        WidgetContent(walletCards: previewWalletCards)
+        let realContent = readContents()[0]
+        if realContent.walletCards.isEmpty {
+            return WidgetContent(walletCards: previewWalletCards)
+        } else {
+            return realContent
+        }
     }
 
     func getSnapshot(in context: Context, completion: @escaping (WidgetContent) -> Void) {
-        let entry = WidgetContent(walletCards: previewWalletCards)
-        completion(entry)
+        // Widget gallery
+        let realContent = readContents()[0]
+        if realContent.walletCards.isEmpty {
+            completion(WidgetContent(walletCards: previewWalletCards))
+        } else {
+            completion(realContent)
+        }
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
@@ -34,7 +42,7 @@ struct QuickLaunchProvider: TimelineProvider {
         completion(timeline)
     }
     
-    func readContents() -> [WidgetContent] {
+    private func readContents() -> [WidgetContent] {
         var contents: [WidgetContent] = []
         let archiveURL = FileManager.sharedContainerURL().appendingPathComponent("contents.json")
         print(">>> \(archiveURL)")
@@ -56,53 +64,57 @@ struct WalletCardView: View {
     let membershipCard: MembershipCardWidget
     
     var body: some View {
-        HStack(alignment: .center, spacing: 0) {
-            if let imageData = membershipCard.imageData, let uiImage = UIImage(data: imageData) {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .padding(.leading, 3.0)
-                    .frame(width: 36.0, height: 36.0)
-                Spacer()
-            } else {
-                RoundedRectangle(cornerRadius: 5)
-                    .frame(width: 36, height: 36, alignment: .center)
-                    .foregroundColor(Color(UIColor(hexString: "#FFFFFF", alpha: 0.5)))
-                Spacer()
+        Link(destination: membershipCard.url) {
+            HStack(alignment: .center, spacing: 0) {
+                if let imageData = membershipCard.imageData, let uiImage = UIImage(data: imageData) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .padding(.leading, 3.0)
+                        .frame(width: 36.0, height: 36.0)
+                    Spacer()
+                } else {
+                    RoundedRectangle(cornerRadius: 5)
+                        .frame(width: 36, height: 36, alignment: .center)
+                        .foregroundColor(Color(UIColor(hexString: "#FFFFFF", alpha: 0.5)))
+                    Spacer()
+                }
             }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 12.0)
+                    .frame(minWidth: 153, maxWidth: .infinity, minHeight: 64)
+                    .foregroundColor(Color(UIColor(hexString: membershipCard.backgroundColor ?? "#009190")))
+            )
         }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 12.0)
-                .frame(minWidth: 153, maxWidth: .infinity, minHeight: 64)
-                .foregroundColor(Color(UIColor(hexString: membershipCard.backgroundColor ?? "#009190")))
-        )
-        .widgetURL(membershipCard.url)
     }
 }
 
 struct AddCardView: View {
+    let membershipCard: MembershipCardWidget
+
     var body: some View {
-        HStack(alignment: .center, spacing: 0) {
-            Spacer()
-            Image(systemName: "plus")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 20.0, height: 36.0)
-                .foregroundColor(.white)
-            Spacer()
+        Link(destination: membershipCard.url) {
+            HStack(alignment: .center, spacing: 0) {
+                Spacer()
+                Image(systemName: "plus")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 20.0, height: 36.0)
+                    .foregroundColor(.white)
+                Spacer()
+            }
+            .padding()
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.gray, lineWidth: 1)
+            )
+            .background(
+                RoundedRectangle(cornerRadius: 12.0)
+                    .frame(minWidth: 153, maxWidth: .infinity, minHeight: 64)
+                    .foregroundColor(Color(.clear))
+            )
         }
-        .padding()
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.gray, lineWidth: 1)
-        )
-        .background(
-            RoundedRectangle(cornerRadius: 12.0)
-                .frame(minWidth: 153, maxWidth: .infinity, minHeight: 64)
-                .foregroundColor(Color(.clear))
-        )
-//        .widgetURL()
     }
 }
 
@@ -138,7 +150,7 @@ struct QuickLaunchEntryView: View {
     var body: some View {
         if hasCurrentUser {
             LazyVGrid(columns: twoColumnGrid, alignment: .leading, spacing: 5) {
-                ForEach(model.walletCards, id: \.self) { membershipCard in
+                ForEach(model.walletCards, id: \.self.id) { membershipCard in
 //                    switch membershipCard.id {
 //                    case "addCard":
 //                        AddCardView()
@@ -148,7 +160,7 @@ struct QuickLaunchEntryView: View {
 //                        WalletCardView(membershipCard: membershipCard)
 //                    }
                     if membershipCard.id == "addCard" {
-                        AddCardView()
+                        AddCardView(membershipCard: membershipCard)
 //                    } else if membershipCard.id == "spacer" {
 //                        Spacer().frame(width: 20, height: 36, alignment: .center)
                     } else {
