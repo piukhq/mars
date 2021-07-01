@@ -312,7 +312,6 @@
 		CE6DE56B2681E8280063A3A9 /* BinkWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6DE56A2681E8280063A3A9 /* BinkWidget.swift */; };
 		CE6DE56D2681E82C0063A3A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE6DE56C2681E82C0063A3A9 /* Assets.xcassets */; };
 		CE6DE5712681E82C0063A3A9 /* BinkWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = CE6DE5642681E8280063A3A9 /* BinkWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		CE6DE57B268201EC0063A3A9 /* PlaceholderSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6DE57A268201EC0063A3A9 /* PlaceholderSwiftUIView.swift */; };
 		CE6DE57D268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6DE57C268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift */; };
 		CE73F9AD2600B64E00D53BCF /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE73F9AB2600B64E00D53BCF /* HeaderTableViewCell.swift */; };
 		CE73F9AE2600B64E00D53BCF /* HeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE73F9AC2600B64E00D53BCF /* HeaderTableViewCell.xib */; };
@@ -337,6 +336,9 @@
 		CEE2091A2689E1B7004D3759 /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209192689E1B7004D3759 /* FileManager+Extension.swift */; };
 		CEE2091B2689E1B7004D3759 /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209192689E1B7004D3759 /* FileManager+Extension.swift */; };
 		CEE2091D268CC5C4004D3759 /* WidgetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE2091C268CC5C4004D3759 /* WidgetController.swift */; };
+		CEE20921268E1DAA004D3759 /* WalletCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE20920268E1DAA004D3759 /* WalletCardView.swift */; };
+		CEE20923268E1E0E004D3759 /* AddCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE20922268E1E0E004D3759 /* AddCardView.swift */; };
+		CEE20925268E1E3A004D3759 /* SpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE20924268E1E3A004D3759 /* SpacerView.swift */; };
 		CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF389EA255D72E90063C718 /* DateExtensionTests.swift */; };
 		CEF837E925DA7AB10066C77E /* FeatureFlagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF837E825DA7AB10066C77E /* FeatureFlagsTableViewController.swift */; };
 		CEFB742325668A5100896DE5 /* BrandHeaderViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE387AA02565749D006BAC11 /* BrandHeaderViewTests.swift */; };
@@ -917,7 +919,6 @@
 		CE6DE56C2681E82C0063A3A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE6DE56E2681E82C0063A3A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE6DE579268200110063A3A9 /* Bink αAlpha.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bink αAlpha.entitlements"; sourceTree = "<group>"; };
-		CE6DE57A268201EC0063A3A9 /* PlaceholderSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderSwiftUIView.swift; sourceTree = "<group>"; };
 		CE6DE57C268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnauthenticatedSwiftUIView.swift; sourceTree = "<group>"; };
 		CE6DE57E26821B270063A3A9 /* BinkWidgetExtensionAlpha.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BinkWidgetExtensionAlpha.entitlements; sourceTree = "<group>"; };
 		CE73F9AB2600B64E00D53BCF /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
@@ -943,6 +944,9 @@
 		CEE209132684653A004D3759 /* WidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetContent.swift; sourceTree = "<group>"; };
 		CEE209192689E1B7004D3759 /* FileManager+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extension.swift"; sourceTree = "<group>"; };
 		CEE2091C268CC5C4004D3759 /* WidgetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetController.swift; sourceTree = "<group>"; };
+		CEE20920268E1DAA004D3759 /* WalletCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCardView.swift; sourceTree = "<group>"; };
+		CEE20922268E1E0E004D3759 /* AddCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardView.swift; sourceTree = "<group>"; };
+		CEE20924268E1E3A004D3759 /* SpacerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacerView.swift; sourceTree = "<group>"; };
 		CEF389EA255D72E90063C718 /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		CEF837E825DA7AB10066C77E /* FeatureFlagsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsTableViewController.swift; sourceTree = "<group>"; };
 		DB088544234FD8A30041A67A /* PLLScreenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenRepository.swift; sourceTree = "<group>"; };
@@ -2291,13 +2295,11 @@
 		CE6DE5692681E8280063A3A9 /* BinkWidget */ = {
 			isa = PBXGroup;
 			children = (
-				CE6DE56A2681E8280063A3A9 /* BinkWidget.swift */,
 				CE6DE56C2681E82C0063A3A9 /* Assets.xcassets */,
 				CE6DE56E2681E82C0063A3A9 /* Info.plist */,
-				CE6DE57A268201EC0063A3A9 /* PlaceholderSwiftUIView.swift */,
-				CE6DE57C268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift */,
 				CEE209132684653A004D3759 /* WidgetContent.swift */,
 				CEE2091C268CC5C4004D3759 /* WidgetController.swift */,
+				CEE20926268E1E76004D3759 /* QuickLaunch */,
 			);
 			path = BinkWidget;
 			sourceTree = "<group>";
@@ -2329,6 +2331,18 @@
 				CEC0ACBB2636AD0000845813 /* Strings.swift */,
 			);
 			path = SwiftGen;
+			sourceTree = "<group>";
+		};
+		CEE20926268E1E76004D3759 /* QuickLaunch */ = {
+			isa = PBXGroup;
+			children = (
+				CE6DE56A2681E8280063A3A9 /* BinkWidget.swift */,
+				CEE20920268E1DAA004D3759 /* WalletCardView.swift */,
+				CE6DE57C268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift */,
+				CEE20922268E1E0E004D3759 /* AddCardView.swift */,
+				CEE20924268E1E3A004D3759 /* SpacerView.swift */,
+			);
+			path = QuickLaunch;
 			sourceTree = "<group>";
 		};
 		CEF389E9255D72B30063C718 /* Extensions */ = {
@@ -3846,11 +3860,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE6DE57B268201EC0063A3A9 /* PlaceholderSwiftUIView.swift in Sources */,
+				CEE20925268E1E3A004D3759 /* SpacerView.swift in Sources */,
 				CEE2091B2689E1B7004D3759 /* FileManager+Extension.swift in Sources */,
 				CEE209152684653A004D3759 /* WidgetContent.swift in Sources */,
+				CEE20923268E1E0E004D3759 /* AddCardView.swift in Sources */,
 				CE6DE57D268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift in Sources */,
 				CE6DE56B2681E8280063A3A9 /* BinkWidget.swift in Sources */,
+				CEE20921268E1DAA004D3759 /* WalletCardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

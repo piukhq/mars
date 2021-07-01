@@ -25,9 +25,3 @@ struct UnauthenticatedSwiftUIView: View {
         .background(Color("UnAuthWidgetBackground"))
     }
 }
-
-//struct UnauthenticatedSwiftUIView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        UnauthenticatedSwiftUIView()
-//    }
-//}

@@ -60,83 +60,6 @@ struct QuickLaunchProvider: TimelineProvider {
     }
 }
 
-struct WalletCardView: View {
-    let membershipCard: MembershipCardWidget
-    
-    var body: some View {
-        Link(destination: membershipCard.url) {
-            HStack(alignment: .center, spacing: 0) {
-                if let imageData = membershipCard.imageData, let uiImage = UIImage(data: imageData) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 6, style: .continuous)
-                            .frame(width: 39, height: 39, alignment: .center)
-                            .foregroundColor(.white)
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 36.0, height: 36.0)
-                            .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
-                    }.shadow(color: Color(.displayP3, white: 2, opacity: 0.5), radius: 2, x: 1.0, y: 1.0)
-                    Spacer()
-                } else {
-                    RoundedRectangle(cornerRadius: 5)
-                        .frame(width: 36, height: 36, alignment: .center)
-                        .foregroundColor(Color(UIColor(hexString: "#FFFFFF", alpha: 0.5)))
-                    Spacer()
-                }
-            }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 12.0, style: .continuous)
-                    .frame(minWidth: 153, maxWidth: .infinity, minHeight: 64)
-                    .foregroundColor(Color(UIColor(hexString: membershipCard.backgroundColor ?? "#009190")))
-            )
-        }
-    }
-}
-
-struct AddCardView: View {
-    let membershipCard: MembershipCardWidget
-
-    var body: some View {
-        Link(destination: membershipCard.url) {
-            HStack(alignment: .center, spacing: 0) {
-                Spacer()
-                Image(systemName: "plus")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 20.0, height: 36.0)
-                    .foregroundColor(.white)
-                Spacer()
-            }
-            .padding()
-            .overlay(
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .stroke(Color.gray, lineWidth: 1)
-            )
-            .background(
-                RoundedRectangle(cornerRadius: 12.0, style: .continuous)
-                    .frame(minWidth: 153, maxWidth: .infinity, minHeight: 64)
-                    .foregroundColor(Color(.clear))
-            )
-        }
-    }
-}
-
-struct SpacerView: View {
-    var body: some View {
-        HStack(alignment: .center, spacing: 0) {
-            Spacer().frame(width: 20, height: 36, alignment: .center)
-        }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 12.0)
-                .frame(minWidth: 153, maxWidth: .infinity, minHeight: 64)
-                .foregroundColor(Color(.clear))
-        )
-    }
-}
-
 struct QuickLaunchEntryView: View {
     let model: QuickLaunchProvider.Entry
 
@@ -145,7 +68,7 @@ struct QuickLaunchEntryView: View {
     
     var body: some View {
         if hasCurrentUser || model.isPreview == true {
-            LazyVGrid(columns: twoColumnGrid, alignment: .leading, spacing: 5) {
+            LazyVGrid(columns: twoColumnGrid, alignment: .leading, spacing: 4) {
                 ForEach(model.walletCards, id: \.self.id) { membershipCard in
                     switch membershipCard.id {
                     case WidgetUrlPath.addCard.rawValue:
@@ -157,8 +80,7 @@ struct QuickLaunchEntryView: View {
                     }
                 }
             }
-            .frame(height: 160.0)
-            .padding(.all, 11.0)
+            .padding(.all, 15.0)
             .background(Color("WidgetBackground"))
         } else {
             UnauthenticatedSwiftUIView()
