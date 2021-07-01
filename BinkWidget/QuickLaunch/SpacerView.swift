@@ -13,7 +13,7 @@ struct SpacerView: View {
         HStack(alignment: .center, spacing: 0) {
             Spacer().frame(width: 20, height: 36, alignment: .center)
         }
-        .padding(EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12))
+        .padding(QuickLaunchConstants.walletCardInsets)
         .background(
             RoundedRectangle(cornerRadius: 12.0)
                 .foregroundColor(Color(.clear))

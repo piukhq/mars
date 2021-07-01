@@ -22,7 +22,7 @@ struct AddCardView: View {
                     .foregroundColor(.white)
                 Spacer()
             }
-            .padding(EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12))
+            .padding(QuickLaunchConstants.walletCardInsets)
             .overlay(
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .stroke(Color.gray, lineWidth: 1)

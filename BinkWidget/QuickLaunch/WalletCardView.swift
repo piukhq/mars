@@ -8,8 +8,13 @@
 
 import SwiftUI
 
+enum QuickLaunchConstants {
+    static let walletCardInsets = EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12)
+}
+
 struct WalletCardView: View {
     let membershipCard: MembershipCardWidget
+    
     
     var body: some View {
         Link(destination: membershipCard.url) {
@@ -33,7 +38,7 @@ struct WalletCardView: View {
                     Spacer()
                 }
             }
-            .padding(EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12))
+            .padding(QuickLaunchConstants.walletCardInsets)
             .background(
                 RoundedRectangle(cornerRadius: 12.0, style: .continuous)
                     .foregroundColor(Color(UIColor(hexString: membershipCard.backgroundColor ?? "#009190")))
