@@ -16,10 +16,28 @@ enum WidgetUrlPath: String {
     case spacerOne
 }
 
+enum WidgetType {
+    case quickLaunch
+    
+    var identifier: String {
+        switch self {
+        case .quickLaunch:
+            return  "com.bink.QuickLaunch"
+        }
+    }
+    
+    var userDefaultsSuite: String {
+        switch self {
+        default:
+            return "group.com.bink.wallet"
+        }
+    }
+}
+
 struct WidgetContent: TimelineEntry, Codable {
     var date = Date()
     let walletCards: [MembershipCardWidget]
-    var isPreview: Bool? = false
+    var isPreview = false
 }
 
 struct MembershipCardWidget: Hashable, Codable {

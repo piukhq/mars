@@ -9,11 +9,7 @@
 import UIKit
 import WidgetKit
 
-class WidgetController {
-    enum WidgetType {
-        case quickLaunch
-    }
-    
+class WidgetController {  
     func handleURLForWidgetType(type: WidgetType, urlPath: String) {
         switch type {
         case .quickLaunch:
@@ -58,7 +54,7 @@ class WidgetController {
         Current.navigate.to(navigationRequest)
     }
     
-    func writeContentsToDisc(membershipCards: [CD_MembershipCard]?) {
+    func writeContentsToDisk(membershipCards: [CD_MembershipCard]?) {
         guard let walletCards = membershipCards else { return }
         var widgetCards: [MembershipCardWidget] = []
         for (i, membershipCard) in walletCards.enumerated() {
@@ -99,7 +95,7 @@ class WidgetController {
             do {
                 try dataToSave.write(to: archiveURL)
                 if #available(iOS 14.0, *) {
-                    WidgetCenter.shared.reloadTimelines(ofKind: "com.bink.QuickLaunch")
+                    WidgetCenter.shared.reloadTimelines(ofKind: WidgetType.quickLaunch.identifier)
                 }
             } catch {
                 print("Error: Can't write contents")

@@ -151,7 +151,7 @@ class UserManager {
         
         UserDefaults(suiteName: "group.com.bink.wallet")?.set(false, forDefaultsKey: .hasCurrentUser)
         if #available(iOS 14.0, *) {
-            WidgetCenter.shared.reloadTimelines(ofKind: "com.bink.QuickLaunch")
+            WidgetCenter.shared.reloadTimelines(ofKind: WidgetType.quickLaunch.identifier)
         }
     }
     

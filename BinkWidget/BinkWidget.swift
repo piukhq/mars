@@ -12,17 +12,18 @@ import SwiftUI
 let previewWalletCards: [MembershipCardWidget] = [
     MembershipCardWidget(id: "0", imageData: UIImage(named: "hn")?.pngData(), backgroundColor: "#000000"),
     MembershipCardWidget(id: "1", imageData: UIImage(named: "wasabi")?.pngData(), backgroundColor: "#bed633"),
+    MembershipCardWidget(id: "2", imageData: UIImage(named: "iceland")?.pngData(), backgroundColor: "#f80000"),
     MembershipCardWidget(id: "addCard", imageData: nil, backgroundColor: nil)
 ]
 
 struct QuickLaunchProvider: TimelineProvider {
     func placeholder(in context: Context) -> WidgetContent {
-        configureSnapshotEntry(context: context)
+        configureSnapshotEntry()
     }
 
     func getSnapshot(in context: Context, completion: @escaping (WidgetContent) -> Void) {
         // Widget gallery
-        completion(configureSnapshotEntry(context: context))
+        completion(configureSnapshotEntry())
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
@@ -31,12 +32,14 @@ struct QuickLaunchProvider: TimelineProvider {
         completion(timeline)
     }
     
-    private func configureSnapshotEntry(context: Context) -> WidgetContent {
-        let realContent = readContents()[0]
-        if realContent.walletCards.first?.id == WidgetUrlPath.addCard.rawValue {
-            return WidgetContent(walletCards: previewWalletCards, isPreview: context.isPreview)
+    private func configureSnapshotEntry() -> WidgetContent {
+        var widgetContentFromDisk = readContents()[0]
+        if widgetContentFromDisk.walletCards.first?.id == WidgetUrlPath.addCard.rawValue {
+            // Empty wallet state
+            return WidgetContent(walletCards: previewWalletCards, isPreview: true)
         } else {
-            return realContent
+            widgetContentFromDisk.isPreview = true
+            return widgetContentFromDisk
         }
     }
     
@@ -134,6 +137,7 @@ struct QuickLaunchEntryView: View {
 
     var twoColumnGrid = [GridItem(.flexible(), alignment: .topLeading), GridItem(.flexible())]
     let hasCurrentUser = UserDefaults(suiteName: "group.com.bink.wallet")?.bool(forKey: "hasCurrentUser") ?? false
+    
     var body: some View {
         if hasCurrentUser || model.isPreview == true {
             LazyVGrid(columns: twoColumnGrid, alignment: .leading, spacing: 5) {
@@ -159,13 +163,13 @@ struct QuickLaunchEntryView: View {
 
 @main
 struct BinkWidget: Widget {
-    let kind: String = "com.bink.QuickLaunch"
+    let kind: String = WidgetType.quickLaunch.identifier
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: QuickLaunchProvider()) { entry in
             QuickLaunchEntryView(model: entry)
         }
-        .configurationDisplayName("Bink quick launch")
+        .configurationDisplayName("Quick Launch")
         .description("Quickly access your favourite loyalty cards.")
         .supportedFamilies([.systemMedium])
     }
@@ -173,7 +177,7 @@ struct BinkWidget: Widget {
 
 struct BinkWidget_Previews: PreviewProvider {
     static var previews: some View {
-        QuickLaunchEntryView(model: WidgetContent(walletCards: previewWalletCards))
+        QuickLaunchEntryView(model: WidgetContent(walletCards: previewWalletCards, isPreview: false))
             .previewContext(WidgetPreviewContext(family: .systemMedium))
             .preferredColorScheme(.light)
     }

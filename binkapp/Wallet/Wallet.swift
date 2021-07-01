@@ -23,7 +23,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     private(set) var membershipPlans: [CD_MembershipPlan]?
     private(set) var membershipCards: [CD_MembershipCard]? {
         didSet {
-            WidgetController().writeContentsToDisc(membershipCards: membershipCards)
+            WidgetController().writeContentsToDisk(membershipCards: membershipCards)
         }
     }
     private(set) var paymentCards: [CD_PaymentCard]?
