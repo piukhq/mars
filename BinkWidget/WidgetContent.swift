@@ -19,6 +19,7 @@ enum WidgetUrlPath: String {
 struct WidgetContent: TimelineEntry, Codable {
     var date = Date()
     let walletCards: [MembershipCardWidget]
+    var isPreview: Bool? = false
 }
 
 struct MembershipCardWidget: Hashable, Codable {

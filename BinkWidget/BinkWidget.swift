@@ -10,42 +10,39 @@ import WidgetKit
 import SwiftUI
 
 let previewWalletCards: [MembershipCardWidget] = [
-    MembershipCardWidget(id: "addCard", imageData: UIImage(named: "hn")?.pngData(), backgroundColor: "#000000"),
-    MembershipCardWidget(id: "addCard", imageData: UIImage(named: "wasabi")?.pngData(), backgroundColor: "#bed633"),
+    MembershipCardWidget(id: "0", imageData: UIImage(named: "hn")?.pngData(), backgroundColor: "#000000"),
+    MembershipCardWidget(id: "1", imageData: UIImage(named: "wasabi")?.pngData(), backgroundColor: "#bed633"),
     MembershipCardWidget(id: "addCard", imageData: nil, backgroundColor: nil)
 ]
 
 struct QuickLaunchProvider: TimelineProvider {
     func placeholder(in context: Context) -> WidgetContent {
-        let realContent = readContents()[0]
-        if realContent.walletCards.isEmpty {
-            return WidgetContent(walletCards: previewWalletCards)
-        } else {
-            return realContent
-        }
+        configureSnapshotEntry(context: context)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (WidgetContent) -> Void) {
         // Widget gallery
-        let realContent = readContents()[0]
-        if realContent.walletCards.first?.id == WidgetUrlPath.addCard.rawValue {
-            completion(WidgetContent(walletCards: previewWalletCards))
-        } else {
-            completion(realContent)
-        }
+        completion(configureSnapshotEntry(context: context))
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         let entries = readContents()
-        
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
+    }
+    
+    private func configureSnapshotEntry(context: Context) -> WidgetContent {
+        let realContent = readContents()[0]
+        if realContent.walletCards.first?.id == WidgetUrlPath.addCard.rawValue {
+            return WidgetContent(walletCards: previewWalletCards, isPreview: context.isPreview)
+        } else {
+            return realContent
+        }
     }
     
     private func readContents() -> [WidgetContent] {
         var contents: [WidgetContent] = []
         let archiveURL = FileManager.sharedContainerURL().appendingPathComponent("contents.json")
-        print(">>> \(archiveURL)")
 
         let decoder = JSONDecoder()
         if let codeData = try? Data(contentsOf: archiveURL) {
@@ -134,11 +131,11 @@ struct SpacerView: View {
 
 struct QuickLaunchEntryView: View {
     let model: QuickLaunchProvider.Entry
+
     var twoColumnGrid = [GridItem(.flexible(), alignment: .topLeading), GridItem(.flexible())]
     let hasCurrentUser = UserDefaults(suiteName: "group.com.bink.wallet")?.bool(forKey: "hasCurrentUser") ?? false
-    
     var body: some View {
-        if hasCurrentUser {
+        if hasCurrentUser || model.isPreview == true {
             LazyVGrid(columns: twoColumnGrid, alignment: .leading, spacing: 5) {
                 ForEach(model.walletCards, id: \.self.id) { membershipCard in
                     switch membershipCard.id {
