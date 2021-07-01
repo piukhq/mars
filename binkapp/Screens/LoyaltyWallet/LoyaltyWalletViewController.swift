@@ -37,7 +37,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     @objc private func handlePointsScrapingUpdate() {
         DispatchQueue.main.async {
-            self.collectionView.reloadData()
+            self.reloadCollectionView()
         }
     }
 
@@ -88,6 +88,29 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         guard let membershipCard = viewModel.cards?[sourceIndexPath.row] else { return }
         Current.wallet.reorderMembershipCard(membershipCard, from: sourceIndexPath.row, to: destinationIndexPath.row)
+    }
+    
+    // MARK: - Diffable datasource
+    
+    override func setSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
+        snapshot.appendItems(viewModel.cards ?? [], toSection: .cards)
+        snapshot.appendItems(viewModel.walletPrompts ?? [], toSection: .prompts)
+    }
+    
+    override func cellHandler(for section: WalletDataSourceSection, dataSourceItem: AnyHashable, indexPath: IndexPath) -> UICollectionViewCell {
+        switch section {
+        case .cards:
+            let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+            guard let membershipCard = dataSourceItem as? CD_MembershipCard else { return cell }
+            let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
+            cell.configureUIWithViewModel(viewModel: cellViewModel, indexPath: indexPath, delegate: self)
+            return cell
+        case .prompts:
+            let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+            guard let walletPrompt = dataSourceItem as? WalletPrompt else { return cell }
+            cell.configureWithWalletPrompt(walletPrompt)
+            return cell
+        }
     }
 }
 
