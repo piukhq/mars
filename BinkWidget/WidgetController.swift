@@ -64,7 +64,7 @@ class WidgetController {
             ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil) { retrievedImage in
                 image = retrievedImage
             }
-
+            
             let membershipCardWidget = MembershipCardWidget(id: membershipCard.id, imageData: image?.pngData(), backgroundColor: membershipCard.membershipPlan?.card?.colour)
             widgetCards.append(membershipCardWidget)
         }

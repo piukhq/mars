@@ -67,11 +67,16 @@ struct WalletCardView: View {
         Link(destination: membershipCard.url) {
             HStack(alignment: .center, spacing: 0) {
                 if let imageData = membershipCard.imageData, let uiImage = UIImage(data: imageData) {
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .padding(.leading, 3.0)
-                        .frame(width: 36.0, height: 36.0)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 6, style: .continuous)
+                            .frame(width: 39, height: 39, alignment: .center)
+                            .foregroundColor(.white)
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 36.0, height: 36.0)
+                            .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
+                    }.shadow(color: Color(.displayP3, white: 2, opacity: 0.5), radius: 2, x: 1.0, y: 1.0)
                     Spacer()
                 } else {
                     RoundedRectangle(cornerRadius: 5)
@@ -82,7 +87,7 @@ struct WalletCardView: View {
             }
             .padding()
             .background(
-                RoundedRectangle(cornerRadius: 12.0)
+                RoundedRectangle(cornerRadius: 12.0, style: .continuous)
                     .frame(minWidth: 153, maxWidth: .infinity, minHeight: 64)
                     .foregroundColor(Color(UIColor(hexString: membershipCard.backgroundColor ?? "#009190")))
             )
@@ -106,11 +111,11 @@ struct AddCardView: View {
             }
             .padding()
             .overlay(
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .stroke(Color.gray, lineWidth: 1)
             )
             .background(
-                RoundedRectangle(cornerRadius: 12.0)
+                RoundedRectangle(cornerRadius: 12.0, style: .continuous)
                     .frame(minWidth: 153, maxWidth: .infinity, minHeight: 64)
                     .foregroundColor(Color(.clear))
             )
@@ -177,7 +182,7 @@ struct BinkWidget: Widget {
 
 struct BinkWidget_Previews: PreviewProvider {
     static var previews: some View {
-        QuickLaunchEntryView(model: WidgetContent(walletCards: previewWalletCards, isPreview: false))
+        QuickLaunchEntryView(model: WidgetContent(walletCards: previewWalletCards, isPreview: true))
             .previewContext(WidgetPreviewContext(family: .systemMedium))
             .preferredColorScheme(.light)
     }
