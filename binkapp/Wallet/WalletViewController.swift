@@ -78,7 +78,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         refreshControl.addTarget(self, action: #selector(reloadWallet), for: .valueChanged)
         
         configureCollectionView()
-                
+        
         if #available(iOS 14.0, *) {
             applySnapshot(animatingDifferences: true)
             configureDiffableDataSourceHandlers()
@@ -376,10 +376,26 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             return self?.diffableDataSource.indexPath(for: item)?.section == WalletDataSourceSection.cards.rawValue
         }
         
-        diffableDataSource.reorderingHandlers.didReorder = { [weak self] transaction in
-            guard let reorderedCards = transaction.finalSnapshot.itemIdentifiers(inSection: .cards) as? [WalletCard] else { return }
-            let reorderedIds = reorderedCards.compactMap { $0.id }
-            self?.viewModel.setLocalCardOrder(reorderedIds)
+        diffableDataSource.reorderingHandlers.didReorder = { transaction in
+            /// Looks a little hacky, but this is the only way to pull out a single element from a reorder transaction
+            /// We need a single element because we want to be able to use our existing reorder mechanism
+            /// Because we are only reordering a single card at a time, we know the first insertion here is the correct one
+            /// We can then use the insertion's associated enum values to access the element that has been moved, and cast it correctly
+            /// We then get the start and end index of this element from the transaction, and use our existing reorder mechanism
+            let insertion = transaction.difference.insertions.first
+            switch insertion {
+            case .insert(_, let element, _):
+                guard let startIndex = transaction.initialSnapshot.indexOfItem(element) else { return }
+                guard let endIndex = transaction.finalSnapshot.indexOfItem(element) else { return }
+                
+                if let membershipCard = element as? CD_MembershipCard {
+                    Current.wallet.reorderMembershipCard(membershipCard, from: startIndex, to: endIndex)
+                } else if let paymentCard = element as? CD_PaymentCard {
+                    Current.wallet.reorderPaymentCard(paymentCard, from: startIndex, to: endIndex)
+                }
+                
+            default: return
+            }
         }
     }
 }

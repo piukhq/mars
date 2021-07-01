@@ -23,7 +23,6 @@ protocol WalletViewModel {
     func toCardDetail(for card: T)
     func toSettings(rowsWithActionRequired: [SettingsRow.RowType]?, delegate: SettingsViewControllerDelegate?)
     func showDeleteConfirmationAlert(card: T, onCancel: @escaping () -> Void)
-    func setLocalCardOrder(_ order: [String])
 }
 
 extension WalletViewModel {

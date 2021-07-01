@@ -6,7 +6,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     private enum FetchType {
@@ -317,12 +317,12 @@ extension Wallet {
         return Current.userDefaults.value(forDefaultsKey: .localWalletOrder(userId: userId, walletType: walletType)) as? [String]
     }
 
-    func setLocalWalletOrder(_ newValue: [String]?, for walletType: WalletType) {
+    private func setLocalWalletOrder(_ newValue: [String]?, for walletType: WalletType) {
         guard let order = newValue else { return }
         guard let userId = Current.userManager.currentUserId else { return }
         Current.userDefaults.set(order, forDefaultsKey: .localWalletOrder(userId: userId, walletType: walletType))
     }
-
+    
     func reorderMembershipCard(_ card: CD_MembershipCard, from sourceIndex: Int, to destinationIndex: Int) {
         reorderWalletCard(card, in: &localMembershipCardsOrder, from: sourceIndex, to: destinationIndex, updating: &membershipCards)
     }
