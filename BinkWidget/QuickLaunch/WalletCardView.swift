@@ -15,7 +15,6 @@ enum QuickLaunchConstants {
 struct WalletCardView: View {
     let membershipCard: MembershipCardWidget
     
-    
     var body: some View {
         Link(destination: membershipCard.url) {
             HStack(alignment: .center, spacing: 0) {

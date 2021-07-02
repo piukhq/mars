@@ -80,6 +80,7 @@ struct QuickLaunchEntryView: View {
                     }
                 }
             }
+            .frame(height: 164)
             .padding(.all, 15.0)
             .background(Color("WidgetBackground"))
         } else {
