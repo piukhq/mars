@@ -26,7 +26,7 @@ enum WidgetType {
         }
     }
     
-    var userDefaultsSuite: String {
+    var userDefaultsSuiteID: String {
         switch self {
         default:
             return "group.com.bink.wallet"

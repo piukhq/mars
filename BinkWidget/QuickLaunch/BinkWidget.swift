@@ -64,7 +64,7 @@ struct QuickLaunchEntryView: View {
     let model: QuickLaunchProvider.Entry
 
     var twoColumnGrid = [GridItem(.flexible(), alignment: .topLeading), GridItem(.flexible())]
-    let hasCurrentUser = UserDefaults(suiteName: "group.com.bink.wallet")?.bool(forKey: "hasCurrentUser") ?? false
+    let hasCurrentUser = UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.bool(forKey: "hasCurrentUser") ?? false
     
     var body: some View {
         if hasCurrentUser || model.isPreview == true {
