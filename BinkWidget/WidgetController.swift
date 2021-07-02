@@ -20,7 +20,7 @@ class WidgetController {
                     let rootViewController = nav?.viewControllers.last
                     if rootViewController?.isKind(of: BrowseBrandsViewController.self) == true && urlPath == WidgetUrlPath.addCard.rawValue { return }
                     
-                    Current.navigate.close(animated: true) {
+                    Current.navigate.close(animated: false) {
                         self.navigateToQuickLaunchWidgetDestination(urlPath: urlPath)
                     }
                 } else {
@@ -39,15 +39,21 @@ class WidgetController {
     }
     
     private func navigateToQuickLaunchWidgetDestination(urlPath: String) {
-        let navigationRequest = TabBarNavigationRequest(tab: .loyalty, popToRoot: true, backgroundPushNavigationRequest: nil) {
+        guard let membershipCard = Current.wallet.membershipCards?.first(where: { $0.id == urlPath }) else {
             if urlPath == WidgetUrlPath.addCard.rawValue {
                 let viewController = ViewControllerFactory.makeBrowseBrandsViewController()
                 let navigationRequest = ModalNavigationRequest(viewController: viewController)
                 Current.navigate.to(navigationRequest)
-            } else {
-                guard let membershipCard = Current.wallet.membershipCards?.first(where: { $0.id == urlPath }) else { return }
-                let viewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: membershipCard)
-                let navigationRequest = PushNavigationRequest(viewController: viewController)
+            }
+            return
+        }
+        
+        let lcdViewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: membershipCard, animateContent: false)
+        let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController, animated: false)
+        let navigationRequest = TabBarNavigationRequest(tab: .loyalty, popToRoot: true, backgroundPushNavigationRequest: lcdNavigationRequest) {
+            if urlPath == WidgetUrlPath.addCard.rawValue {
+                let viewController = ViewControllerFactory.makeBrowseBrandsViewController()
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
                 Current.navigate.to(navigationRequest)
             }
         }
