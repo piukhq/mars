@@ -14,6 +14,15 @@ enum WalletViewControllerConstants {
     static let dotViewTopPadding: CGFloat = 3
 }
 
+enum WalletDataSourceSection: Int, CaseIterable {
+    case cards
+    case prompts
+}
+
+typealias WalletDataSourceItem = AnyHashable
+typealias WalletDataSource = UICollectionViewDiffableDataSource<WalletDataSourceSection, WalletDataSourceItem>
+typealias WalletDataSourceSnapshot = NSDiffableDataSourceSnapshot<WalletDataSourceSection, WalletDataSourceItem>
+
 class WalletViewController<T: WalletViewModel>: BinkViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, InAppReviewable {
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -23,39 +32,39 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         collectionView.contentInset = LayoutHelper.WalletDimensions.contentInset
         return collectionView
     }()
-
+    
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = LayoutHelper.WalletDimensions.cardLineSpacing
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         return layout
     }()
-
+    
     let refreshControl = UIRefreshControl()
     private var hasSupportUpdates = false
     private let dotView = UIView()
-
+    
     var orderingManager = WalletOrderingManager()
     private var distanceFromCenterOfCell: CGFloat?
     
     // We only want to use transition when tapping a wallet card cell and not when adding a new card
     var shouldUseTransition = false
     var indexPathOfCardToDelete: IndexPath?
-
+    
     let viewModel: T
-
+    
     init(viewModel: T) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(gesture:)))
         collectionView.addGestureRecognizer(longPressGesture)
         
@@ -65,12 +74,17 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         NotificationCenter.default.addObserver(self, selector: #selector(stopRefreshing), name: .noInternetConnection, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(stopRefreshing), name: .outageError, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(stopRefreshing), name: .outageSilentFail, object: nil)
-
+        
         refreshControl.addTarget(self, action: #selector(reloadWallet), for: .valueChanged)
-
+        
         configureCollectionView()
+        
+        if #available(iOS 14.0, *) {
+            applySnapshot(animatingDifferences: true)
+            configureDiffableDataSourceHandlers()
+        }
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
@@ -96,7 +110,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             }
         }
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         DispatchQueue.main.async { [weak self] in
@@ -159,18 +173,21 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     func checkForZendeskUpdates() {
         /// In case the Zendesk SDK is slow to return a state, we should configure the navigation item to a default state
         configureNavigationItem(hasSupportUpdates: Current.userDefaults.bool(forDefaultsKey: .hasSupportUpdates))
-
+        
         ZendeskService.getIdentityRequestUpdates { hasUpdates in
             self.configureNavigationItem(hasSupportUpdates: hasUpdates)
         }
     }
-
+    
     func configureCollectionView() {
-        collectionView.register(WalletPromptCollectionViewCell.self, asNib: true)
         view.addSubview(collectionView)
         collectionView.addSubview(refreshControl)
         
-        collectionView.dataSource = self
+        if #available(iOS 14.0, *) {
+            collectionView.dataSource = diffableDataSource
+        } else {
+            collectionView.dataSource = self
+        }
         collectionView.delegate = self
         
         NSLayoutConstraint.activate([
@@ -180,7 +197,17 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             collectionView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
     }
-
+    
+    func reloadCollectionView(animated: Bool = false) {
+        viewModel.setupWalletPrompts()
+        
+        if #available(iOS 14.0, *) {
+            applySnapshot(animatingDifferences: animated)
+        } else {
+            collectionView.reloadData()
+        }
+    }
+    
     func configureLoadingIndicator() {
         if Current.wallet.shouldDisplayLoadingIndicator {
             DispatchQueue.main.async { [weak self] in
@@ -189,37 +216,39 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             }
         }
     }
-
+    
     @objc func reloadWallet() {
         viewModel.reloadWallet()
     }
-
+    
     @objc private func refresh() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.refreshControl.endRefreshing()
         }
-        viewModel.setupWalletPrompts()
-        collectionView.reloadData()
+        reloadCollectionView(animated: true)
     }
     
     @objc private func refreshPostClear() {
         viewModel.refreshLocalWallet()
     }
-
+    
     @objc private func refreshLocal() {
-        if let indexPath = indexPathOfCardToDelete {
-            deleteCard(at: indexPath)
+        if #available(iOS 14.0, *) {
+            reloadCollectionView(animated: true)
         } else {
-            viewModel.setupWalletPrompts()
-            collectionView.reloadData()
+            if let indexPath = indexPathOfCardToDelete {
+                deleteCard(at: indexPath)
+            } else {
+                reloadCollectionView(animated: true)
+            }
         }
     }
     
     @objc private func stopRefreshing() {
         if let navigationBar = self.navigationController?.navigationBar {
             refreshControl.programaticallyEndRefreshing(in: self.collectionView, with: navigationBar)
-            collectionView.reloadData()
+            reloadCollectionView(animated: true)
         }
     }
     
@@ -227,8 +256,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         self.collectionView.performBatchUpdates({ [weak self] in
             self?.collectionView.deleteItems(at: [indexPath])
         }) { [weak self] _ in
-            self?.viewModel.setupWalletPrompts()
-            self?.collectionView.reloadData()
+            self?.reloadCollectionView(animated: true)
             self?.indexPathOfCardToDelete = nil
         }
     }
@@ -236,7 +264,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return section == 0 ? viewModel.cardCount : viewModel.walletPromptsCount
     }
@@ -244,38 +272,38 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return section == 0 ? .zero : UIEdgeInsets(top: 15.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         fatalError("Subclasses should override this method")
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         fatalError("Subclasses should override this method")
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         fatalError("Subclasses should override this method.")
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         fatalError("Subclass should override this.")
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         guard let cell = collectionView.cellForItem(at: indexPath) else { return false }
         return !cell.isKind(of: WalletPromptCollectionViewCell.self) && !cell.isKind(of: OnboardingCardCollectionViewCell.self)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath, toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
         guard let cell = collectionView.cellForItem(at: proposedIndexPath) else { return proposedIndexPath }
-
+        
         if cell.isKind(of: WalletPromptCollectionViewCell.self) || cell.isKind(of: OnboardingCardCollectionViewCell.self) {
             return originalIndexPath
         }
-
+        
         return proposedIndexPath
     }
-
+    
     @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
         switch gesture.state {
         case .began:
@@ -303,12 +331,72 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             collectionView.cancelInteractiveMovement()
         }
     }
-
+    
     override func configureForCurrentTheme() {
         super.configureForCurrentTheme()
         refreshControl.tintColor = Current.themeManager.color(for: .text)
-        collectionView.reloadData()
+        
+        /// This should never be set to animated: true as it will crash
+        /// in the payment wallet due to the cells not being registered yet.
+        reloadCollectionView()
         collectionView.indicatorStyle = Current.themeManager.scrollViewIndicatorStyle(for: traitCollection)
+    }
+    
+    // MARK: - Diffable data source
+    
+    private lazy var diffableDataSource = makeDataSource()
+    
+    private func makeDataSource() -> WalletDataSource {
+        let dataSource = WalletDataSource(collectionView: collectionView) { [weak self] _, indexPath, dataSourceItem in
+            guard let self = self else { fatalError("Failed to get self") }
+            guard let section = WalletDataSourceSection(rawValue: indexPath.section) else { fatalError("Failed to get section") }
+            return self.cellHandler(for: section, dataSourceItem: dataSourceItem, indexPath: indexPath)
+        }
+        return dataSource
+    }
+    
+    func cellHandler(for section: WalletDataSourceSection, dataSourceItem: AnyHashable, indexPath: IndexPath) -> UICollectionViewCell {
+        fatalError("Each wallet subclass should override this to provide specific behaviours.")
+    }
+    
+    func setSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
+        fatalError("Each wallet subclass should override this to append specific wallet items")
+    }
+    
+    func applySnapshot(animatingDifferences: Bool = false) {
+        var snapshot = WalletDataSourceSnapshot()
+        snapshot.appendSections(WalletDataSourceSection.allCases)
+        setSnapshot(&snapshot)
+        diffableDataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    }
+    
+    @available(iOS 14.0, *)
+    private func configureDiffableDataSourceHandlers() {
+        diffableDataSource.reorderingHandlers.canReorderItem = { [weak self] item in
+            return self?.diffableDataSource.indexPath(for: item)?.section == WalletDataSourceSection.cards.rawValue
+        }
+        
+        diffableDataSource.reorderingHandlers.didReorder = { transaction in
+            /// Looks a little hacky, but this is the only way to pull out a single element from a reorder transaction
+            /// We need a single element because we want to be able to use our existing reorder mechanism
+            /// Because we are only reordering a single card at a time, we know the first insertion here is the correct one
+            /// We can then use the insertion's associated enum values to access the element that has been moved, and cast it correctly
+            /// We then get the start and end index of this element from the transaction, and use our existing reorder mechanism
+            let insertion = transaction.difference.insertions.first
+            switch insertion {
+            case .insert(_, let element, _):
+                guard let startIndex = transaction.initialSnapshot.indexOfItem(element) else { return }
+                guard let endIndex = transaction.finalSnapshot.indexOfItem(element) else { return }
+                
+                if let membershipCard = element as? CD_MembershipCard {
+                    Current.wallet.reorderMembershipCard(membershipCard, from: startIndex, to: endIndex)
+                } else if let paymentCard = element as? CD_PaymentCard {
+                    Current.wallet.reorderPaymentCard(paymentCard, from: startIndex, to: endIndex)
+                }
+                
+            default: return
+            }
+        }
     }
 }
 
@@ -320,11 +408,11 @@ extension WalletViewController: SettingsViewControllerDelegate {
 
 struct WalletOrderingManager {
     var isReordering = false
-
+    
     mutating func start() {
         isReordering = true
     }
-
+    
     mutating func stop() {
         isReordering = false
     }
