@@ -14,14 +14,15 @@ struct UnauthenticatedSwiftUIView: View {
             Image("bink-logo")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .padding(.all, 19.0)
-            Text("Tap to sign in to Bink")
+                .frame(width: 140.0)
+            Spacer()
+                .frame(width: 68.0)
+            Text("Tap to sign in\n to Bink")
                 .font(.system(size: 12))
                 .fontWeight(.medium)
                 .multilineTextAlignment(.trailing)
-                .padding(.horizontal, 16.0)
         }
-        .padding(.vertical, 9.0)
+        .padding(.vertical, 20.0)
         .background(Color("UnAuthWidgetBackground"))
     }
 }

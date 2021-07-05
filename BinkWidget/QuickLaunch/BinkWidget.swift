@@ -111,7 +111,7 @@ struct BinkWidget: Widget {
 
 struct BinkWidget_Previews: PreviewProvider {
     static var previews: some View {
-        QuickLaunchEntryView(model: WidgetContent(walletCards: previewWalletCards, isPreview: true))
+        QuickLaunchEntryView(model: WidgetContent(walletCards: previewWalletCards, isPreview: false))
             .previewContext(WidgetPreviewContext(family: .systemMedium))
             .preferredColorScheme(.light)
     }
