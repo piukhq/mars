@@ -18,12 +18,12 @@ let previewWalletCards: [MembershipCardWidget] = [
 
 struct QuickLaunchProvider: TimelineProvider {
     func placeholder(in context: Context) -> WidgetContent {
-        configureSnapshotEntry()
+        configureSnapshotEntry(context: context)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (WidgetContent) -> Void) {
         // Widget gallery
-        completion(configureSnapshotEntry())
+        completion(configureSnapshotEntry(context: context))
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
@@ -32,21 +32,27 @@ struct QuickLaunchProvider: TimelineProvider {
         completion(timeline)
     }
     
-    private func configureSnapshotEntry() -> WidgetContent {
-        var widgetContentFromDisk = readContents()[0]
-        if widgetContentFromDisk.walletCards.first?.id == WidgetUrlPath.addCard.rawValue {
-            // Empty wallet state
-            return WidgetContent(walletCards: previewWalletCards, isPreview: true)
+    private func configureSnapshotEntry(context: Context) -> WidgetContent {
+        let hasCurrentUser = UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.bool(forKey: "hasCurrentUser") ?? false
+        var widgetContentFromDisk = readContents()
+
+        if widgetContentFromDisk.isEmpty {
+            // Nothing on disk - e.g. first launch
+            return WidgetContent(walletCards: previewWalletCards, isPreview: context.isPreview)
+        } else if widgetContentFromDisk[0].walletCards.first?.id == WidgetUrlPath.addCard.rawValue {
+            // Empty wallet state - single cell with plus button
+            return WidgetContent(walletCards: previewWalletCards, isPreview: context.isPreview)
         } else {
-            widgetContentFromDisk.isPreview = true
-            return widgetContentFromDisk
+            // User has cards in wallet
+            widgetContentFromDisk[0].isPreview = hasCurrentUser == true ? false : true
+            return widgetContentFromDisk[0]
         }
     }
     
     private func readContents() -> [WidgetContent] {
         var contents: [WidgetContent] = []
         let archiveURL = FileManager.sharedContainerURL().appendingPathComponent("contents.json")
-
+        
         let decoder = JSONDecoder()
         if let codeData = try? Data(contentsOf: archiveURL) {
             do {
@@ -84,7 +90,7 @@ struct QuickLaunchEntryView: View {
             .padding(.all, 15.0)
             .background(Color("WidgetBackground"))
         } else {
-            UnauthenticatedSwiftUIView()
+            UnauthenticatedSwiftUIView().unredacted()
         }
     }
 }
