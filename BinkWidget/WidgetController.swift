@@ -10,6 +10,14 @@ import UIKit
 import WidgetKit
 
 class WidgetController {
+    func reloadWidget(type: WidgetType) {
+        if #available(iOS 14.0, *) {
+            switch type {
+            case .quickLaunch:
+                WidgetCenter.shared.reloadTimelines(ofKind: WidgetType.quickLaunch.identifier)
+            }
+        }
+    }
     func handleURLForWidgetType(type: WidgetType, urlPath: String) {
         switch type {
         case .quickLaunch:
@@ -62,14 +70,11 @@ class WidgetController {
     
     func writeContentsToDisk(membershipCards: [CD_MembershipCard]?) {
         guard let walletCards = membershipCards else { return }
-//        widgetMembershipCards = []
-        
         let imageRequestGroup = DispatchGroup()
         var widgetCards: [MembershipCardWidget] = []
         
         for (i, membershipCard) in walletCards.enumerated() {
             guard let plan = membershipCard.membershipPlan, i < 4 else { break }
-//            widgetMembershipCards.append(membershipCard)
             imageRequestGroup.enter()
             
             ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil) { retrievedImage in
@@ -106,9 +111,7 @@ class WidgetController {
             if let dataToSave = try? encoder.encode(widgetContent) {
                 do {
                     try dataToSave.write(to: archiveURL)
-                    if #available(iOS 14.0, *) {
-                        WidgetCenter.shared.reloadTimelines(ofKind: WidgetType.quickLaunch.identifier)
-                    }
+                    self.reloadWidget(type: .quickLaunch)
                 } catch {
                     print("Error: Can't write contents")
                     return

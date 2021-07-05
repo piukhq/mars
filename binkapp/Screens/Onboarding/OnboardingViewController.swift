@@ -109,9 +109,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         startTimer()
-        if #available(iOS 14.0, *) {
-            WidgetCenter.shared.reloadTimelines(ofKind: WidgetType.quickLaunch.identifier)
-        }
+        WidgetController().reloadWidget(type: .quickLaunch)
     }
     
     override func viewDidAppear(_ animated: Bool) {

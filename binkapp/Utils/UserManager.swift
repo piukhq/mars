@@ -90,7 +90,6 @@ class UserManager {
                 try setEmail(with: loginRegisterResponse)
             }
             UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(true, forDefaultsKey: .hasCurrentUser)
-            
         } catch {
             if #available(iOS 14.0, *) {
                 BinkLogger.error(UserLoggerError.setNewUser, value: error.localizedDescription)
@@ -151,10 +150,7 @@ class UserManager {
         currentLastName = nil
         
         UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(false, forDefaultsKey: .hasCurrentUser)
-        
-        if #available(iOS 14.0, *) {
-            WidgetCenter.shared.reloadTimelines(ofKind: WidgetType.quickLaunch.identifier)
-        }
+        WidgetController().reloadWidget(type: .quickLaunch)
     }
     
     func clearKeychainIfNecessary() {
