@@ -14,7 +14,7 @@ struct WebScrapingCredentials {
     let password: String
 }
 
-struct PriorityScrapableCard {
+struct PriorityScrapableCard: Equatable {
     let cardId: String
     let planId: String
     
@@ -49,6 +49,7 @@ class WebScrapingUtility: NSObject {
     private let idleThreshold: TimeInterval = 20
     private let idleRetryLimit = 2
     private var idleRetryCount = 0
+    private var sessionHasAttemptedLogin = false
     
     private var userActionTimer: Timer?
 
@@ -130,6 +131,7 @@ class WebScrapingUtility: NSObject {
         idleRetryCount = 0
         userActionTimer?.invalidate()
         isPerformingUserAction = false
+        sessionHasAttemptedLogin = false
         
         if activeWebview != priorityWebview {
             activeWebview = nil
@@ -160,7 +162,7 @@ class WebScrapingUtility: NSObject {
         presentWebView()
         userActionTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] _ in
             guard let self = self else { return }
-            self.handleWebViewNavigation(stateConfigurator: .userActionRequired)
+            self.handleWebViewNavigation(stateConfigurator: WebScrapingStateConfigurator(userActionRequired: true))
         })
     }
     
@@ -168,7 +170,7 @@ class WebScrapingUtility: NSObject {
         isPerformingUserAction = false
         userActionTimer?.invalidate()
         closeWebView()
-        handleWebViewNavigation(stateConfigurator: .userActionComplete)
+        handleWebViewNavigation(stateConfigurator: WebScrapingStateConfigurator(userActionComplete: true))
     }
 
     private func presentWebView() {
@@ -258,9 +260,16 @@ extension WebScrapingUtility: WKNavigationDelegate {
         handleWebViewNavigation()
     }
     
-    enum WebScrapingStateConfigurator: String {
-        case userActionRequired
-        case userActionComplete
+    struct WebScrapingStateConfigurator: Encodable {
+        let userActionRequired: Bool
+        let userActionComplete: Bool
+        var skipLogin: Bool
+        
+        init(userActionRequired: Bool = false, userActionComplete: Bool = false, skipLogin: Bool = false) {
+            self.userActionRequired = userActionRequired
+            self.userActionComplete = userActionComplete
+            self.skipLogin = skipLogin
+        }
     }
 
     private func handleWebViewNavigation(stateConfigurator: WebScrapingStateConfigurator? = nil) {
@@ -274,7 +283,10 @@ extension WebScrapingUtility: WKNavigationDelegate {
             return
         }
         
-        let formattedScript = String(format: script, credentials.username, credentials.password, stateConfigurator?.rawValue ?? "")
+        var configurator = stateConfigurator ?? WebScrapingStateConfigurator()
+        configurator.skipLogin = self.sessionHasAttemptedLogin
+        let configDictionary = try? stateConfigurator?.asDictionary()
+        let formattedScript = String(format: script, credentials.username, credentials.password, configDictionary ?? "")
         runScript(formattedScript) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -305,11 +317,12 @@ extension WebScrapingUtility: WKNavigationDelegate {
                 // Login attempt
                 
                 if response.didAttemptLogin == true {
+                    self.sessionHasAttemptedLogin = true
                     if let card = self.membershipCard, self.activeWebview == self.priorityWebview {
                         /// At this point, we know we've attempted a login so there was no valid session
                         /// As we are using the priority web view, we know the membership card is the only one of it's plan type
                         /// We can safely assume the membership card can be move to the priority list and have it's session reused
-                        if let priorityCard = PriorityScrapableCard(membershipCard: card) {
+                        if let priorityCard = PriorityScrapableCard(membershipCard: card), !self.priorityScrapableCards.contains(priorityCard) {
                             self.priorityScrapableCards.append(priorityCard)
                         }
                     }

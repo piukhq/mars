@@ -1,14 +1,15 @@
 var username = "%@"
 var password = "%@"
+var configurator = "%@"
 
-var formQuery = "form#sign-in-form"
+var formQuery = "form#starbucks-login-form"
 var usernameInputQuery = "form#login-form input[type=email]"
 var passwordInputQuery = "form#login-form input[type=password]"
 var submitButtonQuery = "form#login-form button[type=submit]"
 
 var pointsValueQuery = "#pointSummary [class*=Points] [class*=Points]"
 
-var incorrectCredentialsQuery = "p.ui-component__notice__error-text"
+var incorrectCredentialsQuery = "p.js-title"
 
 handleNavigation()
 
@@ -23,10 +24,6 @@ function handleNavigation() {
             "points": num[0]
         }
     }
-
-    window.location.href = "https://www.google.com"
-
-    return {}
 
     // If we can't identify a points value, can we identify one of the following:
     // Recaptcha, incorrect credentials message
@@ -62,7 +59,7 @@ function handleNavigation() {
         }
         p.value = password
 
-        var b = Array.from(document.querySelectorAll('form#login-form button')).filter(el => el.type === "submit")[0]
+        var b = document.querySelector(submitButtonQuery)
         if (!b) {
             return {
                 "error_message": "Login failed. Submit button could not be identified."
