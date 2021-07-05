@@ -7,7 +7,9 @@ var usernameInputQuery = "form#login-form input[type=email]"
 var passwordInputQuery = "form#login-form input[type=password]"
 var submitButtonQuery = "form#login-form button[type=submit]"
 
-var pointsValueQuery = "#pointSummary [class*=Points] [class*=Points]"
+var rewardsNavButtonQuery = "a[href*=my-rewards]"
+
+var pointsValueQuery = ".balance-text"
 
 var incorrectCredentialsQuery = "p.js-title"
 
@@ -19,9 +21,8 @@ function handleNavigation() {
     var pts = document.querySelector(pointsValueQuery)
 
     if (pts) {
-        var num = pts.innerHTML.match(/\d+/);
         return {
-            "points": num[0]
+            "points": pts.innerText
         }
     }
 
@@ -70,6 +71,12 @@ function handleNavigation() {
         return {
             "did_attempt_login": true
         }
+    }
+
+    // If we can identify a button to navigate to the rewards page, press it
+    var r = document.querySelector(rewardsNavButtonQuery)
+    if (r) {
+        r.click()
     }
 
     // If we cannot identify a login form, points value, recaptcha or incorrect credentials

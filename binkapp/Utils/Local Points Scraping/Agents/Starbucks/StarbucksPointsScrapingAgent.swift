@@ -27,7 +27,7 @@ class StarbucksPointsScrapingAgent: WebScrapable {
     }
 
     var loyaltySchemeBalanceSuffix: String? {
-        return "points"
+        return "stars"
     }
 
     var scrapableUrlString: String {
