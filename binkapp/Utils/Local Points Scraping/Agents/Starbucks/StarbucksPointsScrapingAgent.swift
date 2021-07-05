@@ -31,7 +31,6 @@ class StarbucksPointsScrapingAgent: WebScrapable {
     }
 
     var scrapableUrlString: String {
-//        return "https://www.starbucks.co.uk/account/rewards/my-rewards"
         return "https://www.starbucks.co.uk/account/login"
     }
 }
