@@ -21,26 +21,22 @@ class AutomatedTesting_2_PaymentCards: XCTestCase {
     }
 
     func test_0_addMastercard_isSuccessful() {
-        app.tabBars["Tab Bar"].buttons["Payment"].tap()
-        
-//        app.collectionViews/*@START_MENU_TOKEN@*/.staticTexts["Collect rewards automatically for select loyalty cards by linking them to your payment cards."]/*[[".cells.staticTexts[\"Collect rewards automatically for select loyalty cards by linking them to your payment cards.\"]",".staticTexts[\"Collect rewards automatically for select loyalty cards by linking them to your payment cards.\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.buttons["Payment"].tap()
         app.collectionViews.cells["Wallet prompt"].tap()
         
-        // OK access to camera?
-        
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let okButton = springboard.buttons["OK"]
+        if okButton.waitForExistence(timeout: 10) {
+            okButton.tap()
+        }
 
-        app.collectionViews.cells["Wallet prompt"].children(matching: .other).element.children(matching: .other).element.tap()
-        app.alerts["“Bink β” Would Like to Access the Camera"].scrollViews.otherElements.buttons["OK"].tap()
-                
-        
-//        app.staticTexts["Enter Manually"].tap()
         app.images["Widget imageView"].tap()
         
         let elementsQuery = app.scrollViews.otherElements
         let collectionViewsQuery = elementsQuery.collectionViews
         let cardNumberTextField = collectionViewsQuery/*@START_MENU_TOKEN@*/.textFields["Card number"]/*[[".cells",".textFields[\"xxxx xxxx xxxx xxxx\"]",".textFields[\"Card number\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/
         cardNumberTextField.tap()
-//        cardNumberTextField.tap()
+        
         
         let doneButton = app.toolbars["Toolbar"].buttons["Done"]
         doneButton.tap()
