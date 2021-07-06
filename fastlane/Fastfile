@@ -94,6 +94,19 @@ platform :ios do
       in_house: false
     )
 
+    increment_build_number(build_number: options[:build_number])
+
+    run_tests(
+      workspace: "binkapp.xcworkspace",
+      device: "iPhone 12",
+      scheme: "binkapp tests"
+    )
+
+    build_app(
+      workspace: "binkapp.xcworkspace",
+      scheme: "binkapp app store"
+    )
+
     upload_to_testflight(
       changelog: "Merge request build for branch: " + options[:branch_name]
     )
