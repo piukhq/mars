@@ -162,7 +162,7 @@ class WebScrapingUtility: NSObject {
         presentWebView()
         userActionTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] _ in
             guard let self = self else { return }
-            self.handleWebViewNavigation(stateConfigurator: WebScrapingStateConfigurator(userActionRequired: true))
+            self.handleWebViewNavigation(stateConfigurator: .userActionRequired)
         })
     }
     
@@ -170,7 +170,7 @@ class WebScrapingUtility: NSObject {
         isPerformingUserAction = false
         userActionTimer?.invalidate()
         closeWebView()
-        handleWebViewNavigation(stateConfigurator: WebScrapingStateConfigurator(userActionComplete: true))
+        handleWebViewNavigation(stateConfigurator: .userActionComplete)
     }
 
     private func presentWebView() {
@@ -260,16 +260,10 @@ extension WebScrapingUtility: WKNavigationDelegate {
         handleWebViewNavigation()
     }
     
-    struct WebScrapingStateConfigurator: Encodable {
-        let userActionRequired: Bool
-        let userActionComplete: Bool
-        var skipLogin: Bool
-        
-        init(userActionRequired: Bool = false, userActionComplete: Bool = false, skipLogin: Bool = false) {
-            self.userActionRequired = userActionRequired
-            self.userActionComplete = userActionComplete
-            self.skipLogin = skipLogin
-        }
+    enum WebScrapingStateConfigurator: String {
+        case userActionRequired
+        case userActionComplete
+        case skipLogin
     }
 
     private func handleWebViewNavigation(stateConfigurator: WebScrapingStateConfigurator? = nil) {
@@ -283,10 +277,14 @@ extension WebScrapingUtility: WKNavigationDelegate {
             return
         }
         
-        var configurator = stateConfigurator ?? WebScrapingStateConfigurator()
-        configurator.skipLogin = self.sessionHasAttemptedLogin
-        let configDictionary = try? stateConfigurator?.asDictionary()
-        let formattedScript = String(format: script, credentials.username, credentials.password, configDictionary ?? "")
+        var configString = ""
+        if let stateConfig = stateConfigurator {
+            configString = stateConfig.rawValue
+        } else if self.sessionHasAttemptedLogin {
+            configString = WebScrapingStateConfigurator.skipLogin.rawValue
+        }
+        
+        let formattedScript = String(format: script, credentials.username, credentials.password, configString)
         runScript(formattedScript) { [weak self] result in
             guard let self = self else { return }
             switch result {

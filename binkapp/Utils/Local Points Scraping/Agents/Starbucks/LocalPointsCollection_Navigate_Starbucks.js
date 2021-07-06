@@ -37,39 +37,41 @@ function handleNavigation() {
         }
     }
 
-    // If we can identify the login form, login
+    // If we can identify the login form and the client isn't telling us we've already attempted it; login
 
-    var f = document.querySelector(formQuery)
-    if (f) {
-        // Override the form's id to enable easier querying
-        f.id = "login-form"
-
-        var u = document.querySelector(usernameInputQuery)
-        if (!u) {
-            return {
-                "error_message": "Login failed. Email/username input field could not be identified."
+    if (configurator !== "skipLogin") {
+        var f = document.querySelector(formQuery)
+        if (f) {
+            // Override the form's id to enable easier querying
+            f.id = "login-form"
+    
+            var u = document.querySelector(usernameInputQuery)
+            if (!u) {
+                return {
+                    "error_message": "Login failed. Email/username input field could not be identified."
+                }
             }
-        }
-        u.value = username
-
-        var p = document.querySelector(passwordInputQuery)
-        if (!p) {
-            return {
-                "error_message": "Login failed. Password input field could not be identified."
+            u.value = username
+    
+            var p = document.querySelector(passwordInputQuery)
+            if (!p) {
+                return {
+                    "error_message": "Login failed. Password input field could not be identified."
+                }
             }
-        }
-        p.value = password
-
-        var b = document.querySelector(submitButtonQuery)
-        if (!b) {
-            return {
-                "error_message": "Login failed. Submit button could not be identified."
+            p.value = password
+    
+            var b = document.querySelector(submitButtonQuery)
+            if (!b) {
+                return {
+                    "error_message": "Login failed. Submit button could not be identified."
+                }
             }
-        }
-        b.click()
-
-        return {
-            "did_attempt_login": true
+            b.click()
+    
+            return {
+                "did_attempt_login": true
+            }
         }
     }
 
