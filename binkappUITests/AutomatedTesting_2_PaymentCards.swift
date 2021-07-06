@@ -80,4 +80,19 @@ class AutomatedTesting_2_PaymentCards: XCTestCase {
         
         XCTAssertTrue(app.staticTexts["Linked to 1 loyalty card"].waitForExistence(timeout: 10))
     }
+    
+    func test_2_deleteIcelandAndPaymentCards_isSuccessful() {
+        app.collectionViews.cells["Iceland"].tap()
+        app.tables.cells["Delete Card"].tap()
+        app.buttons["Yes"].tap()
+        
+        XCTAssertFalse(app.collectionViews.cells["Iceland"].waitForExistence(timeout: 10))
+
+        app.buttons["Payment"].tap()
+        app.collectionViews.cells["B Testerson"].tap()
+        app.tables.cells["Delete this card"].tap()
+        app.buttons["Yes"].tap()
+
+        XCTAssertFalse(app.collectionViews.cells["B Testerson"].waitForExistence(timeout: 10))
+    }
 }
