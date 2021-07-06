@@ -82,7 +82,6 @@ platform :ios do
     match(type: "development", app_identifier: "com.bink.mybank.poc", readonly: false, force_for_new_devices: true)
     match(type: "development", app_identifier: "com.bink.wallet.alpha.widget", readonly: false, force_for_new_devices: true)
     match(type: "adhoc", app_identifier: "com.bink.wallet.beta.widget", readonly: false, force_for_new_devices: true)
-    match(type: "appstore", app_identifier: "com.bink.wallet.widget", readonly: false, force_for_new_devices: true)
 
   end
 
@@ -105,7 +104,7 @@ platform :ios do
 
     build_app(
       workspace: "binkapp.xcworkspace",
-      scheme: "binkapp app store"
+      scheme: "binkapp app store (internal)"
     )
 
     upload_to_testflight(
