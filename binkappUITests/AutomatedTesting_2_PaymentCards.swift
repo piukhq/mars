@@ -81,7 +81,18 @@ class AutomatedTesting_2_PaymentCards: XCTestCase {
         XCTAssertTrue(app.staticTexts["Linked to 1 loyalty card"].waitForExistence(timeout: 10))
     }
     
-    func test_2_deleteIcelandAndPaymentCards_isSuccessful() {
+    func test_2_cardIsVisibleAfterPullToRefresh_isTrue() {
+        app.buttons["Payment"].tap()
+
+        let paymentCardCell = app.collectionViews.cells["B Testerson"]
+        let start = paymentCardCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
+        let finish = paymentCardCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 50))
+        start.press(forDuration: 0, thenDragTo: finish)
+        
+        XCTAssertTrue(paymentCardCell.waitForExistence(timeout: 10))
+    }
+    
+    func test_3_deleteIcelandAndPaymentCards_isSuccessful() {
         app.collectionViews.cells["Iceland"].tap()
         app.tables.cells["Delete Card"].tap()
         app.buttons["Yes"].tap()
