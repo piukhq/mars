@@ -24,39 +24,33 @@ class AutomatedTesting_2_PaymentCards: XCTestCase {
         app.buttons["Payment"].tap()
         app.collectionViews.cells["Wallet prompt"].tap()
         
+        // Camera access alert
         let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
         let okButton = springboard.buttons["OK"]
-        if okButton.waitForExistence(timeout: 10) {
+        if okButton.waitForExistence(timeout: 1) { // <<<<<<<<<<<<<<<<<< change to 10
             okButton.tap()
         }
+        
+        app.staticTexts["Enter Manually"].tap()
 
-        app.images["Widget imageView"].tap()
-        
-        let elementsQuery = app.scrollViews.otherElements
-        let collectionViewsQuery = elementsQuery.collectionViews
-        let cardNumberTextField = collectionViewsQuery/*@START_MENU_TOKEN@*/.textFields["Card number"]/*[[".cells",".textFields[\"xxxx xxxx xxxx xxxx\"]",".textFields[\"Card number\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/
+        let cardNumberTextField = app.textFields["Card number"]
         cardNumberTextField.tap()
-        
-        
-        let doneButton = app.toolbars["Toolbar"].buttons["Done"]
-        doneButton.tap()
-        
-        let expiryTextField = collectionViewsQuery/*@START_MENU_TOKEN@*/.textFields["Expiry"]/*[[".cells",".textFields[\"MM\/YY\"]",".textFields[\"Expiry\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/
-        expiryTextField.tap()
+        cardNumberTextField.typeText("5555555555554444")
+
+        let expiryTextField = app.textFields["Expiry"]
         expiryTextField.tap()
         app/*@START_MENU_TOKEN@*/.pickerWheels["01"]/*[[".pickers.pickerWheels[\"01\"]",".pickerWheels[\"01\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.swipeUp()
         app/*@START_MENU_TOKEN@*/.pickerWheels["2021"]/*[[".pickers.pickerWheels[\"2021\"]",".pickerWheels[\"2021\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.swipeUp()
-        doneButton.tap()
-        collectionViewsQuery/*@START_MENU_TOKEN@*/.textFields["Name on card"]/*[[".cells",".textFields[\"J Appleseed\"]",".textFields[\"Name on card\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+        sleep(5)
+        
+        let nameTextField = app.textFields["Name on card"]
+        nameTextField.tap()
+        nameTextField.typeText("B Testerson")
         app/*@START_MENU_TOKEN@*/.buttons["done"]/*[[".keyboards",".buttons[\"done\"]",".buttons[\"Done\"]"],[[[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/.tap()
         app.buttons["Add"].tap()
         app.buttons["I accept"].tap()
-        app.navigationBars["binkapp.PaymentCardDetailView"].buttons["Back"].tap()
         
-        let element = app.collectionViews.children(matching: .cell).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element
-        element.swipeDown()
-        element.tap()
-        elementsQuery/*@START_MENU_TOKEN@*/.staticTexts["Not linked"]/*[[".cells.staticTexts[\"Not linked\"]",".staticTexts[\"Not linked\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-        
+        XCTAssertTrue(app.staticTexts["B Testerson"].waitForExistence(timeout: 10))
     }
 }
