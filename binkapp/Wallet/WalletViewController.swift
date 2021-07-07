@@ -368,7 +368,9 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         var snapshot = WalletDataSourceSnapshot()
         snapshot.appendSections(WalletDataSourceSection.allCases)
         setSnapshot(&snapshot)
-        diffableDataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+        DispatchQueue.main.async { [weak self] in
+            self?.diffableDataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+        }
     }
     
     @available(iOS 14.0, *)
@@ -377,7 +379,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             return self?.diffableDataSource.indexPath(for: item)?.section == WalletDataSourceSection.cards.rawValue
         }
         
-        diffableDataSource.reorderingHandlers.didReorder = { transaction in
+        diffableDataSource.reorderingHandlers.didReorder = { [weak self] transaction in
             /// Looks a little hacky, but this is the only way to pull out a single element from a reorder transaction
             /// We need a single element because we want to be able to use our existing reorder mechanism
             /// Because we are only reordering a single card at a time, we know the first insertion here is the correct one
@@ -395,6 +397,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
                     Current.wallet.reorderPaymentCard(paymentCard, from: startIndex, to: endIndex)
                 }
                 
+                self?.applySnapshot()
             default: return
             }
         }
