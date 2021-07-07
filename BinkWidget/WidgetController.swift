@@ -113,7 +113,9 @@ class WidgetController {
                     try dataToSave.write(to: archiveURL)
                     self.reloadWidget(type: .quickLaunch)
                 } catch {
-                    print("Error: Can't write contents")
+                    if #available(iOS 14.0, *) {
+                        BinkLogger.error(AppLoggerError.encodeWidgetContentsToDiskFailure, value: error.localizedDescription)
+                    }
                     return
                 }
             }

@@ -8,38 +8,49 @@
 
 import SwiftUI
 
-enum QuickLaunchConstants {
-    static let walletCardInsets = EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12)
-}
-
 struct WalletCardView: View {
     let membershipCard: MembershipCardWidget
+    
+    enum Constants {
+        static let insets = EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12)
+        static let cornerRadius: CGFloat = 12
+        static let imageBorderCornerRadius: CGFloat = 6
+        static let imageBorderSize: CGFloat = 39
+        static let imageSize: CGFloat = 36
+        static let imageCornerRadius: CGFloat = 5
+        static let placeholderImageCornerRadius: CGFloat = 5
+        static let placeholderForegroundColorAlpha: CGFloat = 0.5
+        static let shadowWhiteLevel: CGFloat = 2
+        static let shadowOpacity: CGFloat = 0.5
+        static let shadowRadius: CGFloat = 2
+        static let shadowOffset: CGFloat = 1.0
+    }
     
     var body: some View {
         Link(destination: membershipCard.url) {
             HStack(alignment: .center, spacing: 0) {
                 if let imageData = membershipCard.imageData, let uiImage = UIImage(data: imageData) {
                     ZStack {
-                        RoundedRectangle(cornerRadius: 6, style: .continuous)
-                            .frame(width: 39, height: 39, alignment: .center)
+                        RoundedRectangle(cornerRadius: Constants.imageBorderCornerRadius, style: .continuous)
+                            .frame(width: Constants.imageBorderSize, height: Constants.imageBorderSize, alignment: .center)
                             .foregroundColor(.white)
                         Image(uiImage: uiImage)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 36.0, height: 36.0)
-                            .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
-                    }.shadow(color: Color(.displayP3, white: 2, opacity: 0.5), radius: 2, x: 1.0, y: 1.0)
+                            .frame(width: Constants.imageSize, height: Constants.imageSize)
+                            .clipShape(RoundedRectangle(cornerRadius: Constants.imageCornerRadius, style: .continuous))
+                    }.shadow(color: Color(.displayP3, white: Constants.shadowWhiteLevel, opacity: Constants.shadowOpacity), radius: Constants.shadowRadius, x: Constants.shadowRadius, y: Constants.shadowRadius)
                     Spacer()
                 } else {
-                    RoundedRectangle(cornerRadius: 5)
-                        .frame(width: 36, height: 36, alignment: .center)
-                        .foregroundColor(Color(UIColor(hexString: "#FFFFFF", alpha: 0.5)))
+                    RoundedRectangle(cornerRadius: Constants.placeholderImageCornerRadius)
+                        .frame(width: Constants.imageSize, height: Constants.imageSize, alignment: .center)
+                        .foregroundColor(Color(UIColor(hexString: "#FFFFFF", alpha: Constants.placeholderForegroundColorAlpha)))
                     Spacer()
                 }
             }
-            .padding(QuickLaunchConstants.walletCardInsets)
+            .padding(Constants.insets)
             .background(
-                RoundedRectangle(cornerRadius: 12.0, style: .continuous)
+                RoundedRectangle(cornerRadius: Constants.cornerRadius, style: .continuous)
                     .foregroundColor(Color(UIColor(hexString: membershipCard.backgroundColor ?? "#009190")))
             )
         }

@@ -22,7 +22,7 @@ enum WidgetType {
     var identifier: String {
         switch self {
         case .quickLaunch:
-            return  "com.bink.QuickLaunch"
+            return  "com.bink.wallet.quicklaunchwidget"
         }
     }
     

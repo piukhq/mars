@@ -9,20 +9,27 @@
 import SwiftUI
 
 struct UnauthenticatedSwiftUIView: View {
+    enum Constants {
+        static let ImageWidth: CGFloat = 140.0
+        static let SpacerWidth: CGFloat = 68.0
+        static let VerticalPadding: CGFloat = 20.0
+        static let TextSize: CGFloat = 12.0
+    }
+    
     var body: some View {
         HStack(alignment: .center, spacing: 0) {
             Image("bink-logo")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 140.0)
+                .frame(width: Constants.ImageWidth)
             Spacer()
-                .frame(width: 68.0)
+                .frame(width: Constants.SpacerWidth)
             Text("Tap to sign in\n to Bink")
-                .font(.system(size: 12))
+                .font(.system(size: Constants.TextSize))
                 .fontWeight(.medium)
                 .multilineTextAlignment(.trailing)
         }
-        .padding(.vertical, 20.0)
+        .padding(.vertical, Constants.VerticalPadding)
         .background(Color("UnAuthWidgetBackground"))
     }
 }

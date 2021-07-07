@@ -328,6 +328,9 @@
 		CEA905BF25C986E6000F69E1 /* _CD_BaseImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA905BD25C986E6000F69E1 /* _CD_BaseImage.swift */; };
 		CEAB2D73266671C5006A0F43 /* HTMLParsingUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAB2D72266671C5006A0F43 /* HTMLParsingUtil.swift */; };
 		CEACE7212543309E004DD27E /* BinkHTTPHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEACE7202543309E004DD27E /* BinkHTTPHeaders.swift */; };
+		CEAF29FB26959E98006B6EB5 /* BinkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE539DFC25F0EBAB00BDA5EF /* BinkLogger.swift */; };
+		CEAF29FC26959FA7006B6EB5 /* BinkLoggerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54AF5C25F938720061838C /* BinkLoggerEvents.swift */; };
+		CEAF29FD2695A051006B6EB5 /* BinkLoggerErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */; };
 		CEC0ACBC2636AD0000845813 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBA2636AD0000845813 /* Assets.swift */; };
 		CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBB2636AD0000845813 /* Strings.swift */; };
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
@@ -339,7 +342,7 @@
 		CEE2091D268CC5C4004D3759 /* WidgetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE2091C268CC5C4004D3759 /* WidgetController.swift */; };
 		CEE20921268E1DAA004D3759 /* WalletCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE20920268E1DAA004D3759 /* WalletCardView.swift */; };
 		CEE20923268E1E0E004D3759 /* AddCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE20922268E1E0E004D3759 /* AddCardView.swift */; };
-		CEE20925268E1E3A004D3759 /* SpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE20924268E1E3A004D3759 /* SpacerView.swift */; };
+		CEE20925268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE20924268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift */; };
 		CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF389EA255D72E90063C718 /* DateExtensionTests.swift */; };
 		CEF837E925DA7AB10066C77E /* FeatureFlagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF837E825DA7AB10066C77E /* FeatureFlagsTableViewController.swift */; };
 		CEFB742325668A5100896DE5 /* BrandHeaderViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE387AA02565749D006BAC11 /* BrandHeaderViewTests.swift */; };
@@ -948,7 +951,7 @@
 		CEE2091C268CC5C4004D3759 /* WidgetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetController.swift; sourceTree = "<group>"; };
 		CEE20920268E1DAA004D3759 /* WalletCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCardView.swift; sourceTree = "<group>"; };
 		CEE20922268E1E0E004D3759 /* AddCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardView.swift; sourceTree = "<group>"; };
-		CEE20924268E1E3A004D3759 /* SpacerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacerView.swift; sourceTree = "<group>"; };
+		CEE20924268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLaunchWidgetGridSpacerView.swift; sourceTree = "<group>"; };
 		CEF389EA255D72E90063C718 /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		CEF837E825DA7AB10066C77E /* FeatureFlagsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsTableViewController.swift; sourceTree = "<group>"; };
 		DB088544234FD8A30041A67A /* PLLScreenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenRepository.swift; sourceTree = "<group>"; };
@@ -2343,7 +2346,7 @@
 				CEE20920268E1DAA004D3759 /* WalletCardView.swift */,
 				CE6DE57C268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift */,
 				CEE20922268E1E0E004D3759 /* AddCardView.swift */,
-				CEE20924268E1E3A004D3759 /* SpacerView.swift */,
+				CEE20924268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift */,
 			);
 			path = QuickLaunch;
 			sourceTree = "<group>";
@@ -3864,13 +3867,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEE20925268E1E3A004D3759 /* SpacerView.swift in Sources */,
+				CEE20925268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift in Sources */,
 				CEE2091B2689E1B7004D3759 /* FileManager+Extension.swift in Sources */,
 				CEE209152684653A004D3759 /* WidgetContent.swift in Sources */,
 				CEE20923268E1E0E004D3759 /* AddCardView.swift in Sources */,
+				CEAF29FD2695A051006B6EB5 /* BinkLoggerErrors.swift in Sources */,
+				CEAF29FC26959FA7006B6EB5 /* BinkLoggerEvents.swift in Sources */,
 				CE6DE57D268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift in Sources */,
 				CE6DE56B2681E8280063A3A9 /* BinkWidget.swift in Sources */,
 				CEE20921268E1DAA004D3759 /* WalletCardView.swift in Sources */,
+				CEAF29FB26959E98006B6EB5 /* BinkLogger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

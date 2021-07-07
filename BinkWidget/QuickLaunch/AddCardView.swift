@@ -10,6 +10,12 @@ import SwiftUI
 
 struct AddCardView: View {
     let membershipCard: MembershipCardWidget
+    
+    enum Constants {
+        static let addCardImageSize = CGSize(width: 20, height: 36)
+        static let cornerRadius: CGFloat = 12
+        static let lineWidth: CGFloat = 1
+    }
 
     var body: some View {
         Link(destination: membershipCard.url) {
@@ -18,18 +24,14 @@ struct AddCardView: View {
                 Image(systemName: "plus")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 20.0, height: 36.0)
+                    .frame(width: Constants.addCardImageSize.width, height: Constants.addCardImageSize.height)
                     .foregroundColor(.white)
                 Spacer()
             }
-            .padding(QuickLaunchConstants.walletCardInsets)
+            .padding(WalletCardView.Constants.insets)
             .overlay(
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .stroke(Color.gray, lineWidth: 1)
-            )
-            .background(
-                RoundedRectangle(cornerRadius: 12.0, style: .continuous)
-                    .foregroundColor(Color(.clear))
+                RoundedRectangle(cornerRadius: Constants.cornerRadius, style: .continuous)
+                    .stroke(Color.gray, lineWidth: Constants.lineWidth)
             )
         }
     }

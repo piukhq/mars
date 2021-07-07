@@ -79,10 +79,10 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         
         configureCollectionView()
         
-        if #available(iOS 14.0, *) {
-            applySnapshot(animatingDifferences: true)
-            configureDiffableDataSourceHandlers()
-        }
+//        if #available(iOS 14.0, *) {
+//            applySnapshot(animatingDifferences: true)
+//            configureDiffableDataSourceHandlers()
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -184,7 +184,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         collectionView.addSubview(refreshControl)
         
         if #available(iOS 14.0, *) {
-            collectionView.dataSource = diffableDataSource
+            collectionView.dataSource = self
         } else {
             collectionView.dataSource = self
         }
@@ -202,7 +202,9 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         viewModel.setupWalletPrompts()
         
         if #available(iOS 14.0, *) {
-            applySnapshot(animatingDifferences: animated)
+//            applySnapshot(animatingDifferences: animated)
+            collectionView.reloadData()
+
         } else {
             collectionView.reloadData()
         }

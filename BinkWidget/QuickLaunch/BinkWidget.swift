@@ -27,14 +27,14 @@ struct QuickLaunchProvider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
-        let entries = readContents()
+        let entries = readWidgetContentsFromDisk()
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
     }
     
     private func configureSnapshotEntry(context: Context) -> WidgetContent {
         let hasCurrentUser = UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.bool(forKey: "hasCurrentUser") ?? false
-        var widgetContentFromDisk = readContents()
+        var widgetContentFromDisk = readWidgetContentsFromDisk()
 
         if widgetContentFromDisk.isEmpty {
             // Nothing on disk - e.g. first launch
@@ -49,7 +49,7 @@ struct QuickLaunchProvider: TimelineProvider {
         }
     }
     
-    private func readContents() -> [WidgetContent] {
+    private func readWidgetContentsFromDisk() -> [WidgetContent] {
         var contents: [WidgetContent] = []
         let archiveURL = FileManager.sharedContainerURL().appendingPathComponent("contents.json")
         
@@ -59,7 +59,9 @@ struct QuickLaunchProvider: TimelineProvider {
                 let widgetContent = try decoder.decode(WidgetContent.self, from: codeData)
                 contents.append(widgetContent)
             } catch {
-                print("Error: can't decode contents")
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(AppLoggerError.decodeWidgetContentsFromDiskFailure, value: error.localizedDescription)
+                }
             }
         }
         return contents
@@ -72,6 +74,11 @@ struct QuickLaunchEntryView: View {
     var twoColumnGrid = [GridItem(.flexible(), alignment: .topLeading), GridItem(.flexible())]
     let hasCurrentUser = UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.bool(forKey: "hasCurrentUser") ?? false
     
+    enum Constants {
+        static let widgetHeight: CGFloat = 164
+        static let widgetPadding: CGFloat = 15
+    }
+    
     var body: some View {
         if hasCurrentUser || model.isPreview == true {
             LazyVGrid(columns: twoColumnGrid, alignment: .leading, spacing: 4) {
@@ -80,14 +87,14 @@ struct QuickLaunchEntryView: View {
                     case WidgetUrlPath.addCard.rawValue:
                         AddCardView(membershipCard: membershipCard)
                     case WidgetUrlPath.spacerZero.rawValue, WidgetUrlPath.spacerOne.rawValue:
-                        SpacerView()
+                        QuickLaunchWidgetGridSpacerView()
                     default:
                         WalletCardView(membershipCard: membershipCard)
                     }
                 }
             }
-            .frame(height: 164)
-            .padding(.all, 15.0)
+            .frame(height: Constants.widgetHeight)
+            .padding(.all, Constants.widgetPadding)
             .background(Color("WidgetBackground"))
         } else {
             UnauthenticatedSwiftUIView().unredacted()
