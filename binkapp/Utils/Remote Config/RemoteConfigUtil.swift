@@ -78,9 +78,9 @@ class RemoteConfigUtil {
         remoteConfig.fetch { [weak self] (status, error) in
             guard let self = self else { return }
             if status == .success {
-                self.remoteConfig.activate { (_, _) in
+                self.remoteConfig.activate { [weak self] (_, _) in
                     DispatchQueue.main.async {
-                        self.handleRemoteConfigFetch()
+                        self?.handleRemoteConfigFetch()
                     }
                     if #available(iOS 14.0, *) {
                         BinkLogger.info(event: AppLoggerEvent.fetchedRemoteConfig)

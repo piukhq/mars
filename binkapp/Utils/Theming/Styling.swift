@@ -107,5 +107,18 @@ enum Styling {
                 }
             }
         }
+        
+        static var insetGroupedTable: UIColor {
+            switch Current.themeManager.currentTheme.type {
+            case .light:
+                return UIColor(red: 243/255, green: 242/255, blue: 247/255, alpha: 1.0)
+            case .dark:
+                return .binkBlueViewBackground
+            case .system:
+                return UIColor { (traitcollection: UITraitCollection) -> UIColor in
+                    return traitcollection.userInterfaceStyle == .light ? UIColor(red: 243/255, green: 242/255, blue: 247/255, alpha: 1.0) : .binkBlueViewBackground
+                }
+            }
+        }
     }
 }

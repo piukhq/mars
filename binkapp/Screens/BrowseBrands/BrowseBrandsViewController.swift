@@ -46,6 +46,16 @@ class BrowseBrandsViewController: BinkViewController {
         return layout
     }()
     
+    private lazy var textfieldShadowLayer: UIView = {
+        let shadowLayer = UIView()
+        shadowLayer.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
+        shadowLayer.layer.cornerRadius = searchTextField.bounds.height / 2
+        shadowLayer.translatesAutoresizingMaskIntoConstraints = false
+        shadowLayer.clipsToBounds = false
+        shadowLayer.layer.applyDefaultBinkShadow()
+        return shadowLayer
+    }()
+    
     private var filterViewHeight: CGFloat {
         let height = CGFloat(round(Double(self.viewModel.filters.count) / 2) * Double( Constants.filterCellHeight))
         return height + Constants.filterViewHeightPadding
@@ -149,7 +159,7 @@ class BrowseBrandsViewController: BinkViewController {
         searchTextField.leftViewMode = .always
         searchTextField.autocapitalizationType = .words
         searchTextField.autocorrectionType = .no
-        
+
         // Magnifying glass icon
         let searchIconView = UIView(frame: CGRect(x: 0, y: 0, width: searchTextField.frame.height, height: searchTextField.frame.height))
         let searchImageView = UIImageView(frame: CGRect(x: Constants.searchIconLeftPadding, y: Constants.searchIconTopPadding, width: Constants.searchIconSideSize, height: Constants.searchIconSideSize))
@@ -163,6 +173,18 @@ class BrowseBrandsViewController: BinkViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
+        
+        if #available(iOS 14, *) {} else {
+            /// iOS 13
+            view.addSubview(textfieldShadowLayer)
+            NSLayoutConstraint.activate([
+                textfieldShadowLayer.leadingAnchor.constraint(equalTo: searchTextField.leadingAnchor),
+                textfieldShadowLayer.topAnchor.constraint(equalTo: searchTextField.topAnchor),
+                textfieldShadowLayer.heightAnchor.constraint(equalTo: searchTextField.heightAnchor),
+                textfieldShadowLayer.widthAnchor.constraint(equalTo: searchTextField.widthAnchor)
+            ])
+            view.sendSubviewToBack(textfieldShadowLayer)
+        }
     }
     
     @objc private func dismissKeyboard() {
@@ -274,7 +296,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
         guard let membershipPlan = viewModel.getMembershipPlan(for: indexPath) else { return cell }
         
         if let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
-            cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists)
+            cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists, indexPath: indexPath)
         }
         
         if tableView.cellAtIndexPathIsLastInSection(indexPath) {

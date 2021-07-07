@@ -24,10 +24,10 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
         sleep(10)
         app.buttons["Browse brands"].tap()
         sleep(10)
-        app.tables.staticTexts["Iceland"].tap()
+        app.tables.cells["Iceland"].tap()
         sleep(10)
         app.buttons["Add my card"].tap()
-        let cardNumberTextfield = app.textFields["You'll usually find this on the front of your loyalty card."]
+        let cardNumberTextfield = app.textFields["Bonus card number"]
         cardNumberTextfield.tap()
         cardNumberTextfield.typeText("6332040000200000002")
         app.buttons["next"].tap()
@@ -43,16 +43,16 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
         backButton.tap()
         
         sleep(60)
-
+        
         // Pull to refresh
-        let icelandCell = app.staticTexts["Iceland"]
+        let icelandCell = app.collectionViews.cells["Iceland"]
         let start = icelandCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
         let finish = icelandCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 50))
         start.press(forDuration: 0, thenDragTo: finish)
         
         sleep(15)
         
-        app.staticTexts["Iceland"].tap()
+        icelandCell.tap()
         XCTAssertTrue(app.staticTexts["£1 "].waitForExistence(timeout: 30))
     }
     
@@ -60,57 +60,57 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
         sleep(10)
         app.buttons["Browse brands"].tap()
         sleep(10)
-        app.tables.staticTexts["B&Q"].tap()
+        app.tables.cells["B&Q"].tap()
         sleep(10)
         app.buttons["Add my card"].tap()
-        let cardNumberTextfield = app.textFields.element
+        let cardNumberTextfield = app.textFields["Card number"]
         cardNumberTextfield.tap()
         cardNumberTextfield.typeText("6356661234567891")
 
         app.toolbars["Toolbar"].buttons["Done"].tap()
         app.buttons["Add card"].tap()
 
-        XCTAssertTrue(app.staticTexts["Tap to enlarge barcode"].waitForExistence(timeout: 30))
+        XCTAssertTrue(app.buttons["Show barcode button"].waitForExistence(timeout: 30))
     }
     
     func test_2_viewIcelandBarcode_isSuccessful() {
-        app.staticTexts["Iceland"].tap()
-        app.staticTexts["Tap to show card number"].tap()
+        app.collectionViews.cells["Iceland"].tap()
+        app.buttons["Show barcode button"].tap()
         let imageView = app.images["Barcode imageview"]
         XCTAssertTrue(imageView.waitForExistence(timeout: 10))
     }
     
     func test_3_viewBAndQBarcode_isSuccessful() {
-        app.staticTexts["B&Q"].tap()
-        app.staticTexts["Tap to enlarge barcode"].tap()
+        app.collectionViews.cells["B&Q"].tap()
+        app.buttons["Show barcode button"].tap()
         let imageView = app.images["Barcode imageview"]
         XCTAssertTrue(imageView.waitForExistence(timeout: 10))
     }
     
     func test_4_cardsAreVisibleAfterPullToRefresh_isTrue() {
-        let bAndQCell = app.staticTexts["B&Q"]
+        let bAndQCell = app.collectionViews.cells["B&Q"]
         let start = bAndQCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
         let finish = bAndQCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 50))
         start.press(forDuration: 0, thenDragTo: finish)
         
         sleep(10)
         
-        XCTAssertTrue(app.staticTexts["B&Q"].exists)
-        XCTAssertTrue(app.staticTexts["Iceland"].exists)
+        XCTAssertTrue(app.collectionViews.cells["B&Q"].exists)
+        XCTAssertTrue(app.collectionViews.cells["Iceland"].exists)
     }
     
     func test_5_deleteLoyaltyCards_isSuccessful() {
-        app.staticTexts["B&Q"].tap()
-        app.staticTexts["Remove this card from Bink"].tap()
+        app.collectionViews.cells["B&Q"].tap()
+        app.tables.cells["Delete B&Q Club Card"].tap()
         app.buttons["Yes"].tap()
         
         sleep(10)
 
-        app.staticTexts["Iceland"].tap()
-        app.staticTexts["Remove this card from Bink"].tap()
+        app.collectionViews.cells["Iceland"].tap()
+        app.tables.cells["Delete Card"].tap()
         app.buttons["Yes"].tap()
         
-        XCTAssertFalse(app.staticTexts["B&Q"].waitForExistence(timeout: 10))
-        XCTAssertFalse(app.staticTexts["Iceland"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.collectionViews.cells["B&Q"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.collectionViews.cells["Iceland"].waitForExistence(timeout: 10))
     }
 }

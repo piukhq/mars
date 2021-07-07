@@ -108,13 +108,19 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         cardLinkStatusLabel.font = .statusLabel
     }
     
-    func configureUIWithViewModel(viewModel: WalletLoyaltyCardCellViewModel, delegate: WalletLoyaltyCardCollectionViewCellDelegate) {
+    func configureUIWithViewModel(viewModel: WalletLoyaltyCardCellViewModel, indexPath: IndexPath, delegate: WalletLoyaltyCardCollectionViewCellDelegate) {
         self.viewModel = viewModel
         self.delegate = delegate
+        tag = indexPath.row
         
         guard let plan = viewModel.membershipPlan else { return }
-        cardIconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
-        
+        ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: traitCollection) { [weak self] image in
+            if self?.tag == indexPath.row {
+                self?.cardIconImageView.image = image
+            }
+        }
+        accessibilityIdentifier = plan.account?.companyName
+
         /// Brand colours
         let primaryBrandColor = UIColor(hexString: viewModel.brandColorHex ?? "")
         rectangleView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
