@@ -20,8 +20,8 @@ struct WalletCardView: View {
         static let imageCornerRadius: CGFloat = 5
         static let placeholderImageCornerRadius: CGFloat = 5
         static let placeholderForegroundColorAlpha: CGFloat = 0.5
-        static let shadowWhiteLevel: CGFloat = 2
-        static let shadowOpacity: CGFloat = 0.5
+        static let shadowWhiteLevel: Double = 2
+        static let shadowOpacity: Double = 0.5
         static let shadowRadius: CGFloat = 2
         static let shadowOffset: CGFloat = 1.0
     }
@@ -39,7 +39,7 @@ struct WalletCardView: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: Constants.imageSize, height: Constants.imageSize)
                             .clipShape(RoundedRectangle(cornerRadius: Constants.imageCornerRadius, style: .continuous))
-                    }.shadow(color: Color(.displayP3, white: Constants.shadowWhiteLevel, opacity: Constants.shadowOpacity), radius: Constants.shadowRadius, x: Constants.shadowRadius, y: Constants.shadowRadius)
+                    }.shadow(color: Color(.displayP3, white: Constants.shadowWhiteLevel, opacity: Constants.shadowOpacity), radius: Constants.shadowRadius, x: Constants.shadowOffset, y: Constants.shadowOffset)
                     Spacer()
                 } else {
                     RoundedRectangle(cornerRadius: Constants.placeholderImageCornerRadius)
