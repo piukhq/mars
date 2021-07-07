@@ -17,9 +17,15 @@ class RootStateMachine: NSObject, UserServiceProtocol {
         self.window = window
         NotificationCenter.default.addObserver(self, selector: #selector(handleLogout), name: .shouldLogout, object: nil)
 
-        if DTTJailbreakDetection.isJailbroken() {
-            moveTo(ViewControllerFactory.makeJailbrokenViewController())
-        } else if Current.userManager.currentToken == nil {
+//        if DTTJailbreakDetection.isJailbroken() {
+//            moveTo(ViewControllerFactory.makeJailbrokenViewController())
+//        } else if Current.userManager.currentToken == nil {
+//            handleUnauthenticated()
+//        } else {
+//            handleLogin()
+//        }
+        
+        if Current.userManager.currentToken == nil {
             handleUnauthenticated()
         } else {
             handleLogin()
