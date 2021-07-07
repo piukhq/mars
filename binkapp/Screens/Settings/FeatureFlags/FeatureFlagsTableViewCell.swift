@@ -26,8 +26,10 @@ class FeatureFlagsTableViewCell: UITableViewCell {
         
         titleLabel.text = feature.title
         titleLabel.textColor = Current.themeManager.color(for: .text)
+        titleLabel.font = .linkTextButtonNormal
         descriptionLabel.text = feature.description
         descriptionLabel.textColor = .binkDynamicGray3
+        descriptionLabel.font = .bodyTextSmall
         descriptionLabel.isHidden = feature.description == nil ? true : false
         toggleSwitch.isOn = feature.isEnabled
         selectionStyle = .none
