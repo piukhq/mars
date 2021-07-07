@@ -21,17 +21,17 @@ struct NetworkResponseData {
 typealias APIClientCompletionHandler<ResponseType: Any> = (Result<ResponseType, NetworkingError>, NetworkResponseData?) -> Void
 
 final class APIClient {
-    enum Certificates {
-        static let bink = Certificates.certificate(filename: "bink")
-
-        private static func certificate(filename: String) -> SecCertificate {
-            let filePath = Bundle.main.path(forResource: filename, ofType: "der")!
-            let data = try! Data(contentsOf: URL(fileURLWithPath: filePath))
-            let certificate = SecCertificateCreateWithData(nil, data as CFData)!
-
-            return certificate
-        }
-    }
+//    enum Certificates {
+//        static let bink = Certificates.certificate(filename: "bink")
+//
+//        private static func certificate(filename: String) -> SecCertificate {
+//            let filePath = Bundle.main.path(forResource: filename, ofType: "der")!
+//            let data = try! Data(contentsOf: URL(fileURLWithPath: filePath))
+//            let certificate = SecCertificateCreateWithData(nil, data as CFData)!
+//
+//            return certificate
+//        }
+//    }
 
     enum NetworkStrength: String {
         case wifi
@@ -84,17 +84,18 @@ final class APIClient {
     private let session: Session
 
     init() {
-        let url = EnvironmentType.production.rawValue
-        let evaluators = [
-            url:
-                PinnedCertificatesTrustEvaluator(certificates: [
-                    Certificates.bink
-                ])
-        ]
+//        let url = EnvironmentType.production.rawValue
+//        let evaluators = [
+//            url:
+//                PinnedCertificatesTrustEvaluator(certificates: [
+//                    Certificates.bink
+//                ])
+//        ]
 
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 10.0
-        session = Session(configuration: configuration, serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators))
+//        session = Session(configuration: configuration, serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators))
+        session = Session(configuration: configuration)
     }
 }
 
