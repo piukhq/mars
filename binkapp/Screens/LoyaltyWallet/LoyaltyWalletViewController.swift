@@ -46,7 +46,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
             let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
             guard let membershipCard = viewModel.cards?[indexPath.row] else { return cell }
             let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
-            cell.configureUIWithViewModel(viewModel: cellViewModel, delegate: self)
+            cell.configureUIWithViewModel(viewModel: cellViewModel, indexPath: indexPath, delegate: self)
             
             return cell
         } else {
