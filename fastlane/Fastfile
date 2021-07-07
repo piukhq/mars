@@ -85,7 +85,7 @@ platform :ios do
 
   end
 
-  desc "Submit MR build to TestFlight"
+  desc "Submit merge request build to TestFlight"
   lane :mr do |options|
     app_store_connect_api_key(
       key_id: ENV["FASTLANE_ASC_KEY_ID"],
