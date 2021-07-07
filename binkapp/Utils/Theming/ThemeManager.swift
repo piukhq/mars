@@ -16,6 +16,7 @@ class ThemeManager {
         case divider
         case text
         case bar
+        case insetGroupedTableBackground
     }
 
     init() {
@@ -64,6 +65,8 @@ class ThemeManager {
             return currentTheme.textColor
         case .bar:
             return currentTheme.barColor
+        case .insetGroupedTableBackground:
+            return currentTheme.insetGroupedTableBackgroundColor
         }
     }
 

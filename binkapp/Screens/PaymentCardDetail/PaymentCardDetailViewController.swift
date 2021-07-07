@@ -293,7 +293,7 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
                 let cellViewModel = PaymentCardDetailLinkLoyaltyCardCellViewModel(membershipCard: membershipCard, isLinked: isLinked)
 
                 if tableView.indexPathsForVisibleRows?.contains(indexPath) ?? false {
-                    cell.configureWithViewModel(cellViewModel, delegate: self)
+                    cell.configureWithViewModel(cellViewModel, indexPath: indexPath, delegate: self)
                 }
 
                 if tableView.cellAtIndexPathIsLastInSection(indexPath) {
@@ -306,7 +306,7 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
                 let cellViewModel = PaymentCardDetailLoyaltyCardStatusCellViewModel(membershipCard: membershipCard)
 
                 if tableView.indexPathsForVisibleRows?.contains(indexPath) ?? false {
-                    cell.configureWithViewModel(cellViewModel)
+                    cell.configureWithViewModel(cellViewModel, indexPath: indexPath)
                 }
 
                 if tableView.cellAtIndexPathIsLastInSection(indexPath) {
@@ -325,7 +325,7 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
             let cellViewModel = PaymentCardDetailAddLoyaltyCardCellViewModel(membershipPlan: plan)
 
             if tableView.indexPathsForVisibleRows?.contains(indexPath) ?? false {
-                cell.configureWithViewModel(cellViewModel)
+                cell.configureWithViewModel(cellViewModel, indexPath: indexPath)
             }
 
             if tableView.cellAtIndexPathIsLastInSection(indexPath) {
