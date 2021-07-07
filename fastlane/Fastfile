@@ -45,7 +45,6 @@ platform :ios do
     match(type: "development", app_identifier: "com.bink.wallet.alpha.widget", readonly: true)
     match(type: "adhoc", app_identifier: "com.bink.wallet.beta.widget", readonly: true)
     match(type: "appstore", app_identifier: "com.bink.wallet.widget", readonly: true)
-    match(type: "appstore", app_identifier: "com.bink.wallet.beta", readonly: true)
 
   end
 
@@ -82,6 +81,7 @@ platform :ios do
     match(type: "development", app_identifier: "com.bink.mybank.poc", readonly: false, force_for_new_devices: true)
     match(type: "development", app_identifier: "com.bink.wallet.alpha.widget", readonly: false, force_for_new_devices: true)
     match(type: "adhoc", app_identifier: "com.bink.wallet.beta.widget", readonly: false, force_for_new_devices: true)
+    match(type: "appstore", app_identifier: "com.bink.wallet.widget", readonly: false, force_for_new_devices: true)
 
   end
 
