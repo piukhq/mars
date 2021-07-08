@@ -105,7 +105,7 @@ class WidgetController {
             }
             
             let widgetContent = WidgetContent(walletCards: widgetCards)
-            let archiveURL = FileManager.sharedContainerURL().appendingPathComponent("contents.json")
+            guard let archiveURL = FileManager.sharedContainerURL()?.appendingPathComponent("contents.json") else { return }
             
             let encoder = JSONEncoder()
             if let dataToSave = try? encoder.encode(widgetContent) {

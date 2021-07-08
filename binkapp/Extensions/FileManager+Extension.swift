@@ -9,7 +9,8 @@
 import Foundation
 
 extension FileManager {
-    static func sharedContainerURL() -> URL {
-        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.bink.wallet")!
+    static func sharedContainerURL() -> URL? {
+        guard let sharedContainer = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.bink.wallet") else { return nil }
+        return sharedContainer
     }
 }
