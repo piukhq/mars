@@ -18,25 +18,28 @@ class AutomatedTesting_3_ZendeskFAQs: XCTestCase {
         
         app.launchArguments = ["UI-testing"]
         app.launch()
+        
+        app.navigationBars["binkapp.LoyaltyWalletView"].buttons["settings"].tap()
+        app.tables.cells["FAQs"].tap()
     }
     
-    func test_0_zendesk_isSuccessful() {
-        app.navigationBars["binkapp.LoyaltyWalletView"].buttons["settings"].tap()
-        
-//        let tablesQuery = app.tables
-//        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["Frequently asked questions"]/*[[".cells.staticTexts[\"Frequently asked questions\"]",".staticTexts[\"Frequently asked questions\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-        
-        app.tables.cells["FAQs"].tap()
-        
-//        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["Does Bink cost anything?"]/*[[".cells[\"Article: Does Bink cost anything?.\"]",".staticTexts[\"ZDKarticleTitleStandardFont\"]",".staticTexts[\"Does Bink cost anything?\"]",".staticTexts[\"ZDKarticleTitle\"]"],[[[-1,2],[-1,0,1]],[[-1,3],[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/.tap()
-//        app.navigationBars["Does Bink cost anything?"].buttons["Back"].tap()
-//        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["What is GDPR? "]/*[[".cells[\"Article: What is GDPR? .\"]",".staticTexts[\"ZDKarticleTitleStandardFont\"]",".staticTexts[\"What is GDPR? \"]",".staticTexts[\"ZDKarticleTitle\"]"],[[[-1,2],[-1,0,1]],[[-1,3],[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/.tap()
-//
-//        let webViewsQuery = app.scrollViews["ZDKarticleViewScrollView"].otherElements.webViews.webViews.webViews
-//        let whatIsGdprStaticText = webViewsQuery/*@START_MENU_TOKEN@*/.staticTexts["What is GDPR?"]/*[[".otherElements[\"What is GDPR?\"].staticTexts[\"What is GDPR?\"]",".staticTexts[\"What is GDPR?\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
-//        whatIsGdprStaticText.tap()
-//        webViewsQuery/*@START_MENU_TOKEN@*/.staticTexts["GDPR expands the privacy rights granted to data subjects (EU/EEA individuals) and places greater obligations on organisations who handle the personal data of those individuals, wherever those organisations are based."]/*[[".staticTexts[\"GDPR expands the privacy rights granted to data subjects (EU\/EEA individuals) and places greater obligations on organisations wh\"]",".staticTexts[\"GDPR expands the privacy rights granted to data subjects (EU\/EEA individuals) and places greater obligations on organisations who handle the personal data of those individuals, wherever those organisations are based.\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-//        whatIsGdprStaticText.tap()
-        
+    func test_1_zendesk_GDPR_article_exists() {
+        app.tables.staticTexts["What is GDPR? "].tap()
+        XCTAssertTrue(app.scrollViews["ZDKarticleViewScrollView"].otherElements.webViews.staticTexts["What is GDPR?"].waitForExistence(timeout: 3))
+    }
+    
+    func test_0_zendesk_allAboutBink_article_exists() {
+        app.tables.staticTexts["Does Bink cost anything?"].tap()
+        XCTAssertTrue(app.scrollViews["ZDKarticleViewScrollView"].otherElements.webViews.staticTexts["Does Bink cost anything?"].waitForExistence(timeout: 3))
     }
 }
+
+
+
+
+//        XCTAssertTrue(app.tables.staticTexts["Does Bink cost anything?"].waitForExistence(timeout: 2))
+//        XCTAssertTrue(app.tables.staticTexts["What is GDPR?"].waitForExistence(timeout: 2))
+//        XCTAssertTrue(app.tables.staticTexts["How do I download the Bink app?"].waitForExistence(timeout: 2))
+//        XCTAssertTrue(app.tables.staticTexts["Why is my payment card stuck in Pending?"].waitForExistence(timeout: 2))
+//        XCTAssertTrue(app.tables.staticTexts["How do I change the marketing messages I receive?"].waitForExistence(timeout: 2))
+//        XCTAssertTrue(app.tables.staticTexts["Why can't I link my card?"].waitForExistence(timeout: 2))
