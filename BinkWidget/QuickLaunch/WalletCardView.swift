@@ -39,7 +39,7 @@ struct WalletCardView: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: Constants.imageSize, height: Constants.imageSize)
                             .clipShape(RoundedRectangle(cornerRadius: Constants.imageCornerRadius, style: .continuous))
-                    }.shadow(color: Color(.displayP3, white: Constants.shadowWhiteLevel, opacity: Constants.shadowOpacity), radius: Constants.shadowRadius, x: Constants.shadowOffset, y: Constants.shadowOffset)
+                    }
                     Spacer()
                 } else {
                     RoundedRectangle(cornerRadius: Constants.placeholderImageCornerRadius)

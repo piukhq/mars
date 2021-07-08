@@ -2,7 +2,7 @@
   "object": {
     "pins": [
       {
-        "package": "Sentry",
+        "package": "sentry-cocoa",
         "repositoryURL": "https://github.com/getsentry/sentry-cocoa.git",
         "state": {
           "branch": null,
