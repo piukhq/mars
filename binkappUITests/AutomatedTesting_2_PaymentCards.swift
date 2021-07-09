@@ -39,15 +39,15 @@ class AutomatedTesting_2_PaymentCards: XCTestCase {
 
         let expiryTextField = app.textFields["Expiry"]
         expiryTextField.tap()
-        app/*@START_MENU_TOKEN@*/.pickerWheels["01"]/*[[".pickers.pickerWheels[\"01\"]",".pickerWheels[\"01\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.swipeUp()
-        app/*@START_MENU_TOKEN@*/.pickerWheels["2021"]/*[[".pickers.pickerWheels[\"2021\"]",".pickerWheels[\"2021\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.swipeUp()
+        app.pickerWheels["01"].swipeUp()
+        app.pickerWheels["2021"].swipeUp()
         
         sleep(5)
         
         let nameTextField = app.textFields["Name on card"]
         nameTextField.tap()
         nameTextField.typeText("B Testerson")
-        app/*@START_MENU_TOKEN@*/.buttons["done"]/*[[".keyboards",".buttons[\"done\"]",".buttons[\"Done\"]"],[[[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.buttons["done"].tap()
         app.buttons["Add"].tap()
         app.buttons["I accept"].tap()
         
