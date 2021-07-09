@@ -18,10 +18,12 @@ class AutomatedTesting_4_GoToSite: XCTestCase {
         
         app.launchArguments = ["UI-testing"]
         app.launch()
+//        sleep(4)
         app.buttons["Browse brands"].tap()
     }
     
     private func goToSiteAndAssertErrorAlertExistanceIsFalse() {
+//        sleep(3)
         app.buttons["Bink info button"].tap()
         app.buttons["Go to site"].tap()
         XCTAssertFalse(app.alerts.element.waitForExistence(timeout: 3))
