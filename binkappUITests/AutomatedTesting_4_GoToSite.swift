@@ -32,47 +32,47 @@ class AutomatedTesting_4_GoToSite: XCTestCase {
 //        goToSiteAndAssertErrorAlertExistanceIsFalse()
 //    }
 
-    func test_1_coOp_goToSite_loadsWebpage_successfully() {
+    func test_01_coOp_goToSite_loadsWebpage_successfully() {
         app.tables.cells["Co-op"].firstMatch.tap()
         goToSiteAndAssertErrorAlertExistanceIsFalse()
     }
 
-//    func test_2_fatFace_goToSite_loadsWebpage_successfully() {
+//    func test_02_fatFace_goToSite_loadsWebpage_successfully() {
 //        app.tables.cells["FatFace"].tap()
 //        goToSiteAndAssertErrorAlertExistanceIsFalse()
 //    }
 
-    func test_3_harveyNichols_goToSite_loadsWebpage_successfully() {
+    func test_03_harveyNichols_goToSite_loadsWebpage_successfully() {
         app.tables.cells["Harvey Nichols"].tap()
         goToSiteAndAssertErrorAlertExistanceIsFalse()
     }
 
-    func test_4_iceland_goToSite_loadsWebpage_successfully() {
+    func test_04_iceland_goToSite_loadsWebpage_successfully() {
         app.tables.cells["Iceland"].tap()
         goToSiteAndAssertErrorAlertExistanceIsFalse()
     }
     
-    func test_5_wasabi_goToSite_loadsWebpage_successfully() {
+    func test_05_wasabi_goToSite_loadsWebpage_successfully() {
         app.tables.cells["Wasabi"].tap()
         goToSiteAndAssertErrorAlertExistanceIsFalse()
     }
     
-//    func test_6_whSmith_goToSite_loadsWebpage_successfully() {
+//    func test_06_whSmith_goToSite_loadsWebpage_successfully() {
 //        app.tables.cells["WHSmith"].tap()
 //        goToSiteAndAssertErrorAlertExistanceIsFalse()
 //    }
     
-    func test_7_morrisons_goToSite_loadsWebpage_successfully() {
+    func test_07_morrisons_goToSite_loadsWebpage_successfully() {
         app.tables.cells["Morrisons"].tap()
         goToSiteAndAssertErrorAlertExistanceIsFalse()
     }
     
-    func test_8_superdrug_goToSite_loadsWebpage_successfully() {
+    func test_08_superdrug_goToSite_loadsWebpage_successfully() {
         app.tables.cells["Superdrug"].tap()
         goToSiteAndAssertErrorAlertExistanceIsFalse()
     }
     
-    func test_9_tesco_goToSite_loadsWebpage_successfully() {
+    func test_09_tesco_goToSite_loadsWebpage_successfully() {
         app.tables.cells["Tesco"].tap()
         goToSiteAndAssertErrorAlertExistanceIsFalse()
     }
@@ -302,10 +302,10 @@ class AutomatedTesting_4_GoToSite: XCTestCase {
         goToSiteAndAssertErrorAlertExistanceIsFalse()
     }
     
-    func test_55_rspb_goToSite_loadsWebpage_successfully() {
-        app.tables.cells["RSPB"].tap()
-        goToSiteAndAssertErrorAlertExistanceIsFalse()
-    }
+//    func test_55_rspb_goToSite_loadsWebpage_successfully() {
+//        app.tables.cells["RSPB"].tap()
+//        goToSiteAndAssertErrorAlertExistanceIsFalse()
+//    }
     
     func test_56_russellAndBromley_goToSite_loadsWebpage_successfully() {
         app.tables.cells["Russell & Bromley"].tap()
