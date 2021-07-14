@@ -42,6 +42,7 @@
 "add_payment_card_title" = "Add payment card";
 "add_payment_error_title" = "Error Adding Card";
 "add_payment_error_message" = "There was a problem adding your payment card. Please try again.";
+"add_loyalty_card_error_message" = "There was a problem adding your loyalty card. Please try again.";
 "scan_and_link_description" = "Scan and link your payment card";
 "card_linked_status" = "Linked";
 "card_link_now_status" = "Link now";
@@ -78,7 +79,7 @@
 "add_my_card_button" = "Add my card";
 "get_new_card_button" = "Get a new card";
 
-"auth_screen_description" = "Please enter your %@ credentials below to add this card to your wallet";
+"auth_screen_description" = "Please enter your %@ credentials below to add this card to your wallet.";
 
 "pll_title" = "Link to your Payment Cards";
 "see_title" = "See your balance";
@@ -130,7 +131,7 @@
 "learn_more" = "Learn more about how it works";
 
 "security_and_privacy_title" = "Security and privacy";
-"security_and_privacy_description" = "Bink takes the security of your information extremely seriously and uses a range of best in class methods to protect your information.\nBink is a registered PCI Level 1 Service Provider for the protection of sensitive first party data and personally identifiable information.";
+"security_and_privacy_description" = "Bink takes the security of your information extremely seriously and uses a range of best in class methods to protect your information.\n\nBink is a registered PCI Level 1 Service Provider for the protection of sensitive first party data and personally identifiable information.";
 "security_and_privacy_message" = "How we protect your data";
 "security_and_privacy_alert_title" = "Is my Data Secure?";
 
@@ -306,7 +307,7 @@
 "preferences_prompt" = "Make sure you’re the first to know about available rewards, offers and updates!\nYou can opt out at any time.";
 "preferences_prompt_highlight_rewards" = "rewards";
 "preferences_prompt_highlight_offers" = "offers";
-"preferences_prompt_highlight_updates" = "updates";
+"preferences_prompt_highlight_updates" = "updates!";
 
 "register_title" = "Sign up with email";
 "register_subtitle" = "All it takes is an email and password.";
@@ -445,7 +446,7 @@
 
 // MARK: - Who We Are
 "who_we_are_title" = "Who we are";
-"who_we_are_body" = "Below are a list of people that have been instrumental in developing the app you now hold in your hands.";
+"who_we_are_body" = "Below is a list of people that have been instrumental in developing the app you now hold in your hands.";
 
 // MARK: - Recommended App Update
 "recommended_app_update_title" = "App Update Available";

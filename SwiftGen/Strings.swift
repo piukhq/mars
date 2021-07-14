@@ -60,6 +60,8 @@ internal enum L10n {
   internal static let addJoinScreenViewDescriptionInactive = L10n.tr("Localizable", "add_join_screen_view_description_inactive")
   /// View
   internal static let addJoinScreenViewTitle = L10n.tr("Localizable", "add_join_screen_view_title")
+  /// There was a problem adding your loyalty card. Please try again.
+  internal static let addLoyaltyCardErrorMessage = L10n.tr("Localizable", "add_loyalty_card_error_message")
   /// Add loyalty card
   internal static let addLoyaltyCardTitle = L10n.tr("Localizable", "add_loyalty_card_title")
   /// Add my card
@@ -72,7 +74,7 @@ internal enum L10n {
   internal static let addPaymentErrorTitle = L10n.tr("Localizable", "add_payment_error_title")
   /// All
   internal static let allTitle = L10n.tr("Localizable", "all_title")
-  /// Please enter your %@ credentials below to add this card to your wallet
+  /// Please enter your %@ credentials below to add this card to your wallet.
   internal static func authScreenDescription(_ p1: Any) -> String {
     return L10n.tr("Localizable", "auth_screen_description", String(describing: p1))
   }
@@ -532,7 +534,7 @@ internal enum L10n {
   internal static let preferencesPromptHighlightOffers = L10n.tr("Localizable", "preferences_prompt_highlight_offers")
   /// rewards
   internal static let preferencesPromptHighlightRewards = L10n.tr("Localizable", "preferences_prompt_highlight_rewards")
-  /// updates
+  /// updates!
   internal static let preferencesPromptHighlightUpdates = L10n.tr("Localizable", "preferences_prompt_highlight_updates")
   /// Cannot retrieve your preferences at the moment. Please try again later.
   internal static let preferencesRetrieveFail = L10n.tr("Localizable", "preferences_retrieve_fail")
@@ -594,7 +596,7 @@ internal enum L10n {
   internal static let search = L10n.tr("Localizable", "search")
   /// Is my Data Secure?
   internal static let securityAndPrivacyAlertTitle = L10n.tr("Localizable", "security_and_privacy_alert_title")
-  /// Bink takes the security of your information extremely seriously and uses a range of best in class methods to protect your information.\nBink is a registered PCI Level 1 Service Provider for the protection of sensitive first party data and personally identifiable information.
+  /// Bink takes the security of your information extremely seriously and uses a range of best in class methods to protect your information.\n\nBink is a registered PCI Level 1 Service Provider for the protection of sensitive first party data and personally identifiable information.
   internal static let securityAndPrivacyDescription = L10n.tr("Localizable", "security_and_privacy_description")
   /// How we protect your data
   internal static let securityAndPrivacyMessage = L10n.tr("Localizable", "security_and_privacy_message")
@@ -756,7 +758,7 @@ internal enum L10n {
   internal static let wentWrong = L10n.tr("Localizable", "went_wrong")
   /// What is Magic Link?
   internal static let whatIsMagicLinkHyperlink = L10n.tr("Localizable", "what_is_magic_link_hyperlink")
-  /// Below are a list of people that have been instrumental in developing the app you now hold in your hands.
+  /// Below is a list of people that have been instrumental in developing the app you now hold in your hands.
   internal static let whoWeAreBody = L10n.tr("Localizable", "who_we_are_body")
   /// Who we are
   internal static let whoWeAreTitle = L10n.tr("Localizable", "who_we_are_title")

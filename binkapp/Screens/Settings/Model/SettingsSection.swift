@@ -65,6 +65,7 @@ struct SettingsRow {
     
     enum RowAction {
         case pushToViewController(viewController: UIViewController.Type)
+        case pushToSwiftUIView(swiftUIView: SwiftUIView)
         case pushToReusable(screen: ReusableScreen)
         case logout
         case customAction(action: VoidClosure)
@@ -81,6 +82,11 @@ struct SettingsRow {
     enum SupportService {
         case faq
         case contactUs
+    }
+    
+    enum SwiftUIView {
+        case whoWeAre
+        case featureFlags
     }
     
     let type: RowType

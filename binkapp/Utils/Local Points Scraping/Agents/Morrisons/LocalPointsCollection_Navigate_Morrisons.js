@@ -12,7 +12,7 @@ var recaptchaAnchorValidQuery = "re-captcha[class*=-valid]"
 var recaptchaAnchorContainerQuery = "re-captcha div"
 var recaptchaMessage = "You must resolve the CAPTCHA challenge to see your updated Morrisons balance in Bink.\n\n"
 
-var pointsValueQuery = ".quantity"
+var pointsValueQuery = "h1[class='g-h1 g-h1_large']"
 
 var incorrectCredentialsQuery = ".text-danger"
 

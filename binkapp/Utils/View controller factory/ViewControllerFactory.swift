@@ -8,6 +8,7 @@
 
 import UIKit
 import CardScan
+import SwiftUI
 
 enum ViewControllerFactory {
     // MARK: - Adding Cards
@@ -239,12 +240,16 @@ enum ViewControllerFactory {
         return WebViewController(urlString: urlString)
     }
 
-    static func makeDebugViewController() -> DebugMenuTableViewController {
-        let debugMenuFactory = DebugMenuFactory()
-        let debugMenuViewModel = DebugMenuViewModel(debugMenuFactory: debugMenuFactory)
-        let debugMenuViewController = DebugMenuTableViewController(viewModel: debugMenuViewModel)
-        debugMenuFactory.delegate = debugMenuViewController
-        return debugMenuViewController
+    static func makeDebugViewController() -> UIViewController {
+        if #available(iOS 14.0, *) {
+            return UIHostingController(rootView: DebugMenuView())
+        } else {
+            let debugMenuFactory = DebugMenuFactory()
+            let debugMenuViewModel = DebugMenuViewModel(debugMenuFactory: debugMenuFactory)
+            let debugMenuViewController = DebugMenuTableViewController(viewModel: debugMenuViewModel)
+            debugMenuFactory.delegate = debugMenuViewController
+            return debugMenuViewController
+        }
     }
 
     static func makeJailbrokenViewController() -> JailbrokenViewController {

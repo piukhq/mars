@@ -31,11 +31,21 @@ Adds a device to the portal
 fastlane ios setupForce
 ```
 Retrieve and force update all the certificates for all targets and configures your machine to compile against devices, including new ones. NOTE: This should only be run if new devices are required in the profiles and certificates
+### ios mr
+```
+fastlane ios mr
+```
+Submit MR build to TestFlight
 ### ios beta
 ```
 fastlane ios beta
 ```
 Submit branch to TestFlight
+### ios bump
+```
+fastlane ios bump
+```
+Increment the build number and commit to git
 ### ios beta_dsym
 ```
 fastlane ios beta_dsym

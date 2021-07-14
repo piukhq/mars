@@ -72,6 +72,7 @@ extension UserDefaults: BinkUserDefaults {
         case hasSupportUpdates
         case featureFlags
         case skippedRecommendedVersions
+        case lpcDebugMode
         
         var keyValue: String {
             switch self {
@@ -107,6 +108,8 @@ extension UserDefaults: BinkUserDefaults {
                 return "featureFlags"
             case .skippedRecommendedVersions:
                 return "skippedRecommendedVersions"
+            case .lpcDebugMode:
+                return "lpcDebugMode"
             }
         }
     }

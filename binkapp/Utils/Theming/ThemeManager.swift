@@ -9,13 +9,14 @@
 import UIKit
 import CardScan
 
-class ThemeManager {
+class ThemeManager: ObservableObject {
     enum ScreenElement {
         case viewBackground
         case walletCardBackground
         case divider
         case text
         case bar
+        case insetGroupedTableBackground
     }
 
     init() {
@@ -27,7 +28,7 @@ class ThemeManager {
         self.currentTheme = Theme(type: theme)
     }
 
-    var currentTheme: Theme {
+    @Published var currentTheme: Theme {
         didSet {
             if Current.featureManager.isFeatureEnabled(.themes) {
                 Current.userDefaults.set(currentTheme.type.rawValue, forDefaultsKey: .theme)
@@ -64,6 +65,8 @@ class ThemeManager {
             return currentTheme.textColor
         case .bar:
             return currentTheme.barColor
+        case .insetGroupedTableBackground:
+            return currentTheme.insetGroupedTableBackgroundColor
         }
     }
 

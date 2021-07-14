@@ -6,7 +6,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     private enum FetchType {
@@ -24,7 +24,6 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
 
     private var hasLaunched = false
 
-    private(set) var shouldDisplayWalletPrompts: Bool?
     var shouldDisplayLoadingIndicator: Bool {
         let shouldDisplay = !Current.userDefaults.bool(forDefaultsKey: .hasLaunchedWallet)
         Current.userDefaults.set(true, forDefaultsKey: .hasLaunchedWallet)
@@ -108,6 +107,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
 
     func handleLogout() {
         hasLaunched = false
+        membershipCards = nil
     }
 
     var hasPaymentCards: Bool {
@@ -149,8 +149,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             dispatchGroup.leave()
         }
 
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            self?.shouldDisplayWalletPrompts = type == .reload || type == .localReactive
+        dispatchGroup.notify(queue: .main) {
             NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
             completion?(true, nil)
         }
@@ -323,7 +322,7 @@ extension Wallet {
         guard let userId = Current.userManager.currentUserId else { return }
         Current.userDefaults.set(order, forDefaultsKey: .localWalletOrder(userId: userId, walletType: walletType))
     }
-
+    
     func reorderMembershipCard(_ card: CD_MembershipCard, from sourceIndex: Int, to destinationIndex: Int) {
         reorderWalletCard(card, in: &localMembershipCardsOrder, from: sourceIndex, to: destinationIndex, updating: &membershipCards)
     }

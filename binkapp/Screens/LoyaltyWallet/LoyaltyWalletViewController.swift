@@ -37,16 +37,16 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     @objc private func handlePointsScrapingUpdate() {
         DispatchQueue.main.async {
-            self.collectionView.reloadData()
+            self.reloadCollectionView()
         }
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row < viewModel.cardCount {
+        if indexPath.section == 0 {
             let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
             guard let membershipCard = viewModel.cards?[indexPath.row] else { return cell }
             let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
-            cell.configureUIWithViewModel(viewModel: cellViewModel, delegate: self)
+            cell.configureUIWithViewModel(viewModel: cellViewModel, indexPath: indexPath, delegate: self)
             
             return cell
         } else {
@@ -54,14 +54,13 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
             let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
             guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else { return cell }
             cell.configureWithWalletPrompt(walletPrompt)
-            
             return cell
         }
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let cell = collectionView.cellForItem(at: indexPath) else {
-            if indexPath.row < viewModel.cardCount {
+            if indexPath.section == 0 {
                 /// Wallet cards
                 return LayoutHelper.WalletDimensions.cardSize
             } else {
@@ -89,6 +88,29 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         guard let membershipCard = viewModel.cards?[sourceIndexPath.row] else { return }
         Current.wallet.reorderMembershipCard(membershipCard, from: sourceIndexPath.row, to: destinationIndexPath.row)
+    }
+    
+    // MARK: - Diffable datasource
+    
+    override func setSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
+        snapshot.appendItems(viewModel.cards ?? [], toSection: .cards)
+        snapshot.appendItems(viewModel.walletPrompts ?? [], toSection: .prompts)
+    }
+    
+    override func cellHandler(for section: WalletDataSourceSection, dataSourceItem: AnyHashable, indexPath: IndexPath) -> UICollectionViewCell {
+        switch section {
+        case .cards:
+            let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+            guard let membershipCard = dataSourceItem as? CD_MembershipCard else { return cell }
+            let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
+            cell.configureUIWithViewModel(viewModel: cellViewModel, indexPath: indexPath, delegate: self)
+            return cell
+        case .prompts:
+            let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+            guard let walletPrompt = dataSourceItem as? WalletPrompt else { return cell }
+            cell.configureWithWalletPrompt(walletPrompt)
+            return cell
+        }
     }
 }
 
@@ -129,7 +151,7 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
     
     func promptForDelete(with index: IndexPath, cell: WalletLoyaltyCardCollectionViewCell) {
         guard let card = viewModel.cards?[index.row] else { return }
-                
+        indexPathOfCardToDelete = index
         viewModel.showDeleteConfirmationAlert(card: card) {
             cell.set(to: .closed)
         }
