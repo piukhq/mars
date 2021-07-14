@@ -27,7 +27,7 @@ class AutomatedTesting_2_PaymentCards: XCTestCase {
         // Camera access alert
         let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
         let okButton = springboard.buttons["OK"]
-        if okButton.waitForExistence(timeout: 1) { // <<<<<<<<<<<<<<<<<< change to 10
+        if okButton.waitForExistence(timeout: 10) {
             okButton.tap()
         }
         
@@ -55,11 +55,11 @@ class AutomatedTesting_2_PaymentCards: XCTestCase {
     }
     
     func test_1_PLL_link_isSuccessful() {
-        sleep(1) // <<<<<<<<<<<<<<<<<< change to 10
+        sleep(10)
         app.buttons["Browse brands"].tap()
-        sleep(1)
+        sleep(10)
         app.tables.cells["Iceland"].tap()
-        sleep(1)
+        sleep(10)
         app.buttons["Add my card"].tap()
         let cardNumberTextfield = app.textFields["Bonus card number"]
         cardNumberTextfield.tap()

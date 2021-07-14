@@ -21,10 +21,12 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
     }
     
     func test_0_lcdModule_noPaymentCards_navigationIsCorrect() {
+        AutomatedTesting().loginIntoEnvironment(type: .dev)
+        sleep(10)
+        
         app.buttons["Browse brands"].tap()
-//        sleep(10)
         app.tables.cells["Iceland"].tap()
-//        sleep(10)
+        sleep(10)
         app.buttons["Add my card"].tap()
         let cardNumberTextfield = app.textFields["Bonus card number"]
         cardNumberTextfield.tap()
@@ -41,7 +43,7 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         let backButton = app.navigationBars["binkapp.LoyaltyCardFullDetailsView"].buttons["Back"]
         backButton.tap()
         
-        sleep(10) // <<<<<<< Change to 60
+        sleep(60)
         
         // Pull to refresh
         let icelandCell = app.collectionViews.cells["Iceland"]
