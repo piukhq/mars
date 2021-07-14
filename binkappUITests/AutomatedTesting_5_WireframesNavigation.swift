@@ -21,49 +21,60 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
     }
     
     func test_0_lcdModule_noPaymentCards_navigationIsCorrect() {
-//        app.buttons["Browse brands"].tap()
-////        sleep(10)
-//        app.tables.cells["Iceland"].tap()
-////        sleep(10)
-//        app.buttons["Add my card"].tap()
-//        let cardNumberTextfield = app.textFields["Bonus card number"]
-//        cardNumberTextfield.tap()
-//        cardNumberTextfield.typeText("6332040000200000002")
-//        app.buttons["next"].tap()
-//        app.typeText("one")
-//        app.buttons["next"].tap()
-//        app.typeText("rg1 1aa")
-//
-//        app.toolbars["Toolbar"].buttons["Done"].tap()
-//        app.buttons["Add card"].tap()
-//        app.buttons["Done"].tap()
-//        
-//        let backButton = app.navigationBars["binkapp.LoyaltyCardFullDetailsView"].buttons["Back"]
-//        backButton.tap()
-//        
-//        sleep(10) // <<<<<<< Change to 60
+        app.buttons["Browse brands"].tap()
+//        sleep(10)
+        app.tables.cells["Iceland"].tap()
+//        sleep(10)
+        app.buttons["Add my card"].tap()
+        let cardNumberTextfield = app.textFields["Bonus card number"]
+        cardNumberTextfield.tap()
+        cardNumberTextfield.typeText("6332040000200000002")
+        app.buttons["next"].tap()
+        app.typeText("one")
+        app.buttons["next"].tap()
+        app.typeText("rg1 1aa")
+
+        app.toolbars["Toolbar"].buttons["Done"].tap()
+        app.buttons["Add card"].tap()
+        app.buttons["Done"].tap()
+
+        let backButton = app.navigationBars["binkapp.LoyaltyCardFullDetailsView"].buttons["Back"]
+        backButton.tap()
+        
+        sleep(10) // <<<<<<< Change to 60
         
         // Pull to refresh
         let icelandCell = app.collectionViews.cells["Iceland"]
-//        let start = icelandCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
-//        let finish = icelandCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 50))
-//        start.press(forDuration: 0, thenDragTo: finish)
+        let start = icelandCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
+        let finish = icelandCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 50))
+        start.press(forDuration: 0, thenDragTo: finish)
+        
+        // >> Loyalty wallet
+        XCTAssertTrue(app.buttons["Browse brands"].exists)
         
         icelandCell.tap()
         
+        // >> LCD
         XCTAssertTrue(app.navigationBars["binkapp.LoyaltyCardFullDetailsView"].exists)
-        
+        XCTAssertTrue(app.buttons["Back"].exists)
+
         app.staticTexts["Link"].tap()
         
-        // >> Link to payment cards
-        
+        // >> PLL - No payment cards
+        XCTAssertTrue(app.navigationBars["binkapp.PLLScreenView"].exists)
+        XCTAssertTrue(app.buttons["close"].exists)
+
         app.buttons["Add payment cards"].tap()
         
-        // >> Scanner
+        // >> Loyalty scanner
+        XCTAssertTrue(app.staticTexts["Enter Manually"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["close"].exists)
+
         app.staticTexts["Enter Manually"].tap()
         
         // >> Add payment card
-        
+        XCTAssertTrue(app.navigationBars["binkapp.AddPaymentCardView"].exists)
+        XCTAssertTrue(app.navigationBars["binkapp.AddPaymentCardView"].buttons["close"].exists)
 
         let cardNumberTextField = app.textFields["Card number"]
         cardNumberTextField.tap()
@@ -82,12 +93,29 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         app.buttons["done"].tap()
         app.buttons["Add"].tap()
         
-        sleep(10)
+        // >> Terms and conditions
+        XCTAssertTrue(app.textViews["Terms and conditions"].exists)
+        XCTAssertTrue(app.navigationBars["binkapp.ReusableTemplateView"].buttons["close"].exists)
         
         app.buttons["I accept"].tap()
         
-        // PLL screen?
+        sleep(5)
         
-        app.buttons["Add payment cards"].tap()
+        // >> PLL - Payment cards
+        if app.staticTexts["Pending title"].exists {
+            app.staticTexts["Pending title"].tap()
+        } else {
+            app.staticTexts["PLL title label"].tap()
+        }
+        
+        app.buttons["close"].tap()
+        app.buttons["Back"].tap()
+        
+        start.press(forDuration: 0, thenDragTo: finish)
+        
+        sleep(10)
+        
+        icelandCell.tap()
+        XCTAssertTrue(app.staticTexts["Linked"].waitForExistence(timeout: 10))
     }
 }
