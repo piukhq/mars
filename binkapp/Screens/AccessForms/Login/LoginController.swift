@@ -102,7 +102,10 @@ extension LoginController {
     }
     
     func handleMagicLinkFailed() {
-        navigateToStatusScreen(for: .failed)
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: "Error", message: "Magic Link is temporarily unavailable, please try again later.")
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
+//        navigateToStatusScreen(for: .failed)
     }
     
     private func navigateToStatusScreen(for status: MagicLinkStatus, with dataSource: FormDataSource? = nil) {

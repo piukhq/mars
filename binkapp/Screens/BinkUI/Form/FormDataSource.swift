@@ -544,34 +544,39 @@ extension FormDataSource {
             fields.append(bundleIDField)
         }
         
-        if accessForm == .termsAndConditions {
-            let attributedTCs = NSMutableAttributedString(string: L10n.tandcsTitle + "\n" + L10n.tandcsDescription, attributes: [.font: UIFont.bodyTextSmall])
-            let baseTCs = NSString(string: attributedTCs.string)
-            let tcsRange = baseTCs.range(of: L10n.tandcsLink)
-            let privacyPolicyRange = baseTCs.range(of: L10n.ppolicyLink)
-            attributedTCs.addAttributes([.link: "https://bink.com/terms-and-conditions/"], range: tcsRange)
-            attributedTCs.addAttributes([.link: "https://bink.com/privacy-policy/"], range: privacyPolicyRange)
-            
-            let termsAndConditions = CheckboxView(checked: false)
-            termsAndConditions.accessibilityIdentifier = "Terms and conditions"
-            termsAndConditions.configure(title: attributedTCs, columnName: L10n.tandcsLink, columnKind: .none, delegate: self)
-            checkboxes.append(termsAndConditions)
+        let attributedTCs = NSMutableAttributedString(string: L10n.tandcsTitle + "\n" + L10n.tandcsDescription, attributes: [.font: UIFont.bodyTextSmall])
+        let baseTCs = NSString(string: attributedTCs.string)
+        let tcsRange = baseTCs.range(of: L10n.tandcsLink)
+        let privacyPolicyRange = baseTCs.range(of: L10n.ppolicyLink)
+        attributedTCs.addAttributes([.link: "https://bink.com/terms-and-conditions/"], range: tcsRange)
+        attributedTCs.addAttributes([.link: "https://bink.com/privacy-policy/"], range: privacyPolicyRange)
         
-            let attributedMarketing = NSMutableAttributedString(string: L10n.marketingTitle + "\n" + L10n.preferencesPrompt, attributes: [.font: UIFont.bodyTextSmall])
-            let baseMarketing = NSString(string: attributedMarketing.string)
-            let rewardsRange = baseMarketing.range(of: L10n.preferencesPromptHighlightRewards)
-            let offersRange = baseMarketing.range(of: L10n.preferencesPromptHighlightOffers)
-            let updatesRange = baseMarketing.range(of: L10n.preferencesPromptHighlightUpdates)
-            
-            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 14.0) ?? UIFont()]
-            
-            attributedMarketing.addAttributes(attributes, range: rewardsRange)
-            attributedMarketing.addAttributes(attributes, range: offersRange)
-            attributedMarketing.addAttributes(attributes, range: updatesRange)
-            
-            let marketingCheckbox = CheckboxView(checked: false)
-            marketingCheckbox.configure(title: attributedMarketing, columnName: "marketing-bink", columnKind: .userPreference, delegate: self, optional: true)
+        let termsAndConditions = CheckboxView(checked: false)
+        termsAndConditions.accessibilityIdentifier = "Terms and conditions"
+        termsAndConditions.configure(title: attributedTCs, columnName: L10n.tandcsLink, columnKind: .none, delegate: self)
+        
+        let attributedMarketing = NSMutableAttributedString(string: L10n.marketingTitle + "\n" + L10n.preferencesPrompt, attributes: [.font: UIFont.bodyTextSmall])
+        let baseMarketing = NSString(string: attributedMarketing.string)
+        let rewardsRange = baseMarketing.range(of: L10n.preferencesPromptHighlightRewards)
+        let offersRange = baseMarketing.range(of: L10n.preferencesPromptHighlightOffers)
+        let updatesRange = baseMarketing.range(of: L10n.preferencesPromptHighlightUpdates)
+        
+        let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 14.0) ?? UIFont()]
+        
+        attributedMarketing.addAttributes(attributes, range: rewardsRange)
+        attributedMarketing.addAttributes(attributes, range: offersRange)
+        attributedMarketing.addAttributes(attributes, range: updatesRange)
+        
+        let marketingCheckbox = CheckboxView(checked: false)
+        marketingCheckbox.configure(title: attributedMarketing, columnName: "marketing-bink", columnKind: .userPreference, delegate: self, optional: true)
+        
+        if accessForm == .termsAndConditions {
+            checkboxes.append(termsAndConditions)
             checkboxes.append(marketingCheckbox)
+        }
+        
+        if accessForm == .magicLink {
+            checkboxes.append(termsAndConditions)
         }
     }
     

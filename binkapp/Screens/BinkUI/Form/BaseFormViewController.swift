@@ -103,6 +103,7 @@ class BaseFormViewController: BinkViewController, Form {
         descriptionLabel.text = description
         if let attrDescription = attributedDescription {
             textView.attributedText = attrDescription
+            textView.delegate = self
         }
     }
     
@@ -213,6 +214,12 @@ extension BaseFormViewController {
 extension BaseFormViewController: CheckboxViewDelegate {
     func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {
         formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
+    }
+}
+
+extension BaseFormViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        return false
     }
 }
 

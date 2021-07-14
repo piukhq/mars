@@ -43,6 +43,13 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         return attributedDescription
     }()
     
+    override func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        let viewController = ViewControllerFactory.makeWebViewController(urlString: URL.absoluteString)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+        return false
+    }
+    
     private var loginType: AccessForm = .magicLink
     
     init() {
@@ -56,9 +63,6 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //        stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: L10n.loginForgotPassword)])
-        
         footerButtons = [continueButton, switchLoginTypeButton]
     }
     
@@ -66,20 +70,6 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .login)
     }
-    
-    //    private func hyperlinkButton(title: String) -> UIButton {
-    //        let button = UIButton(type: .custom)
-    //        button.translatesAutoresizingMaskIntoConstraints = false
-    //        let attrString = NSAttributedString(
-    //            string: title,
-    //            attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
-    //        )
-    //        button.setAttributedTitle(attrString, for: .normal)
-    //        button.contentHorizontalAlignment = .left
-    //        button.heightAnchor.constraint(equalToConstant: Constants.hyperlinkHeight).isActive = true
-    //        button.addTarget(self, action: .forgotPasswordTapped, for: .touchUpInside)
-    //        return button
-    //    }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
         continueButton.enabled = fullFormIsValid
