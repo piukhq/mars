@@ -57,14 +57,6 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
         }
     }()
 
-    private lazy var issuesLoggingInButton: BinkButton = {
-        return BinkButton(type: .plain, title: L10n.loginIssues) { [weak self] in
-            if let url = URL(string: "https://help.bink.com/hc/en-gb/categories/360002202520-Frequently-Asked-Questions"),  UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url, options: [:])
-            }
-        }
-    }()
-
     lazy var signInWithAppleButton: ASAuthorizationAppleIDButton = {
         let button = ASAuthorizationAppleIDButton(type: .continue, style: .black)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -149,7 +141,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
             pageControl.centerXAnchor.constraint(equalTo: learningContainer.centerXAnchor)
         ])
 
-        footerButtons = [loginWithEmailButton, issuesLoggingInButton]
+        footerButtons = [loginWithEmailButton]
     }
 
     @objc private func handleAppleIdRequest() {

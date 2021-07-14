@@ -264,7 +264,7 @@ internal enum L10n {
   internal static let loginSubtitle = L10n.tr("Localizable", "login_subtitle")
   /// Login with email
   internal static let loginTitle = L10n.tr("Localizable", "login_title")
-  /// Login with email
+  /// Continue with Email
   internal static let loginWithEmailButton = L10n.tr("Localizable", "login_with_email_button")
   /// Login with password
   internal static let loginWithPassword = L10n.tr("Localizable", "login_with_password")
