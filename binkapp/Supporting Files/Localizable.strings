@@ -296,7 +296,7 @@
 
 "continue_button_title" = "Continue";
 "login_with_password" = "Use a password";
-"email_magic_link" = "Login with Magic Link";
+"email_magic_link" = "Use magic link";
 
 "add_email_title" = "Add email";
 "add_email_subtitle" = "Please add your email address below.";
@@ -314,8 +314,8 @@
 "register_failed" = "Registration failed.";
 
 "login_issues" = "Issues logging in?";
-"login_title" = "Login with email";
-"login_subtitle" = "Use your email address and password to log in to the app.";
+"login_title" = "Log in";
+"login_subtitle" = "Welcome back!";
 "login_error" =  "Incorrect email/password. Please try again.";
 "login_forgot_password" = "Forgot password";
 "forgot_password_description" = "Please enter your email address and if it is associated with a Bink account, then a password reset email will be sent";

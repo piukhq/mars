@@ -180,7 +180,7 @@ internal enum L10n {
   internal static let detailsHeaderShowQrCode = L10n.tr("Localizable", "details_header_show_qr_code")
   /// Done
   internal static let done = L10n.tr("Localizable", "done")
-  /// Login with Magic Link
+  /// Use magic link
   internal static let emailMagicLink = L10n.tr("Localizable", "email_magic_link")
   /// Error
   internal static let errorTitle = L10n.tr("Localizable", "error_title")
@@ -260,9 +260,9 @@ internal enum L10n {
   internal static let loginForgotPassword = L10n.tr("Localizable", "login_forgot_password")
   /// Issues logging in?
   internal static let loginIssues = L10n.tr("Localizable", "login_issues")
-  /// Use your email address and password to log in to the app.
+  /// Welcome back!
   internal static let loginSubtitle = L10n.tr("Localizable", "login_subtitle")
-  /// Login with email
+  /// Log in
   internal static let loginTitle = L10n.tr("Localizable", "login_title")
   /// Continue with Email
   internal static let loginWithEmailButton = L10n.tr("Localizable", "login_with_email_button")
