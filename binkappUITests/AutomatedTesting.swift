@@ -42,6 +42,8 @@ class AutomatedTesting {
             logout()
         }
         
+        sleep(30)
+        
         app.scrollViews["Learning scrollview"].tap(withNumberOfTaps: 3, numberOfTouches: 1)
         if app.tables.cells["Environment Base URL"].exists {
             app.tables.cells["Environment Base URL"].tap()
