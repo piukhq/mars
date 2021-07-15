@@ -64,19 +64,19 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         app.staticTexts["Link"].tap()
         
         // >> PLL - No payment cards
-        XCTAssertTrue(app.navigationBars["binkapp.PLLScreenView"].exists)
-        XCTAssertTrue(app.buttons["close"].exists)
+        XCTAssertTrue(app.navigationBars["binkapp.PLLScreenView"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["close"].waitForExistence(timeout: 10))
 
         app.buttons["Add payment cards"].tap()
         
         // >> Loyalty scanner
-        XCTAssertTrue(app.staticTexts["Enter Manually"].waitForExistence(timeout: 3))
-        XCTAssertTrue(app.buttons["close"].exists)
+        XCTAssertTrue(app.staticTexts["Enter Manually"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["close"].waitForExistence(timeout: 10))
 
         app.staticTexts["Enter Manually"].tap()
         
         // >> Add payment card
-        XCTAssertTrue(app.navigationBars["binkapp.AddPaymentCardView"].exists)
+        XCTAssertTrue(app.navigationBars["binkapp.AddPaymentCardView"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.navigationBars["binkapp.AddPaymentCardView"].buttons["close"].exists)
 
         let cardNumberTextField = app.textFields["Card number"]
@@ -88,7 +88,7 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         app.pickerWheels["01"].swipeUp()
         app.pickerWheels["2021"].swipeUp()
         
-        sleep(5)
+        sleep(10)
         
         let nameTextField = app.textFields["Name on card"]
         nameTextField.tap()
@@ -97,12 +97,12 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         app.buttons["Add"].tap()
         
         // >> Terms and conditions
-        XCTAssertTrue(app.textViews["Terms and conditions"].exists)
-        XCTAssertTrue(app.navigationBars["binkapp.ReusableTemplateView"].buttons["close"].exists)
+        XCTAssertTrue(app.textViews["Terms and conditions"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.navigationBars["binkapp.ReusableTemplateView"].buttons["close"].waitForExistence(timeout: 10))
         
         app.buttons["I accept"].tap()
         
-        sleep(5)
+        sleep(10)
         
         // >> PLL - Payment cards
         if app.staticTexts["Pending title"].exists {
