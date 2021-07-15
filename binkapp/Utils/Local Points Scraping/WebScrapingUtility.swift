@@ -118,7 +118,9 @@ class WebScrapingUtility: NSObject {
         }
         
         if priorityPlanIds.contains(plan.id) {
-            return WKWebView(frame: .zero)
+            let config = WKWebViewConfiguration()
+            config.websiteDataStore = WKWebsiteDataStore.nonPersistent()
+            return WKWebView(frame: .zero, configuration: config)
         } else {
             return priorityWebview
         }
