@@ -23,9 +23,9 @@ class AutomatedTesting_3_ZendeskFAQs: XCTestCase {
     func test_0_zendesk_aboutBink_article_exists() {
         AutomatedTesting().loginIntoEnvironment(type: .production)
         
-        sleep(10)
+        sleep(30)
         
-        app.navigationBars["binkapp.LoyaltyWalletView"].buttons["settings"].tap()
+        app.buttons["settings"].tap()
         app.tables.cells["FAQs"].tap()
         
         sleep(10)

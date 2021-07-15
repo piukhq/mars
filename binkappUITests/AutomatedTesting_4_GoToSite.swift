@@ -18,8 +18,9 @@ class AutomatedTesting_4_GoToSite: XCTestCase {
         
         app.launchArguments = ["UI-testing"]
         app.launch()
-        sleep(4)
+        sleep(10)
         app.buttons["Browse brands"].tap()
+        sleep(10)
     }
     
     private func goToSiteAndAssertErrorAlertExistanceIsFalse() {

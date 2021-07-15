@@ -32,7 +32,7 @@ class AutomatedTesting {
     
     func logout() {
         app.buttons["Loyalty"].tap()
-        app.navigationBars["binkapp.LoyaltyWalletView"].buttons["settings"].tap()
+        app.buttons["settings"].tap()
         app.tables.cells["Log out"].tap()
         app.buttons["Log out"].tap()
     }
