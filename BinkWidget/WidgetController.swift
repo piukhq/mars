@@ -10,6 +10,20 @@ import UIKit
 import WidgetKit
 
 class WidgetController {
+    private var isPerformingNavigation = false
+    private var urlPath = ""
+    
+    init() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleStuff), name: .didLoadLocalWallet, object: nil)
+    }
+    
+    @objc private func handleStuff() {
+        if isPerformingNavigation {
+            // We have all the cards we neeeeeeeeeed
+            navigateToQuickLaunchWidgetDestination(urlPath: urlPath)
+        }
+    }
+    
     func reloadWidget(type: WidgetType) {
         if #available(iOS 14.0, *) {
             switch type {
@@ -18,7 +32,11 @@ class WidgetController {
             }
         }
     }
+    
     func handleURLForWidgetType(type: WidgetType, urlPath: String) {
+        isPerformingNavigation = true
+        self.urlPath = urlPath
+        
         switch type {
         case .quickLaunch:
             Current.navigate.closeShieldView {
@@ -51,6 +69,7 @@ class WidgetController {
             self.navigateToBrowseBrands(urlPath: urlPath)
         }
         Current.navigate.to(navigationRequest)
+        isPerformingNavigation = false
     }
     
     private func navigateToBrowseBrands(urlPath: String) {
@@ -58,6 +77,7 @@ class WidgetController {
             let viewController = ViewControllerFactory.makeBrowseBrandsViewController()
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
+            isPerformingNavigation = false
         }
     }
     
