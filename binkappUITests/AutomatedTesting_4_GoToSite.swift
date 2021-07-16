@@ -29,22 +29,12 @@ class AutomatedTesting_4_GoToSite: XCTestCase {
         app.buttons["Go to site"].tap()
         XCTAssertFalse(app.alerts.element.waitForExistence(timeout: 3))
     }
-    
-//    func test_0_burgerKing_goToSite_loadsWebpage_successfully() {
-//        app.tables.cells["Burger King"].tap()
-//        goToSiteAndAssertErrorAlertExistanceIsFalse()
-//    }
 
     func test_01_coOp_goToSite_loadsWebpage_successfully() {
         sleep(10)
         app.tables.cells["Co-op"].firstMatch.tap()
         goToSiteAndAssertErrorAlertExistanceIsFalse()
     }
-
-//    func test_02_fatFace_goToSite_loadsWebpage_successfully() {
-//        app.tables.cells["FatFace"].tap()
-//        goToSiteAndAssertErrorAlertExistanceIsFalse()
-//    }
 
     func test_03_harveyNichols_goToSite_loadsWebpage_successfully() {
         app.tables.cells["Harvey Nichols"].tap()
@@ -60,11 +50,6 @@ class AutomatedTesting_4_GoToSite: XCTestCase {
         app.tables.cells["Wasabi"].tap()
         goToSiteAndAssertErrorAlertExistanceIsFalse()
     }
-    
-//    func test_06_whSmith_goToSite_loadsWebpage_successfully() {
-//        app.tables.cells["WHSmith"].tap()
-//        goToSiteAndAssertErrorAlertExistanceIsFalse()
-//    }
     
     func test_07_morrisons_goToSite_loadsWebpage_successfully() {
         app.tables.cells["Morrisons"].tap()
@@ -85,11 +70,6 @@ class AutomatedTesting_4_GoToSite: XCTestCase {
         app.tables.cells["Waterstones"].tap()
         goToSiteAndAssertErrorAlertExistanceIsFalse()
     }
-
-//    func test_11_addisonLee_goToSite_loadsWebpage_successfully() {
-//        app.tables.cells["Addison Lee"].tap()
-//        goToSiteAndAssertErrorAlertExistanceIsFalse()
-//    }
 
     func test_12_alitaliaMilleMiglia_goToSite_loadsWebpage_successfully() {
         app.tables.cells["Alitalia MilleMiglia"].tap()
@@ -115,11 +95,6 @@ class AutomatedTesting_4_GoToSite: XCTestCase {
         app.tables.cells["Beefeater"].tap()
         goToSiteAndAssertErrorAlertExistanceIsFalse()
     }
-
-//    func test_17_bestWestern_goToSite_loadsWebpage_successfully() {
-//        app.tables.cells["Best Western"].tap()
-//        goToSiteAndAssertErrorAlertExistanceIsFalse()
-//    }
 
     func test_18_boost_goToSite_loadsWebpage_successfully() {
         app.tables.cells["Boost Juice Bars"].tap()
@@ -305,11 +280,6 @@ class AutomatedTesting_4_GoToSite: XCTestCase {
         app.tables.cells["Pets at Home"].tap()
         goToSiteAndAssertErrorAlertExistanceIsFalse()
     }
-
-//    func test_55_rspb_goToSite_loadsWebpage_successfully() {
-//        app.tables.cells["RSPB"].tap()
-//        goToSiteAndAssertErrorAlertExistanceIsFalse()
-//    }
 
     func test_56_russellAndBromley_goToSite_loadsWebpage_successfully() {
         app.tables.cells["Russell & Bromley"].tap()

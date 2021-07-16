@@ -22,7 +22,7 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
     
     func test_0_lcdModule_noPaymentCards_navigationIsCorrect() {
         sleep(10)
-        AutomatedTesting().loginIntoEnvironment(type: .dev)
+        AutomatedTesting.loginIntoEnvironment(type: .dev)
         sleep(10)
         
         app.buttons["Browse brands"].tap()

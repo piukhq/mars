@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-class AutomatedTesting {
+enum AutomatedTesting {
     enum EnvironmentType: String, CaseIterable {
         case dev = "api.dev.gb.bink.com"
         case staging = "api.staging.gb.bink.com"
@@ -28,16 +28,16 @@ class AutomatedTesting {
         }
     }
     
-    let app = XCUIApplication()
+    static let app = XCUIApplication()
     
-    func logout() {
+    static func logout() {
         app.buttons["Loyalty"].tap()
         app.buttons["settings"].tap()
         app.tables.cells["Log out"].tap()
         app.buttons["Log out"].tap()
     }
     
-    func loginIntoEnvironment(type: EnvironmentType) {
+    static func loginIntoEnvironment(type: EnvironmentType) {
         if !app.buttons["Log in"].exists {
             logout()
         }
