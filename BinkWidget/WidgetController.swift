@@ -28,18 +28,10 @@ class WidgetController {
                     let rootViewController = nav?.viewControllers.last
                     if rootViewController?.isKind(of: BrowseBrandsViewController.self) == true && urlPath == WidgetUrlPath.addCard.rawValue { return }
                     
-                    Current.navigate.close(animated: false) {
+                    Current.navigate.close(animated: true) {
                         self.navigateToQuickLaunchWidgetDestination(urlPath: urlPath)
                     }
                 } else {
-                    let mainTabBar = topViewController as? MainTabBarViewController
-                    let nav = mainTabBar?.viewControllers?.first as? PortraitNavigationController
-                    let currentViewController = nav?.viewControllers.last
-                    if currentViewController?.isKind(of: LoyaltyCardFullDetailsViewController.self) == true && mainTabBar?.selectedIndex == 0 {
-                        let lcd = currentViewController as? LoyaltyCardFullDetailsViewController
-                        if lcd?.viewModel.membershipCard.id == urlPath { return }
-                    }
-
                     self.navigateToQuickLaunchWidgetDestination(urlPath: urlPath)
                 }
             }
@@ -48,24 +40,37 @@ class WidgetController {
     
     private func navigateToQuickLaunchWidgetDestination(urlPath: String) {
         guard let membershipCard = Current.wallet.membershipCards?.first(where: { $0.id == urlPath }) else {
-            if urlPath == WidgetUrlPath.addCard.rawValue {
-                let viewController = ViewControllerFactory.makeBrowseBrandsViewController()
-                let navigationRequest = ModalNavigationRequest(viewController: viewController)
-                Current.navigate.to(navigationRequest)
-            }
+            navigateToBrowseBrands(urlPath: urlPath)
             return
         }
         
+        guard !currentViewControllerMatchesDestination(urlPath: urlPath) else { return }
         let lcdViewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: membershipCard, animateContent: false)
-        let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController, animated: false)
+        let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController, animated: true)
         let navigationRequest = TabBarNavigationRequest(tab: .loyalty, popToRoot: true, backgroundPushNavigationRequest: lcdNavigationRequest) {
-            if urlPath == WidgetUrlPath.addCard.rawValue {
-                let viewController = ViewControllerFactory.makeBrowseBrandsViewController()
-                let navigationRequest = ModalNavigationRequest(viewController: viewController)
-                Current.navigate.to(navigationRequest)
-            }
+            self.navigateToBrowseBrands(urlPath: urlPath)
         }
         Current.navigate.to(navigationRequest)
+    }
+    
+    private func navigateToBrowseBrands(urlPath: String) {
+        if urlPath == WidgetUrlPath.addCard.rawValue {
+            let viewController = ViewControllerFactory.makeBrowseBrandsViewController()
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }
+    }
+    
+    private func currentViewControllerMatchesDestination(urlPath: String) -> Bool {
+        guard let topViewController = UIViewController.topMostViewController() else { return false }
+        let mainTabBar = topViewController as? MainTabBarViewController
+        let nav = mainTabBar?.viewControllers?.first as? PortraitNavigationController
+        let currentViewController = nav?.viewControllers.last
+        if currentViewController?.isKind(of: LoyaltyCardFullDetailsViewController.self) == true && mainTabBar?.selectedIndex == 0 {
+            let lcd = currentViewController as? LoyaltyCardFullDetailsViewController
+            if lcd?.viewModel.membershipCard.id == urlPath { return true }
+        }
+        return false
     }
     
     func writeContentsToDisk(membershipCards: [CD_MembershipCard]?) {
