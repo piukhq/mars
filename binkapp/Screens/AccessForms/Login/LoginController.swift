@@ -40,7 +40,7 @@ class LoginController: UserServiceProtocol {
         }
     }
     
-    private func handleResult(_ result: Result<LoginResponse, UserServiceError>, withPreferences preferences: [String: String]? = nil, completion: @escaping (UserServiceError?) -> Void) { 
+    private func handleResult(_ result: Result<LoginResponse, UserServiceError>, withPreferences preferences: [String: String]? = nil, completion: @escaping (UserServiceError?) -> Void) {
         /// Remove any current user object regardless of success or failure.
         Current.userManager.removeUser()
         
@@ -158,76 +158,5 @@ extension LoginController {
         let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configurationModel)
         let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
-    }
-    
-//    private func configureEmailClients() -> [UIAlertAction] {
-//        var actions: [UIAlertAction] = []
-//        
-//        if let url = URL(string: EmailClients.mail.url), UIApplication.shared.canOpenURL(url) {
-//            let action = UIAlertAction(title: EmailClients.mail.rawValue.capitalized, style: .default, handler: { _ in
-//                UIApplication.shared.open(url, options: [:])
-//            })
-//            actions.append(action)
-//        }
-//        
-//        if let url = URL(string: EmailClients.gmail.url), UIApplication.shared.canOpenURL(url) {
-//            let action = UIAlertAction(title: EmailClients.gmail.rawValue.capitalized, style: .default, handler: { _ in
-//                UIApplication.shared.open(url, options: [:])
-//            })
-//            actions.append(action)
-//        }
-//        
-//        if let url = URL(string: EmailClients.outlook.url), UIApplication.shared.canOpenURL(url) {
-//            let action = UIAlertAction(title: EmailClients.outlook.rawValue.capitalized, style: .default, handler: { _ in
-//                UIApplication.shared.open(url, options: [:])
-//            })
-//            actions.append(action)
-//        }
-//        return actions
-//    }
-    
-//    private func availableEmailClientsForDevice() -> [EmailClients] {
-//        var availableClients: [EmailClients] = []
-//
-//        EmailClients.allCases.forEach {
-//            if let url = URL(string: $0.url), UIApplication.shared.canOpenURL(url) {
-//                availableClients.append($0)
-//            }
-//        }
-//        return availableClients
-//    }
-}
-
-enum EmailClients: String, CaseIterable {
-    case mail
-    case gmail
-    case outlook
-    
-    var url: String {
-        switch self {
-        case .mail:
-            return "message://"
-        case .gmail:
-            return "googlegmail:///"
-        case .outlook:
-            return "ms-outlook://"
-        }
-    }
-    
-    static func availableEmailClientsForDevice() -> [EmailClients] {
-        var availableClients: [EmailClients] = []
-        
-        allCases.forEach {
-            if let url = URL(string: $0.url), UIApplication.shared.canOpenURL(url) {
-                availableClients.append($0)
-            }
-        }
-        return availableClients
-    }
-
-    func open() {
-        if let safeURL = URL(string: url), UIApplication.shared.canOpenURL(safeURL) {
-            UIApplication.shared.open(safeURL, options: [:])
-        }
     }
 }
