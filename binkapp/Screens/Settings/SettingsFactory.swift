@@ -20,18 +20,18 @@ struct SettingsFactory {
         
         // MARK: - Debug
         
-        #if DEBUG
-        let debugSection = SettingsSection(title: L10n.settingsSectionDebugTitle, rows: [
-            SettingsRow(
-                type: .debug,
-                subtitle: L10n.settingsSectionDebugSubtitle,
-                action: .pushToViewController(viewController: DebugMenuTableViewController.self),
-                actionRequired: rowsWithActionRequired?.contains(.debug) ?? false
-            )
-        ])
-        
-        sections.append(debugSection)
-        #endif
+        if let _ = try? Configuration.value(for: .debugMenu) {
+            let debugSection = SettingsSection(title: L10n.settingsSectionDebugTitle, rows: [
+                SettingsRow(
+                    type: .debug,
+                    subtitle: L10n.settingsSectionDebugSubtitle,
+                    action: .pushToViewController(viewController: DebugMenuTableViewController.self),
+                    actionRequired: rowsWithActionRequired?.contains(.debug) ?? false
+                )
+            ])
+            
+            sections.append(debugSection)
+        }
         
         // MARK: - Account
         
