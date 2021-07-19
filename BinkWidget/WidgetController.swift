@@ -17,6 +17,10 @@ class WidgetController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleWalletReload), name: .didLoadLocalWallet, object: nil)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     @objc private func handleWalletReload() {
         if isPerformingNavigation {
             navigateToQuickLaunchWidgetDestination(urlPath: urlPath)
