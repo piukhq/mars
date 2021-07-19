@@ -9,10 +9,9 @@
 import UIKit
 import CardScan
 
-class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> {
+class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> {    
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.setupWalletPrompts()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -23,6 +22,7 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
     override func configureCollectionView() {
         super.configureCollectionView()
         collectionView.register(PaymentCardCollectionViewCell.self, asNib: true)
+        collectionView.register(WalletPromptCollectionViewCell.self, asNib: true)
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -71,6 +71,29 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
     override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         guard let paymentCard = viewModel.cards?[sourceIndexPath.row] else { return }
         Current.wallet.reorderPaymentCard(paymentCard, from: sourceIndexPath.row, to: destinationIndexPath.row)
+    }
+    
+    // MARK: - Diffable datasource
+    
+    override func setSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
+        snapshot.appendItems(viewModel.cards ?? [], toSection: .cards)
+        snapshot.appendItems(viewModel.walletPrompts ?? [], toSection: .prompts)
+    }
+    
+    override func cellHandler(for section: WalletDataSourceSection, dataSourceItem: AnyHashable, indexPath: IndexPath) -> UICollectionViewCell {
+        switch section {
+        case .cards:
+            let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+            guard let paymentCard = dataSourceItem as? CD_PaymentCard else { return cell }
+            let cellViewModel = PaymentCardCellViewModel(paymentCard: paymentCard)
+            cell.configureWithViewModel(cellViewModel, delegate: self)
+            return cell
+        case .prompts:
+            let cell: WalletPromptCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+            guard let walletPrompt = dataSourceItem as? WalletPrompt else { return cell }
+            cell.configureWithWalletPrompt(walletPrompt)
+            return cell
+        }
     }
 }
 
