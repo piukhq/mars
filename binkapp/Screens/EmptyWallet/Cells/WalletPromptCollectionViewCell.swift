@@ -28,7 +28,7 @@ class WalletPromptCollectionViewCell: WalletCardCollectionViewCell {
 
     func configureWithWalletPrompt(_ walletPrompt: WalletPrompt) {
         self.walletPrompt = walletPrompt
-
+        accessibilityIdentifier = "Wallet prompt"
         setupShadow()
         
         titleLabel.text = walletPrompt.title

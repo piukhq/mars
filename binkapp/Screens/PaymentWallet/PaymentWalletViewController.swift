@@ -9,7 +9,7 @@
 import UIKit
 import CardScan
 
-class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> {    
+class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
