@@ -31,6 +31,21 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         }
     }()
     
+    private lazy var hyperlinkButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let attrString = NSAttributedString(
+            string: L10n.loginForgotPassword,
+            attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
+        )
+        button.setAttributedTitle(attrString, for: .normal)
+        button.contentHorizontalAlignment = .left
+        button.heightAnchor.constraint(equalToConstant: Constants.hyperlinkHeight).isActive = true
+        button.addTarget(self, action: .forgotPasswordTapped, for: .touchUpInside)
+        button.isHidden = true
+        return button
+    }()
+    
     private var magicLinkattributedDescription: NSMutableAttributedString = {
         let attributedDescription = NSMutableAttributedString(string: L10n.magicLinkDescription, attributes: [.font: UIFont.bodyTextLarge])
         let baseDescription = NSString(string: attributedDescription.string)
@@ -63,6 +78,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        stackScrollView.add(arrangedSubviews: [hyperlinkButton])
         footerButtons = [continueButton, switchLoginTypeButton]
     }
     
@@ -100,10 +116,12 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
             titleLabel.text = L10n.magicLinkTitle
             textView.attributedText = magicLinkattributedDescription
             descriptionLabel.text = nil
+            hyperlinkButton.isHidden = true
         } else {
             titleLabel.text = L10n.loginTitle
             textView.text = nil
             descriptionLabel.text = L10n.loginSubtitle
+            hyperlinkButton.isHidden = false
         }
     }
     
