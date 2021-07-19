@@ -14,12 +14,11 @@ class WidgetController {
     private var urlPath = ""
     
     init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleStuff), name: .didLoadLocalWallet, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleWalletReload), name: .didLoadLocalWallet, object: nil)
     }
     
-    @objc private func handleStuff() {
+    @objc private func handleWalletReload() {
         if isPerformingNavigation {
-            // We have all the cards we neeeeeeeeeed
             navigateToQuickLaunchWidgetDestination(urlPath: urlPath)
         }
     }
