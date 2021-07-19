@@ -203,6 +203,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         
         if #available(iOS 14.0, *) {
             applySnapshot(animatingDifferences: animated)
+
         } else {
             collectionView.reloadData()
         }
