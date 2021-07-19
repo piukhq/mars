@@ -40,8 +40,7 @@ class LoginController: UserServiceProtocol {
         }
     }
     
-    private func handleResult(_ result: Result<LoginResponse, UserServiceError>, withPreferences preferences: [String: String]? = nil, completion: @escaping (UserServiceError?) -> Void) {
-        
+    private func handleResult(_ result: Result<LoginResponse, UserServiceError>, withPreferences preferences: [String: String]? = nil, completion: @escaping (UserServiceError?) -> Void) { 
         /// Remove any current user object regardless of success or failure.
         Current.userManager.removeUser()
         
@@ -119,15 +118,29 @@ extension LoginController {
             let attributedBody = NSMutableAttributedString(string: L10n.checkInboxDescription(emailAddress ?? L10n.nilEmailAddress), attributes: [.font: UIFont.bodyTextLarge])
             
             let baseBody = NSString(string: attributedBody.string)
-            let noteRange = baseBody.range(of: L10n.magicLinkDescriptionNoteHighlight)
             let emailRange = baseBody.range(of: emailAddress ?? "")
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 18.0) ?? UIFont()]
-            attributedBody.addAttributes(attributes, range: noteRange)
             attributedBody.addAttributes(attributes, range: emailRange)
             
             attributedString.append(attributedTitle)
             attributedString.append(attributedBody)
-            configurationModel = ReusableModalConfiguration(title: "", text: attributedString)
+            
+            let availableEmailClients = EmailClients.availableEmailClientsForDevice()
+            if availableEmailClients.isEmpty {
+                configurationModel = ReusableModalConfiguration(title: "", text: attributedString)
+            } else if availableEmailClients.count == 1 {
+                let buttonTitle = L10n.openMailButtonTitle(availableEmailClients.first?.rawValue.capitalized ?? "")
+                configurationModel = ReusableModalConfiguration(title: "", text: attributedString, primaryButtonTitle: buttonTitle, primaryButtonAction: {
+                    availableEmailClients.first?.open()
+                })
+            } else {
+                let buttonTitle = L10n.openMailButtonTitleMultipleClients
+                configurationModel = ReusableModalConfiguration(title: "", text: attributedString, primaryButtonTitle: buttonTitle, primaryButtonAction: {
+                    let alert = ViewControllerFactory.makeEmailClientsAlertController(availableEmailClients)
+                    let navigationRequest = AlertNavigationRequest(alertController: alert)
+                    Current.navigate.to(navigationRequest)
+                })
+            }
         case .expired:
             configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: L10n.linkExpiredTitle, description: L10n.linkExpiredDescription), primaryButtonTitle: L10n.retryTitle, primaryButtonAction: {
                 Current.navigate.back()
@@ -145,5 +158,76 @@ extension LoginController {
         let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configurationModel)
         let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
+    }
+    
+//    private func configureEmailClients() -> [UIAlertAction] {
+//        var actions: [UIAlertAction] = []
+//        
+//        if let url = URL(string: EmailClients.mail.url), UIApplication.shared.canOpenURL(url) {
+//            let action = UIAlertAction(title: EmailClients.mail.rawValue.capitalized, style: .default, handler: { _ in
+//                UIApplication.shared.open(url, options: [:])
+//            })
+//            actions.append(action)
+//        }
+//        
+//        if let url = URL(string: EmailClients.gmail.url), UIApplication.shared.canOpenURL(url) {
+//            let action = UIAlertAction(title: EmailClients.gmail.rawValue.capitalized, style: .default, handler: { _ in
+//                UIApplication.shared.open(url, options: [:])
+//            })
+//            actions.append(action)
+//        }
+//        
+//        if let url = URL(string: EmailClients.outlook.url), UIApplication.shared.canOpenURL(url) {
+//            let action = UIAlertAction(title: EmailClients.outlook.rawValue.capitalized, style: .default, handler: { _ in
+//                UIApplication.shared.open(url, options: [:])
+//            })
+//            actions.append(action)
+//        }
+//        return actions
+//    }
+    
+//    private func availableEmailClientsForDevice() -> [EmailClients] {
+//        var availableClients: [EmailClients] = []
+//
+//        EmailClients.allCases.forEach {
+//            if let url = URL(string: $0.url), UIApplication.shared.canOpenURL(url) {
+//                availableClients.append($0)
+//            }
+//        }
+//        return availableClients
+//    }
+}
+
+enum EmailClients: String, CaseIterable {
+    case mail
+    case gmail
+    case outlook
+    
+    var url: String {
+        switch self {
+        case .mail:
+            return "message://"
+        case .gmail:
+            return "googlegmail:///"
+        case .outlook:
+            return "ms-outlook://"
+        }
+    }
+    
+    static func availableEmailClientsForDevice() -> [EmailClients] {
+        var availableClients: [EmailClients] = []
+        
+        allCases.forEach {
+            if let url = URL(string: $0.url), UIApplication.shared.canOpenURL(url) {
+                availableClients.append($0)
+            }
+        }
+        return availableClients
+    }
+
+    func open() {
+        if let safeURL = URL(string: url), UIApplication.shared.canOpenURL(safeURL) {
+            UIApplication.shared.open(safeURL, options: [:])
+        }
     }
 }

@@ -138,7 +138,7 @@ internal enum L10n {
   internal static let cardNumberTitle = L10n.tr("Localizable", "card_number_title")
   /// One of these payment cards are
   internal static let cardsAlreadyLinkedMessagePrefix = L10n.tr("Localizable", "cards_already_linked_message_prefix")
-  /// We have just emailed a link to %@. Click the link and you will be signed in.\n\nNote: You must open the link on this mobile device in order to be logged in.
+  /// We have just emailed a link to %@. Click the link and you will be signed in.
   internal static func checkInboxDescription(_ p1: Any) -> String {
     return L10n.tr("Localizable", "check_inbox_description", String(describing: p1))
   }
@@ -330,6 +330,14 @@ internal enum L10n {
   }
   /// Oops
   internal static let oops = L10n.tr("Localizable", "oops")
+  /// Open your email app
+  internal static let openMailAlertTitle = L10n.tr("Localizable", "open_mail_alert_title")
+  /// Open %@
+  internal static func openMailButtonTitle(_ p1: Any) -> String {
+    return L10n.tr("Localizable", "open_mail_button_title", String(describing: p1))
+  }
+  /// Open Inbox
+  internal static let openMailButtonTitleMultipleClients = L10n.tr("Localizable", "open_mail_button_title_multiple_clients")
   /// This payment card has expired
   internal static let paymentCardExpiredAlertMessage = L10n.tr("Localizable", "payment_card_expired_alert_message")
   /// This payment card has expired

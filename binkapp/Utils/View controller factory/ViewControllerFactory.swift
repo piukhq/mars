@@ -255,4 +255,20 @@ enum ViewControllerFactory {
     static func makeJailbrokenViewController() -> JailbrokenViewController {
         return JailbrokenViewController()
     }
+    
+    static func makeEmailClientsAlertController(_ emailClients: [EmailClients]) -> BinkAlertController {
+        let alert = BinkAlertController(title: L10n.openMailAlertTitle, message: nil, preferredStyle: .actionSheet)
+        
+        emailClients.forEach { emailClient in
+            let action = UIAlertAction(title: emailClient.rawValue.capitalized, style: .default, handler: { _ in
+                emailClient.open()
+            })
+            alert.addAction(action)
+        }
+        
+        let cancelAction = UIAlertAction(title: L10n.cancel, style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        
+        return alert
+    }
 }

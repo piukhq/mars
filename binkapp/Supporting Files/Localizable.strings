@@ -327,12 +327,15 @@
 "what_is_magic_link_hyperlink" = "Magic Link";
 "magic_link_description_note_highlight" = "Note:";
 "check_inbox_title" = "Check your inbox!";
-"check_inbox_description" = "We have just emailed a link to %@. Click the link and you will be signed in.\n\nNote: You must open the link on this mobile device in order to be logged in.";
+"check_inbox_description" = "We have just emailed a link to %@. Click the link and you will be signed in.";
 "nil_email_address" = "your email address";
 "link_expired_title" = "Link expired";
 "link_expired_description" = "To keep your account safe, links are only valid for a short period of time. Enter your email again and we will send you another!";
 "something_went_wrong_title" = "Something went wrong";
 "something_went_wrong_description" = "There was a problem authenticating you. Please try again.";
+"open_mail_button_title" = "Open %@";
+"open_mail_button_title_multiple_clients" = "Open Inbox";
+"open_mail_alert_title" = "Open your email app";
 
 "tandcs_title" = "I agree to Bink's Terms and Conditions";
 "tandcs_description" = "Please read the Bink Privacy Policy for further details of how your data will be processed";
