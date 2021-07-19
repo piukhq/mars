@@ -42,9 +42,9 @@ class WebScrapingUtility: NSObject {
     
     private var agent: WebScrapable?
     private var membershipCard: CD_MembershipCard?
-
+    
     private weak var delegate: WebScrapingUtilityDelegate?
-
+    
     private var idleTimer: Timer?
     private let idleThreshold: TimeInterval = 20
     private let idleRetryLimit = 2
@@ -52,20 +52,20 @@ class WebScrapingUtility: NSObject {
     private var sessionHasAttemptedLogin = false
     
     private var userActionTimer: Timer?
-
+    
     private var isPerformingUserAction = false
-
+    
     private var isInDebugMode: Bool {
         return Current.pointsScrapingManager.isDebugMode
     }
-
+    
     private var isPresentingWebView: Bool {
         guard let activeWebview = activeWebview else { return false }
         guard let navigationViewController = UIViewController.topMostViewController() as? UINavigationController else { return false }
         guard let topViewController = navigationViewController.viewControllers.first else { return false }
         return topViewController.view.subviews.contains(activeWebview)
     }
-
+    
     private var isBalanceRefresh: Bool {
         guard let balances = membershipCard?.formattedBalances, !balances.isEmpty else { return false }
         return true
@@ -92,14 +92,21 @@ class WebScrapingUtility: NSObject {
         
         let request = URLRequest(url: url)
         
-        activeWebview = appropriateWebview()
-        
-        DispatchQueue.main.async {
-            self.activeWebview?.navigationDelegate = self
-            self.activeWebview?.load(request)
+        getAppropriateWebview { [weak self] result in
+            switch result {
+            case .success(let webview):
+                self?.activeWebview = webview
+                
+                DispatchQueue.main.async {
+                    self?.activeWebview?.navigationDelegate = self
+                    self?.activeWebview?.load(request)
+                }
+                
+                self?.resetIdlingTimer()
+            case .failure(let error):
+                self?.finish(withError: error)
+            }
         }
-
-        resetIdlingTimer()
     }
     
     /// A function to determine if the membership card we are about to scrape can use our priority webview or not.
@@ -107,22 +114,47 @@ class WebScrapingUtility: NSObject {
     /// If we are already supporting a membership card of the same membership plan, we use an ephermeral webview that will only live as long as scraping is taking place.
     /// Only the priority web view can handle sessions and cookies in a user-friendly way.
     /// - Returns: The webview in which to perform points scraping
-    private func appropriateWebview() -> WKWebView? {
-        guard let card = membershipCard, let plan = card.membershipPlan else { return nil }
-        
-        let priorityCardIds = priorityScrapableCards.map { $0.cardId }
-        let priorityPlanIds = priorityScrapableCards.map { $0.planId }
-        
-        if priorityCardIds.contains(card.id) {
-            return priorityWebview
+    private func getAppropriateWebview(completion: @escaping (Result<WKWebView, WebScrapingUtilityError>) -> Void) {
+        guard let card = membershipCard, let plan = card.membershipPlan, let agent = agent else {
+            completion(.failure(.failedToAssignWebView))
+            return
         }
         
-        if priorityPlanIds.contains(plan.id) {
-            let config = WKWebViewConfiguration()
-            config.websiteDataStore = WKWebsiteDataStore.nonPersistent()
-            return WKWebView(frame: .zero, configuration: config)
-        } else {
-            return priorityWebview
+        DispatchQueue.main.async {
+            let priorityCardIds = self.priorityScrapableCards.map { $0.cardId }
+            
+            /// If performing a balance refresh, and the card is already assigned the priority web view, use it
+            if self.isBalanceRefresh, priorityCardIds.contains(card.id) {
+                completion(.success(self.priorityWebview))
+                return
+            }
+            
+            /// Get the priority web view's data store records
+            let defaultDataStore = WKWebsiteDataStore.default()
+            defaultDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+                /// Create an ephemeral web view that will only be used for this scraping run
+                let config = WKWebViewConfiguration()
+                config.websiteDataStore = WKWebsiteDataStore.nonPersistent()
+                let ephermeralWebView = WKWebView(frame: .zero, configuration: config)
+                
+                /// Do we have a scrapable card already added for this plan?
+                /// And if so, is it assigned to priority web view?
+                let existingScrapableCardForPlan = self.priorityScrapableCards.first(where: { $0.planId == plan.id })
+                if let existingCardIdForPlan = existingScrapableCardForPlan, priorityCardIds.contains(existingCardIdForPlan.cardId) {
+                    /// If so, use ephemeral web view
+                    completion(.success(ephermeralWebView))
+                    return
+                } else {
+                    /// If not, use priority web view
+                    /// Clear all merchant data from datastore first to ensure no conflicts
+                    defaultDataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), for: records.filter {
+                        $0.displayName.contains(agent.merchant.rawValue)
+                    }) {
+                        completion(.success(self.priorityWebview))
+                        return
+                    }
+                }
+            }
         }
     }
     
@@ -139,7 +171,7 @@ class WebScrapingUtility: NSObject {
             activeWebview = nil
         }
     }
-
+    
     private func resetIdlingTimer() {
         idleTimer?.invalidate()
         idleTimer = Timer.scheduledTimer(withTimeInterval: idleThreshold, repeats: false, block: { [weak self] timer in
@@ -174,7 +206,7 @@ class WebScrapingUtility: NSObject {
         closeWebView()
         handleWebViewNavigation(stateConfigurator: .userActionComplete)
     }
-
+    
     private func presentWebView() {
         guard !isPresentingWebView else { return }
         guard let activeWebview = activeWebview else { return }
@@ -184,21 +216,21 @@ class WebScrapingUtility: NSObject {
             Current.navigate.to(navigationRequest)
         }
     }
-
+    
     private func closeWebView(force: Bool = false) {
         if !force, isInDebugMode { return }
         if isPresentingWebView {
             Current.navigate.close()
         }
     }
-
+    
     private func script(scriptName: String) -> String? {
         guard let file = Bundle.main.url(forResource: scriptName, withExtension: "js") else {
             return nil
         }
         return try? String(contentsOf: file)
     }
-
+    
     private func runScript(_ script: String, completion: @escaping (Result<WebScrapingResponse, WebScrapingUtilityError>) -> Void) {
         if isExecutingScript { return }
         isExecutingScript = true
@@ -215,7 +247,7 @@ class WebScrapingUtility: NSObject {
                 completion(.failure(.noJavascriptResponse))
                 return
             }
-
+            
             do {
                 let data = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
                 let scrapingResponse = try JSONDecoder().decode(WebScrapingResponse.self, from: data)
@@ -225,7 +257,7 @@ class WebScrapingUtility: NSObject {
             }
         }
     }
-
+    
     private func finish(withValue value: Int? = nil, withError error: WebScrapingUtilityError? = nil) {
         defer {
             stop()
@@ -233,14 +265,14 @@ class WebScrapingUtility: NSObject {
         
         guard let agent = agent else { return }
         guard let membershipCard = membershipCard else { return }
-
+        
         if let value = value {
             if Current.pointsScrapingManager.isDebugMode {
                 DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - Retreived points balance", type: .success)
             }
             delegate?.webScrapingUtility(self, didCompleteWithValue: value, forMembershipCard: membershipCard, withAgent: agent)
         }
-
+        
         if let error = error {
             if Current.pointsScrapingManager.isDebugMode {
                 DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - \(error.localizedDescription)", type: .failure)
@@ -251,7 +283,7 @@ class WebScrapingUtility: NSObject {
             priorityScrapableCards.removeAll(where: { $0.cardId == membershipCard.id })
         }
     }
-
+    
     func isCurrentlyScraping(forMembershipCard card: CD_MembershipCard) -> Bool {
         return membershipCard?.id == card.id
     }
@@ -267,7 +299,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
         case userActionComplete
         case skipLogin
     }
-
+    
     private func handleWebViewNavigation(stateConfigurator: WebScrapingStateConfigurator? = nil) {
         resetIdlingTimer()
         guard let agent = agent else { return }
@@ -334,7 +366,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
                 
                 
                 // Points retrieval
-
+                
                 if let points = response.pointsValue {
                     self.finish(withValue: points)
                     return
