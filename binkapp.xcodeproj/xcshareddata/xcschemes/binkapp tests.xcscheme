@@ -62,7 +62,10 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "AutomatedTesting_5_WireframesNavigation">
+                  Identifier = "AutomatedTesting_3_ZendeskFAQs">
+               </Test>
+               <Test
+                  Identifier = "AutomatedTesting_4_GoToSite">
                </Test>
                <Test
                   Identifier = "AutomatedTesting_5_WireframesNavigation/test_0_lcdModule_noPaymentCards_navigationIsCorrect()">
