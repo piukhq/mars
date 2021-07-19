@@ -19,7 +19,11 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     var foregroundRefreshCount = 0
 
     private(set) var membershipPlans: [CD_MembershipPlan]?
-    private(set) var membershipCards: [CD_MembershipCard]?
+    private(set) var membershipCards: [CD_MembershipCard]? {
+        didSet {
+            WidgetController().writeContentsToDisk(membershipCards: membershipCards)
+        }
+    }
     private(set) var paymentCards: [CD_PaymentCard]?
 
     private var hasLaunched = false

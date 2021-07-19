@@ -187,7 +187,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         super.viewDidLayoutSubviews()
         didLayoutSubviews = true
         if didLayoutSubviews {
-            animatePadding()
+            setPadding(animated: viewModel.shouldAnimateContent)
         }
     }
     
@@ -427,10 +427,10 @@ private extension LoyaltyCardFullDetailsViewController {
         viewModel.toBarcodeModel()
     }
     
-    private func animatePadding() {
+    private func setPadding(animated: Bool = true) {
         view.layoutIfNeeded()
         self.contentAnimationSpacerHeightConstraint.constant = 0
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: animated ? 0.4 : 0) {
             self.view.layoutIfNeeded()
         }
     }
