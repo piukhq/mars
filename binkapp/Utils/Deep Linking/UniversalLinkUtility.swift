@@ -28,7 +28,7 @@ class UniversalLinkUtility {
     }
     
     private func handleMagicLink(token: String) {
-//        Current.rootStateMachine.handleMagicLink() <<< DO WE STILL NEED THIS
+//        Current.rootStateMachine.handleMagicLink()
         
         Current.loginController.exchangeMagicLinkToken(token: token, withPreferences: [:]) { error in
             if let error = error {
@@ -40,5 +40,9 @@ class UniversalLinkUtility {
                 }
             }
         }
+        
+//        let tAndCViewController = ViewControllerFactory.makeSocialTermsAndConditionsViewController(requestType: .magicLink(shortLivedToken: token))
+//        let navigationRequest = PushNavigationRequest(viewController: tAndCViewController)
+//        Current.navigate.to(navigationRequest)
     }
 }

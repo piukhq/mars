@@ -71,10 +71,7 @@ class LoginController: UserServiceProtocol {
                     BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
                 })
                 
-                // Show Success screen?!
-                let successViewController = ViewControllerFactory.makeLoginSuccessViewController()
-                let navigationRequest = PushNavigationRequest(viewController: successViewController)
-                Current.navigate.to(navigationRequest)
+                Current.rootStateMachine.handleLogin()
                 
                 BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
                 BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))

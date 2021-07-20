@@ -27,7 +27,7 @@ class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
         imageView.image = Asset.binkIconLogo.image
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = Constants.logoCornerRadius
-//        imageView.layer.cornerCurve = .continuous
+        imageView.layer.cornerCurve = .continuous
         imageView.heightAnchor.constraint(equalToConstant: Constants.logoDimension).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: Constants.logoDimension).isActive = true
         return imageView
@@ -52,24 +52,23 @@ class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        footerButtons = [continueButton]
+        stackScrollView.insert(arrangedSubview: binkLogo, atIndex: 0, customSpacing: 30)
+//        configureLayout()
         
-        stackScrollView.insert(arrangedSubview: binkLogo, atIndex: 0, customSpacing: 20)
+        footerButtons = [continueButton]
     }
     
-//    func configureLayout() {
-//        NSLayoutConstraint.activate([
-//            binkLogo.heightAnchor.constraint(equalToConstant: Constants.logoDimension),
-//            binkLogo.widthAnchor.constraint(equalToConstant: Constants.logoDimension)
-//        ])
-//    }
+    func configureLayout() {
+        NSLayoutConstraint.activate([
+            binkLogo.heightAnchor.constraint(equalToConstant: Constants.logoDimension),
+            binkLogo.widthAnchor.constraint(equalToConstant: Constants.logoDimension)
+        ])
+    }
 
     
     @objc func continueButtonTapped() {
         continueButton.toggleLoading(isLoading: true)
         
-        Current.rootStateMachine.handleLogin()
-
         let preferenceCheckbox = dataSource.checkboxes.filter { $0.columnKind == .userPreference }
         var params: [String: String] = [:]
         
@@ -79,8 +78,12 @@ class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
             }
         }
         
-        guard !params.isEmpty else { return }
+        guard !params.isEmpty else {
+            Current.navigate.close()
+            return
+        }
         setPreferences(params: params)
+        Current.navigate.close()
     }
 }
 

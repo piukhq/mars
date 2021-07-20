@@ -55,6 +55,10 @@ class RootStateMachine: NSObject, UserServiceProtocol {
     func handleLogin() {
         let tabBarController = MainTabBarViewController(viewModel: MainTabBarViewModel())
         moveTo(tabBarController)
+        
+        let successViewController = ViewControllerFactory.makeLoginSuccessViewController()
+        let navigationRequest = ModalNavigationRequest(viewController: successViewController)
+        Current.navigate.to(navigationRequest)
     }
     
     /// User driven logout that triggers API call and clears local storage
