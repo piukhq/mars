@@ -108,7 +108,7 @@ platform :ios do
     )
 
     upload_to_testflight(
-      changelog: "Merge request build for branch: " + options[:branch_name] + "Commit message: " + options[:commit]
+      changelog: "Merge request build for branch: " + options[:branch_name] + "Commit message: " + options[:commit_message]
     )
   end
 
