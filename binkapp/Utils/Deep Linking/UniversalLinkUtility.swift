@@ -28,10 +28,21 @@ class UniversalLinkUtility {
     }
     
     private func handleMagicLink(token: String) {
-        Current.rootStateMachine.handleMagicLink()
+//        Current.rootStateMachine.handleMagicLink()
         
-        let tAndCViewController = ViewControllerFactory.makeSocialTermsAndConditionsViewController(requestType: .magicLink(shortLivedToken: token))
-        let navigationRequest = PushNavigationRequest(viewController: tAndCViewController)
-        Current.navigate.to(navigationRequest)
+        Current.loginController.exchangeMagicLinkToken(token: token, withPreferences: [:]) { error in
+            if let error = error {
+                switch error {
+                case .magicLinkExpired:
+                    Current.loginController.handleMagicLinkExpiredToken()
+                default:
+                    Current.loginController.handleMagicLinkFailed()
+                }
+            }
+        }
+        
+//        let tAndCViewController = ViewControllerFactory.makeSocialTermsAndConditionsViewController(requestType: .magicLink(shortLivedToken: token))
+//        let navigationRequest = PushNavigationRequest(viewController: tAndCViewController)
+//        Current.navigate.to(navigationRequest)
     }
 }

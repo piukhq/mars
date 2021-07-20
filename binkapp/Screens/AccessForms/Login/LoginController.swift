@@ -17,7 +17,8 @@ class LoginController: UserServiceProtocol {
     
     func exchangeMagicLinkToken(token: String, withPreferences preferences: [String: String], completion: @escaping (UserServiceError?) -> Void) {
         /// We know that if we don't successfully login, we should fallback to the onboarding screen once loading completes.
-        Current.rootStateMachine.startLoading(from: ViewControllerFactory.makeOnboardingViewController())
+
+//        Current.rootStateMachine.startLoading(from: ViewControllerFactory.makeOnboardingViewController()) << DO WE STILL NEED THIS???????
         
         requestMagicLinkAccessToken(for: token) { [weak self] (result, rawResponse) in
             self?.handleResult(result, withPreferences: preferences, completion: { error in
@@ -70,11 +71,10 @@ class LoginController: UserServiceProtocol {
                     BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
                 })
                 
-                Current.rootStateMachine.handleLogin()
-                
-                if let preferences = preferences {
-                    self?.setPreferences(params: preferences)
-                }
+                // Show Success screen?!
+                let successViewController = ViewControllerFactory.makeLoginSuccessViewController()
+                let navigationRequest = PushNavigationRequest(viewController: successViewController)
+                Current.navigate.to(navigationRequest)
                 
                 BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
                 BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))

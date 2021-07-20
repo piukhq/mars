@@ -44,6 +44,7 @@ enum AccessForm {
     case forgottenPassword
     case addEmail
     case termsAndConditions
+    case success
 }
 
 class FormDataSource: NSObject {
@@ -577,6 +578,10 @@ extension FormDataSource {
         
         if accessForm == .magicLink {
             checkboxes.append(termsAndConditions)
+        }
+        
+        if accessForm == .success {
+            checkboxes.append(marketingCheckbox)
         }
     }
     
