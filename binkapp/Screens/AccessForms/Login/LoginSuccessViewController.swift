@@ -9,11 +9,30 @@
 import UIKit
 
 class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
+    enum Constants {
+        static let logoDimension: CGFloat = 142
+        static let logoCornerRadius: CGFloat = 20
+    }
+    
     private lazy var continueButton: BinkButton = {
         return BinkButton(type: .gradient, title: L10n.continueButtonTitle) { [weak self] in
             self?.continueButtonTapped()
         }
     }()
+    
+    private lazy var binkLogo: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.clipsToBounds = true
+        imageView.image = Asset.binkIconLogo.image
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = Constants.logoCornerRadius
+//        imageView.layer.cornerCurve = .continuous
+        imageView.heightAnchor.constraint(equalToConstant: Constants.logoDimension).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: Constants.logoDimension).isActive = true
+        return imageView
+    }()
+
     
     init() {
         let emailAddress = Current.userManager.currentEmailAddress
@@ -34,7 +53,17 @@ class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         footerButtons = [continueButton]
+        
+        stackScrollView.insert(arrangedSubview: binkLogo, atIndex: 0, customSpacing: 20)
     }
+    
+//    func configureLayout() {
+//        NSLayoutConstraint.activate([
+//            binkLogo.heightAnchor.constraint(equalToConstant: Constants.logoDimension),
+//            binkLogo.widthAnchor.constraint(equalToConstant: Constants.logoDimension)
+//        ])
+//    }
+
     
     @objc func continueButtonTapped() {
         continueButton.toggleLoading(isLoading: true)
