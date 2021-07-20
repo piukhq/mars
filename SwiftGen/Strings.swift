@@ -262,6 +262,12 @@ internal enum L10n {
   internal static let loginIssues = L10n.tr("Localizable", "login_issues")
   /// Welcome back!
   internal static let loginSubtitle = L10n.tr("Localizable", "login_subtitle")
+  /// You are now logged in with %@ and will remain logged in on this device until you choose to log out.\nYou can log out from settings.
+  internal static func loginSuccesSubtitle(_ p1: Any) -> String {
+    return L10n.tr("Localizable", "login_succes_subtitle", String(describing: p1))
+  }
+  /// Success
+  internal static let loginSuccessTitle = L10n.tr("Localizable", "login_success_title")
   /// Log in
   internal static let loginTitle = L10n.tr("Localizable", "login_title")
   /// Continue with Email

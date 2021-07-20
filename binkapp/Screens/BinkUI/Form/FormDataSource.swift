@@ -484,7 +484,7 @@ extension FormDataSource {
         
         // Email
         
-        if accessForm != .termsAndConditions {
+        if accessForm != .termsAndConditions && accessForm != .success {
             let emailField = FormField(
                 title: L10n.accessFormEmailTitle,
                 placeholder: L10n.accessFormEmailPlaceholder,

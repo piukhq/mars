@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginSuccessViewController: BaseFormViewController {
+class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
     private lazy var continueButton: BinkButton = {
         return BinkButton(type: .gradient, title: L10n.continueButtonTitle) { [weak self] in
             self?.continueButtonTapped()
@@ -16,7 +16,14 @@ class LoginSuccessViewController: BaseFormViewController {
     }()
     
     init() {
-        super.init(title: "SUCCESS", description: L10n.socialTandcsSubtitle, dataSource: FormDataSource(accessForm: .success))
+        let emailAddress = Current.userManager.currentEmailAddress
+        let attributedBody = NSMutableAttributedString(string: L10n.loginSuccesSubtitle(emailAddress ?? L10n.nilEmailAddress), attributes: [.font: UIFont.bodyTextLarge])
+        let baseBody = NSString(string: attributedBody.string)
+        let emailRange = baseBody.range(of: emailAddress ?? "")
+        let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 18.0) ?? UIFont()]
+        attributedBody.addAttributes(attributes, range: emailRange)
+        
+        super.init(title: L10n.loginSuccessTitle, description: "", attributedDescription: attributedBody, dataSource: FormDataSource(accessForm: .success))
         dataSource.delegate = self
     }
     
@@ -32,11 +39,19 @@ class LoginSuccessViewController: BaseFormViewController {
     @objc func continueButtonTapped() {
         continueButton.toggleLoading(isLoading: true)
         
-        Current.rootStateMachine.handleLogin() // << move to success screen continue tap
+        Current.rootStateMachine.handleLogin()
 
-//        if let preferences = preferences {
-//            self?.setPreferences(params: preferences) // << move to success screen continue tap
-//        }
+        let preferenceCheckbox = dataSource.checkboxes.filter { $0.columnKind == .userPreference }
+        var params: [String: String] = [:]
+        
+        preferenceCheckbox.forEach {
+            if let columnName = $0.columnName {
+                params[columnName] = $0.value
+            }
+        }
+        
+        guard !params.isEmpty else { return }
+        setPreferences(params: params)
     }
 }
 
