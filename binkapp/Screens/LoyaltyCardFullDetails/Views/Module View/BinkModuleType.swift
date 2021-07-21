@@ -33,6 +33,7 @@ enum ModuleState: Equatable {
     case pll(linkedPaymentCards: [CD_PaymentCard]?, paymentCards: [CD_PaymentCard]?)
     case pllNoPaymentCards
     case pllError
+    case lpcLoginRequired
     
     var imageName: String {
         switch self {
@@ -42,7 +43,7 @@ enum ModuleState: Equatable {
             return Asset.lcdModuleIconsPointsActive.name
         case .pending:
             return Asset.lcdModuleIconsPointsLoginPending.name
-        case .signUp, .patchGhostCard, .loginChanges, .registerGhostCard, .noReasonCode:
+        case .signUp, .patchGhostCard, .loginChanges, .registerGhostCard, .noReasonCode, .lpcLoginRequired:
             return Asset.lcdModuleIconsPointsLogin.name
         case .unlinkable:
             return Asset.lcdModuleIconsLinkInactive.name
@@ -95,6 +96,8 @@ enum ModuleState: Equatable {
             return L10n.cardLinkedStatus
         case .pllNoPaymentCards, .pllError:
             return L10n.cardLinkStatus
+        case .lpcLoginRequired:
+            return L10n.loginTitle
         }
     }
     
@@ -146,6 +149,8 @@ enum ModuleState: Equatable {
             return paymentCards?.isEmpty == true ? L10n.linkModuleToNumberOfPaymentCardMessage(linkedPaymentCardsCount, paymentCardsCount) : L10n.linkModuleToNumberOfPaymentCardsMessage(linkedPaymentCardsCount, paymentCardsCount)
         case .pllNoPaymentCards, .pllError:
             return L10n.linkModuleToPaymentCardsMessage
+        case .lpcLoginRequired:
+            return L10n.pointsModuleToSeeHistory
         }
     }
     
@@ -181,6 +186,8 @@ enum ModuleState: Equatable {
             return "pllNoPaymentCards"
         case .pllError:
             return "pllError"
+        case .lpcLoginRequired:
+            return "lpcLoginRequired"
         }
     }
 }
