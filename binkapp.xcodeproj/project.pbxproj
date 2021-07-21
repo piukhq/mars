@@ -142,6 +142,8 @@
 		706D203C24D85B76004BCCF3 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		706D203E24D96D35004BCCF3 /* GoogleService-Info-BETA.plist in Resources */ = {isa = PBXBuildFile; fileRef = 706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */; };
 		706D204224D97104004BCCF3 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D204124D97104004BCCF3 /* AnalyticsEvent.swift */; };
+		70703422268CC1460072F3BF /* LocalPointsCollection_Navigate_Starbucks.js in Resources */ = {isa = PBXBuildFile; fileRef = 70703421268CC1460072F3BF /* LocalPointsCollection_Navigate_Starbucks.js */; };
+		70703424268CC15F0072F3BF /* StarbucksPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70703423268CC15F0072F3BF /* StarbucksPointsScrapingAgent.swift */; };
 		70840E6C2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70840E6B2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift */; };
 		70907E0825C8683C007629BB /* LocalPointsCollection_Login_Tesco.js in Resources */ = {isa = PBXBuildFile; fileRef = 70907E0725C8683C007629BB /* LocalPointsCollection_Login_Tesco.js */; };
 		70907E0D25C878AE007629BB /* LocalPointsCollection_Login_Heathrow.js in Resources */ = {isa = PBXBuildFile; fileRef = 70907E0C25C878AE007629BB /* LocalPointsCollection_Login_Heathrow.js */; };
@@ -745,6 +747,8 @@
 		706D203824D851BA004BCCF3 /* CD_CardAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_CardAccount.swift; sourceTree = "<group>"; };
 		706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-BETA.plist"; sourceTree = "<group>"; };
 		706D204124D97104004BCCF3 /* AnalyticsEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
+		70703421268CC1460072F3BF /* LocalPointsCollection_Navigate_Starbucks.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Starbucks.js; sourceTree = "<group>"; };
+		70703423268CC15F0072F3BF /* StarbucksPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarbucksPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		707DF15926970E5600EB5674 /* BinkWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BinkWidgetExtension.entitlements; sourceTree = "<group>"; };
 		70840E6B2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperdrugPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70872F812475393900195679 /* Binkapp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Binkapp.entitlements; sourceTree = "<group>"; };
@@ -1819,6 +1823,15 @@
 			path = Morrisons;
 			sourceTree = "<group>";
 		};
+		70703420268CC11D0072F3BF /* Starbucks */ = {
+			isa = PBXGroup;
+			children = (
+				70703421268CC1460072F3BF /* LocalPointsCollection_Navigate_Starbucks.js */,
+				70703423268CC15F0072F3BF /* StarbucksPointsScrapingAgent.swift */,
+			);
+			path = Starbucks;
+			sourceTree = "<group>";
+		};
 		70840E622562AC76000E17A5 /* Superdrug */ = {
 			isa = PBXGroup;
 			children = (
@@ -1882,6 +1895,7 @@
 		70BD4BD024B774EB006E4E3D /* Agents */ = {
 			isa = PBXGroup;
 			children = (
+				70703420268CC11D0072F3BF /* Starbucks */,
 				70661B86250792C0006DB009 /* Boots */,
 				70E8DFDB2563E2F20027A244 /* Heathrow */,
 				70661B8D250A56DB006DB009 /* Morrisons */,
@@ -3139,6 +3153,7 @@
 				3C25BE0023019BC100E931EE /* BrandTableViewCell.xib in Resources */,
 				70907E3E25C883E2007629BB /* LocalPointsCollection_Points_Waterstones.js in Resources */,
 				CE2C7A7925DEC635007624FE /* DebugMenuPickerTableViewCell.xib in Resources */,
+				70703422268CC1460072F3BF /* LocalPointsCollection_Navigate_Starbucks.js in Resources */,
 				B71D51F92343692000BB3406 /* OfferTileView.xib in Resources */,
 				EFF59F16234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.xib in Resources */,
 				70C530F526122646007E2147 /* LocalPointsCollection_Navigate_Morrisons.js in Resources */,
@@ -3553,6 +3568,7 @@
 				3CE24B2C2304014600B258C8 /* AddOrJoinViewModel.swift in Sources */,
 				3C05A9E02327D35100620583 /* PortraitNavigationController.swift in Sources */,
 				EF9E9BD023C72930002FF18E /* RefreshControlExtension.swift in Sources */,
+				70703424268CC15F0072F3BF /* StarbucksPointsScrapingAgent.swift in Sources */,
 				3CB6BF7723141D1F00B74882 /* AuthAndAddViewModel.swift in Sources */,
 				CE539DBF25E943DD00BDA5EF /* Feature.swift in Sources */,
 				BD458B42236CA3910029A538 /* LogoutResponse.swift in Sources */,

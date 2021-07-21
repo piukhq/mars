@@ -1,36 +1,36 @@
 //
-//  TescoPointsScrapingAgent.swift
+//  StarbucksPointsScrapingAgent.swift
 //  binkapp
 //
-//  Created by Nick Farrant on 09/07/2020.
-//  Copyright © 2020 Bink. All rights reserved.
+//  Created by Nick Farrant on 30/06/2021.
+//  Copyright © 2021 Bink. All rights reserved.
 //
 
 import Foundation
 
-struct TescoScrapingAgent: WebScrapable {
+class StarbucksPointsScrapingAgent: WebScrapable {
     var merchant: WebScrapableMerchant {
-        return .tesco
+        return .starbucks
     }
     
     var membershipPlanId: Int {
         switch APIConstants.currentEnvironment {
         case .dev:
-            return 207
+            return 15
         case .staging:
-            return 230
+            return 15
         case .preprod:
-            return 230
+            return 15
         case .production:
-            return 203
+            return 15
         }
     }
 
     var loyaltySchemeBalanceSuffix: String? {
-        return "points"
+        return "stars"
     }
 
     var scrapableUrlString: String {
-        return "https://secure.tesco.com/Clubcard/MyAccount/home/Home"
+        return "https://www.starbucks.co.uk/account/login"
     }
 }
