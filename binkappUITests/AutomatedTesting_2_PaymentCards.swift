@@ -19,42 +19,40 @@ class AutomatedTesting_2_PaymentCards: XCTestCase {
         app.launchArguments = ["UI-testing"]
         app.launch()
     }
+    
+    func test_0_addMastercard_isSuccessful() {
+        app.buttons["Payment"].tap()
+        app.collectionViews.cells["Wallet prompt"].tap()
 
-    // Disable until we can fix the bug that stops PCD scrolling to delete button
-    // We won't be deleting this card, so it's already in the wallet
-//    func test_0_addMastercard_isSuccessful() {
-//        app.buttons["Payment"].tap()
-//        app.collectionViews.cells["Wallet prompt"].tap()
-//
-//        // Camera access alert
-//        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
-//        let okButton = springboard.buttons["OK"]
-//        if okButton.waitForExistence(timeout: 10) {
-//            okButton.tap()
-//        }
-//
-//        app.staticTexts["Enter Manually"].tap()
-//
-//        let cardNumberTextField = app.textFields["Card number"]
-//        cardNumberTextField.tap()
-//        cardNumberTextField.typeText("5555555555554444")
-//
-//        let expiryTextField = app.textFields["Expiry"]
-//        expiryTextField.tap()
-//        app.pickerWheels["01"].swipeUp()
-//        app.pickerWheels["2021"].swipeUp()
-//
-//        sleep(5)
-//
-//        let nameTextField = app.textFields["Name on card"]
-//        nameTextField.tap()
-//        nameTextField.typeText("B Testerson")
-//        app.buttons["done"].tap()
-//        app.buttons["Add"].tap()
-//        app.buttons["I accept"].tap()
-//
-//        XCTAssertTrue(app.staticTexts["B Testerson"].waitForExistence(timeout: 10))
-//    }
+        // Camera access alert
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let okButton = springboard.buttons["OK"]
+        if okButton.waitForExistence(timeout: 10) {
+            okButton.tap()
+        }
+
+        app.staticTexts["Enter Manually"].tap()
+
+        let cardNumberTextField = app.textFields["Card number"]
+        cardNumberTextField.tap()
+        cardNumberTextField.typeText("5555555555554444")
+
+        let expiryTextField = app.textFields["Expiry"]
+        expiryTextField.tap()
+        app.pickerWheels["01"].swipeUp()
+        app.pickerWheels["2021"].swipeUp()
+
+        sleep(5)
+
+        let nameTextField = app.textFields["Name on card"]
+        nameTextField.tap()
+        nameTextField.typeText("B Testerson")
+        app.buttons["done"].tap()
+        app.buttons["Add"].tap()
+        app.buttons["I accept"].tap()
+
+        XCTAssertTrue(app.staticTexts["B Testerson"].waitForExistence(timeout: 10))
+    }
     
     func test_1_PLL_link_isSuccessful() {
         sleep(10)
@@ -101,13 +99,11 @@ class AutomatedTesting_2_PaymentCards: XCTestCase {
         
         XCTAssertFalse(app.collectionViews.cells["Iceland"].waitForExistence(timeout: 10))
 
-        
-        // Disable until we can fix the bug that stops PCD scrolling to delete button
-//        app.buttons["Payment"].tap()
-//        app.collectionViews.cells["B Testerson"].tap()
-//        app.tables.cells["Delete this card"].tap()
-//        app.buttons["Yes"].tap()
-//
-//        XCTAssertFalse(app.collectionViews.cells["B Testerson"].waitForExistence(timeout: 10))
+        app.buttons["Payment"].tap()
+        app.collectionViews.cells["B Testerson"].tap()
+        app.tables.cells["Delete this card"].tap()
+        app.buttons["Yes"].tap()
+
+        XCTAssertFalse(app.collectionViews.cells["B Testerson"].waitForExistence(timeout: 10))
     }
 }
