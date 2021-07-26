@@ -35,12 +35,12 @@ Retrieve and force update all the certificates for all targets and configures yo
 ```
 fastlane ios mr
 ```
-Submit MR build to TestFlight
+Submit merge request build to TestFlight
 ### ios beta
 ```
 fastlane ios beta
 ```
-Submit branch to TestFlight
+Submit production build to TestFlight
 ### ios bump
 ```
 fastlane ios bump
@@ -54,6 +54,6 @@ Submit dysm to Sentry for Firebase App Distribution
 
 ----
 
-This README.md is auto-generated and will be re-generated every time [fastlane](https://fastlane.tools) is run.
+This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
 More information about fastlane can be found on [fastlane.tools](https://fastlane.tools).
 The documentation of fastlane can be found on [docs.fastlane.tools](https://docs.fastlane.tools).
