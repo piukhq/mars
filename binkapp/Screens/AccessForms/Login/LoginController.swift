@@ -89,8 +89,8 @@ class LoginController: UserServiceProtocol {
 // MARK: - Magic Link Status Screen
 
 extension LoginController {
-    func handleMagicLinkCheckInbox(formDataSource: FormDataSource? = nil) {
-        navigateToStatusScreen(for: .checkInbox, with: formDataSource)
+    func handleMagicLinkCheckInbox(formDataSource: FormDataSource? = nil, token: String? = nil) {
+        navigateToStatusScreen(for: .checkInbox, with: formDataSource, token: token)
     }
     
     func handleMagicLinkExpiredToken(token: String) {
@@ -110,9 +110,12 @@ extension LoginController {
     private func navigateToStatusScreen(for status: MagicLinkStatus, with dataSource: FormDataSource? = nil, token: String? = nil) {
         var configurationModel: ReusableModalConfiguration
         
+        let decodedToken = try? decode(jwt: token ?? "")
+        let decodedEmail = decodedToken?.body["email"] as? String
+        
         switch status {
         case .checkInbox:
-            let emailAddress = dataSource?.fields.first(where: { $0.fieldCommonName == .email })?.value
+            let emailAddress = dataSource?.fields.first(where: { $0.fieldCommonName == .email })?.value ?? decodedEmail
             let attributedString = NSMutableAttributedString()
             let attributedTitle = NSAttributedString(string: L10n.checkInboxTitle + "\n", attributes: [NSAttributedString.Key.font: UIFont.headline])
             let attributedBody = NSMutableAttributedString(string: L10n.checkInboxDescription(emailAddress ?? L10n.nilEmailAddress), attributes: [.font: UIFont.bodyTextLarge])
@@ -144,13 +147,7 @@ extension LoginController {
         case .expired:
             configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: L10n.linkExpiredTitle, description: L10n.linkExpiredDescription), primaryButtonTitle: L10n.retryTitle, primaryButtonAction: {
                 // Resend email
-                guard let token = token else {
-                    self.displayMagicLinkErrorAlert()
-                    return
-                }
-                
-                let decodedToken = try? decode(jwt: token)
-                guard let email = decodedToken?.body["email"] as? String else {
+                guard let email = decodedEmail else {
                     self.displayMagicLinkErrorAlert()
                     return
                 }
@@ -161,7 +158,7 @@ extension LoginController {
                         return
                     }
 
-                    self?.handleMagicLinkCheckInbox()
+                    self?.handleMagicLinkCheckInbox(token: token)
                 }
             }, secondaryButtonTitle: L10n.cancel) {
                 Current.navigate.back(toRoot: true, animated: true)
