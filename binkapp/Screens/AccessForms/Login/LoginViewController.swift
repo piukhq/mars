@@ -163,7 +163,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     private func performMagicLinkRequest() {
         let fields = dataSource.currentFieldValues()
         guard let email = fields["email"] else {
-            Current.loginController.handleMagicLinkFailed()
+            Current.loginController.displayMagicLinkErrorAlert()
             return
         }
         
@@ -172,7 +172,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
             self.continueButton.toggleLoading(isLoading: false)
             
             guard success else {
-                Current.loginController.handleMagicLinkFailed()
+                Current.loginController.displayMagicLinkErrorAlert()
                 return
             }
             

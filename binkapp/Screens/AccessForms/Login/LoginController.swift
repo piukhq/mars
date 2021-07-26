@@ -6,6 +6,7 @@
 //  Copyright © 2021 Bink. All rights reserved.
 //
 
+import JWTDecode
 import UIKit
 
 class LoginController: UserServiceProtocol {
@@ -17,8 +18,7 @@ class LoginController: UserServiceProtocol {
     
     func exchangeMagicLinkToken(token: String, withPreferences preferences: [String: String], completion: @escaping (UserServiceError?) -> Void) {
         /// We know that if we don't successfully login, we should fallback to the onboarding screen once loading completes.
-
-//        Current.rootStateMachine.startLoading(from: ViewControllerFactory.makeOnboardingViewController()) << DO WE STILL NEED THIS???????
+        Current.rootStateMachine.startLoading(from: ViewControllerFactory.makeOnboardingViewController())
         
         requestMagicLinkAccessToken(for: token) { [weak self] (result, rawResponse) in
             self?.handleResult(result, withPreferences: preferences, completion: { error in
@@ -89,22 +89,25 @@ class LoginController: UserServiceProtocol {
 // MARK: - Magic Link Status Screen
 
 extension LoginController {
-    func handleMagicLinkCheckInbox(formDataSource: FormDataSource) {
+    func handleMagicLinkCheckInbox(formDataSource: FormDataSource? = nil) {
         navigateToStatusScreen(for: .checkInbox, with: formDataSource)
     }
     
-    func handleMagicLinkExpiredToken() {
-        navigateToStatusScreen(for: .expired)
+    func handleMagicLinkExpiredToken(token: String) {
+        navigateToStatusScreen(for: .expired, token: token)
     }
     
-    func handleMagicLinkFailed() {
+    func handleMagicLinkFailed(token: String) {
+        navigateToStatusScreen(for: .failed, token: token)
+    }
+    
+    func displayMagicLinkErrorAlert() {
         let alert = ViewControllerFactory.makeOkAlertViewController(title: "Error", message: "Magic Link is temporarily unavailable, please try again later.")
         let navigationRequest = AlertNavigationRequest(alertController: alert)
         Current.navigate.to(navigationRequest)
-//        navigateToStatusScreen(for: .failed)
     }
     
-    private func navigateToStatusScreen(for status: MagicLinkStatus, with dataSource: FormDataSource? = nil) {
+    private func navigateToStatusScreen(for status: MagicLinkStatus, with dataSource: FormDataSource? = nil, token: String? = nil) {
         var configurationModel: ReusableModalConfiguration
         
         switch status {
@@ -140,13 +143,34 @@ extension LoginController {
             }
         case .expired:
             configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: L10n.linkExpiredTitle, description: L10n.linkExpiredDescription), primaryButtonTitle: L10n.retryTitle, primaryButtonAction: {
-                Current.navigate.back()
+                // Resend email
+                guard let token = token else {
+                    self.displayMagicLinkErrorAlert()
+                    return
+                }
+                
+                let decodedToken = try? decode(jwt: token)
+                guard let email = decodedToken?.body["email"] as? String else {
+                    self.displayMagicLinkErrorAlert()
+                    return
+                }
+
+                self.requestMagicLink(email: email) { [weak self] (success, _) in
+                    guard success else {
+                        self?.displayMagicLinkErrorAlert()
+                        return
+                    }
+
+                    self?.handleMagicLinkCheckInbox()
+                }
             }, secondaryButtonTitle: L10n.cancel) {
                 Current.navigate.back(toRoot: true, animated: true)
             }
         case .failed:
             configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: L10n.somethingWentWrongTitle, description: L10n.somethingWentWrongDescription), primaryButtonTitle: L10n.retryTitle, primaryButtonAction: {
-                Current.navigate.back()
+                // the token exchange is re-attempted
+                
+                
             }, secondaryButtonTitle: L10n.cancel) {
                 Current.navigate.back(toRoot: true, animated: true)
             }

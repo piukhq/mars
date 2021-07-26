@@ -62,9 +62,9 @@ class TermsAndConditionsViewController: BaseFormViewController, UserServiceProto
                 if let error = error {
                     switch error {
                     case .magicLinkExpired:
-                        Current.loginController.handleMagicLinkExpiredToken()
+                        Current.loginController.handleMagicLinkExpiredToken(token: "")
                     default:
-                        Current.loginController.handleMagicLinkFailed()
+                        Current.loginController.handleMagicLinkFailed(token: "")
                     }
                 }
             }

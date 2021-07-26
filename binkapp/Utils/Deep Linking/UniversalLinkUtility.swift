@@ -34,15 +34,11 @@ class UniversalLinkUtility {
             if let error = error {
                 switch error {
                 case .magicLinkExpired:
-                    Current.loginController.handleMagicLinkExpiredToken()
+                    Current.loginController.handleMagicLinkExpiredToken(token: token)
                 default:
-                    Current.loginController.handleMagicLinkFailed()
+                    Current.loginController.handleMagicLinkFailed(token: token)
                 }
             }
         }
-        
-//        let tAndCViewController = ViewControllerFactory.makeSocialTermsAndConditionsViewController(requestType: .magicLink(shortLivedToken: token))
-//        let navigationRequest = PushNavigationRequest(viewController: tAndCViewController)
-//        Current.navigate.to(navigationRequest)
     }
 }

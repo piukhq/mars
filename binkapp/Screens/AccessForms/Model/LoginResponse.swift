@@ -21,7 +21,7 @@ struct LoginResponse: Codable {
     let accessToken: String?
     
     
-    // Abstrations
+    // Abstractions
     
     // Abstract the two possible token response keys we can get
     var jwt: String? {
