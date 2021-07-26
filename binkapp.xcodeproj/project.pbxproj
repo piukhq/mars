@@ -332,12 +332,12 @@
 		CEAB2D73266671C5006A0F43 /* HTMLParsingUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAB2D72266671C5006A0F43 /* HTMLParsingUtil.swift */; };
 		CEACE7212543309E004DD27E /* BinkHTTPHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEACE7202543309E004DD27E /* BinkHTTPHeaders.swift */; };
 		CEAF29FA26946247006B6EB5 /* AutomatedTesting_2_PaymentCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF29F926946246006B6EB5 /* AutomatedTesting_2_PaymentCards.swift */; };
-		CEAF2A002695EA09006B6EB5 /* AutomatedTesting_3_ZendeskFAQs.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF29FF2695EA09006B6EB5 /* AutomatedTesting_3_ZendeskFAQs.swift */; };
-		CEAF2A0226974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF2A0126974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift */; };
-		CEAF2A04269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF2A03269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift */; };
 		CEAF29FB26959E98006B6EB5 /* BinkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE539DFC25F0EBAB00BDA5EF /* BinkLogger.swift */; };
 		CEAF29FC26959FA7006B6EB5 /* BinkLoggerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54AF5C25F938720061838C /* BinkLoggerEvents.swift */; };
 		CEAF29FD2695A051006B6EB5 /* BinkLoggerErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */; };
+		CEAF2A002695EA09006B6EB5 /* AutomatedTesting_3_ZendeskFAQs.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF29FF2695EA09006B6EB5 /* AutomatedTesting_3_ZendeskFAQs.swift */; };
+		CEAF2A0226974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF2A0126974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift */; };
+		CEAF2A04269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF2A03269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift */; };
 		CEC0ACBC2636AD0000845813 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBA2636AD0000845813 /* Assets.swift */; };
 		CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBB2636AD0000845813 /* Strings.swift */; };
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
@@ -4478,7 +4478,7 @@
 			baseConfigurationReference = 67B8D6E0B8AB406C5DE33137 /* Pods-binkapp.app store (internal).xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
@@ -4497,10 +4497,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.3.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				PRODUCT_MODULE_NAME = binkapp;
-				PRODUCT_NAME = Bink;
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet";
+				PRODUCT_NAME = "Bink β";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.beta";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -4623,6 +4623,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 2.3.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -4696,6 +4697,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 2.3.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.widget;
@@ -4769,6 +4771,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 2.3.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.widget;
@@ -4842,11 +4845,12 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 2.3.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.widget";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.beta.widget";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
