@@ -131,7 +131,7 @@ platform :ios do
 
     run_tests(
       workspace: "binkapp.xcworkspace",
-      device: "iPhone 12",
+      device: "iPhone 12 Pro",
       scheme: "binkapp tests"
     )
 
