@@ -102,7 +102,7 @@ extension LoginController {
     }
     
     func displayMagicLinkErrorAlert() {
-        let alert = ViewControllerFactory.makeOkAlertViewController(title: "Error", message: "Magic Link is temporarily unavailable, please try again later.")
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: L10n.magicLinkErrorMessage)
         let navigationRequest = AlertNavigationRequest(alertController: alert)
         Current.navigate.to(navigationRequest)
     }
@@ -146,7 +146,7 @@ extension LoginController {
             }
         case .expired:
             configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: L10n.linkExpiredTitle, description: L10n.linkExpiredDescription), primaryButtonTitle: L10n.retryTitle, primaryButtonAction: {
-                // Resend email
+                // Resend magic link email
                 guard let email = decodedEmail else {
                     self.displayMagicLinkErrorAlert()
                     return
@@ -165,9 +165,22 @@ extension LoginController {
             }
         case .failed:
             configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: L10n.somethingWentWrongTitle, description: L10n.somethingWentWrongDescription), primaryButtonTitle: L10n.retryTitle, primaryButtonAction: {
-                // the token exchange is re-attempted
+                // Re-attempt token exchange
+                guard let token = token else {
+                    self.displayMagicLinkErrorAlert()
+                    return
+                }
                 
-                
+                self.exchangeMagicLinkToken(token: token, withPreferences: [:]) { [weak self] error in
+                    if let error = error {
+                        switch error {
+                        case .magicLinkExpired:
+                            self?.handleMagicLinkExpiredToken(token: token)
+                        default:
+                            self?.handleMagicLinkFailed(token: token)
+                        }
+                    }
+                }
             }, secondaryButtonTitle: L10n.cancel) {
                 Current.navigate.back(toRoot: true, animated: true)
             }

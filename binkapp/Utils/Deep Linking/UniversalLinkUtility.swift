@@ -28,8 +28,6 @@ class UniversalLinkUtility {
     }
     
     private func handleMagicLink(token: String) {
-//        Current.rootStateMachine.handleMagicLink()
-        
         Current.loginController.exchangeMagicLinkToken(token: token, withPreferences: [:]) { error in
             if let error = error {
                 switch error {

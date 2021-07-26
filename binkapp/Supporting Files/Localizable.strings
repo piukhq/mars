@@ -338,6 +338,7 @@
 "open_mail_alert_title" = "Open your email app";
 "login_success_title" = "Success";
 "login_succes_subtitle" = "You are now logged in with %@ and will remain logged in on this device until you choose to log out.\nYou can log out from settings.";
+"magic_link_error_message" = "Magic Link is temporarily unavailable, please try again later.";
 
 "tandcs_title" = "I agree to Bink's Terms and Conditions";
 "tandcs_description" = "Please read the Bink Privacy Policy for further details of how your data will be processed";

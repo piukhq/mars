@@ -290,6 +290,8 @@ internal enum L10n {
   internal static let magicLinkDescription = L10n.tr("Localizable", "magic_link_description")
   /// Note:
   internal static let magicLinkDescriptionNoteHighlight = L10n.tr("Localizable", "magic_link_description_note_highlight")
+  /// Magic Link is temporarily unavailable, please try again later.
+  internal static let magicLinkErrorMessage = L10n.tr("Localizable", "magic_link_error_message")
   /// Continue with email
   internal static let magicLinkTitle = L10n.tr("Localizable", "magic_link_title")
   /// Opt in to receive marketing messages
