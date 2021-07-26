@@ -80,7 +80,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         configureCollectionView()
         
         if #available(iOS 14.0, *) {
-            applySnapshot(animatingDifferences: true)
+            applySnapshot()
             configureDiffableDataSourceHandlers()
         }
     }
@@ -199,7 +199,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         ])
     }
     
-    func reloadCollectionView(animated: Bool = false) {
+    func reloadCollectionView(animated: Bool = true) {
         viewModel.setupWalletPrompts()
         
         if #available(iOS 14.0, *) {
@@ -228,7 +228,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             guard let self = self else { return }
             self.refreshControl.endRefreshing()
         }
-        reloadCollectionView(animated: true)
+        reloadCollectionView()
     }
     
     @objc private func refreshPostClear() {
@@ -237,12 +237,12 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     
     @objc private func refreshLocal() {
         if #available(iOS 14.0, *) {
-            reloadCollectionView(animated: true)
+            reloadCollectionView()
         } else {
             if let indexPath = indexPathOfCardToDelete {
                 deleteCard(at: indexPath)
             } else {
-                reloadCollectionView(animated: true)
+                reloadCollectionView()
             }
         }
     }
@@ -250,7 +250,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     @objc private func stopRefreshing() {
         if let navigationBar = self.navigationController?.navigationBar {
             refreshControl.programaticallyEndRefreshing(in: self.collectionView, with: navigationBar)
-            reloadCollectionView(animated: true)
+            reloadCollectionView()
         }
     }
     
@@ -258,7 +258,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         self.collectionView.performBatchUpdates({ [weak self] in
             self?.collectionView.deleteItems(at: [indexPath])
         }) { [weak self] _ in
-            self?.reloadCollectionView(animated: true)
+            self?.reloadCollectionView()
             self?.indexPathOfCardToDelete = nil
         }
     }
@@ -337,9 +337,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     override func configureForCurrentTheme() {
         super.configureForCurrentTheme()
         refreshControl.tintColor = Current.themeManager.color(for: .text)
-        
-        /// This should never be set to animated: true as it will crash
-        /// in the payment wallet due to the cells not being registered yet.
         reloadCollectionView()
         collectionView.indicatorStyle = Current.themeManager.scrollViewIndicatorStyle(for: traitCollection)
     }
