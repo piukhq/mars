@@ -131,15 +131,18 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
         let dispatchGroup = DispatchGroup()
         let forceRefresh = type == .reload
         
-        dispatchGroup.enter()
-        Current.remoteConfig.fetch { success in
-            guard success else {
-                NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
-                // if this failed, the entire function should fail
-                completion?(success, nil)
-                return
+        /// If we are fetching wallet data from the API, then also fetch from remote config
+        if forceRefresh {
+            dispatchGroup.enter()
+            Current.remoteConfig.fetch { success in
+                guard success else {
+                    NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
+                    // if this failed, the entire function should fail
+                    completion?(success, nil)
+                    return
+                }
+                dispatchGroup.leave()
             }
-            dispatchGroup.leave()
         }
 
         dispatchGroup.enter()
@@ -165,7 +168,9 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
         }
 
         dispatchGroup.notify(queue: .main) {
-            Current.remoteConfig.handleRemoteConfigFetch()
+            if forceRefresh {
+                Current.remoteConfig.handleRemoteConfigFetch()
+            }
             NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
             completion?(true, nil)
         }
