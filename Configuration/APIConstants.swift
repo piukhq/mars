@@ -70,13 +70,12 @@ enum APIConstants {
     }
 
     static var baseURLString: String {
-        #if DEBUG
-        // If we have set the environment from the debug menu
-        if let debugBaseURLString = Current.userDefaults.value(forDefaultsKey: .debugBaseURL) as? String {
-            return debugBaseURLString
+        if let _ = try? Configuration.value(for: .debugMenu) {
+            // If we have set the environment from the debug menu
+            if let debugBaseURLString = Current.userDefaults.value(forDefaultsKey: .debugBaseURL) as? String {
+                return debugBaseURLString
+            }
         }
-        #endif
-
 
         do {
             let configBaseURL = try Configuration.value(for: .apiBaseUrl)
