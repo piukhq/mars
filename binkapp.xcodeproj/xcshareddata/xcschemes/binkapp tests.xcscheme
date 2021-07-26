@@ -62,12 +62,6 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "AutomatedTesting_2_PaymentCards">
-               </Test>
-               <Test
-                  Identifier = "AutomatedTesting_3_ZendeskFAQs">
-               </Test>
-               <Test
                   Identifier = "AutomatedTesting_4_GoToSite">
                </Test>
                <Test
