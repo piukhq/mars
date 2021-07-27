@@ -28,19 +28,26 @@ class UniversalLinkUtility {
     }
     
     private func handleMagicLink(token: String) {
-        // Check if we have current user
-        let currentEmail = Current.userManager.currentEmailAddress ?? ""
-        
-        // If current email address matches email from token - return
-        let decodedEmail = Current.loginController.decodedEmailAddress(from: token) ?? ""
-        
-        guard currentEmail != decodedEmail else {
+        switch Current.userManager.hasCurrentUser {
+        case true:
+            let currentEmail = Current.userManager.currentEmailAddress ?? ""
+            let decodedEmail = Current.loginController.decodedEmailAddress(from: token) ?? L10n.nilEmailAddress
+            guard currentEmail != decodedEmail else { return }
             
-            return
+            let alertView = ViewControllerFactory.makeOkCancelAlertViewController(title: L10n.magicLinkAlreadyLoggedInTitle, message: L10n.magicLinkAlreadyLoggedInDescription(decodedEmail)) {
+                // logout and exchange magic link token and log in to new account
+                self.exchangeMagicLinkToken(token: token)
+            }
+            
+            let navigationRequest = AlertNavigationRequest(alertController: alertView)
+            Current.navigate.to(navigationRequest)
+        
+        case false:
+            exchangeMagicLinkToken(token: token)
         }
-        
-        // If its a different email address, present alert - if OK is tapped, logout and exchange magic link token
-        
+    }
+    
+    private func exchangeMagicLinkToken(token: String) {
         Current.loginController.exchangeMagicLinkToken(token: token, withPreferences: [:]) { error in
             if let error = error {
                 switch error {

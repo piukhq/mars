@@ -216,6 +216,16 @@ enum ViewControllerFactory {
         return alert
     }
     
+    static func makeOkCancelAlertViewController(title: String?, message: String?, cancelButton: Bool? = nil, completion: EmptyCompletionBlock? = nil) -> BinkAlertController {
+        let alert = BinkAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: L10n.ok, style: .default, handler: { _ in
+            completion?()
+        }))
+        
+        alert.addAction(UIAlertAction(title: L10n.cancel, style: .cancel))
+        return alert
+    }
+    
     static func makeRecommendedAppUpdateAlertController(skipVersionHandler: @escaping () -> Void) -> BinkAlertController {
         let alert = BinkAlertController(title: L10n.recommendedAppUpdateTitle, message: L10n.recommendedAppUpdateMessage, preferredStyle: .alert)
         

@@ -286,6 +286,12 @@ internal enum L10n {
   internal static let loyaltyScannerWidgetTitleEnterManuallyText = L10n.tr("Localizable", "loyalty_scanner_widget_title_enter_manually_text")
   /// Unrecognised barcode
   internal static let loyaltyScannerWidgetTitleUnrecognizedBarcodeText = L10n.tr("Localizable", "loyalty_scanner_widget_title_unrecognized_barcode_text")
+  /// Would you like to log in to %@?
+  internal static func magicLinkAlreadyLoggedInDescription(_ p1: Any) -> String {
+    return L10n.tr("Localizable", "magic_link_already_logged_in_description", String(describing: p1))
+  }
+  /// Already Logged In
+  internal static let magicLinkAlreadyLoggedInTitle = L10n.tr("Localizable", "magic_link_already_logged_in_title")
   /// Get a link sent to your inbox so you can register or access your account instantly!\n\nNote: We will send you a Magic Link
   internal static let magicLinkDescription = L10n.tr("Localizable", "magic_link_description")
   /// Note:
