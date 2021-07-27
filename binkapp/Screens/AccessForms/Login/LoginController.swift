@@ -84,6 +84,11 @@ class LoginController: UserServiceProtocol {
             completion(error)
         }
     }
+    
+    func decodedEmailAddress(from token: String) -> String? {
+        let decodedToken = try? decode(jwt: token)
+        return decodedToken?.body["email"] as? String
+    }
 }
 
 // MARK: - Magic Link Status Screen
@@ -109,9 +114,7 @@ extension LoginController {
     
     private func navigateToStatusScreen(for status: MagicLinkStatus, with dataSource: FormDataSource? = nil, token: String? = nil) {
         var configurationModel: ReusableModalConfiguration
-        
-        let decodedToken = try? decode(jwt: token ?? "")
-        let decodedEmail = decodedToken?.body["email"] as? String
+        let decodedEmail = decodedEmailAddress(from: token ?? "")
         
         switch status {
         case .checkInbox:

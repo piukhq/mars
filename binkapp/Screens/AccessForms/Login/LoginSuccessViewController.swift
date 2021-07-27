@@ -32,7 +32,6 @@ class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
         imageView.widthAnchor.constraint(equalToConstant: Constants.logoDimension).isActive = true
         return imageView
     }()
-
     
     init() {
         let emailAddress = Current.userManager.currentEmailAddress
@@ -52,19 +51,10 @@ class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        stackScrollView.insert(arrangedSubview: binkLogo, atIndex: 0, customSpacing: 30)
-//        configureLayout()
-        
         footerButtons = [continueButton]
-    }
-    
-    func configureLayout() {
-        NSLayoutConstraint.activate([
-            binkLogo.heightAnchor.constraint(equalToConstant: Constants.logoDimension),
-            binkLogo.widthAnchor.constraint(equalToConstant: Constants.logoDimension)
-        ])
-    }
+        stackScrollView.insert(arrangedSubview: binkLogo, atIndex: 0, customSpacing: 30)
 
+    }
     
     @objc func continueButtonTapped() {
         continueButton.toggleLoading(isLoading: true)
