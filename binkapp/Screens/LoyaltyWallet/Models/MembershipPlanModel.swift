@@ -44,7 +44,21 @@ extension MembershipPlanModel: CoreDataMappable, CoreDataIDMappable {
         update(cdObject, \.status, with: status, delta: delta)
         update(cdObject, \.hasVouchers, with: NSNumber(value: hasVouchers ?? false), delta: delta)
 
-        if let featureSet = featureSet {
+        if var featureSet = featureSet {
+            if let planId = apiId, let agent = Current.pointsScrapingManager.agent(forPlanId: planId) {
+                /// If we have a local points collection agent set for this plan, we should check that it is enabled on remote config
+                if Current.pointsScrapingManager.agentEnabled(agent) {
+                    /// If enabled on remote config, set to View
+                    featureSet.cardType = .view
+                    featureSet.hasPoints = true
+                } else {
+                    /// If disabled on remote config, set to Store
+                    featureSet.cardType = .store
+                    featureSet.hasPoints = false
+                }
+                featureSet.transactionsAvailable = false
+            }
+            
             let cdFeatureSet = featureSet.mapToCoreData(context, .update, overrideID: FeatureSetModel.overrideId(forParentId: overrideID ?? id))
             update(cdFeatureSet, \.plan, with: cdObject, delta: delta)
             update(cdObject, \.featureSet, with: cdFeatureSet, delta: delta)

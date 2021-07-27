@@ -81,6 +81,8 @@ private extension BinkModuleViewModel {
                     
                     // Points module 1.6
                     return .loginChanges(type: .points(membershipCard: membershipCard), status: membershipCard.status?.status, reasonCode: reasonCode)
+                case .pointsScrapingLoginRequired:
+                    return .lpcLoginRequired
                 default:
                     // Points module 1.10 (need reason codes, set by default)
                     return .registerGhostCard
