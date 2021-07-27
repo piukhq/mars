@@ -72,9 +72,6 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "AutomatedTesting_0_Login">
-               </Test>
-               <Test
                   Identifier = "AutomatedTesting_1_LoyaltyCards">
                </Test>
                <Test

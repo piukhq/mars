@@ -47,6 +47,7 @@ enum ReasonCode: String, Codable, CaseIterable {
     case attemptingToScrapePointsValue = "M100"
     case pointsScrapingSuccessful = "M300"
     case pointsScrapingLoginFailed = "M102"
+    case pointsScrapingLoginRequired = "M103"
 
     var code: Int {
         let codeString = String(rawValue.suffix(3))
@@ -96,6 +97,8 @@ enum ReasonCode: String, Codable, CaseIterable {
             return "Points scraping successful"
         case .pointsScrapingLoginFailed:
             return "Points scraping login failed"
+        case .pointsScrapingLoginRequired:
+            return "Points scraping login required"
         }
     }
 
