@@ -85,7 +85,10 @@ class LoginController: UserServiceProtocol {
                 completion(nil)
             })
         case .failure(let error):
-            Current.rootStateMachine.stopLoading()
+            if loginType == .magicLink {
+                Current.rootStateMachine.stopLoading()
+            }
+            
             BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
             completion(error)
         }
