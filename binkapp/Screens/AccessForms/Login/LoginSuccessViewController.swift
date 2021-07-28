@@ -6,11 +6,12 @@
 //  Copyright © 2021 Bink. All rights reserved.
 //
 
+import Lottie
 import UIKit
 
 class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
     enum Constants {
-        static let logoDimension: CGFloat = 142
+        static let logoDimension: CGFloat = 300
         static let logoCornerRadius: CGFloat = 20
     }
     
@@ -19,18 +20,15 @@ class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
             self?.continueButtonTapped()
         }
     }()
-    
-    private lazy var binkLogo: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.clipsToBounds = true
-        imageView.image = Asset.binkIconLogo.image
-        imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = Constants.logoCornerRadius
-        imageView.layer.cornerCurve = .continuous
-        imageView.heightAnchor.constraint(equalToConstant: Constants.logoDimension).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: Constants.logoDimension).isActive = true
-        return imageView
+ 
+    private lazy var animationView: AnimationView = {
+        let animationView = AnimationView(name: "success")
+        animationView.contentMode = .scaleAspectFit
+        animationView.loopMode = .loop
+        animationView.translatesAutoresizingMaskIntoConstraints = false
+        animationView.heightAnchor.constraint(equalToConstant: Constants.logoDimension).isActive = true
+        animationView.widthAnchor.constraint(equalToConstant: Constants.logoDimension).isActive = true
+        return animationView
     }()
     
     init() {
@@ -52,8 +50,9 @@ class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         footerButtons = [continueButton]
-        stackScrollView.insert(arrangedSubview: binkLogo, atIndex: 0, customSpacing: 30)
-
+        stackScrollView.insert(arrangedSubview: animationView, atIndex: 0)
+        stackScrollView.alignment = .center
+        animationView.play()
     }
     
     @objc func continueButtonTapped() {
