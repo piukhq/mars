@@ -46,12 +46,12 @@ enum Styling {
         static var viewBackground: UIColor {
             switch Current.themeManager.currentTheme.type {
             case .light:
-                return .white
+                return UIColor(hexString: "F7F7F7")
             case .dark:
                 return .binkBlueViewBackground
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                    return traitcollection.userInterfaceStyle == .light ? .white : .binkBlueViewBackground
+                    return traitcollection.userInterfaceStyle == .light ? UIColor(hexString: "F7F7F7") : .binkBlueViewBackground
                 }
             }
         }
