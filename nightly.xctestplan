@@ -21,6 +21,7 @@
     },
     {
       "selectedTests" : [
+        "AutomatedTesting_4_GoToSite\/test_00_loginToProduction()",
         "AutomatedTesting_4_GoToSite\/test_01_coOp_goToSite_loadsWebpage_successfully()",
         "AutomatedTesting_4_GoToSite\/test_03_harveyNichols_goToSite_loadsWebpage_successfully()",
         "AutomatedTesting_4_GoToSite\/test_04_iceland_goToSite_loadsWebpage_successfully()",
@@ -85,7 +86,8 @@
         "AutomatedTesting_4_GoToSite\/test_67_theWorks_goToSite_loadsWebpage_successfully()",
         "AutomatedTesting_4_GoToSite\/test_68_tkMaxx_goToSite_loadsWebpage_successfully()",
         "AutomatedTesting_4_GoToSite\/test_69_towsure_goToSite_loadsWebpage_successfully()",
-        "AutomatedTesting_4_GoToSite\/test_70_waitrose_goToSite_loadsWebpage_successfully()"
+        "AutomatedTesting_4_GoToSite\/test_70_waitrose_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_loginToProduction()"
       ],
       "target" : {
         "containerPath" : "container:binkapp.xcodeproj",
