@@ -11,6 +11,11 @@ import XCTest
 class AutomatedTesting_4_GoToSite: XCTestCase {
     private var app = XCUIApplication()
     
+    override class func setUp() {
+        super.setUp()
+        AutomatedTesting.loginIntoEnvironment(type: .production)
+    }
+    
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
@@ -18,22 +23,18 @@ class AutomatedTesting_4_GoToSite: XCTestCase {
         
         app.launchArguments = ["UI-testing"]
         app.launch()
-        sleep(30)
-        AutomatedTesting.loginIntoEnvironment(type: .production)
-        sleep(30)
+        
         app.buttons["Browse brands"].tap()
         sleep(10)
     }
     
     private func goToSiteAndAssertErrorAlertExistanceIsFalse() {
-        sleep(3)
         app.buttons["Bink info button"].tap()
         app.buttons["Go to site"].tap()
         XCTAssertFalse(app.alerts.element.waitForExistence(timeout: 3))
     }
 
     func test_01_coOp_goToSite_loadsWebpage_successfully() {
-        sleep(10)
         app.tables.cells["Co-op"].firstMatch.tap()
         goToSiteAndAssertErrorAlertExistanceIsFalse()
     }
