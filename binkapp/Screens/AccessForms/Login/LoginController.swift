@@ -9,10 +9,16 @@
 import JWTDecode
 import UIKit
 
+enum LoginType {
+    case magicLink
+    case apple
+    case password
+}
+
 class LoginController: UserServiceProtocol {
     func login(with request: LoginRegisterRequest, completion: @escaping (UserServiceError?) -> Void) {
         login(request: request) { [weak self] result in
-            self?.handleResult(result, completion: completion)
+            self?.handleResult(for: .password, result, completion: completion)
         }
     }
     
@@ -21,7 +27,7 @@ class LoginController: UserServiceProtocol {
         Current.rootStateMachine.startLoading(from: ViewControllerFactory.makeOnboardingViewController())
         
         requestMagicLinkAccessToken(for: token) { [weak self] (result, rawResponse) in
-            self?.handleResult(result, withPreferences: preferences, completion: { error in
+            self?.handleResult(for: .magicLink, result, withPreferences: preferences, completion: { error in
                 if let error = error {
                     if rawResponse?.urlResponse?.statusCode == 401 {
                         completion(.magicLinkExpired)
@@ -37,11 +43,11 @@ class LoginController: UserServiceProtocol {
     
     func loginWithApple(request: SignInWithAppleRequest, withPreferences preferences: [String: String], completion: @escaping (UserServiceError?) -> Void) {
         authWithApple(request: request) { [weak self] result in
-            self?.handleResult(result, withPreferences: preferences, completion: completion)
+            self?.handleResult(for: .apple, result, withPreferences: preferences, completion: completion)
         }
     }
     
-    private func handleResult(_ result: Result<LoginResponse, UserServiceError>, withPreferences preferences: [String: String]? = nil, completion: @escaping (UserServiceError?) -> Void) {
+    private func handleResult(for loginType: LoginType, _ result: Result<LoginResponse, UserServiceError>, withPreferences preferences: [String: String]? = nil, completion: @escaping (UserServiceError?) -> Void) {
         /// Remove any current user object regardless of success or failure.
         Current.userManager.removeUser()
         
@@ -71,7 +77,7 @@ class LoginController: UserServiceProtocol {
                     BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
                 })
                 
-                Current.rootStateMachine.handleLogin()
+                Current.rootStateMachine.handleLogin(for: loginType)
                 
                 BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
                 BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
@@ -151,12 +157,14 @@ extension LoginController {
             configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: L10n.linkExpiredTitle, description: L10n.linkExpiredDescription), primaryButtonTitle: L10n.retryTitle, primaryButtonAction: {
                 // Resend magic link email
                 guard let email = decodedEmail else {
+                    
                     self.displayMagicLinkErrorAlert()
                     return
                 }
 
                 self.requestMagicLink(email: email) { [weak self] (success, _) in
                     guard success else {
+                        
                         self?.displayMagicLinkErrorAlert()
                         return
                     }

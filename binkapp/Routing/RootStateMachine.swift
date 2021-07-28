@@ -22,7 +22,7 @@ class RootStateMachine: NSObject, UserServiceProtocol {
         } else if Current.userManager.currentToken == nil {
             handleUnauthenticated()
         } else {
-            handleLogin()
+            handleLogin(for: .password)
         }
         
         window.tintColor = .black
@@ -52,13 +52,18 @@ class RootStateMachine: NSObject, UserServiceProtocol {
         Current.userManager.removeUser()
     }
 
-    func handleLogin() {
+    func handleLogin(for loginType: LoginType) {
         let tabBarController = MainTabBarViewController(viewModel: MainTabBarViewModel())
         moveTo(tabBarController)
         
-        let successViewController = ViewControllerFactory.makeLoginSuccessViewController()
-        let navigationRequest = ModalNavigationRequest(viewController: successViewController)
-        Current.navigate.to(navigationRequest)
+        switch loginType {
+        case .magicLink:
+            let successViewController = ViewControllerFactory.makeLoginSuccessViewController()
+            let navigationRequest = ModalNavigationRequest(viewController: successViewController)
+            Current.navigate.to(navigationRequest)
+        default:
+            break
+        }
     }
     
     /// User driven logout that triggers API call and clears local storage

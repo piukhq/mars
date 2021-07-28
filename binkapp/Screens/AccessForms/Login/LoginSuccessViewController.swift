@@ -11,8 +11,7 @@ import UIKit
 
 class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
     enum Constants {
-        static let logoDimension: CGFloat = 300
-        static let logoCornerRadius: CGFloat = 20
+        static let animationDimension: CGFloat = 300
     }
     
     private lazy var continueButton: BinkButton = {
@@ -24,10 +23,10 @@ class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
     private lazy var animationView: AnimationView = {
         let animationView = AnimationView(name: "success")
         animationView.contentMode = .scaleAspectFit
-        animationView.loopMode = .loop
+        animationView.loopMode = .playOnce
         animationView.translatesAutoresizingMaskIntoConstraints = false
-        animationView.heightAnchor.constraint(equalToConstant: Constants.logoDimension).isActive = true
-        animationView.widthAnchor.constraint(equalToConstant: Constants.logoDimension).isActive = true
+        animationView.heightAnchor.constraint(equalToConstant: Constants.animationDimension).isActive = true
+        animationView.widthAnchor.constraint(equalToConstant: Constants.animationDimension).isActive = true
         return animationView
     }()
     
@@ -52,7 +51,13 @@ class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
         footerButtons = [continueButton]
         stackScrollView.insert(arrangedSubview: animationView, atIndex: 0)
         stackScrollView.alignment = .center
+        textView.textAlignment = .center
         animationView.play()
+    }
+    
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        titleLabel.textColor = .binkBlueTitleText
     }
     
     @objc func continueButtonTapped() {
