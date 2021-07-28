@@ -18,7 +18,9 @@ class AutomatedTesting_4_GoToSite: XCTestCase {
         
         app.launchArguments = ["UI-testing"]
         app.launch()
-        sleep(10)
+        sleep(30)
+        AutomatedTesting.loginIntoEnvironment(type: .production)
+        sleep(30)
         app.buttons["Browse brands"].tap()
         sleep(10)
     }
