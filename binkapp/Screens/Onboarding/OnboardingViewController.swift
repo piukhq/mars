@@ -8,6 +8,7 @@
 
 import UIKit
 import AuthenticationServices
+import WidgetKit
 
 class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     private let viewModel = OnboardingViewModel()
@@ -102,6 +103,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         startTimer()
+        WidgetController().reloadWidget(type: .quickLaunch)
     }
     
     override func viewDidAppear(_ animated: Bool) {

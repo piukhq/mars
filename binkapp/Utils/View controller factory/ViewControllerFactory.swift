@@ -72,9 +72,9 @@ enum ViewControllerFactory {
     
     // MARK: - Loyalty Card Detail
     
-    static func makeLoyaltyCardDetailViewController(membershipCard: CD_MembershipCard) -> LoyaltyCardFullDetailsViewController {
+    static func makeLoyaltyCardDetailViewController(membershipCard: CD_MembershipCard, animateContent: Bool = true) -> LoyaltyCardFullDetailsViewController {
         let factory = WalletCardDetailInformationRowFactory()
-        let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: membershipCard, informationRowFactory: factory)
+        let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: membershipCard, informationRowFactory: factory, animated: animateContent)
         let viewController = LoyaltyCardFullDetailsViewController(viewModel: viewModel)
         factory.delegate = viewController
         return viewController

@@ -142,6 +142,8 @@
 		706D203C24D85B76004BCCF3 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		706D203E24D96D35004BCCF3 /* GoogleService-Info-BETA.plist in Resources */ = {isa = PBXBuildFile; fileRef = 706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */; };
 		706D204224D97104004BCCF3 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D204124D97104004BCCF3 /* AnalyticsEvent.swift */; };
+		70703422268CC1460072F3BF /* LocalPointsCollection_Navigate_Starbucks.js in Resources */ = {isa = PBXBuildFile; fileRef = 70703421268CC1460072F3BF /* LocalPointsCollection_Navigate_Starbucks.js */; };
+		70703424268CC15F0072F3BF /* StarbucksPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70703423268CC15F0072F3BF /* StarbucksPointsScrapingAgent.swift */; };
 		70840E6C2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70840E6B2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift */; };
 		70841DEB26417E2800AF5810 /* MagicLinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70841DEA26417E2800AF5810 /* MagicLinkModel.swift */; };
 		70907E0825C8683C007629BB /* LocalPointsCollection_Login_Tesco.js in Resources */ = {isa = PBXBuildFile; fileRef = 70907E0725C8683C007629BB /* LocalPointsCollection_Login_Tesco.js */; };
@@ -308,7 +310,14 @@
 		CE539DFD25F0EBAB00BDA5EF /* BinkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE539DFC25F0EBAB00BDA5EF /* BinkLogger.swift */; };
 		CE54AF5D25F938720061838C /* BinkLoggerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54AF5C25F938720061838C /* BinkLoggerEvents.swift */; };
 		CE54AF6225FA0BA00061838C /* BinkLoggerErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */; };
+		CE67DC0D269F2407008D930D /* AutomatedTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE67DC0C269F2407008D930D /* AutomatedTesting.swift */; };
 		CE6DE55F267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6DE55E267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift */; };
+		CE6DE5662681E8280063A3A9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6DE5652681E8280063A3A9 /* WidgetKit.framework */; };
+		CE6DE5682681E8280063A3A9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6DE5672681E8280063A3A9 /* SwiftUI.framework */; };
+		CE6DE56B2681E8280063A3A9 /* BinkWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6DE56A2681E8280063A3A9 /* BinkWidget.swift */; };
+		CE6DE56D2681E82C0063A3A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE6DE56C2681E82C0063A3A9 /* Assets.xcassets */; };
+		CE6DE5712681E82C0063A3A9 /* BinkWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = CE6DE5642681E8280063A3A9 /* BinkWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CE6DE57D268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6DE57C268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift */; };
 		CE73F9AD2600B64E00D53BCF /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE73F9AB2600B64E00D53BCF /* HeaderTableViewCell.swift */; };
 		CE73F9AE2600B64E00D53BCF /* HeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE73F9AC2600B64E00D53BCF /* HeaderTableViewCell.xib */; };
 		CE85A1D226A5DB43003B74CD /* EmailClients.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D126A5DB43003B74CD /* EmailClients.swift */; };
@@ -328,10 +337,25 @@
 		CEA905BF25C986E6000F69E1 /* _CD_BaseImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA905BD25C986E6000F69E1 /* _CD_BaseImage.swift */; };
 		CEAB2D73266671C5006A0F43 /* HTMLParsingUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAB2D72266671C5006A0F43 /* HTMLParsingUtil.swift */; };
 		CEACE7212543309E004DD27E /* BinkHTTPHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEACE7202543309E004DD27E /* BinkHTTPHeaders.swift */; };
+		CEAF29FA26946247006B6EB5 /* AutomatedTesting_2_PaymentCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF29F926946246006B6EB5 /* AutomatedTesting_2_PaymentCards.swift */; };
+		CEAF29FB26959E98006B6EB5 /* BinkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE539DFC25F0EBAB00BDA5EF /* BinkLogger.swift */; };
+		CEAF29FC26959FA7006B6EB5 /* BinkLoggerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54AF5C25F938720061838C /* BinkLoggerEvents.swift */; };
+		CEAF29FD2695A051006B6EB5 /* BinkLoggerErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */; };
+		CEAF2A002695EA09006B6EB5 /* AutomatedTesting_3_ZendeskFAQs.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF29FF2695EA09006B6EB5 /* AutomatedTesting_3_ZendeskFAQs.swift */; };
+		CEAF2A0226974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF2A0126974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift */; };
+		CEAF2A04269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF2A03269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift */; };
 		CEC0ACBC2636AD0000845813 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBA2636AD0000845813 /* Assets.swift */; };
 		CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBB2636AD0000845813 /* Strings.swift */; };
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
 		CED69E6B253D7A5700A4CA21 /* HyperlinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */; };
+		CEE209142684653A004D3759 /* WidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209132684653A004D3759 /* WidgetContent.swift */; };
+		CEE209152684653A004D3759 /* WidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209132684653A004D3759 /* WidgetContent.swift */; };
+		CEE2091A2689E1B7004D3759 /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209192689E1B7004D3759 /* FileManager+Extension.swift */; };
+		CEE2091B2689E1B7004D3759 /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209192689E1B7004D3759 /* FileManager+Extension.swift */; };
+		CEE2091D268CC5C4004D3759 /* WidgetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE2091C268CC5C4004D3759 /* WidgetController.swift */; };
+		CEE20921268E1DAA004D3759 /* WalletCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE20920268E1DAA004D3759 /* WalletCardView.swift */; };
+		CEE20923268E1E0E004D3759 /* AddCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE20922268E1E0E004D3759 /* AddCardView.swift */; };
+		CEE20925268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE20924268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift */; };
 		CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF389EA255D72E90063C718 /* DateExtensionTests.swift */; };
 		CEF837E925DA7AB10066C77E /* FeatureFlagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF837E825DA7AB10066C77E /* FeatureFlagsTableViewController.swift */; };
 		CEFB742325668A5100896DE5 /* BrandHeaderViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE387AA02565749D006BAC11 /* BrandHeaderViewTests.swift */; };
@@ -552,6 +576,13 @@
 			remoteGlobalIDString = 5ECE046722CE5798001BA964;
 			remoteInfo = binkapp;
 		};
+		CE6DE56F2681E82C0063A3A9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5ECE046022CE5797001BA964 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE6DE5632681E8280063A3A9;
+			remoteInfo = BinkWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -563,6 +594,17 @@
 			files = (
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE6DE5722681E82C0063A3A9 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				CE6DE5712681E82C0063A3A9 /* BinkWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -711,9 +753,13 @@
 		706D203824D851BA004BCCF3 /* CD_CardAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_CardAccount.swift; sourceTree = "<group>"; };
 		706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-BETA.plist"; sourceTree = "<group>"; };
 		706D204124D97104004BCCF3 /* AnalyticsEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
+		70703421268CC1460072F3BF /* LocalPointsCollection_Navigate_Starbucks.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Starbucks.js; sourceTree = "<group>"; };
+		70703423268CC15F0072F3BF /* StarbucksPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarbucksPointsScrapingAgent.swift; sourceTree = "<group>"; };
+		707DF15926970E5600EB5674 /* BinkWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BinkWidgetExtension.entitlements; sourceTree = "<group>"; };
 		70840E6B2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperdrugPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70841DEA26417E2800AF5810 /* MagicLinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkModel.swift; sourceTree = "<group>"; };
 		70872F812475393900195679 /* Bink α.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bink α.entitlements"; sourceTree = "<group>"; };
+		70872F812475393900195679 /* Binkapp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Binkapp.entitlements; sourceTree = "<group>"; };
 		70907E0725C8683C007629BB /* LocalPointsCollection_Login_Tesco.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Login_Tesco.js; sourceTree = "<group>"; };
 		70907E0C25C878AE007629BB /* LocalPointsCollection_Login_Heathrow.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Login_Heathrow.js; sourceTree = "<group>"; };
 		70907E1125C87B82007629BB /* LocalPointsCollection_Login_Superdrug.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Login_Superdrug.js; sourceTree = "<group>"; };
@@ -888,7 +934,15 @@
 		CE539DFC25F0EBAB00BDA5EF /* BinkLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLogger.swift; sourceTree = "<group>"; };
 		CE54AF5C25F938720061838C /* BinkLoggerEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLoggerEvents.swift; sourceTree = "<group>"; };
 		CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLoggerErrors.swift; sourceTree = "<group>"; };
+		CE67DC0C269F2407008D930D /* AutomatedTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting.swift; sourceTree = "<group>"; };
 		CE6DE55E267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsSwiftUIView.swift; sourceTree = "<group>"; };
+		CE6DE5642681E8280063A3A9 /* BinkWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BinkWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE6DE5652681E8280063A3A9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		CE6DE5672681E8280063A3A9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		CE6DE56A2681E8280063A3A9 /* BinkWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkWidget.swift; sourceTree = "<group>"; };
+		CE6DE56C2681E82C0063A3A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CE6DE56E2681E82C0063A3A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE6DE57C268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnauthenticatedSwiftUIView.swift; sourceTree = "<group>"; };
 		CE73F9AB2600B64E00D53BCF /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
 		CE73F9AC2600B64E00D53BCF /* HeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderTableViewCell.xib; sourceTree = "<group>"; };
 		CE85A1D126A5DB43003B74CD /* EmailClients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailClients.swift; sourceTree = "<group>"; };
@@ -908,11 +962,21 @@
 		CEA905BD25C986E6000F69E1 /* _CD_BaseImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_BaseImage.swift; sourceTree = "<group>"; };
 		CEAB2D72266671C5006A0F43 /* HTMLParsingUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLParsingUtil.swift; sourceTree = "<group>"; };
 		CEACE7202543309E004DD27E /* BinkHTTPHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkHTTPHeaders.swift; sourceTree = "<group>"; };
+		CEAF29F926946246006B6EB5 /* AutomatedTesting_2_PaymentCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_2_PaymentCards.swift; sourceTree = "<group>"; };
+		CEAF29FF2695EA09006B6EB5 /* AutomatedTesting_3_ZendeskFAQs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_3_ZendeskFAQs.swift; sourceTree = "<group>"; };
+		CEAF2A0126974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_4_GoToSite.swift; sourceTree = "<group>"; };
+		CEAF2A03269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_5_WireframesNavigation.swift; sourceTree = "<group>"; };
 		CEC0AC3B2636AAA400845813 /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		CEC0ACBA2636AD0000845813 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		CEC0ACBB2636AD0000845813 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardScannerStrings.swift; sourceTree = "<group>"; };
 		CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkLabel.swift; sourceTree = "<group>"; };
+		CEE209132684653A004D3759 /* WidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetContent.swift; sourceTree = "<group>"; };
+		CEE209192689E1B7004D3759 /* FileManager+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extension.swift"; sourceTree = "<group>"; };
+		CEE2091C268CC5C4004D3759 /* WidgetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetController.swift; sourceTree = "<group>"; };
+		CEE20920268E1DAA004D3759 /* WalletCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCardView.swift; sourceTree = "<group>"; };
+		CEE20922268E1E0E004D3759 /* AddCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardView.swift; sourceTree = "<group>"; };
+		CEE20924268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLaunchWidgetGridSpacerView.swift; sourceTree = "<group>"; };
 		CEF389EA255D72E90063C718 /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		CEF837E825DA7AB10066C77E /* FeatureFlagsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsTableViewController.swift; sourceTree = "<group>"; };
 		DB088544234FD8A30041A67A /* PLLScreenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenRepository.swift; sourceTree = "<group>"; };
@@ -1152,6 +1216,15 @@
 			files = (
 				CE4A624925714EAE003271F6 /* Sentry in Frameworks */,
 				CB92D023BF75D98DF0B2550E /* Pods_binkappUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE6DE5612681E8280063A3A9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE6DE5682681E8280063A3A9 /* SwiftUI.framework in Frameworks */,
+				CE6DE5662681E8280063A3A9 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1536,6 +1609,8 @@
 				4BF7651BEBD7E19F9F7391DE /* Pods_binkapp.framework */,
 				352CBEDF33DDEB7B603C909B /* Pods_binkappTests.framework */,
 				0578BBF342AD2E4F349D1822 /* Pods_binkappUITests.framework */,
+				CE6DE5652681E8280063A3A9 /* WidgetKit.framework */,
+				CE6DE5672681E8280063A3A9 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1574,6 +1649,7 @@
 				5ECE048222CE579B001BA964 /* binkappTests */,
 				5ECE048D22CE579B001BA964 /* binkappUITests */,
 				BD3CB94223285716005C37AE /* Configuration */,
+				CE6DE5692681E8280063A3A9 /* BinkWidget */,
 				492DA371EDF911EDB1A625BF /* Frameworks */,
 				55D2E5494D854AAC5EFAFFC7 /* Pods */,
 				B766599D2321461D00B327BE /* Recovered References */,
@@ -1586,6 +1662,7 @@
 				5ECE046822CE5798001BA964 /* Bink α.app */,
 				5ECE047F22CE579B001BA964 /* binkappTests.xctest */,
 				5ECE048A22CE579B001BA964 /* binkappUITests.xctest */,
+				CE6DE5642681E8280063A3A9 /* BinkWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1594,7 +1671,8 @@
 			isa = PBXGroup;
 			children = (
 				5ECE046B22CE5798001BA964 /* AppDelegate.swift */,
-				70872F812475393900195679 /* Bink α.entitlements */,
+				707DF15926970E5600EB5674 /* BinkWidgetExtension.entitlements */,
+				70872F812475393900195679 /* Binkapp.entitlements */,
 				3C25BE012301A0F600E931EE /* BinkNetworking */,
 				3CF054D322FDABCA0069E98A /* BinkUI */,
 				EF59A12B244744C6001B60B8 /* Error Handling */,
@@ -1634,8 +1712,13 @@
 			isa = PBXGroup;
 			children = (
 				5ECE049022CE579B001BA964 /* Info.plist */,
+				CE67DC0C269F2407008D930D /* AutomatedTesting.swift */,
 				5ECE048E22CE579B001BA964 /* AutomatedTesting_0_Login.swift */,
 				CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */,
+				CEAF29F926946246006B6EB5 /* AutomatedTesting_2_PaymentCards.swift */,
+				CEAF29FF2695EA09006B6EB5 /* AutomatedTesting_3_ZendeskFAQs.swift */,
+				CEAF2A0126974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift */,
+				CEAF2A03269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift */,
 			);
 			path = binkappUITests;
 			sourceTree = "<group>";
@@ -1756,6 +1839,15 @@
 			path = Morrisons;
 			sourceTree = "<group>";
 		};
+		70703420268CC11D0072F3BF /* Starbucks */ = {
+			isa = PBXGroup;
+			children = (
+				70703421268CC1460072F3BF /* LocalPointsCollection_Navigate_Starbucks.js */,
+				70703423268CC15F0072F3BF /* StarbucksPointsScrapingAgent.swift */,
+			);
+			path = Starbucks;
+			sourceTree = "<group>";
+		};
 		70840E622562AC76000E17A5 /* Superdrug */ = {
 			isa = PBXGroup;
 			children = (
@@ -1835,6 +1927,7 @@
 		70BD4BD024B774EB006E4E3D /* Agents */ = {
 			isa = PBXGroup;
 			children = (
+				70703420268CC11D0072F3BF /* Starbucks */,
 				70661B86250792C0006DB009 /* Boots */,
 				70E8DFDB2563E2F20027A244 /* Heathrow */,
 				70661B8D250A56DB006DB009 /* Morrisons */,
@@ -2074,6 +2167,7 @@
 				BDFAA07C23E24DC600949271 /* UIImage+Extension.swift */,
 				EFD602F0243E11B2003AC746 /* UINavigationControllerExtension.swift */,
 				70E8E5A62567FB690027A244 /* OptionalExtension.swift */,
+				CEE209192689E1B7004D3759 /* FileManager+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2279,6 +2373,18 @@
 			path = Animations;
 			sourceTree = "<group>";
 		};
+		CE6DE5692681E8280063A3A9 /* BinkWidget */ = {
+			isa = PBXGroup;
+			children = (
+				CE6DE56C2681E82C0063A3A9 /* Assets.xcassets */,
+				CE6DE56E2681E82C0063A3A9 /* Info.plist */,
+				CEE209132684653A004D3759 /* WidgetContent.swift */,
+				CEE2091C268CC5C4004D3759 /* WidgetController.swift */,
+				CEE20926268E1E76004D3759 /* QuickLaunch */,
+			);
+			path = BinkWidget;
+			sourceTree = "<group>";
+		};
 		CEA16EC926249D6700D449E1 /* Barcode Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -2306,6 +2412,18 @@
 				CEC0ACBB2636AD0000845813 /* Strings.swift */,
 			);
 			path = SwiftGen;
+			sourceTree = "<group>";
+		};
+		CEE20926268E1E76004D3759 /* QuickLaunch */ = {
+			isa = PBXGroup;
+			children = (
+				CE6DE56A2681E8280063A3A9 /* BinkWidget.swift */,
+				CEE20920268E1DAA004D3759 /* WalletCardView.swift */,
+				CE6DE57C268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift */,
+				CEE20922268E1E0E004D3759 /* AddCardView.swift */,
+				CEE20924268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift */,
+			);
+			path = QuickLaunch;
 			sourceTree = "<group>";
 		};
 		CEF389E9255D72B30063C718 /* Extensions */ = {
@@ -2941,10 +3059,12 @@
 				BDA4EE9B2320ED4D00A99CB1 /* ShellScript */,
 				70FFDD07253F1A58004EF1F1 /* Swift Lint */,
 				E9C9355DDE6B8A796F5CDFF8 /* [CP] Embed Pods Frameworks */,
+				CE6DE5722681E82C0063A3A9 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				CE6DE5702681E82C0063A3A9 /* PBXTargetDependency */,
 			);
 			name = binkapp;
 			packageProductDependencies = (
@@ -2998,13 +3118,30 @@
 			productReference = 5ECE048A22CE579B001BA964 /* binkappUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		CE6DE5632681E8280063A3A9 /* BinkWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE6DE5772681E82C0063A3A9 /* Build configuration list for PBXNativeTarget "BinkWidgetExtension" */;
+			buildPhases = (
+				CE6DE5602681E8280063A3A9 /* Sources */,
+				CE6DE5612681E8280063A3A9 /* Frameworks */,
+				CE6DE5622681E8280063A3A9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BinkWidgetExtension;
+			productName = BinkWidgetExtension;
+			productReference = CE6DE5642681E8280063A3A9 /* BinkWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		5ECE046022CE5797001BA964 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = Bink;
 				TargetAttributes = {
@@ -3019,6 +3156,9 @@
 					5ECE048922CE579B001BA964 = {
 						CreatedOnToolsVersion = 10.2.1;
 						TestTargetID = 5ECE046722CE5798001BA964;
+					};
+					CE6DE5632681E8280063A3A9 = {
+						CreatedOnToolsVersion = 12.5;
 					};
 					EF45F71D2322570F00DA6A29 = {
 						CreatedOnToolsVersion = 10.3;
@@ -3046,6 +3186,7 @@
 				5ECE047E22CE579B001BA964 /* binkappTests */,
 				5ECE048922CE579B001BA964 /* binkappUITests */,
 				EF45F71D2322570F00DA6A29 /* mogenerator */,
+				CE6DE5632681E8280063A3A9 /* BinkWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -3064,6 +3205,7 @@
 				3C25BE0023019BC100E931EE /* BrandTableViewCell.xib in Resources */,
 				70907E3E25C883E2007629BB /* LocalPointsCollection_Points_Waterstones.js in Resources */,
 				CE2C7A7925DEC635007624FE /* DebugMenuPickerTableViewCell.xib in Resources */,
+				70703422268CC1460072F3BF /* LocalPointsCollection_Navigate_Starbucks.js in Resources */,
 				B71D51F92343692000BB3406 /* OfferTileView.xib in Resources */,
 				EFF59F16234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.xib in Resources */,
 				70C530F526122646007E2147 /* LocalPointsCollection_Navigate_Morrisons.js in Resources */,
@@ -3165,6 +3307,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE6DE5622681E8280063A3A9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE6DE56D2681E82C0063A3A9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3472,6 +3622,7 @@
 				3CE24B2C2304014600B258C8 /* AddOrJoinViewModel.swift in Sources */,
 				3C05A9E02327D35100620583 /* PortraitNavigationController.swift in Sources */,
 				EF9E9BD023C72930002FF18E /* RefreshControlExtension.swift in Sources */,
+				70703424268CC15F0072F3BF /* StarbucksPointsScrapingAgent.swift in Sources */,
 				3CB6BF7723141D1F00B74882 /* AuthAndAddViewModel.swift in Sources */,
 				CE539DBF25E943DD00BDA5EF /* Feature.swift in Sources */,
 				BD458B42236CA3910029A538 /* LogoutResponse.swift in Sources */,
@@ -3480,6 +3631,7 @@
 				70A61D532630A23C0073A08A /* BinkModuleView.swift in Sources */,
 				3C453CB72338E84F00287B56 /* PaymentWalletViewModel.swift in Sources */,
 				EF4B46662346489C009A3651 /* PaymentCardDetailViewController.swift in Sources */,
+				CEE209142684653A004D3759 /* WidgetContent.swift in Sources */,
 				CEA16EC526249C6300D449E1 /* BarcodeView.swift in Sources */,
 				EF59A1312448B769001B60B8 /* APIErrorResponses.swift in Sources */,
 				EFEB5BF7237DCA5A00E18743 /* PLRAccumulatorCell.swift in Sources */,
@@ -3592,6 +3744,7 @@
 				EFA5F7212379A7C70027AB80 /* _CD_FieldChoice.swift in Sources */,
 				BDD9C83C233BE493003CD616 /* MembershipPlanImageModel.swift in Sources */,
 				EF94AF0F23DF55EE00AAA039 /* BinkTrackableButton.swift in Sources */,
+				CEE2091A2689E1B7004D3759 /* FileManager+Extension.swift in Sources */,
 				EFA5F7242379A7C70027AB80 /* _CD_RegistrationField.swift in Sources */,
 				EFA5F73C2379A7C70027AB80 /* CD_PaymentCardCard.swift in Sources */,
 				70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */,
@@ -3688,6 +3841,7 @@
 				CE539DAE25E80C1100BDA5EF /* BinkTableViewController.swift in Sources */,
 				3C4BE8C8233B590100EC4BF6 /* ReusableModalViewModel.swift in Sources */,
 				EF480C1B2355F9470060B7C1 /* WalletViewController.swift in Sources */,
+				CEE2091D268CC5C4004D3759 /* WidgetController.swift in Sources */,
 				EF8BF1FB234147F500D2E5F3 /* PaymentCardAccountResponse.swift in Sources */,
 				EF485572231D728A00FC9E5F /* DebugMenuSection.swift in Sources */,
 				7061053925B8552C00A16DA5 /* Theme.swift in Sources */,
@@ -3790,8 +3944,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEAF2A04269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift in Sources */,
 				CE990E13261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift in Sources */,
+				CEAF2A002695EA09006B6EB5 /* AutomatedTesting_3_ZendeskFAQs.swift in Sources */,
+				CE67DC0D269F2407008D930D /* AutomatedTesting.swift in Sources */,
+				CEAF29FA26946247006B6EB5 /* AutomatedTesting_2_PaymentCards.swift in Sources */,
+				CEAF2A0226974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift in Sources */,
 				3CFD913122F1BB7D00F25AF1 /* AutomatedTesting_0_Login.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE6DE5602681E8280063A3A9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEE20925268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift in Sources */,
+				CEE2091B2689E1B7004D3759 /* FileManager+Extension.swift in Sources */,
+				CEE209152684653A004D3759 /* WidgetContent.swift in Sources */,
+				CEE20923268E1E0E004D3759 /* AddCardView.swift in Sources */,
+				CEAF29FD2695A051006B6EB5 /* BinkLoggerErrors.swift in Sources */,
+				CEAF29FC26959FA7006B6EB5 /* BinkLoggerEvents.swift in Sources */,
+				CE6DE57D268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift in Sources */,
+				CE6DE56B2681E8280063A3A9 /* BinkWidget.swift in Sources */,
+				CEE20921268E1DAA004D3759 /* WalletCardView.swift in Sources */,
+				CEAF29FB26959E98006B6EB5 /* BinkLogger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3807,6 +3983,11 @@
 			isa = PBXTargetDependency;
 			target = 5ECE046722CE5798001BA964 /* binkapp */;
 			targetProxy = 5ECE048B22CE579B001BA964 /* PBXContainerItemProxy */;
+		};
+		CE6DE5702681E82C0063A3A9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE6DE5632681E8280063A3A9 /* BinkWidgetExtension */;
+			targetProxy = CE6DE56F2681E82C0063A3A9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -3963,12 +4144,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E708C17C8E9A69A07732E058 /* Pods-binkapp.alpha.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Alpha";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
+				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3981,7 +4163,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.1;
+				MARKETING_VERSION = 2.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink α";
@@ -3997,12 +4179,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2211289D0FB0F1A14BC9E957 /* Pods-binkapp.beta.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
+				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4023,7 +4206,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.1;
+				MARKETING_VERSION = 2.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink β";
@@ -4203,12 +4386,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48E817B386298CDCB07B08F6 /* Pods-binkapp.app store.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
+				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4221,7 +4405,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.1;
+				MARKETING_VERSION = 2.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = Bink;
@@ -4350,12 +4534,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 67B8D6E0B8AB406C5DE33137 /* Pods-binkapp.app store (internal).xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
+				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4368,11 +4553,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
+				MARKETING_VERSION = 2.3.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				PRODUCT_MODULE_NAME = binkapp;
-				PRODUCT_NAME = Bink;
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet";
+				PRODUCT_NAME = "Bink β";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.beta";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -4428,6 +4613,308 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = binkapp;
+			};
+			name = "App Store (Internal)";
+		};
+		CE6DE5732681E82C0063A3A9 /* Alpha */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = binkapp/BinkWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = HC34M8YE55;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = BinkWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.3.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.bink.wallet.alpha.widget";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Alpha;
+		};
+		CE6DE5742681E82C0063A3A9 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = binkapp/BinkWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = HC34M8YE55;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = BinkWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.3.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.beta.widget";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Beta;
+		};
+		CE6DE5752681E82C0063A3A9 /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = binkapp/BinkWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = HC34M8YE55;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = BinkWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.3.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.widget";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "App Store";
+		};
+		CE6DE5762681E82C0063A3A9 /* App Store (Internal) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = binkapp/BinkWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = HC34M8YE55;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = BinkWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.3.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.beta.widget";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = "App Store (Internal)";
 		};
@@ -4506,6 +4993,17 @@
 				5ECE049B22CE579B001BA964 /* Beta */,
 				5EFB27E92306A81D0046A2BF /* App Store */,
 				5EFB27F12306A8F90046A2BF /* App Store (Internal) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "App Store";
+		};
+		CE6DE5772681E82C0063A3A9 /* Build configuration list for PBXNativeTarget "BinkWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE6DE5732681E82C0063A3A9 /* Alpha */,
+				CE6DE5742681E82C0063A3A9 /* Beta */,
+				CE6DE5752681E82C0063A3A9 /* App Store */,
+				CE6DE5762681E82C0063A3A9 /* App Store (Internal) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "App Store";

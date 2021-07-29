@@ -10,6 +10,7 @@ import Foundation
 import KeychainAccess
 import Sentry
 import Firebase
+import WidgetKit
 
 private enum UserManagerError: Error {
     case missingData
@@ -58,8 +59,13 @@ class UserManager {
     
     var hasCurrentUser: Bool {
         // We can safely assume that if we have no token, we have no user
-        guard let token = currentToken else { return false }
-        guard !token.isEmpty else { return false }
+        guard let token = currentToken, !token.isEmpty else {
+            UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(false, forDefaultsKey: .hasCurrentUser)
+            return false
+        }
+        
+        // Store in shared container
+        UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(true, forDefaultsKey: .hasCurrentUser)
         return true
     }
     
@@ -81,6 +87,7 @@ class UserManager {
         do {
             try setToken(with: response)
             try setEmail(with: response)
+            UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(true, forDefaultsKey: .hasCurrentUser)
         } catch {
             if #available(iOS 14.0, *) {
                 BinkLogger.error(UserLoggerError.setNewUser, value: error.localizedDescription)
@@ -139,6 +146,9 @@ class UserManager {
         currentEmailAddress = nil
         currentFirstName = nil
         currentLastName = nil
+        
+        UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(false, forDefaultsKey: .hasCurrentUser)
+        WidgetController().reloadWidget(type: .quickLaunch)
     }
     
     func clearKeychainIfNecessary() {

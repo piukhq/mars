@@ -92,26 +92,27 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     // MARK: - Diffable datasource
     
-    override func setSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
-        snapshot.appendItems(viewModel.cards ?? [], toSection: .cards)
-        snapshot.appendItems(viewModel.walletPrompts ?? [], toSection: .prompts)
-    }
-    
-    override func cellHandler(for section: WalletDataSourceSection, dataSourceItem: AnyHashable, indexPath: IndexPath) -> UICollectionViewCell {
-        switch section {
-        case .cards:
-            let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-            guard let membershipCard = dataSourceItem as? CD_MembershipCard else { return cell }
-            let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
-            cell.configureUIWithViewModel(viewModel: cellViewModel, indexPath: indexPath, delegate: self)
-            return cell
-        case .prompts:
-            let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-            guard let walletPrompt = dataSourceItem as? WalletPrompt else { return cell }
-            cell.configureWithWalletPrompt(walletPrompt)
-            return cell
-        }
-    }
+    /// Disabling pending a review of diffable data source and core data behaviour
+//    override func setSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
+//        snapshot.appendItems(viewModel.cards ?? [], toSection: .cards)
+//        snapshot.appendItems(viewModel.walletPrompts ?? [], toSection: .prompts)
+//    }
+//    
+//    override func cellHandler(for section: WalletDataSourceSection, dataSourceItem: AnyHashable, indexPath: IndexPath) -> UICollectionViewCell {
+//        switch section {
+//        case .cards:
+//            let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+//            guard let membershipCard = dataSourceItem as? CD_MembershipCard else { return cell }
+//            let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
+//            cell.configureUIWithViewModel(viewModel: cellViewModel, indexPath: indexPath, delegate: self)
+//            return cell
+//        case .prompts:
+//            let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+//            guard let walletPrompt = dataSourceItem as? WalletPrompt else { return cell }
+//            cell.configureWithWalletPrompt(walletPrompt)
+//            return cell
+//        }
+//    }
 }
 
 extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelegate {

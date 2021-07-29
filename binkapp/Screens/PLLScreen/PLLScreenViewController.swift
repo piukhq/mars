@@ -43,6 +43,7 @@ class PLLScreenViewController: BinkViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.headline
         label.textAlignment = .left
+        label.accessibilityIdentifier = "PLL title label"
         return label
     }()
     
@@ -81,6 +82,7 @@ class PLLScreenViewController: BinkViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.headline
         label.textAlignment = .left
+        label.accessibilityIdentifier = "Pending title"
         return label
     }()
     

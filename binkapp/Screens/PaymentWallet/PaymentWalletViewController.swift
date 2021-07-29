@@ -9,7 +9,7 @@
 import UIKit
 import CardScan
 
-class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> {    
+class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -75,26 +75,27 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
     
     // MARK: - Diffable datasource
     
-    override func setSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
-        snapshot.appendItems(viewModel.cards ?? [], toSection: .cards)
-        snapshot.appendItems(viewModel.walletPrompts ?? [], toSection: .prompts)
-    }
-    
-    override func cellHandler(for section: WalletDataSourceSection, dataSourceItem: AnyHashable, indexPath: IndexPath) -> UICollectionViewCell {
-        switch section {
-        case .cards:
-            let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-            guard let paymentCard = dataSourceItem as? CD_PaymentCard else { return cell }
-            let cellViewModel = PaymentCardCellViewModel(paymentCard: paymentCard)
-            cell.configureWithViewModel(cellViewModel, delegate: self)
-            return cell
-        case .prompts:
-            let cell: WalletPromptCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-            guard let walletPrompt = dataSourceItem as? WalletPrompt else { return cell }
-            cell.configureWithWalletPrompt(walletPrompt)
-            return cell
-        }
-    }
+    /// Disabling pending a review of diffable data source and core data behaviour
+//    override func setSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
+//        snapshot.appendItems(viewModel.cards ?? [], toSection: .cards)
+//        snapshot.appendItems(viewModel.walletPrompts ?? [], toSection: .prompts)
+//    }
+//    
+//    override func cellHandler(for section: WalletDataSourceSection, dataSourceItem: AnyHashable, indexPath: IndexPath) -> UICollectionViewCell {
+//        switch section {
+//        case .cards:
+//            let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+//            guard let paymentCard = dataSourceItem as? CD_PaymentCard else { return cell }
+//            let cellViewModel = PaymentCardCellViewModel(paymentCard: paymentCard)
+//            cell.configureWithViewModel(cellViewModel, delegate: self)
+//            return cell
+//        case .prompts:
+//            let cell: WalletPromptCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+//            guard let walletPrompt = dataSourceItem as? WalletPrompt else { return cell }
+//            cell.configureWithWalletPrompt(walletPrompt)
+//            return cell
+//        }
+//    }
 }
 
 extension PaymentWalletViewController: WalletPaymentCardCollectionViewCellDelegate {

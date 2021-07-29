@@ -24,10 +24,13 @@ class LoyaltyCardFullDetailsViewModel {
     
     let barcodeViewModel: BarcodeViewModel
     
-    init(membershipCard: CD_MembershipCard, informationRowFactory: WalletCardDetailInformationRowFactory) {
+    private let animated: Bool
+    
+    init(membershipCard: CD_MembershipCard, informationRowFactory: WalletCardDetailInformationRowFactory, animated: Bool = true) {
         self.membershipCard = membershipCard
         self.informationRowFactory = informationRowFactory
         self.barcodeViewModel = BarcodeViewModel(membershipCard: membershipCard)
+        self.animated = animated
     }
     
     var brandName: String {
@@ -78,6 +81,10 @@ class LoyaltyCardFullDetailsViewModel {
         return !(membershipCard.membershipPlan?.featureSet?.planCardType == .link) && barcodeViewModel.isBarcodeAvailable && barcodeViewModel.barcodeImage(withSize: .zero) != nil
     }
     
+    var shouldAnimateContent: Bool {
+        return animated
+    }
+    
     var barcodeButtonTitle: String {
         var buttonTitle = L10n.detailsHeaderShowCardNumber
         
@@ -105,7 +112,7 @@ class LoyaltyCardFullDetailsViewModel {
     
     func goToScreenForState(state: ModuleState, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) {
         switch state {
-        case .loginChanges:
+        case .loginChanges, .lpcLoginRequired:
             guard let membershipPlan = membershipCard.membershipPlan else { return }
             let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: membershipCard)
             let navigationRequest = ModalNavigationRequest(viewController: viewController)

@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     var stateMachine: RootStateMachine?
     
     let universalLinkUtility = UniversalLinkUtility()
+    let widgetController = WidgetController()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         #if DEBUG
@@ -106,6 +107,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         universalLinkUtility.handleLink(for: url)
         
         return false
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        guard let urlPath = url.host?.removingPercentEncoding else { return false }
+        widgetController.handleURLForWidgetType(type: .quickLaunch, urlPath: urlPath)
+        return true
     }
 }
 

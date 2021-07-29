@@ -22,32 +22,14 @@ class AutomatedTesting_0_Login: XCTestCase {
     
     
     func test0_loginScreenOnAppLaunch_exists() {
+        if !app.buttons["Log in"].exists {
+            AutomatedTesting.logout()
+        }
         XCTAssertTrue(app.buttons["Log in"].waitForExistence(timeout: 20), "Login button does not exist")
     }
     
     func test2_loginWithEmailAndPassword() {
-        app.scrollViews["Learning scrollview"].tap(withNumberOfTaps: 3, numberOfTouches: 1)
-        if app.tables.cells["Environment Base URL"].exists {
-            app.tables.cells["Environment Base URL"].tap()
-            app.sheets.scrollViews.otherElements.buttons["Dev"].tap()
-        } else {
-            app.buttons["Select Environment"].tap()
-            app.buttons["api.gb.bink.com"].tap()
-            app.scrollViews["Learning scrollview"].tap(withNumberOfTaps: 3, numberOfTouches: 1)
-            app.buttons["Select Environment"].tap()
-            app.buttons["api.dev.gb.bink.com"].tap()
-        }
-        app.buttons["Log in"].tap()
-        
-        let emailTextfield = app.textFields["Enter email address"]
-        emailTextfield.tap()
-        emailTextfield.typeText("binklogin@binktest.com")
-        
-        let passwordtextfield = app.secureTextFields["Enter password"]
-        passwordtextfield.tap()
-        passwordtextfield.typeText("Binklogin123")
-        app.buttons["done"].tap()
-        app.buttons["Continue"].tap() 
+        AutomatedTesting.loginIntoEnvironment(type: .dev)
         
         let paymentTabBarButton = app.buttons["Payment"]
         XCTAssertTrue(paymentTabBarButton.waitForExistence(timeout: 30))

@@ -16,6 +16,7 @@ enum WebScrapableMerchant: String {
     case waterstones
     case heathrow
     case perfumeshop
+    case starbucks
 }
 
 protocol WebScrapable {
@@ -25,15 +26,12 @@ protocol WebScrapable {
     var loyaltySchemeBalanceCurrency: String? { get }
     var loyaltySchemeBalanceSuffix: String? { get }
     var loyaltySchemeBalancePrefix: String? { get }
-//    var loginUrlString: String { get }
     var scrapableUrlString: String { get }
-//    var loginScriptFileName: String { get }
-//    var pointsScrapingScriptFileName: String { get }
     var navigateScriptFileName: String { get }
 }
 
 extension WebScrapable {
-    /// Some future merchants may use .username - override if that is the case.
+    /// Some  merchants may use .username - override if that is the case.
     var usernameField: FieldCommonName {
         return .email
     }
@@ -49,14 +47,6 @@ extension WebScrapable {
     var loyaltySchemeBalancePrefix: String? {
         return nil
     }
-
-//    var loginScriptFileName: String {
-//        return "LocalPointsCollection_Login_\(merchant.rawValue.capitalized)"
-//    }
-//
-//    var pointsScrapingScriptFileName: String {
-//        return "LocalPointsCollection_Points_\(merchant.rawValue.capitalized)"
-//    }
     
     var navigateScriptFileName: String {
         return "LocalPointsCollection_Navigate_\(merchant.rawValue.capitalized)"
