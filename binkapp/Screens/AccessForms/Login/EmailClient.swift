@@ -18,7 +18,7 @@ enum EmailClient: String, CaseIterable {
         case .mail:
             return "message://"
         case .gmail:
-            return "googlegmail:///"
+            return "googlegmail://"
         case .outlook:
             return "ms-outlook://"
         }
