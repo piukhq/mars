@@ -24,10 +24,13 @@ class LoyaltyCardFullDetailsViewModel {
     
     let barcodeViewModel: BarcodeViewModel
     
-    init(membershipCard: CD_MembershipCard, informationRowFactory: WalletCardDetailInformationRowFactory) {
+    private let animated: Bool
+    
+    init(membershipCard: CD_MembershipCard, informationRowFactory: WalletCardDetailInformationRowFactory, animated: Bool = true) {
         self.membershipCard = membershipCard
         self.informationRowFactory = informationRowFactory
         self.barcodeViewModel = BarcodeViewModel(membershipCard: membershipCard)
+        self.animated = animated
     }
     
     var brandName: String {
@@ -76,6 +79,10 @@ class LoyaltyCardFullDetailsViewModel {
     
     var shouldShowBarcode: Bool {
         return !(membershipCard.membershipPlan?.featureSet?.planCardType == .link) && barcodeViewModel.isBarcodeAvailable && barcodeViewModel.barcodeImage(withSize: .zero) != nil
+    }
+    
+    var shouldAnimateContent: Bool {
+        return animated
     }
     
     var barcodeButtonTitle: String {

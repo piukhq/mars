@@ -75,6 +75,9 @@ class AuthAndAddViewModel {
         return formPurpose != .add || formPurpose == .ghostCard
     }
     
+    private var privacyPolicy: NSMutableAttributedString?
+    private var termsAndConditions: NSMutableAttributedString?
+    
     init(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) {
         self.membershipPlan = membershipPlan
         self.membershipCardPostModel = MembershipCardPostModel(account: AccountPostModel(), membershipPlan: Int(membershipPlan.id))
@@ -337,11 +340,30 @@ class AuthAndAddViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func openWebView(withUrlString url: URL) {
-        let urlString = url.absoluteString
-        let viewController = ViewControllerFactory.makeWebViewController(urlString: urlString)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
-        Current.navigate.to(navigationRequest)
+    func configureAttributedStrings() {
+        for document in (membershipPlan.account?.planDocuments) ?? [] {
+            let planDocument = document as? CD_PlanDocument
+            if planDocument?.name?.contains("policy") == true {
+                if let urlString = planDocument?.url, let url = URL(string: urlString) {
+                    privacyPolicy = HTMLParsingUtil.makeAttributedStringFromHTML(url: url)
+                }
+            }
+            
+            if planDocument?.name?.contains("conditions") == true {
+                if let urlString = planDocument?.url, let url = URL(string: urlString) {
+                    termsAndConditions = HTMLParsingUtil.makeAttributedStringFromHTML(url: url)
+                }
+            }
+        }
+    }
+    
+    func presentPlanDocumentsModal(withUrl url: URL) {
+        if let text = url.absoluteString.contains("pp") ? privacyPolicy : termsAndConditions {
+            let modalConfig = ReusableModalConfiguration(text: text, membershipPlan: membershipPlan)
+            let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: modalConfig)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }
     }
     
     func toReusableTemplate(title: String, description: String) {
