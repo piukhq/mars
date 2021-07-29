@@ -16,7 +16,7 @@ struct MagicLinkRequestModel: Codable {
     
     init(email: String) {
         self.email = email
-        self.slug = "iceland-bonus-card-mock"
+        self.slug = APIConstants.isProduction ? "matalan-reward-card" : "iceland-bonus-card-mock"
         self.locale = "en_GB"
         self.bundleId = APIConstants.bundleID
     }
