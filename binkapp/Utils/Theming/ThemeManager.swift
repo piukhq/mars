@@ -9,7 +9,7 @@
 import UIKit
 import CardScan
 
-class ThemeManager {
+class ThemeManager: ObservableObject {
     enum ScreenElement {
         case viewBackground
         case walletCardBackground
@@ -28,7 +28,7 @@ class ThemeManager {
         self.currentTheme = Theme(type: theme)
     }
 
-    var currentTheme: Theme {
+    @Published var currentTheme: Theme {
         didSet {
             if Current.featureManager.isFeatureEnabled(.themes) {
                 Current.userDefaults.set(currentTheme.type.rawValue, forDefaultsKey: .theme)

@@ -209,6 +209,12 @@ extension SettingsViewController: UITableViewDelegate {
                     let hostingViewController = UIHostingController(rootView: WhoWeAreSwiftUIView())
                     let navigationRequest = PushNavigationRequest(viewController: hostingViewController)
                     Current.navigate.to(navigationRequest)
+                case .featureFlags:
+                    if #available(iOS 14.0, *) {
+                        let viewController = UIHostingController(rootView: FeatureFlagsSwiftUIView(delegate: self))
+                        let navigationRequest = PushNavigationRequest(viewController: viewController)
+                        Current.navigate.to(navigationRequest)
+                    }
                 }
             case .pushToReusable(let screen):
                 switch screen {
@@ -237,6 +243,10 @@ extension SettingsViewController: UITableViewDelegate {
 }
 
 extension SettingsViewController: FeatureFlagsViewControllerDelegate {
+    func featureFlagsViewDidDismiss() {
+        tableView.reloadData()
+    }
+    
     func featureFlagsViewControllerDidDismiss(_ featureFlagsViewController: FeatureFlagsTableViewController) {
         tableView.reloadData()
     }
