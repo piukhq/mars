@@ -106,6 +106,10 @@ struct WalletLoyaltyCardCellViewModel {
     }
 
     var pointsValueText: String? {
+        if let reasonCodes = membershipCard.status?.formattedReasonCodes, reasonCodes.contains(.pointsScrapingLoginRequired) {
+            return L10n.loginTitle
+        }
+        
         guard cardStatus != .pending else {
             return L10n.pendingTitle
         }

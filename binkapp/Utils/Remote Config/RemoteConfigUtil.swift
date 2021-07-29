@@ -64,34 +64,29 @@ class RemoteConfigUtil {
         Current.pointsScrapingManager.agents.forEach {
             remoteConfig.setDefaults([RemoteConfigKey.localPointsCollectionAgentEnabled($0).formattedKey: NSNumber(value: false)])
         }
-        
-        fetch()
     }
     
-    private func handleRemoteConfigFetch() {
+    func handleRemoteConfigFetch() {
         hasPerformedFetch = true
         Current.featureManager.getFeaturesFromRemoteConfig()
         appConfiguration.promptRecommendedUpdateIfNecessary()
     }
     
-    func fetch(completion: (() -> Void)? = nil) {
+    func fetch(completion: ((Bool) -> Void)? = nil) {
         remoteConfig.fetch { [weak self] (status, error) in
             guard let self = self else { return }
             if status == .success {
-                self.remoteConfig.activate { [weak self] (_, _) in
-                    DispatchQueue.main.async {
-                        self?.handleRemoteConfigFetch()
-                    }
+                self.remoteConfig.activate { (_, _) in
                     if #available(iOS 14.0, *) {
                         BinkLogger.info(event: AppLoggerEvent.fetchedRemoteConfig)
                     }
-                    completion?()
+                    completion?(true)
                 }
             } else {
                 if #available(iOS 14.0, *) {
                     BinkLogger.error(AppLoggerError.remoteConfigFetchFailure, value: error?.localizedDescription)
                 }
-                completion?()
+                completion?(false)
             }
         }
     }

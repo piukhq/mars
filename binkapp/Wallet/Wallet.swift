@@ -130,6 +130,20 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     private func loadWallets(forType type: FetchType, reloadPlans: Bool, isUserDriven: Bool, completion: ServiceCompletionSuccessHandler<WalletServiceError>? = nil) {
         let dispatchGroup = DispatchGroup()
         let forceRefresh = type == .reload
+        
+        /// If we are fetching wallet data from the API, then also fetch from remote config
+        if forceRefresh {
+            dispatchGroup.enter()
+            Current.remoteConfig.fetch { success in
+                guard success else {
+                    NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
+                    // if this failed, the entire function should fail
+                    completion?(success, nil)
+                    return
+                }
+                dispatchGroup.leave()
+            }
+        }
 
         dispatchGroup.enter()
         getLoyaltyWallet(forceRefresh: forceRefresh, reloadPlans: reloadPlans, isUserDriven: isUserDriven) { (success, error) in
@@ -154,6 +168,9 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
         }
 
         dispatchGroup.notify(queue: .main) {
+            if forceRefresh {
+                Current.remoteConfig.handleRemoteConfigFetch()
+            }
             NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
             completion?(true, nil)
         }

@@ -77,7 +77,8 @@ class PointsScrapingManager {
         SuperdrugScrapingAgent(),
         HeathrowScrapingAgent(),
         PerfumeShopScrapingAgent(),
-        WaterstonesScrapingAgent()
+        WaterstonesScrapingAgent(),
+        StarbucksPointsScrapingAgent()
     ]
     
     var processingQueue: [QueuedItem] = []
@@ -185,13 +186,10 @@ class PointsScrapingManager {
     }
     
     func refreshBalancesIfNecessary() {
-        Current.remoteConfig.fetch { [weak self] in
-            guard let self = self else { return }
-            guard self.isMasterEnabled else { return }
-            self.getRefreshableMembershipCards { [weak self] refreshableCards in
-                refreshableCards.forEach { self?.addQueuedItem(QueuedItem(card: $0)) }
-                self?.processQueuedItems()
-            }
+        guard self.isMasterEnabled else { return }
+        self.getRefreshableMembershipCards { [weak self] refreshableCards in
+            refreshableCards.forEach { self?.addQueuedItem(QueuedItem(card: $0)) }
+            self?.processQueuedItems()
         }
     }
     

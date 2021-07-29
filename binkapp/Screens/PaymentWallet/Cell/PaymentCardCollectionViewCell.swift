@@ -102,6 +102,7 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         
         setLabelStyling()
         setupShadow()
+        accessibilityIdentifier = viewModel.nameOnCardText
     }
     
     func configureWithAddViewModel(_ viewModel: PaymentCardCreateModel) {

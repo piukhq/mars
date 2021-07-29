@@ -20,6 +20,7 @@ class BinkModuleView: CustomView {
         contentView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         moduleImageView.image = UIImage(named: viewModel.imageName)
         titleLabel.text = viewModel.titleText
+        titleLabel.accessibilityIdentifier = viewModel.titleText
         titleLabel.textColor = Current.themeManager.color(for: .text)
         subtitleLabel.text = viewModel.subtitleText
         subtitleLabel.textColor = Current.themeManager.color(for: .text)

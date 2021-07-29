@@ -15,6 +15,7 @@ class BinkInfoButton: UIButton {
         tintColor = UIColor.blueAccent
         titleLabel?.font = UIFont.linkTextButtonNormal
         setTitleColor(UIColor.blueAccent, for: .normal)
+        accessibilityIdentifier = "Bink info button"
         
         if imageView != nil {
             imageEdgeInsets = LayoutHelper.BinkInfoButton.imageEdgeInsets
