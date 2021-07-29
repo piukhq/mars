@@ -330,7 +330,7 @@
 "check_inbox_description" = "We have just emailed a link to %@. Click the link and you will be signed in.";
 "nil_email_address" = "your email address";
 "link_expired_title" = "Link expired";
-"link_expired_description" = "To keep your account safe, links are only valid for a short period of time. Enter your email again and we will send you another!";
+"link_expired_description" = "To keep your account safe, links are only valid for a short period of time. Tap Retry and we will send you another.";
 "something_went_wrong_title" = "Something went wrong";
 "something_went_wrong_description" = "There was a problem authenticating you. Please try again.";
 "open_mail_button_title" = "Open %@";

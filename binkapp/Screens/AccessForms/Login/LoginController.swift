@@ -160,14 +160,12 @@ extension LoginController {
             configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: L10n.linkExpiredTitle, description: L10n.linkExpiredDescription), primaryButtonTitle: L10n.retryTitle, primaryButtonAction: {
                 // Resend magic link email
                 guard let email = decodedEmail else {
-                    
                     self.displayMagicLinkErrorAlert()
                     return
                 }
 
                 self.requestMagicLink(email: email) { [weak self] (success, _) in
                     guard success else {
-                        
                         self?.displayMagicLinkErrorAlert()
                         return
                     }

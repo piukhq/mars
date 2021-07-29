@@ -222,7 +222,7 @@ internal enum L10n {
   internal static let issuesLoggingIn = L10n.tr("Localizable", "issues_logging_in")
   /// Learn more about how it works
   internal static let learnMore = L10n.tr("Localizable", "learn_more")
-  /// To keep your account safe, links are only valid for a short period of time. Enter your email again and we will send you another!
+  /// To keep your account safe, links are only valid for a short period of time. Tap Retry and we will send you another.
   internal static let linkExpiredDescription = L10n.tr("Localizable", "link_expired_description")
   /// Link expired
   internal static let linkExpiredTitle = L10n.tr("Localizable", "link_expired_title")
