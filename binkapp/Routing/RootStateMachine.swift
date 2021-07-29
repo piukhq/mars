@@ -59,7 +59,7 @@ class RootStateMachine: NSObject, UserServiceProtocol {
         switch loginType {
         case .magicLink:
             let successViewController = ViewControllerFactory.makeLoginSuccessViewController()
-            let navigationRequest = ModalNavigationRequest(viewController: successViewController)
+            let navigationRequest = ModalNavigationRequest(viewController: successViewController, dragToDismiss: false, hideCloseButton: true)
             Current.navigate.to(navigationRequest)
         default:
             break
