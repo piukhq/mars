@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum EmailClients: String, CaseIterable {
+enum EmailClient: String, CaseIterable {
     case mail
     case gmail
     case outlook
@@ -24,8 +24,8 @@ enum EmailClients: String, CaseIterable {
         }
     }
     
-    static func availableEmailClientsForDevice() -> [EmailClients] {
-        var availableClients: [EmailClients] = []
+    static func availableEmailClientsForDevice() -> [EmailClient] {
+        var availableClients: [EmailClient] = []
         
         allCases.forEach {
             if let url = URL(string: $0.url), UIApplication.shared.canOpenURL(url) {

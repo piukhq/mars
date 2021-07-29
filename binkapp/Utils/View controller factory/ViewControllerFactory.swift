@@ -270,7 +270,7 @@ enum ViewControllerFactory {
         return JailbrokenViewController()
     }
     
-    static func makeEmailClientsAlertController(_ emailClients: [EmailClients]) -> BinkAlertController {
+    static func makeEmailClientsAlertController(_ emailClients: [EmailClient]) -> BinkAlertController {
         let alert = BinkAlertController(title: L10n.openMailAlertTitle, message: nil, preferredStyle: .actionSheet)
         
         emailClients.forEach { emailClient in

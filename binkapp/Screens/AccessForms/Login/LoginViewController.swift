@@ -134,19 +134,19 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     private func performLogin() {
         let fields = dataSource.currentFieldValues()
         
-        let loginRequest: LoginRegisterRequest
+        let loginRequest: LoginRequest
         
         let customBundleClientEnabled = Current.userDefaults.bool(forDefaultsKey: .allowCustomBundleClientOnLogin)
         
         if !Current.isReleaseTypeBuild && customBundleClientEnabled {
-            loginRequest = LoginRegisterRequest(
+            loginRequest = LoginRequest(
                 email: fields["email"],
                 password: fields["password"],
                 clientID: fields["client id"] ?? "",
                 bundleID: fields["bundle id"] ?? ""
             )
         } else {
-            loginRequest = LoginRegisterRequest(
+            loginRequest = LoginRequest(
                 email: fields["email"],
                 password: fields["password"]
             )

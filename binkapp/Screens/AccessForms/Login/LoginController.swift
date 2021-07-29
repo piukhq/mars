@@ -16,7 +16,7 @@ enum LoginType {
 }
 
 class LoginController: UserServiceProtocol {
-    func login(with request: LoginRegisterRequest, completion: @escaping (UserServiceError?) -> Void) {
+    func login(with request: LoginRequest, completion: @escaping (UserServiceError?) -> Void) {
         login(request: request) { [weak self] result in
             self?.handleResult(for: .password, result, completion: completion)
         }
@@ -140,7 +140,7 @@ extension LoginController {
             attributedString.append(attributedTitle)
             attributedString.append(attributedBody)
             
-            let availableEmailClients = EmailClients.availableEmailClientsForDevice()
+            let availableEmailClients = EmailClient.availableEmailClientsForDevice()
             if availableEmailClients.isEmpty {
                 configurationModel = ReusableModalConfiguration(title: "", text: attributedString)
             } else if availableEmailClients.count == 1 {

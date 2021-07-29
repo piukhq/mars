@@ -156,7 +156,7 @@ extension UserServiceProtocol {
         }
     }
 
-    func registerUser(request: LoginRegisterRequest, completion: ServiceCompletionResultHandler<LoginResponse, UserServiceError>? = nil) {
+    func registerUser(request: LoginRequest, completion: ServiceCompletionResultHandler<LoginResponse, UserServiceError>? = nil) {
         let networtRequest = BinkNetworkRequest(endpoint: .register, method: .post, headers: nil, isUserDriven: true)
         Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: Safe<LoginResponse>.self) { (result, rawResponse) in
             switch result {
@@ -178,7 +178,7 @@ extension UserServiceProtocol {
         }
     }
     
-    func login(request: LoginRegisterRequest, completion: ServiceCompletionResultHandler<LoginResponse, UserServiceError>? = nil) {
+    func login(request: LoginRequest, completion: ServiceCompletionResultHandler<LoginResponse, UserServiceError>? = nil) {
         let networtRequest = BinkNetworkRequest(endpoint: .login, method: .post, headers: nil, isUserDriven: true)
         Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: Safe<LoginResponse>.self) { (result, rawResponse) in
             switch result {
