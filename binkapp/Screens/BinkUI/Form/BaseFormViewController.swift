@@ -135,6 +135,7 @@ class BaseFormViewController: BinkViewController, Form {
         titleLabel.textColor = Current.themeManager.color(for: .text)
         descriptionLabel.textColor = Current.themeManager.color(for: .text)
         textView.textColor = Current.themeManager.color(for: .text)
+        Current.themeManager.overrideUserInterfaceStyle(for: collectionView)
     }
     
     private func configureLayout() {
