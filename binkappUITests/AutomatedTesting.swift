@@ -48,7 +48,7 @@ enum AutomatedTesting {
     static func loginIntoEnvironment(type: EnvironmentType) {
         logout()
         
-//        sleep(30)
+        sleep(30)
         
         app.scrollViews["Learning scrollview"].tap(withNumberOfTaps: 3, numberOfTouches: 1)
         if app.tables.cells["Environment Base URL"].exists {
