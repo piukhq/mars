@@ -245,6 +245,7 @@ private extension APIClient {
             if statusCode == unauthorizedStatus && endpoint.shouldRespondToUnauthorizedStatus {
                 // Unauthorized response
                 NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                completion?(.failure(.unauthorized), networkResponseData)
                 return
             } else if successStatusRange.contains(statusCode) {
                 // Successful response

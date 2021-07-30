@@ -69,6 +69,17 @@ class ThemeManager: ObservableObject {
             return currentTheme.insetGroupedTableBackgroundColor
         }
     }
+    
+    func overrideUserInterfaceStyle(for view: UIView) {
+        switch Current.themeManager.currentTheme.type {
+        case .light:
+            view.overrideUserInterfaceStyle = .light
+        case .dark:
+            view.overrideUserInterfaceStyle = .dark
+        case .system:
+            view.overrideUserInterfaceStyle = .unspecified
+        }
+    }
 
     func tabBarAppearance(for traitCollection: UITraitCollection) -> UITabBarAppearance {
         let tabAppearance = UITabBarAppearance()

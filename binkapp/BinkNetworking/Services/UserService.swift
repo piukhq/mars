@@ -22,6 +22,9 @@ enum UserServiceError: BinkError {
     case failedToSetPreferences
     case failedToRenewToken
     case customError(String)
+    case failedToSendMagicLink
+    case magicLinkExpired
+    case failedToGetMagicLinkAccessToken
     
     var domain: BinkErrorDomain {
         return .userService
@@ -57,6 +60,12 @@ enum UserServiceError: BinkError {
             return "Failed to renew token"
         case .customError(let message):
             return message
+        case .failedToSendMagicLink:
+            return "Failed to send magic link"
+        case .magicLinkExpired:
+            return "Magic link expired"
+        case .failedToGetMagicLinkAccessToken:
+            return "Failed to get magic link access token"
         }
     }
 }
@@ -147,9 +156,9 @@ extension UserServiceProtocol {
         }
     }
 
-    func registerUser(request: LoginRegisterRequest, completion: ServiceCompletionResultHandler<LoginRegisterResponse, UserServiceError>? = nil) {
+    func registerUser(request: LoginRequest, completion: ServiceCompletionResultHandler<LoginResponse, UserServiceError>? = nil) {
         let networtRequest = BinkNetworkRequest(endpoint: .register, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: Safe<LoginRegisterResponse>.self) { (result, rawResponse) in
+        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: Safe<LoginResponse>.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
@@ -169,9 +178,9 @@ extension UserServiceProtocol {
         }
     }
     
-    func login(request: LoginRegisterRequest, completion: ServiceCompletionResultHandler<LoginRegisterResponse, UserServiceError>? = nil) {
+    func login(request: LoginRequest, completion: ServiceCompletionResultHandler<LoginResponse, UserServiceError>? = nil) {
         let networtRequest = BinkNetworkRequest(endpoint: .login, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: Safe<LoginRegisterResponse>.self) { (result, rawResponse) in
+        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: Safe<LoginResponse>.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
@@ -191,9 +200,9 @@ extension UserServiceProtocol {
         }
     }
     
-    func authWithApple(request: SignInWithAppleRequest, completion: ServiceCompletionResultHandler<LoginRegisterResponse, UserServiceError>? = nil) {
+    func authWithApple(request: SignInWithAppleRequest, completion: ServiceCompletionResultHandler<LoginResponse, UserServiceError>? = nil) {
         let networtRequest = BinkNetworkRequest(endpoint: .apple, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: Safe<LoginRegisterResponse>.self) { (result, _) in
+        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: Safe<LoginResponse>.self) { (result, _) in
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
@@ -263,9 +272,9 @@ extension UserServiceProtocol {
         }
     }
     
-    func renewToken(_ currentToken: String, completion: ServiceCompletionResultHandler<RenewTokenResponse, UserServiceError>? = nil) {
+    func renewToken(_ currentToken: String, completion: ServiceCompletionResultHandler<LoginResponse, UserServiceError>? = nil) {
         let request = BinkNetworkRequest(endpoint: .renew, method: .post, headers: [.authorization(currentToken), .defaultContentType, .acceptWithAPIVersion()], isUserDriven: false)
-        Current.apiClient.performRequest(request, expecting: Safe<RenewTokenResponse>.self) { (result, rawResponse) in
+        Current.apiClient.performRequest(request, expecting: Safe<LoginResponse>.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
@@ -281,6 +290,48 @@ extension UserServiceProtocol {
                     BinkLogger.error(UserLoggerError.renewTokenFailure, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion?(.failure(.failedToRenewToken))
+            }
+        }
+    }
+    
+    func requestMagicLink(email: String, completion: ServiceCompletionSuccessHandler<UserServiceError>? = nil) {
+        let request = BinkNetworkRequest(endpoint: .magicLinks, method: .post, isUserDriven: false)
+        Current.apiClient.performRequestWithNoResponse(request, body: try? MagicLinkRequestModel(email: email).asDictionary()) { (success, _, _) in
+            if success {
+                if #available(iOS 14.0, *) {
+                    BinkLogger.info(event: UserLoggerEvent.sentMagicLink)
+                }
+                completion?(success, nil)
+            } else {
+                if #available(iOS 14.0, *) {
+                    BinkLogger.info(event: UserLoggerError.failedToSendMagicLink)
+                }
+                completion?(success, .failedToSendMagicLink)
+            }
+        }
+    }
+    
+    func requestMagicLinkAccessToken(for temporaryToken: String, completion: ServiceCompletionResultRawResponseHandler<LoginResponse, UserServiceError>? = nil) {
+        let request = BinkNetworkRequest(endpoint: .magicLinksAccessTokens, method: .post, isUserDriven: false)
+        Current.apiClient.performRequestWithBody(request, body: MagicLinkAccessTokenRequestModel(token: temporaryToken), expecting: Safe<LoginResponse>.self) { (result, rawResponse) in
+            switch result {
+            case .success(let response):
+                if #available(iOS 14.0, *) {
+                    BinkLogger.info(event: UserLoggerEvent.receivedMagicLinkAccessToken)
+                }
+                guard let safeResponse = response.value else {
+                    if #available(iOS 14.0, *) {
+                        BinkLogger.info(event: UserLoggerError.failedToReceiveMagicLinkAccessToken)
+                    }
+                    completion?(.failure(.failedToGetMagicLinkAccessToken), rawResponse)
+                    return
+                }
+                completion?(.success(safeResponse), rawResponse)
+            case .failure:
+                if #available(iOS 14.0, *) {
+                    BinkLogger.info(event: UserLoggerError.failedToReceiveMagicLinkAccessToken)
+                }
+                completion?(.failure(.failedToGetMagicLinkAccessToken), rawResponse)
             }
         }
     }

@@ -52,14 +52,8 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
         return APIConstants.isProduction && Current.isReleaseTypeBuild
     }()
 
-    private lazy var registerButton: BinkButton = {
-        return BinkButton(type: .gradient, title: viewModel.signUpWithEmailButtonText) { [weak self] in
-            self?.viewModel.pushToRegister()
-        }
-    }()
-
-    private lazy var loginButton: BinkButton = {
-        return BinkButton(type: .plain, title: viewModel.loginWithEmailButtonText) { [weak self] in
+    private lazy var loginWithEmailButton: BinkButton = {
+        return BinkButton(type: .gradient, title: viewModel.loginWithEmailButtonText) { [weak self] in
             self?.viewModel.pushToLogin()
         }
     }()
@@ -149,7 +143,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
             pageControl.centerXAnchor.constraint(equalTo: learningContainer.centerXAnchor)
         ])
 
-        footerButtons = [registerButton, loginButton]
+        footerButtons = [loginWithEmailButton]
     }
 
     @objc private func handleAppleIdRequest() {
@@ -167,7 +161,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     private func configureUI() {
         if signInWithAppleEnabled, let buttonsView = footerButtonsView {
             signInWithAppleButton.layer.applyDefaultBinkShadow()
-            buttonsView.insertAdditionalViews([signInWithAppleButton])
+            buttonsView.insertAdditionalViews([signInWithAppleButton], at: 2)
             NSLayoutConstraint.activate([
                 signInWithAppleButton.heightAnchor.constraint(equalToConstant: 55),
                 signInWithAppleButton.widthAnchor.constraint(equalTo: buttonsView.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),

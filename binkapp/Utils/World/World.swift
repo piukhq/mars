@@ -15,6 +15,7 @@ class World {
     lazy var wallet = Wallet()
     lazy var userDefaults: BinkUserDefaults = UserDefaults.standard
     lazy var userManager = UserManager()
+    lazy var loginController = LoginController()
     lazy var apiClient = APIClient()
     lazy var navigate = Navigate()
     lazy var rootStateMachine = RootStateMachine()

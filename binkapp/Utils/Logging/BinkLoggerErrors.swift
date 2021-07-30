@@ -89,6 +89,8 @@ enum UserLoggerError: String, BinkLoggerProtocol {
     case fetchPreferencesFailure = "Failed to fetch preferences"
     case setPreferencesFailure = "Failed to set preferences"
     case renewTokenFailure = "Failed to renew token"
+    case failedToSendMagicLink = "Failed to send magic link"
+    case failedToReceiveMagicLinkAccessToken = "Failed to receive magic link access token"
     
     var category: BinkLoggerCategory {
         return .user
