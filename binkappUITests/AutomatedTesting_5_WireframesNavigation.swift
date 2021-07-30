@@ -23,7 +23,7 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
     func test_0_lcdModule_noPaymentCards_navigationIsCorrect() {
         sleep(10)
         AutomatedTesting.loginIntoEnvironment(type: .dev)
-        sleep(10)
+        sleep(20)
         
         app.buttons["Browse brands"].tap()
         app.tables.cells["Iceland"].tap()
@@ -120,5 +120,15 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         
         icelandCell.tap()
         XCTAssertTrue(app.staticTexts["Linked"].waitForExistence(timeout: 10))
+        
+        app.tables.cells["Delete Card"].tap()
+        app.buttons["Yes"].tap()
+        
+        sleep(5)
+        
+        app.buttons["Payment"].tap()
+        app.collectionViews.cells["B Testerson"].tap()
+        app.tables.cells["Delete this card"].tap()
+        app.buttons["Yes"].tap()
     }
 }

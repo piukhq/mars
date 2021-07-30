@@ -42,7 +42,7 @@ enum AutomatedTesting {
             logout()
         }
         
-        sleep(30)
+//        sleep(30)
         
         app.scrollViews["Learning scrollview"].tap(withNumberOfTaps: 3, numberOfTouches: 1)
         if app.tables.cells["Environment Base URL"].exists {
@@ -52,6 +52,10 @@ enum AutomatedTesting {
             // iOS 14 >
             app.buttons["Select Environment"].tap()
             app.buttons[type.rawValue].tap()
+        }
+        
+        if !app.buttons["Log in"].exists {
+            app.buttons["Back"].tap()
         }
         app.buttons["Log in"].tap()
         
