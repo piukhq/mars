@@ -46,15 +46,12 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         
         sleep(60)
         
-        // Pull to refresh
-        let icelandCell = app.collectionViews.cells["Iceland"]
-        let start = icelandCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
-        let finish = icelandCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 50))
-        start.press(forDuration: 0, thenDragTo: finish)
+        AutomatedTesting.pullToRefresh(from: .iceland)
         
         // >> Loyalty wallet
         XCTAssertTrue(app.buttons["Browse brands"].exists)
         
+        let icelandCell = app.collectionViews.cells["Iceland"]
         icelandCell.tap()
         
         // >> LCD
@@ -114,7 +111,7 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         app.buttons["close"].tap()
         app.buttons["Back"].tap()
         
-        start.press(forDuration: 0, thenDragTo: finish)
+        AutomatedTesting.pullToRefresh(from: .iceland)
         
         sleep(10)
         

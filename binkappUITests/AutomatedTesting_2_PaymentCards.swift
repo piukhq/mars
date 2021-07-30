@@ -21,6 +21,9 @@ class AutomatedTesting_2_PaymentCards: XCTestCase {
     }
 
     func test_0_addMastercard_isSuccessful() {
+        sleep(10)
+        AutomatedTesting.loginIntoEnvironment(type: .dev)
+        
         app.buttons["Payment"].tap()
         app.collectionViews.cells["Wallet prompt"].tap()
         
@@ -84,15 +87,14 @@ class AutomatedTesting_2_PaymentCards: XCTestCase {
     func test_2_cardIsVisibleAfterPullToRefresh_isTrue() {
         app.buttons["Payment"].tap()
 
-        let paymentCardCell = app.collectionViews.cells["B Testerson"]
-        let start = paymentCardCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
-        let finish = paymentCardCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 50))
-        start.press(forDuration: 0, thenDragTo: finish)
+        AutomatedTesting.pullToRefresh(from: .mastercard)
         
+        let paymentCardCell = app.collectionViews.cells["B Testerson"]
         XCTAssertTrue(paymentCardCell.waitForExistence(timeout: 10))
     }
     
     func test_3_deleteIcelandAndPaymentCards_isSuccessful() {
+        sleep(10)
         app.collectionViews.cells["Iceland"].tap()
         app.tables.cells["Delete Card"].tap()
         app.buttons["Yes"].tap()
