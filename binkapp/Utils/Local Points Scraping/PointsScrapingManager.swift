@@ -21,6 +21,10 @@ class PointsScrapingManager {
         let card: CD_MembershipCard
         var isProcessing = false
         
+        /// If this is set to true, we shouldn't process this item with other items
+        /// This is specifically for automatic retry behaviour from LCD
+        var shouldAttemptRetry = false
+        
         init(card: CD_MembershipCard) {
             self.card = card
         }
@@ -134,18 +138,22 @@ class PointsScrapingManager {
     // MARK: - Add/Auth handling
     
     func enableLocalPointsScrapingForCardIfPossible(withRequest request: MembershipCardPostModel, credentials: WebScrapingCredentials, membershipCard: CD_MembershipCard) throws {
+        let itemToProcess = QueuedItem(card: membershipCard)
+        
         guard planIdIsWebScrapable(request.membershipPlan) else { return }
+        
         guard canEnableLocalPointsScrapingForCard(withRequest: request) else {
+            transitionToFailed(item: itemToProcess)
             throw PointsScrapingManagerError.failedToEnableMembershipCardForPointsScraping
         }
-        
+    
         do {
             try storeCredentials(credentials, forMembershipCardId: membershipCard.id)
             
-            addQueuedItem(QueuedItem(card: membershipCard))
+            addQueuedItem(itemToProcess)
             processQueuedItems()
         } catch {
-            self.transitionToFailed(membershipCard: membershipCard)
+            self.transitionToFailed(item: itemToProcess)
         }
     }
     
@@ -170,18 +178,18 @@ class PointsScrapingManager {
         
         guard let itemToProcess = processingQueue.first(where: { $0.isProcessing == false }) else { return }
         guard let planIdString = itemToProcess.card.membershipPlan?.id, let planId = Int(planIdString) else {
-            self.transitionToFailed(membershipCard: itemToProcess.card)
+            self.transitionToFailed(item: itemToProcess)
             return
         }
         guard let agent = agents.first(where: { $0.membershipPlanId == planId }) else {
-            self.transitionToFailed(membershipCard: itemToProcess.card)
+            self.transitionToFailed(item: itemToProcess)
             return
         }
 
         do {
             try webScrapingUtility?.start(agent: agent, item: itemToProcess)
         } catch {
-            self.transitionToFailed(membershipCard: itemToProcess.card)
+            self.transitionToFailed(item: itemToProcess)
         }
     }
     
@@ -230,6 +238,9 @@ class PointsScrapingManager {
         NotificationCenter.default.post(name: .webScrapingUtilityDidComplete, object: nil)
         
         /// Clear membership card from processing queue
+        
+        // TODO: Don't clear if we can attempt a retry?
+        
         processingQueue.removeAll(where: { $0.card.id == card.id })
         processQueuedItems()
     }
@@ -240,6 +251,11 @@ class PointsScrapingManager {
     
     func debug() {
         webScrapingUtility?.debug()
+    }
+    
+    func canAttemptRetry(for card: CD_MembershipCard) -> Bool {
+        /// Is the membership card in the processingQueue, with isAttemptingRetry true?
+        return false
     }
 }
 
@@ -263,8 +279,8 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
         }
     }
     
-    private func transitionToAuthorized(pointsValue: Int, membershipCard: CD_MembershipCard, agent: WebScrapable) {
-        fetchMembershipCard(forId: membershipCard.id) { membershipCard in
+    private func transitionToAuthorized(pointsValue: Int, item: QueuedItem, agent: WebScrapable) {
+        fetchMembershipCard(forId: item.card.id) { membershipCard in
             guard let membershipCard = membershipCard else {
                 fatalError("We should never get here. If we passed in a correct membership card id, we should get a card back.")
             }
@@ -288,7 +304,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 do {
                     try backgroundContext.save()
                 } catch {
-                    self.transitionToFailed(membershipCard: membershipCard)
+                    self.transitionToFailed(item: item)
                 }
 
                 self.pointsScrapingDidComplete(for: membershipCard)
@@ -298,10 +314,11 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
         }
     }
     
-    func transitionToFailed(membershipCard: CD_MembershipCard) {
-        removeCredentials(forMembershipCardId: membershipCard.id)
+    func transitionToFailed(item: QueuedItem) {
+        // TODO: Keep credentials if we havent retried once
+        removeCredentials(forMembershipCardId: item.card.id)
         
-        fetchMembershipCard(forId: membershipCard.id) { membershipCard in
+        fetchMembershipCard(forId: item.card.id) { membershipCard in
             guard let membershipCard = membershipCard else {
                 fatalError("We should never get here. If we passed in a correct membership card id, we should get a card back.")
             }
@@ -336,23 +353,23 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
 // MARK: - WebScrapingUtilityDelegate
 
 extension PointsScrapingManager: WebScrapingUtilityDelegate {
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable) {
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, item: QueuedItem, withAgent agent: WebScrapable) {
         if #available(iOS 14.0, *) {
-            BinkLogger.infoPrivateHash(event: WalletLoggerEvent.pointsScrapingSuccess, value: card.id)
+            BinkLogger.infoPrivateHash(event: WalletLoggerEvent.pointsScrapingSuccess, value: item.card.id)
         }
-        transitionToAuthorized(pointsValue: value, membershipCard: card, agent: agent)
+        transitionToAuthorized(pointsValue: value, item: item, agent: agent)
     }
     
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable) {
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, item: QueuedItem, withAgent agent: WebScrapable) {
         switch error {
         case .incorrectCredentials:
-            BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionCredentialFailure(membershipCard: card, error: error))
+            BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionCredentialFailure(membershipCard: item.card, error: error))
         default:
-            BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionInternalFailure(membershipCard: card, error: error))
+            BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionInternalFailure(membershipCard: item.card, error: error))
         }
         if #available(iOS 14.0, *) {
             BinkLogger.error(WalletLoggerError.pointsScrapingFailure, value: error.message)
         }
-        transitionToFailed(membershipCard: card)
+        transitionToFailed(item: item)
     }
 }
