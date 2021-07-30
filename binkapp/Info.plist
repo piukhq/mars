@@ -77,6 +77,8 @@
 		<string>fbshareextension</string>
 		<string>googlegmail</string>
 		<string>ms-outlook</string>
+		<string>http</string>
+		<string>https</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
