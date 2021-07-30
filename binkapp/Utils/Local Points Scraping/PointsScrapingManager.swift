@@ -20,10 +20,7 @@ class PointsScrapingManager {
     class QueuedItem {
         let card: CD_MembershipCard
         var isProcessing = false
-        
-        /// If this is set to true, we shouldn't process this item with other items
-        /// This is specifically for automatic retry behaviour from LCD
-        var shouldAttemptRetry = false
+        var requiresRetry = false
         
         init(card: CD_MembershipCard) {
             self.card = card
@@ -176,7 +173,7 @@ class PointsScrapingManager {
     private func processQueuedItems() {
         guard !processingQueue.isEmpty else { return }
         
-        guard let itemToProcess = processingQueue.first(where: { $0.isProcessing == false }) else { return }
+        guard let itemToProcess = processingQueue.first(where: { $0.isProcessing == false && $0.requiresRetry == false }) else { return }
         guard let planIdString = itemToProcess.card.membershipPlan?.id, let planId = Int(planIdString) else {
             self.transitionToFailed(item: itemToProcess)
             return
@@ -234,14 +231,13 @@ class PointsScrapingManager {
         return agents.contains(where: { $0.membershipPlanId == planId })
     }
     
-    private func pointsScrapingDidComplete(for card: CD_MembershipCard) {
+    private func pointsScrapingDidComplete(for item: QueuedItem) {
         NotificationCenter.default.post(name: .webScrapingUtilityDidComplete, object: nil)
         
-        /// Clear membership card from processing queue
+        /// If requiresRetry is false, then we know the item either succeeded points collection, or failed it's only retry. In either case, remove the item from the processing queue
+        /// If requiredRetry is true, then we know we want to perform a retry, so we should leave the item in the queue. It won't be processed with other cards, but only when the points module in LCD is tapped
         
-        // TODO: Don't clear if we can attempt a retry?
-        
-        processingQueue.removeAll(where: { $0.card.id == card.id })
+        processingQueue.removeAll(where: { $0.card.id == item.card.id && $0.requiresRetry == false })
         processQueuedItems()
     }
 
@@ -307,7 +303,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                     self.transitionToFailed(item: item)
                 }
 
-                self.pointsScrapingDidComplete(for: membershipCard)
+                self.pointsScrapingDidComplete(for: item)
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionSuccess(membershipCard: membershipCard))
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
             }
@@ -315,8 +311,15 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
     }
     
     func transitionToFailed(item: QueuedItem) {
-        // TODO: Keep credentials if we havent retried once
-        removeCredentials(forMembershipCardId: item.card.id)
+        /// If the item has shouldAttemptRetry = true, then we know that it is the retry that has failed and we should remove the processing item and ask the user for credentials next time
+        if item.requiresRetry {
+            removeCredentials(forMembershipCardId: item.card.id)
+        }
+        
+        /// If the item required a retry, it has attempted that and now doesn't require a retry
+        /// If the item didn't require a retry, then this was it's first attempt and we can perform a retry
+        /// So, let's toggle it!
+        item.requiresRetry.toggle()
         
         fetchMembershipCard(forId: item.card.id) { membershipCard in
             guard let membershipCard = membershipCard else {
@@ -343,7 +346,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 // If this try fails, the card will be stuck in pending until deleted and readded
                 try? backgroundContext.save()
                 
-                self.pointsScrapingDidComplete(for: membershipCard)
+                self.pointsScrapingDidComplete(for: item)
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
             }
         }
