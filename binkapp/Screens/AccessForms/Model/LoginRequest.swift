@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LoginRegisterRequest: Codable {
+struct LoginRequest: Codable {
     let email: String?
     let password: String?
     let clientID: String
