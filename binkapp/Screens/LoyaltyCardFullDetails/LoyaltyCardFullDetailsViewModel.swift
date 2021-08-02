@@ -114,7 +114,8 @@ class LoyaltyCardFullDetailsViewModel {
         switch state {
         case .loginChanges, .lpcLoginRequired:
             guard let membershipPlan = membershipCard.membershipPlan else { return }
-            let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: membershipCard)
+            let cardNumberPrefilledValue = FormDataSource.PrefilledValue(commonName: .cardNumber, value: membershipCard.card?.membershipId)
+            let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: membershipCard, prefilledFormValues: [cardNumberPrefilledValue])
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         case .plrTransactions, .pllTransactions:

@@ -63,6 +63,9 @@ class FormDataSource: NSObject {
     private(set) var membershipPlan: CD_MembershipPlan?
     
     private(set) var fields: [FormField] = []
+    private var visibleFields: [FormField] {
+        return fields.filter { !$0.hidden }
+    }
     private(set) var checkboxes: [CheckboxView] = []
     private var cellTextFields: [Int: UITextField] = [:]
     private var selectedCheckboxIndex = 0
@@ -263,7 +266,8 @@ extension FormDataSource {
                             forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
                             fieldCommonName: field.fieldCommonName,
                             alternatives: field.alternativeCommonNames(),
-                            dataSourceRefreshBlock: dataSourceRefreshBlock
+                            dataSourceRefreshBlock: dataSourceRefreshBlock,
+                            hidden: (formPurpose == .addFailed && !(membershipPlan?.isPLL ?? false)) ? true : false
                         )
                     )
                 }
@@ -447,7 +451,7 @@ extension FormDataSource {
             if field.checkbox?.boolValue == true {
                 checkbox.configure(title: attributedString, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: self)
             } else {
-                //If we don't want a checkbox, we don't need a delegate for it, so we will hide the checkbox by checking if we have a delegate or not
+                // If we don't want a checkbox, we don't need a delegate for it, so we will hide the checkbox by checking if we have a delegate or not
                 checkbox.configure(title: attributedString, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: self, hideCheckbox: true)
             }
             checkboxes.append(checkbox)
@@ -607,13 +611,13 @@ extension FormDataSource: CheckboxViewDelegate {
 
 extension FormDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return fields.count
+        return visibleFields.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: FormCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
         
-        if let field = fields[safe: indexPath.item] {
+        if let field = visibleFields[safe: indexPath.item] {
             cell.configure(with: field, delegate: self)
             cellTextFields[indexPath.row] = cell.textField
         }
