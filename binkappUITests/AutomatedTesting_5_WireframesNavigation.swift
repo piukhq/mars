@@ -40,10 +40,8 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         app.toolbars["Toolbar"].buttons["Done"].tap()
         app.buttons["Add card"].tap()
         app.buttons["Done"].tap()
+        app.buttons["Back"].tap()
 
-        let backButton = app.navigationBars["binkapp.LoyaltyCardFullDetailsView"].buttons["Back"]
-        backButton.tap()
-        
         sleep(60)
         
         AutomatedTesting.pullToRefresh(from: .iceland)
@@ -55,15 +53,15 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         icelandCell.tap()
         
         // >> LCD
-        XCTAssertTrue(app.navigationBars["binkapp.LoyaltyCardFullDetailsView"].exists)
+        XCTAssertTrue(app.staticTexts["Tap to show card number"].exists)
         XCTAssertTrue(app.buttons["Back"].exists)
-
+        
         app.staticTexts["Link"].tap()
         
         // >> PLL - No payment cards
-        XCTAssertTrue(app.navigationBars["binkapp.PLLScreenView"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["Add payment cards"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.buttons["close"].waitForExistence(timeout: 10))
-
+        
         app.buttons["Add payment cards"].tap()
         
         // >> Loyalty scanner
@@ -73,8 +71,8 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         app.staticTexts["Enter Manually"].tap()
         
         // >> Add payment card
-        XCTAssertTrue(app.navigationBars["binkapp.AddPaymentCardView"].waitForExistence(timeout: 10))
-        XCTAssertTrue(app.navigationBars["binkapp.AddPaymentCardView"].buttons["close"].exists)
+        XCTAssertTrue(app.staticTexts["Add payment card"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["close"].exists)
 
         let cardNumberTextField = app.textFields["Card number"]
         cardNumberTextField.tap()
@@ -95,7 +93,7 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         
         // >> Terms and conditions
         XCTAssertTrue(app.textViews["Terms and conditions"].waitForExistence(timeout: 10))
-        XCTAssertTrue(app.navigationBars["binkapp.ReusableTemplateView"].buttons["close"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["close"].waitForExistence(timeout: 10))
         
         app.buttons["I accept"].tap()
         
