@@ -112,7 +112,7 @@ class LoyaltyCardFullDetailsViewModel {
     
     func goToScreenForState(state: ModuleState, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) {
         switch state {
-        case .loginChanges:
+        case .loginChanges, .lpcLoginRequired:
             guard let membershipPlan = membershipCard.membershipPlan else { return }
             let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: membershipCard)
             let navigationRequest = ModalNavigationRequest(viewController: viewController)

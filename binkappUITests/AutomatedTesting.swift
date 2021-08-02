@@ -37,7 +37,7 @@ enum AutomatedTesting {
     static let app = XCUIApplication()
     
     static func logout() {
-        if !app.buttons["Log in"].exists {
+        if !app.buttons["Continue with Email"].exists {
             app.buttons["Loyalty"].tap()
             app.buttons["settings"].tap()
             app.tables.cells["Log out"].tap()
@@ -60,10 +60,13 @@ enum AutomatedTesting {
             app.buttons[type.rawValue].tap()
         }
         
-        if !app.buttons["Log in"].exists {
+        sleep(5)
+        
+        if !app.buttons["Continue with Email"].exists {
             app.buttons["Back"].tap()
         }
-        app.buttons["Log in"].tap()
+        app.buttons["Continue with Email"].tap()
+        app.buttons["Use a password"].tap()
         
         let emailTextfield = app.textFields["Enter email address"]
         emailTextfield.tap()

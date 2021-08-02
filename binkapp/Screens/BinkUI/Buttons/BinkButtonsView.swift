@@ -91,9 +91,9 @@ class BinkButtonsView: UIStackView {
         ])
     }
 
-    func insertAdditionalViews(_ views: [UIView]) {
+    func insertAdditionalViews(_ views: [UIView], at position: Int) {
         for additionalView in views {
-            insertArrangedSubview(additionalView, at: 1) // insert underneath the top spacer
+            insertArrangedSubview(additionalView, at: position) // insert underneath the top spacer
         }
     }
 }

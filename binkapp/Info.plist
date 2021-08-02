@@ -28,6 +28,18 @@
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleURLIconFile</key>
+			<string></string>
+			<key>CFBundleURLName</key>
+			<string>com.bink.wallet</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>bink</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
 			<string></string>
@@ -63,6 +75,10 @@
 		<string>fb-messenger-share-api</string>
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
+		<string>googlegmail</string>
+		<string>ms-outlook</string>
+		<string>http</string>
+		<string>https</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

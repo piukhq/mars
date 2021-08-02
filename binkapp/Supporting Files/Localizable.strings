@@ -263,9 +263,7 @@
 "preferences_update_fail" = "We can't update your preferences at the moment. Please try again later.";
 
 // MARK: - Buttons
-"signup_with_email_button" = "Sign up with email";
-"login_with_email_button" = "Log in with email";
-"login_with_email_button" = "Log in";
+"login_with_email_button" = "Continue with Email";
 
 // MARK: - Onboarding
 "onboarding_slide1_header" = "Payment linked loyalty. Magic!";
@@ -297,6 +295,8 @@
 // MARK: - Login, Register, Social T&Cs
 
 "continue_button_title" = "Continue";
+"login_with_password" = "Use a password";
+"email_magic_link" = "Use magic link";
 
 "add_email_title" = "Add email";
 "add_email_subtitle" = "Please add your email address below.";
@@ -313,6 +313,7 @@
 "register_subtitle" = "All it takes is an email and password.";
 "register_failed" = "Registration failed.";
 
+"login_issues" = "Issues logging in?";
 "login_title" = "Log in";
 "login_subtitle" = "Welcome back!";
 "login_error" =  "Incorrect email/password. Please try again.";
@@ -320,6 +321,26 @@
 "forgot_password_description" = "Please enter your email address and if it is associated with a Bink account, then a password reset email will be sent";
 "fogrot_password_popup_text" = "If the email address you entered is associated with a Bink account, then a password reset email will be sent.";
 "issues_logging_in" = "Issues logging in?";
+
+"magic_link_title" = "Continue with email";
+"magic_link_description" = "Get a link sent to your inbox so you can register or access your account instantly!\n\nNote: We will send you a Magic Link";
+"what_is_magic_link_hyperlink" = "Magic Link";
+"magic_link_description_note_highlight" = "Note:";
+"check_inbox_title" = "Check your inbox!";
+"check_inbox_description" = "We have just emailed a link to %@. Click the link and you will be signed in.";
+"nil_email_address" = "your email address";
+"link_expired_title" = "Link expired";
+"link_expired_description" = "To keep your account safe, links are only valid for a short period of time. Tap Retry and we will send you another.";
+"something_went_wrong_title" = "Something went wrong";
+"something_went_wrong_description" = "There was a problem authenticating you. Please try again.";
+"open_mail_button_title" = "Open %@";
+"open_mail_button_title_multiple_clients" = "Open Inbox";
+"open_mail_alert_title" = "Open your email app";
+"login_success_title" = "Success";
+"login_succes_subtitle" = "You are now logged in with %@ and will remain logged in on this device until you choose to log out.\nYou can log out from settings.";
+"magic_link_error_message" = "Magic Link is temporarily unavailable, please try again later.";
+"magic_link_already_logged_in_title" = "Already Logged In";
+"magic_link_already_logged_in_description" = "Would you like to log in to %@?";
 
 "tandcs_title" = "I agree to Bink's Terms and Conditions";
 "tandcs_description" = "Please read the Bink Privacy Policy for further details of how your data will be processed";

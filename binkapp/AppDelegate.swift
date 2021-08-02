@@ -18,6 +18,8 @@ import SafariServices
 class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     var window: UIWindow?
     var stateMachine: RootStateMachine?
+    
+    let universalLinkUtility = UniversalLinkUtility()
     let widgetController = WidgetController()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -93,6 +95,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
             BinkLogger.info(event: AppLoggerEvent.appEnteredBackground)
         }
         Current.wallet.handleAppDidEnterBackground()
+    }
+    
+    // MARK: - Universal Link Handling
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb, let url = userActivity.webpageURL else {
+            return false
+        }
+        
+        universalLinkUtility.handleLink(for: url)
+        
+        return false
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {

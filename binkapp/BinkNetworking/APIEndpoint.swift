@@ -28,6 +28,8 @@ enum APIEndpoint: Equatable {
     case paymentCard(cardId: String)
     case linkMembershipCardToPaymentCard(membershipCardId: String, paymentCardId: String)
     case spreedly
+    case magicLinks
+    case magicLinksAccessTokens
     
     var headers: [BinkHTTPHeader] {
         var headers: [BinkHTTPHeader] = [.defaultUserAgent, .defaultContentType]
@@ -73,7 +75,7 @@ enum APIEndpoint: Equatable {
     /// There are cases where an endpoint requires authorization, but shouldn't respond to a 401 response code such as .logout.
     var shouldRespondToUnauthorizedStatus: Bool {
         switch self {
-        case .logout:
+        case .logout, .magicLinks, .magicLinksAccessTokens:
             return false
         default: return true
         }
@@ -141,6 +143,10 @@ enum APIEndpoint: Equatable {
             return "/ubiquity/membership_card/\(membershipCardId)/payment_card/\(paymentCardId)"
         case .spreedly:
             return "https://core.spreedly.com/v1/payment_methods?environment_key=\(BinkappKeys().spreedlyEnvironmentKey)"
+        case .magicLinks:
+            return "/users/magic_links"
+        case .magicLinksAccessTokens:
+            return "/users/magic_links/access_tokens"
         }
     }
 }
