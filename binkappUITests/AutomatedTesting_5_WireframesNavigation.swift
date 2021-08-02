@@ -60,7 +60,7 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         
         // >> PLL - No payment cards
         XCTAssertTrue(app.buttons["Add payment cards"].waitForExistence(timeout: 10))
-//        XCTAssertTrue(app.buttons["close"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["close"].waitForExistence(timeout: 10))
         
         app.buttons["Add payment cards"].tap()
         
