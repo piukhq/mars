@@ -19,9 +19,9 @@ class PortraitNavigationController: UINavigationController {
     }()
     
     private lazy var closeButton: UIBarButtonItem = {
-        let close = UIBarButtonItem(image: Asset.close.image, style: .plain, target: self, action: #selector(close))
-        close.accessibilityIdentifier = "close"
-        return close
+        let closeButton = UIBarButtonItem(image: Asset.close.image, style: .plain, target: self, action: #selector(close))
+        closeButton.accessibilityIdentifier = "close"
+        return closeButton
     }()
     
     // TODO: When we kill off iOS 12 support, remove the init overrides and just use a custom init
