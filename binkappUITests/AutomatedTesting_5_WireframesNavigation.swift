@@ -53,13 +53,13 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         icelandCell.tap()
         
         // >> LCD
-        XCTAssertTrue(app.staticTexts["Tap to show card number"].exists)
+        XCTAssertTrue(app.navigationBars["binkapp.LoyaltyCardFullDetailsView"].exists)
         XCTAssertTrue(app.buttons["Back"].exists)
         
         app.staticTexts["Link"].tap()
         
         // >> PLL - No payment cards
-        XCTAssertTrue(app.buttons["Add payment cards"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.navigationBars["binkapp.PLLScreenView"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.buttons["close"].waitForExistence(timeout: 10))
         
         app.buttons["Add payment cards"].tap()
@@ -71,8 +71,9 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         app.staticTexts["Enter Manually"].tap()
         
         // >> Add payment card
-        XCTAssertTrue(app.staticTexts["Add payment card"].waitForExistence(timeout: 10))
-        XCTAssertTrue(app.buttons["close"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.navigationBars["binkapp.AddPaymentCardView"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.navigationBars["binkapp.AddPaymentCardView"].buttons["close"].exists)
+
 
         let cardNumberTextField = app.textFields["Card number"]
         cardNumberTextField.tap()
@@ -93,7 +94,7 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         
         // >> Terms and conditions
         XCTAssertTrue(app.textViews["Terms and conditions"].waitForExistence(timeout: 10))
-        XCTAssertTrue(app.buttons["close"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.navigationBars["binkapp.ReusableTemplateView"].buttons["close"].waitForExistence(timeout: 10))
         
         app.buttons["I accept"].tap()
         
