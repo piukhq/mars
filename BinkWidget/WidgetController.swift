@@ -31,7 +31,7 @@ class WidgetController {
         if #available(iOS 14.0, *) {
             switch type {
             case .quickLaunch:
-                WidgetCenter.shared.reloadTimelines(ofKind: WidgetType.quickLaunch.identifier)
+                WidgetCenter.shared.reloadTimelines(ofKind: type.identifier)
             }
         }
     }
@@ -152,12 +152,9 @@ class WidgetController {
     
     func trackInstalledWidgets() {
         if #available(iOS 14.0, *) {
-            WidgetCenter.shared.getCurrentConfigurations { info in
-                switch info {
-                case .success(let widgetInfo):
+            WidgetCenter.shared.getCurrentConfigurations { result in
+                if let widgetInfo = try? result.get() {
                     BinkAnalytics.track(WidgetAnalyticsEvent.installedWidgets(widgetInfo))
-                default:
-                    break
                 }
             }
         }
