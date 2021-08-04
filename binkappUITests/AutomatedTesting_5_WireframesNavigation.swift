@@ -23,7 +23,7 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
     func test_0_lcdModule_noPaymentCards_navigationIsCorrect() {
         sleep(10)
         AutomatedTesting.loginIntoEnvironment(type: .dev)
-        sleep(10)
+        sleep(20)
         
         app.buttons["Browse brands"].tap()
         app.tables.cells["Iceland"].tap()
@@ -40,33 +40,28 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         app.toolbars["Toolbar"].buttons["Done"].tap()
         app.buttons["Add card"].tap()
         app.buttons["Done"].tap()
+        app.buttons["Back"].tap()
 
-        let backButton = app.navigationBars["binkapp.LoyaltyCardFullDetailsView"].buttons["Back"]
-        backButton.tap()
-        
         sleep(60)
         
-        // Pull to refresh
-        let icelandCell = app.collectionViews.cells["Iceland"]
-        let start = icelandCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
-        let finish = icelandCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 50))
-        start.press(forDuration: 0, thenDragTo: finish)
+        AutomatedTesting.pullToRefresh(from: .iceland)
         
         // >> Loyalty wallet
         XCTAssertTrue(app.buttons["Browse brands"].exists)
         
+        let icelandCell = app.collectionViews.cells["Iceland"]
         icelandCell.tap()
         
         // >> LCD
         XCTAssertTrue(app.navigationBars["binkapp.LoyaltyCardFullDetailsView"].exists)
         XCTAssertTrue(app.buttons["Back"].exists)
-
+        
         app.staticTexts["Link"].tap()
         
         // >> PLL - No payment cards
         XCTAssertTrue(app.navigationBars["binkapp.PLLScreenView"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.buttons["close"].waitForExistence(timeout: 10))
-
+        
         app.buttons["Add payment cards"].tap()
         
         // >> Loyalty scanner
@@ -78,6 +73,7 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         // >> Add payment card
         XCTAssertTrue(app.navigationBars["binkapp.AddPaymentCardView"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.navigationBars["binkapp.AddPaymentCardView"].buttons["close"].exists)
+
 
         let cardNumberTextField = app.textFields["Card number"]
         cardNumberTextField.tap()
@@ -114,11 +110,21 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         app.buttons["close"].tap()
         app.buttons["Back"].tap()
         
-        start.press(forDuration: 0, thenDragTo: finish)
+        AutomatedTesting.pullToRefresh(from: .iceland)
         
         sleep(10)
         
         icelandCell.tap()
         XCTAssertTrue(app.staticTexts["Linked"].waitForExistence(timeout: 10))
+        
+        app.tables.cells["Delete Card"].tap()
+        app.buttons["Yes"].tap()
+        
+        sleep(5)
+        
+        app.buttons["Payment"].tap()
+        app.collectionViews.cells["B Testerson"].tap()
+        app.tables.cells["Delete this card"].tap()
+        app.buttons["Yes"].tap()
     }
 }
