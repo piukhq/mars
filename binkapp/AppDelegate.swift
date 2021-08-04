@@ -75,6 +75,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         addObservers()
         InAppReviewUtility.recordAppLaunch()
         Current.userManager.clearKeychainIfNecessary()
+        widgetController.trackInstalledWidgets()
+        
         return true
     }
     

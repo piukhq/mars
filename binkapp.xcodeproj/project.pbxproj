@@ -441,7 +441,7 @@
 		EF8F0485238D583300BD708B /* _CD_LinkingSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F0483238D583200BD708B /* _CD_LinkingSupport.swift */; };
 		EF8F0486238D583300BD708B /* CD_LinkingSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F0484238D583200BD708B /* CD_LinkingSupport.swift */; };
 		EF94AF0523D887AE00AAA039 /* SpreedlyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF0423D887AE00AAA039 /* SpreedlyModels.swift */; };
-		EF94AF0823D9B89B00AAA039 /* Anaytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF0723D9B89B00AAA039 /* Anaytics.swift */; };
+		EF94AF0823D9B89B00AAA039 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF0723D9B89B00AAA039 /* Analytics.swift */; };
 		EF94AF0D23D9F04700AAA039 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF0C23D9F04700AAA039 /* DictionaryExtension.swift */; };
 		EF94AF0F23DF55EE00AAA039 /* BinkTrackableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF0E23DF55EE00AAA039 /* BinkTrackableButton.swift */; };
 		EF94AF1423E05B5D00AAA039 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF1323E05B5D00AAA039 /* ImageService.swift */; };
@@ -1065,7 +1065,7 @@
 		EF8F0483238D583200BD708B /* _CD_LinkingSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_LinkingSupport.swift; sourceTree = "<group>"; };
 		EF8F0484238D583200BD708B /* CD_LinkingSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_LinkingSupport.swift; sourceTree = "<group>"; };
 		EF94AF0423D887AE00AAA039 /* SpreedlyModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpreedlyModels.swift; sourceTree = "<group>"; };
-		EF94AF0723D9B89B00AAA039 /* Anaytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anaytics.swift; sourceTree = "<group>"; };
+		EF94AF0723D9B89B00AAA039 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		EF94AF0C23D9F04700AAA039 /* DictionaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
 		EF94AF0E23DF55EE00AAA039 /* BinkTrackableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkTrackableButton.swift; sourceTree = "<group>"; };
 		EF94AF1323E05B5D00AAA039 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
@@ -2798,7 +2798,7 @@
 			isa = PBXGroup;
 			children = (
 				706D204124D97104004BCCF3 /* AnalyticsEvent.swift */,
-				EF94AF0723D9B89B00AAA039 /* Anaytics.swift */,
+				EF94AF0723D9B89B00AAA039 /* Analytics.swift */,
 			);
 			path = Analytics;
 			sourceTree = "<group>";
@@ -3561,7 +3561,7 @@
 				EF94AF1423E05B5D00AAA039 /* ImageService.swift in Sources */,
 				70E86777248E6BE5001ED282 /* SettingsTableViewFooter.swift in Sources */,
 				EF8F0486238D583300BD708B /* CD_LinkingSupport.swift in Sources */,
-				EF94AF0823D9B89B00AAA039 /* Anaytics.swift in Sources */,
+				EF94AF0823D9B89B00AAA039 /* Analytics.swift in Sources */,
 				EF94AF0523D887AE00AAA039 /* SpreedlyModels.swift in Sources */,
 				70661B93250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift in Sources */,
 				70661B88250792DB006DB009 /* BootsPointsScrapingAgent.swift in Sources */,

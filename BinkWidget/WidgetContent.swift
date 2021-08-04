@@ -32,6 +32,13 @@ enum WidgetType {
             return "group.com.bink.wallet"
         }
     }
+    
+    func isInstalled(widgetIDs: [String]) -> Bool {
+        if widgetIDs.contains(identifier) {
+            return true
+        }
+        return false
+    }
 }
 
 struct WidgetContent: TimelineEntry, Codable {

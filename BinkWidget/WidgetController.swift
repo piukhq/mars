@@ -149,4 +149,17 @@ class WidgetController {
             }
         }
     }
+    
+    func trackInstalledWidgets() {
+        if #available(iOS 14.0, *) {
+            WidgetCenter.shared.getCurrentConfigurations { info in
+                switch info {
+                case .success(let widgetInfo):
+                    BinkAnalytics.track(WidgetAnalyticsEvent.installedWidgets(widgetInfo))
+                default:
+                    break
+                }
+            }
+        }
+    }
 }

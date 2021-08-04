@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseAnalytics
+import WidgetKit
 
 protocol BinkAnalyticsEvent {
     var name: String { get }
@@ -495,6 +496,28 @@ enum RecommendedAppUpdateAnalyticsEvent: BinkAnalyticsEvent {
             return ["user_action": "maybe_later"]
         case .skipThisVersion:
             return ["user_action": "skip_this_version"]
+        }
+    }
+}
+
+// MARK: - Widgets
+
+@available(iOS 14.0, *)
+enum WidgetAnalyticsEvent: BinkAnalyticsEvent {
+case installedWidgets([WidgetInfo])
+    
+    var name: String {
+        switch self {
+        case .installedWidgets:
+            return "installed_widgets"
+        }
+    }
+    
+    var data: [String: Any]? {
+        switch self {
+        case .installedWidgets(let widgetInfos):
+            let widgetIDs = widgetInfos.map { $0.kind }
+            return ["ql_widget_installed": WidgetType.quickLaunch.isInstalled(widgetIDs: widgetIDs)]
         }
     }
 }
