@@ -77,7 +77,11 @@ enum BinkAnalytics {
                 if let widgetInfo = try? result.get() {
                     let widgetIDs = widgetInfo.map { $0.kind }
                     let isQLWidgetInstalled = WidgetType.quickLaunch.isInstalled(widgetIDs: widgetIDs)
-                    BinkAnalytics.setUserProperty(value: String(isQLWidgetInstalled), forKey: .quicklaunchWidgetInstalled)
+                    
+                    if Current.userDefaults.bool(forDefaultsKey: .hasInstalledQLWidget) != isQLWidgetInstalled || !Current.userDefaults.bool(forDefaultsKey: .hasPreviouslyLaunchedApp) {
+                        BinkAnalytics.setUserProperty(value: String(isQLWidgetInstalled), forKey: .quicklaunchWidgetInstalled)
+                        Current.userDefaults.set(isQLWidgetInstalled, forDefaultsKey: .hasInstalledQLWidget)
+                    }
                 }
             }
         }
