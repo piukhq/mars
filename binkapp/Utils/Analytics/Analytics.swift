@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAnalytics
+import WidgetKit
 
 /// Conformance to this protocol makes a class trackable
 protocol AnalyticsTrackable {
@@ -23,6 +24,7 @@ enum BinkAnalytics {
         case networkStrength
         case deviceZoom
         case binkVersion
+        case quicklaunchWidgetInstalled = "ql_widget_installed"
     }
 
     static let keyPrefix = "com.bink.wallet.trackingSession."
@@ -69,6 +71,16 @@ enum BinkAnalytics {
         guard let appVersion = Bundle.shortVersionNumber else { return }
         guard let buildNumber = Bundle.bundleVersion else { return }
         BinkAnalytics.setUserProperty(value: "Version: \(appVersion), build: \(buildNumber)", forKey: .binkVersion)
+        
+        if #available(iOS 14.0, *) {
+            WidgetCenter.shared.getCurrentConfigurations { result in
+                if let widgetInfo = try? result.get() {
+                    let widgetIDs = widgetInfo.map { $0.kind }
+                    let isQLWidgetInstalled = WidgetType.quickLaunch.isInstalled(widgetIDs: widgetIDs)
+                    BinkAnalytics.setUserProperty(value: String(isQLWidgetInstalled), forKey: .quicklaunchWidgetInstalled)
+                }
+            }
+        }
     }
 
     private static func setUserProperty(value: String?, forKey key: UserPropertyKey) {

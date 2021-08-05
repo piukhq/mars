@@ -39,7 +39,10 @@ class WidgetController {
     func handleURLForWidgetType(type: WidgetType, urlPath: String) {
         isPerformingNavigation = true
         self.urlPath = urlPath
-        
+        if #available(iOS 14.0, *) {
+            BinkAnalytics.track(WidgetAnalyticsEvent.widgetLaunch(urlPath: urlPath))
+        }
+     
         switch type {
         case .quickLaunch:
             Current.navigate.closeShieldView {
@@ -145,16 +148,6 @@ class WidgetController {
                         BinkLogger.error(AppLoggerError.encodeWidgetContentsToDiskFailure, value: error.localizedDescription)
                     }
                     return
-                }
-            }
-        }
-    }
-    
-    func trackInstalledWidgets() {
-        if #available(iOS 14.0, *) {
-            WidgetCenter.shared.getCurrentConfigurations { result in
-                if let widgetInfo = try? result.get() {
-                    BinkAnalytics.track(WidgetAnalyticsEvent.installedWidgets(widgetInfo))
                 }
             }
         }

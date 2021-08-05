@@ -11,7 +11,8 @@ import SwiftUI
 import WidgetKit
 
 enum WidgetUrlPath: String {
-    case addCard
+    case addCard = "add_button"
+    case signIn = "sign_in"
     case spacerZero
     case spacerOne
 }
