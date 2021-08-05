@@ -504,13 +504,10 @@ enum RecommendedAppUpdateAnalyticsEvent: BinkAnalyticsEvent {
 
 @available(iOS 14.0, *)
 enum WidgetAnalyticsEvent: BinkAnalyticsEvent {
-//    case installedWidgets([WidgetInfo])
     case widgetLaunch(urlPath: String)
     
     var name: String {
         switch self {
-//        case .installedWidgets:
-//            return "installed_widgets"
         case .widgetLaunch:
             return "widget_launch"
         }
@@ -518,9 +515,6 @@ enum WidgetAnalyticsEvent: BinkAnalyticsEvent {
     
     var data: [String: Any]? {
         switch self {
-//        case .installedWidgets(let widgetInfos):
-//            let widgetIDs = widgetInfos.map { $0.kind }
-//            return ["ql_widget_installed": WidgetType.quickLaunch.isInstalled(widgetIDs: widgetIDs)]
         case .widgetLaunch(let urlPath):
             return ["launch_reason": urlPath]
         }
