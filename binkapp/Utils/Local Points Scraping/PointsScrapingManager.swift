@@ -190,6 +190,27 @@ class PointsScrapingManager {
         }
     }
     
+    func processRetry(for card: CD_MembershipCard) {
+        guard let itemToProcess = processingQueue.first(where: { $0.card.id == card.id }) else {
+            fatalError("Could not build item to process")
+        }
+        guard let planIdString = itemToProcess.card.membershipPlan?.id, let planId = Int(planIdString) else {
+            self.transitionToFailed(item: itemToProcess)
+            return
+        }
+        guard let agent = agents.first(where: { $0.membershipPlanId == planId }) else {
+            self.transitionToFailed(item: itemToProcess)
+            return
+        }
+
+        do {
+            transitionToPending(item: itemToProcess)
+            try webScrapingUtility?.start(agent: agent, item: itemToProcess)
+        } catch {
+            self.transitionToFailed(item: itemToProcess)
+        }
+    }
+    
     func refreshBalancesIfNecessary() {
         guard self.isMasterEnabled else { return }
         self.getRefreshableMembershipCards { [weak self] refreshableCards in
@@ -232,7 +253,7 @@ class PointsScrapingManager {
     }
     
     private func pointsScrapingDidComplete(for item: QueuedItem) {
-        NotificationCenter.default.post(name: .webScrapingUtilityDidComplete, object: nil)
+        NotificationCenter.default.post(name: .webScrapingUtilityDidUpdate, object: nil)
         
         /// If requiresRetry is false, then we know the item either succeeded points collection, or failed it's only retry. In either case, remove the item from the processing queue
         /// If requiredRetry is true, then we know we want to perform a retry, so we should leave the item in the queue. It won't be processed with other cards, but only when the points module in LCD is tapped
@@ -250,7 +271,10 @@ class PointsScrapingManager {
     }
     
     func canAttemptRetry(for card: CD_MembershipCard) -> Bool {
-        /// Is the membership card in the processingQueue, with isAttemptingRetry true?
+        /// Is the membership card in the processingQueue, with requiresRetry set to true?
+        if let _ = processingQueue.first(where: { $0.card.id == card.id && $0.requiresRetry }) {
+            return true
+        }
         return false
     }
 }
@@ -343,11 +367,40 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 membershipCard.status = cdStatus
                 cdStatus.card = membershipCard
                 
-                // If this try fails, the card will be stuck in pending until deleted and readded
-                try? backgroundContext.save()
+                do {
+                    try backgroundContext.save()
+                } catch {
+                    self.transitionToFailed(item: item)
+                }
                 
                 self.pointsScrapingDidComplete(for: item)
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
+            }
+        }
+    }
+    
+    func transitionToPending(item: QueuedItem) {
+        fetchMembershipCard(forId: item.card.id) { membershipCard in
+            guard let membershipCard = membershipCard else {
+                fatalError("We should never get here. If we passed in a correct membership card id, we should get a card back.")
+            }
+            Current.database.performBackgroundTask(with: membershipCard) { (backgroundContext, safeObject) in
+                guard let membershipCard = safeObject else {
+                    fatalError("We should never get here. Core data didn't return us an object, why not?")
+                }
+                
+                // Set card status to pending
+                let status = MembershipCardStatusModel(apiId: nil, state: .pending, reasonCodes: [.attemptingToScrapePointsValue])
+                let cdStatus = status.mapToCoreData(backgroundContext, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: membershipCard.id))
+                membershipCard.status = cdStatus
+                cdStatus.card = membershipCard
+                
+                do {
+                    try backgroundContext.save()
+                    NotificationCenter.default.post(name: .webScrapingUtilityDidUpdate, object: nil)
+                } catch {
+                    self.transitionToFailed(item: item)
+                }
             }
         }
     }
