@@ -272,7 +272,7 @@ class PointsScrapingManager {
     
     func canAttemptRetry(for card: CD_MembershipCard) -> Bool {
         /// Is the membership card in the processingQueue, with requiresRetry set to true?
-        if let _ = processingQueue.first(where: { $0.card.id == card.id && $0.requiresRetry }) {
+        if let _ = processingQueue.first(where: { $0.card.id == card.id && $0.requiresRetry && !$0.isProcessing }) {
             return true
         }
         return false

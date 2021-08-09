@@ -266,6 +266,8 @@ class WebScrapingUtility: NSObject {
         guard let agent = agent else { return }
         guard let item = item else { return }
         
+        item.isProcessing = false
+        
         if let value = value {
             if Current.pointsScrapingManager.isDebugMode {
                 DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - Retreived points balance", type: .success)
