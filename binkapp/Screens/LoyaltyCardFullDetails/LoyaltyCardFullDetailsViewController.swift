@@ -148,7 +148,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidUpdate, object: nil)
     }
     
     @objc private func handlePointsScrapingUpdate() {
@@ -459,7 +459,11 @@ extension LoyaltyCardFullDetailsViewController: CardDetailInformationRowFactoryD
 
 extension LoyaltyCardFullDetailsViewController: BinkModuleViewDelegate {
     func binkModuleViewWasTapped(moduleView: BinkModuleView, withState state: ModuleState) {
-        viewModel.goToScreenForState(state: state, delegate: self)
+        if Current.pointsScrapingManager.canAttemptRetry(for: viewModel.membershipCard) {
+            Current.pointsScrapingManager.processRetry(for: viewModel.membershipCard)
+        } else {
+            viewModel.goToScreenForState(state: state, delegate: self)
+        }
     }
 }
 

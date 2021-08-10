@@ -26,14 +26,14 @@ struct PriorityScrapableCard: Equatable {
 }
 
 protocol WebScrapingUtilityDelegate: AnyObject {
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable)
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable)
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, item: PointsScrapingManager.QueuedItem, withAgent agent: WebScrapable)
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, item: PointsScrapingManager.QueuedItem, withAgent agent: WebScrapable)
 }
 
 class WebScrapingUtility: NSObject {
     var isExecutingScript = false
     private var isRunning: Bool {
-        return membershipCard != nil || agent != nil
+        return item != nil || agent != nil
     }
     
     private let priorityWebview: WKWebView
@@ -41,7 +41,7 @@ class WebScrapingUtility: NSObject {
     private var priorityScrapableCards: [PriorityScrapableCard] = []
     
     private var agent: WebScrapable?
-    private var membershipCard: CD_MembershipCard?
+    private var item: PointsScrapingManager.QueuedItem?
     
     private weak var delegate: WebScrapingUtilityDelegate?
     
@@ -67,7 +67,7 @@ class WebScrapingUtility: NSObject {
     }
     
     private var isBalanceRefresh: Bool {
-        guard let balances = membershipCard?.formattedBalances, !balances.isEmpty else { return false }
+        guard let balances = item?.card.formattedBalances, !balances.isEmpty else { return false }
         return true
     }
     
@@ -87,7 +87,7 @@ class WebScrapingUtility: NSObject {
             throw WebScrapingUtilityError.agentProvidedInvalidUrl
         }
         
-        self.membershipCard = item.card
+        self.item = item
         item.isProcessing = true
         
         let request = URLRequest(url: url)
@@ -115,7 +115,7 @@ class WebScrapingUtility: NSObject {
     /// Only the priority web view can handle sessions and cookies in a user-friendly way.
     /// - Returns: The webview in which to perform points scraping
     private func getAppropriateWebview(completion: @escaping (Result<WKWebView, WebScrapingUtilityError>) -> Void) {
-        guard let card = membershipCard, let plan = card.membershipPlan, let agent = agent else {
+        guard let card = item?.card, let plan = card.membershipPlan, let agent = agent else {
             completion(.failure(.failedToAssignWebView))
             return
         }
@@ -160,7 +160,7 @@ class WebScrapingUtility: NSObject {
     
     private func stop() {
         agent = nil
-        membershipCard = nil
+        item = nil
         idleTimer?.invalidate()
         idleRetryCount = 0
         userActionTimer?.invalidate()
@@ -264,13 +264,15 @@ class WebScrapingUtility: NSObject {
         }
         
         guard let agent = agent else { return }
-        guard let membershipCard = membershipCard else { return }
+        guard let item = item else { return }
+        
+        item.isProcessing = false
         
         if let value = value {
             if Current.pointsScrapingManager.isDebugMode {
                 DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - Retreived points balance", type: .success)
             }
-            delegate?.webScrapingUtility(self, didCompleteWithValue: value, forMembershipCard: membershipCard, withAgent: agent)
+            delegate?.webScrapingUtility(self, didCompleteWithValue: value, item: item, withAgent: agent)
         }
         
         if let error = error {
@@ -278,14 +280,14 @@ class WebScrapingUtility: NSObject {
                 DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - \(error.localizedDescription)", type: .failure)
             }
             SentryService.triggerException(.localPointsCollectionFailed(error, agent.merchant, balanceRefresh: isBalanceRefresh))
-            delegate?.webScrapingUtility(self, didCompleteWithError: error, forMembershipCard: membershipCard, withAgent: agent)
+            delegate?.webScrapingUtility(self, didCompleteWithError: error, item: item, withAgent: agent)
             
-            priorityScrapableCards.removeAll(where: { $0.cardId == membershipCard.id })
+            priorityScrapableCards.removeAll(where: { $0.cardId == item.card.id })
         }
     }
     
     func isCurrentlyScraping(forMembershipCard card: CD_MembershipCard) -> Bool {
-        return membershipCard?.id == card.id
+        return item?.card.id == card.id
     }
 }
 
@@ -307,7 +309,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
             finish(withError: .scriptFileNotFound)
             return
         }
-        guard let card = membershipCard, let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: card.id) else {
+        guard let card = item?.card, let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: card.id) else {
             return
         }
         
@@ -350,7 +352,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
                 
                 if response.didAttemptLogin == true {
                     self.sessionHasAttemptedLogin = true
-                    if let card = self.membershipCard, self.activeWebview == self.priorityWebview {
+                    if let card = self.item?.card, self.activeWebview == self.priorityWebview {
                         /// At this point, we know we've attempted a login so there was no valid session
                         /// As we are using the priority web view, we know the membership card is the only one of it's plan type
                         /// We can safely assume the membership card can be move to the priority list and have it's session reused
