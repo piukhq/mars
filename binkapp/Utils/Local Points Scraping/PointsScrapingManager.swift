@@ -277,6 +277,12 @@ class PointsScrapingManager {
         }
         return false
     }
+    
+    func handleLogout() {
+        webScrapingUtility?.handleLogout()
+        webScrapingUtility = nil
+        processingQueue.removeAll()
+    }
 }
 
 // MARK: - Core Data interaction

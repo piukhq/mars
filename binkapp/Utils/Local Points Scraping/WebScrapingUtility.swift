@@ -172,6 +172,10 @@ class WebScrapingUtility: NSObject {
         }
     }
     
+    func handleLogout() {
+        stop()
+    }
+    
     private func resetIdlingTimer() {
         idleTimer?.invalidate()
         idleTimer = Timer.scheduledTimer(withTimeInterval: idleThreshold, repeats: false, block: { [weak self] timer in
