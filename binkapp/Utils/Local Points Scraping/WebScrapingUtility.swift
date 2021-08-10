@@ -158,7 +158,7 @@ class WebScrapingUtility: NSObject {
         }
     }
     
-    private func stop() {
+    func stop() {
         agent = nil
         item = nil
         idleTimer?.invalidate()
@@ -170,10 +170,6 @@ class WebScrapingUtility: NSObject {
         if activeWebview != priorityWebview {
             activeWebview = nil
         }
-    }
-    
-    func handleLogout() {
-        stop()
     }
     
     private func resetIdlingTimer() {

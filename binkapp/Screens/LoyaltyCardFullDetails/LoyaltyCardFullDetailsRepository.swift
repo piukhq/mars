@@ -16,6 +16,8 @@ class LoyaltyCardFullDetailsRepository: WalletServiceProtocol {
         
         BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCard(card: membershipCard))
         
+        Current.pointsScrapingManager.handleDelete(for: membershipCard)
+        
         deleteMembershipCard(membershipCard) { (success, _, responseData) in
             guard success else {
                 BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCardResponseFail(card: trackableCard, responseData: responseData))

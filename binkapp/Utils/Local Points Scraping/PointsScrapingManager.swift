@@ -279,9 +279,23 @@ class PointsScrapingManager {
     }
     
     func handleLogout() {
-        webScrapingUtility?.handleLogout()
+        webScrapingUtility?.stop()
         webScrapingUtility = nil
         processingQueue.removeAll()
+        fetchPointsScrapableMembershipCards { cards in
+            cards?.compactMap { $0.id }.forEach { id in
+                self.removeCredentials(forMembershipCardId: id)
+            }
+        }
+    }
+    
+    func handleDelete(for card: CD_MembershipCard) {
+        if isCurrentlyScraping(forMembershipCard: card) {
+            webScrapingUtility?.stop()
+            webScrapingUtility = nil
+        }
+        processingQueue.removeAll(where: { $0.card == card })
+        disableLocalPointsScraping(forMembershipCardId: card.id)
     }
 }
 
