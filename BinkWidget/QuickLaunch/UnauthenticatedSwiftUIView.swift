@@ -16,10 +16,7 @@ struct UnauthenticatedSwiftUIView: View {
         static let TextSize: CGFloat = 12.0
     }
     
-    let url = URL(string: "quicklaunch-widget://sign_in") ?? URL(string: "quicklaunch-widget://")!
-    
     var body: some View {
-        Link(destination: url) {
             HStack(alignment: .center, spacing: 0) {
                 Image("bink-logo")
                     .resizable()
@@ -34,6 +31,6 @@ struct UnauthenticatedSwiftUIView: View {
             }
             .padding(.vertical, Constants.VerticalPadding)
             .background(Color("UnAuthWidgetBackground"))
-        }
+            .widgetURL(URL(string: "quicklaunch-widget://sign_in"))
     }
 }

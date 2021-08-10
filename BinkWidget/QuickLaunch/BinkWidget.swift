@@ -73,7 +73,7 @@ struct QuickLaunchEntryView: View {
 
     var twoColumnGrid = [GridItem(.flexible(), alignment: .topLeading), GridItem(.flexible())]
     let hasCurrentUser = UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.bool(forKey: "hasCurrentUser") ?? false
-    let url = URL(string: "quicklaunch-widget://from_edge") ?? URL(string: "quicklaunch-widget://")!
+    let url = URL(string: "quicklaunch-widget://from_edge")
     
     enum Constants {
         static let widgetHeight: CGFloat = 164
