@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAnalytics
 import WidgetKit
+import DeepDiff
 
 /// Conformance to this protocol makes a class trackable
 protocol AnalyticsTrackable {
@@ -75,12 +76,22 @@ enum BinkAnalytics {
         if #available(iOS 14.0, *) {
             WidgetCenter.shared.getCurrentConfigurations { result in
                 if let widgetInfo = try? result.get() {
-                    let widgetIDs = widgetInfo.map { $0.kind }
-                    let isQLWidgetInstalled = WidgetType.quickLaunch.isInstalled(widgetIDs: widgetIDs)
+                    let currentlyInstalledWidgetIDs = widgetInfo.map { $0.kind }
+                    let previouslyInstalledWidgetIDs = Current.userDefaults.value(forDefaultsKey: .installedWidgets) as? [String] ?? []
+                    let widgetDifferences = diff(old: previouslyInstalledWidgetIDs, new: currentlyInstalledWidgetIDs)
                     
-                    if Current.userDefaults.bool(forDefaultsKey: .hasInstalledQLWidget) != isQLWidgetInstalled || !Current.userDefaults.bool(forDefaultsKey: .hasPreviouslyLaunchedApp) {
-                        BinkAnalytics.setUserProperty(value: String(isQLWidgetInstalled), forKey: .quicklaunchWidgetInstalled)
-                        Current.userDefaults.set(isQLWidgetInstalled, forDefaultsKey: .hasInstalledQLWidget)
+                    if !widgetDifferences.isEmpty || !Current.userDefaults.bool(forDefaultsKey: .hasPreviouslyLaunchedApp) {
+                        for change in widgetDifferences {
+                            let widgetID = change.insert?.item ?? change.delete?.item ?? ""
+                            switch widgetID {
+                            case "com.bink.wallet.quicklaunchwidget":
+                                let isQLWidgetInstalled = currentlyInstalledWidgetIDs.contains(widgetID)
+                                BinkAnalytics.setUserProperty(value: String(isQLWidgetInstalled), forKey: .quicklaunchWidgetInstalled)
+                            default:
+                                break
+                            }
+                        }
+                        Current.userDefaults.set(currentlyInstalledWidgetIDs, forDefaultsKey: .installedWidgets)
                     }
                 }
             }

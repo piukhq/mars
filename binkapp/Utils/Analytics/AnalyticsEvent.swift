@@ -8,7 +8,6 @@
 
 import Foundation
 import FirebaseAnalytics
-import WidgetKit
 
 protocol BinkAnalyticsEvent {
     var name: String { get }
@@ -504,7 +503,7 @@ enum RecommendedAppUpdateAnalyticsEvent: BinkAnalyticsEvent {
 
 @available(iOS 14.0, *)
 enum WidgetAnalyticsEvent: BinkAnalyticsEvent {
-    case widgetLaunch(urlPath: String)
+    case widgetLaunch(urlPath: String, widgetType: String)
     
     var name: String {
         switch self {
@@ -515,8 +514,8 @@ enum WidgetAnalyticsEvent: BinkAnalyticsEvent {
     
     var data: [String: Any]? {
         switch self {
-        case .widgetLaunch(let urlPath):
-            return ["launch_reason": urlPath]
+        case .widgetLaunch(let urlPath, let widgetType):
+            return ["launch_reason": urlPath, "widget_slug": widgetType]
         }
     }
 }
