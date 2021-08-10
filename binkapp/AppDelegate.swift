@@ -110,8 +110,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        guard let urlPath = url.host?.removingPercentEncoding else { return false }
-        widgetController.handleURLForWidgetType(type: .quickLaunch, urlPath: urlPath)
+        if url.absoluteString.starts(with: "bink://magiclink?token=") {
+            universalLinkUtility.handleLink(for: url)
+        } else {
+            guard let urlPath = url.host?.removingPercentEncoding else { return false }
+            widgetController.handleURLForWidgetType(type: .quickLaunch, urlPath: urlPath)
+        }
         return true
     }
 }
