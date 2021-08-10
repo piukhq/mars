@@ -297,7 +297,7 @@ extension WalletServiceProtocol {
                         completion(.failure(.customError(networkError.message)))
                     case 404:
                         completion(.failure(.customError(L10n.communicationError)))
-                        SentryService.triggerException(.apiRejectedPaymentCardRequest(response))
+                        SentryService.triggerException(.apiRejectedLoyaltyCardRequest(response))
                     default:
                         completion(.failure(.failedToLinkMembershipCardToPaymentCard))
                     }
