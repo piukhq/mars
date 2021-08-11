@@ -503,7 +503,7 @@ enum RecommendedAppUpdateAnalyticsEvent: BinkAnalyticsEvent {
 
 @available(iOS 14.0, *)
 enum WidgetAnalyticsEvent: BinkAnalyticsEvent {
-    case widgetLaunch(urlPath: String, widgetType: String)
+    case widgetLaunch(urlPath: String, widgetType: WidgetType?)
     
     var name: String {
         switch self {
@@ -515,7 +515,16 @@ enum WidgetAnalyticsEvent: BinkAnalyticsEvent {
     var data: [String: Any]? {
         switch self {
         case .widgetLaunch(let urlPath, let widgetType):
-            return ["launch_reason": urlPath, "widget_slug": widgetType]
+            return ["launch_reason": urlPath, "widget_slug": idForWidgetType(type: widgetType)]
+        }
+    }
+    
+    private func idForWidgetType(type: WidgetType?) -> String {
+        switch type {
+        case .quickLaunch:
+            return "ql"
+        default:
+            return ""
         }
     }
 }

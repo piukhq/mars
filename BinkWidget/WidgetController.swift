@@ -36,22 +36,13 @@ class WidgetController {
         }
     }
     
-    private func widgetTypeFromUrlScheme(scheme: String?) -> String {
-        switch scheme {
-        case "quicklaunch-widget":
-            return "ql"
-        default:
-            return ""
-        }
-    }
-    
     func handleURLForWidgetType(type: WidgetType, url: URL) {
         isPerformingNavigation = true
         guard let urlPath = url.host?.removingPercentEncoding else { return }
         self.urlPath = urlPath
         
         if #available(iOS 14.0, *) {
-            let widgetType = widgetTypeFromUrlScheme(scheme: url.scheme)
+            let widgetType = WidgetType(rawValue: url.scheme ?? "")
             BinkAnalytics.track(WidgetAnalyticsEvent.widgetLaunch(urlPath: urlPath, widgetType: widgetType))
         }
      

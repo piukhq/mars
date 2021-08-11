@@ -17,8 +17,8 @@ enum WidgetUrlPath: String {
     case spacerOne
 }
 
-enum WidgetType {
-    case quickLaunch
+enum WidgetType: String {
+    case quickLaunch = "quicklaunch-widget"
     
     var identifier: String {
         switch self {
