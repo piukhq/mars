@@ -17,7 +17,7 @@ enum WidgetUrlPath: String {
     case spacerOne
 }
 
-enum WidgetType: String {
+enum WidgetType: String, CaseIterable {
     case quickLaunch = "quicklaunch-widget"
     
     var identifier: String {
@@ -40,6 +40,10 @@ enum WidgetType: String {
         }
         return false
     }
+    
+    static func widgetTypeFromID(_ id: String) -> WidgetType? {
+        return allCases.first(where: { $0.identifier == id })
+    }
 }
 
 struct WidgetContent: TimelineEntry, Codable {
@@ -53,6 +57,6 @@ struct MembershipCardWidget: Hashable, Codable {
     let imageData: Data?
     let backgroundColor: String?
     var url: URL {
-        URL(string: "quicklaunch-widget://" + id) ?? URL(string: "quicklaunch-widget://")!
+        URL(string: WidgetType.quickLaunch.rawValue + "://" + id) ?? URL(string: WidgetType.quickLaunch.rawValue + "://")!
     }
 }

@@ -31,6 +31,6 @@ struct UnauthenticatedSwiftUIView: View {
             }
             .padding(.vertical, Constants.VerticalPadding)
             .background(Color("UnAuthWidgetBackground"))
-            .widgetURL(URL(string: "quicklaunch-widget://sign_in"))
+            .widgetURL(URL(string: WidgetType.quickLaunch.rawValue + "://sign_in"))
     }
 }

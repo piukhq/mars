@@ -74,7 +74,7 @@ extension UserDefaults: BinkUserDefaults {
         case skippedRecommendedVersions
         case lpcDebugMode
         case hasCurrentUser
-        case installedWidgets
+        case installedWidgetIds
         
         var keyValue: String {
             switch self {
@@ -114,8 +114,8 @@ extension UserDefaults: BinkUserDefaults {
                 return "lpcDebugMode"
             case .hasCurrentUser:
                 return "hasCurrentUser"
-            case .installedWidgets:
-                return "installedWidgets"
+            case .installedWidgetIds:
+                return "installedWidgetIds"
             }
         }
     }

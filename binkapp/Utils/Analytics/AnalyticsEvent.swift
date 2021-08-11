@@ -515,11 +515,11 @@ enum WidgetAnalyticsEvent: BinkAnalyticsEvent {
     var data: [String: Any]? {
         switch self {
         case .widgetLaunch(let urlPath, let widgetType):
-            return ["launch_reason": urlPath, "widget_slug": idForWidgetType(type: widgetType)]
+            return ["launch_reason": urlPath, "widget_slug": idForWidgetType(widgetType)]
         }
     }
     
-    private func idForWidgetType(type: WidgetType?) -> String {
+    private func idForWidgetType(_ type: WidgetType?) -> String {
         switch type {
         case .quickLaunch:
             return "ql"
