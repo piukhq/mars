@@ -158,7 +158,7 @@ class WebScrapingUtility: NSObject {
         }
     }
     
-    private func stop() {
+    func stop() {
         agent = nil
         item = nil
         idleTimer?.invalidate()
