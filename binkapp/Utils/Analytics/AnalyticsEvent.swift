@@ -498,3 +498,33 @@ enum RecommendedAppUpdateAnalyticsEvent: BinkAnalyticsEvent {
         }
     }
 }
+
+// MARK: - Widgets
+
+@available(iOS 14.0, *)
+enum WidgetAnalyticsEvent: BinkAnalyticsEvent {
+    case widgetLaunch(urlPath: String, widgetType: WidgetType?)
+    
+    var name: String {
+        switch self {
+        case .widgetLaunch:
+            return "widget_launch"
+        }
+    }
+    
+    var data: [String: Any]? {
+        switch self {
+        case .widgetLaunch(let urlPath, let widgetType):
+            return ["launch_reason": urlPath, "widget_slug": idForWidgetType(widgetType)]
+        }
+    }
+    
+    private func idForWidgetType(_ type: WidgetType?) -> String {
+        switch type {
+        case .quickLaunch:
+            return "ql"
+        default:
+            return ""
+        }
+    }
+}

@@ -8,6 +8,8 @@
 
 import UIKit
 import FirebaseAnalytics
+import WidgetKit
+import DeepDiff
 
 /// Conformance to this protocol makes a class trackable
 protocol AnalyticsTrackable {
@@ -23,6 +25,7 @@ enum BinkAnalytics {
         case networkStrength
         case deviceZoom
         case binkVersion
+        case quicklaunchWidgetInstalled = "ql_widget_installed"
     }
 
     static let keyPrefix = "com.bink.wallet.trackingSession."
@@ -69,6 +72,41 @@ enum BinkAnalytics {
         guard let appVersion = Bundle.shortVersionNumber else { return }
         guard let buildNumber = Bundle.bundleVersion else { return }
         BinkAnalytics.setUserProperty(value: "Version: \(appVersion), build: \(buildNumber)", forKey: .binkVersion)
+        
+        if #available(iOS 14.0, *) {
+            WidgetCenter.shared.getCurrentConfigurations { result in
+                // Obtain currently installed widget data and map to an array of widget IDs
+                if let widgetInfo = try? result.get() {
+                    let currentlyInstalledWidgetIDs = widgetInfo.map { $0.kind }
+
+                    // Get previously installed widget IDs from user defaults, if any
+                    let previouslyInstalledWidgetIDs = Current.userDefaults.value(forDefaultsKey: .installedWidgetIds) as? [String] ?? []
+                    
+                    // Compare currently installed widgets to any previously installed widgets
+                    let widgetDifferences = diff(old: previouslyInstalledWidgetIDs, new: currentlyInstalledWidgetIDs)
+                    
+                    if !widgetDifferences.isEmpty || !Current.userDefaults.bool(forDefaultsKey: .hasPreviouslyLaunchedApp) {
+                        // We've reached this point if any widgets have been installed or removed since the last app launch, or this is the first ever launch
+                        
+                        // Loop through the changes, get the IDs and use them to convert to widgetType
+                        for change in widgetDifferences {
+                            let widgetID = change.insert?.item ?? change.delete?.item ?? ""
+                            let widgetType = WidgetType.widgetTypeFromID(widgetID)
+                            
+                            // Set user property to true or false for each widget installation change
+                            switch widgetType {
+                            case .quickLaunch:
+                                let isQLWidgetInstalled = currentlyInstalledWidgetIDs.contains(widgetID)
+                                BinkAnalytics.setUserProperty(value: String(isQLWidgetInstalled), forKey: .quicklaunchWidgetInstalled)
+                            default:
+                                break
+                            }
+                        }
+                        Current.userDefaults.set(currentlyInstalledWidgetIDs, forDefaultsKey: .installedWidgetIds)
+                    }
+                }
+            }
+        }
     }
 
     private static func setUserProperty(value: String?, forKey key: UserPropertyKey) {

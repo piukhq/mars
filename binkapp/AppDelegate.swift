@@ -75,6 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         addObservers()
         InAppReviewUtility.recordAppLaunch()
         Current.userManager.clearKeychainIfNecessary()
+        
         return true
     }
     
@@ -110,8 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        guard let urlPath = url.host?.removingPercentEncoding else { return false }
-        widgetController.handleURLForWidgetType(type: .quickLaunch, urlPath: urlPath)
+        widgetController.handleURLForWidgetType(type: .quickLaunch, url: url)
         return true
     }
 }
