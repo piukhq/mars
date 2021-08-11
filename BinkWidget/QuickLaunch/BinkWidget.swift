@@ -73,6 +73,7 @@ struct QuickLaunchEntryView: View {
 
     var twoColumnGrid = [GridItem(.flexible(), alignment: .topLeading), GridItem(.flexible())]
     let hasCurrentUser = UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.bool(forKey: "hasCurrentUser") ?? false
+    let url = URL(string: WidgetType.quickLaunch.rawValue + "://from_edge")
     
     enum Constants {
         static let widgetHeight: CGFloat = 164
@@ -96,6 +97,7 @@ struct QuickLaunchEntryView: View {
             .frame(height: Constants.widgetHeight)
             .padding(.all, Constants.widgetPadding)
             .background(Color("WidgetBackground"))
+            .widgetURL(url)
         } else {
             UnauthenticatedSwiftUIView().unredacted()
         }
