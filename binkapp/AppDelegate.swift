@@ -111,7 +111,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        widgetController.handleURLForWidgetType(type: .quickLaunch, url: url)
+        if url.absoluteString.starts(with: "bink://magiclink?token=") {
+            universalLinkUtility.handleLink(for: url)
+        } else {
+            widgetController.handleURLForWidgetType(type: .quickLaunch, url: url)
+        }
         return true
     }
 }
