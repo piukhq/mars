@@ -58,6 +58,7 @@ class PaymentScannerWidgetView: UIView {
     }
     
     func configure(withThemeDelegate themeDelegate: ThemeDelegate? = nil) {
+        imageView.accessibilityIdentifier = "Widget imageView"
         clipsToBounds = true
         layer.cornerRadius = Constants.cornerRadius
         backgroundColor = themeDelegate?.widgetBackgroundColor

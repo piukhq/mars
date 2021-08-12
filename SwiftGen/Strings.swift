@@ -138,6 +138,12 @@ internal enum L10n {
   internal static let cardNumberTitle = L10n.tr("Localizable", "card_number_title")
   /// One of these payment cards are
   internal static let cardsAlreadyLinkedMessagePrefix = L10n.tr("Localizable", "cards_already_linked_message_prefix")
+  /// We have just emailed a link to %@. Click the link and you will be signed in.
+  internal static func checkInboxDescription(_ p1: Any) -> String {
+    return L10n.tr("Localizable", "check_inbox_description", String(describing: p1))
+  }
+  /// Check your inbox!
+  internal static let checkInboxTitle = L10n.tr("Localizable", "check_inbox_title")
   /// There was a problem communicating with the server. Please try again later.
   internal static let communicationError = L10n.tr("Localizable", "communication_error")
   /// Continue
@@ -174,6 +180,8 @@ internal enum L10n {
   internal static let detailsHeaderShowQrCode = L10n.tr("Localizable", "details_header_show_qr_code")
   /// Done
   internal static let done = L10n.tr("Localizable", "done")
+  /// Use magic link
+  internal static let emailMagicLink = L10n.tr("Localizable", "email_magic_link")
   /// Error
   internal static let errorTitle = L10n.tr("Localizable", "error_title")
   /// Filters
@@ -214,6 +222,10 @@ internal enum L10n {
   internal static let issuesLoggingIn = L10n.tr("Localizable", "issues_logging_in")
   /// Learn more about how it works
   internal static let learnMore = L10n.tr("Localizable", "learn_more")
+  /// To keep your account safe, links are only valid for a short period of time. Tap Retry and we will send you another.
+  internal static let linkExpiredDescription = L10n.tr("Localizable", "link_expired_description")
+  /// Link expired
+  internal static let linkExpiredTitle = L10n.tr("Localizable", "link_expired_title")
   /// Link error
   internal static let linkModuleErrorTitle = L10n.tr("Localizable", "link_module_error_title")
   /// To link to cards
@@ -246,12 +258,22 @@ internal enum L10n {
   internal static let loginError = L10n.tr("Localizable", "login_error")
   /// Forgot password
   internal static let loginForgotPassword = L10n.tr("Localizable", "login_forgot_password")
+  /// Issues logging in?
+  internal static let loginIssues = L10n.tr("Localizable", "login_issues")
   /// Welcome back!
   internal static let loginSubtitle = L10n.tr("Localizable", "login_subtitle")
+  /// You are now logged in with %@ and will remain logged in on this device until you choose to log out.\nYou can log out from settings.
+  internal static func loginSuccesSubtitle(_ p1: Any) -> String {
+    return L10n.tr("Localizable", "login_succes_subtitle", String(describing: p1))
+  }
+  /// Success
+  internal static let loginSuccessTitle = L10n.tr("Localizable", "login_success_title")
   /// Log in
   internal static let loginTitle = L10n.tr("Localizable", "login_title")
-  /// Log in
+  /// Continue with Email
   internal static let loginWithEmailButton = L10n.tr("Localizable", "login_with_email_button")
+  /// Use a password
+  internal static let loginWithPassword = L10n.tr("Localizable", "login_with_password")
   /// Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pellentesque, nisi ut sagittis luctus, justo orci porttitor nulla, ac ultricies sem mi quis nunc. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur placerat sagittis tortor quis vehicula. Fusce et aliquam tellus, eu semper sem. Proin eu eleifend nunc. Aliquam id lacus faucibus, euismod orci in, tempor felis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam finibus commodo dui sit amet imperdiet. Phasellus tincidunt elementum euismod. Aliquam lobortis sapien in justo varius pulvinar. Morbi ac placerat sem. Maecenas ut auctor purus.Etiam quis blandit sapien. Nam urna quam, tempus ut massa sed, blandit ultrices neque. Sed sagittis vel quam ac interdum. Nunc tempus eros eget leo volutpat, ac sodales ex scelerisque. Aenean vel nibh lacus. Sed convallis faucibus euismod. Sed diam dui, commodo blandit tempus in, faucibus quis ligula. Integer condimentum mollis bibendum. Nullam feugiat rutrum mauris a luctus. Morbi dignissim, orci ac tempor bibendum, augue diam pharetra massa, vel commodo leo sem sed nisl. Pellentesque egestas egestas quam, nec laoreet dolor. Curabitur commodo scelerisque nisl ac mollis. Morbi egestas arcu nec convallis mollis.
   internal static let loremIpsum = L10n.tr("Localizable", "lorem_ipsum")
   /// Hold card here. It will scan automatically.
@@ -264,6 +286,20 @@ internal enum L10n {
   internal static let loyaltyScannerWidgetTitleEnterManuallyText = L10n.tr("Localizable", "loyalty_scanner_widget_title_enter_manually_text")
   /// Unrecognised barcode
   internal static let loyaltyScannerWidgetTitleUnrecognizedBarcodeText = L10n.tr("Localizable", "loyalty_scanner_widget_title_unrecognized_barcode_text")
+  /// Would you like to log in to %@?
+  internal static func magicLinkAlreadyLoggedInDescription(_ p1: Any) -> String {
+    return L10n.tr("Localizable", "magic_link_already_logged_in_description", String(describing: p1))
+  }
+  /// Already Logged In
+  internal static let magicLinkAlreadyLoggedInTitle = L10n.tr("Localizable", "magic_link_already_logged_in_title")
+  /// Get a link sent to your inbox so you can register or access your account instantly!\n\nNote: We will send you a Magic Link
+  internal static let magicLinkDescription = L10n.tr("Localizable", "magic_link_description")
+  /// Note:
+  internal static let magicLinkDescriptionNoteHighlight = L10n.tr("Localizable", "magic_link_description_note_highlight")
+  /// Magic Link is temporarily unavailable, please try again later.
+  internal static let magicLinkErrorMessage = L10n.tr("Localizable", "magic_link_error_message")
+  /// Continue with email
+  internal static let magicLinkTitle = L10n.tr("Localizable", "magic_link_title")
   /// Opt in to receive marketing messages
   internal static let marketingTitle = L10n.tr("Localizable", "marketing_title")
   /// minute
@@ -276,6 +312,8 @@ internal enum L10n {
   }
   /// Sign up not supported
   internal static let nativeJoinUnavailableTitle = L10n.tr("Localizable", "native_join_unavailable_title")
+  /// your email address
+  internal static let nilEmailAddress = L10n.tr("Localizable", "nil_email_address")
   /// No
   internal static let no = L10n.tr("Localizable", "no")
   /// I don't have an account
@@ -306,6 +344,14 @@ internal enum L10n {
   }
   /// Oops
   internal static let oops = L10n.tr("Localizable", "oops")
+  /// Open your email app
+  internal static let openMailAlertTitle = L10n.tr("Localizable", "open_mail_alert_title")
+  /// Open %@
+  internal static func openMailButtonTitle(_ p1: Any) -> String {
+    return L10n.tr("Localizable", "open_mail_button_title", String(describing: p1))
+  }
+  /// Open Inbox
+  internal static let openMailButtonTitleMultipleClients = L10n.tr("Localizable", "open_mail_button_title_multiple_clients")
   /// This payment card has expired
   internal static let paymentCardExpiredAlertMessage = L10n.tr("Localizable", "payment_card_expired_alert_message")
   /// This payment card has expired
@@ -656,14 +702,16 @@ internal enum L10n {
   internal static let signUpPendingDescription = L10n.tr("Localizable", "sign_up_pending_description")
   /// Sign up pending
   internal static let signUpPendingTitle = L10n.tr("Localizable", "sign_up_pending_title")
-  /// Sign up with email
-  internal static let signupWithEmailButton = L10n.tr("Localizable", "signup_with_email_button")
   /// Sign in with Apple failed.
   internal static let socialTandcsSiwaError = L10n.tr("Localizable", "social_tandcs_siwa_error")
   /// One last step...
   internal static let socialTandcsSubtitle = L10n.tr("Localizable", "social_tandcs_subtitle")
   /// Terms and conditions
   internal static let socialTandcsTitle = L10n.tr("Localizable", "social_tandcs_title")
+  /// There was a problem authenticating you. Please try again.
+  internal static let somethingWentWrongDescription = L10n.tr("Localizable", "something_went_wrong_description")
+  /// Something went wrong
+  internal static let somethingWentWrongTitle = L10n.tr("Localizable", "something_went_wrong_title")
   /// Connection error. Please try again.
   internal static let sslPinningFailureText = L10n.tr("Localizable", "ssl_pinning_failure_text")
   /// Error
@@ -730,6 +778,8 @@ internal enum L10n {
   internal static let walletPromptStoreTitle = L10n.tr("Localizable", "wallet_prompt_store_title")
   /// Something went wrong.
   internal static let wentWrong = L10n.tr("Localizable", "went_wrong")
+  /// Magic Link
+  internal static let whatIsMagicLinkHyperlink = L10n.tr("Localizable", "what_is_magic_link_hyperlink")
   /// Below is a list of people that have been instrumental in developing the app you now hold in your hands.
   internal static let whoWeAreBody = L10n.tr("Localizable", "who_we_are_body")
   /// Who we are

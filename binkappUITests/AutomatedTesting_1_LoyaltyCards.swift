@@ -100,6 +100,7 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
     }
     
     func test_5_deleteLoyaltyCards_isSuccessful() {
+        sleep(10)
         app.collectionViews.cells["B&Q"].tap()
         app.tables.cells["Delete B&Q Club Card"].tap()
         app.buttons["Yes"].tap()

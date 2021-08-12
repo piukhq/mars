@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct RenewTokenResponse: Codable, TokenResponseProtocol {
-    var apiKey: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case apiKey = "api_key"
-    }
-}
+//struct RenewTokenResponse: Codable, TokenResponseProtocol {
+//    var apiKey: String?
+//    
+//    enum CodingKeys: String, CodingKey {
+//        case apiKey = "api_key"
+//    }
+//}

@@ -159,13 +159,17 @@ enum ViewControllerFactory {
         return PortraitNavigationController(rootViewController: OnboardingViewController())
     }
 
-    static func makeSocialTermsAndConditionsViewController(requestType: SocialLoginRequestType) -> SocialTermsAndConditionsViewController {
-        return SocialTermsAndConditionsViewController(requestType: requestType)
+    static func makeSocialTermsAndConditionsViewController(requestType: LoginRequestType) -> TermsAndConditionsViewController {
+        return TermsAndConditionsViewController(requestType: requestType)
+    }
+    
+    static func makeLoginSuccessViewController() -> LoginSuccessViewController {
+        return LoginSuccessViewController()
     }
 
-    static func makeRegisterViewController() -> RegisterViewController {
-        return RegisterViewController()
-    }
+//    static func makeRegisterViewController() -> RegisterViewController {
+//        return RegisterViewController()
+//    }
 
     static func makeLoginViewController() -> LoginViewController {
         return LoginViewController()
@@ -212,6 +216,16 @@ enum ViewControllerFactory {
         return alert
     }
     
+    static func makeOkCancelAlertViewController(title: String?, message: String?, cancelButton: Bool? = nil, completion: EmptyCompletionBlock? = nil) -> BinkAlertController {
+        let alert = BinkAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: L10n.ok, style: .default, handler: { _ in
+            completion?()
+        }))
+        
+        alert.addAction(UIAlertAction(title: L10n.cancel, style: .cancel))
+        return alert
+    }
+    
     static func makeRecommendedAppUpdateAlertController(skipVersionHandler: @escaping () -> Void) -> BinkAlertController {
         let alert = BinkAlertController(title: L10n.recommendedAppUpdateTitle, message: L10n.recommendedAppUpdateMessage, preferredStyle: .alert)
         
@@ -254,5 +268,21 @@ enum ViewControllerFactory {
 
     static func makeJailbrokenViewController() -> JailbrokenViewController {
         return JailbrokenViewController()
+    }
+    
+    static func makeEmailClientsAlertController(_ emailClients: [EmailClient]) -> BinkAlertController {
+        let alert = BinkAlertController(title: L10n.openMailAlertTitle, message: nil, preferredStyle: .actionSheet)
+        
+        emailClients.forEach { emailClient in
+            let action = UIAlertAction(title: emailClient.rawValue.capitalized, style: .default, handler: { _ in
+                emailClient.open()
+            })
+            alert.addAction(action)
+        }
+        
+        let cancelAction = UIAlertAction(title: L10n.cancel, style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        
+        return alert
     }
 }

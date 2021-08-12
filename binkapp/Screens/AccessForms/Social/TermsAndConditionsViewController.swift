@@ -1,5 +1,5 @@
 //
-//  SocialTermsAndConditionsViewController.swift
+//  TermsAndConditionsViewController.swift
 //  binkapp
 //
 //  Created by Max Woodhams on 03/11/2019.
@@ -8,22 +8,23 @@
 
 import UIKit
 
-enum SocialLoginRequestType {
+enum LoginRequestType {
     case apple(SignInWithAppleRequest)
+    case magicLink(shortLivedToken: String)
 }
 
-class SocialTermsAndConditionsViewController: BaseFormViewController, UserServiceProtocol {
+class TermsAndConditionsViewController: BaseFormViewController, UserServiceProtocol {
     private lazy var continueButton: BinkButton = {
         return BinkButton(type: .gradient, title: L10n.continueButtonTitle, enabled: false) { [weak self] in
             self?.continueButtonTapped()
         }
     }()
 
-    private let requestType: SocialLoginRequestType
+    private let requestType: LoginRequestType
     
-    init(requestType: SocialLoginRequestType) {
+    init(requestType: LoginRequestType) {
         self.requestType = requestType
-        super.init(title: L10n.socialTandcsTitle, description: L10n.socialTandcsSubtitle, dataSource: FormDataSource(accessForm: .socialTermsAndConditions))
+        super.init(title: L10n.socialTandcsTitle, description: L10n.socialTandcsSubtitle, dataSource: FormDataSource(accessForm: .termsAndConditions))
         dataSource.delegate = self
     }
     
@@ -46,67 +47,41 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
     }
     
     @objc func continueButtonTapped() {
-        let preferenceCheckboxes = dataSource.checkboxes.filter { $0.columnKind == .userPreference }
         continueButton.toggleLoading(isLoading: true)
         
         switch requestType {
         case .apple(let request):
-            loginWithApple(request: request, preferenceCheckboxes: preferenceCheckboxes)
-        }
-    }
-    
-    private func loginWithApple(request: SignInWithAppleRequest, preferenceCheckboxes: [CheckboxView]) {
-        authWithApple(request: request) { [weak self] result in
-            switch result {
-            case .success(let response):
-                guard let email = response.email else {
+            Current.loginController.loginWithApple(request: request, withPreferences: preferenceValues) { [weak self] error in
+                guard error == nil else {
                     self?.handleAuthError()
                     return
                 }
-                Current.userManager.setNewUser(with: response)
-                
-                self?.createService(params: APIConstants.makeServicePostRequest(email: email), completion: { (success, _) in
-                    guard success else {
-                        self?.handleAuthError()
-                        return
+            }
+        case .magicLink(let shortLivedToken):
+            Current.loginController.exchangeMagicLinkToken(token: shortLivedToken, withPreferences: preferenceValues) { error in
+                if let error = error {
+                    switch error {
+                    case .magicLinkExpired:
+                        Current.loginController.handleMagicLinkExpiredToken(token: "")
+                    default:
+                        Current.loginController.handleMagicLinkFailed(token: "")
                     }
-                    
-                    self?.getUserProfile(completion: { result in
-                        guard let response = try? result.get() else {
-                            BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
-                            return
-                        }
-                        Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
-                        BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
-                    })
-                    
-                    Current.rootStateMachine.handleLogin()
-                    self?.updatePreferences(checkboxes: preferenceCheckboxes)
-                    self?.continueButton.toggleLoading(isLoading: false)
-                    
-                    BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
-                    BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
-                })
-            case .failure:
-                BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
-                self?.handleAuthError()
+                }
             }
         }
     }
     
-    func updatePreferences(checkboxes: [CheckboxView]) {
+    private var preferenceValues: [String: String] {
         var params: [String: String] = [:]
 
-        checkboxes.forEach {
+        let preferences = dataSource.checkboxes.filter { $0.columnKind == .userPreference }
+        preferences.forEach {
             if let columnName = $0.columnName {
                 params[columnName] = $0.value
             }
         }
 
-        guard !params.isEmpty else { return }
-
-        // We don't worry about whether this was successful or not
-        setPreferences(params: params)
+        return params
     }
     
     private func showError() {
@@ -115,6 +90,8 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
         switch requestType {
         case .apple:
             message = L10n.socialTandcsSiwaError
+        default:
+            message = L10n.loginError
         }
         
         let alert = BinkAlertController(title: L10n.errorTitle, message: message, preferredStyle: .alert)
@@ -135,13 +112,13 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
     }
 }
 
-extension SocialTermsAndConditionsViewController: FormDataSourceDelegate {
+extension TermsAndConditionsViewController: FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
         return true
     }
 }
 
-extension SocialTermsAndConditionsViewController: FormCollectionViewCellDelegate {
+extension TermsAndConditionsViewController: FormCollectionViewCellDelegate {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {}
     func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField) {}
 }
