@@ -52,7 +52,7 @@
       </MacroExpansion>
       <Testables>
          <TestableReference
-            skipped = "NO">
+            skipped = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5ECE048922CE579B001BA964"
@@ -60,6 +60,14 @@
                BlueprintName = "binkappUITests"
                ReferencedContainer = "container:binkapp.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "AutomatedTesting_4_GoToSite">
+               </Test>
+               <Test
+                  Identifier = "AutomatedTesting_5_WireframesNavigation/test_0_lcdModule_noPaymentCards_navigationIsCorrect()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
          <TestableReference
             skipped = "NO">

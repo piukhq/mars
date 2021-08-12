@@ -30,10 +30,6 @@ struct PerfumeShopScrapingAgent: WebScrapable {
         return "points"
     }
 
-//    var loginUrlString: String {
-//        return "https://www.theperfumeshop.com/login"
-//    }
-
     var scrapableUrlString: String {
         return "https://www.theperfumeshop.com/my-account"
     }

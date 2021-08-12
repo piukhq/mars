@@ -24,9 +24,9 @@ class CheckboxView: CustomView {
     @IBOutlet private weak var textView: UITextView!
     @IBOutlet private weak var textViewLeadingConstraint: NSLayoutConstraint!
     
-    private var checkedState: Bool = false
-    private(set) var hideCheckbox: Bool = false
-    private(set) var optional: Bool = false
+    private var checkedState = false
+    private(set) var hideCheckbox = false
+    private(set) var optional = false
     private(set) var columnName: String?
     private(set) var columnKind: FormField.ColumnKind?
     private(set) var textSelected: TextAction?
@@ -78,7 +78,7 @@ class CheckboxView: CustomView {
             self.title = title
             return
         }
-        
+
         let attributedString = title
         attributedString.addAttribute(.link, value: safeUrl, range: NSRange(location: title.length - columnName.count, length: columnName.count))
         textView.attributedText = attributedString

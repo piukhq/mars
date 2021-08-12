@@ -83,12 +83,10 @@ class UserManager {
         return token
     }
     
-    func setNewUser<T>(with response: T) where T: TokenResponseProtocol {
+    func setNewUser(with response: LoginResponse) {
         do {
             try setToken(with: response)
-            if let loginRegisterResponse = response as? LoginRegisterResponse {
-                try setEmail(with: loginRegisterResponse)
-            }
+            try setEmail(with: response)
             UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(true, forDefaultsKey: .hasCurrentUser)
         } catch {
             if #available(iOS 14.0, *) {
@@ -124,13 +122,13 @@ class UserManager {
         }
     }
     
-    private func setToken(with response: TokenResponseProtocol) throws {
-        guard let token = response.apiKey else { throw UserManagerError.missingData }
+    private func setToken(with response: LoginResponse) throws {
+        guard let token = response.jwt else { throw UserManagerError.missingData }
         try keychain.set(token, key: Constants.tokenKey)
         currentToken = token
     }
     
-    private func setEmail(with response: LoginRegisterResponse) throws {
+    private func setEmail(with response: LoginResponse) throws {
         guard let email = response.email else { throw UserManagerError.missingData }
         try keychain.set(email, key: Constants.emailKey)
         currentEmailAddress = email

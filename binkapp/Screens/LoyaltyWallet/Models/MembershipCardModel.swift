@@ -102,8 +102,8 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
             // Are we currently attempting to perform local points scraping for this membership card?
             // If so, we don't want to update it's status - this is handled elsewhere.
             if !Current.pointsScrapingManager.isCurrentlyScraping(forMembershipCard: cdObject) {
-                if cdObject.status == nil || cdObject.status?.status == .pending {
-                    let status = MembershipCardStatusModel(apiId: nil, state: .failed, reasonCodes: [.pointsScrapingLoginFailed])
+                if cdObject.status == nil || cdObject.status?.status == .pending || cdObject.status?.status == .unauthorised {
+                    let status = MembershipCardStatusModel(apiId: nil, state: .failed, reasonCodes: [.pointsScrapingLoginRequired])
                     let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: overrideID ?? id))
                     update(cdStatus, \.card, with: cdObject, delta: delta)
                     update(cdObject, \.status, with: cdStatus, delta: delta)

@@ -8,25 +8,67 @@
 
 import UIKit
 
+enum MagicLinkStatus {
+    case checkInbox
+    case expired
+    case failed
+}
+
 class LoginViewController: BaseFormViewController, UserServiceProtocol {
     private enum Constants {
         static let hyperlinkHeight: CGFloat = 54.0
     }
-
+    
     private lazy var continueButton: BinkButton = {
         return BinkButton(type: .gradient, title: L10n.continueButtonTitle, enabled: false) { [weak self] in
             self?.continueButtonTapped()
         }
     }()
     
-    private lazy var loginIssuesButton: BinkButton = {
-        return BinkButton(type: .plain, title: L10n.issuesLoggingIn, enabled: true) { [weak self] in
-            self?.presentLoginIssuesScreen()
+    private lazy var switchLoginTypeButton: BinkButton = {
+        BinkButton(type: .plain, title: L10n.loginWithPassword, enabled: true) { [weak self] in
+            self?.switchLoginTypeButtonHandler()
         }
     }()
-
+    
+    private lazy var hyperlinkButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let attrString = NSAttributedString(
+            string: L10n.loginForgotPassword,
+            attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
+        )
+        button.setAttributedTitle(attrString, for: .normal)
+        button.contentHorizontalAlignment = .left
+        button.heightAnchor.constraint(equalToConstant: Constants.hyperlinkHeight).isActive = true
+        button.addTarget(self, action: .forgotPasswordTapped, for: .touchUpInside)
+        button.isHidden = true
+        return button
+    }()
+    
+    private var magicLinkattributedDescription: NSMutableAttributedString = {
+        let attributedDescription = NSMutableAttributedString(string: L10n.magicLinkDescription, attributes: [.font: UIFont.bodyTextLarge])
+        let baseDescription = NSString(string: attributedDescription.string)
+        let magicLinkRange = baseDescription.range(of: L10n.whatIsMagicLinkHyperlink)
+        attributedDescription.addAttributes([.link: "https://help.bink.com/hc/en-gb/articles/4404303824786"], range: magicLinkRange)
+        
+        let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 18.0) ?? UIFont()]
+        let noteRange = baseDescription.range(of: L10n.magicLinkDescriptionNoteHighlight)
+        attributedDescription.addAttributes(attributes, range: noteRange)
+        return attributedDescription
+    }()
+    
+    override func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        let viewController = ViewControllerFactory.makeWebViewController(urlString: URL.absoluteString)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+        return false
+    }
+    
+    private var loginType: AccessForm = .magicLink
+    
     init() {
-        super.init(title: L10n.logInTitle, description: L10n.loginSubtitle, dataSource: FormDataSource(accessForm: .login))
+        super.init(title: L10n.magicLinkTitle, description: "", attributedDescription: magicLinkattributedDescription, dataSource: FormDataSource(accessForm: .magicLink))
         dataSource.delegate = self
     }
     
@@ -36,29 +78,13 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: L10n.loginForgotPassword)])
-        
-        footerButtons = [continueButton, loginIssuesButton]
+        stackScrollView.add(arrangedSubviews: [hyperlinkButton])
+        footerButtons = [continueButton, switchLoginTypeButton]
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .login)
-    }
-    
-    private func hyperlinkButton(title: String) -> UIButton {
-        let button = UIButton(type: .custom)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        let attrString = NSAttributedString(
-            string: title,
-            attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
-        )
-        button.setAttributedTitle(attrString, for: .normal)
-        button.contentHorizontalAlignment = .left
-        button.heightAnchor.constraint(equalToConstant: Constants.hyperlinkHeight).isActive = true
-        button.addTarget(self, action: .forgotPasswordTapped, for: .touchUpInside)
-        return button
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
@@ -68,59 +94,34 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     @objc func continueButtonTapped() {
         continueButton.toggleLoading(isLoading: true)
         
-        let fields = dataSource.currentFieldValues()
-        
-        let loginRequest: LoginRegisterRequest
-        
-        let customBundleClientEnabled = Current.userDefaults.bool(forDefaultsKey: .allowCustomBundleClientOnLogin)
-        
-        if !Current.isReleaseTypeBuild && customBundleClientEnabled {
-            loginRequest = LoginRegisterRequest(
-                email: fields["email"],
-                password: fields["password"],
-                clientID: fields["client id"] ?? "",
-                bundleID: fields["bundle id"] ?? ""
-            )
-        } else {
-            loginRequest = LoginRegisterRequest(
-                email: fields["email"],
-                password: fields["password"]
-            )
+        if loginType == .emailPassword {
+            performLogin()
         }
-
-        login(request: loginRequest) { [weak self] result in
-            switch result {
-            case .success(let response):
-                guard let email = response.email else {
-                    self?.handleLoginError()
-                    return
-                }
-                Current.userManager.setNewUser(with: response)
-                
-                self?.createService(params: APIConstants.makeServicePostRequest(email: email), completion: { (success, _) in
-                    guard success else {
-                        self?.handleLoginError()
-                        return
-                    }
-                    
-                    self?.getUserProfile(completion: { result in
-                        guard let response = try? result.get() else {
-                            BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
-                            return
-                        }
-                        Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
-                        BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
-                    })
-                    
-                    self?.continueButton.toggleLoading(isLoading: false)
-                    Current.rootStateMachine.handleLogin()
-                    BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
-                    BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
-                })
-            case .failure:
-                BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
-                self?.handleLoginError()
-            }
+        
+        if loginType == .magicLink {
+            performMagicLinkRequest()
+        }
+    }
+    
+    private func switchLoginTypeButtonHandler() {
+        loginType = loginType == .magicLink ? .emailPassword : .magicLink
+        let emailAddress = dataSource.fields.first(where: { $0.fieldCommonName == .email })?.value
+        let prefilledValues = FormDataSource.PrefilledValue(commonName: .email, value: emailAddress)
+        dataSource = FormDataSource(accessForm: loginType, prefilledValues: [prefilledValues])
+        dataSource.delegate = self
+        formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
+        switchLoginTypeButton.setTitle(loginType == .magicLink ? L10n.loginWithPassword : L10n.emailMagicLink)
+        
+        if loginType == .magicLink {
+            titleLabel.text = L10n.magicLinkTitle
+            textView.attributedText = magicLinkattributedDescription
+            descriptionLabel.text = nil
+            hyperlinkButton.isHidden = true
+        } else {
+            titleLabel.text = L10n.loginTitle
+            textView.text = nil
+            descriptionLabel.text = L10n.loginSubtitle
+            hyperlinkButton.isHidden = false
         }
     }
     
@@ -128,6 +129,55 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         let viewController = ViewControllerFactory.makeForgottenPasswordViewController()
         let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
+    }
+    
+    private func performLogin() {
+        let fields = dataSource.currentFieldValues()
+        
+        let loginRequest: LoginRequest
+        
+        let customBundleClientEnabled = Current.userDefaults.bool(forDefaultsKey: .allowCustomBundleClientOnLogin)
+        
+        if !Current.isReleaseTypeBuild && customBundleClientEnabled {
+            loginRequest = LoginRequest(
+                email: fields["email"],
+                password: fields["password"],
+                clientID: fields["client id"] ?? "",
+                bundleID: fields["bundle id"] ?? ""
+            )
+        } else {
+            loginRequest = LoginRequest(
+                email: fields["email"],
+                password: fields["password"]
+            )
+        }
+        
+        Current.loginController.login(with: loginRequest) { error in
+            if error != nil {
+                self.handleLoginError()
+                return
+            }
+        }
+    }
+    
+    private func performMagicLinkRequest() {
+        let fields = dataSource.currentFieldValues()
+        guard let email = fields["email"] else {
+            Current.loginController.displayMagicLinkErrorAlert()
+            return
+        }
+        
+        requestMagicLink(email: email) { [weak self] (success, _) in
+            guard let self = self else { return }
+            self.continueButton.toggleLoading(isLoading: false)
+            
+            guard success else {
+                Current.loginController.displayMagicLinkErrorAlert()
+                return
+            }
+            
+            Current.loginController.handleMagicLinkCheckInbox(formDataSource: self.dataSource)
+        }
     }
     
     func presentLoginIssuesScreen() {
@@ -141,20 +191,23 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         alert.addAction(UIAlertAction(title: L10n.ok, style: .default))
         present(alert, animated: true)
     }
-
+    
     private func handleLoginError() {
         Current.userManager.removeUser()
         continueButton.toggleLoading(isLoading: false)
         showError()
+    }
+    
+    override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
+        let viewController = ViewControllerFactory.makeWebViewController(urlString: URL.absoluteString)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 }
 
 extension LoginViewController: FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
         return true
-    }
-    
-    func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView) {
     }
 }
 
