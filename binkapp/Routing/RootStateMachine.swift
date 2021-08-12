@@ -70,6 +70,9 @@ class RootStateMachine: NSObject, UserServiceProtocol {
     @objc func handleLogout() {
         startLoading()
         defer {
+            /// We want to remove credentials for scrapable cards before we trash all local membership cards
+            Current.pointsScrapingManager.handleLogout()
+            
             clearLocalStorage { [weak self] in
                 self?.completeLogout()
             }
