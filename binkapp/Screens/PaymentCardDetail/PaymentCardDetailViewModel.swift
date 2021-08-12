@@ -307,7 +307,10 @@ class PaymentCardDetailViewModel {
         }
         if membershipCardIsLinked(membershipCard) {
             removeLinkToMembershipCard(membershipCard) { error in
-                guard let error = error else { return }
+                guard let error = error else {
+                    completion()
+                    return
+                }
                 let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: error.message, completion: completion)
                 Current.navigate.to(AlertNavigationRequest(alertController: alert))
             }
