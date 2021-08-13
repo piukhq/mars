@@ -9,8 +9,36 @@ import UIKit
 import CardScan
 
 class AddOrJoinViewController: BinkViewController {
-    @IBOutlet private weak var brandHeaderView: BrandHeaderView!
-    @IBOutlet private weak var plansStackView: UIStackView!
+//    @IBOutlet private weak var brandHeaderView: BrandHeaderView!
+//    @IBOutlet private weak var plansStackView: UIStackView!
+    
+    private enum Constants {
+//        static let normalCellHeight: CGFloat = 84.0
+        static let horizontalInset: CGFloat = 25.0
+        static let bottomInset: CGFloat = 150.0
+//        static let postCollectionViewPadding: CGFloat = 15.0
+//        static let offsetPadding: CGFloat = 30.0
+    }
+    
+    private lazy var stackScrollView: StackScrollView = {
+        let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [brandHeaderView], adjustForKeyboard: true)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.backgroundColor = .clear
+        stackView.margin = UIEdgeInsets(top: 0, left: Constants.horizontalInset, bottom: 0, right: Constants.horizontalInset)
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Constants.bottomInset, right: 0)
+//        stackView.customPadding(Constants.postCollectionViewPadding, after: collectionView)
+        view.addSubview(stackView)
+        return stackView
+    }()
+    
+    private lazy var brandHeaderView: BrandHeaderView = {
+        let brandHeader = BrandHeaderView()
+        brandHeader.heightAnchor.constraint(equalToConstant: 110).isActive = true
+        return brandHeader
+    }()
+    
     private let viewModel: AddOrJoinViewModel
 
     private lazy var addCardButton: BinkButton = {
@@ -39,6 +67,7 @@ class AddOrJoinViewController: BinkViewController {
         
         setNavigationBar()
         configureUI()
+        configureLayout()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -66,13 +95,16 @@ class AddOrJoinViewController: BinkViewController {
         guard let cardType = membershipPlan.featureSet?.planCardType else { return }
         let storeView = LoyaltyPlanView()
         storeView.configure(for: .storeCell, cardType: cardType)
-        plansStackView.addArrangedSubview(storeView)
+//        stackScrollView.addArrangedSubview(storeView)
+        stackScrollView.add(arrangedSubview: storeView)
         let viewView = LoyaltyPlanView()
         viewView.configure(for: .viewCell, cardType: cardType)
-        plansStackView.addArrangedSubview(viewView)
+//        stackScrollView.addArrangedSubview(viewView)
+        stackScrollView.add(arrangedSubview: viewView)
         let linkView = LoyaltyPlanView()
         linkView.configure(for: .linkCell, cardType: cardType)
-        plansStackView.addArrangedSubview(linkView)
+//        stackScrollView.addArrangedSubview(linkView)
+        stackScrollView.add(arrangedSubview: linkView)
 
         var buttons: [BinkButton] = []
         if viewModel.shouldShowAddCardButton {
@@ -81,7 +113,16 @@ class AddOrJoinViewController: BinkViewController {
         if viewModel.shouldShowNewCardButton {
             buttons.append(getNewCardButton)
         }
-        footerButtons = buttons
+//        footerButtons = buttons
+    }
+    
+    private func configureLayout() {
+        NSLayoutConstraint.activate([
+            stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
     }
 }
 
