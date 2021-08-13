@@ -9,15 +9,10 @@ import UIKit
 import CardScan
 
 class AddOrJoinViewController: BinkViewController {
-//    @IBOutlet private weak var brandHeaderView: BrandHeaderView!
-//    @IBOutlet private weak var plansStackView: UIStackView!
-    
     private enum Constants {
-//        static let normalCellHeight: CGFloat = 84.0
         static let horizontalInset: CGFloat = 25.0
         static let bottomInset: CGFloat = 150.0
-//        static let postCollectionViewPadding: CGFloat = 15.0
-//        static let offsetPadding: CGFloat = 30.0
+        static let postBrandHeaderViewPadding: CGFloat = 20.0
     }
     
     private lazy var stackScrollView: StackScrollView = {
@@ -28,7 +23,7 @@ class AddOrJoinViewController: BinkViewController {
         stackView.distribution = .fill
         stackView.alignment = .fill
         stackView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Constants.bottomInset, right: 0)
-//        stackView.customPadding(Constants.postCollectionViewPadding, after: collectionView)
+        stackView.customPadding(Constants.postBrandHeaderViewPadding, after: brandHeaderView)
         view.addSubview(stackView)
         return stackView
     }()
@@ -95,15 +90,12 @@ class AddOrJoinViewController: BinkViewController {
         guard let cardType = membershipPlan.featureSet?.planCardType else { return }
         let storeView = LoyaltyPlanView()
         storeView.configure(for: .storeCell, cardType: cardType)
-//        stackScrollView.addArrangedSubview(storeView)
         stackScrollView.add(arrangedSubview: storeView)
         let viewView = LoyaltyPlanView()
         viewView.configure(for: .viewCell, cardType: cardType)
-//        stackScrollView.addArrangedSubview(viewView)
         stackScrollView.add(arrangedSubview: viewView)
         let linkView = LoyaltyPlanView()
         linkView.configure(for: .linkCell, cardType: cardType)
-//        stackScrollView.addArrangedSubview(linkView)
         stackScrollView.add(arrangedSubview: linkView)
 
         var buttons: [BinkButton] = []
@@ -113,7 +105,7 @@ class AddOrJoinViewController: BinkViewController {
         if viewModel.shouldShowNewCardButton {
             buttons.append(getNewCardButton)
         }
-//        footerButtons = buttons
+        footerButtons = buttons
     }
     
     private func configureLayout() {
