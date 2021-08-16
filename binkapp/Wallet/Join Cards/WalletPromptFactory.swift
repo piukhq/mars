@@ -37,9 +37,9 @@ enum WalletPromptFactory {
             if !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .link }) {
                 var pllPlans = plans.filter({ $0.featureSet?.planCardType == .link })
                 
-                #if DEBUG
-                pllPlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.linkPromptDebugCellCount, sortedPlans: &pllPlans)
-                #endif
+                if SchemeUtil.isDebug() {
+                    pllPlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.linkPromptDebugCellCount, sortedPlans: &pllPlans)
+                }
                 
                 walletPrompts.append(WalletPrompt(type: .link(plans: pllPlans)))
             }
@@ -53,9 +53,9 @@ enum WalletPromptFactory {
                         return plansEnabledOnRemoteConfig.contains(where: { $0.membershipPlanId == Int(plan.id) })
                     }
                     
-                    #if DEBUG
-                    liveSeePlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.seePromptDebugCellCount, sortedPlans: &liveSeePlans)
-                    #endif
+                    if SchemeUtil.isDebug() {
+                        liveSeePlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.seePromptDebugCellCount, sortedPlans: &liveSeePlans)
+                    }
                     
                     walletPrompts.append(WalletPrompt(type: .see(plans: liveSeePlans)))
                 }
@@ -65,9 +65,9 @@ enum WalletPromptFactory {
             if !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .store }) {
                 var storePlans = plans.filter { $0.featureSet?.planCardType == .store }
                 
-                #if DEBUG
-                storePlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.storePromptDebugCellCount, sortedPlans: &storePlans)
-                #endif
+                if SchemeUtil.isDebug() {
+                    storePlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.storePromptDebugCellCount, sortedPlans: &storePlans)
+                }
                 
                 walletPrompts.append(WalletPrompt(type: .store(plans: storePlans)))
             }
