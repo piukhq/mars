@@ -291,6 +291,16 @@ extension WalletServiceProtocol {
                 
                 if case .userFacingError = networkError {
                     completion(.failure(.userFacingNetworkingError(networkError)))
+                } else if case .customError = networkError {
+                    switch response?.urlResponse?.statusCode {
+                    case 403:
+                        completion(.failure(.customError(networkError.message)))
+                    case 404:
+                        completion(.failure(.customError(L10n.communicationError)))
+                        SentryService.triggerException(.apiRejectedLoyaltyCardRequest(response))
+                    default:
+                        completion(.failure(.failedToLinkMembershipCardToPaymentCard))
+                    }
                 } else {
                     completion(.failure(.failedToLinkMembershipCardToPaymentCard))
                 }

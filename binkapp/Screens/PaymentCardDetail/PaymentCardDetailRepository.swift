@@ -93,7 +93,7 @@ class PaymentCardDetailRepository: WalletServiceProtocol {
         }
     }
 
-    func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, forPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (CD_PaymentCard?) -> Void) {
+    func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, forPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (CD_PaymentCard?, WalletServiceError?) -> Void) {
         toggleMembershipCardPaymentCardLink(membershipCard: membershipCard, paymentCard: paymentCard, shouldLink: false) { result in
             switch result {
             case .success:
@@ -113,12 +113,12 @@ class PaymentCardDetailRepository: WalletServiceProtocol {
                         Current.database.performTask { context in
                             let fetchedObject = context.fetchWithApiID(CD_PaymentCard.self, id: paymentCard.id)
                             
-                            completion(fetchedObject)
+                            completion(fetchedObject, nil)
                         }
                     }
                 }
-            case .failure:
-                completion(nil)
+            case .failure(let error):
+                completion(nil, error)
             }
         }
     }

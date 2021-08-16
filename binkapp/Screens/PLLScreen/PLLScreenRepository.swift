@@ -19,11 +19,12 @@ class PLLScreenRepository: WalletServiceProtocol {
         for paymentCard in changedLinkCards {
             group.enter()
             if membershipCard.linkedPaymentCards.contains(paymentCard) {
-                removeLinkToMembershipCard(membershipCard, forPaymentCard: paymentCard) { id in
+                removeLinkToMembershipCard(membershipCard, forPaymentCard: paymentCard) { id, error in
                     if let id = id {
                         idsToRemove.append(id)
                     } else {
                         fullSuccess = false
+                        walletError = error
                     }
                     group.leave()
                 }
@@ -75,7 +76,7 @@ private extension PLLScreenRepository {
         }
     }
 
-    func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, forPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (String?) -> Void) {
+    func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, forPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (String?, WalletServiceError?) -> Void) {
         toggleMembershipCardPaymentCardLink(membershipCard: membershipCard, paymentCard: paymentCard, shouldLink: false) { result in
             switch result {
             case .success:
@@ -91,11 +92,11 @@ private extension PLLScreenRepository {
                     try? context.save()
                     
                     DispatchQueue.main.async {
-                        completion(paymentCard.id)
+                        completion(paymentCard.id, nil)
                     }
                 }
-            case .failure:
-                completion(nil)
+            case .failure(let walletError):
+                completion(nil, walletError)
             }
         }
     }
