@@ -50,7 +50,7 @@ class AddOrJoinViewController: BinkViewController {
     
     init(viewModel: AddOrJoinViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: "AddOrJoinViewController", bundle: Bundle(for: AddOrJoinViewController.self))
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -59,7 +59,6 @@ class AddOrJoinViewController: BinkViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setNavigationBar()
         configureUI()
         configureLayout()
