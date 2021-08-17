@@ -8,11 +8,11 @@
 
 import UIKit
 
-protocol Form {
+protocol FormDelegate {
     func formValidityUpdated(fullFormIsValid: Bool)
 }
 
-class BaseFormViewController: BinkViewController, Form {
+class BaseFormViewController: BinkViewController, FormDelegate {
     // MARK: - Helpers
     
     private enum Constants {

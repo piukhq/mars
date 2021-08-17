@@ -44,7 +44,7 @@ struct FormPickerData: Equatable {
     }
 }
 
-class FormField {
+class FormField: Identifiable {
     enum FieldInputType: Equatable {
         case text
         case email
