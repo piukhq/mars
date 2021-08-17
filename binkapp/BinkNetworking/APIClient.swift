@@ -218,6 +218,13 @@ private extension APIClient {
         }
         
         if let error = response.error {
+            if case .linkMembershipCardToPaymentCard = endpoint {
+                guard let data = response.data else { return }
+                let body = String(data: data, encoding: .utf8)
+                completion?(.failure(.customError(body ?? "")), networkResponseData)
+                return
+            }
+            
             completion?(.failure(.customError(error.localizedDescription)), networkResponseData)
             return
         }
