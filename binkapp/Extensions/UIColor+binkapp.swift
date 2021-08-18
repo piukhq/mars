@@ -194,4 +194,12 @@ extension UIColor {
             return UIColor(hexString: "ff453a")
         }
     }
+    
+    // MARK: - Form colors
+    
+    static let activeBlue = UIColor(hexString: "147EFB")
+    static let errorRed = UIColor(hexString: "FF0000")
+    static let successGreen = UIColor(hexString: "1EA9AC")
+    static let amber = UIColor(hexString: "FFBF00")
+
 }

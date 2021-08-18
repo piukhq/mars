@@ -46,6 +46,7 @@ struct BinkFormTextfield: View {
             .offset(x: -6.0)
             .background(
                 Rectangle()
+                    .fill(Color(UIColor.activeBlue))
                     .frame(width: 350, height: 20, alignment: .bottom)
                     .offset(x: 0, y: 41))
     }
