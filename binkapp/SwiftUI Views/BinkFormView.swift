@@ -21,6 +21,7 @@ struct BinkFormView: View {
         Form {
             ForEach(datasource) { field in
                 BinkFormTextfield(field: field)
+                    
             }
         }
     }
@@ -31,10 +32,19 @@ struct BinkFormTextfield: View {
     var field: FormField
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text(field.title)
+        ZStack {
+            HStack {
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(field.title)
+                        
+                    TextField(field.placeholder, text: $value)
+                }
                 
-            TextField(field.placeholder, text: $value)
+                Image(systemName: "flag.circle")
+            }
+            Rectangle()
+                .frame(width: 360, height: 20, alignment: .bottom)
+                .offset(x: -30, y: 36)
         }
     }
 }
