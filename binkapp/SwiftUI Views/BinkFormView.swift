@@ -21,7 +21,6 @@ struct BinkFormView: View {
         Form {
             ForEach(datasource) { field in
                 BinkFormTextfield(field: field)
-                    
             }
         }
     }
@@ -30,22 +29,25 @@ struct BinkFormView: View {
 struct BinkFormTextfield: View {
     @State var value: String = ""
     var field: FormField
-
+    
     var body: some View {
-        ZStack {
             HStack {
                 VStack(alignment: .leading, spacing: 5) {
                     Text(field.title)
-                        
+                        .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
+                    
                     TextField(field.placeholder, text: $value)
+                        .padding(.bottom, 8.0)
+                        .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
                 }
                 
                 Image(systemName: "flag.circle")
             }
-            Rectangle()
-                .frame(width: 360, height: 20, alignment: .bottom)
-                .offset(x: -30, y: 36)
-        }
+            .offset(x: -6.0)
+            .background(
+                Rectangle()
+                    .frame(width: 350, height: 20, alignment: .bottom)
+                    .offset(x: 0, y: 41))
     }
 }
 
