@@ -46,7 +46,7 @@ enum Styling {
         static var viewBackground: UIColor {
             switch Current.themeManager.currentTheme.type {
             case .light:
-                return .white
+                return .binkWhiteViewBackground
             case .dark:
                 return .binkBlueViewBackground
             case .system:
@@ -98,7 +98,7 @@ enum Styling {
         static var bar: UIColor {
             switch Current.themeManager.currentTheme.type {
             case .light:
-                return UIColor.white.withAlphaComponent(0.6)
+                return UIColor.binkWhiteViewBackground.withAlphaComponent(0.6)
             case .dark:
                 return UIColor.binkBlueBarBackground.withAlphaComponent(0.7)
             case .system:

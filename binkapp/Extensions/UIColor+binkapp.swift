@@ -132,6 +132,10 @@ extension UIColor {
     }
 
     // MARK: - Theming
+    
+    // MARK: - Bink White
+    static let binkWhiteViewBackground = UIColor(hexString: "#F7F7F7")
+    
 
     // MARK: Bink Blue
     static let binkBlueViewBackground = UIColor(hexString: "111127")
@@ -201,5 +205,4 @@ extension UIColor {
     static let errorRed = UIColor(hexString: "FF0000")
     static let successGreen = UIColor(hexString: "1EA9AC")
     static let amber = UIColor(hexString: "FFBF00")
-
 }

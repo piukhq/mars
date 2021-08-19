@@ -13,15 +13,88 @@ let shouldChangeBlock: FormField.TextFieldShouldChange = { (_, _, _, _) in
 }
 
 let field1 = FormField(title: "Email", placeholder: "Enter your email bitch", validation: "", fieldType: .email, updated: { _, _ in }, shouldChange: shouldChangeBlock, fieldExited: { _ in })
+let datasourceMock = FormDataSource(accessForm: .emailPassword)
+
+var underlineColor: UIColor = .activeBlue
 
 struct BinkFormView: View {
-    private let datasource: [FormField] = [field1]
+    @ObservedObject var datasource: FormDataSource
+    
+    init(datasource: FormDataSource) {
+        self.datasource = datasource
+    }
     
     var body: some View {
-        Form {
-            ForEach(datasource) { field in
-                BinkFormTextfield(field: field)
+        VStack {
+            ForEach(datasource.fields) { field in
+//                Section {
+                BinkCell(field: field).clipped()
+//                }
             }
+        }
+        
+        .environmentObject(datasource)
+    }
+}
+
+struct BinkCell: View {
+    var field: FormField
+    
+    @State private var isEditing = false
+    @State var value: String = ""
+
+    
+    var body: some View {
+        ZStack(alignment: .center) {
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .foregroundColor(.white)
+            
+            HStack {
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(field.title)
+                        .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
+
+                    TextField(field.placeholder, text: $value) { isEditing in
+                        self.isEditing = isEditing
+                    } onCommit: {
+                        print("Did commit: \(value)")
+                    }
+                    .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
+                }
+                Image(systemName: "flag.circle")
+            }
+            .padding()
+
+            Rectangle()
+                .fill(Color(isEditing ? .activeBlue : .clear))
+                .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 6, alignment: .top)
+                .clipped()
+                .offset(y: 39)
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+            .background(Color(UIColor.binkWhiteViewBackground))
+        .frame(width: nil, height: 80, alignment: .center)
+    }
+}
+
+struct BinkTextFieldView: View {
+    @State var value: String = ""
+    var field: FormField
+    
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 0) {
+                Text(field.title)
+                    .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
+                
+                TextField(field.placeholder, text: $value) { isEditing in
+                    
+                } onCommit: {
+                    
+                }
+                .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
+            }
+            Image(systemName: "flag.circle")
         }
     }
 }
@@ -31,29 +104,55 @@ struct BinkFormTextfield: View {
     var field: FormField
     
     var body: some View {
-            HStack {
-                VStack(alignment: .leading, spacing: 5) {
-                    Text(field.title)
-                        .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
-                    
-                    TextField(field.placeholder, text: $value)
-                        .padding(.bottom, 8.0)
-                        .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
-                }
-                
-                Image(systemName: "flag.circle")
+//        ZStack {
+//        RoundedRectangle(cornerRadius: 25.0, style: .continuous)
+//            .fill(Color.white)
+//            .frame(width: nil, height: 80, alignment: .center)
+//            .background(
+//                   Rectangle()
+//                       .fill(Color(UIColor.activeBlue))
+////                       .frame(width: 490, height: 20, alignment: .bottom)
+////                       .offset(x: -20, y: 0))
+//        )
+//            .overlay(
+        HStack {
+            VStack(alignment: .leading, spacing: 5) {
+                Text(field.title)
+                    .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
+
+                TextField(field.placeholder, text: $value)
+                    .padding(.bottom, 8.0)
+                    .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
             }
-            .offset(x: -6.0)
-            .background(
-                Rectangle()
-                    .fill(Color(UIColor.activeBlue))
-                    .frame(width: 350, height: 20, alignment: .bottom)
-                    .offset(x: 0, y: 41))
+
+            Image(systemName: "flag.circle")
+        }
+        .cornerRadius(20)
+        .padding()
+//        )
+//        .background(RoundedRectangle(cornerRadius: 15)
+//                        .fill(Color.white))
+        .background(
+               Rectangle()
+                   .fill(Color(UIColor.activeBlue))
+                   .frame(width: 490, height: 20, alignment: .bottom)
+                   .offset(x: -20, y: 50))
+
+        .offset(x: -6.0)
+
+        }
     }
-}
+//}
 
 struct BinkFormView_Previews: PreviewProvider {
     static var previews: some View {
-        BinkFormView()
+        Group {
+            ZStack {
+                Rectangle()
+                    .foregroundColor(Color(UIColor.grey10))
+                BinkFormView(datasource: datasourceMock)
+                    .preferredColorScheme(.light)
+            }
+        }
     }
 }
