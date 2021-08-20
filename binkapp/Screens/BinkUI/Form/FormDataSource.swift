@@ -47,7 +47,7 @@ enum AccessForm {
     case success
 }
 
-class FormDataSource: NSObject {
+class FormDataSource: NSObject, ObservableObject {
     struct PrefilledValue: Equatable {
         var commonName: FieldCommonName?
         var value: String?
@@ -62,8 +62,8 @@ class FormDataSource: NSObject {
     /// We need the data source to hold a reference to the plan for some forms so that we can pass it through delegates to other objects
     private(set) var membershipPlan: CD_MembershipPlan?
     
-    private(set) var fields: [FormField] = []
-    private var visibleFields: [FormField] {
+    @Published var fields: [FormField] = []
+    var visibleFields: [FormField] {
         return fields.filter { !$0.hidden }
     }
     private(set) var checkboxes: [CheckboxView] = []

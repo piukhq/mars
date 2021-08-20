@@ -15,25 +15,25 @@ let shouldChangeBlock: FormField.TextFieldShouldChange = { (_, _, _, _) in
 let field1 = FormField(title: "Email", placeholder: "Enter your email bitch", validation: "", fieldType: .email, updated: { _, _ in }, shouldChange: shouldChangeBlock, fieldExited: { _ in })
 let datasourceMock = FormDataSource(accessForm: .emailPassword)
 
-var underlineColor: UIColor = .activeBlue
 
 struct BinkFormView: View {
-    @ObservedObject var datasource: FormDataSource
+    @EnvironmentObject var datasource: FormDataSource
     
-    init(datasource: FormDataSource) {
-        self.datasource = datasource
-    }
+//    init(datasource: FormDataSource) {
+//        self.datasource = datasource
+//    }
     
     var body: some View {
-        VStack {
+        VStack(alignment: .center, spacing: 20) {
             ForEach(datasource.fields) { field in
-//                Section {
-                BinkCell(field: field).clipped()
-//                }
+                BinkCell(field: field)
+                    .environmentObject(datasource)
+//                Spacer(minLength: 20)
             }
         }
+        .background(Color(UIColor.binkWhiteViewBackground))
         
-        .environmentObject(datasource)
+//        .environmentObject(datasource)
     }
 }
 
@@ -42,7 +42,7 @@ struct BinkCell: View {
     
     @State private var isEditing = false
     @State var value: String = ""
-
+    
     
     var body: some View {
         ZStack(alignment: .center) {
@@ -53,7 +53,7 @@ struct BinkCell: View {
                 VStack(alignment: .leading, spacing: 0) {
                     Text(field.title)
                         .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
-
+                    
                     TextField(field.placeholder, text: $value) { isEditing in
                         self.isEditing = isEditing
                     } onCommit: {
@@ -64,7 +64,7 @@ struct BinkCell: View {
                 Image(systemName: "flag.circle")
             }
             .padding()
-
+            
             Rectangle()
                 .fill(Color(isEditing ? .activeBlue : .clear))
                 .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 6, alignment: .top)
@@ -72,32 +72,32 @@ struct BinkCell: View {
                 .offset(y: 39)
         }
         .clipShape(RoundedRectangle(cornerRadius: 16))
-            .background(Color(UIColor.binkWhiteViewBackground))
+        .background(Color(UIColor.binkWhiteViewBackground))
         .frame(width: nil, height: 80, alignment: .center)
     }
 }
 
-struct BinkTextFieldView: View {
-    @State var value: String = ""
-    var field: FormField
-    
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 0) {
-                Text(field.title)
-                    .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
-                
-                TextField(field.placeholder, text: $value) { isEditing in
-                    
-                } onCommit: {
-                    
-                }
-                .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
-            }
-            Image(systemName: "flag.circle")
-        }
-    }
-}
+//struct BinkTextFieldView: View {
+//    @State var value: String = ""
+//    var field: FormField
+//
+//    var body: some View {
+//        HStack {
+//            VStack(alignment: .leading, spacing: 0) {
+//                Text(field.title)
+//                    .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
+//
+//                TextField(field.placeholder, text: $value) { isEditing in
+//
+//                } onCommit: {
+//
+//                }
+//                .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
+//            }
+//            Image(systemName: "flag.circle")
+//        }
+//    }
+//}
 
 struct BinkFormTextfield: View {
     @State var value: String = ""
@@ -139,7 +139,6 @@ struct BinkFormTextfield: View {
                    .offset(x: -20, y: 50))
 
         .offset(x: -6.0)
-
         }
     }
 //}
@@ -150,7 +149,8 @@ struct BinkFormView_Previews: PreviewProvider {
             ZStack {
                 Rectangle()
                     .foregroundColor(Color(UIColor.grey10))
-                BinkFormView(datasource: datasourceMock)
+                BinkFormView()
+                    .environmentObject(datasourceMock)
                     .preferredColorScheme(.light)
             }
         }

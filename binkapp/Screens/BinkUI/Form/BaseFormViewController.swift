@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import SwiftUI
 
 protocol FormDelegate {
     func formValidityUpdated(fullFormIsValid: Bool)
 }
 
-class BaseFormViewController: BinkViewController, FormDelegate {
+class BaseFormViewController: BinkViewController, FormDelegate, ObservableObject {
     // MARK: - Helpers
     
     private enum Constants {
@@ -36,15 +37,22 @@ class BaseFormViewController: BinkViewController, FormDelegate {
         return collectionView
     }()
     
+//    lazy var formView: BinkFormView = {
+//        let formController = UIHostingController(rootView: BinkFormView())
+//        formController.view.translatesAutoresizingMaskIntoConstraints = false
+//        addChild(formController)
+//        return formController.view
+//    }()
+    
     lazy var stackScrollView: StackScrollView = {
-        let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [titleLabel, descriptionLabel, textView, collectionView], adjustForKeyboard: true)
+        let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [titleLabel, descriptionLabel, textView], adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .clear
         stackView.margin = UIEdgeInsets(top: 0, left: Constants.horizontalInset, bottom: 0, right: Constants.horizontalInset)
         stackView.distribution = .fill
         stackView.alignment = .fill
         stackView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Constants.bottomInset, right: 0)
-        stackView.customPadding(Constants.postCollectionViewPadding, after: collectionView)
+        stackView.customPadding(Constants.postCollectionViewPadding, after: textView)
         view.addSubview(stackView)
         return stackView
     }()
@@ -87,10 +95,11 @@ class BaseFormViewController: BinkViewController, FormDelegate {
     var selectedCellYOrigin: CGFloat = 0.0
     var selectedCellHeight: CGFloat = 0.0
     
-    var dataSource: FormDataSource {
+    @ObservedObject var dataSource: FormDataSource {
         didSet {
-            collectionView.dataSource = dataSource
-            collectionView.reloadData()
+//            collectionView.dataSource = dataSource
+//            collectionView.reloadData()
+            configureFormView(with: dataSource, update: true)
             configureCheckboxes()
         }
     }
@@ -125,7 +134,10 @@ class BaseFormViewController: BinkViewController, FormDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLayout()
+        configureFormView(with: dataSource)
+
         configureCheckboxes()
+
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
@@ -136,6 +148,29 @@ class BaseFormViewController: BinkViewController, FormDelegate {
         descriptionLabel.textColor = Current.themeManager.color(for: .text)
         textView.textColor = Current.themeManager.color(for: .text)
         Current.themeManager.overrideUserInterfaceStyle(for: collectionView)
+    }
+    
+    private func configureFormView(with datasource: FormDataSource, update: Bool = false) {
+        let formController = UIHostingController(rootView: BinkFormView().environmentObject(dataSource))
+        if let form = formController.view {
+            addChild(formController)
+            form.translatesAutoresizingMaskIntoConstraints = false
+            
+            if update {
+                for (i, subview) in stackScrollView.arrangedSubviews.enumerated().reversed() {
+                    if subview.isKind(of: CheckboxView.self) {
+                        stackScrollView.remove(arrangedSubview: subview)
+                        
+                    }
+                    
+                    if (i + 1) > 3 {
+                        stackScrollView.remove(arrangedSubview: subview)
+                    }
+                }
+            }
+
+            stackScrollView.add(arrangedSubview: form)
+        }
     }
     
     private func configureLayout() {
