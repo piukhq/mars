@@ -19,10 +19,6 @@ let datasourceMock = FormDataSource(accessForm: .emailPassword)
 struct BinkFormView: View {
     @EnvironmentObject var datasource: FormDataSource
     
-//    init(datasource: FormDataSource) {
-//        self.datasource = datasource
-//    }
-    
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
             ForEach(datasource.fields) { field in
@@ -31,8 +27,6 @@ struct BinkFormView: View {
             }
         }
         .background(Color(UIColor.binkWhiteViewBackground))
-        
-//        .environmentObject(datasource)
     }
 }
 
@@ -40,6 +34,11 @@ struct BinkCell: View {
     @State var field: FormField
     @State private var isEditing = false
     @State var value: String = ""
+    
+    init(field: FormField) {
+        self.field = field
+        UITextField.appearance().clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
+    }
     
     var body: some View {
         ZStack(alignment: .center) {
@@ -70,24 +69,26 @@ struct BinkCell: View {
                         })
                         .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
                         .autocapitalization(field.fieldType.capitalization())
+//                        .accessibilityIdentifier(field.title)
                     }
                 }
                 
-                if field.isValid() {
+                if field.isValid() && !isEditing {
                     Image(systemName: "flag.circle")
+                        .offset(x: -5, y: 11)
                 }
             }
-            .padding()
+            .padding([.leading, .trailing], 15)
             
             Rectangle()
                 .fill(underlineColor(isEdting: $isEditing))
                 .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 6, alignment: .top)
                 .clipped()
-                .offset(y: 39)
+                .offset(y: 34)
         }
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .background(Color(UIColor.binkWhiteViewBackground))
-        .frame(width: nil, height: 80, alignment: .center)
+        .frame(width: nil, height: 70, alignment: .center)
     }
     
     private func underlineColor(isEdting: Binding<Bool>) -> Color {

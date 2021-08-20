@@ -169,6 +169,7 @@ class BaseFormViewController: BinkViewController, FormDelegate, ObservableObject
             }
 
             stackScrollView.add(arrangedSubview: form)
+            stackScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Constants.bottomInset, right: 0)
         }
     }
     
