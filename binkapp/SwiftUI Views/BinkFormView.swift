@@ -41,54 +41,67 @@ struct BinkCell: View {
     }
     
     var body: some View {
-        ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .foregroundColor(.white)
-            
-            HStack {
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(field.title)
-                        .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
+        VStack(alignment: .leading) {
+            ZStack(alignment: .center) {
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .foregroundColor(.white)
+                
+                HStack {
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(field.title)
+                            .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
+                        
+                        if field.fieldType.isSecureTextEntry {
+                            SecureField(field.placeholder, text: $value) {
+                                self.field.updateValue(value)
+                                self.field.fieldWasExited()
+                                self.isEditing = false
+                            }
+                            .onTapGesture {
+                                isEditing = true
+                            }
+                        } else {
+                            TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
+                                self.isEditing = isEditing
+                                self.field.updateValue(value)
+                                self.field.fieldWasExited()
+                            }, onCommit: {
+                                print("Did commit: \(value)")
+                            })
+                            .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
+                            .autocapitalization(field.fieldType.capitalization())
+    //                        .accessibilityIdentifier(field.title)
+                        }
+                    }
                     
-                    if field.fieldType.isSecureTextEntry {
-                        SecureField(field.placeholder, text: $value) {
-                            self.field.updateValue(value)
-                            self.field.fieldWasExited()
-                            self.isEditing = false
-                        }
-                        .onTapGesture {
-                            isEditing = true
-                        }
-                    } else {
-                        TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
-                            self.isEditing = isEditing
-                            self.field.updateValue(value)
-                            self.field.fieldWasExited()
-                        }, onCommit: {
-                            print("Did commit: \(value)")
-                        })
-                        .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
-                        .autocapitalization(field.fieldType.capitalization())
-//                        .accessibilityIdentifier(field.title)
+                    if field.isValid() && !isEditing {
+                        Image(systemName: "flag.circle")
+                            .offset(x: -5, y: 11)
                     }
                 }
+                .padding([.leading, .trailing], 15)
                 
-                if field.isValid() && !isEditing {
-                    Image(systemName: "flag.circle")
-                        .offset(x: -5, y: 11)
+                Rectangle()
+                    .fill(underlineColor(isEdting: $isEditing))
+//                    .fill(Color(.activeBlue))
+                    .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 6, alignment: .top)
+                    .clipped()
+                    .offset(y: 34)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .background(Color(UIColor.binkWhiteViewBackground))
+            .frame(width: nil, height: 70, alignment: .center)
+            
+            if field.fieldType.isSecureTextEntry {
+                // TODO: - Validation point Texts
+            } else {
+                if !field.isValid() && !value.isEmpty && !isEditing {
+                    Text(field.validationErrorMessage ?? L10n.formFieldValidationError)
+                        .font(.custom(UIFont.textFieldExplainer.fontName, size: UIFont.textFieldExplainer.pointSize))
+                        .foregroundColor(Color(.errorRed))
                 }
             }
-            .padding([.leading, .trailing], 15)
-            
-            Rectangle()
-                .fill(underlineColor(isEdting: $isEditing))
-                .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 6, alignment: .top)
-                .clipped()
-                .offset(y: 34)
         }
-        .clipShape(RoundedRectangle(cornerRadius: 16))
-        .background(Color(UIColor.binkWhiteViewBackground))
-        .frame(width: nil, height: 70, alignment: .center)
     }
     
     private func underlineColor(isEdting: Binding<Bool>) -> Color {
