@@ -160,7 +160,6 @@ class BaseFormViewController: BinkViewController, FormDelegate, ObservableObject
                 for (i, subview) in stackScrollView.arrangedSubviews.enumerated().reversed() {
                     if subview.isKind(of: CheckboxView.self) {
                         stackScrollView.remove(arrangedSubview: subview)
-                        
                     }
                     
                     if (i + 1) > 3 {

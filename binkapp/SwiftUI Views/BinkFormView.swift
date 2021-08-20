@@ -54,6 +54,7 @@ struct BinkCell: View {
                     if field.fieldType.isSecureTextEntry {
                         SecureField(field.placeholder, text: $value) {
                             self.field.updateValue(value)
+                            self.field.fieldWasExited()
                             self.isEditing = false
                         }
                         .onTapGesture {
@@ -63,6 +64,7 @@ struct BinkCell: View {
                         TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
                             self.isEditing = isEditing
                             self.field.updateValue(value)
+                            self.field.fieldWasExited()
                         }, onCommit: {
                             print("Did commit: \(value)")
                         })
