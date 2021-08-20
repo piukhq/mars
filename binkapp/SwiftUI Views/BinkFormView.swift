@@ -28,7 +28,6 @@ struct BinkFormView: View {
             ForEach(datasource.fields) { field in
                 BinkCell(field: field)
                     .environmentObject(datasource)
-//                Spacer(minLength: 20)
             }
         }
         .background(Color(UIColor.binkWhiteViewBackground))
@@ -38,11 +37,9 @@ struct BinkFormView: View {
 }
 
 struct BinkCell: View {
-    var field: FormField
-    
+    @State var field: FormField
     @State private var isEditing = false
     @State var value: String = ""
-    
     
     var body: some View {
         ZStack(alignment: .center) {
@@ -50,23 +47,38 @@ struct BinkCell: View {
                 .foregroundColor(.white)
             
             HStack {
-                VStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .leading, spacing: 3) {
                     Text(field.title)
                         .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
                     
-                    TextField(field.placeholder, text: $value) { isEditing in
-                        self.isEditing = isEditing
-                    } onCommit: {
-                        print("Did commit: \(value)")
+                    if field.fieldType.isSecureTextEntry {
+                        SecureField(field.placeholder, text: $value) {
+                            self.field.updateValue(value)
+                            self.isEditing = false
+                        }
+                        .onTapGesture {
+                            isEditing = true
+                        }
+                    } else {
+                        TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
+                            self.isEditing = isEditing
+                            self.field.updateValue(value)
+                        }, onCommit: {
+                            print("Did commit: \(value)")
+                        })
+                        .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
+                        .autocapitalization(field.fieldType.capitalization())
                     }
-                    .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
                 }
-                Image(systemName: "flag.circle")
+                
+                if field.isValid() {
+                    Image(systemName: "flag.circle")
+                }
             }
             .padding()
             
             Rectangle()
-                .fill(Color(isEditing ? .activeBlue : .clear))
+                .fill(underlineColor(isEdting: $isEditing))
                 .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 6, alignment: .top)
                 .clipped()
                 .offset(y: 39)
@@ -74,6 +86,21 @@ struct BinkCell: View {
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .background(Color(UIColor.binkWhiteViewBackground))
         .frame(width: nil, height: 80, alignment: .center)
+    }
+    
+    private func underlineColor(isEdting: Binding<Bool>) -> Color {
+        var color: UIColor
+        
+        if isEditing {
+            color = .activeBlue
+        } else {
+            color = field.isValid() ? .successGreen : .errorRed
+        }
+        
+        if value.isEmpty && !isEditing {
+            color = .clear
+        }
+        return Color(color)
     }
 }
 
