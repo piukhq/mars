@@ -51,6 +51,13 @@ enum Configuration {
         guard let string = object as? String, !string.isEmpty else { throw ConfigurationError.invalidValue }
         return string
     }
+    
+    static func isDebug() -> Bool {
+        if let _ = try? value(for: .debugMenu) {
+            return true
+        }
+        return false
+    }
 }
 
 enum APIConstants {
