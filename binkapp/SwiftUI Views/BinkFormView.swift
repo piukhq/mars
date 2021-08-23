@@ -34,6 +34,8 @@ struct BinkCell: View {
     @State var field: FormField
     @State private var isEditing = false
     @State var value: String = ""
+    @State var didExit = false
+    @State var showErrorState = false
     
     init(field: FormField) {
         self.field = field
@@ -64,9 +66,24 @@ struct BinkCell: View {
                             TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
                                 self.isEditing = isEditing
                                 self.field.updateValue(value)
-                                self.field.fieldWasExited()
+                                
+                                if isEditing {
+                                    if !field.isValid() && !value.isEmpty {
+                                        showErrorState = true
+                                    } else {
+                                        showErrorState = false
+                                    }
+                                } else {
+                                    self.field.fieldWasExited()
+                                    didExit = true
+                                    if !field.isValid() && !value.isEmpty {
+                                        showErrorState = true
+                                    } else {
+                                        showErrorState = false
+                                    }
+                                }
                             }, onCommit: {
-                                print("Did commit: \(value)")
+                                self.showErrorState = true
                             })
                             .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
                             .autocapitalization(field.fieldType.capitalization())
@@ -83,7 +100,6 @@ struct BinkCell: View {
                 
                 Rectangle()
                     .fill(underlineColor(isEdting: $isEditing))
-//                    .fill(Color(.activeBlue))
                     .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 6, alignment: .top)
                     .clipped()
                     .offset(y: 34)
@@ -95,13 +111,21 @@ struct BinkCell: View {
             if field.fieldType.isSecureTextEntry {
                 // TODO: - Validation point Texts
             } else {
-                if !field.isValid() && !value.isEmpty && !isEditing {
+                    if textfieldValidationPassed(value: $value) {
                     Text(field.validationErrorMessage ?? L10n.formFieldValidationError)
                         .font(.custom(UIFont.textFieldExplainer.fontName, size: UIFont.textFieldExplainer.pointSize))
                         .foregroundColor(Color(.errorRed))
+                        .padding(.leading)
                 }
             }
         }
+    }
+    
+    private func textfieldValidationPassed(value: Binding<String>) -> Bool {
+        field.updateValue(value.wrappedValue)
+        guard showErrorState else { return false }
+        
+        return !field.isValid() && !value.wrappedValue.isEmpty || !field.isValid() && showErrorState && !value.wrappedValue.isEmpty
     }
     
     private func underlineColor(isEdting: Binding<Bool>) -> Color {
@@ -109,6 +133,10 @@ struct BinkCell: View {
         
         if isEditing {
             color = .activeBlue
+            
+            if textfieldValidationPassed(value: $value) {
+                color = .errorRed
+            }
         } else {
             color = field.isValid() ? .successGreen : .errorRed
         }
