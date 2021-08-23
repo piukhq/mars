@@ -22,6 +22,7 @@ class AddPaymentCardViewController: BaseFormViewController {
         static let cardHeight: CGFloat = 120.0
         static let hyperlinkHeight: CGFloat = 54.0
         static let cellErrorLabelSafeSpacing: CGFloat = 60.0
+        static let horizontalInset: CGFloat = 25.0
     }
 
     private lazy var addButton: BinkButton = {
@@ -50,7 +51,7 @@ class AddPaymentCardViewController: BaseFormViewController {
         stackScrollView.insert(arrangedSubview: card, atIndex: 0, customSpacing: Constants.cardPadding)
         stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: L10n.securityAndPrivacyTitle)])
         configureLayout()
-        
+        card.configureWithAddViewModel(viewModel.paymentCard)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
@@ -66,24 +67,10 @@ class AddPaymentCardViewController: BaseFormViewController {
 
         NSLayoutConstraint.activate([
             card.heightAnchor.constraint(equalToConstant: Constants.cardHeight),
-            card.widthAnchor.constraint(equalTo: collectionView.widthAnchor)
+            card.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(Constants.horizontalInset * 2))
         ])
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        // This is due to strange layout issues on first appearance
-        if !hasSetupCell {
-            hasSetupCell = true
-            card.frame = CGRect(
-                origin: .zero,
-                size: CGSize(width: collectionView.contentSize.width, height: Constants.cardHeight)
-            )
-            card.configureWithAddViewModel(viewModel.paymentCard)
-        }
-    }
-    
+
     // MARK: - Builder
     
     private func hyperlinkButton(title: String) -> UIButton {
