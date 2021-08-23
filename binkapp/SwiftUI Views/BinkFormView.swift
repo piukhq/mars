@@ -22,7 +22,7 @@ struct BinkFormView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
             ForEach(datasource.fields) { field in
-                BinkCell(field: field)
+                BinkTextfieldView(field: field)
                     .environmentObject(datasource)
             }
         }
@@ -30,11 +30,10 @@ struct BinkFormView: View {
     }
 }
 
-struct BinkCell: View {
+struct BinkTextfieldView: View {
     @State var field: FormField
     @State private var isEditing = false
     @State var value: String = ""
-    @State var didExit = false
     @State var showErrorState = false
     
     init(field: FormField) {
@@ -67,21 +66,10 @@ struct BinkCell: View {
                                 self.isEditing = isEditing
                                 self.field.updateValue(value)
                                 
-                                if isEditing {
-                                    if !field.isValid() && !value.isEmpty {
-                                        showErrorState = true
-                                    } else {
-                                        showErrorState = false
-                                    }
-                                } else {
+                                if !isEditing {
                                     self.field.fieldWasExited()
-                                    didExit = true
-                                    if !field.isValid() && !value.isEmpty {
-                                        showErrorState = true
-                                    } else {
-                                        showErrorState = false
-                                    }
                                 }
+                                showErrorState = !field.isValid() && !value.isEmpty
                             }, onCommit: {
                                 self.showErrorState = true
                             })
@@ -92,7 +80,7 @@ struct BinkCell: View {
                     }
                     
                     if field.isValid() && !isEditing {
-                        Image(systemName: "flag.circle")
+                        Image("icon-check")
                             .offset(x: -5, y: 11)
                     }
                 }
@@ -109,9 +97,9 @@ struct BinkCell: View {
             .frame(width: nil, height: 70, alignment: .center)
             
             if field.fieldType.isSecureTextEntry {
-                // TODO: - Validation point Texts
+                // TODO: - Validation point TextViews
             } else {
-                    if textfieldValidationPassed(value: $value) {
+                if textfieldValidationPassed(value: $value) {
                     Text(field.validationErrorMessage ?? L10n.formFieldValidationError)
                         .font(.custom(UIFont.textFieldExplainer.fontName, size: UIFont.textFieldExplainer.pointSize))
                         .foregroundColor(Color(.errorRed))
@@ -121,16 +109,16 @@ struct BinkCell: View {
         }
     }
     
+    // MARK: - Helper Methods
+    
     private func textfieldValidationPassed(value: Binding<String>) -> Bool {
         field.updateValue(value.wrappedValue)
         guard showErrorState else { return false }
-        
-        return !field.isValid() && !value.wrappedValue.isEmpty || !field.isValid() && showErrorState && !value.wrappedValue.isEmpty
+        return !field.isValid() && !value.wrappedValue.isEmpty
     }
     
     private func underlineColor(isEdting: Binding<Bool>) -> Color {
         var color: UIColor
-        
         if isEditing {
             color = .activeBlue
             
@@ -148,71 +136,8 @@ struct BinkCell: View {
     }
 }
 
-//struct BinkTextFieldView: View {
-//    @State var value: String = ""
-//    var field: FormField
-//
-//    var body: some View {
-//        HStack {
-//            VStack(alignment: .leading, spacing: 0) {
-//                Text(field.title)
-//                    .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
-//
-//                TextField(field.placeholder, text: $value) { isEditing in
-//
-//                } onCommit: {
-//
-//                }
-//                .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
-//            }
-//            Image(systemName: "flag.circle")
-//        }
-//    }
-//}
 
-struct BinkFormTextfield: View {
-    @State var value: String = ""
-    var field: FormField
-    
-    var body: some View {
-//        ZStack {
-//        RoundedRectangle(cornerRadius: 25.0, style: .continuous)
-//            .fill(Color.white)
-//            .frame(width: nil, height: 80, alignment: .center)
-//            .background(
-//                   Rectangle()
-//                       .fill(Color(UIColor.activeBlue))
-////                       .frame(width: 490, height: 20, alignment: .bottom)
-////                       .offset(x: -20, y: 0))
-//        )
-//            .overlay(
-        HStack {
-            VStack(alignment: .leading, spacing: 5) {
-                Text(field.title)
-                    .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
-
-                TextField(field.placeholder, text: $value)
-                    .padding(.bottom, 8.0)
-                    .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
-            }
-
-            Image(systemName: "flag.circle")
-        }
-        .cornerRadius(20)
-        .padding()
-//        )
-//        .background(RoundedRectangle(cornerRadius: 15)
-//                        .fill(Color.white))
-        .background(
-               Rectangle()
-                   .fill(Color(UIColor.activeBlue))
-                   .frame(width: 490, height: 20, alignment: .bottom)
-                   .offset(x: -20, y: 50))
-
-        .offset(x: -6.0)
-        }
-    }
-//}
+// MARK: - Previews
 
 struct BinkFormView_Previews: PreviewProvider {
     static var previews: some View {
