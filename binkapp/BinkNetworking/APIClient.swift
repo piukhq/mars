@@ -238,11 +238,9 @@ private extension APIClient {
                 return
             }
 
-            #if DEBUG
             if Current.userDefaults.bool(forDefaultsKey: .responseCodeVisualiser) {
                 DebugInfoAlertView.show("HTTP status code \(statusCode)", type: successStatusRange.contains(statusCode) ? .success : .failure)
             }
-            #endif
 
             guard let data = response.data else {
                 completion?(.failure(.invalidResponse), networkResponseData)
@@ -313,11 +311,9 @@ private extension APIClient {
             return
         }
         
-        #if DEBUG
         if Current.userDefaults.bool(forDefaultsKey: .responseCodeVisualiser) {
             DebugInfoAlertView.show("HTTP status code \(statusCode)", type: successStatusRange.contains(statusCode) ? .success : .failure)
         }
-        #endif
 
         if statusCode == unauthorizedStatus && endpoint.shouldRespondToUnauthorizedStatus {
             // Unauthorized response
