@@ -20,7 +20,7 @@ struct SettingsFactory {
         
         // MARK: - Debug
         
-        if let _ = try? Configuration.value(for: .debugMenu) {
+        if let _ = try? Configuration.value(for: .debug) {
             let debugSection = SettingsSection(title: L10n.settingsSectionDebugTitle, rows: [
                 SettingsRow(
                     type: .debug,
