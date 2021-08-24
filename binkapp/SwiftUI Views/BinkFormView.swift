@@ -6,6 +6,7 @@
 //  Copyright © 2021 Bink. All rights reserved.
 //
 
+import Combine
 import SwiftUI
 
 let shouldChangeBlock: FormField.TextFieldShouldChange = { (_, _, _, _) in
@@ -13,30 +14,71 @@ let shouldChangeBlock: FormField.TextFieldShouldChange = { (_, _, _, _) in
 }
 
 let field1 = FormField(title: "Email", placeholder: "Enter your email bitch", validation: "", fieldType: .email, updated: { _, _ in }, shouldChange: shouldChangeBlock, fieldExited: { _ in })
-let datasourceMock = FormDataSource(accessForm: .emailPassword)
+let datasourceMock = FormDataSource(PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil))
 
+
+final class FormViewModel: ObservableObject {
+    @Published var datasource: FormDataSource
+    var descriptionText: String?
+    
+    init(datasource: FormDataSource, descriptionText: String?) {
+        self.datasource = datasource
+        self.descriptionText = descriptionText
+    }
+}
 
 struct BinkFormView: View {
-    @EnvironmentObject var datasource: FormDataSource
-    
+    @ObservedObject var viewModel: FormViewModel
+
     var body: some View {
-        VStack(alignment: .center, spacing: 20) {
-            ForEach(datasource.fields) { field in
-                BinkTextfieldView(field: field)
-                    .environmentObject(datasource)
+        ScrollView {
+            VStack(alignment: .center, spacing: 20.0) {
+                Image(Asset.amex.name)
+                    .resizable()
+                    .frame(width: 100, height: 100, alignment: .center)
+                    .aspectRatio(contentMode: .fit)
+                Text("Placeholder")
+                    .font(.custom(UIFont.linkTextButtonNormal.fontName, size: UIFont.linkTextButtonNormal.pointSize))
+                    .foregroundColor(Color(.blueAccent))
+
+                VStack(alignment: .leading, spacing: 5, content: {
+                    Text("Placeholder")
+                        .font(.custom(UIFont.headline.fontName, size: UIFont.headline.pointSize))
+                        .multilineTextAlignment(.leading)
+                    Text(viewModel.descriptionText ?? "")
+                        .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
+                })
             }
+            
+            VStack(alignment: .center, spacing: 20) {
+                ForEach(viewModel.datasource.fields) { field in
+                    if #available(iOS 14.0, *) {
+                        BinkTextfieldView(field: field)
+                            .accessibilityIdentifier(field.title)
+                            .keyboardType(field.fieldType.keyboardType())
+                    } else {
+                        BinkTextfieldView(field: field)
+                    }
+                }
+            }
+            .background(Color(UIColor.binkWhiteViewBackground))
         }
+        .padding(.horizontal, 30.0)
+//        .padding(20.0)
         .background(Color(UIColor.binkWhiteViewBackground))
     }
 }
 
 struct BinkTextfieldView: View {
+//    @State var datasource: FormDataSource
     @State var field: FormField
     @State private var isEditing = false
     @State var value: String = ""
     @State var showErrorState = false
+    @State private var keyboardHeight: CGFloat = 0
     
     init(field: FormField) {
+//        self.datasource = datasource
         self.field = field
         UITextField.appearance().clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
     }
@@ -66,7 +108,9 @@ struct BinkTextfieldView: View {
                                 self.isEditing = isEditing
                                 self.field.updateValue(value)
                                 
-                                if !isEditing {
+                                if isEditing {
+//                                    self.datasource.formViewDidSelectField(self)
+                                } else {
                                     self.field.fieldWasExited()
                                 }
                                 showErrorState = !field.isValid() && !value.isEmpty
@@ -75,13 +119,29 @@ struct BinkTextfieldView: View {
                             })
                             .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
                             .autocapitalization(field.fieldType.capitalization())
-    //                        .accessibilityIdentifier(field.title)
+                            .coordinateSpace(name: "textfield")
                         }
                     }
                     
                     if field.isValid() && !isEditing {
-                        Image("icon-check")
+                        Image(Asset.iconCheck.name)
                             .offset(x: -5, y: 11)
+                    }
+                    
+                    if field.fieldCommonName == .cardNumber && !isEditing {
+                        Button(action: {
+//                            if field.fieldType == .paymentCardNumber {
+//                                datasource.formViewDidReceivePaymentScannerButtonTap(self)
+//                            } else {
+//                                datasource.formViewDidReceiveLoyaltytScannerButtonTap(self)
+//                            }
+                        }) {
+                            Image(Asset.scanIcon.name)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 25.0)
+                        }
+                        .offset(x: -5, y: 11)
                     }
                 }
                 .padding([.leading, .trailing], 15)
@@ -93,7 +153,6 @@ struct BinkTextfieldView: View {
                     .offset(y: 34)
             }
             .clipShape(RoundedRectangle(cornerRadius: 16))
-            .background(Color(UIColor.binkWhiteViewBackground))
             .frame(width: nil, height: 70, alignment: .center)
             
             if field.fieldType.isSecureTextEntry {
@@ -107,6 +166,8 @@ struct BinkTextfieldView: View {
                 }
             }
         }
+        .padding(.bottom, keyboardHeight)
+        .onReceive(Publishers.keyboardHeight, perform: { self.keyboardHeight = $0 })
     }
     
     // MARK: - Helper Methods
@@ -143,12 +204,35 @@ struct BinkFormView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             ZStack {
-                Rectangle()
-                    .foregroundColor(Color(UIColor.grey10))
-                BinkFormView()
-                    .environmentObject(datasourceMock)
-                    .preferredColorScheme(.light)
+//                Rectangle()
+//                    .foregroundColor(Color(UIColor.grey10))
+                BinkFormView(viewModel: FormViewModel(datasource: datasourceMock, descriptionText: "Description text"))
+//                    .preferredColorScheme(.light)
             }
         }
     }
 }
+
+extension Publishers {
+    // 1.
+    static var keyboardHeight: AnyPublisher<CGFloat, Never> {
+        // 2.
+        let willShow = NotificationCenter.default.publisher(for: UIApplication.keyboardWillShowNotification)
+            .map { $0.keyboardHeight }
+        
+        let willHide = NotificationCenter.default.publisher(for: UIApplication.keyboardWillHideNotification)
+            .map { _ in CGFloat(0) }
+        
+        // 3.
+        return MergeMany(willShow, willHide)
+            .eraseToAnyPublisher()
+    }
+}
+
+//#if canImport(UIKit)
+//extension View {
+//    func hideKeyboard() {
+//        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+//    }
+//}
+//#endif

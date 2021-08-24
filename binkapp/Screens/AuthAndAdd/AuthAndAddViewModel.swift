@@ -42,7 +42,7 @@ enum FormPurpose: Equatable {
     }
 }
 
-class AuthAndAddViewModel {
+class AuthAndAddViewModel: ObservableObject {
     private let repository = AuthAndAddRepository()
     private let membershipPlan: CD_MembershipPlan
     let prefilledFormValues: [FormDataSource.PrefilledValue]?
