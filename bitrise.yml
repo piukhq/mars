@@ -1,0 +1,910 @@
+---
+# CONFIG
+format_version: '8'
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+project_type: ios
+
+# WORKFLOWS
+workflows:
+  beta:
+    steps:
+    - gitlab-status@0.12:
+        inputs:
+        - private_token: "$gitlabAccessToken"
+        - preset_status: running
+        - api_base_url: https://git.bink.com/api/v4
+    - script@1.1.5:
+        title: Do anything with Script step
+        inputs:
+        - content: gem install cocoapods-keys
+    - fastlane-match@0.2.0:
+        inputs:
+        - app_id: "$BITRISE_BUNDLEID"
+        - decrypt_password: "$MATCH_PASSWORD"
+        - type: adhoc
+        - git_url: "$MATCH_REPO_URL"
+    - fastlane-match@0:
+        inputs:
+        - app_id: com.bink.wallet.beta.widget
+        - decrypt_password: "$MATCH_PASSWORD"
+        - type: adhoc
+        - git_url: "$MATCH_REPO_URL"
+    - cocoapods-install@1.8.0: {}
+    - set-xcode-build-number@1.0.8:
+        inputs:
+        - plist_path: "$PROJECT_LOCATION"
+    - xcode-archive@2.6.0:
+        inputs:
+        - team_id: HC34M8YE55
+        - upload_bitcode: 'no'
+        - compile_bitcode: 'no'
+        - export_method: ad-hoc
+    - firebase-app-distribution@0:
+        inputs:
+        - app: 1:532636841265:ios:d187a7ec083f05a972ec10
+        - release_notes: |-
+            Message:
+            $BITRISE_GIT_MESSAGE
+
+            Type:
+            Develop
+        - groups: ios-develop
+        - firebase_token: "$firebaseRefreshToken"
+    - microsoft-teams-integration@1.2:
+        inputs:
+        - webhook_url: https://outlook.office.com/webhook/bf220ac8-d509-474f-a568-148982784d19@a6e2367a-92ea-4e5a-b565-723830bcc095/IncomingWebhook/eb595a7bd05244e4b54c408a371ca090/8ca3aa12-4603-452c-ae1e-b241aef04c87
+    - gitlab-status@0.12:
+        inputs:
+        - private_token: "$gitlabAccessToken"
+        - api_base_url: https://git.bink.com/api/v4
+    - script@1:
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -o pipefail
+            echo "Starting to look for AB or IB Jira Number"
+            re='(AB|IB)20-\d{3,}'
+            result=$(echo ${BITRISE_GIT_MESSAGE} ${BITRISE_GIT_BRANCH} | grep -E $re -o | head -1)
+            if [ -z ${result} ]; then
+                echo "Could not find Jira Issue Number"
+                exit 0
+            else
+             echo "Found "$result
+             envman add --key JIRA_ISSUE_CODE --value $result
+             exit 0
+            fi
+    - post-jira-comment-with-build-details@1:
+        inputs:
+        - issue_keys: "$JIRA_ISSUE_CODE"
+        - base_url: "$jiraBaseUrl"
+        - api_token: "$jiraAccessToken"
+        - user_name: "$jiraUserEmail"
+        - build_message: "Ready for Acceptance - *$BITRISE_BUILD_NUMBER* is now available
+            \n||Build number|$BITRISE_BUILD_NUMBER|\n||Branch|$BITRISE_GIT_BRANCH|\n||Commit
+            hash|$GIT_CLONE_COMMIT_HASH|\n||Commit message|$GIT_CLONE_COMMIT_MESSAGE_SUBJECT|\n\n[Show
+            build details|$BITRISE_BUILD_URL]\n"
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+
+            curl -sL https://sentry.io/get-cli/ | bash
+        title: Install Sentry CLI
+    - fastlane@2:
+        inputs:
+        - lane: beta_dsym
+  beta-jira:
+    steps:
+    - script@1:
+        inputs:
+        - content: "#!/bin/bash\nset -o pipefail\n\necho \"Starting to look for AB
+            or IB Jira Number\"\n\nre='(AB|IB)20-\\d{3}'\nresult=$(echo ${BITRISE_GIT_MESSAGE}
+            ${BITRISE_GIT_BRANCH}  | grep -P -o -m1 $re | head -1)\n\nif [ -z ${result}
+            ]; then \n    echo \"Could not find Jira Issue Number\"\n    exit 1\nelse\n
+            \   echo \"Found \"$result\n    envman add --key JIRA_ISSUE_CODE --value
+            $result\n    exit 0\nfi"
+  beta-jira-only:
+    steps:
+    - script@1:
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -o pipefail
+
+            envman add --key JIRA_ISSUE_CODE --value "IB20-1106"
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            # run our script
+            cd Scripts/JiraTicketUpdate
+            swift run JiraTicketUpdate acceptance
+  beta-pipeline:
+    steps:
+    - git-clone@4.0.14: {}
+    - gitlab-status@0.9:
+        inputs:
+        - private_token: "$gitlabAccessToken"
+        - api_base_url: https://git.bink.com/api/v4
+  beta-test:
+    steps:
+    - script@1.1.5:
+        title: Do anything with Script step
+        inputs:
+        - content: gem install cocoapods-keys
+    - fastlane-match@0.2.0:
+        inputs:
+        - app_id: "$BITRISE_BUNDLEID"
+        - decrypt_password: "$MATCH_PASSWORD"
+        - type: adhoc
+        - git_url: "$MATCH_REPO_URL"
+    - cocoapods-install@1.8.0: {}
+    - xcode-test@2:
+        inputs:
+        - xcodebuild_test_options: "-enableCodeCoverage YES"
+        - simulator_device: iPhone 12
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            bundle install
+            bundle exec danger
+    - deploy-to-bitrise-io@1:
+        inputs:
+        - notify_user_groups: none
+  common-setup:
+    steps:
+    - gitlab-status@0.9:
+        inputs:
+        - private_token: "$gitlabAccessToken"
+        - preset_status: running
+        - api_base_url: https://git.bink.com/api/v4
+    - script@1.1.5:
+        title: Do anything with Script step
+        inputs:
+        - content: gem install cocoapods-keys
+  daily-security-scan:
+    after_run:
+    - common-setup
+    - script-dependencies
+    - dependency-vulnerability-scan
+    envs:
+    - opts:
+        is_expand: false
+      CI_PIPELINE_NAME: DAILY SCAN
+  dependency-vulnerability-scan:
+    steps:
+    - brew-install@0:
+        inputs:
+        - options: ''
+        - upgrade: 'no'
+        - packages: dependency-check
+        title: Install Dependency Check Plugin
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            dependency-check --project $BITRISE_APP_TITLE --scan $BITRISE_SOURCE_DIR --enableExperimental --out $BITRISE_DEPLOY_DIR --format JSON --format HTML --failOnCVSS 7 --suppression $BITRISEIO_ios_owasp_suppression_file_URL
+        title: Dependency Checker
+    - script@1:
+        inputs:
+        - content: "import json\nimport requests\nimport os\n\nlocation = os.environ.get('BITRISE_DEPLOY_DIR')\nurl
+            = os.environ.get('BITRISE_BUILD_URL')\npipename = os.environ.get('CI_PIPELINE_NAME')
+            + \" Pipeline\"\n\nprint(location)\nprint(url)\n\nwith open(location +
+            '/dependency-check-report.json') as f:\n    data = json.load(f)\n\ndeps
+            = data['dependencies']\n\ndepsWithVulns = []\ntotalVulnsCount = 0\nvulnsFound
+            = \"\"\nfor dep in deps:\n    vulns = dep.get('vulnerabilities')\n    if
+            vulns is not None:\n        vulnList = []\n        totalVulnsCount +=
+            len(vulns)\n        for vuln in vulns:\n            vulnList.append(vuln['name']
+            + \" \" + vuln['severity'])\n        depName = dep.get('fileName')\n        depsWithVulns.append('<b>'
+            + depName + '</b> - ' + str(len(vulnList)) + ' issues' + '\\n' + ',\\n'.join(map(str,vulnList)))\n\n#
+            Dependencies Scanned Count\ndepsScannedCount = str(len(deps))\n# Vulnerabilities
+            Found Count\n\nif len(depsWithVulns) > 0:\n    vulnsFound = '\\n'.join(map(str,
+            depsWithVulns))\nelse:\n    vulnsFound = '0 vulnerabilities in the application'\n\npayload
+            = \"\"\" {\n    \"@type\": \"MessageCard\",\n    \"@context\": \"http://schema.org/extensions\",\n
+            \   \"themeColor\": \"0076D7\",\n    \"summary\": \"Vulnerability Report\",\n
+            \   \"sections\": [{\n        \"activityTitle\": \"^-^ Bunk the VulnerabilityBot
+            ^-^\",\n        \"activitySubtitle\": \"iOS Report\",\n        \"facts\":
+            [{\n            \"name\": \"Dependencies Scanned\",\n            \"value\":
+            \"%s\",\n        }, {\n            \"name\": \"Vulnerabilities Discovered\",\n
+            \           \"value\": \"%s\",\n        }],\n        \"markdown\": true\n
+            \   }, \n    {\n        \"activityTitle\": \"%s\",\n        \"activitySubtitle\":
+            \"Result\",\n        \"activityText\": \"<pre>%s</pre>\",\n        \"text\":
+            \"NOTE: When selecting See Report, you need to navigate to <b>Apps and
+            Artifacts</b> to see the HTML report in detail.\",\n    }\n    ],\n    \"potentialAction\":
+            [{\n        \"@type\": \"OpenUri\",\n        \"name\": \"See Report\",\n
+            \       \"targets\": [{\n            \"os\": \"default\",\n            \"uri\":
+            \"%s\"\n        }]\n    }]\n}\n\"\"\" % (depsScannedCount, str(totalVulnsCount),
+            pipename, vulnsFound, url)\n\nprint(payload)\n\nurl = os.environ.get('MOBILE_TEAMS_WEBHOOK')\nheaders
+            = {'content-type': 'application/json'}\nr = requests.post(url, data=payload,
+            headers=headers)\nprint(r.json)\nprint(r.raw)"
+        - runner_bin: python3
+        title: Parse Results and Post Message
+        is_always_run: true
+    - deploy-to-bitrise-io@1:
+        inputs:
+        - notify_user_groups: none
+        - is_enable_public_page: 'false'
+        title: Deploy Report to Build Artifacts
+    before_run: []
+  git-script:
+    steps:
+    - script@1:
+        inputs:
+        - content: "#!/bin/bash\nset -o pipefail\n\nre=\"(AB|IB)20-\\d{3}\"\necho
+            \"Starting to look for AB or IB Jira Number\"\nresult=$(echo $BITRISE_GIT_MESSAGE
+            | grep -o -E $re)\n\necho $result\n\nif [ -z ${result} ]; then \n    echo
+            \"Could not find Jira Issue Number\"\nelse\n    echo \"Found \"$result\n
+            \   envman add --key JIRA_ISSUE_CODE --value $result\nfi\n"
+    - post-jira-comment-with-build-details@1:
+        inputs:
+        - api_token: "$jiraAccessToken"
+        - issue_keys: "$JIRA_ISSUE_CODE"
+        - base_url: "$jiraBaseUrl"
+        - build_message: TEST
+        - user_name: "$jiraUserEmail"
+  mr:
+    steps:
+    - gitlab-status@0.12:
+        inputs:
+        - private_token: "$gitlabAccessToken"
+        - preset_status: running
+        - api_base_url: https://git.bink.com/api/v4
+    - script@1.1.5:
+        title: Do anything with Script step
+        inputs:
+        - content: gem install cocoapods-keys
+    envs:
+    - opts:
+        is_expand: false
+      BITRISE_SCHEME: binkapp beta
+    - opts:
+        is_expand: false
+      BITRISE_BUNDLEID: com.bink.wallet.beta
+    - opts:
+        is_expand: false
+      CI_PIPELINE_NAME: MR
+    after_run:
+    - script-dependencies
+    - mr-deploy-testflight
+  mr-danger-test:
+    steps:
+    - gitlab-status@0.9:
+        inputs:
+        - private_token: "$gitlabAccessToken"
+        - preset_status: running
+        - api_base_url: https://git.bink.com/api/v4
+    - xcode-test@2:
+        inputs:
+        - generate_code_coverage_files: 'yes'
+        - simulator_device: iPhone 12
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            brew install danger/tap/danger-swift
+            sudo gem install danger-xcov
+            danger-swift ci
+    envs:
+    - opts:
+        is_expand: false
+      BITRISE_SCHEME: binkapp beta
+    - opts:
+        is_expand: false
+      BITRISE_BUNDLEID: com.bink.wallet.beta
+  mr-deploy:
+    steps:
+    - fastlane-match@0.2.0:
+        inputs:
+        - decrypt_password: "$MATCH_PASSWORD"
+        - type: appstore
+        - app_id: com.bink.wallet.beta
+        - git_url: "$MATCH_REPO_URL"
+    - fastlane-match@0:
+        inputs:
+        - app_id: com.bink.wallet.beta.widget
+        - decrypt_password: "$MATCH_PASSWORD"
+        - type: appstore
+        - git_url: "$MATCH_REPO_URL"
+    - cocoapods-install@1.11:
+        inputs:
+        - install_cocoapods_version: 1.10.1
+    - xcode-test@2:
+        inputs:
+        - scheme: binkapp tests
+        - simulator_device: iPhone 12
+    - set-xcode-build-number@1.0.8:
+        inputs:
+        - plist_path: "$PROJECT_LOCATION"
+    - xcode-archive@2.6.0:
+        inputs:
+        - team_id: HC34M8YE55
+        - compile_bitcode: 'no'
+        - upload_bitcode: 'no'
+        - export_method: ad-hoc
+    - fastlane@3.2:
+        title: Upload to TestFlight
+        inputs:
+        - lane: mr branch_name:$BITRISE_GIT_BRANCH
+    - firebase-app-distribution@0:
+        inputs:
+        - app: 1:532636841265:ios:d187a7ec083f05a972ec10
+        - groups: ios-mrs
+        - release_notes: "Message:\n$BITRISE_GIT_MESSAGE\n\nType:\nMerge Request\n\nBranch:
+            \n$BITRISE_GIT_BRANCH -> $BITRISEIO_GIT_BRANCH_DEST\n"
+        - firebase_token: "$firebaseRefreshToken"
+    - microsoft-teams-integration@1.2:
+        inputs:
+        - webhook_url: https://outlook.office.com/webhook/bf220ac8-d509-474f-a568-148982784d19@a6e2367a-92ea-4e5a-b565-723830bcc095/IncomingWebhook/eb595a7bd05244e4b54c408a371ca090/8ca3aa12-4603-452c-ae1e-b241aef04c87
+    - gitlab-status@0.12:
+        inputs:
+        - private_token: "$gitlabAccessToken"
+        - api_base_url: https://git.bink.com/api/v4
+    - script@1:
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -o pipefail
+            echo "Starting to look for AB or IB Jira Number"
+            re='(AB|IB)20-\d{3,}'
+            result=$(echo ${BITRISE_GIT_MESSAGE} ${BITRISE_GIT_BRANCH} | grep -E $re -o | head -1)
+            if [ -z ${result} ]; then
+                echo "Could not find Jira Issue Number"
+                exit 0
+            else
+             echo "Found "$result
+             envman add --key JIRA_ISSUE_CODE --value $result
+             exit 0
+            fi
+        title: Pull out Jira Issue Code
+    - post-jira-comment-with-build-details@1:
+        inputs:
+        - base_url: "$jiraBaseUrl"
+        - api_token: "$jiraAccessToken"
+        - user_name: "$jiraUserEmail"
+        - build_message: "Merge Request - *$BITRISE_BUILD_NUMBER* is now available
+            \n||Build number|$BITRISE_BUILD_NUMBER|\n||Author|$GIT_CLONE_COMMIT_AUTHOR_NAME|\n||Branch|$BITRISE_GIT_BRANCH|\n||Commit
+            hash|$GIT_CLONE_COMMIT_HASH|\n||Commit message|$GIT_CLONE_COMMIT_MESSAGE_SUBJECT|\n\n[Show
+            build details|$BITRISE_BUILD_URL]\n"
+        - issue_keys: "$JIRA_ISSUE_CODE"
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+
+            curl -sL https://sentry.io/get-cli/ | bash
+        title: Install Sentry CLI
+    - fastlane@2:
+        inputs:
+        - lane: beta_dsym
+        title: Upload dsyms
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            brew install danger/tap/danger-swift
+            danger-swift ci
+    envs:
+    - opts:
+        is_expand: false
+      BITRISE_SCHEME: binkapp beta
+    - opts:
+        is_expand: false
+      BITRISE_BUNDLEID: com.bink.wallet.beta
+    after_run: []
+  mr-deploy-firebase:
+    steps:
+    - fastlane-match@0.2.0:
+        inputs:
+        - decrypt_password: "$MATCH_PASSWORD"
+        - type: adhoc
+        - app_id: "$BITRISE_BUNDLEID"
+        - git_url: "$MATCH_REPO_URL"
+    - fastlane-match@0:
+        inputs:
+        - app_id: com.bink.wallet.beta.widget
+        - decrypt_password: "$MATCH_PASSWORD"
+        - type: adhoc
+        - git_url: "$MATCH_REPO_URL"
+    - cocoapods-install@1.11:
+        inputs:
+        - install_cocoapods_version: 1.10.1
+    - xcode-test@2:
+        inputs:
+        - scheme: binkapp tests
+        - simulator_device: iPhone 12
+    - set-xcode-build-number@1.0.8:
+        inputs:
+        - plist_path: "$PROJECT_LOCATION"
+    - xcode-archive@2.6.0:
+        inputs:
+        - team_id: HC34M8YE55
+        - compile_bitcode: 'no'
+        - upload_bitcode: 'no'
+        - export_method: ad-hoc
+    - firebase-app-distribution@0:
+        inputs:
+        - app: 1:532636841265:ios:d187a7ec083f05a972ec10
+        - groups: ios-mrs
+        - release_notes: "Message:\n$BITRISE_GIT_MESSAGE\n\nType:\nMerge Request\n\nBranch:
+            \n$BITRISE_GIT_BRANCH -> $BITRISEIO_GIT_BRANCH_DEST\n"
+        - firebase_token: "$firebaseRefreshToken"
+    - microsoft-teams-integration@1.2:
+        inputs:
+        - webhook_url: https://outlook.office.com/webhook/bf220ac8-d509-474f-a568-148982784d19@a6e2367a-92ea-4e5a-b565-723830bcc095/IncomingWebhook/eb595a7bd05244e4b54c408a371ca090/8ca3aa12-4603-452c-ae1e-b241aef04c87
+    - gitlab-status@0.12:
+        inputs:
+        - private_token: "$gitlabAccessToken"
+        - api_base_url: https://git.bink.com/api/v4
+    - script@1:
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -o pipefail
+            echo "Starting to look for AB or IB Jira Number"
+            re='(AB|IB)20-\d{3,}'
+            result=$(echo ${BITRISE_GIT_MESSAGE} ${BITRISE_GIT_BRANCH} | grep -E $re -o | head -1)
+            if [ -z ${result} ]; then
+                echo "Could not find Jira Issue Number"
+                exit 0
+            else
+             echo "Found "$result
+             envman add --key JIRA_ISSUE_CODE --value $result
+             exit 0
+            fi
+        title: Pull out Jira Issue Code
+    - post-jira-comment-with-build-details@1:
+        inputs:
+        - base_url: "$jiraBaseUrl"
+        - api_token: "$jiraAccessToken"
+        - user_name: "$jiraUserEmail"
+        - build_message: "Merge Request - *$BITRISE_BUILD_NUMBER* is now available
+            \n||Build number|$BITRISE_BUILD_NUMBER|\n||Author|$GIT_CLONE_COMMIT_AUTHOR_NAME|\n||Branch|$BITRISE_GIT_BRANCH|\n||Commit
+            hash|$GIT_CLONE_COMMIT_HASH|\n||Commit message|$GIT_CLONE_COMMIT_MESSAGE_SUBJECT|\n\n[Show
+            build details|$BITRISE_BUILD_URL]\n"
+        - issue_keys: "$JIRA_ISSUE_CODE"
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+
+            curl -sL https://sentry.io/get-cli/ | bash
+        title: Install Sentry CLI
+    - fastlane@2:
+        inputs:
+        - lane: beta_dsym
+        title: Upload dsyms
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            brew install danger/tap/danger-swift
+            danger-swift ci
+    envs:
+    - opts:
+        is_expand: false
+      BITRISE_SCHEME: binkapp beta
+    - opts:
+        is_expand: false
+      BITRISE_BUNDLEID: com.bink.wallet.beta
+    after_run: []
+  mr-deploy-testflight:
+    steps:
+    - fastlane-match@0.2.0:
+        inputs:
+        - decrypt_password: "$MATCH_PASSWORD"
+        - type: appstore
+        - app_id: com.bink.wallet.beta
+        - git_url: "$MATCH_REPO_URL"
+    - fastlane-match@0:
+        inputs:
+        - app_id: com.bink.wallet.beta.widget
+        - decrypt_password: "$MATCH_PASSWORD"
+        - type: appstore
+        - git_url: "$MATCH_REPO_URL"
+    - cocoapods-install@1.11:
+        inputs:
+        - install_cocoapods_version: 1.10.1
+    - fastlane@3.2:
+        title: Upload to TestFlight
+        inputs:
+        - lane: mr branch_name:$BITRISE_GIT_BRANCH build_number:$BITRISE_BUILD_NUMBER
+    - microsoft-teams-integration@1.2:
+        inputs:
+        - webhook_url: https://outlook.office.com/webhook/bf220ac8-d509-474f-a568-148982784d19@a6e2367a-92ea-4e5a-b565-723830bcc095/IncomingWebhook/eb595a7bd05244e4b54c408a371ca090/8ca3aa12-4603-452c-ae1e-b241aef04c87
+    - gitlab-status@0.12:
+        inputs:
+        - private_token: "$gitlabAccessToken"
+        - api_base_url: https://git.bink.com/api/v4
+    - script@1:
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -o pipefail
+            echo "Starting to look for AB or IB Jira Number"
+            re='(AB|IB)20-\d{3,}'
+            result=$(echo ${BITRISE_GIT_MESSAGE} ${BITRISE_GIT_BRANCH} | grep -E $re -o | head -1)
+            if [ -z ${result} ]; then
+                echo "Could not find Jira Issue Number"
+                exit 0
+            else
+             echo "Found "$result
+             envman add --key JIRA_ISSUE_CODE --value $result
+             exit 0
+            fi
+        title: Pull out Jira Issue Code
+    - post-jira-comment-with-build-details@1:
+        inputs:
+        - base_url: "$jiraBaseUrl"
+        - api_token: "$jiraAccessToken"
+        - user_name: "$jiraUserEmail"
+        - build_message: "Merge Request - *$BITRISE_BUILD_NUMBER* is now available
+            \n||Build number|$BITRISE_BUILD_NUMBER|\n||Author|$GIT_CLONE_COMMIT_AUTHOR_NAME|\n||Branch|$BITRISE_GIT_BRANCH|\n||Commit
+            hash|$GIT_CLONE_COMMIT_HASH|\n||Commit message|$GIT_CLONE_COMMIT_MESSAGE_SUBJECT|\n\n[Show
+            build details|$BITRISE_BUILD_URL]\n"
+        - issue_keys: "$JIRA_ISSUE_CODE"
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+
+            curl -sL https://sentry.io/get-cli/ | bash
+        title: Install Sentry CLI
+    - fastlane@2:
+        inputs:
+        - lane: beta_dsym
+        title: Upload dsyms
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            brew install danger/tap/danger-swift
+            danger-swift ci
+    envs:
+    - opts:
+        is_expand: false
+      BITRISE_SCHEME: binkapp beta
+    - opts:
+        is_expand: false
+      BITRISE_BUNDLEID: com.bink.wallet.beta
+    after_run: []
+  nightly:
+    steps:
+    - script@1.1.5:
+        title: Do anything with Script step
+        inputs:
+        - content: gem install cocoapods-keys
+    - fastlane-match@0.2.0:
+        inputs:
+        - app_id: "$BITRISE_BUNDLEID"
+        - decrypt_password: "$MATCH_PASSWORD"
+        - type: adhoc
+        - git_url: "$MATCH_REPO_URL"
+    - fastlane-match@0.2.0:
+        inputs:
+        - app_id: com.bink.wallet.beta.widget
+        - decrypt_password: "$MATCH_PASSWORD"
+        - type: adhoc
+        - git_url: "$MATCH_REPO_URL"
+    - cocoapods-install@1.8.0: {}
+    - xcode-test@3.0:
+        inputs:
+        - simulator_device: iPhone 12
+        - test_plan: nightly
+        - scheme: binkapp tests
+    - set-xcode-build-number@1.0.8:
+        inputs:
+        - plist_path: "$PROJECT_LOCATION"
+    - xcode-archive@2.6.0:
+        inputs:
+        - team_id: HC34M8YE55
+        - export_method: ad-hoc
+    - firebase-app-distribution@0:
+        inputs:
+        - app: 1:532636841265:ios:d187a7ec083f05a972ec10
+        - release_notes: |-
+            Message:
+            $BITRISE_GIT_MESSAGE
+
+            Type:
+            Nightly
+        - groups: ios-nightly
+        - firebase_token: "$firebaseRefreshToken"
+    - microsoft-teams-integration@1.0.1:
+        inputs:
+        - webhook_url: https://outlook.office.com/webhook/bf220ac8-d509-474f-a568-148982784d19@a6e2367a-92ea-4e5a-b565-723830bcc095/IncomingWebhook/eb595a7bd05244e4b54c408a371ca090/8ca3aa12-4603-452c-ae1e-b241aef04c87
+    envs:
+    - opts:
+        is_expand: false
+      CI_PIPELINE_NAME: NIGHTLY
+  nightly-Appium-UI-tests:
+    steps:
+    - script@1.1.5:
+        title: Do anything with Script step
+        inputs:
+        - content: gem install cocoapods-keys
+    - fastlane-match@0.2.0:
+        inputs:
+        - app_id: "$BITRISE_BUNDLEID"
+        - decrypt_password: "$MATCH_PASSWORD"
+        - type: adhoc
+        - git_url: "$MATCH_REPO_URL"
+    - cocoapods-install@1.8.0: {}
+    - script@1:
+        inputs:
+        - content: "#!/usr/bin/env bash\n# fail if any commands fails\nset -e\n# debug
+            log\nset -x\n\nnpm install -g appium@1.19.1 --unsafe-perm=true --allow-root
+            \nappium --default-capabilities '{\"showIOSLog\": true}' &>/dev/null &\n\nbrew
+            install python\npip install Appium-Python-Client\n\npip install -U pytest\nbrew
+            install carthage\n\n# Install idevice installer\nbrew install ideviceinstaller\n#
+            Install iOS Deploy\nnpm install -g ios-deploy --unsafe-perm=true --allow-root\n#
+            Install iOS Simulator\nnpm install ios-sim -g --unsafe-perm=true --allow-root"
+    - xcode-build-for-simulator@0:
+        inputs:
+        - simulator_device: iPhone 11 Pro Max
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            # Navigate to appium directory where webdriver agent is located
+            cd /usr/local/lib/node_modules/appium/node_modules/appium-webdriveragent/
+            # Run the bootstrap script
+            bash Scripts/bootstrap.sh -d
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            cd $BITRISE_SOURCE_DIR/pythonUITests
+            py.test
+    - deploy-to-bitrise-io@1: {}
+  NightlyUITests:
+    steps:
+    - script@1.1.5:
+        title: Do anything with Script step
+        inputs:
+        - content: gem install cocoapods-keys
+    - fastlane-match@0.2.0:
+        inputs:
+        - app_id: "$BITRISE_BUNDLEID"
+        - decrypt_password: "$MATCH_PASSWORD"
+        - type: adhoc
+        - git_url: "$MATCH_REPO_URL"
+    - cocoapods-install@1.8.0: {}
+    - xcode-test@2:
+        inputs:
+        - simulator_device: iPhone 12
+        - scheme: binkapp tests
+    - xcode-archive@2.6.0:
+        inputs:
+        - team_id: HC34M8YE55
+        - export_method: ad-hoc
+  release:
+    steps:
+    - set-git-credentials@1:
+        inputs:
+        - git_email_address: nfarrant@bink.com
+        - git_user_name: Nick Farrant
+    envs:
+    - opts:
+        is_expand: false
+      BITRISE_SCHEME: binkapp app store
+    - opts:
+        is_expand: false
+      BITRISE_EXPORT_METHOD: app store
+    - opts:
+        is_expand: false
+      BITRISE_BUNDLEID: com.bink.wallet
+    - opts:
+        is_expand: false
+      CI_PIPELINE_NAME: RELEASE
+    - opts:
+        is_expand: false
+      DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS: "-t Signiant"
+    after_run:
+    - script-dependencies
+    - dependency-vulnerability-scan
+    - release-deploy
+    - static-analysis
+  release-deploy:
+    steps:
+    - fastlane-match@0.2.0:
+        inputs:
+        - app_id: "$BITRISE_BUNDLEID"
+        - decrypt_password: "$MATCH_PASSWORD"
+        - type: appstore
+        - git_url: "$MATCH_REPO_URL"
+    - fastlane-match@0:
+        inputs:
+        - decrypt_password: "$MATCH_PASSWORD"
+        - app_id: com.bink.wallet.widget
+        - type: appstore
+        - git_url: "$MATCH_REPO_URL"
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            gem install cocoapods-keys
+        title: Install Cocoapods-Keys
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+
+            curl -sL https://sentry.io/get-cli/ | bash
+        title: Install Sentry CLI
+    - cocoapods-install@2.2: {}
+    - fastlane@3.2:
+        inputs:
+        - lane: beta
+        title: fastlane beta
+    envs:
+    - opts:
+        is_expand: false
+      BITRISE_SCHEME: binkapp app store
+    - opts:
+        is_expand: false
+      BITRISE_EXPORT_METHOD: app store
+    - opts:
+        is_expand: false
+      BITRISE_BUNDLEID: com.bink.wallet
+    - opts:
+        is_expand: false
+      CI_PIPELINE_NAME: RELEASE
+  release-mr:
+    steps:
+    - gitlab-status@0.12:
+        inputs:
+        - private_token: "$gitlabAccessToken"
+        - preset_status: running
+        - api_base_url: https://git.bink.com/api/v4
+    - script@1.1:
+        title: Do anything with Script step
+        inputs:
+        - content: gem install cocoapods-keys
+    - gitlab-status@0:
+        inputs:
+        - private_token: "$gitlabAccessToken"
+        - api_base_url: https://git.bink.com/api/v4
+    envs:
+    - opts:
+        is_expand: false
+      BITRISE_SCHEME: binkapp beta
+    - opts:
+        is_expand: false
+      BITRISE_BUNDLEID: com.bink.wallet.beta
+    - opts:
+        is_expand: false
+      CI_PIPELINE_NAME: MR
+    after_run: []
+    description: Run when a release branch MR is created, so we don't trigger a deployment.
+  script-dependencies:
+    before_run: []
+    steps:
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            gem install thor
+            gem install bundler-audit
+  static-analysis:
+    before_run: []
+    steps:
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            sh Scripts/mobsf-compress.sh
+        title: Compress Source Code
+    - script@1:
+        title: Deploy and Scan with MobSF
+        inputs:
+        - content: Python3 Scripts/mobsf-submit.py
+    - deploy-to-bitrise-io@1: {}
+    - gitlab-status@0:
+        inputs:
+        - private_token: "$gitlabAccessToken"
+        - api_base_url: https://git.bink.com/api/v4
+app:
+  envs:
+  - opts:
+      is_expand: false
+    BITRISE_PROJECT_PATH: binkapp.xcworkspace
+  - opts:
+      is_expand: false
+    BITRISE_SCHEME: binkapp beta
+  - opts:
+      is_expand: false
+    BITRISE_EXPORT_METHOD: ad-hoc
+  - opts:
+      is_expand: false
+    PROJECT_LOCATION: binkapp/Info.plist
+  - opts:
+      is_expand: false
+    IS_BITRISE: 'YES'
+  - opts:
+      is_expand: false
+    FASTLANE_LANE: dev
+  - opts:
+      is_expand: false
+    MR_SCHEME: binkapp merge request
+  - opts:
+      is_expand: false
+    NIGHTLY_SCHEME: binkapp nightly
+  - opts:
+      is_expand: false
+    BITRISE_BUNDLEID: com.bink.wallet.beta
+  - opts:
+      is_expand: false
+    SENTRY_URL: https://sentry.io
+  - opts:
+      is_expand: false
+    DANGER_GITLAB_HOST: git.bink.com
+  - opts:
+      is_expand: false
+    DANGER_GITLAB_API_BASE_URL: https://git.bink.com/api/v4
+  - opts:
+      is_expand: false
+    CI_PIPELINE_NAME: BETA
+meta:
+  bitrise.io:
+    machine_type: performance
