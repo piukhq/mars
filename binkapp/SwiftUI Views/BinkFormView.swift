@@ -19,11 +19,28 @@ let datasourceMock = FormDataSource(PaymentCardCreateModel(fullPan: nil, nameOnC
 
 final class FormViewModel: ObservableObject {
     @Published var datasource: FormDataSource
+    @State var keyboardHeight: CGFloat = 0
+
+    var titleText: String?
     var descriptionText: String?
+    var membershipPlan: CD_MembershipPlan?
     
-    init(datasource: FormDataSource, descriptionText: String?) {
+    init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan?) {
         self.datasource = datasource
-        self.descriptionText = descriptionText
+        self.titleText = title
+        self.descriptionText = description
+        self.membershipPlan = membershipPlan
+    }
+    
+    var infoButtonText: String? {
+        if let planName = membershipPlan?.account?.planName {
+            return "\(planName) info"
+        }
+        return nil
+    }
+    
+    var shouldShowInfoButton: Bool {
+        return infoButtonText != nil
     }
 }
 
@@ -37,20 +54,22 @@ struct BinkFormView: View {
                     .resizable()
                     .frame(width: 100, height: 100, alignment: .center)
                     .aspectRatio(contentMode: .fit)
-                Text("Placeholder")
-                    .font(.custom(UIFont.linkTextButtonNormal.fontName, size: UIFont.linkTextButtonNormal.pointSize))
-                    .foregroundColor(Color(.blueAccent))
+                
+                if viewModel.shouldShowInfoButton {
+                    Text(viewModel.infoButtonText ?? "")
+                        .font(.custom(UIFont.linkTextButtonNormal.fontName, size: UIFont.linkTextButtonNormal.pointSize))
+                        .foregroundColor(Color(.blueAccent))
+                }
+
 
                 VStack(alignment: .leading, spacing: 5, content: {
-                    Text("Placeholder")
+                    Text(viewModel.titleText ?? "")
                         .font(.custom(UIFont.headline.fontName, size: UIFont.headline.pointSize))
                         .multilineTextAlignment(.leading)
                     Text(viewModel.descriptionText ?? "")
                         .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
                 })
-            }
-            
-            VStack(alignment: .center, spacing: 20) {
+                
                 ForEach(viewModel.datasource.fields) { field in
                     if #available(iOS 14.0, *) {
                         BinkTextfieldView(field: field)
@@ -61,11 +80,12 @@ struct BinkFormView: View {
                     }
                 }
             }
-            .background(Color(UIColor.binkWhiteViewBackground))
+            .padding(EdgeInsets(top: 20, leading: 25, bottom: 150, trailing: 25))
+
         }
-        .padding(.horizontal, 30.0)
-//        .padding(20.0)
         .background(Color(UIColor.binkWhiteViewBackground))
+        .padding(.bottom, viewModel.keyboardHeight)
+        .onReceive(Publishers.keyboardHeight, perform: { self.viewModel.keyboardHeight = $0 })
     }
 }
 
@@ -75,7 +95,6 @@ struct BinkTextfieldView: View {
     @State private var isEditing = false
     @State var value: String = ""
     @State var showErrorState = false
-    @State private var keyboardHeight: CGFloat = 0
     
     init(field: FormField) {
 //        self.datasource = datasource
@@ -166,8 +185,6 @@ struct BinkTextfieldView: View {
                 }
             }
         }
-        .padding(.bottom, keyboardHeight)
-        .onReceive(Publishers.keyboardHeight, perform: { self.keyboardHeight = $0 })
     }
     
     // MARK: - Helper Methods
@@ -206,7 +223,7 @@ struct BinkFormView_Previews: PreviewProvider {
             ZStack {
 //                Rectangle()
 //                    .foregroundColor(Color(UIColor.grey10))
-                BinkFormView(viewModel: FormViewModel(datasource: datasourceMock, descriptionText: "Description text"))
+                BinkFormView(viewModel: FormViewModel(datasource: datasourceMock, title: "Title text", description: "Im a description", membershipPlan: nil))
 //                    .preferredColorScheme(.light)
             }
         }
@@ -214,16 +231,13 @@ struct BinkFormView_Previews: PreviewProvider {
 }
 
 extension Publishers {
-    // 1.
     static var keyboardHeight: AnyPublisher<CGFloat, Never> {
-        // 2.
         let willShow = NotificationCenter.default.publisher(for: UIApplication.keyboardWillShowNotification)
             .map { $0.keyboardHeight }
         
         let willHide = NotificationCenter.default.publisher(for: UIApplication.keyboardWillHideNotification)
             .map { _ in CGFloat(0) }
         
-        // 3.
         return MergeMany(willShow, willHide)
             .eraseToAnyPublisher()
     }

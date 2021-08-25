@@ -21,7 +21,7 @@ struct AuthAndAddView: View {
     }
     
     var body: some View {
-        BinkFormView(viewModel: FormViewModel(datasource: datasource, descriptionText: viewModel.getDescription()))
+        BinkFormView(viewModel: FormViewModel(datasource: datasource, title: viewModel.title, description: viewModel.getDescription(), membershipPlan: viewModel.getMembershipPlan()))
     }
 }
 
