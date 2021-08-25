@@ -26,12 +26,12 @@ final class FormViewModel: ObservableObject {
     var descriptionText: String?
     var membershipPlan: CD_MembershipPlan?
     
-    init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan?) {
+    init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan?, colorScheme: ColorScheme) {
         self.datasource = datasource
         self.titleText = title
         self.descriptionText = description
         self.membershipPlan = membershipPlan
-        configureBrandImage()
+        configureBrandImage(colorScheme: colorScheme)
     }
     
     var infoButtonText: String? {
@@ -49,9 +49,9 @@ final class FormViewModel: ObservableObject {
         return membershipPlan != nil
     }
     
-    func configureBrandImage() {
+    func configureBrandImage(colorScheme: ColorScheme) {
         guard let plan = membershipPlan else { return }
-        ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil) { uiImage in
+        ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil, colorScheme: colorScheme) { uiImage in
             if let uiImage = uiImage {
                 self.brandImage = Image(uiImage: uiImage)
             }
@@ -64,7 +64,6 @@ struct BinkFormView: View {
         static let vStackInsets = EdgeInsets(top: 20, leading: 25, bottom: 150, trailing: 25)
     }
     
-    @Environment(\.colorScheme) var colorScheme
     @ObservedObject var viewModel: FormViewModel
     var plan: CD_MembershipPlan!
 
@@ -252,7 +251,7 @@ struct BinkFormView_Previews: PreviewProvider {
             ZStack {
 //                Rectangle()
 //                    .foregroundColor(Color(UIColor.grey10))
-                BinkFormView(viewModel: FormViewModel(datasource: datasourceMock, title: "Title text", description: "Im a description", membershipPlan: nil))
+                BinkFormView(viewModel: FormViewModel(datasource: datasourceMock, title: "Title text", description: "Im a description", membershipPlan: nil, colorScheme: ColorScheme.light))
 //                    .preferredColorScheme(.light)
             }
         }
