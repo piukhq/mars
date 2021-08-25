@@ -37,7 +37,7 @@ class BaseFormViewController: BinkViewController, FormDelegate, ObservableObject
         return collectionView
     }()
     
-    private lazy var formView = makeFormView()
+//    private lazy var formView = makeFormView()
     
     lazy var stackScrollView: StackScrollView = {
         let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [titleLabel, descriptionLabel, textView], adjustForKeyboard: true)
@@ -95,7 +95,7 @@ class BaseFormViewController: BinkViewController, FormDelegate, ObservableObject
 //            collectionView.dataSource = dataSource
 //            collectionView.reloadData()
 //            configureFormView(with: dataSource, update: true)
-            formView.rootView = BinkFormView(datasource: dataSource)
+//            formView.rootView = BinkFormView(datasource: dataSource)
             configureCheckboxes()
         }
     }
@@ -132,7 +132,7 @@ class BaseFormViewController: BinkViewController, FormDelegate, ObservableObject
         configureLayout()
 //        configureFormView(with: dataSource)
         
-        stackScrollView.add(arrangedSubview: formView.view)
+//        stackScrollView.add(arrangedSubview: formView.view)
 
         configureCheckboxes()
 
@@ -171,16 +171,16 @@ class BaseFormViewController: BinkViewController, FormDelegate, ObservableObject
 //        }
 //    }
     
-    func makeFormView() -> UIHostingController<BinkFormView> {
-        let formView = BinkFormView(datasource: dataSource)
-        let formController = UIHostingController(rootView: formView)
-        addChild(formController)
-        formController.didMove(toParent: self)
-        formController.view.translatesAutoresizingMaskIntoConstraints = false
-        
-        stackScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Constants.bottomInset, right: 0)
-        return UIHostingController(rootView: formView)
-    }
+//    func makeFormView() -> UIHostingController<BinkFormView> {
+//        let formView = BinkFormView(datasource: dataSource)
+//        let formController = UIHostingController(rootView: formView)
+//        addChild(formController)
+//        formController.didMove(toParent: self)
+//        formController.view.translatesAutoresizingMaskIntoConstraints = false
+//
+//        stackScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Constants.bottomInset, right: 0)
+//        return UIHostingController(rootView: formView)
+//    }
     
     private func configureLayout() {
         NSLayoutConstraint.activate([

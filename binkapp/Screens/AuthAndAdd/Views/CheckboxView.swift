@@ -5,6 +5,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
+import SwiftUI
 import UIKit
 
 protocol CheckboxViewDelegate: NSObjectProtocol {
@@ -17,14 +18,27 @@ extension CheckboxViewDelegate {
     func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {}
 }
 
-class CheckboxView: CustomView {
+struct CheckboxSwiftUIVIew: UIViewRepresentable {
+    var checkbox: CheckboxView
+    @Binding var checkedState: Bool
+    
+    func makeUIView(context: Context) -> CheckboxView {
+        return checkbox
+    }
+    
+    func updateUIView(_ uiView: UIViewType, context: Context) {
+        uiView.checkedState = checkedState
+    }
+}
+
+class CheckboxView: CustomView, Identifiable, ObservableObject {
     typealias TextAction = () -> Void
     @IBOutlet private weak var checkboxButton: UIButton!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var textView: UITextView!
     @IBOutlet private weak var textViewLeadingConstraint: NSLayoutConstraint!
     
-    private var checkedState = false
+    @Published var checkedState = false
     private(set) var hideCheckbox = false
     private(set) var optional = false
     private(set) var columnName: String?

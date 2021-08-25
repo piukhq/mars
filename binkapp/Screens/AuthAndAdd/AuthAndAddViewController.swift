@@ -173,11 +173,19 @@ extension AuthAndAddViewController: FormDataSourceDelegate {
         viewModel.formPurpose = .add
         formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
     }
+    
+    // Swift UI
+    
+    func formViewDidSelectField(_ view: BinkTextfieldView) {
+//        let cellOrigin = collectionView.convert(cell.frame.origin, to: view)
+//        self.selectedCellYOrigin = cellOrigin.y
+//        selectedCellHeight = cell.isValidationLabelHidden ? cell.frame.size.height + Constants.cellErrorLabelSafeSpacing : cell.frame.size.height
+    }
 }
 
 extension AuthAndAddViewController: LoyaltyButtonDelegate {
     func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
-        viewModel.brandHeaderWasTapped()
+//        viewModel.brandHeaderWasTapped()
     }
 }
 

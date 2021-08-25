@@ -21,6 +21,7 @@ final class FormViewModel: ObservableObject {
     @Published var datasource: FormDataSource
     @Published var brandImage: Image?
     @State var keyboardHeight: CGFloat = 0
+    @State var checkboxes: [CheckboxSwiftUIVIew] = []
 
     var titleText: String?
     var descriptionText: String?
@@ -45,12 +46,27 @@ final class FormViewModel: ObservableObject {
         return infoButtonText != nil
     }
     
+    // >> Trying to figure out how to notify viewmodel or view of checkbox change <<<<<<<<<<
+    var fullFormIsValid: Bool {
+        let formFieldsValid = datasource.fields.allSatisfy({ $0.isValid() })
+        var checkboxesValid = true
+        datasource.checkboxes.forEach { checkbox in
+            if checkbox.columnKind == FormField.ColumnKind.planDocument || checkbox.columnKind == FormField.ColumnKind.none {
+                if !checkbox.isValid {
+                    checkboxesValid = false
+                }
+            }
+        }
+        
+        return formFieldsValid && checkboxesValid
+    }
+
+    
 //    var shouldShowBrandImage: Bool {
 //        return membershipPlan != nil
 //    }
     
     func configureBrandImage(colorScheme: ColorScheme) {
-//        guard let plan = membershipPlan else { return }
         ImageService.getImage(forPathType: .membershipPlanIcon(plan: membershipPlan), traitCollection: nil, colorScheme: colorScheme) { uiImage in
             if let uiImage = uiImage {
                 self.brandImage = Image(uiImage: uiImage)
@@ -71,6 +87,7 @@ struct BinkFormView: View {
     }
     
     @ObservedObject var viewModel: FormViewModel
+    @State var checkedStateDidChange = false
     var plan: CD_MembershipPlan!
 
     var body: some View {
@@ -101,8 +118,14 @@ struct BinkFormView: View {
                         .multilineTextAlignment(.leading)
                     Text(viewModel.descriptionText ?? "")
                         .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
+                    
+                    Button(action: {}, label: {
+                        Text("Button")
+                    })
+                    .disabled(viewModel.datasource.fullFormIsValid)
                 })
                 
+                // Textfields
                 ForEach(viewModel.datasource.fields) { field in
                     if #available(iOS 14.0, *) {
                         BinkTextfieldView(field: field)
@@ -110,6 +133,14 @@ struct BinkFormView: View {
                             .keyboardType(field.fieldType.keyboardType())
                     } else {
                         BinkTextfieldView(field: field)
+                    }
+                }
+                
+                // Checkboxes
+                VStack(spacing: -10) {
+                    ForEach(viewModel.datasource.checkboxes) { checkbox in
+                        CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $checkedStateDidChange)
+                            .padding(.horizontal, 10)
                     }
                 }
             }

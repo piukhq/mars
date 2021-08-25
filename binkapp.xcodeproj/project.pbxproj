@@ -1906,7 +1906,7 @@
 			isa = PBXGroup;
 			children = (
 				701E2C492677567E003F903B /* DebugMenuView.swift */,
-				CE81AAB026CC0A4600102283 /* BinkFormView.swift */,
+				CE81AAB426D687F100102283 /* FormView */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -2369,6 +2369,14 @@
 				CEE20926268E1E76004D3759 /* QuickLaunch */,
 			);
 			path = BinkWidget;
+			sourceTree = "<group>";
+		};
+		CE81AAB426D687F100102283 /* FormView */ = {
+			isa = PBXGroup;
+			children = (
+				CE81AAB026CC0A4600102283 /* BinkFormView.swift */,
+			);
+			path = FormView;
 			sourceTree = "<group>";
 		};
 		CE85A1FF26B1535B003B74CD /* Animations */ = {

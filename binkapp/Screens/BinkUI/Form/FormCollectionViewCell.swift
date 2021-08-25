@@ -50,7 +50,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         cameraButton.imageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         cameraButton.setImage(Asset.scanIcon.image, for: .normal)
         cameraButton.imageView?.contentMode = .scaleAspectFill
-        cameraButton.addTarget(self, action: .handleScanButtonTap, for: .touchUpInside)
+//        cameraButton.addTarget(self, action: .handleScanButtonTap, for: .touchUpInside)
         cameraButton.translatesAutoresizingMaskIntoConstraints = false
         cameraButton.setContentHuggingPriority(.required, for: .horizontal)
         return cameraButton
@@ -264,13 +264,13 @@ class FormCollectionViewCell: UICollectionViewCell {
         textField.text = selectedDate
     }
     
-    @objc func handleScanButtonTap() {
-        if formField?.fieldType == .paymentCardNumber {
-            delegate?.formCollectionViewCellDidReceivePaymentScannerButtonTap(self)
-        } else {
-            delegate?.formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(self)
-        }
-    }
+//    @objc func handleScanButtonTap() {
+//        if formField?.fieldType == .paymentCardNumber {
+//            delegate?.formCollectionViewCellDidReceivePaymentScannerButtonTap(self)
+//        } else {
+//            delegate?.formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(self)
+//        }
+//    }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         // In order to allow a field to appear disabled, but allow the clear button to still be functional, we cannot make the textfield disabled
@@ -331,5 +331,5 @@ extension FormCollectionViewCell: FormMultipleChoiceInputDelegate {
 fileprivate extension Selector {
     static let textFieldUpdated = #selector(FormCollectionViewCell.textFieldUpdated(_:text:backingData:))
     static let accessoryDoneTouchUpInside = #selector(FormCollectionViewCell.accessoryDoneTouchUpInside)
-    static let handleScanButtonTap = #selector(FormCollectionViewCell.handleScanButtonTap)
+//    static let handleScanButtonTap = #selector(FormCollectionViewCell.handleScanButtonTap)
 }

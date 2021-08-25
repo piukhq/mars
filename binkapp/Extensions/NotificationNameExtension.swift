@@ -6,7 +6,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension Notification.Name {
     static let noInternetConnection = Notification.Name("no_internet_connection")
@@ -32,4 +32,10 @@ extension Notification.Name {
 
     // MARK: - Theming
     static let themeManagerDidSetTheme = Notification.Name("theme_manager_did_set_theme")
+}
+
+extension Notification {
+    var keyboardHeight: CGFloat {
+        return (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect)?.height ?? 0
+    }
 }
