@@ -379,12 +379,6 @@ class AuthAndAddViewModel: ObservableObject {
         Current.navigate.to(navigationRequest)
     }
     
-    func brandHeaderWasTapped() {
-        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: membershipPlan)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
-        Current.navigate.to(navigationRequest)
-    }
-    
     func displaySimplePopup(title: String?, message: String?) {
         let alert = ViewControllerFactory.makeOkAlertViewController(title: title, message: message)
         Current.navigate.to(AlertNavigationRequest(alertController: alert))

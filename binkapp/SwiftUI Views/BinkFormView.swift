@@ -24,9 +24,9 @@ final class FormViewModel: ObservableObject {
 
     var titleText: String?
     var descriptionText: String?
-    var membershipPlan: CD_MembershipPlan?
+    let membershipPlan: CD_MembershipPlan
     
-    init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan?, colorScheme: ColorScheme) {
+    init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan, colorScheme: ColorScheme) {
         self.datasource = datasource
         self.titleText = title
         self.descriptionText = description
@@ -35,7 +35,7 @@ final class FormViewModel: ObservableObject {
     }
     
     var infoButtonText: String? {
-        if let planName = membershipPlan?.account?.planName {
+        if let planName = membershipPlan.account?.planName {
             return "\(planName) info"
         }
         return nil
@@ -45,17 +45,23 @@ final class FormViewModel: ObservableObject {
         return infoButtonText != nil
     }
     
-    var shouldShowBrandImage: Bool {
-        return membershipPlan != nil
-    }
+//    var shouldShowBrandImage: Bool {
+//        return membershipPlan != nil
+//    }
     
     func configureBrandImage(colorScheme: ColorScheme) {
-        guard let plan = membershipPlan else { return }
-        ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil, colorScheme: colorScheme) { uiImage in
+//        guard let plan = membershipPlan else { return }
+        ImageService.getImage(forPathType: .membershipPlanIcon(plan: membershipPlan), traitCollection: nil, colorScheme: colorScheme) { uiImage in
             if let uiImage = uiImage {
                 self.brandImage = Image(uiImage: uiImage)
             }
         }
+    }
+    
+    func infoButtonWasTapped() {
+        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: membershipPlan)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 }
 
@@ -70,10 +76,6 @@ struct BinkFormView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .center, spacing: 20.0) {
-//                if colorScheme == .dark {
-//
-//                }
-
                 viewModel.brandImage?
                     .resizable()
                     .frame(width: 70, height: 70, alignment: .center)
@@ -81,7 +83,7 @@ struct BinkFormView: View {
                 
                 if viewModel.shouldShowInfoButton {
                     Button(action: {
-                        // TODO: - Open info view
+                        viewModel.infoButtonWasTapped()
                     }, label: {
                         Text(viewModel.infoButtonText ?? "")
                             .font(.custom(UIFont.linkTextButtonNormal.fontName, size: UIFont.linkTextButtonNormal.pointSize))
@@ -205,7 +207,7 @@ struct BinkTextfieldView: View {
             if field.fieldType.isSecureTextEntry {
                 // TODO: - Validation point TextViews
             } else {
-                if textfieldValidationPassed(value: $value) {
+                if textfieldValidationFailed(value: $value) {
                     Text(field.validationErrorMessage ?? L10n.formFieldValidationError)
                         .font(.custom(UIFont.textFieldExplainer.fontName, size: UIFont.textFieldExplainer.pointSize))
                         .foregroundColor(Color(.errorRed))
@@ -217,7 +219,7 @@ struct BinkTextfieldView: View {
     
     // MARK: - Helper Methods
     
-    private func textfieldValidationPassed(value: Binding<String>) -> Bool {
+    private func textfieldValidationFailed(value: Binding<String>) -> Bool {
         field.updateValue(value.wrappedValue)
         guard showErrorState else { return false }
         return !field.isValid() && !value.wrappedValue.isEmpty
@@ -228,7 +230,7 @@ struct BinkTextfieldView: View {
         if isEditing {
             color = .activeBlue
             
-            if textfieldValidationPassed(value: $value) {
+            if textfieldValidationFailed(value: $value) {
                 color = .errorRed
             }
         } else {
@@ -251,7 +253,7 @@ struct BinkFormView_Previews: PreviewProvider {
             ZStack {
 //                Rectangle()
 //                    .foregroundColor(Color(UIColor.grey10))
-                BinkFormView(viewModel: FormViewModel(datasource: datasourceMock, title: "Title text", description: "Im a description", membershipPlan: nil, colorScheme: ColorScheme.light))
+//                BinkFormView(viewModel: FormViewModel(datasource: datasourceMock, title: "Title text", description: "Im a description", membershipPlan: nil, colorScheme: ColorScheme.light))
 //                    .preferredColorScheme(.light)
             }
         }
