@@ -19,6 +19,7 @@ let datasourceMock = FormDataSource(PaymentCardCreateModel(fullPan: nil, nameOnC
 
 final class FormViewModel: ObservableObject {
     @Published var datasource: FormDataSource
+    @Published var brandImage: Image?
     @State var keyboardHeight: CGFloat = 0
 
     var titleText: String?
@@ -30,6 +31,7 @@ final class FormViewModel: ObservableObject {
         self.titleText = title
         self.descriptionText = description
         self.membershipPlan = membershipPlan
+        configureBrandImage()
     }
     
     var infoButtonText: String? {
@@ -42,6 +44,19 @@ final class FormViewModel: ObservableObject {
     var shouldShowInfoButton: Bool {
         return infoButtonText != nil
     }
+    
+    var shouldShowBrandImage: Bool {
+        return membershipPlan != nil
+    }
+    
+    func configureBrandImage() {
+        guard let plan = membershipPlan else { return }
+        ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil) { uiImage in
+            if let uiImage = uiImage {
+                self.brandImage = Image(uiImage: uiImage)
+            }
+        }
+    }
 }
 
 struct BinkFormView: View {
@@ -49,18 +64,26 @@ struct BinkFormView: View {
         static let vStackInsets = EdgeInsets(top: 20, leading: 25, bottom: 150, trailing: 25)
     }
     
+    @Environment(\.colorScheme) var colorScheme
     @ObservedObject var viewModel: FormViewModel
+    var plan: CD_MembershipPlan!
 
     var body: some View {
         ScrollView {
             VStack(alignment: .center, spacing: 20.0) {
-                Image(Asset.amex.name)
+//                if colorScheme == .dark {
+//
+//                }
+
+                viewModel.brandImage?
                     .resizable()
-                    .frame(width: 100, height: 100, alignment: .center)
+                    .frame(width: 70, height: 70, alignment: .center)
                     .aspectRatio(contentMode: .fit)
                 
                 if viewModel.shouldShowInfoButton {
-                    Button(action: {}, label: {
+                    Button(action: {
+                        // TODO: - Open info view
+                    }, label: {
                         Text(viewModel.infoButtonText ?? "")
                             .font(.custom(UIFont.linkTextButtonNormal.fontName, size: UIFont.linkTextButtonNormal.pointSize))
                         Image(uiImage: Asset.iconsChevronRight.image.withRenderingMode(.alwaysTemplate))
