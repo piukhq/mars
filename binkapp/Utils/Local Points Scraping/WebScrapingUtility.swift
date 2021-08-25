@@ -12,6 +12,13 @@ import WebKit
 struct WebScrapingCredentials {
     let username: String
     let password: String
+    let cardNumber: String?
+    
+    init(username: String, password: String, cardNumber: String? = nil) {
+        self.username = username
+        self.password = password
+        self.cardNumber = cardNumber
+    }
 }
 
 struct PriorityScrapableCard: Equatable {
