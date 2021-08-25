@@ -297,7 +297,6 @@ class PointsScrapingManager {
     
     func handleLogout() {
         webScrapingUtility?.stop()
-        webScrapingUtility = nil
         processingQueue.removeAll()
         fetchPointsScrapableMembershipCards { cards in
             cards?.compactMap { $0.id }.forEach { id in
@@ -309,7 +308,6 @@ class PointsScrapingManager {
     func handleDelete(for card: CD_MembershipCard) {
         if isCurrentlyScraping(forMembershipCard: card) {
             webScrapingUtility?.stop()
-            webScrapingUtility = nil
         }
         processingQueue.removeAll(where: { $0.card == card })
         disableLocalPointsScraping(forMembershipCardId: card.id)
