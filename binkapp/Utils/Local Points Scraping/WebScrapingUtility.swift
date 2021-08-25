@@ -12,6 +12,13 @@ import WebKit
 struct WebScrapingCredentials {
     let username: String
     let password: String
+    let cardNumber: String?
+    
+    init(username: String, password: String, cardNumber: String? = nil) {
+        self.username = username
+        self.password = password
+        self.cardNumber = cardNumber
+    }
 }
 
 struct PriorityScrapableCard: Equatable {
@@ -320,7 +327,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
             configString = WebScrapingStateConfigurator.skipLogin.rawValue
         }
         
-        let formattedScript = String(format: script, credentials.username, credentials.password, configString)
+        let formattedScript = String(format: script, credentials.username, credentials.password, configString, credentials.cardNumber ?? "")
         runScript(formattedScript) { [weak self] result in
             guard let self = self else { return }
             switch result {
