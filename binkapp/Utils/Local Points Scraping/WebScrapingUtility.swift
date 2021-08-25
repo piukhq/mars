@@ -327,7 +327,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
             configString = WebScrapingStateConfigurator.skipLogin.rawValue
         }
         
-        let formattedScript = String(format: script, credentials.username, credentials.password, configString)
+        let formattedScript = String(format: script, credentials.username, credentials.password, configString, credentials.cardNumber ?? "")
         runScript(formattedScript) { [weak self] result in
             guard let self = self else { return }
             switch result {

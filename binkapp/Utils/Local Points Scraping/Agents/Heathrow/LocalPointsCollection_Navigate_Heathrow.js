@@ -1,5 +1,6 @@
 var username = "%@"
 var password = "%@"
+var config = "%@"
 var cardNumber = "%@"
 
 var formQuery = "form#login-form"
