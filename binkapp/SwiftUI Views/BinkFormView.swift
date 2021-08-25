@@ -45,6 +45,10 @@ final class FormViewModel: ObservableObject {
 }
 
 struct BinkFormView: View {
+    enum Constants {
+        static let vStackInsets = EdgeInsets(top: 20, leading: 25, bottom: 150, trailing: 25)
+    }
+    
     @ObservedObject var viewModel: FormViewModel
 
     var body: some View {
@@ -56,9 +60,14 @@ struct BinkFormView: View {
                     .aspectRatio(contentMode: .fit)
                 
                 if viewModel.shouldShowInfoButton {
-                    Text(viewModel.infoButtonText ?? "")
-                        .font(.custom(UIFont.linkTextButtonNormal.fontName, size: UIFont.linkTextButtonNormal.pointSize))
-                        .foregroundColor(Color(.blueAccent))
+                    Button(action: {}, label: {
+                        Text(viewModel.infoButtonText ?? "")
+                            .font(.custom(UIFont.linkTextButtonNormal.fontName, size: UIFont.linkTextButtonNormal.pointSize))
+                        Image(uiImage: Asset.iconsChevronRight.image.withRenderingMode(.alwaysTemplate))
+                            .resizable()
+                            .frame(width: 10, height: 10, alignment: .center)
+                    })
+                    .foregroundColor(Color(.blueAccent))
                 }
 
 
@@ -80,8 +89,7 @@ struct BinkFormView: View {
                     }
                 }
             }
-            .padding(EdgeInsets(top: 20, leading: 25, bottom: 150, trailing: 25))
-
+            .padding(Constants.vStackInsets)
         }
         .background(Color(UIColor.binkWhiteViewBackground))
         .padding(.bottom, viewModel.keyboardHeight)
@@ -90,14 +98,12 @@ struct BinkFormView: View {
 }
 
 struct BinkTextfieldView: View {
-//    @State var datasource: FormDataSource
     @State var field: FormField
     @State private var isEditing = false
     @State var value: String = ""
     @State var showErrorState = false
     
     init(field: FormField) {
-//        self.datasource = datasource
         self.field = field
         UITextField.appearance().clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
     }
