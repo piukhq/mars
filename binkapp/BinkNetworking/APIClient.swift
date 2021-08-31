@@ -218,6 +218,13 @@ private extension APIClient {
         }
         
         if let error = response.error {
+            if case .linkMembershipCardToPaymentCard = endpoint {
+                guard let data = response.data else { return }
+                let body = String(data: data, encoding: .utf8)
+                completion?(.failure(.customError(body ?? "")), networkResponseData)
+                return
+            }
+            
             completion?(.failure(.customError(error.localizedDescription)), networkResponseData)
             return
         }
@@ -231,11 +238,9 @@ private extension APIClient {
                 return
             }
 
-            #if DEBUG
             if Current.userDefaults.bool(forDefaultsKey: .responseCodeVisualiser) {
                 DebugInfoAlertView.show("HTTP status code \(statusCode)", type: successStatusRange.contains(statusCode) ? .success : .failure)
             }
-            #endif
 
             guard let data = response.data else {
                 completion?(.failure(.invalidResponse), networkResponseData)
@@ -306,11 +311,9 @@ private extension APIClient {
             return
         }
         
-        #if DEBUG
         if Current.userDefaults.bool(forDefaultsKey: .responseCodeVisualiser) {
             DebugInfoAlertView.show("HTTP status code \(statusCode)", type: successStatusRange.contains(statusCode) ? .success : .failure)
         }
-        #endif
 
         if statusCode == unauthorizedStatus && endpoint.shouldRespondToUnauthorizedStatus {
             // Unauthorized response
