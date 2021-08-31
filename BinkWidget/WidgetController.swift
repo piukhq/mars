@@ -31,15 +31,21 @@ class WidgetController {
         if #available(iOS 14.0, *) {
             switch type {
             case .quickLaunch:
-                WidgetCenter.shared.reloadTimelines(ofKind: WidgetType.quickLaunch.identifier)
+                WidgetCenter.shared.reloadTimelines(ofKind: type.identifier)
             }
         }
     }
     
-    func handleURLForWidgetType(type: WidgetType, urlPath: String) {
+    func handleURLForWidgetType(type: WidgetType, url: URL) {
         isPerformingNavigation = true
+        guard let urlPath = url.host?.removingPercentEncoding else { return }
         self.urlPath = urlPath
         
+        if #available(iOS 14.0, *) {
+            let widgetType = WidgetType(rawValue: url.scheme ?? "")
+            BinkAnalytics.track(WidgetAnalyticsEvent.widgetLaunch(urlPath: urlPath, widgetType: widgetType))
+        }
+     
         switch type {
         case .quickLaunch:
             Current.navigate.closeShieldView {

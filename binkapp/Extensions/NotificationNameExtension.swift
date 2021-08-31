@@ -28,7 +28,7 @@ extension Notification.Name {
     static let logoutOutage = Notification.Name("logout_outage")
     
     // MARK: - Local points scraping
-    static let webScrapingUtilityDidComplete = Notification.Name("web_scraping_utility_did_complete")
+    static let webScrapingUtilityDidUpdate = Notification.Name("web_scraping_utility_did_complete")
 
     // MARK: - Theming
     static let themeManagerDidSetTheme = Notification.Name("theme_manager_did_set_theme")

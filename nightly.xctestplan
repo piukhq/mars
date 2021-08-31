@@ -1,0 +1,100 @@
+{
+  "configurations" : [
+    {
+      "id" : "03D722F6-1A8E-42BC-899B-F003FD0CC3A7",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:binkapp.xcodeproj",
+        "identifier" : "5ECE047E22CE579B001BA964",
+        "name" : "binkappTests"
+      }
+    },
+    {
+      "selectedTests" : [
+        "AutomatedTesting_4_GoToSite\/test_00_loginToProduction()",
+        "AutomatedTesting_4_GoToSite\/test_01_coOp_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_03_harveyNichols_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_04_iceland_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_05_wasabi_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_07_morrisons_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_08_superdrug_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_09_tesco_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_10_waterstones_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_12_alitaliaMilleMiglia_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_13_asiaMiles_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_14_bAndQ_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_15_beales_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_16_beefeater_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_18_boost_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_19_boots_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_20_brewersFayre_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_21_britishAirways_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_22_clubIndvidual_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_23_costa_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_24_cotswoldOutdoor_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_25_debenhams_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_26_esprit_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_27_esquires_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_28_eurostar_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_29_foyles_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_30_goOutdoors_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_31_grosvenorCasinos_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_32_hAndM_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_33_harrods_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_34_heathrow_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_35_hiltonHonors_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_36_hollandAndBarett_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_37_hotelChocolat_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_38_houseOfFraser_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_39_iberia_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_40_ikeaFamily_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_41_johnLewis_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_42_kfc_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_43_krispyKreme_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_44_mAndCo_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_45_malaysiaAirlines_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_46_marksAndSpencer_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_47_matalan_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_48_monsoon_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_49_nandos_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_50_nationalTrust_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_51_nectar_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_52_odeon_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_53_paperchase_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_54_petsAtHome_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_56_russellAndBromley_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_57_shell_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_58_singaporeAirlines_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_59_spaceNK_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_60_starbucks_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_61_subway_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_62_swissAir_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_63_tableTable_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_64_texaco_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_65_theBodyShop_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_66_thePerfumeShop_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_67_theWorks_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_68_tkMaxx_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_69_towsure_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_70_waitrose_goToSite_loadsWebpage_successfully()",
+        "AutomatedTesting_4_GoToSite\/test_loginToProduction()"
+      ],
+      "target" : {
+        "containerPath" : "container:binkapp.xcodeproj",
+        "identifier" : "5ECE048922CE579B001BA964",
+        "name" : "binkappUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

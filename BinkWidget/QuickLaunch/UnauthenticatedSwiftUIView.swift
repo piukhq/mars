@@ -17,19 +17,20 @@ struct UnauthenticatedSwiftUIView: View {
     }
     
     var body: some View {
-        HStack(alignment: .center, spacing: 0) {
-            Image("bink-logo")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: Constants.ImageWidth)
-            Spacer()
-                .frame(width: Constants.SpacerWidth)
-            Text("Tap to sign in\n to Bink")
-                .font(.system(size: Constants.TextSize))
-                .fontWeight(.medium)
-                .multilineTextAlignment(.trailing)
-        }
-        .padding(.vertical, Constants.VerticalPadding)
-        .background(Color("UnAuthWidgetBackground"))
+            HStack(alignment: .center, spacing: 0) {
+                Image("bink-logo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: Constants.ImageWidth)
+                Spacer()
+                    .frame(width: Constants.SpacerWidth)
+                Text("Tap to sign in\n to Bink")
+                    .font(.system(size: Constants.TextSize))
+                    .fontWeight(.medium)
+                    .multilineTextAlignment(.trailing)
+            }
+            .padding(.vertical, Constants.VerticalPadding)
+            .background(Color("UnAuthWidgetBackground"))
+            .widgetURL(URL(string: WidgetType.quickLaunch.rawValue + "://sign_in"))
     }
 }

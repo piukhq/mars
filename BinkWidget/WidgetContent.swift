@@ -11,13 +11,14 @@ import SwiftUI
 import WidgetKit
 
 enum WidgetUrlPath: String {
-    case addCard
+    case addCard = "add_button"
+    case signIn = "sign_in"
     case spacerZero
     case spacerOne
 }
 
-enum WidgetType {
-    case quickLaunch
+enum WidgetType: String, CaseIterable {
+    case quickLaunch = "quicklaunch-widget"
     
     var identifier: String {
         switch self {
@@ -32,6 +33,17 @@ enum WidgetType {
             return "group.com.bink.wallet"
         }
     }
+    
+    func isInstalled(widgetIDs: [String]) -> Bool {
+        if widgetIDs.contains(identifier) {
+            return true
+        }
+        return false
+    }
+    
+    static func widgetTypeFromID(_ id: String) -> WidgetType? {
+        return allCases.first(where: { $0.identifier == id })
+    }
 }
 
 struct WidgetContent: TimelineEntry, Codable {
@@ -45,6 +57,6 @@ struct MembershipCardWidget: Hashable, Codable {
     let imageData: Data?
     let backgroundColor: String?
     var url: URL {
-        URL(string: "quicklaunch-widget://" + id) ?? URL(string: "quicklaunch-widget://")!
+        URL(string: WidgetType.quickLaunch.rawValue + "://" + id) ?? URL(string: WidgetType.quickLaunch.rawValue + "://")!
     }
 }
