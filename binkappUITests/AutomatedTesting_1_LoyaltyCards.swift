@@ -22,6 +22,8 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
     
     func test_0_addIcelandCard_isSuccessful() {
         sleep(10)
+        AutomatedTesting.loginIntoEnvironment(type: .dev)
+        sleep(30)
         app.buttons["Browse brands"].tap()
         sleep(10)
         app.tables.cells["Iceland"].tap()
@@ -44,15 +46,12 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
         
         sleep(60)
         
-        // Pull to refresh
-        let icelandCell = app.collectionViews.cells["Iceland"]
-        let start = icelandCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
-        let finish = icelandCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 50))
-        start.press(forDuration: 0, thenDragTo: finish)
+        AutomatedTesting.pullToRefresh(from: .iceland)
         
         sleep(15)
         
-        icelandCell.tap()
+        app.collectionViews.cells["Iceland"].tap()
+
         XCTAssertTrue(app.staticTexts["£1 "].waitForExistence(timeout: 30))
     }
     
@@ -88,10 +87,7 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
     }
     
     func test_4_cardsAreVisibleAfterPullToRefresh_isTrue() {
-        let bAndQCell = app.collectionViews.cells["B&Q"]
-        let start = bAndQCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
-        let finish = bAndQCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 50))
-        start.press(forDuration: 0, thenDragTo: finish)
+        AutomatedTesting.pullToRefresh(from: .bAndQ)
         
         sleep(10)
         

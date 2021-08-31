@@ -22,10 +22,8 @@ class AutomatedTesting_0_Login: XCTestCase {
     
     
     func test0_loginScreenOnAppLaunch_exists() {
-        if !app.buttons["Log in"].exists {
-            AutomatedTesting.logout()
-        }
-        XCTAssertTrue(app.buttons["Log in"].waitForExistence(timeout: 20), "Login button does not exist")
+        AutomatedTesting.logout()
+        XCTAssertTrue(app.buttons["Continue with Email"].waitForExistence(timeout: 20), "Login button does not exist")
     }
     
     func test2_loginWithEmailAndPassword() {
