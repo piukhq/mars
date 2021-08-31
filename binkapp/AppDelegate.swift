@@ -114,7 +114,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         if url.absoluteString.starts(with: "bink://magiclink?token=") {
             universalLinkUtility.handleLink(for: url)
         } else {
-            widgetController.handleURLForWidgetType(type: .quickLaunch, url: url)
+            guard let urlPath = url.host?.removingPercentEncoding else { return false }
+            widgetController.handleURLForWidgetType(type: .quickLaunch, urlPath: urlPath)
         }
         return true
     }
