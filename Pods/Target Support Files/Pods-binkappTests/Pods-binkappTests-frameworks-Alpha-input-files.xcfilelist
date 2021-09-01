@@ -1,7 +1,6 @@
 ${PODS_ROOT}/Target Support Files/Pods-binkappTests/Pods-binkappTests-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/CardScan/CardScan.framework
 ${BUILT_PRODUCTS_DIR}/DTTJailbreakDetection/DTTJailbreakDetection.framework
-${BUILT_PRODUCTS_DIR}/Disk/Disk.framework
 ${BUILT_PRODUCTS_DIR}/JWTDecode/JWTDecode.framework
 ${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework
 ${BUILT_PRODUCTS_DIR}/ZXingObjC/ZXingObjC.framework
