@@ -98,7 +98,7 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.5.1):
     - GoogleUtilities/Logger
-  - JWTDecode (2.6.0)
+  - JWTDecode (2.6.2)
   - KeychainAccess (4.2.2)
   - Keys (1.0.1)
   - nanopb (2.30908.0):
@@ -140,7 +140,7 @@ DEPENDENCIES:
   - Firebase (~> 8.6)
   - Firebase/Analytics (~> 8.6)
   - Firebase/RemoteConfig (~> 8.6)
-  - JWTDecode (~> 2.6.0)
+  - JWTDecode (~> 2.6.2)
   - KeychainAccess (~> 4.2)
   - Keys (from `Pods/CocoaPodsKeys`)
   - SwiftGen (~> 6.4)
@@ -216,7 +216,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 2c0c6e2a7ab3fe730ade6379f732bdefb46f50b0
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
   GoogleUtilities: 3df19e3c24f7bbc291d8b5809aa6b0d41e642437
-  JWTDecode: 480ca441ddbd5fbfb2abf17870af62f86436be58
+  JWTDecode: 2cc56f950540c95fd11b14ff6388f7c6cb9760ab
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
@@ -233,6 +233,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: e100a7a0a1bb5d7d43abbde3338727d985a4986d
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 08d7f60fbcf794f2c891cc84eaefe1396e1ac883
+PODFILE CHECKSUM: ddf0764436ca26bf16d27ac970752fa7c3d85cd9
 
 COCOAPODS: 1.10.1
