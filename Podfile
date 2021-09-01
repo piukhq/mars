@@ -5,12 +5,12 @@ inhibit_all_warnings!
 
 def common_pods
 
-pod 'DTTJailbreakDetection', '~> 0.4' # No SPM package available
+pod 'DTTJailbreakDetection', '~> 0.4' # No SPM package available - NF 01/09/21
 pod 'SwiftyRSA', :git => 'git@git.bink.com:Pantheon/iOS/SwiftyRSA.git'
-pod 'ZendeskSupportSDK', '5.2.0' # Cannot update due to deprecations
+pod 'ZendeskSupportSDK', '5.2.0' # Cannot update due to deprecations - NF 01/09/21
 pod 'CardScan', :git => 'git@git.bink.com:Pantheon/iOS/cardscan-ios.git'
-pod 'SwiftLint', '~> 0.43'
-pod 'SwiftGen', '~> 6.4'
+pod 'SwiftLint', '~> 0.43' # SPM led to compilation errors - NF 01/09/21
+pod 'SwiftGen', '~> 6.4' # SPM led to compilation errors - NF 01/09/21
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",
