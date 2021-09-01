@@ -5,7 +5,6 @@ inhibit_all_warnings!
 
 def common_pods
 
-pod 'KeychainAccess', '~> 4.2'
 pod 'Disk', '~> 0.6'
 pod 'DTTJailbreakDetection', '~> 0.4'
 pod 'JWTDecode', '~> 2.6'

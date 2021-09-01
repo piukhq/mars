@@ -4,7 +4,6 @@ ${BUILT_PRODUCTS_DIR}/CardScan/CardScan.framework
 ${BUILT_PRODUCTS_DIR}/DTTJailbreakDetection/DTTJailbreakDetection.framework
 ${BUILT_PRODUCTS_DIR}/Disk/Disk.framework
 ${BUILT_PRODUCTS_DIR}/JWTDecode/JWTDecode.framework
-${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework
 ${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework
 ${BUILT_PRODUCTS_DIR}/ZXingObjC/ZXingObjC.framework
 ${PODS_XCFRAMEWORKS_BUILD_DIR}/CommonUISDK/CommonUISDK.framework/CommonUISDK

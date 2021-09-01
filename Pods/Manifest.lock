@@ -5,7 +5,6 @@ PODS:
   - Disk (0.6.4)
   - DTTJailbreakDetection (0.4.0)
   - JWTDecode (2.6.2)
-  - KeychainAccess (4.2.2)
   - Keys (1.0.1)
   - SwiftGen (6.4.0)
   - SwiftLint (0.43.1)
@@ -34,7 +33,6 @@ DEPENDENCIES:
   - Disk (~> 0.6)
   - DTTJailbreakDetection (~> 0.4)
   - JWTDecode (~> 2.6)
-  - KeychainAccess (~> 4.2)
   - Keys (from `Pods/CocoaPodsKeys`)
   - SwiftGen (~> 6.4)
   - SwiftLint (~> 0.43)
@@ -47,7 +45,6 @@ SPEC REPOS:
     - Disk
     - DTTJailbreakDetection
     - JWTDecode
-    - KeychainAccess
     - SwiftGen
     - SwiftLint
     - ZendeskCommonUISDK
@@ -80,7 +77,6 @@ SPEC CHECKSUMS:
   Disk: dcee5c2e98fb72f9a924cde8da8435b08244a80e
   DTTJailbreakDetection: 5e356c5badc17995f65a83ed9483f787a0057b71
   JWTDecode: 2cc56f950540c95fd11b14ff6388f7c6cb9760ab
-  KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
   SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
@@ -94,6 +90,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: e100a7a0a1bb5d7d43abbde3338727d985a4986d
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 8a6d668d2fd933ad98f03c6f9fc2febb5b48d4ea
+PODFILE CHECKSUM: b09526af557b7a6ee7ac1ebf225d3b7c5e37660e
 
 COCOAPODS: 1.10.1
