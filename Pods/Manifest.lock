@@ -130,24 +130,24 @@ PODS:
   - ZXingObjC/All (3.6.5)
 
 DEPENDENCIES:
-  - Alamofire (~> 5.4.3)
+  - Alamofire (~> 5.4)
   - AlamofireImage (~> 4.2)
-  - AlamofireNetworkActivityLogger (~> 3.4.0)
+  - AlamofireNetworkActivityLogger (~> 3.4)
   - "CardScan (from `git@git.bink.com:Pantheon/iOS/cardscan-ios.git`)"
-  - DeepDiff (~> 2.3.1)
-  - Disk (~> 0.6.4)
-  - DTTJailbreakDetection (~> 0.4.0)
+  - DeepDiff (~> 2.3)
+  - Disk (~> 0.6)
+  - DTTJailbreakDetection (~> 0.4)
   - Firebase (~> 8.6)
   - Firebase/Analytics (~> 8.6)
   - Firebase/RemoteConfig (~> 8.6)
   - JWTDecode (~> 2.6.0)
-  - KeychainAccess (~> 4.2.2)
+  - KeychainAccess (~> 4.2)
   - Keys (from `Pods/CocoaPodsKeys`)
   - SwiftGen (~> 6.4)
   - SwiftLint (~> 0.43.0)
   - "SwiftyRSA (from `git@git.bink.com:Pantheon/iOS/SwiftyRSA.git`)"
   - ZendeskSupportSDK (~> 5.2.0)
-  - ZXingObjC (~> 3.6.5)
+  - ZXingObjC (~> 3.6)
 
 SPEC REPOS:
   trunk:
@@ -233,6 +233,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: e100a7a0a1bb5d7d43abbde3338727d985a4986d
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: e2946da947e55b7b8d600f09ed8f353bb9ba789b
+PODFILE CHECKSUM: 08d7f60fbcf794f2c891cc84eaefe1396e1ac883
 
 COCOAPODS: 1.10.1
