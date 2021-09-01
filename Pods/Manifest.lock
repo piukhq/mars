@@ -22,9 +22,6 @@ PODS:
   - ZendeskSupportSDK (5.2.0):
     - ZendeskMessagingSDK (~> 3.8.1)
     - ZendeskSupportProvidersSDK (~> 5.2.0)
-  - ZXingObjC (3.6.5):
-    - ZXingObjC/All (= 3.6.5)
-  - ZXingObjC/All (3.6.5)
 
 DEPENDENCIES:
   - "CardScan (from `git@git.bink.com:Pantheon/iOS/cardscan-ios.git`)"
@@ -33,8 +30,7 @@ DEPENDENCIES:
   - SwiftGen (~> 6.4)
   - SwiftLint (~> 0.43)
   - "SwiftyRSA (from `git@git.bink.com:Pantheon/iOS/SwiftyRSA.git`)"
-  - ZendeskSupportSDK (~> 5.2.0)
-  - ZXingObjC (~> 3.6)
+  - ZendeskSupportSDK (= 5.2.0)
 
 SPEC REPOS:
   trunk:
@@ -48,7 +44,6 @@ SPEC REPOS:
     - ZendeskSDKConfigurationsSDK
     - ZendeskSupportProvidersSDK
     - ZendeskSupportSDK
-    - ZXingObjC
 
 EXTERNAL SOURCES:
   CardScan:
@@ -80,8 +75,7 @@ SPEC CHECKSUMS:
   ZendeskSDKConfigurationsSDK: 45fa87ec8418697f7fce5e56bec472052f0aedb5
   ZendeskSupportProvidersSDK: 5221df6ca45e0b6f12470a5e8e65ccf3ccca17fa
   ZendeskSupportSDK: e100a7a0a1bb5d7d43abbde3338727d985a4986d
-  ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 74507c4312a4d8d8586a7164685e634292231dd4
+PODFILE CHECKSUM: 6ab0eca4ed655dd808f8225e0d019c1ffae8ecbf
 
 COCOAPODS: 1.10.1

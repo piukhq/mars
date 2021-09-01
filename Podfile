@@ -7,9 +7,8 @@ def common_pods
 
 pod 'DTTJailbreakDetection', '~> 0.4' # No SPM package available
 pod 'SwiftyRSA', :git => 'git@git.bink.com:Pantheon/iOS/SwiftyRSA.git'
-pod 'ZendeskSupportSDK', '~> 5.2.0'
+pod 'ZendeskSupportSDK', '5.2.0' # Cannot update due to deprecations
 pod 'CardScan', :git => 'git@git.bink.com:Pantheon/iOS/cardscan-ios.git'
-pod 'ZXingObjC', '~> 3.6'
 pod 'SwiftLint', '~> 0.43'
 pod 'SwiftGen', '~> 6.4'
 
