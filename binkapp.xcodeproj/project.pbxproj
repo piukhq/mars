@@ -106,7 +106,6 @@
 		3CD802822391314900D26888 /* ForgotPasswordRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD802812391314900D26888 /* ForgotPasswordRepository.swift */; };
 		3CE24B2B2304014600B258C8 /* AddOrJoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE24B282304014500B258C8 /* AddOrJoinViewController.swift */; };
 		3CE24B2C2304014600B258C8 /* AddOrJoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE24B292304014500B258C8 /* AddOrJoinViewModel.swift */; };
-		3CE24B2D2304014600B258C8 /* AddOrJoinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE24B2A2304014500B258C8 /* AddOrJoinViewController.xib */; };
 		3CE892682338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE892672338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift */; };
 		3CEABFCA2316AB42009B1122 /* MembershipTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEABFC92316AB42009B1122 /* MembershipTransaction.swift */; };
 		3CEABFCC2316AB65009B1122 /* MembershipCardStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEABFCB2316AB65009B1122 /* MembershipCardStatusModel.swift */; };
@@ -703,7 +702,6 @@
 		3CD802812391314900D26888 /* ForgotPasswordRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordRepository.swift; sourceTree = "<group>"; };
 		3CE24B282304014500B258C8 /* AddOrJoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrJoinViewController.swift; sourceTree = "<group>"; };
 		3CE24B292304014500B258C8 /* AddOrJoinViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrJoinViewModel.swift; sourceTree = "<group>"; };
-		3CE24B2A2304014500B258C8 /* AddOrJoinViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddOrJoinViewController.xib; sourceTree = "<group>"; };
 		3CE892672338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+RoundedCornersAndAspectFit.swift"; sourceTree = "<group>"; };
 		3CEABFC92316AB42009B1122 /* MembershipTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MembershipTransaction.swift; sourceTree = "<group>"; };
 		3CEABFCB2316AB65009B1122 /* MembershipCardStatusModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MembershipCardStatusModel.swift; sourceTree = "<group>"; };
@@ -1520,7 +1518,6 @@
 				3C119B9E2315332B0015CE91 /* Views */,
 				3CE24B292304014500B258C8 /* AddOrJoinViewModel.swift */,
 				3CE24B282304014500B258C8 /* AddOrJoinViewController.swift */,
-				3CE24B2A2304014500B258C8 /* AddOrJoinViewController.xib */,
 			);
 			path = AddOrJoin;
 			sourceTree = "<group>";
@@ -3212,7 +3209,6 @@
 				CEA16EF526258C8E00D449E1 /* BarcodeViewWide.xib in Resources */,
 				3C9CCD2F231695AE00FAF589 /* CheckboxView.xib in Resources */,
 				CE2CFE9125E3D48E00B1CB93 /* FeatureFlagsTableViewCell.xib in Resources */,
-				3CE24B2D2304014600B258C8 /* AddOrJoinViewController.xib in Resources */,
 				70907E0D25C878AE007629BB /* LocalPointsCollection_Login_Heathrow.js in Resources */,
 				EFCAF9222371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.xib in Resources */,
 				EF762583236B1967002214C3 /* OnboardingLearningView.xib in Resources */,
@@ -4120,6 +4116,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
@@ -4138,6 +4135,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4173,6 +4171,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4380,6 +4379,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG = "";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4528,6 +4528,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

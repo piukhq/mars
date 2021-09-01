@@ -29,6 +29,10 @@ struct HeathrowScrapingAgent: WebScrapable {
     var usernameField: FieldCommonName {
         return .username
     }
+    
+    var requiredCredentials: [PointsScrapingManager.CredentialStoreType] {
+        return [.username, .password, .cardNumber]
+    }
 
     var loyaltySchemeBalanceSuffix: String? {
         return "points"

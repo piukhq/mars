@@ -183,7 +183,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
             scrollView.addSubview(onboardingViews[i])
         }
         
-        if let _ = try? Configuration.value(for: .debugMenu) {
+        if let _ = try? Configuration.value(for: .debug) {
             let tap = UITapGestureRecognizer(target: self, action: #selector(openDebugMenu))
             tap.numberOfTapsRequired = 3
             learningContainer.addGestureRecognizer(tap)

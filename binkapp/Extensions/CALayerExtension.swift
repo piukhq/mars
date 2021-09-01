@@ -10,7 +10,7 @@ import UIKit
 
 extension CALayer {
     func applyDefaultBinkShadow() {
-        applySketchShadow(color: .black, alpha: 0.1, x: 0, y: 3, blur: 22, spread: 0)
+        applySketchShadow(color: .black, alpha: 0.1, x: 0, y: 3, blur: 15, spread: 0)
     }
 
     func applySketchShadow(color: UIColor = .black, alpha: Float = 0.5, x: CGFloat = 0, y: CGFloat = 2, blur: CGFloat = 4, spread: CGFloat = 0) {
