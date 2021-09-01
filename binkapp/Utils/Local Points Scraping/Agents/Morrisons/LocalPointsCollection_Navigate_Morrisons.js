@@ -114,7 +114,7 @@ function handleNavigation() {
         nativeInputValueSetter.call(u, username);
         nativeInputValueSetter.call(p, password);
 
-        var valueSetterEvent = new Event('input', { bubbles: true});
+        var valueSetterEvent = new Event('input', { bubbles: true });
         u.dispatchEvent(valueSetterEvent);
         p.dispatchEvent(valueSetterEvent);
 
