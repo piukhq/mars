@@ -5,9 +5,6 @@ inhibit_all_warnings!
 
 def common_pods
 
-pod 'Firebase', '~> 8.6'
-pod 'Firebase/Analytics', '~> 8.6'
-pod 'Firebase/RemoteConfig', '~> 8.6'
 pod 'Alamofire', '~> 5.4'
 pod 'AlamofireImage', '~> 4.2'
 pod 'AlamofireNetworkActivityLogger', '~> 3.4'
