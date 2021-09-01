@@ -394,6 +394,11 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 }
                 
                 self.pointsScrapingDidComplete(for: item)
+                
+                if self.isDebugMode {
+                    self.webScrapingUtility?.debug()
+                }
+                
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
             }
         }
