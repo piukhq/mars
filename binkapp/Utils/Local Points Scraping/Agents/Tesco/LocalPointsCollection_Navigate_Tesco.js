@@ -1,13 +1,11 @@
 var username = "%@"
 var password = "%@"
 
-var formQuery = "form#sign-in-form"
+var formQuery = "form"
 var usernameInputQuery = "form#login-form input[type=email]"
 var passwordInputQuery = "form#login-form input[type=password]"
 var submitButtonQuery = "form#login-form button[type=submit]"
-
 var pointsValueQuery = "#pointSummary [class*=Points] [class*=Points]"
-
 var incorrectCredentialsQuery = "p.ui-component__notice__error-text"
 
 handleNavigation()
@@ -24,9 +22,7 @@ function handleNavigation() {
         }
     }
 
-
-    // If we can't identify a points value, can we identify one of the following:
-    // Recaptcha, incorrect credentials message
+    // If we can't identify a points value, can we identify incorrect credentials message
 
     var error = document.querySelector(incorrectCredentialsQuery)
     if (error && error.innerHTML !== "") {
@@ -36,9 +32,6 @@ function handleNavigation() {
         }
     }
 
-    // TODO: Recaptcha
-
-
     // If we can identify the login form, login
 
     var f = document.querySelector(formQuery)
@@ -47,31 +40,22 @@ function handleNavigation() {
         f.id = "login-form"
 
         var u = document.querySelector(usernameInputQuery)
-        if (!u) {
-            return {
-                "error_message": "Login failed. Email/username input field could not be identified."
-            }
-        }
-        u.value = username
-
         var p = document.querySelector(passwordInputQuery)
-        if (!p) {
-            return {
-                "error_message": "Login failed. Password input field could not be identified."
-            }
-        }
-        p.value = password
+        var b = document.querySelector(submitButtonQuery)
 
-        var b = Array.from(document.querySelectorAll('form#login-form button')).filter(el => el.type === "submit")[0]
-        if (!b) {
-            return {
-                "error_message": "Login failed. Submit button could not be identified."
-            }
-        }
-        b.click()
+        if (u && p && b) {
+            var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set
+            nativeInputValueSetter.call(u, username)
+            nativeInputValueSetter.call(p, password)
 
-        return {
-            "did_attempt_login": true
+            var valueSetterEvent = new Event('input', { bubbles: true })
+            u.dispatchEvent(valueSetterEvent)
+            p.dispatchEvent(valueSetterEvent)
+            b.click()
+
+            return {
+                "did_attempt_login": true
+            }
         }
     }
 
