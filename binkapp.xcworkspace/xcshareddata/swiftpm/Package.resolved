@@ -119,6 +119,15 @@
         }
       },
       {
+        "package": "JWTDecode",
+        "repositoryURL": "https://github.com/auth0/JWTDecode.swift.git",
+        "state": {
+          "branch": null,
+          "revision": "65b03eae055ef22f93e6acd3c0d6153cc0f6ec8d",
+          "version": "2.6.2"
+        }
+      },
+      {
         "package": "KeychainAccess",
         "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess.git",
         "state": {

@@ -177,7 +177,6 @@ code_sign_if_enabled() {
 if [[ "$CONFIGURATION" == "Alpha" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/CardScan/CardScan.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DTTJailbreakDetection/DTTJailbreakDetection.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/JWTDecode/JWTDecode.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ZXingObjC/ZXingObjC.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/CommonUISDK/CommonUISDK.framework"
@@ -191,7 +190,6 @@ fi
 if [[ "$CONFIGURATION" == "App Store" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/CardScan/CardScan.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DTTJailbreakDetection/DTTJailbreakDetection.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/JWTDecode/JWTDecode.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ZXingObjC/ZXingObjC.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/CommonUISDK/CommonUISDK.framework"
@@ -205,7 +203,6 @@ fi
 if [[ "$CONFIGURATION" == "App Store (Internal)" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/CardScan/CardScan.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DTTJailbreakDetection/DTTJailbreakDetection.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/JWTDecode/JWTDecode.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ZXingObjC/ZXingObjC.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/CommonUISDK/CommonUISDK.framework"
@@ -219,7 +216,6 @@ fi
 if [[ "$CONFIGURATION" == "Beta" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/CardScan/CardScan.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DTTJailbreakDetection/DTTJailbreakDetection.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/JWTDecode/JWTDecode.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ZXingObjC/ZXingObjC.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/CommonUISDK/CommonUISDK.framework"

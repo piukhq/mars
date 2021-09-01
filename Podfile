@@ -5,8 +5,7 @@ inhibit_all_warnings!
 
 def common_pods
 
-pod 'DTTJailbreakDetection', '~> 0.4'
-pod 'JWTDecode', '~> 2.6'
+pod 'DTTJailbreakDetection', '~> 0.4' # No SPM package available
 pod 'SwiftyRSA', :git => 'git@git.bink.com:Pantheon/iOS/SwiftyRSA.git'
 pod 'ZendeskSupportSDK', '~> 5.2.0'
 pod 'CardScan', :git => 'git@git.bink.com:Pantheon/iOS/cardscan-ios.git'
