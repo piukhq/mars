@@ -20,7 +20,7 @@ pod 'SwiftyRSA', :git => 'git@git.bink.com:Pantheon/iOS/SwiftyRSA.git'
 pod 'ZendeskSupportSDK', '~> 5.2.0'
 pod 'CardScan', :git => 'git@git.bink.com:Pantheon/iOS/cardscan-ios.git'
 pod 'ZXingObjC', '~> 3.6'
-pod 'SwiftLint', '~> 0.43.0'
+pod 'SwiftLint', '~> 0.43'
 pod 'SwiftGen', '~> 6.4'
 
 plugin 'cocoapods-keys', {
