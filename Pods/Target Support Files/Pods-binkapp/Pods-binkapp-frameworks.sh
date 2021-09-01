@@ -176,9 +176,6 @@ code_sign_if_enabled() {
 
 if [[ "$CONFIGURATION" == "Alpha" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Keys-framework/Keys.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityLogger/AlamofireNetworkActivityLogger.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CardScan/CardScan.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DTTJailbreakDetection/DTTJailbreakDetection.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DeepDiff/DeepDiff.framework"
@@ -197,9 +194,6 @@ if [[ "$CONFIGURATION" == "Alpha" ]]; then
 fi
 if [[ "$CONFIGURATION" == "App Store" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Keys-framework/Keys.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityLogger/AlamofireNetworkActivityLogger.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CardScan/CardScan.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DTTJailbreakDetection/DTTJailbreakDetection.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DeepDiff/DeepDiff.framework"
@@ -218,9 +212,6 @@ if [[ "$CONFIGURATION" == "App Store" ]]; then
 fi
 if [[ "$CONFIGURATION" == "App Store (Internal)" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Keys-framework/Keys.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityLogger/AlamofireNetworkActivityLogger.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CardScan/CardScan.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DTTJailbreakDetection/DTTJailbreakDetection.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DeepDiff/DeepDiff.framework"
@@ -239,9 +230,6 @@ if [[ "$CONFIGURATION" == "App Store (Internal)" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Beta" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Keys-framework/Keys.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityLogger/AlamofireNetworkActivityLogger.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CardScan/CardScan.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DTTJailbreakDetection/DTTJailbreakDetection.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DeepDiff/DeepDiff.framework"

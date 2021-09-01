@@ -11,6 +11,33 @@
         }
       },
       {
+        "package": "Alamofire",
+        "repositoryURL": "https://github.com/Alamofire/Alamofire.git",
+        "state": {
+          "branch": null,
+          "revision": "f96b619bcb2383b43d898402283924b80e2c4bae",
+          "version": "5.4.3"
+        }
+      },
+      {
+        "package": "AlamofireImage",
+        "repositoryURL": "https://github.com/Alamofire/AlamofireImage.git",
+        "state": {
+          "branch": null,
+          "revision": "98cbb00ce0ec5fc8e52a5b50a6bfc08d3e5aee10",
+          "version": "4.2.0"
+        }
+      },
+      {
+        "package": "AlamofireNetworkActivityLogger",
+        "repositoryURL": "https://github.com/konkab/AlamofireNetworkActivityLogger.git",
+        "state": {
+          "branch": null,
+          "revision": "8db9d4e27176905298e7215e3d800e349cdfa30b",
+          "version": "3.4.0"
+        }
+      },
+      {
         "package": "BoringSSL-GRPC",
         "repositoryURL": "https://github.com/firebase/boringssl-SwiftPM.git",
         "state": {

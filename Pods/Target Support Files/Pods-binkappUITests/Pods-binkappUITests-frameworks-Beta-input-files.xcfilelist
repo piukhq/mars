@@ -1,7 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-binkappUITests/Pods-binkappUITests-frameworks.sh
-${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
-${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework
-${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityLogger/AlamofireNetworkActivityLogger.framework
 ${BUILT_PRODUCTS_DIR}/CardScan/CardScan.framework
 ${BUILT_PRODUCTS_DIR}/DTTJailbreakDetection/DTTJailbreakDetection.framework
 ${BUILT_PRODUCTS_DIR}/DeepDiff/DeepDiff.framework

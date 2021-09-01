@@ -5,9 +5,6 @@ inhibit_all_warnings!
 
 def common_pods
 
-pod 'Alamofire', '~> 5.4'
-pod 'AlamofireImage', '~> 4.2'
-pod 'AlamofireNetworkActivityLogger', '~> 3.4'
 pod 'DeepDiff', '~> 2.3'
 pod 'KeychainAccess', '~> 4.2'
 pod 'Disk', '~> 0.6'

@@ -1,9 +1,4 @@
 PODS:
-  - Alamofire (5.4.3)
-  - AlamofireImage (4.2.0):
-    - Alamofire (~> 5.4)
-  - AlamofireNetworkActivityLogger (3.4.0):
-    - Alamofire (~> 5.4.0)
   - CardScan (1.0.5049):
     - CardScan/Core (= 1.0.5049)
   - CardScan/Core (1.0.5049)
@@ -36,9 +31,6 @@ PODS:
   - ZXingObjC/All (3.6.5)
 
 DEPENDENCIES:
-  - Alamofire (~> 5.4)
-  - AlamofireImage (~> 4.2)
-  - AlamofireNetworkActivityLogger (~> 3.4)
   - "CardScan (from `git@git.bink.com:Pantheon/iOS/cardscan-ios.git`)"
   - DeepDiff (~> 2.3)
   - Disk (~> 0.6)
@@ -54,9 +46,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Alamofire
-    - AlamofireImage
-    - AlamofireNetworkActivityLogger
     - DeepDiff
     - Disk
     - DTTJailbreakDetection
@@ -90,9 +79,6 @@ CHECKOUT OPTIONS:
     :git: "git@git.bink.com:Pantheon/iOS/SwiftyRSA.git"
 
 SPEC CHECKSUMS:
-  Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
-  AlamofireImage: 34a2d90b0e5fe6a5605f85ae4b7b01e784c60192
-  AlamofireNetworkActivityLogger: 162ab8aee00e6267a4304d7cc134e13ccfe3bcc5
   CardScan: ff2d73951a829020bbb5cb1309355f1006c412f7
   DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc
   Disk: dcee5c2e98fb72f9a924cde8da8435b08244a80e
@@ -112,6 +98,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: e100a7a0a1bb5d7d43abbde3338727d985a4986d
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 95eb9b6298ab323c24bc777e1e896b28659a2207
+PODFILE CHECKSUM: dc9e9f4427699850390642d8b84fbed74bf85787
 
 COCOAPODS: 1.10.1
