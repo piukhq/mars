@@ -33,7 +33,8 @@ enum BinkAnalytics {
     static let attemptedEventName = "attempted_event"
 
     static func track(_ event: BinkAnalyticsEvent, additionalTrackingData: [String: Any]? = nil) {
-        #if RELEASE
+        guard Configuration.runtimeConfiguration == .releaseBuild else { return }
+        
         var trackingData: [String: Any]?
 
         defer {
@@ -59,7 +60,6 @@ enum BinkAnalytics {
         
         // Otherwise just track the additional data
         trackingData = data
-        #endif
     }
 
     static func beginSessionTracking() {

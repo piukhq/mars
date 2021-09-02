@@ -42,7 +42,7 @@ class DebugInfoAlertView: UIView {
     }
     
     static func show(_ message: String, type: DebugInfoAlertView.AlertType) {
-        guard Configuration.isDebug else { return }
+        guard Configuration.runtimeConfiguration != .releaseBuild else { return }
         if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
             if let statusCodeView = window.subviews.first(where: { $0.isKind(of: DebugInfoAlertView.self) }) as? DebugInfoAlertView {
                 statusCodeView.type = type

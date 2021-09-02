@@ -53,7 +53,7 @@ class SettingsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 4 + appearanceSection), 2)
     }
     
-    #if DEBUG
+    #if !RELEASE
     func test_rowsCount_returnsCorrectCountForDebugSection() {
         XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 0 + appearanceSection), 1)
     }
@@ -80,7 +80,7 @@ class SettingsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.titleForSection(atIndex: 4 + appearanceSection), L10n.settingsSectionLegalTitle)
     }
     
-    #if DEBUG
+    #if !RELEASE
     func test_titleForSection_returnsCorrectTitleForDebugSection() {
         XCTAssertEqual(sut.titleForSection(atIndex: 0), L10n.settingsSectionDebugTitle)
     }
@@ -142,7 +142,7 @@ class SettingsViewModelTests: XCTestCase {
         XCTAssertEqual(tAndC?.title, "Terms and conditions")
     }
     
-    #if DEBUG
+    #if !RELEASE
     func test_row_returnsCorrectRowForDebugRow() {
         let debug = getSettingsRow(forRow: 0, section: 0)
         XCTAssertEqual(debug?.title, "Debug")

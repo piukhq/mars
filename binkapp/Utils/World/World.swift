@@ -27,17 +27,6 @@ class World {
 
     var onboardingTrackingId: String? // Stored to provide a consistent id from start to finish of onboarding, reset upon a new journey
     var inAppReviewableJourney: Any? // We cast this to the correct type using generics when we need to
-    
-    private let prodBundleIdentifier = "com.bink.wallet"
-
-    var isReleaseTypeBuild: Bool {
-        guard let bundleIdentifier = Bundle.main.bundleIdentifier else {
-            // I can't imagine a scenario where this would be not set?
-            return false
-        }
-        
-        return bundleIdentifier == prodBundleIdentifier
-    }
 }
 
 protocol BinkUserDefaults {

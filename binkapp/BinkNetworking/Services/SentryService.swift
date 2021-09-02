@@ -10,34 +10,11 @@ import Foundation
 import Sentry
 
 enum SentryService {
-    private static var environment: String {
-        let envString: String
-
-        if Current.isReleaseTypeBuild && APIConstants.isProduction && !isDebug {
-            envString = "prod"
-        } else {
-            envString = "beta"
-        }
-
-        return envString
-    }
-
-    private static var isDebug: Bool {
-        let isDebug: Bool
-        #if DEBUG
-        isDebug = true
-        #else
-        isDebug = false
-        #endif
-
-        return isDebug
-    }
-
     static func start() {
         SentrySDK.start(options: [
             "dsn": "https://f0d6d99819de4bb593243c51aa2e0020@o503751.ingest.sentry.io/5610016",
-            "debug": isDebug, // Enabled debug when first installing is always helpful
-            "environment": environment, // beta, or prod
+            "debug": Configuration.runtimeConfiguration != .releaseBuild, // Enabled debug when first installing is always helpful
+            "environment": Configuration.runtimeConfiguration.rawValue, // debug, internal or release
             "release": Bundle.shortVersionNumber ?? ""
         ])
     }

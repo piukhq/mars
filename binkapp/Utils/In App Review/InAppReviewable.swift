@@ -35,9 +35,9 @@ extension InAppReviewable {
 
     private var canRequestReview: Bool {
         if !UIApplication.isRunningUITests {
-            #if DEBUG
-            guard Current.userDefaults.bool(forDefaultsKey: .applyInAppReviewRules) else { return true }
-            #endif
+            if Configuration.runtimeConfiguration != .releaseBuild, Current.userDefaults.bool(forDefaultsKey: .applyInAppReviewRules) == false {
+                return true
+            }
             return requestTimeLimitHasPassed && !reviewRequestedForCurrentMinorVersion && enabledInRemoteConfig
         }
         return false
