@@ -37,7 +37,7 @@ enum WalletPromptFactory {
             if !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .link }) {
                 var pllPlans = plans.filter({ $0.featureSet?.planCardType == .link })
                 
-                if Configuration.isDebug() {
+                if Configuration.isDebug {
                     pllPlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.linkPromptDebugCellCount, sortedPlans: &pllPlans)
                 }
                 
@@ -53,7 +53,7 @@ enum WalletPromptFactory {
                         return plansEnabledOnRemoteConfig.contains(where: { $0.membershipPlanId == Int(plan.id) })
                     }
                     
-                    if Configuration.isDebug() {
+                    if Configuration.isDebug {
                         liveSeePlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.seePromptDebugCellCount, sortedPlans: &liveSeePlans)
                     }
                     
@@ -65,7 +65,7 @@ enum WalletPromptFactory {
             if !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .store }) {
                 var storePlans = plans.filter { $0.featureSet?.planCardType == .store }
                 
-                if Configuration.isDebug() {
+                if Configuration.isDebug {
                     storePlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.storePromptDebugCellCount, sortedPlans: &storePlans)
                 }
                 

@@ -52,7 +52,7 @@ enum Configuration {
         return string
     }
     
-    static func isDebug() -> Bool {
+    static var isDebug: Bool {
         if let _ = try? value(for: .debug) {
             return true
         }
