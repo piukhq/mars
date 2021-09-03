@@ -120,6 +120,36 @@ platform :ios do
     )
   end
 
+  desc "Submit nightly Develop build to TestFlight"
+  lane :nightly do |options|
+    app_store_connect_api_key(
+      key_id: ENV["FASTLANE_ASC_KEY_ID"],
+      issuer_id: ENV["FASTLANE_ASC_ISSUER_ID"],
+      key_content: ENV["FASTLANE_ASC_P8"],
+      in_house: false
+    )
+
+    increment_build_number(build_number: options[:build_number])
+
+    run_tests(
+      workspace: "binkapp.xcworkspace",
+      device: "iPhone 12 Pro",
+      scheme: "binkapp tests",
+      testplan: "nightly"
+    )
+
+    build_app(
+      workspace: "binkapp.xcworkspace",
+      scheme: "binkapp app store (internal)"
+    )
+
+    upload_to_testflight(
+      changelog: "Nightly build from Develop branch",
+      distribute_external: true,
+      groups: "Bink Internal",
+    )
+  end
+
   desc "Submit production build to TestFlight"
   lane :beta do |options|
     app_store_connect_api_key(
