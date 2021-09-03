@@ -139,7 +139,8 @@ platform :ios do
 
     build_app(
       workspace: "binkapp.xcworkspace",
-      scheme: "binkapp app store (internal)"
+      scheme: "binkapp app store (internal)",
+      testplan: "nightly"
     )
 
     upload_to_testflight(
