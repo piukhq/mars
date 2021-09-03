@@ -23,11 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     let widgetController = WidgetController()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        #if DEBUG
-        NetworkActivityLogger.shared.level = .debug
-        NetworkActivityLogger.shared.startLogging()
-        ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyDev)
-        #endif
         
         if UIApplication.isRunningUITests {
             configureAppForTesting()
@@ -40,10 +35,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         // Sentry Crash Reporting
         SentryService.start()
     
-        #if RELEASE
-        BinkAnalytics.beginSessionTracking()
-        ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyProduction)
-        #endif
+        if Configuration.runtimeConfiguration == .releaseBuild {
+            BinkAnalytics.beginSessionTracking()
+            ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyProduction)
+        } else {
+            NetworkActivityLogger.shared.level = .debug
+            NetworkActivityLogger.shared.startLogging()
+            ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyDev)
+        }
 
         // Device storage
         StorageUtility.start()

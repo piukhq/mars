@@ -1,0 +1,2 @@
+API_BASE_URL = api.staging.gb.bink.com
+SECRET = staging // USE STAGING SECRET

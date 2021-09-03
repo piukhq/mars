@@ -138,7 +138,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         
         let customBundleClientEnabled = Current.userDefaults.bool(forDefaultsKey: .allowCustomBundleClientOnLogin)
         
-        if !Current.isReleaseTypeBuild && customBundleClientEnabled {
+        if Configuration.runtimeConfiguration != .releaseBuild && customBundleClientEnabled {
             loginRequest = LoginRequest(
                 email: fields["email"],
                 password: fields["password"],

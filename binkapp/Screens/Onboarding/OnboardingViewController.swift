@@ -49,7 +49,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     }()
     
     private lazy var signInWithAppleEnabled: Bool = {
-        return APIConstants.isProduction && Current.isReleaseTypeBuild
+        return APIConstants.isProduction && Configuration.runtimeConfiguration == .releaseBuild
     }()
 
     private lazy var loginWithEmailButton: BinkButton = {
@@ -183,7 +183,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
             scrollView.addSubview(onboardingViews[i])
         }
         
-        if let _ = try? Configuration.value(for: .debug) {
+        if Configuration.runtimeConfiguration != .releaseBuild {
             let tap = UITapGestureRecognizer(target: self, action: #selector(openDebugMenu))
             tap.numberOfTapsRequired = 3
             learningContainer.addGestureRecognizer(tap)

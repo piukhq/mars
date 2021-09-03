@@ -524,7 +524,7 @@ extension FormDataSource {
         
         let customBundleClientEnabled = Current.userDefaults.bool(forDefaultsKey: .allowCustomBundleClientOnLogin)
         
-        if !Current.isReleaseTypeBuild && customBundleClientEnabled {
+        if Configuration.runtimeConfiguration != .releaseBuild && customBundleClientEnabled {
             let bundleIDField = FormField(
                 title: "Bundle ID",
                 placeholder: "Fam, your bundle ID",

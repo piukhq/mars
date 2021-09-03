@@ -43,7 +43,6 @@ enum Configuration {
     enum ConfigurationKey: String {
         case apiBaseUrl = "API_BASE_URL"
         case secret = "SECRET"
-        case debug = "DEBUG"
     }
     
     static func value(for key: ConfigurationKey) throws -> String {
@@ -52,11 +51,24 @@ enum Configuration {
         return string
     }
     
-    static func isDebug() -> Bool {
-        if let _ = try? value(for: .debug) {
-            return true
-        }
-        return false
+    static var runtimeConfiguration: RuntimeConfiguration {
+        #if DEBUG
+        return .debugBuild
+        #endif
+        
+        #if INTERNAL
+        return .internalBuild
+        #endif
+        
+        #if RELEASE
+        return .releaseBuild
+        #endif
+    }
+    
+    enum RuntimeConfiguration: String {
+        case debugBuild = "debug"
+        case internalBuild = "internal"
+        case releaseBuild = "release"
     }
 }
 
@@ -77,7 +89,7 @@ enum APIConstants {
     }
 
     static var baseURLString: String {
-        if let _ = try? Configuration.value(for: .debug) {
+        if Configuration.runtimeConfiguration != .releaseBuild {
             // If we have set the environment from the debug menu
             if let debugBaseURLString = Current.userDefaults.value(forDefaultsKey: .debugBaseURL) as? String {
                 return debugBaseURLString

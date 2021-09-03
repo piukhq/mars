@@ -43,9 +43,10 @@ class PaymentWalletRepository: WalletServiceProtocol {
 
     func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(BinkError?) -> Void) {
         if Current.apiClient.isProduction || Current.apiClient.isPreProduction {
-            #if DEBUG
-            fatalError("You are targetting production, but on a debug scheme. You should use a release scheme to test adding production payment cards.")
-            #else
+            if Configuration.runtimeConfiguration == .debugBuild {
+                fatalError("You are targetting production, but on a debug scheme. You should use a release scheme to test adding production payment cards.")
+            }
+            
             requestSpreedlyToken(paymentCard: paymentCard, onSuccess: { [weak self] spreedlyResponse in
                 guard spreedlyResponse.isValid else {
                     onError(nil)
@@ -61,7 +62,6 @@ class PaymentWalletRepository: WalletServiceProtocol {
                 onError(error)
             }
             return
-            #endif
         } else {
             createPaymentCard(paymentCard, onSuccess: { createdPaymentCard in
                 onSuccess(createdPaymentCard)
