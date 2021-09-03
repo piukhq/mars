@@ -147,6 +147,7 @@ platform :ios do
       changelog: "Nightly build from Develop branch",
       distribute_external: true,
       groups: "Bink Internal",
+      reject_build_waiting_for_review: true
     )
   end
 
