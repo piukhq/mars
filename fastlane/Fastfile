@@ -134,13 +134,13 @@ platform :ios do
     run_tests(
       workspace: "binkapp.xcworkspace",
       device: "iPhone 12 Pro",
-      scheme: "binkapp tests"
+      scheme: "binkapp tests",
+      testplan: "nightly"
     )
 
     build_app(
       workspace: "binkapp.xcworkspace",
-      scheme: "binkapp app store (internal)",
-      testplan: "nightly"
+      scheme: "binkapp app store (internal)"
     )
 
     upload_to_testflight(
