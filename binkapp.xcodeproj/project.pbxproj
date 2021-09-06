@@ -321,6 +321,7 @@
 		CE73F9AE2600B64E00D53BCF /* HeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE73F9AC2600B64E00D53BCF /* HeaderTableViewCell.xib */; };
 		CE81AAB126CC0A4600102283 /* BinkFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81AAB026CC0A4600102283 /* BinkFormView.swift */; };
 		CE81AAB326D5696600102283 /* AuthAndAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81AAB226D5696600102283 /* AuthAndAddView.swift */; };
+		CE81AAB626E63A3700102283 /* CheckboxSwiftUIVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81AAB526E63A3700102283 /* CheckboxSwiftUIVIew.swift */; };
 		CE85A1D226A5DB43003B74CD /* EmailClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D126A5DB43003B74CD /* EmailClient.swift */; };
 		CE85A1D626A6CD97003B74CD /* LoginSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D526A6CD97003B74CD /* LoginSuccessViewController.swift */; };
 		CE85A1D826B0096B003B74CD /* UniversalLinkUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D726B0096A003B74CD /* UniversalLinkUtility.swift */; };
@@ -946,6 +947,7 @@
 		CE73F9AC2600B64E00D53BCF /* HeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderTableViewCell.xib; sourceTree = "<group>"; };
 		CE81AAB026CC0A4600102283 /* BinkFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkFormView.swift; sourceTree = "<group>"; };
 		CE81AAB226D5696600102283 /* AuthAndAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAndAddView.swift; sourceTree = "<group>"; };
+		CE81AAB526E63A3700102283 /* CheckboxSwiftUIVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxSwiftUIVIew.swift; sourceTree = "<group>"; };
 		CE85A1D126A5DB43003B74CD /* EmailClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailClient.swift; sourceTree = "<group>"; };
 		CE85A1D526A6CD97003B74CD /* LoginSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSuccessViewController.swift; sourceTree = "<group>"; };
 		CE85A1D726B0096A003B74CD /* UniversalLinkUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalLinkUtility.swift; sourceTree = "<group>"; };
@@ -1468,6 +1470,7 @@
 				3C9CCD2C2316958300FAF589 /* CheckboxView.swift */,
 				3C9CCD2E231695AE00FAF589 /* CheckboxView.xib */,
 				3C2C91002319560C00D112E3 /* InputView.swift */,
+				CE81AAB526E63A3700102283 /* CheckboxSwiftUIVIew.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3907,6 +3910,7 @@
 				3CCC46C422FC652C008476E3 /* BarcodeViewController.swift in Sources */,
 				EFA5F7402379A7C70027AB80 /* _CD_PaymentCardCard.swift in Sources */,
 				70CA2F05256E79D1008E0A81 /* DynamicActionModel.swift in Sources */,
+				CE81AAB626E63A3700102283 /* CheckboxSwiftUIVIew.swift in Sources */,
 				EFB7ED652379CA5900B72D06 /* PLRRewardDetailViewController.swift in Sources */,
 				EFE949472331424E00E29AA4 /* LinkingSupportModel.swift in Sources */,
 				EF758E0E23225F45000D26A9 /* NSPersistentContainer.swift in Sources */,

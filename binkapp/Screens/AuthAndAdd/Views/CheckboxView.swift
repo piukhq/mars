@@ -18,19 +18,6 @@ extension CheckboxViewDelegate {
     func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {}
 }
 
-struct CheckboxSwiftUIVIew: UIViewRepresentable {
-    var checkbox: CheckboxView
-    @Binding var checkedState: Bool
-    
-    func makeUIView(context: Context) -> CheckboxView {
-        return checkbox
-    }
-    
-    func updateUIView(_ uiView: UIViewType, context: Context) {
-        uiView.checkedState = checkedState
-    }
-}
-
 class CheckboxView: CustomView, Identifiable, ObservableObject {
     typealias TextAction = () -> Void
     @IBOutlet private weak var checkboxButton: UIButton!

@@ -21,7 +21,6 @@ final class FormViewModel: ObservableObject {
     @Published var datasource: FormDataSource
     @Published var brandImage: Image?
     @State var keyboardHeight: CGFloat = 0
-    @State var checkboxes: [CheckboxSwiftUIVIew] = []
 
     var titleText: String?
     var descriptionText: String?
@@ -45,22 +44,6 @@ final class FormViewModel: ObservableObject {
     var shouldShowInfoButton: Bool {
         return infoButtonText != nil
     }
-    
-    // >> Trying to figure out how to notify viewmodel or view of checkbox change <<<<<<<<<<
-    var fullFormIsValid: Bool {
-        let formFieldsValid = datasource.fields.allSatisfy({ $0.isValid() })
-        var checkboxesValid = true
-        datasource.checkboxes.forEach { checkbox in
-            if checkbox.columnKind == FormField.ColumnKind.planDocument || checkbox.columnKind == FormField.ColumnKind.none {
-                if !checkbox.isValid {
-                    checkboxesValid = false
-                }
-            }
-        }
-        
-        return formFieldsValid && checkboxesValid
-    }
-
     
 //    var shouldShowBrandImage: Bool {
 //        return membershipPlan != nil
@@ -87,7 +70,7 @@ struct BinkFormView: View {
     }
     
     @ObservedObject var viewModel: FormViewModel
-    @State var checkedStateDidChange = false
+    @State var checkedState = false
     var plan: CD_MembershipPlan!
 
     var body: some View {
@@ -139,7 +122,7 @@ struct BinkFormView: View {
                 // Checkboxes
                 VStack(spacing: -10) {
                     ForEach(viewModel.datasource.checkboxes) { checkbox in
-                        CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $checkedStateDidChange)
+                        CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $checkedState)
                             .padding(.horizontal, 10)
                     }
                 }
@@ -147,6 +130,7 @@ struct BinkFormView: View {
             .padding(Constants.vStackInsets)
         }
         .background(Color(UIColor.binkWhiteViewBackground))
+        .background(Color.red)
         .padding(.bottom, viewModel.keyboardHeight)
         .onReceive(Publishers.keyboardHeight, perform: { self.viewModel.keyboardHeight = $0 })
     }
