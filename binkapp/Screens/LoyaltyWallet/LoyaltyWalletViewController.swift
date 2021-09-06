@@ -9,8 +9,9 @@ import UIKit
 import CoreGraphics
 import DeepDiff
 import CardScan
+import WatchConnectivity
 
-class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> {
+class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel>, WCSessionDelegate {
     var selectedIndexPath: IndexPath?
     
     override func configureCollectionView() {
@@ -40,7 +41,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
             self.reloadCollectionView()
         }
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
             let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
@@ -71,7 +72,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         }
         return cell.frame.size
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row < viewModel.cardCount {
             guard let card = viewModel.cards?[indexPath.row] else {
@@ -84,7 +85,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         selectedIndexPath = indexPath
         resetAllSwipeStates()
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         guard let membershipCard = viewModel.cards?[sourceIndexPath.row] else { return }
         Current.wallet.reorderMembershipCard(membershipCard, from: sourceIndexPath.row, to: destinationIndexPath.row)
@@ -93,32 +94,45 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     // MARK: - Diffable datasource
     
     /// Disabling pending a review of diffable data source and core data behaviour
-//    override func setSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
-//        snapshot.appendItems(viewModel.cards ?? [], toSection: .cards)
-//        snapshot.appendItems(viewModel.walletPrompts ?? [], toSection: .prompts)
-//    }
-//    
-//    override func cellHandler(for section: WalletDataSourceSection, dataSourceItem: AnyHashable, indexPath: IndexPath) -> UICollectionViewCell {
-//        switch section {
-//        case .cards:
-//            let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-//            guard let membershipCard = dataSourceItem as? CD_MembershipCard else { return cell }
-//            let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
-//            cell.configureUIWithViewModel(viewModel: cellViewModel, indexPath: indexPath, delegate: self)
-//            return cell
-//        case .prompts:
-//            let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-//            guard let walletPrompt = dataSourceItem as? WalletPrompt else { return cell }
-//            cell.configureWithWalletPrompt(walletPrompt)
-//            return cell
-//        }
-//    }
+    //    override func setSnapshot(_ snapshot: inout WalletDataSourceSnapshot) {
+    //        snapshot.appendItems(viewModel.cards ?? [], toSection: .cards)
+    //        snapshot.appendItems(viewModel.walletPrompts ?? [], toSection: .prompts)
+    //    }
+    //
+    //    override func cellHandler(for section: WalletDataSourceSection, dataSourceItem: AnyHashable, indexPath: IndexPath) -> UICollectionViewCell {
+    //        switch section {
+    //        case .cards:
+    //            let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+    //            guard let membershipCard = dataSourceItem as? CD_MembershipCard else { return cell }
+    //            let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
+    //            cell.configureUIWithViewModel(viewModel: cellViewModel, indexPath: indexPath, delegate: self)
+    //            return cell
+    //        case .prompts:
+    //            let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+    //            guard let walletPrompt = dataSourceItem as? WalletPrompt else { return cell }
+    //            cell.configureWithWalletPrompt(walletPrompt)
+    //            return cell
+    //        }
+    //    }
+    
+    
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        
+    }
+    
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        
+    }
+    
+    func sessionDidDeactivate(_ session: WCSession) {
+        
+    }
 }
 
 extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelegate {
     func cellPerform(action: CellAction, cell: WalletLoyaltyCardCollectionViewCell) {
         guard let index = collectionView.indexPath(for: cell) else { return }
-
+        
         switch action {
         case .barcode:
             handleBarcodeSwipe(with: index, cell: cell)
@@ -167,13 +181,13 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
             promptForDelete(with: index, cell: cell)
         }
     }
-
+    
     func cellSwipeBegan(cell: WalletLoyaltyCardCollectionViewCell) {
         // We have to filter the cells based on their type, because otherwise the wallet prompt cells are included, and then we can't cast properly
         let cells = collectionView.visibleCells.filter { $0 != cell }.filter { $0.isKind(of: WalletLoyaltyCardCollectionViewCell.self) } as? [WalletLoyaltyCardCollectionViewCell]
         cells?.forEach { $0.set(to: .closed) }
     }
-
+    
     func resetAllSwipeStates() {
         // We have to filter the cells based on their type, because otherwise the wallet prompt cells are included, and then we can't cast properly
         let cells = collectionView.visibleCells.filter { $0.isKind(of: WalletLoyaltyCardCollectionViewCell.self) } as? [WalletLoyaltyCardCollectionViewCell]
@@ -184,7 +198,7 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
 extension LoyaltyWalletViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         navigationController.interactivePopGestureRecognizer?.delegate = nil
-
+        
         // Check whether we have tapped a cell or added a new card
         guard shouldUseTransition else { return nil }
         if let _ = fromVC as? LoyaltyWalletViewController {

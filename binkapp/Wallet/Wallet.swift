@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import WatchConnectivity
 
-class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
+class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
     private enum FetchType {
         case localLaunch // Specifically used on launch to perform desired behaviour not needed at any other time
         case localReactive // Any local fetch other than on launch
@@ -44,6 +45,12 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     /// On launch, we want to return our locally persisted wallet before we go and get a refreshed copy.
     /// Should only be called once, when the tab bar is loaded and our wallet view controllers can listen for notifications.
     func launch() {
+        if WCSession.isSupported() {
+            let session = WCSession.default
+            session.delegate = self
+            session.activate()
+        }
+        
         loadWallets(forType: .localLaunch, reloadPlans: false, isUserDriven: false) { [weak self] (_, _) in
             self?.loadWallets(forType: .reload, reloadPlans: true, isUserDriven: false) { (_, _) in
                 self?.refreshManager.start()
@@ -221,6 +228,13 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     }
 
     private func loadMembershipCards(forceRefresh: Bool = false, isUserDriven: Bool, completion: @escaping ServiceCompletionSuccessHandler<WalletServiceError>) {
+        defer {
+            if (WCSession.default.isReachable) {
+                let message = ["message": "Membership cards updated: \(Date().timeIntervalSince1970)"]
+                WCSession.default.sendMessage(message, replyHandler: nil)
+            }
+        }
+        
         guard forceRefresh else {
             fetchCoreDataObjects(forObjectType: CD_MembershipCard.self) { [weak self] cards in
                 guard let self = self else { return }
@@ -396,4 +410,12 @@ extension Wallet {
             walletDataSource = cards
         }
     }
+}
+
+// MARK: - Watch Connectivity
+
+extension Wallet: WCSessionDelegate {
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
+    func sessionDidBecomeInactive(_ session: WCSession) {}
+    func sessionDidDeactivate(_ session: WCSession) {}
 }
