@@ -35,19 +35,23 @@ struct BinkButtonsStackView: View {
     }
     
     @ObservedObject private var themeManager = Current.themeManager
-    var buttonCount: CGFloat = 2
+    var buttonCount: CGFloat = 1
     
     var body: some View {
-        VStack(spacing: 0) {
+        VStack {
             Spacer()
-            VStack(alignment: .center, spacing: Constants.buttonSpacing) {
-                Spacer(minLength: Constants.buttonSpacing)
-                BinkGradientButtonSwiftUIView()
-                BinkGradientButtonSwiftUIView()
-                Spacer(minLength: BinkButtonsView.bottomSafePadding)
+            ZStack {
+                LinearGradient(gradient: Gradient(colors: [Color(themeManager.color(for: .viewBackground)), Color.clear]), startPoint: .bottom, endPoint: .top)
+                    .padding(.top, 40)
+                
+                VStack(alignment: .center, spacing: Constants.buttonSpacing) {
+                    Spacer(minLength: Constants.buttonSpacing)
+                    BinkGradientButtonSwiftUIView()
+//                    BinkGradientButtonSwiftUIView()
+                    Spacer(minLength: BinkButtonsView.bottomSafePadding)
+                }
             }
             .frame(width: UIScreen.main.bounds.width, height: BinkButtonsView.bottomSafePadding + (Constants.height * buttonCount), alignment: .center)
-            .background(LinearGradient(gradient: Gradient(colors: [Color(themeManager.color(for: .viewBackground)), Color.clear]), startPoint: .bottom, endPoint: .top))
         }
         .background(Color.clear)
     }
