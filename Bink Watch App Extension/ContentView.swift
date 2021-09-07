@@ -12,8 +12,21 @@ struct ContentView: View {
     @ObservedObject var viewModel = WatchAppViewModel()
     
     var body: some View {
-        Text(viewModel.messageText)
-            .padding()
+        ScrollView {
+            VStack {
+                ForEach(viewModel.cards, id: \.id) { card in
+                    NavigationLink(destination: Text(card.companyName)) {
+                        HStack {
+                            Image(uiImage: card.iconImage!)
+                                .resizable()
+                                .frame(width: 40, height: 40)
+                            Spacer()
+                            Text(card.companyName)
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

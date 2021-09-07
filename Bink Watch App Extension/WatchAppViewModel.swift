@@ -6,7 +6,7 @@
 //  Copyright © 2021 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import WatchConnectivity
 
 final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
@@ -19,13 +19,33 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
         session.activate()
     }
     
-    @Published var messageText = "Welcome to Bink"
+    @Published var messageText: String = "Welcome to Bink"
+    @Published var cards: [WatchReceivableLoyaltyCard] = []
+    
+    struct WatchReceivableLoyaltyCard: Codable {
+        let id: String
+        let companyName: String
+        let iconImageData: Data
+        
+        var iconImage: UIImage? {
+            return UIImage(data: iconImageData)
+        }
+    }
     
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         DispatchQueue.main.async {
-            self.messageText = message["message"] as? String ?? "Unknown"
+            guard let cardDictsFromMessage = message["message"] as? [[String: Any]] else { return }
+            self.cards = cardDictsFromMessage.map { try? WatchReceivableLoyaltyCard(dictionary: $0) }.compactMap { $0 }
         }
     }
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
+}
+
+extension Decodable {
+    init(dictionary: [String: Any]) throws {
+        let decoder = JSONDecoder()
+        let data = try JSONSerialization.data(withJSONObject: dictionary, options: [])
+        self = try decoder.decode(Self.self, from: data)
+    }
 }

@@ -226,12 +226,23 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
             }
         }
     }
+    
+    struct WatchSendableLoyaltyCard: Codable {
+        let id: String
+        let companyName: String
+        let iconImageData: Data
+    }
 
     private func loadMembershipCards(forceRefresh: Bool = false, isUserDriven: Bool, completion: @escaping ServiceCompletionSuccessHandler<WalletServiceError>) {
         defer {
-            if (WCSession.default.isReachable) {
-                let message = ["message": "Membership cards updated: \(Date().timeIntervalSince1970)"]
-                WCSession.default.sendMessage(message, replyHandler: nil)
+            if WCSession.default.isReachable {
+                if let membershipCards = membershipCards {
+                    let cardsDictArray = membershipCards.map {
+                        WatchSendableLoyaltyCard(id: $0.id, companyName: $0.membershipPlan?.account?.companyName ?? "", iconImageData: UIImage(named: "loyalty")!.pngData()!).dictionary
+                    }.compactMap { $0 }
+                    
+                    WCSession.default.sendMessage(["message": cardsDictArray], replyHandler: nil)
+                }
             }
         }
         
@@ -418,4 +429,11 @@ extension Wallet: WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
     func sessionDidBecomeInactive(_ session: WCSession) {}
     func sessionDidDeactivate(_ session: WCSession) {}
+}
+
+extension Encodable {
+    var dictionary: [String: Any]? {
+        guard let data = try? JSONEncoder().encode(self) else { return nil }
+        return (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)).flatMap { $0 as? [String: Any] }
+    }
 }
