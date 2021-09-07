@@ -34,10 +34,11 @@ struct BinkButtonsStackView: View {
         static let height: CGFloat = buttonHeight + buttonSpacing
     }
     
+    @ObservedObject private var themeManager = Current.themeManager
     var buttonCount: CGFloat = 2
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             Spacer()
             VStack(alignment: .center, spacing: Constants.buttonSpacing) {
                 Spacer(minLength: Constants.buttonSpacing)
@@ -46,7 +47,7 @@ struct BinkButtonsStackView: View {
                 Spacer(minLength: BinkButtonsView.bottomSafePadding)
             }
             .frame(width: UIScreen.main.bounds.width, height: BinkButtonsView.bottomSafePadding + (Constants.height * buttonCount), alignment: .center)
-            .background(Color.gray)
+            .background(LinearGradient(gradient: Gradient(colors: [Color(themeManager.color(for: .viewBackground)), Color.clear]), startPoint: .bottom, endPoint: .top))
         }
         .background(Color.clear)
     }

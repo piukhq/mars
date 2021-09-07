@@ -32,18 +32,10 @@ struct AuthAndAddView: View {
     }
     
     var body: some View {
-//        ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
+        ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
             BinkFormView(viewModel: FormViewModel(datasource: datasource, title: viewModel.title, description: viewModel.getDescription(), membershipPlan: viewModel.getMembershipPlan(), colorScheme: colorScheme, footerButtons: [primaryButton]))
-            
-//            BinkButtonsSwiftUIView(buttons: [primaryButton])
-//                .frame(width: 200, alignment: .bottom)
-//        })
-    }
-    
-    private mutating func handlePrimaryButtonTap() {
-//        primaryButton.toggleLoading(isLoading: true)
-        try? viewModel.addMembershipCard(with: datasource.fields, checkboxes: datasource.checkboxes, completion: {
-//            self.primaryButton.toggleLoading(isLoading: false)
+            BinkButtonsStackView()
+                .offset(y: BinkButtonsView.bottomSafePadding - BinkButtonsView.bottomPadding)
         })
     }
 }
