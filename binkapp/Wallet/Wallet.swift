@@ -231,15 +231,25 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
         let id: String
         let companyName: String
         let iconImageData: Data
+        let barcodeImageData: Data
     }
 
     private func loadMembershipCards(forceRefresh: Bool = false, isUserDriven: Bool, completion: @escaping ServiceCompletionSuccessHandler<WalletServiceError>) {
         defer {
             if WCSession.default.isReachable {
                 if let membershipCards = membershipCards {
-                    let cardsDictArray = membershipCards.map {
-                        WatchSendableLoyaltyCard(id: $0.id, companyName: $0.membershipPlan?.account?.companyName ?? "", iconImageData: UIImage(named: "loyalty")!.pngData()!).dictionary
-                    }.compactMap { $0 }
+                    var cardsDictArray: [[String: Any]] = []
+                    
+                    for card in membershipCards {
+                        let iconImageData = ImageService.getImageFromDevice(forPathType: .membershipPlanIcon(plan: card.membershipPlan!))?.pngData()
+                        
+                        let barcodeViewModel = BarcodeViewModel(membershipCard: card)
+                        let barcodeImageData = barcodeViewModel.barcodeImage(withSize: CGSize(width: 100, height: 100))!.pngData()!
+                        
+                        if let object = WatchSendableLoyaltyCard(id: card.id, companyName: card.membershipPlan?.account?.companyName ?? "", iconImageData: iconImageData!, barcodeImageData: barcodeImageData).dictionary {
+                            cardsDictArray.append(object)
+                        }
+                    }
                     
                     WCSession.default.sendMessage(["message": cardsDictArray], replyHandler: nil)
                 }

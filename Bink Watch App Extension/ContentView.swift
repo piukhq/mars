@@ -15,7 +15,11 @@ struct ContentView: View {
         ScrollView {
             VStack {
                 ForEach(viewModel.cards, id: \.id) { card in
-                    NavigationLink(destination: Text(card.companyName)) {
+                    NavigationLink(destination:
+                                    Image(uiImage: card.barcodeImage!)
+                                    .resizable()
+                                    .frame(width: 100, height: 100, alignment: .center)
+                    ) {
                         HStack {
                             Image(uiImage: card.iconImage!)
                                 .resizable()
