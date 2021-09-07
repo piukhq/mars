@@ -25,7 +25,12 @@ struct ContentView: View {
                                 .resizable()
                                 .frame(width: 40, height: 40)
                             Spacer()
-                            Text(card.companyName)
+                            VStack {
+                                Text(card.companyName)
+                                if let balance = card.balanceString {
+                                    Text(balance)
+                                }
+                            }
                         }
                     }
                 }

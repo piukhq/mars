@@ -232,6 +232,7 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
         let companyName: String
         let iconImageData: Data
         let barcodeImageData: Data
+        let balanceString: String?
     }
 
     private func loadMembershipCards(forceRefresh: Bool = false, isUserDriven: Bool, completion: @escaping ServiceCompletionSuccessHandler<WalletServiceError>) {
@@ -246,7 +247,10 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
                         let barcodeViewModel = BarcodeViewModel(membershipCard: card)
                         let barcodeImageData = barcodeViewModel.barcodeImage(withSize: CGSize(width: 100, height: 100))!.pngData()!
                         
-                        if let object = WatchSendableLoyaltyCard(id: card.id, companyName: card.membershipPlan?.account?.companyName ?? "", iconImageData: iconImageData!, barcodeImageData: barcodeImageData).dictionary {
+                        let walletCardViewModel = WalletLoyaltyCardCellViewModel(membershipCard: card)
+                        let balanceString = "\(walletCardViewModel.pointsValueText ?? "") \(walletCardViewModel.pointsValueSuffixText ?? "")"
+                        
+                        if let object = WatchSendableLoyaltyCard(id: card.id, companyName: card.membershipPlan?.account?.companyName ?? "", iconImageData: iconImageData!, barcodeImageData: barcodeImageData, balanceString: balanceString).dictionary {
                             cardsDictArray.append(object)
                         }
                     }

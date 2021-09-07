@@ -27,6 +27,7 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
         let companyName: String
         let iconImageData: Data
         let barcodeImageData: Data
+        let balanceString: String?
         
         var iconImage: UIImage? {
             return UIImage(data: iconImageData)
