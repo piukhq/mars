@@ -13,6 +13,14 @@ import SwiftUI
 
 struct AuthAndAddView: View {
     @Environment(\.colorScheme) var colorScheme
+    @State var primaryButtonTapped = false
+    
+    private var primaryButton: BinkButton
+    
+//    private lazy var primaryButton: BinkButtonView = {
+//        let binkButton = BinkButton(type: .gradient, title: viewModel.buttonTitle, enabled: datasource.fullFormIsValid, action: {})
+//        return BinkButtonView(button: binkButton, wasTapped: $primaryButtonTapped)
+//    }()
 
     private let viewModel: AuthAndAddViewModel
     private let datasource: FormDataSource
@@ -20,10 +28,23 @@ struct AuthAndAddView: View {
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
         datasource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose, prefilledValues: viewModel.prefilledFormValues)
+        self.primaryButton = BinkButton(type: .gradient, title: viewModel.buttonTitle, enabled: datasource.fullFormIsValid, action: {})
     }
     
     var body: some View {
-        BinkFormView(viewModel: FormViewModel(datasource: datasource, title: viewModel.title, description: viewModel.getDescription(), membershipPlan: viewModel.getMembershipPlan(), colorScheme: colorScheme))
+//        ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
+            BinkFormView(viewModel: FormViewModel(datasource: datasource, title: viewModel.title, description: viewModel.getDescription(), membershipPlan: viewModel.getMembershipPlan(), colorScheme: colorScheme, footerButtons: [primaryButton]))
+            
+//            BinkButtonsSwiftUIView(buttons: [primaryButton])
+//                .frame(width: 200, alignment: .bottom)
+//        })
+    }
+    
+    private mutating func handlePrimaryButtonTap() {
+//        primaryButton.toggleLoading(isLoading: true)
+        try? viewModel.addMembershipCard(with: datasource.fields, checkboxes: datasource.checkboxes, completion: {
+//            self.primaryButton.toggleLoading(isLoading: false)
+        })
     }
 }
 

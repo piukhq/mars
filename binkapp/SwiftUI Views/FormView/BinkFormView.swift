@@ -25,12 +25,14 @@ final class FormViewModel: ObservableObject {
     var titleText: String?
     var descriptionText: String?
     let membershipPlan: CD_MembershipPlan
+    var footerButtons: [BinkButton]
     
-    init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan, colorScheme: ColorScheme) {
+    init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan, colorScheme: ColorScheme, footerButtons: [BinkButton]) {
         self.datasource = datasource
         self.titleText = title
         self.descriptionText = description
         self.membershipPlan = membershipPlan
+        self.footerButtons = footerButtons
         configureBrandImage(colorScheme: colorScheme)
     }
     
@@ -62,6 +64,10 @@ final class FormViewModel: ObservableObject {
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
+    
+//    func makeFooterButtonsView() -> BinkButtonsSwiftUIView {
+//        return BinkButtonsSwiftUIView(buttons: footerButtons)
+//    }
 }
 
 struct BinkFormView: View {
@@ -72,67 +78,69 @@ struct BinkFormView: View {
     @ObservedObject var viewModel: FormViewModel
     @State var checkedState = false
     var plan: CD_MembershipPlan!
-
+    
     var body: some View {
-        ScrollView {
-            VStack(alignment: .center, spacing: 20.0) {
-                viewModel.brandImage?
-                    .resizable()
-                    .frame(width: 70, height: 70, alignment: .center)
-                    .aspectRatio(contentMode: .fit)
-                
-                if viewModel.shouldShowInfoButton {
-                    Button(action: {
-                        viewModel.infoButtonWasTapped()
-                    }, label: {
-                        Text(viewModel.infoButtonText ?? "")
-                            .font(.custom(UIFont.linkTextButtonNormal.fontName, size: UIFont.linkTextButtonNormal.pointSize))
-                        Image(uiImage: Asset.iconsChevronRight.image.withRenderingMode(.alwaysTemplate))
-                            .resizable()
-                            .frame(width: 10, height: 10, alignment: .center)
-                    })
-                    .foregroundColor(Color(.blueAccent))
-                }
-
-
-                VStack(alignment: .leading, spacing: 5, content: {
-                    Text(viewModel.titleText ?? "")
-                        .font(.custom(UIFont.headline.fontName, size: UIFont.headline.pointSize))
-                        .multilineTextAlignment(.leading)
-                    Text(viewModel.descriptionText ?? "")
-                        .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
+        ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
+            ScrollView {
+                VStack(alignment: .center, spacing: 20.0) {
+                    viewModel.brandImage?
+                        .resizable()
+                        .frame(width: 70, height: 70, alignment: .center)
+                        .aspectRatio(contentMode: .fit)
                     
-                    Button(action: {}, label: {
-                        Text("Button")
+                    if viewModel.shouldShowInfoButton {
+                        Button(action: {
+                            viewModel.infoButtonWasTapped()
+                        }, label: {
+                            Text(viewModel.infoButtonText ?? "")
+                                .font(.custom(UIFont.linkTextButtonNormal.fontName, size: UIFont.linkTextButtonNormal.pointSize))
+                            Image(uiImage: Asset.iconsChevronRight.image.withRenderingMode(.alwaysTemplate))
+                                .resizable()
+                                .frame(width: 10, height: 10, alignment: .center)
+                        })
+                        .foregroundColor(Color(.blueAccent))
+                    }
+                    
+                    
+                    VStack(alignment: .leading, spacing: 5, content: {
+                        Text(viewModel.titleText ?? "")
+                            .font(.custom(UIFont.headline.fontName, size: UIFont.headline.pointSize))
+                            .multilineTextAlignment(.leading)
+                        Text(viewModel.descriptionText ?? "")
+                            .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
+                        
+                        Button(action: {}, label: {
+                            Text("Button")
+                        })
+                        .disabled(viewModel.datasource.fullFormIsValid)
                     })
-                    .disabled(viewModel.datasource.fullFormIsValid)
-                })
-                
-                // Textfields
-                ForEach(viewModel.datasource.fields) { field in
-                    if #available(iOS 14.0, *) {
-                        BinkTextfieldView(field: field)
-                            .accessibilityIdentifier(field.title)
-                            .keyboardType(field.fieldType.keyboardType())
-                    } else {
-                        BinkTextfieldView(field: field)
+                    
+                    // Textfields
+                    ForEach(viewModel.datasource.fields) { field in
+                        if #available(iOS 14.0, *) {
+                            BinkTextfieldView(field: field)
+                                .accessibilityIdentifier(field.title)
+                                .keyboardType(field.fieldType.keyboardType())
+                        } else {
+                            BinkTextfieldView(field: field)
+                        }
+                    }
+                    
+                    // Checkboxes
+                    VStack(spacing: -10) {
+                        ForEach(viewModel.datasource.checkboxes) { checkbox in
+                            CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $checkedState)
+                                .padding(.horizontal, 10)
+                        }
                     }
                 }
-                
-                // Checkboxes
-                VStack(spacing: -10) {
-                    ForEach(viewModel.datasource.checkboxes) { checkbox in
-                        CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $checkedState)
-                            .padding(.horizontal, 10)
-                    }
-                }
+                .padding(Constants.vStackInsets)
             }
-            .padding(Constants.vStackInsets)
-        }
-        .background(Color(UIColor.binkWhiteViewBackground))
-        .background(Color.red)
-        .padding(.bottom, viewModel.keyboardHeight)
-        .onReceive(Publishers.keyboardHeight, perform: { self.viewModel.keyboardHeight = $0 })
+            .background(Color(UIColor.binkWhiteViewBackground))
+            .background(Color.red)
+            .padding(.bottom, viewModel.keyboardHeight)
+            .onReceive(Publishers.keyboardHeight, perform: { self.viewModel.keyboardHeight = $0 })
+        })
     }
 }
 
