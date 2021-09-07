@@ -34,7 +34,7 @@ struct AuthAndAddView: View {
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
             BinkFormView(viewModel: FormViewModel(datasource: datasource, title: viewModel.title, description: viewModel.getDescription(), membershipPlan: viewModel.getMembershipPlan(), colorScheme: colorScheme, footerButtons: [primaryButton]))
-            BinkButtonsStackView()
+            BinkButtonsStackView(buttons: [BinkGradientButtonSwiftUIView(title: viewModel.buttonTitle)])
                 .offset(y: BinkButtonsView.bottomSafePadding - BinkButtonsView.bottomPadding)
         })
     }
