@@ -25,14 +25,13 @@ final class FormViewModel: ObservableObject {
     var titleText: String?
     var descriptionText: String?
     let membershipPlan: CD_MembershipPlan
-    var footerButtons: [BinkButton]
+//    var footerButtons: [BinkButton]
     
-    init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan, colorScheme: ColorScheme, footerButtons: [BinkButton]) {
+    init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan, colorScheme: ColorScheme) {
         self.datasource = datasource
         self.titleText = title
         self.descriptionText = description
         self.membershipPlan = membershipPlan
-        self.footerButtons = footerButtons
         configureBrandImage(colorScheme: colorScheme)
     }
     
@@ -76,11 +75,18 @@ struct BinkFormView: View {
     }
     
     @ObservedObject var viewModel: FormViewModel
+    @ObservedObject private var themeManager = Current.themeManager
     @State var checkedState = false
     var plan: CD_MembershipPlan!
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
+            /// Temporary workaround to force background color beyond bottom safe area. Once iOS 13 has been dropped, replace with ignoringSafeAreas modifier
+            Rectangle()
+                .foregroundColor(Color(themeManager.color(for: .viewBackground)))
+                .frame(height: 100, alignment: .center)
+                .offset(y: 50.0)
+            
             ScrollView {
                 VStack(alignment: .center, spacing: 20.0) {
                     viewModel.brandImage?
@@ -136,8 +142,7 @@ struct BinkFormView: View {
                 }
                 .padding(Constants.vStackInsets)
             }
-            .background(Color(UIColor.binkWhiteViewBackground))
-            .background(Color.red)
+            .background(Color(themeManager.color(for: .viewBackground)))
             .padding(.bottom, viewModel.keyboardHeight)
             .onReceive(Publishers.keyboardHeight, perform: { self.viewModel.keyboardHeight = $0 })
         })

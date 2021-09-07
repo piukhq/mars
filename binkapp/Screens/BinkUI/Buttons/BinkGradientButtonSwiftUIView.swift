@@ -8,24 +8,29 @@
 
 import SwiftUI
 
-struct BinkGradientButtonSwiftUIView: View, Hashable {
-    static func == (lhs: BinkGradientButtonSwiftUIView, rhs: BinkGradientButtonSwiftUIView) -> Bool {
-        lhs.title == rhs.title
-    }
-    
+struct BinkGradientButtonSwiftUIView: View, Identifiable {
+    @ObservedObject private var themeManager = Current.themeManager
+
+    var id = UUID()
     var title: String
-    var isEnabled = true
+    @State var enabled = true
     
     var body: some View {
         Button(title) {
             print("Tapped")
         }
         .frame(width: UIScreen.main.bounds.width * 0.75, height: 52.0)
-        .background(LinearGradient(gradient: Gradient(colors: [Color(.binkGradientBlueRight), Color(.binkGradientBlueLeft)]), startPoint: .leading, endPoint: .trailing))
+        .background(
+            ZStack {
+                Color(themeManager.color(for: .viewBackground))
+                LinearGradient(gradient: Gradient(colors: [Color(.binkGradientBlueRight), Color(.binkGradientBlueLeft)]), startPoint: .leading, endPoint: .trailing)
+                    .opacity(enabled ? 1.0 : 0.5)
+            })
         .cornerRadius(52 / 2)
-        .foregroundColor(.white)
+        .foregroundColor(enabled ? .white : .white.opacity(0.5))
         .font(.custom(UIFont.buttonText.fontName, size: UIFont.buttonText.pointSize))
         .shadow(color: .black.opacity(0.2), radius: 10, x: 3.0, y: 8.0)
+        .disabled(!enabled)
     }
 }
 
@@ -38,18 +43,17 @@ struct BinkButtonsStackView: View {
     
     @ObservedObject private var themeManager = Current.themeManager
     var buttons: [BinkGradientButtonSwiftUIView]
-//    var buttonCount: CGFloat = 1
     
     var body: some View {
         VStack {
             Spacer()
             ZStack {
-                LinearGradient(gradient: Gradient(colors: [Color(themeManager.color(for: .viewBackground)), .clear.opacity(0.0)]), startPoint: .bottom, endPoint: .top)
+                LinearGradient(gradient: Gradient(colors: [Color(themeManager.color(for: .viewBackground)), .white.opacity(0.01)]), startPoint: .bottom, endPoint: .top)
                     .padding(.top, 20)
                 
                 VStack(alignment: .center, spacing: Constants.buttonSpacing) {
                     Spacer(minLength: Constants.buttonSpacing)
-                    ForEach(buttons, id: \.self) { button in
+                    ForEach(buttons) { button in
                         button
                     }
                     Spacer(minLength: BinkButtonsView.bottomSafePadding)
@@ -63,6 +67,12 @@ struct BinkButtonsStackView: View {
 
 struct BinkButtonStackView_Previews: PreviewProvider {
     static var previews: some View {
-        BinkButtonsStackView(buttons: [BinkGradientButtonSwiftUIView(title: "Continue", isEnabled: false), BinkGradientButtonSwiftUIView(title: "Continue", isEnabled: false)])
+        Group {
+            ZStack {
+                Rectangle()
+                    .foregroundColor(Color(UIColor.grey10))
+                BinkButtonsStackView(buttons: [BinkGradientButtonSwiftUIView(title: "Bello", enabled: false), BinkGradientButtonSwiftUIView(title: "Continue", enabled: true)])
+            }
+        }
     }
 }
