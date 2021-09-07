@@ -28,12 +28,27 @@ struct BinkGradientButtonSwiftUIView: View {
 //}
 
 struct BinkButtonsStackView: View {
+    enum Constants {
+        static let buttonHeight: CGFloat = 52.0
+        static let buttonSpacing: CGFloat = 25.0
+        static let height: CGFloat = buttonHeight + buttonSpacing
+    }
+    
+    var buttonCount: CGFloat = 2
+    
     var body: some View {
-        VStack(alignment: .center, spacing: 25) {
+        VStack {
             Spacer()
-            BinkGradientButtonSwiftUIView()
-            BinkGradientButtonSwiftUIView()
+            VStack(alignment: .center, spacing: Constants.buttonSpacing) {
+                Spacer(minLength: Constants.buttonSpacing)
+                BinkGradientButtonSwiftUIView()
+                BinkGradientButtonSwiftUIView()
+                Spacer(minLength: BinkButtonsView.bottomSafePadding)
+            }
+            .frame(width: UIScreen.main.bounds.width, height: BinkButtonsView.bottomSafePadding + (Constants.height * buttonCount), alignment: .center)
+            .background(Color.gray)
         }
+        .background(Color.clear)
     }
 }
 
