@@ -25,7 +25,7 @@ struct ContentView: View {
                                 .resizable()
                                 .frame(width: 40, height: 40)
                             Spacer()
-                            VStack {
+                            VStack(alignment: .trailing) {
                                 Text(card.companyName)
                                 if let balance = card.balanceString {
                                     Text(balance)
@@ -36,6 +36,7 @@ struct ContentView: View {
                 }
             }
         }
+        .padding()
     }
 }
 
