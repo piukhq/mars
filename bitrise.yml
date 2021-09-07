@@ -1,10 +1,8 @@
 ---
-# CONFIG
 format_version: '8'
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: ios
 
-# WORKFLOWS
 workflows:
   beta:
     steps:
@@ -13,6 +11,9 @@ workflows:
         - private_token: "$gitlabAccessToken"
         - preset_status: running
         - api_base_url: https://git.bink.com/api/v4
+    - activate-ssh-key@4.0.3:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4.0.14: {}
     - script@1.1.5:
         title: Do anything with Script step
         inputs:
@@ -105,6 +106,8 @@ workflows:
             $result\n    exit 0\nfi"
   beta-jira-only:
     steps:
+    - activate-ssh-key@4: {}
+    - git-clone@4: {}
     - script@1:
         inputs:
         - content: |-
@@ -133,6 +136,9 @@ workflows:
         - api_base_url: https://git.bink.com/api/v4
   beta-test:
     steps:
+    - activate-ssh-key@4.0.3:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4.0.14: {}
     - script@1.1.5:
         title: Do anything with Script step
         inputs:
@@ -164,12 +170,15 @@ workflows:
         - notify_user_groups: none
   common-setup:
     steps:
-    - gitlab-status@0.9:
+    - gitlab-status@0.12:
         inputs:
         - private_token: "$gitlabAccessToken"
         - preset_status: running
         - api_base_url: https://git.bink.com/api/v4
-    - script@1.1.5:
+    - activate-ssh-key@4.1:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@6.1: {}
+    - script@1.1:
         title: Do anything with Script step
         inputs:
         - content: gem install cocoapods-keys
@@ -190,7 +199,7 @@ workflows:
         - upgrade: 'no'
         - packages: dependency-check
         title: Install Dependency Check Plugin
-    - script@1:
+    - script@1.1:
         inputs:
         - content: |-
             #!/usr/bin/env bash
@@ -265,7 +274,10 @@ workflows:
         - private_token: "$gitlabAccessToken"
         - preset_status: running
         - api_base_url: https://git.bink.com/api/v4
-    - script@1.1.5:
+    - activate-ssh-key@4.1:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@6.1: {}
+    - script@1.1:
         title: Do anything with Script step
         inputs:
         - content: gem install cocoapods-keys
@@ -289,6 +301,9 @@ workflows:
         - private_token: "$gitlabAccessToken"
         - preset_status: running
         - api_base_url: https://git.bink.com/api/v4
+    - activate-ssh-key@4.0.3:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4.0.14: {}
     - xcode-test@2:
         inputs:
         - generate_code_coverage_files: 'yes'
@@ -532,14 +547,14 @@ workflows:
         - decrypt_password: "$MATCH_PASSWORD"
         - type: appstore
         - git_url: "$MATCH_REPO_URL"
-    - cocoapods-install@1.11:
+    - cocoapods-install@2.2:
         inputs:
         - install_cocoapods_version: 1.10.1
     - fastlane@3.2:
         title: Upload to TestFlight
         inputs:
         - lane: mr branch_name:$BITRISE_GIT_BRANCH build_number:$BITRISE_BUILD_NUMBER
-    - microsoft-teams-integration@1.2:
+    - microsoft-teams-integration@2.1:
         inputs:
         - webhook_url: https://outlook.office.com/webhook/bf220ac8-d509-474f-a568-148982784d19@a6e2367a-92ea-4e5a-b565-723830bcc095/IncomingWebhook/eb595a7bd05244e4b54c408a371ca090/8ca3aa12-4603-452c-ae1e-b241aef04c87
     - gitlab-status@0.12:
@@ -580,7 +595,7 @@ workflows:
 
             curl -sL https://sentry.io/get-cli/ | bash
         title: Install Sentry CLI
-    - fastlane@2:
+    - fastlane@3.2:
         inputs:
         - lane: beta_dsym
         title: Upload dsyms
@@ -605,6 +620,9 @@ workflows:
     after_run: []
   nightly:
     steps:
+    - activate-ssh-key@4.0.3:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4.0.14: {}
     - script@1.1.5:
         title: Do anything with Script step
         inputs:
@@ -654,6 +672,9 @@ workflows:
       CI_PIPELINE_NAME: NIGHTLY
   nightly-Appium-UI-tests:
     steps:
+    - activate-ssh-key@4.0.3:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4.0.14: {}
     - script@1.1.5:
         title: Do anything with Script step
         inputs:
@@ -702,8 +723,38 @@ workflows:
             cd $BITRISE_SOURCE_DIR/pythonUITests
             py.test
     - deploy-to-bitrise-io@1: {}
+  nightly-testflight:
+    steps:
+    - gitlab-status@0.12:
+        inputs:
+        - private_token: "$gitlabAccessToken"
+        - preset_status: running
+        - api_base_url: https://git.bink.com/api/v4
+    - activate-ssh-key@4.1:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@6.1: {}
+    - script@1.1:
+        title: Do anything with Script step
+        inputs:
+        - content: gem install cocoapods-keys
+    envs:
+    - opts:
+        is_expand: false
+      BITRISE_SCHEME: binkapp beta
+    - opts:
+        is_expand: false
+      BITRISE_BUNDLEID: com.bink.wallet.beta
+    - opts:
+        is_expand: false
+      CI_PIPELINE_NAME: MR
+    after_run:
+    - script-dependencies
+    - nightly-deploy-testflight
   NightlyUITests:
     steps:
+    - activate-ssh-key@4.0.3:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4.0.14: {}
     - script@1.1.5:
         title: Do anything with Script step
         inputs:
@@ -725,10 +776,13 @@ workflows:
         - export_method: ad-hoc
   release:
     steps:
+    - activate-ssh-key@4.0:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
     - set-git-credentials@1:
         inputs:
         - git_email_address: nfarrant@bink.com
         - git_user_name: Nick Farrant
+    - git-clone@6.1: {}
     envs:
     - opts:
         is_expand: false
@@ -807,6 +861,9 @@ workflows:
         - private_token: "$gitlabAccessToken"
         - preset_status: running
         - api_base_url: https://git.bink.com/api/v4
+    - activate-ssh-key@4.0:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@6.1: {}
     - script@1.1:
         title: Do anything with Script step
         inputs:
@@ -864,6 +921,91 @@ workflows:
         inputs:
         - private_token: "$gitlabAccessToken"
         - api_base_url: https://git.bink.com/api/v4
+  nightly-deploy-testflight:
+    steps:
+    - fastlane-match@0.2.0:
+        inputs:
+        - decrypt_password: "$MATCH_PASSWORD"
+        - type: appstore
+        - app_id: com.bink.wallet.beta
+        - git_url: "$MATCH_REPO_URL"
+    - fastlane-match@0:
+        inputs:
+        - app_id: com.bink.wallet.beta.widget
+        - decrypt_password: "$MATCH_PASSWORD"
+        - type: appstore
+        - git_url: "$MATCH_REPO_URL"
+    - cocoapods-install@2.2:
+        inputs:
+        - install_cocoapods_version: 1.10.1
+    - fastlane@3.2:
+        title: Upload to TestFlight
+        inputs:
+        - lane: nightly branch_name:$BITRISE_GIT_BRANCH build_number:$BITRISE_BUILD_NUMBER
+    - microsoft-teams-integration@2.1:
+        inputs:
+        - webhook_url: https://outlook.office.com/webhook/bf220ac8-d509-474f-a568-148982784d19@a6e2367a-92ea-4e5a-b565-723830bcc095/IncomingWebhook/eb595a7bd05244e4b54c408a371ca090/8ca3aa12-4603-452c-ae1e-b241aef04c87
+    - gitlab-status@0.12:
+        inputs:
+        - private_token: "$gitlabAccessToken"
+        - api_base_url: https://git.bink.com/api/v4
+    - script@1:
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -o pipefail
+            echo "Starting to look for AB or IB Jira Number"
+            re='(AB|IB)20-\d{3,}'
+            result=$(echo ${BITRISE_GIT_MESSAGE} ${BITRISE_GIT_BRANCH} | grep -E $re -o | head -1)
+            if [ -z ${result} ]; then
+                echo "Could not find Jira Issue Number"
+                exit 0
+            else
+             echo "Found "$result
+             envman add --key JIRA_ISSUE_CODE --value $result
+             exit 0
+            fi
+        title: Pull out Jira Issue Code
+    - post-jira-comment-with-build-details@1:
+        inputs:
+        - base_url: "$jiraBaseUrl"
+        - api_token: "$jiraAccessToken"
+        - user_name: "$jiraUserEmail"
+        - build_message: "Merge Request - *$BITRISE_BUILD_NUMBER* is now available
+            \n||Build number|$BITRISE_BUILD_NUMBER|\n||Author|$GIT_CLONE_COMMIT_AUTHOR_NAME|\n||Branch|$BITRISE_GIT_BRANCH|\n||Commit
+            hash|$GIT_CLONE_COMMIT_HASH|\n||Commit message|$GIT_CLONE_COMMIT_MESSAGE_SUBJECT|\n\n[Show
+            build details|$BITRISE_BUILD_URL]\n"
+        - issue_keys: "$JIRA_ISSUE_CODE"
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+
+            curl -sL https://sentry.io/get-cli/ | bash
+        title: Install Sentry CLI
+    - fastlane@3.2:
+        inputs:
+        - lane: beta_dsym
+        title: Upload dsyms
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            brew install danger/tap/danger-swift
+            danger-swift ci
+    envs:
+    - opts:
+        is_expand: false
+      BITRISE_SCHEME: binkapp beta
+    - opts:
+        is_expand: false
+      BITRISE_BUNDLEID: com.bink.wallet.beta
+    after_run: []
 app:
   envs:
   - opts:
@@ -905,6 +1047,9 @@ app:
   - opts:
       is_expand: false
     CI_PIPELINE_NAME: BETA
+  - opts:
+      is_expand: false
+    FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: '120'
 meta:
   bitrise.io:
     machine_type: performance
