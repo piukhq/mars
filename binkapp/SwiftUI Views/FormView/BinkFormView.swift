@@ -14,8 +14,10 @@ struct BinkFormView: View {
         static let vStackInsets = EdgeInsets(top: 20, leading: 25, bottom: 150, trailing: 25)
     }
     
+    @Environment(\.colorScheme) var colorScheme
     @ObservedObject var viewModel: FormViewModel
     @ObservedObject private var themeManager = Current.themeManager
+    @ObservedObject private var imageLoader = ImageLoader()
     @State var checkedState = false
     var plan: CD_MembershipPlan!
     
@@ -30,8 +32,10 @@ struct BinkFormView: View {
             
             ScrollView {
                 VStack(alignment: .center, spacing: 20.0) {
-                    viewModel.brandImage?
-                        .resizable()
+                    RemoteImage(image: imageLoader.image)
+                        .onAppear {
+                            imageLoader.retrieveImage(for: viewModel.membershipPlan, colorScheme: colorScheme)
+                        }
                         .frame(width: 70, height: 70, alignment: .center)
                         .aspectRatio(contentMode: .fit)
                     

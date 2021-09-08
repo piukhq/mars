@@ -310,6 +310,7 @@
 		CE54AF5D25F938720061838C /* BinkLoggerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54AF5C25F938720061838C /* BinkLoggerEvents.swift */; };
 		CE54AF6225FA0BA00061838C /* BinkLoggerErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */; };
 		CE6054A426E8932800FD0866 /* FormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6054A326E8932800FD0866 /* FormViewModel.swift */; };
+		CE6054A626E8D54500FD0866 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6054A526E8D54500FD0866 /* ImageLoader.swift */; };
 		CE67DC0D269F2407008D930D /* AutomatedTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE67DC0C269F2407008D930D /* AutomatedTesting.swift */; };
 		CE6DE55F267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6DE55E267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift */; };
 		CE6DE5662681E8280063A3A9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6DE5652681E8280063A3A9 /* WidgetKit.framework */; };
@@ -937,6 +938,7 @@
 		CE54AF5C25F938720061838C /* BinkLoggerEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLoggerEvents.swift; sourceTree = "<group>"; };
 		CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLoggerErrors.swift; sourceTree = "<group>"; };
 		CE6054A326E8932800FD0866 /* FormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewModel.swift; sourceTree = "<group>"; };
+		CE6054A526E8D54500FD0866 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		CE67DC0C269F2407008D930D /* AutomatedTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting.swift; sourceTree = "<group>"; };
 		CE6DE55E267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsSwiftUIView.swift; sourceTree = "<group>"; };
 		CE6DE5642681E8280063A3A9 /* BinkWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BinkWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2830,6 +2832,7 @@
 			isa = PBXGroup;
 			children = (
 				EF94AF1323E05B5D00AAA039 /* ImageService.swift */,
+				CE6054A526E8D54500FD0866 /* ImageLoader.swift */,
 			);
 			path = "Image Service";
 			sourceTree = "<group>";
@@ -3688,6 +3691,7 @@
 				BD99D2D8234FDF2C00823FC4 /* SettingsViewController.swift in Sources */,
 				CE85A1D226A5DB43003B74CD /* EmailClient.swift in Sources */,
 				EF59A12F24474572001B60B8 /* NetworkingError.swift in Sources */,
+				CE6054A626E8D54500FD0866 /* ImageLoader.swift in Sources */,
 				EFA5F71D2379A7C70027AB80 /* CD_Tier.swift in Sources */,
 				3C2C90FF23193F6700D112E3 /* AccountPostModel.swift in Sources */,
 				70E39801256E8CDA009AD8CB /* DynamicActionsUtility.swift in Sources */,

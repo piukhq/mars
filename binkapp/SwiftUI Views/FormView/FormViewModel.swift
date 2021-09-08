@@ -23,7 +23,6 @@ final class FormViewModel: ObservableObject {
         self.titleText = title
         self.descriptionText = description
         self.membershipPlan = membershipPlan
-//        configureBrandImage(colorScheme: colorScheme! )
     }
     
     var infoButtonText: String? {
@@ -36,19 +35,7 @@ final class FormViewModel: ObservableObject {
     var shouldShowInfoButton: Bool {
         return infoButtonText != nil
     }
-    
-//    var shouldShowBrandImage: Bool {
-//        return membershipPlan != nil
-//    }
-    
-//    func configureBrandImage(colorScheme: ColorScheme) {
-//        ImageService.getImage(forPathType: .membershipPlanIcon(plan: membershipPlan), traitCollection: nil, colorScheme: colorScheme) { uiImage in
-//            if let uiImage = uiImage {
-//                self.brandImage = Image(uiImage: uiImage)
-//            }
-//        }
-//    }
-//
+
     func infoButtonWasTapped() {
         let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: membershipPlan)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)

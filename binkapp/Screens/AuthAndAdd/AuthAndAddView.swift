@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct AuthAndAddView: View {
-    @Environment(\.colorScheme) var colorScheme
     @ObservedObject var formViewModel: FormViewModel
 
     private let viewModel: AuthAndAddViewModel
