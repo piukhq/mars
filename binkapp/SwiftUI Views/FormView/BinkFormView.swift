@@ -56,14 +56,10 @@ struct BinkFormView: View {
                     VStack(alignment: .leading, spacing: 5, content: {
                         Text(viewModel.titleText ?? "")
                             .font(.custom(UIFont.headline.fontName, size: UIFont.headline.pointSize))
-                            .multilineTextAlignment(.leading)
+                            .fixedSize(horizontal: false, vertical: true)
                         Text(viewModel.descriptionText ?? "")
                             .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
-                        
-                        Button(action: {}, label: {
-                            Text("Button")
-                        })
-                        .disabled(viewModel.datasource.fullFormIsValid)
+                            .fixedSize(horizontal: false, vertical: true)
                     })
                     
                     // Textfields
@@ -84,6 +80,7 @@ struct BinkFormView: View {
                                 .padding(.horizontal, 10)
                         }
                     }
+                    .frame(height: 100)
                 }
                 .padding(Constants.vStackInsets)
             }
