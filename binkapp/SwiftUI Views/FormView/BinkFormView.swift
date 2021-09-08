@@ -9,66 +9,6 @@
 import Combine
 import SwiftUI
 
-let shouldChangeBlock: FormField.TextFieldShouldChange = { (_, _, _, _) in
-    return false
-}
-
-let field1 = FormField(title: "Email", placeholder: "Enter your email bitch", validation: "", fieldType: .email, updated: { _, _ in }, shouldChange: shouldChangeBlock, fieldExited: { _ in })
-let datasourceMock = FormDataSource(PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil))
-
-
-final class FormViewModel: ObservableObject {
-    @Published var datasource: FormDataSource
-    @Published var brandImage: Image?
-    @State var keyboardHeight: CGFloat = 0
-
-    var titleText: String?
-    var descriptionText: String?
-    let membershipPlan: CD_MembershipPlan
-//    var footerButtons: [BinkButton]
-    
-    init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan, colorScheme: ColorScheme) {
-        self.datasource = datasource
-        self.titleText = title
-        self.descriptionText = description
-        self.membershipPlan = membershipPlan
-        configureBrandImage(colorScheme: colorScheme)
-    }
-    
-    var infoButtonText: String? {
-        if let planName = membershipPlan.account?.planName {
-            return "\(planName) info"
-        }
-        return nil
-    }
-    
-    var shouldShowInfoButton: Bool {
-        return infoButtonText != nil
-    }
-    
-//    var shouldShowBrandImage: Bool {
-//        return membershipPlan != nil
-//    }
-    
-    func configureBrandImage(colorScheme: ColorScheme) {
-        ImageService.getImage(forPathType: .membershipPlanIcon(plan: membershipPlan), traitCollection: nil, colorScheme: colorScheme) { uiImage in
-            if let uiImage = uiImage {
-                self.brandImage = Image(uiImage: uiImage)
-            }
-        }
-    }
-    
-    func infoButtonWasTapped() {
-        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: membershipPlan)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
-        Current.navigate.to(navigationRequest)
-    }
-    
-//    func makeFooterButtonsView() -> BinkButtonsSwiftUIView {
-//        return BinkButtonsSwiftUIView(buttons: footerButtons)
-//    }
-}
-
 struct BinkFormView: View {
     enum Constants {
         static let vStackInsets = EdgeInsets(top: 20, leading: 25, bottom: 150, trailing: 25)
@@ -86,6 +26,7 @@ struct BinkFormView: View {
                 .foregroundColor(Color(themeManager.color(for: .viewBackground)))
                 .frame(height: 100, alignment: .center)
                 .offset(y: 50.0)
+            ///
             
             ScrollView {
                 VStack(alignment: .center, spacing: 20.0) {
@@ -124,11 +65,11 @@ struct BinkFormView: View {
                     // Textfields
                     ForEach(viewModel.datasource.fields) { field in
                         if #available(iOS 14.0, *) {
-                            BinkTextfieldView(field: field)
+                            BinkTextfieldView(field: field, didExit: $viewModel.textfieldDidExit)
                                 .accessibilityIdentifier(field.title)
                                 .keyboardType(field.fieldType.keyboardType())
                         } else {
-                            BinkTextfieldView(field: field)
+                            BinkTextfieldView(field: field, didExit: $viewModel.textfieldDidExit)
                         }
                     }
                     
@@ -154,9 +95,11 @@ struct BinkTextfieldView: View {
     @State private var isEditing = false
     @State var value: String = ""
     @State var showErrorState = false
+    @Binding var fieldDidExit: Bool
     
-    init(field: FormField) {
+    init(field: FormField, didExit: Binding<Bool>) {
         self.field = field
+        _fieldDidExit = didExit
         UITextField.appearance().clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
     }
     
@@ -184,6 +127,7 @@ struct BinkTextfieldView: View {
                             TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
                                 self.isEditing = isEditing
                                 self.field.updateValue(value)
+                                self.fieldDidExit = isEditing
                                 
                                 if isEditing {
 //                                    self.datasource.formViewDidSelectField(self)
@@ -274,6 +218,13 @@ struct BinkTextfieldView: View {
 
 
 // MARK: - Previews
+
+let shouldChangeBlock: FormField.TextFieldShouldChange = { (_, _, _, _) in
+    return false
+}
+
+let field1 = FormField(title: "Email", placeholder: "Enter your email bitch", validation: "", fieldType: .email, updated: { _, _ in }, shouldChange: shouldChangeBlock, fieldExited: { _ in })
+let datasourceMock = FormDataSource(PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil))
 
 struct BinkFormView_Previews: PreviewProvider {
     static var previews: some View {

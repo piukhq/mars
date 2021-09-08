@@ -10,21 +10,27 @@ import SwiftUI
 
 struct AuthAndAddView: View {
     @Environment(\.colorScheme) var colorScheme
+    @ObservedObject var formViewModel: FormViewModel
 
     private let viewModel: AuthAndAddViewModel
     private let datasource: FormDataSource
 
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
-        datasource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose, prefilledValues: viewModel.prefilledFormValues)
+        self.datasource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose, prefilledValues: viewModel.prefilledFormValues)
+        self.formViewModel = FormViewModel(datasource: datasource, title: viewModel.title, description: viewModel.getDescription(), membershipPlan: viewModel.getMembershipPlan())
     }
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
-            BinkFormView(viewModel: FormViewModel(datasource: datasource, title: viewModel.title, description: viewModel.getDescription(), membershipPlan: viewModel.getMembershipPlan(), colorScheme: colorScheme))
-            BinkButtonsStackView(buttons: [BinkGradientButtonSwiftUIView(title: viewModel.buttonTitle, enabled: datasource.fullFormIsValid)])
+            BinkFormView(viewModel: formViewModel)
+            BinkButtonsStackView(buttons: [BinkGradientButtonSwiftUIView(enabled: checkFormValidity(didExit: $formViewModel.textfieldDidExit), title: viewModel.buttonTitle)])
                 .offset(y: BinkButtonsView.bottomSafePadding - BinkButtonsView.bottomPadding)
         })
+    }
+    
+    func checkFormValidity(didExit: Binding<Bool>) -> Bool {
+        return datasource.fullFormIsValid
     }
 }
 

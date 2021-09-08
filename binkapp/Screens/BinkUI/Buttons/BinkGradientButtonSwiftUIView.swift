@@ -10,10 +10,10 @@ import SwiftUI
 
 struct BinkGradientButtonSwiftUIView: View, Identifiable {
     @ObservedObject private var themeManager = Current.themeManager
+    @State var enabled = true
 
     var id = UUID()
     var title: String
-    @State var enabled = true
     
     var body: some View {
         Button(title) {
@@ -71,7 +71,7 @@ struct BinkButtonStackView_Previews: PreviewProvider {
             ZStack {
                 Rectangle()
                     .foregroundColor(Color(UIColor.grey10))
-                BinkButtonsStackView(buttons: [BinkGradientButtonSwiftUIView(title: "Bello", enabled: false), BinkGradientButtonSwiftUIView(title: "Continue", enabled: true)])
+                BinkButtonsStackView(buttons: [BinkGradientButtonSwiftUIView(enabled: false, title: "Bello"), BinkGradientButtonSwiftUIView(enabled: true, title: "Continue")])
             }
         }
     }
