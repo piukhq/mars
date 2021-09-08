@@ -150,7 +150,7 @@ struct BinkTextfieldView: View {
                             .offset(x: -5, y: 11)
                     }
                     
-                    if field.fieldCommonName == .cardNumber && !isEditing {
+                    if field.fieldCommonName == .cardNumber && !isEditing && !field.isValid() {
                         Button(action: {
 //                            if field.fieldType == .paymentCardNumber {
 //                                datasource.formViewDidReceivePaymentScannerButtonTap(self)
