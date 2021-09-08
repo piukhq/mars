@@ -15,7 +15,7 @@ struct AuthAndAddView: View {
     private let datasource: FormDataSource
     
     private var primaryButton: BinkGradientButtonSwiftUIView {
-        return BinkGradientButtonSwiftUIView(enabled: checkFormValidity(didExit: $formViewModel.textfieldDidExit), isLoading: false, title: viewModel.buttonTitle, buttonTapped: handlePrimaryButtonTap)
+        return BinkGradientButtonSwiftUIView(enabled: checkFormValidity(didExit: $formViewModel.textfieldDidExit, checkedState: $formViewModel.checkedState), isLoading: false, title: viewModel.buttonTitle, buttonTapped: handlePrimaryButtonTap)
     }
 
     init(viewModel: AuthAndAddViewModel) {
@@ -32,7 +32,7 @@ struct AuthAndAddView: View {
         })
     }
     
-    private func checkFormValidity(didExit: Binding<Bool>) -> Bool {
+    private func checkFormValidity(didExit: Binding<Bool>, checkedState: Binding<Bool>) -> Bool {
         return datasource.fullFormIsValid
     }
     

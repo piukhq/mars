@@ -18,7 +18,6 @@ struct BinkFormView: View {
     @ObservedObject var viewModel: FormViewModel
     @ObservedObject private var themeManager = Current.themeManager
     @ObservedObject private var imageLoader = ImageLoader()
-    @State var checkedState = false
     var plan: CD_MembershipPlan!
     
     var body: some View {
@@ -76,7 +75,7 @@ struct BinkFormView: View {
                     // Checkboxes
                     VStack(spacing: -10) {
                         ForEach(viewModel.datasource.checkboxes) { checkbox in
-                            CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $checkedState)
+                            CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $viewModel.checkedState)
                                 .padding(.horizontal, 10)
                         }
                     }

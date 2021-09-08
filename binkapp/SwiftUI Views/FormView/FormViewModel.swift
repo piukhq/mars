@@ -12,6 +12,7 @@ final class FormViewModel: ObservableObject {
     @Published var datasource: FormDataSource
     @Published var brandImage: Image?
     @Published var textfieldDidExit = false
+    @Published var checkedState = false
     @State var keyboardHeight: CGFloat = 0
 
     var titleText: String?
