@@ -14,6 +14,10 @@ struct AuthAndAddView: View {
 
     private let viewModel: AuthAndAddViewModel
     private let datasource: FormDataSource
+    
+    private var primaryButton: BinkGradientButtonSwiftUIView {
+        return BinkGradientButtonSwiftUIView(enabled: checkFormValidity(didExit: $formViewModel.textfieldDidExit), isLoading: false, title: viewModel.buttonTitle, buttonTapped: handlePrimaryButtonTap)
+    }
 
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
@@ -24,13 +28,19 @@ struct AuthAndAddView: View {
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
             BinkFormView(viewModel: formViewModel)
-            BinkButtonsStackView(buttons: [BinkGradientButtonSwiftUIView(enabled: checkFormValidity(didExit: $formViewModel.textfieldDidExit), title: viewModel.buttonTitle)])
+            BinkButtonsStackView(buttons: [primaryButton])
                 .offset(y: BinkButtonsView.bottomSafePadding - BinkButtonsView.bottomPadding)
         })
     }
     
-    func checkFormValidity(didExit: Binding<Bool>) -> Bool {
+    private func checkFormValidity(didExit: Binding<Bool>) -> Bool {
         return datasource.fullFormIsValid
+    }
+    
+    private func handlePrimaryButtonTap() {
+        try? viewModel.addMembershipCard(with: datasource.fields, checkboxes: datasource.checkboxes, completion: {
+            primaryButton.isLoading = false
+        })
     }
 }
 

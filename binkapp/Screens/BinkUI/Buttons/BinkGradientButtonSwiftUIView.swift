@@ -11,13 +11,16 @@ import SwiftUI
 struct BinkGradientButtonSwiftUIView: View, Identifiable {
     @ObservedObject private var themeManager = Current.themeManager
     @State var enabled = true
+    @State var isLoading: Bool
 
     var id = UUID()
     var title: String
+    var buttonTapped: () -> Void
     
     var body: some View {
-        Button(title) {
-            print("Tapped")
+        Button(isLoading ? "" : title) {
+            isLoading = true
+            buttonTapped()
         }
         .frame(width: UIScreen.main.bounds.width * 0.75, height: 52.0)
         .background(
@@ -31,6 +34,22 @@ struct BinkGradientButtonSwiftUIView: View, Identifiable {
         .font(.custom(UIFont.buttonText.fontName, size: UIFont.buttonText.pointSize))
         .shadow(color: .black.opacity(0.2), radius: 10, x: 3.0, y: 8.0)
         .disabled(!enabled)
+        .overlay(ActivityIndicator(animate: $isLoading, style: .medium), alignment: .center)
+    }
+}
+
+struct ActivityIndicator: UIViewRepresentable {
+    @Binding var animate: Bool
+    let style: UIActivityIndicatorView.Style
+
+    func makeUIView(context: UIViewRepresentableContext<ActivityIndicator>) -> UIActivityIndicatorView {
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.color = .white
+        return activityIndicator
+    }
+
+    func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<ActivityIndicator>) {
+        animate ? uiView.startAnimating() : uiView.stopAnimating()
     }
 }
 
@@ -71,7 +90,7 @@ struct BinkButtonStackView_Previews: PreviewProvider {
             ZStack {
                 Rectangle()
                     .foregroundColor(Color(UIColor.grey10))
-                BinkButtonsStackView(buttons: [BinkGradientButtonSwiftUIView(enabled: false, title: "Bello"), BinkGradientButtonSwiftUIView(enabled: true, title: "Continue")])
+                BinkButtonsStackView(buttons: [BinkGradientButtonSwiftUIView(enabled: false, isLoading: false, title: "Bello", buttonTapped: {}), BinkGradientButtonSwiftUIView(enabled: true, isLoading: false, title: "Continue", buttonTapped: {})])
             }
         }
     }
