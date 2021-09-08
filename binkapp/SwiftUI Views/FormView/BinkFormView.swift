@@ -75,7 +75,7 @@ struct BinkFormView: View {
                     // Checkboxes
                     VStack(spacing: -10) {
                         ForEach(viewModel.datasource.checkboxes) { checkbox in
-                            CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $viewModel.checkedState)
+                            CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $viewModel.checkedState, didTapOnURL: $viewModel.didTapOnURL)
                                 .padding(.horizontal, 10)
                         }
                     }

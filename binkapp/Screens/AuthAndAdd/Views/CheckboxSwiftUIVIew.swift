@@ -12,9 +12,11 @@ import UIKit
 struct CheckboxSwiftUIVIew: UIViewRepresentable {
     var checkbox: CheckboxView
     @Binding var checkedState: Bool
+    @Binding var didTapOnURL: URL?
+
     
     func makeCoordinator() -> Coordinator {
-        Coordinator(checkedState: $checkedState)
+        Coordinator(checkedState: $checkedState, url: $didTapOnURL)
     }
     
     func makeUIView(context: Context) -> CheckboxView {
@@ -30,13 +32,19 @@ struct CheckboxSwiftUIVIew: UIViewRepresentable {
 extension CheckboxSwiftUIVIew {
     class Coordinator: NSObject, CheckboxViewDelegate {
         @Binding private var checkedState: Bool
+        @Binding private var didTapOnURL: URL?
         
-        init(checkedState: Binding<Bool>) {
+        init(checkedState: Binding<Bool>, url: Binding<URL?>) {
             _checkedState = checkedState
+            _didTapOnURL = url
         }
         
         func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {
             checkedState = checkboxView.checkedState
+        }
+        
+        func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
+            didTapOnURL = URL
         }
     }
 }

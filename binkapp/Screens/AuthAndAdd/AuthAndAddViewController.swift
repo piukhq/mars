@@ -62,9 +62,9 @@ class AuthAndAddViewController: BaseFormViewController {
         case .add, .addFailed, .addFromScanner: setScreenName(trackedScreen: .addAuthForm)
         case .signUp, .signUpFailed:
             setScreenName(trackedScreen: .enrolForm)
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                self?.viewModel.configureAttributedStrings()
-            }
+//            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+//                self?.viewModel.configureAttributedStrings()
+//            }
         case .ghostCard, .patchGhostCard: setScreenName(trackedScreen: .registrationForm)
         }
     }
@@ -112,7 +112,7 @@ class AuthAndAddViewController: BaseFormViewController {
     }
     
     override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
-        viewModel.presentPlanDocumentsModal(withUrl: URL)
+//        viewModel.presentPlanDocumentsModal(withUrl: URL)
     }
 }
 

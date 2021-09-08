@@ -30,6 +30,11 @@ struct AuthAndAddView: View {
             BinkButtonsStackView(buttons: [primaryButton])
                 .offset(y: BinkButtonsView.bottomSafePadding - BinkButtonsView.bottomPadding)
         })
+        .onAppear(perform: {
+            DispatchQueue.global(qos: .userInitiated).async {
+                formViewModel.configureAttributedStrings()
+            }
+        })
     }
     
     private func checkFormValidity(didExit: Binding<Bool>, checkedState: Binding<Bool>) -> Bool {
