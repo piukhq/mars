@@ -31,9 +31,10 @@ struct BinkFormView: View {
             
             ScrollView {
                 VStack(alignment: .center, spacing: 20.0) {
-                    RemoteImage(image: imageLoader.image)
+                    RemoteImage(image: viewModel.brandImage ?? imageLoader.image)
                         .onAppear {
                             imageLoader.retrieveImage(for: viewModel.membershipPlan, colorScheme: colorScheme)
+                            viewModel.brandImage = imageLoader.image
                         }
                         .frame(width: 70, height: 70, alignment: .center)
                         .aspectRatio(contentMode: .fit)
