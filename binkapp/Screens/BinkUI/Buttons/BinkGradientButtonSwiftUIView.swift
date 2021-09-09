@@ -18,23 +18,25 @@ struct BinkGradientButtonSwiftUIView: View, Identifiable {
     var buttonTapped: () -> Void
     
     var body: some View {
-        Button(isLoading ? "" : title) {
+        Button {
             isLoading = true
             buttonTapped()
+        } label: {
+            Text(isLoading ? "" : title)
+                .frame(width: UIScreen.main.bounds.width * 0.75, height: 52.0)
+                .background(
+                    ZStack {
+                        Color(themeManager.color(for: .viewBackground))
+                        LinearGradient(gradient: Gradient(colors: [Color(.binkGradientBlueRight), Color(.binkGradientBlueLeft)]), startPoint: .leading, endPoint: .trailing)
+                            .opacity(enabled ? 1.0 : 0.5)
+                    })
+                .cornerRadius(52 / 2)
+                .foregroundColor(enabled ? .white : .white.opacity(0.5))
+                .font(.custom(UIFont.buttonText.fontName, size: UIFont.buttonText.pointSize))
+                .shadow(color: .black.opacity(0.2), radius: 10, x: 3.0, y: 8.0)
+                .overlay(ActivityIndicator(animate: $isLoading, style: .medium), alignment: .center)
         }
-        .frame(width: UIScreen.main.bounds.width * 0.75, height: 52.0)
-        .background(
-            ZStack {
-                Color(themeManager.color(for: .viewBackground))
-                LinearGradient(gradient: Gradient(colors: [Color(.binkGradientBlueRight), Color(.binkGradientBlueLeft)]), startPoint: .leading, endPoint: .trailing)
-                    .opacity(enabled ? 1.0 : 0.5)
-            })
-        .cornerRadius(52 / 2)
-        .foregroundColor(enabled ? .white : .white.opacity(0.5))
-        .font(.custom(UIFont.buttonText.fontName, size: UIFont.buttonText.pointSize))
-        .shadow(color: .black.opacity(0.2), radius: 10, x: 3.0, y: 8.0)
         .disabled(!enabled)
-        .overlay(ActivityIndicator(animate: $isLoading, style: .medium), alignment: .center)
     }
 }
 
