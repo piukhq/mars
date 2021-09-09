@@ -18,7 +18,6 @@ struct BinkFormView: View {
     @ObservedObject var viewModel: FormViewModel
     @ObservedObject private var themeManager = Current.themeManager
     @ObservedObject private var imageLoader = ImageLoader()
-    var plan: CD_MembershipPlan!
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
@@ -65,11 +64,11 @@ struct BinkFormView: View {
                     // Textfields
                     ForEach(viewModel.datasource.fields) { field in
                         if #available(iOS 14.0, *) {
-                            BinkTextfieldView(field: field, didExit: $viewModel.textfieldDidExit)
+                            BinkTextfieldView(field: field, didExit: $viewModel.textfieldDidExit, presentScanner: $viewModel.presentScanner)
                                 .accessibilityIdentifier(field.title)
                                 .keyboardType(field.fieldType.keyboardType())
                         } else {
-                            BinkTextfieldView(field: field, didExit: $viewModel.textfieldDidExit)
+//                            BinkTextfieldView(field: field, didExit: $viewModel.textfieldDidExit)
                         }
                     }
                     
@@ -94,13 +93,16 @@ struct BinkFormView: View {
 struct BinkTextfieldView: View {
     @State var field: FormField
     @State private var isEditing = false
-    @State var value: String = ""
+    @State var value: String
     @State var showErrorState = false
     @Binding var fieldDidExit: Bool
+    @Binding var presentScanner: BarcodeScannerType
     
-    init(field: FormField, didExit: Binding<Bool>) {
+    init(field: FormField, didExit: Binding<Bool>, presentScanner: Binding<BarcodeScannerType>) {
         self.field = field
+        _value = State(initialValue: field.forcedValue ?? "")
         _fieldDidExit = didExit
+        _presentScanner = presentScanner
         UITextField.appearance().clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
     }
     
@@ -152,11 +154,11 @@ struct BinkTextfieldView: View {
                     
                     if field.fieldCommonName == .cardNumber && !isEditing && !field.isValid() {
                         Button(action: {
-//                            if field.fieldType == .paymentCardNumber {
-//                                datasource.formViewDidReceivePaymentScannerButtonTap(self)
-//                            } else {
-//                                datasource.formViewDidReceiveLoyaltytScannerButtonTap(self)
-//                            }
+                            if field.fieldType == .paymentCardNumber {
+                                presentScanner = .payment
+                            } else {
+                                presentScanner = .loyalty
+                            }
                         }) {
                             Image(Asset.scanIcon.name)
                                 .resizable()

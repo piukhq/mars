@@ -13,6 +13,12 @@ final class FormViewModel: ObservableObject {
     @Published var brandImage: Image?
     @Published var textfieldDidExit = false
     @Published var checkedState = false
+//    @Published var formPurpose: FormPurpose
+    @Published var presentScanner: BarcodeScannerType = .loyalty {
+        didSet {
+            toLoyaltyScanner()
+        }
+    }
     @Published var didTapOnURL: URL? {
         didSet {
             if let url = didTapOnURL {
@@ -77,4 +83,39 @@ final class FormViewModel: ObservableObject {
             Current.navigate.to(navigationRequest)
         }
     }
+    
+    func toLoyaltyScanner() {
+        if presentScanner == .loyalty {
+            let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(forPlan: membershipPlan, delegate: self)
+            PermissionsUtility.launchLoyaltyScanner(viewController) {
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
+            }
+        } else {
+            // Present payment scanner
+        }
+    }
+}
+
+extension FormViewModel: BarcodeScannerViewControllerDelegate {
+    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
+        viewController.dismiss(animated: true) {
+            var prefilledValues = self.datasource.fields.filter { $0.fieldCommonName != .barcode && $0.fieldCommonName != .cardNumber }.map {
+                FormDataSource.PrefilledValue(commonName: $0.fieldCommonName, value: $0.value)
+            }
+            prefilledValues.append(FormDataSource.PrefilledValue(commonName: .barcode, value: barcode))
+            self.datasource = FormDataSource(authAdd: membershipPlan, formPurpose: .addFromScanner, prefilledValues: prefilledValues)
+//            self.formPurpose = .addFromScanner // UPdate addAuthviewmodel
+//            self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
+        }
+    }
+    
+    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
+        viewController.dismiss(animated: true)
+    }
+}
+
+enum BarcodeScannerType {
+    case loyalty
+    case payment
 }

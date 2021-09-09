@@ -21,11 +21,11 @@ class AuthAndAddViewController: BaseFormViewController {
         return brandHeader
     }()
     
-    private lazy var primaryButton: BinkButton = {
-        return BinkButton(type: .gradient, title: viewModel.buttonTitle, enabled: dataSource.fullFormIsValid) { [weak self] in
-            self?.handlePrimaryButtonTap()
-        }
-    }()
+//    private lazy var primaryButton: BinkButton = {
+//        return BinkButton(type: .gradient, title: viewModel.buttonTitle, enabled: dataSource.fullFormIsValid) { [weak self] in
+//            self?.handlePrimaryButtonTap()
+//        }
+//    }()
     
     private let viewModel: AuthAndAddViewModel
     
@@ -45,7 +45,7 @@ class AuthAndAddViewController: BaseFormViewController {
         
         setNavigationBar()
         configureUI()
-        configureLayout()
+//        configureLayout()
         stackScrollView.insert(arrangedSubview: brandHeaderView, atIndex: 0, customSpacing: Constants.cardPadding)
         collectionView.delegate = self
         
@@ -83,9 +83,9 @@ class AuthAndAddViewController: BaseFormViewController {
     
     // MARK: - Layout
     
-    func configureLayout() {
-        footerButtons = [primaryButton]
-    }
+//    func configureLayout() {
+//        footerButtons = [primaryButton]
+//    }
     
     func configureUI() {
         let membershipPlan = viewModel.getMembershipPlan()
@@ -100,15 +100,15 @@ class AuthAndAddViewController: BaseFormViewController {
         descriptionLabel.isHidden = viewModel.getDescription() == nil
     }
     
-    private func handlePrimaryButtonTap() {
-        primaryButton.toggleLoading(isLoading: true)
-        try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes, completion: { [weak self] in
-            self?.primaryButton.toggleLoading(isLoading: false)
-        })
-    }
+//    private func handlePrimaryButtonTap() {
+//        primaryButton.toggleLoading(isLoading: true)
+//        try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes, completion: { [weak self] in
+//            self?.primaryButton.toggleLoading(isLoading: false)
+//        })
+//    }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
-        primaryButton.enabled = fullFormIsValid
+//        primaryButton.enabled = fullFormIsValid
     }
     
     override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
@@ -161,7 +161,7 @@ extension AuthAndAddViewController: FormDataSourceDelegate {
     }
     
     func formDataSource(_ dataSource: FormDataSource, shouldPresentLoyaltyScannerForPlan plan: CD_MembershipPlan) {
-        viewModel.toLoyaltyScanner(forPlan: plan, delegate: self)
+//        viewModel.toLoyaltyScanner(forPlan: plan, delegate: self)
     }
     
     func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {

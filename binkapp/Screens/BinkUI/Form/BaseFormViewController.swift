@@ -37,10 +37,8 @@ class BaseFormViewController: BinkViewController, FormDelegate, ObservableObject
         return collectionView
     }()
     
-//    private lazy var formView = makeFormView()
-    
     lazy var stackScrollView: StackScrollView = {
-        let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [titleLabel, descriptionLabel, textView], adjustForKeyboard: true)
+        let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [titleLabel, descriptionLabel, textView, collectionView], adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .clear
         stackView.margin = UIEdgeInsets(top: 0, left: Constants.horizontalInset, bottom: 0, right: Constants.horizontalInset)
@@ -90,10 +88,10 @@ class BaseFormViewController: BinkViewController, FormDelegate, ObservableObject
     var selectedCellYOrigin: CGFloat = 0.0
     var selectedCellHeight: CGFloat = 0.0
     
-    @Published var dataSource: FormDataSource {
+    var dataSource: FormDataSource {
         didSet {
-//            collectionView.dataSource = dataSource
-//            collectionView.reloadData()
+            collectionView.dataSource = dataSource
+            collectionView.reloadData()
 //            configureFormView(with: dataSource, update: true)
 //            formView.rootView = BinkFormView(datasource: dataSource)
             configureCheckboxes()

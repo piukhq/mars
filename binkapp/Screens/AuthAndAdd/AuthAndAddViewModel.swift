@@ -355,11 +355,11 @@ class AuthAndAddViewModel: ObservableObject {
         Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     
-    func toLoyaltyScanner(forPlan plan: CD_MembershipPlan, delegate: BarcodeScannerViewControllerDelegate?) {
-        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(forPlan: plan, delegate: delegate)
-        PermissionsUtility.launchLoyaltyScanner(viewController) {
-            let navigationRequest = ModalNavigationRequest(viewController: viewController)
-            Current.navigate.to(navigationRequest)
-        }
-    }
+//    func toLoyaltyScanner(forPlan plan: CD_MembershipPlan, delegate: BarcodeScannerViewControllerDelegate?) {
+//        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(forPlan: plan, delegate: delegate)
+//        PermissionsUtility.launchLoyaltyScanner(viewController) {
+//            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+//            Current.navigate.to(navigationRequest)
+//        }
+//    }
 }
