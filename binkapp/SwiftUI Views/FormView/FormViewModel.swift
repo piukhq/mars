@@ -106,7 +106,6 @@ extension FormViewModel: BarcodeScannerViewControllerDelegate {
             prefilledValues.append(FormDataSource.PrefilledValue(commonName: .barcode, value: barcode))
             self.datasource = FormDataSource(authAdd: membershipPlan, formPurpose: .addFromScanner, prefilledValues: prefilledValues)
 //            self.formPurpose = .addFromScanner // UPdate addAuthviewmodel
-//            self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
         }
     }
     
