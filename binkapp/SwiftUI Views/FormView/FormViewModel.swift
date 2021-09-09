@@ -13,7 +13,6 @@ final class FormViewModel: ObservableObject {
     @Published var brandImage: Image?
     @Published var textfieldDidExit = false
     @Published var checkedState = false
-//    @Published var formPurpose: FormPurpose
     @Published var presentScanner: BarcodeScannerType = .loyalty {
         didSet {
             toLoyaltyScanner()
@@ -105,7 +104,6 @@ extension FormViewModel: BarcodeScannerViewControllerDelegate {
             }
             prefilledValues.append(FormDataSource.PrefilledValue(commonName: .barcode, value: barcode))
             self.datasource = FormDataSource(authAdd: membershipPlan, formPurpose: .addFromScanner, prefilledValues: prefilledValues)
-//            self.formPurpose = .addFromScanner // UPdate addAuthviewmodel
         }
     }
     

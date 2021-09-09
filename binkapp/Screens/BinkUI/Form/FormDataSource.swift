@@ -63,6 +63,7 @@ class FormDataSource: NSObject, ObservableObject {
     private(set) var membershipPlan: CD_MembershipPlan?
     
     @Published var fields: [FormField] = []
+    @Published var formPurpose: FormPurpose?
     var visibleFields: [FormField] {
         return fields.filter { !$0.hidden }
     }
@@ -184,6 +185,7 @@ extension FormDataSource {
     convenience init(authAdd membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, delegate: MultiDelegate? = nil, prefilledValues: [PrefilledValue]? = nil) {
         self.init()
         self.delegate = delegate
+        self.formPurpose = formPurpose
         self.membershipPlan = membershipPlan
         setupFields(with: membershipPlan, formPurpose: formPurpose, prefilledValues: prefilledValues)
     }
