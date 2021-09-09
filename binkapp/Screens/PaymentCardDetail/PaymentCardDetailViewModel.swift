@@ -306,7 +306,14 @@ class PaymentCardDetailViewModel {
             return
         }
         if membershipCardIsLinked(membershipCard) {
-            removeLinkToMembershipCard(membershipCard, completion: completion)
+            removeLinkToMembershipCard(membershipCard) { error in
+                guard let error = error else {
+                    completion()
+                    return
+                }
+                let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: error.message, completion: completion)
+                Current.navigate.to(AlertNavigationRequest(alertController: alert))
+            }
         } else {
             linkMembershipCard(membershipCard, completion: completion)
         }
@@ -332,13 +339,13 @@ class PaymentCardDetailViewModel {
         }
     }
 
-    private func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
-        repository.removeLinkToMembershipCard(membershipCard, forPaymentCard: paymentCard) { [weak self] paymentCard in
+    private func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping (WalletServiceError?) -> Void) {
+        repository.removeLinkToMembershipCard(membershipCard, forPaymentCard: paymentCard) { [weak self] paymentCard, error in
             if let paymentCard = paymentCard {
                 self?.paymentCard = paymentCard
             }
 
-            completion()
+            completion(error)
         }
     }
 }

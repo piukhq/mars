@@ -23,7 +23,6 @@ enum NetworkingError: BinkError {
     case customError(String)
     case userFacingError(UserFacingNetworkingError)
 
-
     var domain: BinkErrorDomain {
         return .networking
     }

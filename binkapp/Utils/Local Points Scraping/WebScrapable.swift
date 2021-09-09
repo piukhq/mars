@@ -23,6 +23,7 @@ protocol WebScrapable {
     var merchant: WebScrapableMerchant { get }
     var membershipPlanId: Int { get }
     var usernameField: FieldCommonName { get }
+    var requiredCredentials: [PointsScrapingManager.CredentialStoreType] { get }
     var loyaltySchemeBalanceCurrency: String? { get }
     var loyaltySchemeBalanceSuffix: String? { get }
     var loyaltySchemeBalancePrefix: String? { get }
@@ -34,6 +35,10 @@ extension WebScrapable {
     /// Some  merchants may use .username - override if that is the case.
     var usernameField: FieldCommonName {
         return .email
+    }
+    
+    var requiredCredentials: [PointsScrapingManager.CredentialStoreType] {
+        return [.username, .password]
     }
 
     var loyaltySchemeBalanceCurrency: String? {

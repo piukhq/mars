@@ -96,7 +96,8 @@ class PLLScreenViewModel {
             completion(true)
         }) { [weak self] error in
             guard let error = error else { return }
-            if case .userFacingNetworkingError(let networkingError) = error {
+            switch error {
+            case .userFacingNetworkingError(let networkingError):
                 if case .userFacingError(let userFacingError) = networkingError {
                     let messagePrefix = self?.changedLinkCards.count == 1 ? L10n.cardAlreadyLinkedMessagePrefix : L10n.cardsAlreadyLinkedMessagePrefix
                     let planName = self?.membershipCard.membershipPlan?.account?.planName ?? ""
@@ -107,6 +108,12 @@ class PLLScreenViewModel {
                         completion(false)
                     })
                 }
+            case .customError(let message):
+                self?.displaySimplePopup(title: L10n.errorTitle, message: message, completion: {
+                    completion(false)
+                })
+            default:
+                break
             }
         }
     }

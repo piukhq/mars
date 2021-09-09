@@ -43,13 +43,20 @@ enum Configuration {
     enum ConfigurationKey: String {
         case apiBaseUrl = "API_BASE_URL"
         case secret = "SECRET"
-        case debugMenu = "DEBUG_MENU"
+        case debug = "DEBUG"
     }
     
     static func value(for key: ConfigurationKey) throws -> String {
         guard let object = Bundle.main.object(forInfoDictionaryKey: key.rawValue) else { throw ConfigurationError.missingKey }
         guard let string = object as? String, !string.isEmpty else { throw ConfigurationError.invalidValue }
         return string
+    }
+    
+    static func isDebug() -> Bool {
+        if let _ = try? value(for: .debug) {
+            return true
+        }
+        return false
     }
 }
 
@@ -70,7 +77,7 @@ enum APIConstants {
     }
 
     static var baseURLString: String {
-        if let _ = try? Configuration.value(for: .debugMenu) {
+        if let _ = try? Configuration.value(for: .debug) {
             // If we have set the environment from the debug menu
             if let debugBaseURLString = Current.userDefaults.value(forDefaultsKey: .debugBaseURL) as? String {
                 return debugBaseURLString
