@@ -21,13 +21,6 @@ struct BinkFormView: View {
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
-            /// Temporary workaround to force background color beyond bottom safe area. Once iOS 13 has been dropped, replace with ignoringSafeAreas modifier
-            Rectangle()
-                .foregroundColor(Color(themeManager.color(for: .viewBackground)))
-                .frame(height: 100, alignment: .center)
-                .offset(y: 50.0)
-            ///
-            
             ScrollView {
                 VStack(alignment: .center, spacing: 20.0) {
                     RemoteImage(image: viewModel.brandImage ?? imageLoader.image)
@@ -83,7 +76,8 @@ struct BinkFormView: View {
                 }
                 .padding(Constants.vStackInsets)
             }
-            .background(Color(themeManager.color(for: .viewBackground)))
+            .background(Color.red)
+            .edgesIgnoringSafeArea(.bottom)
 //            .padding(.bottom, viewModel.keyboardHeight)
 //            .onReceive(Publishers.keyboardHeight, perform: { self.viewModel.keyboardHeight = $0 })
         })
