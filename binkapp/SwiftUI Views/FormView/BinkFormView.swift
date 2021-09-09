@@ -84,8 +84,8 @@ struct BinkFormView: View {
                 .padding(Constants.vStackInsets)
             }
             .background(Color(themeManager.color(for: .viewBackground)))
-            .padding(.bottom, viewModel.keyboardHeight)
-            .onReceive(Publishers.keyboardHeight, perform: { self.viewModel.keyboardHeight = $0 })
+//            .padding(.bottom, viewModel.keyboardHeight)
+//            .onReceive(Publishers.keyboardHeight, perform: { self.viewModel.keyboardHeight = $0 })
         })
     }
 }
@@ -143,7 +143,6 @@ struct BinkTextfieldView: View {
                             })
                             .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
                             .autocapitalization(field.fieldType.capitalization())
-                            .coordinateSpace(name: "textfield")
                         }
                     }
                     
@@ -242,18 +241,18 @@ struct BinkFormView_Previews: PreviewProvider {
     }
 }
 
-extension Publishers {
-    static var keyboardHeight: AnyPublisher<CGFloat, Never> {
-        let willShow = NotificationCenter.default.publisher(for: UIApplication.keyboardWillShowNotification)
-            .map { $0.keyboardHeight }
-        
-        let willHide = NotificationCenter.default.publisher(for: UIApplication.keyboardWillHideNotification)
-            .map { _ in CGFloat(0) }
-        
-        return MergeMany(willShow, willHide)
-            .eraseToAnyPublisher()
-    }
-}
+//extension Publishers {
+//    static var keyboardHeight: AnyPublisher<CGFloat, Never> {
+//        let willShow = NotificationCenter.default.publisher(for: UIApplication.keyboardWillShowNotification)
+//            .map { $0.keyboardHeight }
+//
+//        let willHide = NotificationCenter.default.publisher(for: UIApplication.keyboardWillHideNotification)
+//            .map { _ in CGFloat(0) }
+//
+//        return MergeMany(willShow, willHide)
+//            .eraseToAnyPublisher()
+//    }
+//}
 
 //#if canImport(UIKit)
 //extension View {
