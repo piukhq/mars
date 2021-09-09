@@ -132,6 +132,10 @@ extension UIColor {
     }
 
     // MARK: - Theming
+    
+    // MARK: - Bink White
+    static let primaryViewBackground = UIColor(hexString: "#F7F7F7")
+    
 
     // MARK: Bink Blue
     static let binkBlueViewBackground = UIColor(hexString: "111127")

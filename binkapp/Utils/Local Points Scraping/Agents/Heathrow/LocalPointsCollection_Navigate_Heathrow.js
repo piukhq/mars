@@ -1,9 +1,12 @@
 var username = "%@"
 var password = "%@"
+var config = "%@"
+var cardNumber = "%@"
 
 var formQuery = "form#login-form"
 var usernameInputQuery = "form#login-form input#username"
 var passwordInputQuery = "form#login-form input[type=password]"
+var cardNumberInputQuery = "form#login-form input#usercardnumber"
 var submitButtonQuery = "form#login-form button[type=submit]"
 
 var pointsValueQuery = ".total-points"
@@ -34,9 +37,6 @@ function handleNavigation() {
         }
     }
 
-    // TODO: Recaptcha
-
-
     // If we can identify the login form, login
 
     var f = document.querySelector(formQuery)
@@ -59,6 +59,14 @@ function handleNavigation() {
             }
         }
         p.value = password
+
+        var c = document.querySelector(cardNumberInputQuery)
+        if (!c) {
+            return {
+                "error_message": "Login failed. Card number input field could not be identified."
+            }
+        }
+        c.value = cardNumber
 
         var b = document.querySelector(submitButtonQuery)
         if (!b) {
