@@ -18,6 +18,7 @@ struct BinkFormView: View {
     @ObservedObject var viewModel: FormViewModel
     @ObservedObject private var themeManager = Current.themeManager
     @ObservedObject private var imageLoader = ImageLoader()
+    @State var showtextFieldToolbar = false
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
@@ -57,7 +58,7 @@ struct BinkFormView: View {
                     // Textfields
                     ForEach(viewModel.datasource.fields) { field in
                         if #available(iOS 14.0, *) {
-                            BinkTextfieldView(field: field, didExit: $viewModel.textfieldDidExit, presentScanner: $viewModel.presentScanner)
+                            BinkTextfieldView(field: field, didExit: $viewModel.textfieldDidExit, presentScanner: $viewModel.presentScanner, showToolbar: $showtextFieldToolbar)
                                 .accessibilityIdentifier(field.title)
                                 .keyboardType(field.fieldType.keyboardType())
                         } else {
@@ -72,14 +73,32 @@ struct BinkFormView: View {
                                 .padding(.horizontal, 10)
                         }
                     }
-                    .frame(height: 100)
+                    .frame(height: 150)
                 }
                 .padding(Constants.vStackInsets)
             }
-            .background(Color.red)
+            .background(Color(themeManager.color(for: .viewBackground)))
             .edgesIgnoringSafeArea(.bottom)
 //            .padding(.bottom, viewModel.keyboardHeight)
 //            .onReceive(Publishers.keyboardHeight, perform: { self.viewModel.keyboardHeight = $0 })
+            
+            // Keyboard Toolbar
+            VStack {
+                Spacer()
+                if showtextFieldToolbar {
+                    HStack {
+                        Spacer()
+                        Button(L10n.done) {
+                            showtextFieldToolbar = false
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        }
+                        .foregroundColor(Color(.binkGradientBlueLeft))
+                        .padding(.trailing, 12)
+                    }
+                    .frame(idealWidth: .infinity, maxWidth: .infinity, idealHeight: 44, maxHeight: 44, alignment: .center)
+                    .background(Color.white)
+                }
+            }
         })
     }
 }
@@ -91,12 +110,14 @@ struct BinkTextfieldView: View {
     @State var showErrorState = false
     @Binding var fieldDidExit: Bool
     @Binding var presentScanner: BarcodeScannerType
+    @Binding var showtextFieldToolbar: Bool
     
-    init(field: FormField, didExit: Binding<Bool>, presentScanner: Binding<BarcodeScannerType>) {
+    init(field: FormField, didExit: Binding<Bool>, presentScanner: Binding<BarcodeScannerType>, showToolbar: Binding<Bool>) {
         self.field = field
         _value = State(initialValue: field.forcedValue ?? "")
         _fieldDidExit = didExit
         _presentScanner = presentScanner
+        _showtextFieldToolbar = showToolbar
         UITextField.appearance().clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
     }
     
@@ -128,6 +149,7 @@ struct BinkTextfieldView: View {
                                 
                                 if isEditing {
 //                                    self.datasource.formViewDidSelectField(self)
+                                    showtextFieldToolbar = true
                                 } else {
                                     self.field.fieldWasExited()
                                 }

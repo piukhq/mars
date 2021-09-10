@@ -661,19 +661,4 @@ extension FormDataSource: FormCollectionViewCellDelegate {
 //    func formCollectionViewCellDidReceivePaymentScannerButtonTap(_ cell: FormCollectionViewCell) {
 //        delegate?.formDataSourceShouldPresentPaymentScanner(self)
 //    }
-    
-    // MARK: - Swift UI delegates
-    
-//    func formViewDidSelectField(_ view: BinkTextfieldView) {
-//        delegate?.formViewDidSelectField(view)
-//    }
-//    
-//    func formViewDidReceivePaymentScannerButtonTap(_ view: BinkTextfieldView) {
-//        delegate?.formDataSourceShouldPresentPaymentScanner(self)
-//    }
-//    
-//    func formViewDidReceiveLoyaltytScannerButtonTap(_ view: BinkTextfieldView) {
-//        guard let plan = membershipPlan else { return }
-//        delegate?.formDataSource(self, shouldPresentLoyaltyScannerForPlan: plan)
-//    }
 }
