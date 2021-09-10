@@ -25,7 +25,7 @@ final class FormViewModel: ObservableObject {
             }
         }
     }
-//    @State var keyboardHeight: CGFloat = 0
+    @State var keyboardHeight: CGFloat = 0
 
     var titleText: String?
     var descriptionText: String?

@@ -311,6 +311,7 @@
 		CE54AF6225FA0BA00061838C /* BinkLoggerErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */; };
 		CE6054A426E8932800FD0866 /* FormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6054A326E8932800FD0866 /* FormViewModel.swift */; };
 		CE6054A626E8D54500FD0866 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6054A526E8D54500FD0866 /* ImageLoader.swift */; };
+		CE6054A826EB552B00FD0866 /* BinkTextfieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6054A726EB552A00FD0866 /* BinkTextfieldView.swift */; };
 		CE67DC0D269F2407008D930D /* AutomatedTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE67DC0C269F2407008D930D /* AutomatedTesting.swift */; };
 		CE6DE55F267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6DE55E267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift */; };
 		CE6DE5662681E8280063A3A9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6DE5652681E8280063A3A9 /* WidgetKit.framework */; };
@@ -939,6 +940,7 @@
 		CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLoggerErrors.swift; sourceTree = "<group>"; };
 		CE6054A326E8932800FD0866 /* FormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewModel.swift; sourceTree = "<group>"; };
 		CE6054A526E8D54500FD0866 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		CE6054A726EB552A00FD0866 /* BinkTextfieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkTextfieldView.swift; sourceTree = "<group>"; };
 		CE67DC0C269F2407008D930D /* AutomatedTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting.swift; sourceTree = "<group>"; };
 		CE6DE55E267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsSwiftUIView.swift; sourceTree = "<group>"; };
 		CE6DE5642681E8280063A3A9 /* BinkWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BinkWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2385,6 +2387,7 @@
 			isa = PBXGroup;
 			children = (
 				CE81AAB026CC0A4600102283 /* BinkFormView.swift */,
+				CE6054A726EB552A00FD0866 /* BinkTextfieldView.swift */,
 				CE6054A326E8932800FD0866 /* FormViewModel.swift */,
 			);
 			path = FormView;
@@ -3812,6 +3815,7 @@
 				EFA5F72C2379A7C70027AB80 /* CD_MembershipTransaction.swift in Sources */,
 				EFA5F7102379A7C70027AB80 /* _CD_MembershipCard.swift in Sources */,
 				3C466B9E22FAE6190044478D /* CardModel.swift in Sources */,
+				CE6054A826EB552B00FD0866 /* BinkTextfieldView.swift in Sources */,
 				706D203924D851BA004BCCF3 /* _CD_CardAccount.swift in Sources */,
 				709748A024D32A52008D0E29 /* RemoteConfigUtil.swift in Sources */,
 				EFA5F70D2379A7C70027AB80 /* _CD_PaymentCardAccount.swift in Sources */,
