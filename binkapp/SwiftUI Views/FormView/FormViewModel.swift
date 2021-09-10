@@ -50,6 +50,10 @@ final class FormViewModel: ObservableObject {
     var shouldShowInfoButton: Bool {
         return infoButtonText != nil
     }
+    
+    var checkboxStackHeight: CGFloat {
+        return datasource.checkboxes.count == 3 ? 150 : 100
+    }
 
     func infoButtonWasTapped() {
         let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: membershipPlan)

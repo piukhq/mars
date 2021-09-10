@@ -73,7 +73,7 @@ struct BinkFormView: View {
                                 .padding(.horizontal, 10)
                         }
                     }
-                    .frame(height: 150)
+                    .frame(height: viewModel.checkboxStackHeight)
                 }
                 .padding(Constants.vStackInsets)
             }
