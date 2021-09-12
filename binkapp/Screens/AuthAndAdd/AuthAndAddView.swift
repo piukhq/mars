@@ -12,7 +12,6 @@ struct AuthAndAddView: View {
     @ObservedObject var formViewModel: FormViewModel
 
     private let viewModel: AuthAndAddViewModel
-    
     private var primaryButton: BinkGradientButtonSwiftUIView {
         return BinkGradientButtonSwiftUIView(enabled: formViewModel.datasource.fullFormIsValid, isLoading: false, title: viewModel.buttonTitle, buttonTapped: handlePrimaryButtonTap)
     }
@@ -26,8 +25,10 @@ struct AuthAndAddView: View {
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
             BinkFormView(viewModel: formViewModel)
-            BinkButtonsStackView(buttons: [primaryButton])
-                .offset(y: BinkButtonsView.bottomSafePadding - BinkButtonsView.bottomPadding)
+            if !formViewModel.showDatePicker {
+                BinkButtonsStackView(buttons: [primaryButton])
+                    .offset(y: BinkButtonsView.bottomSafePadding - BinkButtonsView.bottomPadding)
+            }
         })
         .onAppear(perform: {
             DispatchQueue.global(qos: .userInitiated).async {

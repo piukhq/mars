@@ -58,7 +58,7 @@ struct BinkFormView: View {
                     // Textfields
                     ForEach(viewModel.datasource.fields) { field in
                         if #available(iOS 14.0, *) {
-                            BinkTextfieldView(field: field, didExit: $viewModel.textfieldDidExit, presentScanner: $viewModel.presentScanner, showToolbar: $showtextFieldToolbar)
+                            BinkTextfieldView(field: field, didExit: $viewModel.textfieldDidExit, presentScanner: $viewModel.presentScanner, showToolbar: $showtextFieldToolbar, showDatePicker: $viewModel.showDatePicker, date: $viewModel.date)
                                 .accessibilityIdentifier(field.title)
                                 .keyboardType(field.fieldType.keyboardType())
                         } else {
@@ -97,6 +97,30 @@ struct BinkFormView: View {
                     }
                     .frame(idealWidth: .infinity, maxWidth: .infinity, idealHeight: 44, maxHeight: 44, alignment: .center)
                     .background(Color.white)
+                }
+            }
+            if viewModel.showDatePicker {
+                if #available(iOS 14.0, *) {
+                    VStack(spacing: 0) {
+                        HStack {
+                            Spacer()
+                            Button(L10n.done) {
+                                viewModel.showDatePicker = false
+                            }
+                            .foregroundColor(Color(.binkGradientBlueLeft))
+                            .padding(.trailing, 12)
+                        }
+                        .frame(idealWidth: .infinity, maxWidth: .infinity, idealHeight: 44, maxHeight: 44, alignment: .center)
+                        .background(Color.white)
+                        
+                        DatePicker("D.O.B.", selection: $viewModel.date)
+                            .datePickerStyle(GraphicalDatePickerStyle())
+                            .frame(maxHeight: 400)
+                            .background(Color(themeManager.color(for: .viewBackground)))
+                    }
+                } else {
+                    DatePicker("D.O.B.", selection: $viewModel.date)
+                        .frame(maxHeight: 400)
                 }
             }
         })

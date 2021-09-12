@@ -13,16 +13,21 @@ struct BinkTextfieldView: View {
     @State private var isEditing = false
     @State var value: String
     @State var showErrorState = false
+    
     @Binding var fieldDidExit: Bool
     @Binding var presentScanner: BarcodeScannerType
     @Binding var showtextFieldToolbar: Bool
-    
-    init(field: FormField, didExit: Binding<Bool>, presentScanner: Binding<BarcodeScannerType>, showToolbar: Binding<Bool>) {
-        self.field = field
+    @Binding var showDatePicker: Bool
+    @Binding var date: Date
+
+    init(field: FormField, didExit: Binding<Bool>, presentScanner: Binding<BarcodeScannerType>, showToolbar: Binding<Bool>, showDatePicker: Binding<Bool>, date: Binding<Date>) {
+        _field = State(initialValue: field)
         _value = State(initialValue: field.forcedValue ?? "")
         _fieldDidExit = didExit
         _presentScanner = presentScanner
         _showtextFieldToolbar = showToolbar
+        _showDatePicker = showDatePicker
+        _date = date
         UITextField.appearance().clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
     }
     
@@ -45,6 +50,15 @@ struct BinkTextfieldView: View {
                             }
                             .onTapGesture {
                                 isEditing = true
+                            }
+                        } else if field.fieldType == .date {
+                            HStack {
+                                Button {
+                                    showDatePicker.toggle()
+                                } label: {
+                                    Text(convertDateToString(date: $date))
+                                }
+                                Spacer()
                             }
                         } else {
                             TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
@@ -72,6 +86,7 @@ struct BinkTextfieldView: View {
                             .offset(x: -5, y: 11)
                     }
                     
+                    // Camera Button
                     if (field.fieldCommonName == .cardNumber || field.fieldCommonName == .barcode) && !isEditing && !field.isValid() {
                         Button(action: {
                             if field.fieldType == .paymentCardNumber {
@@ -113,6 +128,10 @@ struct BinkTextfieldView: View {
     }
     
     // MARK: - Helper Methods
+    
+    func convertDateToString(date: Binding<Date>) -> String {
+        return String(date.wrappedValue.getFormattedString(format: .dayShortMonthYearWithSlash))
+    }
     
     private func textfieldValidationFailed(value: Binding<String>) -> Bool {
         field.updateValue(value.wrappedValue)

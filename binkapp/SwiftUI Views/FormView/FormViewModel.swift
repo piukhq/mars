@@ -13,6 +13,7 @@ final class FormViewModel: ObservableObject {
     @Published var brandImage: Image?
     @Published var textfieldDidExit = false
     @Published var checkedState = false
+    @Published var showDatePicker = false
     @Published var presentScanner: BarcodeScannerType = .loyalty {
         didSet {
             toLoyaltyScanner()
@@ -26,6 +27,7 @@ final class FormViewModel: ObservableObject {
         }
     }
     @State var keyboardHeight: CGFloat = 0
+    @Published var date = Date()
 
     var titleText: String?
     var descriptionText: String?
