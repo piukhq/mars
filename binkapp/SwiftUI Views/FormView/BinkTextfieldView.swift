@@ -17,8 +17,8 @@ struct BinkTextfieldView: View {
 
     init(field: FormField, viewModel: FormViewModel) {
         _field = State(initialValue: field)
-        self.viewModel = viewModel
         _value = State(initialValue: field.forcedValue ?? "")
+        self.viewModel = viewModel
         UITextField.appearance().clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
     }
     
@@ -33,17 +33,10 @@ struct BinkTextfieldView: View {
                         Text(field.title)
                             .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
                         
-                        if field.fieldType.isSecureTextEntry {
-                            SecureField(field.placeholder, text: $value) {
-                                self.field.updateValue(value)
-                                self.field.fieldWasExited()
-                                self.isEditing = false
-                            }
-                            .onTapGesture {
-                                isEditing = true
-                            }
-                        } else if field.fieldType == .date {
-                            // Date Picker
+                        switch field.fieldType {
+                        case .choice(let data):
+                            Text("\(data.first?.title ?? "")")
+                        case .date:
                             HStack {
                                 Button {
                                     viewModel.showDatePicker.toggle()
@@ -64,9 +57,16 @@ struct BinkTextfieldView: View {
                                 }
                                 Spacer()
                             }
-//                        } else if case let .choice(data) = field.fieldType == .choice {
-//
-                        } else {
+                        case .sensitive, .confirmPassword:
+                            SecureField(field.placeholder, text: $value) {
+                                self.field.updateValue(value)
+                                self.field.fieldWasExited()
+                                self.isEditing = false
+                            }
+                            .onTapGesture {
+                                isEditing = true
+                            }
+                        default:
                             TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
                                 self.isEditing = isEditing
                                 self.field.updateValue(value)
