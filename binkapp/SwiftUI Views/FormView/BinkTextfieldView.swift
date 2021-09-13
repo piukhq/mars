@@ -14,7 +14,6 @@ struct BinkTextfieldView: View {
     @State private var isEditing = false
     @State var value: String
     @State var showErrorState = false
-//    @State var dateString: String
 
     init(field: FormField, viewModel: FormViewModel) {
         _field = State(initialValue: field)
@@ -47,12 +46,20 @@ struct BinkTextfieldView: View {
                             HStack {
                                 Button {
                                     viewModel.showDatePicker.toggle()
+                                    isEditing = true
                                 } label: {
                                     TextField(field.placeholder, text: $viewModel.dateString)
                                         .disabled(true)
+                                        .onReceive(viewModel.$dateString) { newDate in
+                                            self.value = newDate
+                                            self.field.updateValue(newDate)
+                                            self.isEditing = false
+                                        }
                                 }
                                 Spacer()
                             }
+//                        } else if case let .choice(data) = field.fieldType == .choice {
+//
                         } else {
                             TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
                                 self.isEditing = isEditing
