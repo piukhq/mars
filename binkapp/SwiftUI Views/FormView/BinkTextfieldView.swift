@@ -59,6 +59,9 @@ struct BinkTextfieldView: View {
                                             self.isEditing = false
                                         }
                                 }
+                                .onReceive(viewModel.$showDatePicker) { showingDatePicker in
+                                    isEditing = showingDatePicker
+                                }
                                 Spacer()
                             }
 //                        } else if case let .choice(data) = field.fieldType == .choice {
@@ -131,10 +134,6 @@ struct BinkTextfieldView: View {
     }
     
     // MARK: - Helper Methods
-    
-    func convertDateToString(date: Date) {
-//        dateString = String(date.getFormattedString(format: .dayShortMonthYearWithSlash))
-    }
     
     private func textfieldValidationFailed(value: Binding<String>) -> Bool {
         field.updateValue(value.wrappedValue)

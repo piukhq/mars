@@ -12,7 +12,6 @@ final class FormViewModel: ObservableObject {
     @Published var datasource: FormDataSource
     @Published var brandImage: Image?
     @Published var textfieldDidExit = false // ?? Still being used?
-//    @Published private var isEditing = false
     @Published var showtextFieldToolbar = false
     @Published var checkedState = false
     @Published var showDatePicker = false
