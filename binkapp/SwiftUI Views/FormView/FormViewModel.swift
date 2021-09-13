@@ -12,15 +12,11 @@ final class FormViewModel: ObservableObject {
     @Published var datasource: FormDataSource
     @Published var brandImage: Image?
     @Published var textfieldDidExit = false // ?? Still being used?
+//    @Published private var isEditing = false
     @Published var showtextFieldToolbar = false
     @Published var checkedState = false
     @Published var showDatePicker = false
-    @Published var dateString: String = ""
-    @Published var date = Date() {
-        didSet {
-            dateString = date.getFormattedString(format: .dayShortMonthYearWithSlash)
-        }
-    }
+    @Published var date = Date()
     @Published var presentScanner: BarcodeScannerType = .loyalty {
         didSet {
             toLoyaltyScanner()

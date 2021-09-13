@@ -43,16 +43,19 @@ struct BinkTextfieldView: View {
                                 isEditing = true
                             }
                         } else if field.fieldType == .date {
+                            // Date Picker
                             HStack {
                                 Button {
                                     viewModel.showDatePicker.toggle()
                                     isEditing = true
                                 } label: {
-                                    TextField(field.placeholder, text: $viewModel.dateString)
+                                    TextField(field.placeholder, text: $value)
                                         .disabled(true)
-                                        .onReceive(viewModel.$dateString) { newDate in
-                                            self.value = newDate
-                                            self.field.updateValue(newDate)
+                                        .onReceive(viewModel.$date) { date in
+                                            guard isEditing else { return }
+                                            let dateString = date.getFormattedString(format: .dayShortMonthYearWithSlash)
+                                            self.value = dateString
+                                            self.field.updateValue(dateString)
                                             self.isEditing = false
                                         }
                                 }
