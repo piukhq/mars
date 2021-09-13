@@ -86,17 +86,10 @@ struct BinkFormView: View {
             VStack {
                 Spacer()
                 if viewModel.showtextFieldToolbar {
-                    HStack {
-                        Spacer()
-                        Button(L10n.done) {
-                            viewModel.showtextFieldToolbar = false
-                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                        }
-                        .foregroundColor(Color(.binkGradientBlueLeft))
-                        .padding(.trailing, 12)
+                    InputToolbar {
+                        viewModel.showtextFieldToolbar = false
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     }
-                    .frame(idealWidth: .infinity, maxWidth: .infinity, idealHeight: 44, maxHeight: 44, alignment: .center)
-                    .background(Color.white)
                 }
             }
 
@@ -104,16 +97,7 @@ struct BinkFormView: View {
             case .date:
                 if #available(iOS 14.0, *) {
                     VStack(spacing: 0) {
-                        HStack {
-                            Spacer()
-                            Button(L10n.done) {
-                                viewModel.pickerType = .none
-                            }
-                            .foregroundColor(Color(.binkGradientBlueLeft))
-                            .padding(.trailing, 12)
-                        }
-                        .frame(idealWidth: .infinity, maxWidth: .infinity, idealHeight: 44, maxHeight: 44, alignment: .center)
-                        .background(Color.white)
+                        InputToolbar(buttonAction: { viewModel.pickerType = .none })
                         
                         DatePicker("D.O.B.", selection: $viewModel.date)
                             .datePickerStyle(GraphicalDatePickerStyle())
@@ -121,20 +105,27 @@ struct BinkFormView: View {
                             .background(Color(themeManager.color(for: .viewBackground)))
                     }
                 } else {
+                    InputToolbar(buttonAction: { viewModel.pickerType = .none })
+
                     DatePicker("D.O.B.", selection: $viewModel.date)
                         .frame(maxHeight: 400)
                         .background(Color(themeManager.color(for: .viewBackground)))
                 }
             case .choice(let data):
-                let formData = data.map { $0.title }
-                Picker("Title", selection: $pickerSelection.onChange({ _ in
-                    viewModel.pickerData = pickerSelection
-                })) {
-                    ForEach(formData, id: \.self) {
-                        Text($0)
+                VStack(spacing: 0) {
+                    InputToolbar(buttonAction: { viewModel.pickerType = .none })
+
+                    let formData = data.map { $0.title }
+                    Picker("Title", selection: $pickerSelection.onChange({ _ in
+                        viewModel.pickerData = pickerSelection
+                    })) {
+                        ForEach(formData, id: \.self) {
+                            Text($0)
+                        }
                     }
+                    .background(Color(themeManager.color(for: .viewBackground)))
                 }
-                .background(Color(themeManager.color(for: .viewBackground)))
+                .offset(y: UIApplication.bottomSafeArea)
             case .expiry:
                 Text("")
             case .none:
@@ -197,5 +188,27 @@ extension Binding {
                 handler(newValue)
             }
         )
+    }
+}
+
+
+struct InputToolbar: View {
+    var buttonAction: () -> Void
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            Rectangle()
+                .frame(height: 0.5)
+            HStack {
+                Spacer()
+                Button(L10n.done) {
+                    buttonAction()
+                }
+                .foregroundColor(Color(.binkGradientBlueLeft))
+                .padding(.trailing, 12)
+            }
+            .frame(idealWidth: .infinity, maxWidth: .infinity, idealHeight: 44, maxHeight: 44, alignment: .center)
+            .background(Color.white)
+        }
     }
 }
