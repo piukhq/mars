@@ -57,7 +57,7 @@ struct BinkFormView: View {
                     // Textfields
                     ForEach(viewModel.datasource.fields) { field in
                         if #available(iOS 14.0, *) {
-                            BinkTextfieldView(field: field, viewModel: viewModel, date: $viewModel.date)
+                            BinkTextfieldView(field: field, viewModel: viewModel)
                                 .accessibilityIdentifier(field.title)
                                 .keyboardType(field.fieldType.keyboardType())
                         } else {

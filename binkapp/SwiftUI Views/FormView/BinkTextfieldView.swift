@@ -14,28 +14,12 @@ struct BinkTextfieldView: View {
     @State private var isEditing = false
     @State var value: String
     @State var showErrorState = false
-    @State var dateString: String
-    
-//    @Binding var fieldDidExit: Bool
-//    @Binding var presentScanner: BarcodeScannerType
-//    @Binding var showtextFieldToolbar: Bool
-//    @Binding var showDatePicker: Bool
-    @Binding var date: Date {
-        didSet {
-            dateString = String(date.getFormattedString(format: .dayShortMonthYearWithSlash))
-        }
-    }
+//    @State var dateString: String
 
-    init(field: FormField, viewModel: FormViewModel, date: Binding<Date>) {
+    init(field: FormField, viewModel: FormViewModel) {
         _field = State(initialValue: field)
         self.viewModel = viewModel
         _value = State(initialValue: field.forcedValue ?? "")
-        _dateString = State(initialValue: field.placeholder)
-//        _fieldDidExit = didExit
-//        _presentScanner = presentScanner
-//        _showtextFieldToolbar = showToolbar
-//        _showDatePicker = showDatePicker
-        _date = date
         UITextField.appearance().clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
     }
     
@@ -64,9 +48,8 @@ struct BinkTextfieldView: View {
                                 Button {
                                     viewModel.showDatePicker.toggle()
                                 } label: {
-                                    TextField(field.placeholder, text: $dateString)
+                                    TextField(field.placeholder, text: $viewModel.dateString)
                                         .disabled(true)
-//                                    Text($dateString.wrappedValue)
                                 }
                                 Spacer()
                             }
@@ -140,7 +123,7 @@ struct BinkTextfieldView: View {
     // MARK: - Helper Methods
     
     func convertDateToString(date: Date) {
-        dateString = String(date.getFormattedString(format: .dayShortMonthYearWithSlash))
+//        dateString = String(date.getFormattedString(format: .dayShortMonthYearWithSlash))
     }
     
     private func textfieldValidationFailed(value: Binding<String>) -> Bool {

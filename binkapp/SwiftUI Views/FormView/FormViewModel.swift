@@ -15,8 +15,12 @@ final class FormViewModel: ObservableObject {
     @Published var showtextFieldToolbar = false
     @Published var checkedState = false
     @Published var showDatePicker = false
-    @Published var date = Date()
-    @Published var dateString: String?
+    @Published var dateString: String = ""
+    @Published var date = Date() {
+        didSet {
+            dateString = date.getFormattedString(format: .dayShortMonthYearWithSlash)
+        }
+    }
     @Published var presentScanner: BarcodeScannerType = .loyalty {
         didSet {
             toLoyaltyScanner()
@@ -58,7 +62,7 @@ final class FormViewModel: ObservableObject {
     var checkboxStackHeight: CGFloat {
         return datasource.checkboxes.count == 3 ? 150 : 100
     }
-
+    
     func infoButtonWasTapped() {
         let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: membershipPlan)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
