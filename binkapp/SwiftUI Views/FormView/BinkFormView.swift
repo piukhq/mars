@@ -18,7 +18,6 @@ struct BinkFormView: View {
     @ObservedObject var viewModel: FormViewModel
     @ObservedObject private var themeManager = Current.themeManager
     @ObservedObject private var imageLoader = ImageLoader()
-    @State var showtextFieldToolbar = false
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
@@ -58,7 +57,7 @@ struct BinkFormView: View {
                     // Textfields
                     ForEach(viewModel.datasource.fields) { field in
                         if #available(iOS 14.0, *) {
-                            BinkTextfieldView(field: field, didExit: $viewModel.textfieldDidExit, presentScanner: $viewModel.presentScanner, showToolbar: $showtextFieldToolbar, showDatePicker: $viewModel.showDatePicker, date: $viewModel.date)
+                            BinkTextfieldView(field: field, viewModel: viewModel, date: $viewModel.date)
                                 .accessibilityIdentifier(field.title)
                                 .keyboardType(field.fieldType.keyboardType())
                         } else {
@@ -85,11 +84,11 @@ struct BinkFormView: View {
             // Keyboard Toolbar
             VStack {
                 Spacer()
-                if showtextFieldToolbar {
+                if viewModel.showtextFieldToolbar {
                     HStack {
                         Spacer()
                         Button(L10n.done) {
-                            showtextFieldToolbar = false
+                            viewModel.showtextFieldToolbar = false
                             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         }
                         .foregroundColor(Color(.binkGradientBlueLeft))

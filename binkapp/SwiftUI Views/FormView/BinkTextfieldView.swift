@@ -9,24 +9,32 @@
 import SwiftUI
 
 struct BinkTextfieldView: View {
+    @ObservedObject var viewModel: FormViewModel
     @State var field: FormField
     @State private var isEditing = false
     @State var value: String
     @State var showErrorState = false
+    @State var dateString: String
     
-    @Binding var fieldDidExit: Bool
-    @Binding var presentScanner: BarcodeScannerType
-    @Binding var showtextFieldToolbar: Bool
-    @Binding var showDatePicker: Bool
-    @Binding var date: Date
+//    @Binding var fieldDidExit: Bool
+//    @Binding var presentScanner: BarcodeScannerType
+//    @Binding var showtextFieldToolbar: Bool
+//    @Binding var showDatePicker: Bool
+    @Binding var date: Date {
+        didSet {
+            dateString = String(date.getFormattedString(format: .dayShortMonthYearWithSlash))
+        }
+    }
 
-    init(field: FormField, didExit: Binding<Bool>, presentScanner: Binding<BarcodeScannerType>, showToolbar: Binding<Bool>, showDatePicker: Binding<Bool>, date: Binding<Date>) {
+    init(field: FormField, viewModel: FormViewModel, date: Binding<Date>) {
         _field = State(initialValue: field)
+        self.viewModel = viewModel
         _value = State(initialValue: field.forcedValue ?? "")
-        _fieldDidExit = didExit
-        _presentScanner = presentScanner
-        _showtextFieldToolbar = showToolbar
-        _showDatePicker = showDatePicker
+        _dateString = State(initialValue: field.placeholder)
+//        _fieldDidExit = didExit
+//        _presentScanner = presentScanner
+//        _showtextFieldToolbar = showToolbar
+//        _showDatePicker = showDatePicker
         _date = date
         UITextField.appearance().clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
     }
@@ -54,9 +62,11 @@ struct BinkTextfieldView: View {
                         } else if field.fieldType == .date {
                             HStack {
                                 Button {
-                                    showDatePicker.toggle()
+                                    viewModel.showDatePicker.toggle()
                                 } label: {
-                                    Text(convertDateToString(date: $date))
+                                    TextField(field.placeholder, text: $dateString)
+                                        .disabled(true)
+//                                    Text($dateString.wrappedValue)
                                 }
                                 Spacer()
                             }
@@ -64,11 +74,11 @@ struct BinkTextfieldView: View {
                             TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
                                 self.isEditing = isEditing
                                 self.field.updateValue(value)
-                                self.fieldDidExit = isEditing
+                                self.viewModel.textfieldDidExit = isEditing
                                 
                                 if isEditing {
 //                                    self.datasource.formViewDidSelectField(self)
-                                    showtextFieldToolbar = true
+                                    viewModel.showtextFieldToolbar = true
                                 } else {
                                     self.field.fieldWasExited()
                                 }
@@ -90,9 +100,9 @@ struct BinkTextfieldView: View {
                     if (field.fieldCommonName == .cardNumber || field.fieldCommonName == .barcode) && !isEditing && !field.isValid() {
                         Button(action: {
                             if field.fieldType == .paymentCardNumber {
-                                presentScanner = .payment
+                                viewModel.presentScanner = .payment
                             } else {
-                                presentScanner = .loyalty
+                                viewModel.presentScanner = .loyalty
                             }
                         }) {
                             Image(Asset.scanIcon.name)
@@ -129,8 +139,8 @@ struct BinkTextfieldView: View {
     
     // MARK: - Helper Methods
     
-    func convertDateToString(date: Binding<Date>) -> String {
-        return String(date.wrappedValue.getFormattedString(format: .dayShortMonthYearWithSlash))
+    func convertDateToString(date: Date) {
+        dateString = String(date.getFormattedString(format: .dayShortMonthYearWithSlash))
     }
     
     private func textfieldValidationFailed(value: Binding<String>) -> Bool {
