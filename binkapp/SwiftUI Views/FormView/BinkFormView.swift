@@ -86,7 +86,7 @@ struct BinkFormView: View {
             VStack {
                 Spacer()
                 if viewModel.showtextFieldToolbar {
-                    InputToolbar {
+                    InputToolbarView {
                         viewModel.showtextFieldToolbar = false
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     }
@@ -97,7 +97,7 @@ struct BinkFormView: View {
             case .date:
                 if #available(iOS 14.0, *) {
                     VStack(spacing: 0) {
-                        InputToolbar(buttonAction: { viewModel.pickerType = .none })
+                        InputToolbarView(buttonAction: { viewModel.pickerType = .none })
                         
                         DatePicker("D.O.B.", selection: $viewModel.date)
                             .datePickerStyle(GraphicalDatePickerStyle())
@@ -105,7 +105,7 @@ struct BinkFormView: View {
                             .background(Color(themeManager.color(for: .viewBackground)))
                     }
                 } else {
-                    InputToolbar(buttonAction: { viewModel.pickerType = .none })
+                    InputToolbarView(buttonAction: { viewModel.pickerType = .none })
 
                     DatePicker("D.O.B.", selection: $viewModel.date)
                         .frame(maxHeight: 400)
@@ -113,7 +113,7 @@ struct BinkFormView: View {
                 }
             case .choice(let data):
                 VStack(spacing: 0) {
-                    InputToolbar(buttonAction: { viewModel.pickerType = .none })
+                    InputToolbarView(buttonAction: { viewModel.pickerType = .none })
 
                     let formData = data.map { $0.title }
                     Picker("Title", selection: $pickerSelection.onChange({ _ in
@@ -178,37 +178,3 @@ extension Publishers {
 //    }
 //}
 //#endif
-
-extension Binding {
-    func onChange(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
-        Binding(
-            get: { self.wrappedValue },
-            set: { newValue in
-                self.wrappedValue = newValue
-                handler(newValue)
-            }
-        )
-    }
-}
-
-
-struct InputToolbar: View {
-    var buttonAction: () -> Void
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            Rectangle()
-                .frame(height: 0.5)
-            HStack {
-                Spacer()
-                Button(L10n.done) {
-                    buttonAction()
-                }
-                .foregroundColor(Color(.binkGradientBlueLeft))
-                .padding(.trailing, 12)
-            }
-            .frame(idealWidth: .infinity, maxWidth: .infinity, idealHeight: 44, maxHeight: 44, alignment: .center)
-            .background(Color.white)
-        }
-    }
-}

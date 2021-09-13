@@ -84,10 +84,3 @@ extension UIDevice {
         }
     }
 }
-
-extension UIApplication {
-    static let bottomSafeArea: CGFloat = {
-        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
-        return window?.safeAreaInsets.bottom ?? 0
-    }()
-}
