@@ -14,8 +14,9 @@ final class FormViewModel: ObservableObject {
     @Published var textfieldDidExit = false // ?? Still being used?
     @Published var showtextFieldToolbar = false
     @Published var checkedState = false
-    @Published var showDatePicker = false
+    @Published var pickerType: PickerType = .none
     @Published var date = Date()
+    @Published var pickerData = ""
     @Published var presentScanner: BarcodeScannerType = .loyalty {
         didSet {
             toLoyaltyScanner()
@@ -28,6 +29,7 @@ final class FormViewModel: ObservableObject {
             }
         }
     }
+    
     @State var keyboardHeight: CGFloat = 0
 
     var titleText: String?
@@ -122,4 +124,11 @@ extension FormViewModel: BarcodeScannerViewControllerDelegate {
 enum BarcodeScannerType {
     case loyalty
     case payment
+}
+
+enum PickerType {
+    case date
+    case choice(data: [FormPickerData])
+    case expiry
+    case none
 }

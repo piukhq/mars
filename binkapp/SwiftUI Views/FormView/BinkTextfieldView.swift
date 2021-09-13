@@ -35,11 +35,31 @@ struct BinkTextfieldView: View {
                         
                         switch field.fieldType {
                         case .choice(let data):
-                            Text("\(data.first?.title ?? "")")
+                            HStack {
+                                Button {
+                                    viewModel.pickerType = .choice(data: data)
+                                    isEditing = true
+                                } label: {
+                                    TextField(data.first?.title ?? "", text: $value)
+                                        .disabled(true)
+                                        .onReceive(viewModel.$pickerData) { pickerData in
+                                            guard isEditing else { return }
+                                            self.value = pickerData
+                                            self.field.updateValue(pickerData)
+//                                            self.isEditing = false
+                                        }
+                                }
+                                .onReceive(viewModel.$pickerType) { pickerType in
+                                    if case .none = pickerType {
+                                        isEditing = false
+                                    }
+                                }
+                                Spacer()
+                            }
                         case .date:
                             HStack {
                                 Button {
-                                    viewModel.showDatePicker.toggle()
+                                    viewModel.pickerType = .date
                                     isEditing = true
                                 } label: {
                                     TextField(field.placeholder, text: $value)
@@ -52,8 +72,10 @@ struct BinkTextfieldView: View {
                                             self.isEditing = false
                                         }
                                 }
-                                .onReceive(viewModel.$showDatePicker) { showingDatePicker in
-                                    isEditing = showingDatePicker
+                                .onReceive(viewModel.$pickerType) { pickerType in
+                                    if case .none = pickerType {
+                                        isEditing = false
+                                    }
                                 }
                                 Spacer()
                             }

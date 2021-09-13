@@ -25,7 +25,7 @@ struct AuthAndAddView: View {
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
             BinkFormView(viewModel: formViewModel)
-            if !formViewModel.showDatePicker {
+            if case .none = formViewModel.pickerType {
                 BinkButtonsStackView(buttons: [primaryButton])
                     .offset(y: BinkButtonsView.bottomSafePadding - BinkButtonsView.bottomPadding)
             }

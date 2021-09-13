@@ -18,7 +18,8 @@ struct BinkFormView: View {
     @ObservedObject var viewModel: FormViewModel
     @ObservedObject private var themeManager = Current.themeManager
     @ObservedObject private var imageLoader = ImageLoader()
-    
+    @State var pickerSelection = ""
+
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
             ScrollView {
@@ -98,13 +99,15 @@ struct BinkFormView: View {
                     .background(Color.white)
                 }
             }
-            if viewModel.showDatePicker {
+
+            switch viewModel.pickerType {
+            case .date:
                 if #available(iOS 14.0, *) {
                     VStack(spacing: 0) {
                         HStack {
                             Spacer()
                             Button(L10n.done) {
-                                viewModel.showDatePicker = false
+                                viewModel.pickerType = .none
                             }
                             .foregroundColor(Color(.binkGradientBlueLeft))
                             .padding(.trailing, 12)
@@ -120,7 +123,22 @@ struct BinkFormView: View {
                 } else {
                     DatePicker("D.O.B.", selection: $viewModel.date)
                         .frame(maxHeight: 400)
+                        .background(Color(themeManager.color(for: .viewBackground)))
                 }
+            case .choice(let data):
+                let formData = data.map { $0.title }
+                Picker("Title", selection: $pickerSelection.onChange({ _ in
+                    viewModel.pickerData = pickerSelection
+                })) {
+                    ForEach(formData, id: \.self) {
+                        Text($0)
+                    }
+                }
+                .background(Color(themeManager.color(for: .viewBackground)))
+            case .expiry:
+                Text("")
+            case .none:
+                Text("")
             }
         })
     }
@@ -169,3 +187,15 @@ extension Publishers {
 //    }
 //}
 //#endif
+
+extension Binding {
+    func onChange(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
+        Binding(
+            get: { self.wrappedValue },
+            set: { newValue in
+                self.wrappedValue = newValue
+                handler(newValue)
+            }
+        )
+    }
+}
