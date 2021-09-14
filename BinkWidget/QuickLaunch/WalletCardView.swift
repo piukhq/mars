@@ -29,6 +29,9 @@ struct WalletCardView: View {
         static let shadowOpacity: Double = 0.5
         static let shadowRadius: CGFloat = 2
         static let shadowOffset: CGFloat = 1.0
+        static let textLeadingPadding: CGFloat = 10
+        static let textTrailingPadding: CGFloat = -5
+        static let textLineLimit: Int = 2
     }
     
     var body: some View {
@@ -47,24 +50,23 @@ struct WalletCardView: View {
                     }
 
                     Text(membershipCard.planName ?? "")
-                        .padding(.leading, 10.0)
-                        .padding(.trailing, -5.0)
-                        .lineLimit(2)
+                        .padding(.leading, Constants.textLeadingPadding)
+                        .padding(.trailing, Constants.textTrailingPadding)
+                        .lineLimit(Constants.textLineLimit)
                         .foregroundColor(backgroundColorIsLight ? .black : .white)
-                        .font(.custom("NunitoSans-SemiBold", size: 12))
+                        .font(.nunitoSemiBold(12))
                     Spacer()
-                    
                 } else {
                     RoundedRectangle(cornerRadius: Constants.placeholderImageCornerRadius)
                         .frame(width: Constants.imageSize, height: Constants.imageSize, alignment: .center)
                         .foregroundColor(Color(UIColor(hexString: "#FFFFFF", alpha: Constants.placeholderForegroundColorAlpha)))
                     
-                    Text("The Perfume Shop membership cardings good times")
-                        .padding(.leading, 10.0)
-                        .padding(.trailing, -5.0)
-                        .lineLimit(2)
+                    Text(membershipCard.planName ?? "")
+                        .padding(.leading, Constants.textLeadingPadding)
+                        .padding(.trailing, Constants.textTrailingPadding)
+                        .lineLimit(Constants.textLineLimit)
                         .foregroundColor(backgroundColorIsLight ? .black : .white)
-                        .font(.custom("NunitoSans-SemiBold", size: 12))
+                        .font(.nunitoSemiBold(12))
                     Spacer()
                 }
             }
@@ -74,22 +76,5 @@ struct WalletCardView: View {
                     .foregroundColor(Color(UIColor(hexString: membershipCard.backgroundColor ?? "#009190")))
             )
         }
-    }
-}
-
-extension UIColor {
-    public func isLight(threshold: CGFloat = 0.5) -> Bool {
-        let originalCGColor = cgColor
-
-        // algorithm from: http://www.w3.org/WAI/ER/WD-AERT/#color-contrast
-        let RGBCGColor = originalCGColor.converted(to: CGColorSpaceCreateDeviceRGB(), intent: .defaultIntent, options: nil)
-        guard let components = RGBCGColor?.components else {
-            return false
-        }
-        guard components.count >= 3 else {
-            return false
-        }
-        let brightness = CGFloat(((components[0] * 299) + (components[1] * 587) + (components[2] * 114)) / 1_000)
-        return brightness > threshold
     }
 }
