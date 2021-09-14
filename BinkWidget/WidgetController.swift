@@ -112,7 +112,7 @@ class WidgetController {
             imageRequestGroup.enter()
             
             ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil) { retrievedImage in
-                let membershipCardWidget = MembershipCardWidget(id: membershipCard.id, imageData: retrievedImage?.pngData(), backgroundColor: membershipCard.membershipPlan?.card?.colour)
+                let membershipCardWidget = MembershipCardWidget(id: membershipCard.id, imageData: retrievedImage?.pngData(), backgroundColor: membershipCard.membershipPlan?.card?.colour, planName: membershipCard.membershipPlan?.account?.companyName)
                 widgetCards.append(membershipCardWidget)
                 imageRequestGroup.leave()
             }
@@ -120,9 +120,9 @@ class WidgetController {
         
         imageRequestGroup.notify(queue: .main) {
             if widgetCards.count < 4 {
-                let addCard = MembershipCardWidget(id: WidgetUrlPath.addCard.rawValue, imageData: nil, backgroundColor: nil)
-                let spacerZero = MembershipCardWidget(id: WidgetUrlPath.spacerZero.rawValue, imageData: nil, backgroundColor: nil)
-                let spacerOne = MembershipCardWidget(id: WidgetUrlPath.spacerOne.rawValue, imageData: nil, backgroundColor: nil)
+                let addCard = MembershipCardWidget(id: WidgetUrlPath.addCard.rawValue, imageData: nil, backgroundColor: nil, planName: nil)
+                let spacerZero = MembershipCardWidget(id: WidgetUrlPath.spacerZero.rawValue, imageData: nil, backgroundColor: nil, planName: nil)
+                let spacerOne = MembershipCardWidget(id: WidgetUrlPath.spacerOne.rawValue, imageData: nil, backgroundColor: nil, planName: nil)
                 var spacerCards: [MembershipCardWidget] = []
 
                 if widgetCards.count == 1 {
