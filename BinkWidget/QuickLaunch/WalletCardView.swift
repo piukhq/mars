@@ -11,6 +11,11 @@ import SwiftUI
 struct WalletCardView: View {
     let membershipCard: MembershipCardWidget
     
+    var backgroundColorIsLight: Bool {
+        let backgroundColor = UIColor(hexString: membershipCard.backgroundColor ?? "")
+        return backgroundColor.isLight()
+    }
+    
     enum Constants {
         static let insets = EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12)
         static let cornerRadius: CGFloat = 12
@@ -40,11 +45,23 @@ struct WalletCardView: View {
                             .frame(width: Constants.imageSize, height: Constants.imageSize)
                             .clipShape(RoundedRectangle(cornerRadius: Constants.imageCornerRadius, style: .continuous))
                     }
+
+                    Text(membershipCard.planName ?? "")
+                        .padding(.leading, 10.0)
+                        .lineLimit(2)
+                        .foregroundColor(backgroundColorIsLight ? .black : .white)
+//                        .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
                     Spacer()
+                    
                 } else {
                     RoundedRectangle(cornerRadius: Constants.placeholderImageCornerRadius)
                         .frame(width: Constants.imageSize, height: Constants.imageSize, alignment: .center)
                         .foregroundColor(Color(UIColor(hexString: "#FFFFFF", alpha: Constants.placeholderForegroundColorAlpha)))
+                    
+                    Text("The Perfume Shop membership cardings good times")
+                        .padding(.leading, 10.0)
+                        .lineLimit(2)
+
                     Spacer()
                 }
             }
@@ -54,5 +71,22 @@ struct WalletCardView: View {
                     .foregroundColor(Color(UIColor(hexString: membershipCard.backgroundColor ?? "#009190")))
             )
         }
+    }
+}
+
+extension UIColor {
+    public func isLight(threshold: CGFloat = 0.5) -> Bool {
+        let originalCGColor = cgColor
+
+        // algorithm from: http://www.w3.org/WAI/ER/WD-AERT/#color-contrast
+        let RGBCGColor = originalCGColor.converted(to: CGColorSpaceCreateDeviceRGB(), intent: .defaultIntent, options: nil)
+        guard let components = RGBCGColor?.components else {
+            return false
+        }
+        guard components.count >= 3 else {
+            return false
+        }
+        let brightness = CGFloat(((components[0] * 299) + (components[1] * 587) + (components[2] * 114)) / 1_000)
+        return brightness > threshold
     }
 }
