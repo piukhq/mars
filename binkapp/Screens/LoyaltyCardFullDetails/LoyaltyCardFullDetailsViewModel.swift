@@ -209,7 +209,15 @@ class LoyaltyCardFullDetailsViewModel {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         case .lpcBalance:
-            print("")
+            let buttonAction: BinkButtonAction = {
+                Current.navigate.close {
+                    print("Refreshing")
+                }
+            }
+            let config = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "Balance", description: "Your account was updated 9m ago. We'll check again soon."), primaryButtonTitle: "Refresh", primaryButtonAction: buttonAction, secondaryButtonTitle: nil, secondaryButtonAction: nil, membershipPlan: membershipCard.membershipPlan)
+            let viewController = ReusableTemplateViewController(viewModel: ReusableModalViewModel(configurationModel: config))
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         }
     }
     

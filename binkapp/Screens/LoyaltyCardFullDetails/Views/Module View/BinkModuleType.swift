@@ -155,7 +155,7 @@ enum ModuleState: Equatable {
         case .lpcLoginRequired:
             return L10n.pointsModuleToSeeHistory
         case .lpcBalance(_, let lastChecked):
-            return lastChecked ?? ""
+            return "\(L10n.pointsModuleLastChecked) \(lastChecked ?? "")"
         }
     }
     
