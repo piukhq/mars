@@ -20,11 +20,13 @@ class PointsScrapingManager {
     
     class QueuedItem {
         let card: CD_MembershipCard
+        var isBalanceRefresh: Bool
         var isProcessing = false
         var requiresRetry = false
         
-        init(card: CD_MembershipCard) {
+        init(card: CD_MembershipCard, isBalanceRefresh: Bool) {
             self.card = card
+            self.isBalanceRefresh = isBalanceRefresh
         }
     }
     
@@ -152,7 +154,7 @@ class PointsScrapingManager {
     // MARK: - Add/Auth handling
     
     func enableLocalPointsScrapingForCardIfPossible(withRequest request: MembershipCardPostModel, credentials: WebScrapingCredentials, membershipCard: CD_MembershipCard) throws {
-        let itemToProcess = QueuedItem(card: membershipCard)
+        let itemToProcess = QueuedItem(card: membershipCard, isBalanceRefresh: false)
         
         guard planIdIsWebScrapable(request.membershipPlan) else { return }
         
@@ -231,7 +233,7 @@ class PointsScrapingManager {
     func refreshBalancesIfNecessary() {
         guard self.isMasterEnabled else { return }
         self.getRefreshableMembershipCards { [weak self] refreshableCards in
-            refreshableCards.forEach { self?.addQueuedItem(QueuedItem(card: $0)) }
+            refreshableCards.forEach { self?.addQueuedItem(QueuedItem(card: $0, isBalanceRefresh: true)) }
             self?.processQueuedItems()
         }
     }
@@ -466,6 +468,9 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
         if #available(iOS 14.0, *) {
             BinkLogger.error(WalletLoggerError.pointsScrapingFailure, value: error.message)
         }
+        
+        // TODO: Determine here if we want to return a stale balance or move to failed
+        
         transitionToFailed(item: item)
     }
 }

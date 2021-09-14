@@ -13,6 +13,7 @@ class WalletRefreshManager {
     private static let twoMinutes: TimeInterval = 120
     private static let twoHours: TimeInterval = 7200
     private static let twelveHours: TimeInterval = 43200
+    private static let seventyTwoHours: TimeInterval = twelveHours * 6
 
     private var accountsRefreshTimer: Timer!
     private var plansRefreshTimer: Timer!
