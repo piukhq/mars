@@ -459,18 +459,17 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
     }
     
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, item: QueuedItem, withAgent agent: WebScrapable) {
+        if item.isBalanceRefresh, WalletRefreshManager.cardCanRetainStaleBalance(item.card) { return }
+        
         switch error {
         case .incorrectCredentials:
             BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionCredentialFailure(membershipCard: item.card, error: error))
         default:
             BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionInternalFailure(membershipCard: item.card, error: error))
         }
+        
         if #available(iOS 14.0, *) {
             BinkLogger.error(WalletLoggerError.pointsScrapingFailure, value: error.message)
         }
-        
-        // TODO: Determine here if we want to return a stale balance or move to failed
-        
-        transitionToFailed(item: item)
     }
 }
