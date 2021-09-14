@@ -34,12 +34,13 @@ enum ModuleState: Equatable {
     case pllNoPaymentCards
     case pllError
     case lpcLoginRequired
+    case lpcBalance(formattedTitle: String?, lastChecked: String?)
     
     var imageName: String {
         switch self {
         case .loginUnavailable:
             return Asset.lcdModuleIconsPointsInactive.name
-        case .plrTransactions, .aboutMembership, .pllTransactions:
+        case .plrTransactions, .aboutMembership, .pllTransactions, .lpcBalance:
             return Asset.lcdModuleIconsPointsActive.name
         case .pending:
             return Asset.lcdModuleIconsPointsLoginPending.name
@@ -98,6 +99,8 @@ enum ModuleState: Equatable {
             return L10n.cardLinkStatus
         case .lpcLoginRequired:
             return L10n.loginTitle
+        case .lpcBalance(let formattedTitle, _):
+            return formattedTitle ?? ""
         }
     }
     
@@ -151,6 +154,8 @@ enum ModuleState: Equatable {
             return L10n.linkModuleToPaymentCardsMessage
         case .lpcLoginRequired:
             return L10n.pointsModuleToSeeHistory
+        case .lpcBalance(_, let lastChecked):
+            return lastChecked ?? ""
         }
     }
     
@@ -162,7 +167,7 @@ enum ModuleState: Equatable {
             return "plrTransactions"
         case .aboutMembership:
             return "aboutMembership"
-        case .pllTransactions:
+        case .pllTransactions, .lpcBalance:
             return "pllTransactions"
         case .pending:
             return "pending"
