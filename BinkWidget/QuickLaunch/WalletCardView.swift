@@ -13,7 +13,7 @@ struct WalletCardView: View {
     
     var backgroundColorIsLight: Bool {
         let backgroundColor = UIColor(hexString: membershipCard.backgroundColor ?? "")
-        return backgroundColor.isLight()
+        return backgroundColor.isLight(threshold: 0.7)
     }
     
     enum Constants {
@@ -48,9 +48,10 @@ struct WalletCardView: View {
 
                     Text(membershipCard.planName ?? "")
                         .padding(.leading, 10.0)
+                        .padding(.trailing, -5.0)
                         .lineLimit(2)
                         .foregroundColor(backgroundColorIsLight ? .black : .white)
-//                        .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
+                        .font(.custom("NunitoSans-SemiBold", size: 12))
                     Spacer()
                     
                 } else {
@@ -60,8 +61,10 @@ struct WalletCardView: View {
                     
                     Text("The Perfume Shop membership cardings good times")
                         .padding(.leading, 10.0)
+                        .padding(.trailing, -5.0)
                         .lineLimit(2)
-
+                        .foregroundColor(backgroundColorIsLight ? .black : .white)
+                        .font(.custom("NunitoSans-SemiBold", size: 12))
                     Spacer()
                 }
             }
