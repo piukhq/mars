@@ -119,6 +119,11 @@ class LoyaltyCardFullDetailsViewModel {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         case .plrTransactions, .pllTransactions:
+            if let planIdString = membershipCard.membershipPlan?.id, let planId = Int(planIdString), Current.pointsScrapingManager.planIdIsWebScrapable(planId) {
+                print("")
+                return
+            }
+            
             guard membershipCard.membershipPlan?.featureSet?.transactionsAvailable?.boolValue ?? false else {
                 let title = L10n.transactionHistoryNotSupportedTitle
                 let description = L10n.transactionHistoryNotSupportedDescription(membershipCard.membershipPlan?.account?.planName ?? "")
@@ -203,6 +208,8 @@ class LoyaltyCardFullDetailsViewModel {
             let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan, membershipCard: membershipCard)
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
+        case .lpcBalance:
+            print("")
         }
     }
     
