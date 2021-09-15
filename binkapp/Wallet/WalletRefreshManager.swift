@@ -9,10 +9,11 @@
 import Foundation
 
 class WalletRefreshManager {
-    private static let oneHour: TimeInterval = 3600
     private static let twoMinutes: TimeInterval = 120
-    private static let twoHours: TimeInterval = 7200
-    private static let twelveHours: TimeInterval = 43200
+    private static let oneHour: TimeInterval = 3600
+    private static let twoHours: TimeInterval = oneHour * 2
+    private static let twelveHours: TimeInterval = oneHour * 12
+    private static let threeDays: TimeInterval = oneHour * 72
 
     private var accountsRefreshTimer: Timer!
     private var plansRefreshTimer: Timer!
@@ -69,5 +70,19 @@ extension WalletRefreshManager {
             return elapsed >= Int(Current.pointsScrapingManager.isDebugMode ? WalletRefreshManager.twoMinutes : WalletRefreshManager.twelveHours)
         }
         return false
+    }
+    
+    static func cardCanRetainStaleBalance(_ card: CD_MembershipCard) -> Bool {
+        guard let balance = card.formattedBalances?.first else {
+            fatalError("We are performing a balance refresh but have no balance object.")
+        }
+        guard let updatedAt = balance.updatedAt?.doubleValue else {
+            fatalError("Balance has no updatedAt value.")
+        }
+        
+        let balanceUpdated = Date(timeIntervalSince1970: updatedAt)
+        let elapsed = Int(Date().timeIntervalSince(balanceUpdated))
+        
+        return elapsed >= Int(Current.pointsScrapingManager.isDebugMode ? WalletRefreshManager.threeDays : WalletRefreshManager.threeDays)
     }
 }

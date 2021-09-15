@@ -20,11 +20,13 @@ class PointsScrapingManager {
     
     class QueuedItem {
         let card: CD_MembershipCard
+        var isBalanceRefresh: Bool
         var isProcessing = false
         var requiresRetry = false
         
-        init(card: CD_MembershipCard) {
+        init(card: CD_MembershipCard, isBalanceRefresh: Bool) {
             self.card = card
+            self.isBalanceRefresh = isBalanceRefresh
         }
     }
     
@@ -152,7 +154,7 @@ class PointsScrapingManager {
     // MARK: - Add/Auth handling
     
     func enableLocalPointsScrapingForCardIfPossible(withRequest request: MembershipCardPostModel, credentials: WebScrapingCredentials, membershipCard: CD_MembershipCard) throws {
-        let itemToProcess = QueuedItem(card: membershipCard)
+        let itemToProcess = QueuedItem(card: membershipCard, isBalanceRefresh: false)
         
         guard planIdIsWebScrapable(request.membershipPlan) else { return }
         
@@ -181,6 +183,12 @@ class PointsScrapingManager {
     }
     
     // MARK: - Processing queue
+    
+    func performBalanceRefresh(for card: CD_MembershipCard) {
+        let queuedItem = QueuedItem(card: card, isBalanceRefresh: true)
+        addQueuedItem(queuedItem)
+        processQueuedItems()
+    }
     
     private func addQueuedItem(_ item: QueuedItem) {
         if processingQueue.contains(where: { $0.card.id == item.card.id }) { return }
@@ -231,7 +239,7 @@ class PointsScrapingManager {
     func refreshBalancesIfNecessary() {
         guard self.isMasterEnabled else { return }
         self.getRefreshableMembershipCards { [weak self] refreshableCards in
-            refreshableCards.forEach { self?.addQueuedItem(QueuedItem(card: $0)) }
+            refreshableCards.forEach { self?.addQueuedItem(QueuedItem(card: $0, isBalanceRefresh: true)) }
             self?.processQueuedItems()
         }
     }
@@ -280,7 +288,7 @@ class PointsScrapingManager {
     }
 
     func isCurrentlyScraping(forMembershipCard card: CD_MembershipCard) -> Bool {
-        return webScrapingUtility?.isCurrentlyScraping(forMembershipCard: card) == true
+        return processingQueue.contains(where: { $0.card == card })
     }
     
     func debug() {
@@ -457,15 +465,17 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
     }
     
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, item: QueuedItem, withAgent agent: WebScrapable) {
+        if item.isBalanceRefresh, WalletRefreshManager.cardCanRetainStaleBalance(item.card) { return }
+        
         switch error {
         case .incorrectCredentials:
             BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionCredentialFailure(membershipCard: item.card, error: error))
         default:
             BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionInternalFailure(membershipCard: item.card, error: error))
         }
+        
         if #available(iOS 14.0, *) {
             BinkLogger.error(WalletLoggerError.pointsScrapingFailure, value: error.message)
         }
-        transitionToFailed(item: item)
     }
 }

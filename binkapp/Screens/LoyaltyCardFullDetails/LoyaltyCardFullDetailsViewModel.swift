@@ -203,6 +203,32 @@ class LoyaltyCardFullDetailsViewModel {
             let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan, membershipCard: membershipCard)
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
+        case .lpcBalance(_, let lastCheckedDate):
+            let buttonAction: BinkButtonAction = { [weak self] in
+                guard let self = self else { return }
+                if Current.pointsScrapingManager.isCurrentlyScraping(forMembershipCard: self.membershipCard) {
+                    let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.lpcPointsModuleBalanceExplainerAlertTitle, message: L10n.lpcPointsModuleBalanceExplainerAlertBody)
+                    let navigationRequest = AlertNavigationRequest(alertController: alert)
+                    Current.navigate.to(navigationRequest)
+                } else {
+                    Current.navigate.close {
+                        Current.pointsScrapingManager.performBalanceRefresh(for: self.membershipCard)
+                    }
+                }
+            }
+            let planName = membershipCard.membershipPlan?.account?.planName ?? ""
+            let lastCheckedString = L10n.lpcPointsModuleBalanceExplainerBodyTimeAgo(lastCheckedDate?.timeAgoString() ?? "")
+            
+            let bodyText = L10n.lpcPointsModuleBalanceExplainerBody(planName, lastCheckedString, Current.pointsScrapingManager.isDebugMode ? "2 minutes (DEBUG)" : "12 hours")
+            let attributedString = ReusableModalConfiguration.makeAttributedString(title: L10n.lpcPointsModuleBalanceExplainerTitle, description: bodyText)
+            let baseBodyText = NSString(string: attributedString.string)
+            let lastCheckedRange = baseBodyText.range(of: lastCheckedString)
+            attributedString.addAttribute(NSAttributedString.Key.font, value: UIFont.buttonText, range: lastCheckedRange)
+            
+            let config = ReusableModalConfiguration(title: "", text: attributedString, primaryButtonTitle: L10n.lpcPointsModuleBalanceExplainerButtonTitle, primaryButtonAction: buttonAction, secondaryButtonTitle: nil, secondaryButtonAction: nil, membershipPlan: membershipCard.membershipPlan)
+            let viewController = ReusableTemplateViewController(viewModel: ReusableModalViewModel(configurationModel: config))
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         }
     }
     
