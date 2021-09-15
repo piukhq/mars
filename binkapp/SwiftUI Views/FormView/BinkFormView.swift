@@ -14,39 +14,15 @@ struct BinkFormView: View {
         static let vStackInsets = EdgeInsets(top: 20, leading: 25, bottom: 150, trailing: 25)
     }
     
-    @Environment(\.colorScheme) var colorScheme
     @ObservedObject var viewModel: FormViewModel
     @ObservedObject private var themeManager = Current.themeManager
-    @ObservedObject private var imageLoader = ImageLoader()
     @State var pickerSelection = ""
 
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
             ScrollView {
                 VStack(alignment: .center, spacing: 20.0) {
-                    RemoteImage(image: viewModel.brandImage ?? imageLoader.image)
-                        .onAppear {
-                            if let membershipPlan = viewModel.membershipPlan {
-                                imageLoader.retrieveImage(for: membershipPlan, colorScheme: colorScheme)
-                                viewModel.brandImage = imageLoader.image
-                            }
-                        }
-                        .frame(width: 70, height: 70, alignment: .center)
-                        .aspectRatio(contentMode: .fit)
-                    
-                    if viewModel.shouldShowInfoButton {
-                        Button(action: {
-                            viewModel.infoButtonWasTapped()
-                        }, label: {
-                            Text(viewModel.infoButtonText ?? "")
-                                .font(.custom(UIFont.linkTextButtonNormal.fontName, size: UIFont.linkTextButtonNormal.pointSize))
-                            Image(uiImage: Asset.iconsChevronRight.image.withRenderingMode(.alwaysTemplate))
-                                .resizable()
-                                .frame(width: 10, height: 10, alignment: .center)
-                        })
-                        .foregroundColor(Color(.blueAccent))
-                    }
-                    
+                    FormHeaderView(membershipPlan: viewModel.membershipPlan)
                     
                     VStack(alignment: .leading, spacing: 5, content: {
                         Text(viewModel.titleText ?? "")

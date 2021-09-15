@@ -10,7 +10,6 @@ import SwiftUI
 
 final class FormViewModel: ObservableObject {
     @Published var datasource: FormDataSource
-    @Published var brandImage: Image?
     @Published var textfieldDidExit = false // ?? Still being used?
     @Published var showtextFieldToolbar = false
     @Published var checkedState = false
@@ -45,26 +44,8 @@ final class FormViewModel: ObservableObject {
         self.membershipPlan = membershipPlan
     }
     
-    var infoButtonText: String? {
-        if let planName = membershipPlan?.account?.planName {
-            return "\(planName) info"
-        }
-        return nil
-    }
-    
-    var shouldShowInfoButton: Bool {
-        return infoButtonText != nil
-    }
-    
     var checkboxStackHeight: CGFloat {
         return datasource.checkboxes.count == 3 ? 150 : 100
-    }
-    
-    func infoButtonWasTapped() {
-        guard let membershipPlan = membershipPlan else { return }
-        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: membershipPlan)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
-        Current.navigate.to(navigationRequest)
     }
     
     func configureAttributedStrings() {
@@ -100,8 +81,6 @@ final class FormViewModel: ObservableObject {
                 let navigationRequest = ModalNavigationRequest(viewController: viewController)
                 Current.navigate.to(navigationRequest)
             }
-        } else {
-            // Present payment scanner
         }
     }
 }

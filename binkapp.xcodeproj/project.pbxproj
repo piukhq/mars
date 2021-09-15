@@ -354,6 +354,7 @@
 		CEAF2A0226974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF2A0126974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift */; };
 		CEAF2A04269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF2A03269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift */; };
 		CEB7ADEF26F1EE2700BD138C /* AddPaymentCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADEE26F1EE2700BD138C /* AddPaymentCardView.swift */; };
+		CEB7ADF226F22DC400BD138C /* FormHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADF126F22DC400BD138C /* FormHeaderView.swift */; };
 		CEC0ACBC2636AD0000845813 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBA2636AD0000845813 /* Assets.swift */; };
 		CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBB2636AD0000845813 /* Strings.swift */; };
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
@@ -985,6 +986,7 @@
 		CEAF2A0126974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_4_GoToSite.swift; sourceTree = "<group>"; };
 		CEAF2A03269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_5_WireframesNavigation.swift; sourceTree = "<group>"; };
 		CEB7ADEE26F1EE2700BD138C /* AddPaymentCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentCardView.swift; sourceTree = "<group>"; };
+		CEB7ADF126F22DC400BD138C /* FormHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormHeaderView.swift; sourceTree = "<group>"; };
 		CEC0AC3B2636AAA400845813 /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		CEC0ACBA2636AD0000845813 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		CEC0ACBB2636AD0000845813 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -2401,6 +2403,7 @@
 				CE6054A726EB552A00FD0866 /* BinkTextfieldView.swift */,
 				CE6054A326E8932800FD0866 /* FormViewModel.swift */,
 				CE52E13526EFB1F600CAFBBF /* InputToolbarView.swift */,
+				CEB7ADF126F22DC400BD138C /* FormHeaderView.swift */,
 			);
 			path = FormView;
 			sourceTree = "<group>";
@@ -3695,6 +3698,7 @@
 				CE539DFD25F0EBAB00BDA5EF /* BinkLogger.swift in Sources */,
 				3CEABFCA2316AB42009B1122 /* MembershipTransaction.swift in Sources */,
 				B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */,
+				CEB7ADF226F22DC400BD138C /* FormHeaderView.swift in Sources */,
 				BD9E4CD823740A7500C6F098 /* PreferenceChangeResponse.swift in Sources */,
 				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
 				EF758E0F23225F45000D26A9 /* NSManagedObjectContext.swift in Sources */,
