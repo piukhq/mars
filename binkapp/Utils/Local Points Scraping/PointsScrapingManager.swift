@@ -467,6 +467,8 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, item: QueuedItem, withAgent agent: WebScrapable) {
         if item.isBalanceRefresh, WalletRefreshManager.cardCanRetainStaleBalance(item.card) { return }
         
+        SentryService.triggerException(.localPointsCollectionFailed(error, agent.merchant, balanceRefresh: item.isBalanceRefresh))
+        
         switch error {
         case .incorrectCredentials:
             BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionCredentialFailure(membershipCard: item.card, error: error))
