@@ -290,9 +290,9 @@ internal enum L10n {
   internal static let lpcPointsModuleBalanceExplainerAlertBody = L10n.tr("Localizable", "lpc_points_module_balance_explainer_alert_body")
   /// Balance refresh pending
   internal static let lpcPointsModuleBalanceExplainerAlertTitle = L10n.tr("Localizable", "lpc_points_module_balance_explainer_alert_title")
-  /// Your %@ account balance was last updated %@. Bink will try to update this account every 12 hours.\n\nYou can manually update your balance using the button below.
-  internal static func lpcPointsModuleBalanceExplainerBody(_ p1: Any, _ p2: Any) -> String {
-    return L10n.tr("Localizable", "lpc_points_module_balance_explainer_body", String(describing: p1), String(describing: p2))
+  /// Your %@ account balance was last updated %@. Bink will try to update this account every %@ hours.\n\nYou can manually update your balance using the button below.
+  internal static func lpcPointsModuleBalanceExplainerBody(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+    return L10n.tr("Localizable", "lpc_points_module_balance_explainer_body", String(describing: p1), String(describing: p2), String(describing: p3))
   }
   /// %@ ago
   internal static func lpcPointsModuleBalanceExplainerBodyTimeAgo(_ p1: Any) -> String {
