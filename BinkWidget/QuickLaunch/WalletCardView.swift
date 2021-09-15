@@ -54,7 +54,7 @@ struct WalletCardView: View {
                         .padding(.trailing, Constants.textTrailingPadding)
                         .lineLimit(Constants.textLineLimit)
                         .foregroundColor(backgroundColorIsLight ? .black : .white)
-                        .font(.nunitoSemiBold(12))
+                        .font(.nunitoBold(12))
                     Spacer()
                 } else {
                     RoundedRectangle(cornerRadius: Constants.placeholderImageCornerRadius)
@@ -66,7 +66,7 @@ struct WalletCardView: View {
                         .padding(.trailing, Constants.textTrailingPadding)
                         .lineLimit(Constants.textLineLimit)
                         .foregroundColor(backgroundColorIsLight ? .black : .white)
-                        .font(.nunitoSemiBold(12))
+                        .font(.nunitoBold(12))
                     Spacer()
                 }
             }
