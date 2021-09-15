@@ -288,7 +288,7 @@ class PointsScrapingManager {
     }
 
     func isCurrentlyScraping(forMembershipCard card: CD_MembershipCard) -> Bool {
-        return webScrapingUtility?.isCurrentlyScraping(forMembershipCard: card) == true
+        return processingQueue.contains(where: { $0.card == card })
     }
     
     func debug() {
