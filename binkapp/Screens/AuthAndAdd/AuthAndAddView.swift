@@ -27,7 +27,6 @@ struct AuthAndAddView: View {
             BinkFormView(viewModel: formViewModel)
             if case .none = formViewModel.pickerType {
                 BinkButtonsStackView(buttons: [primaryButton])
-                    .offset(y: BinkButtonsView.bottomSafePadding - BinkButtonsView.bottomPadding)
             }
         })
         .onAppear(perform: {

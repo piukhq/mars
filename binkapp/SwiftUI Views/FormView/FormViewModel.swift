@@ -34,11 +34,11 @@ final class FormViewModel: ObservableObject {
 
     var titleText: String?
     var descriptionText: String?
-    let membershipPlan: CD_MembershipPlan
+    let membershipPlan: CD_MembershipPlan?
     private var privacyPolicy: NSMutableAttributedString?
     private var termsAndConditions: NSMutableAttributedString?
     
-    init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan) {
+    init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan? = nil) {
         self.datasource = datasource
         self.titleText = title
         self.descriptionText = description
@@ -46,7 +46,7 @@ final class FormViewModel: ObservableObject {
     }
     
     var infoButtonText: String? {
-        if let planName = membershipPlan.account?.planName {
+        if let planName = membershipPlan?.account?.planName {
             return "\(planName) info"
         }
         return nil
@@ -61,13 +61,14 @@ final class FormViewModel: ObservableObject {
     }
     
     func infoButtonWasTapped() {
+        guard let membershipPlan = membershipPlan else { return }
         let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: membershipPlan)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
     
     func configureAttributedStrings() {
-        for document in (membershipPlan.account?.planDocuments) ?? [] {
+        for document in (membershipPlan?.account?.planDocuments) ?? [] {
             let planDocument = document as? CD_PlanDocument
             if planDocument?.name?.contains("policy") == true {
                 if let urlString = planDocument?.url, let url = URL(string: urlString) {

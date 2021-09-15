@@ -84,6 +84,7 @@ struct BinkButtonsStackView: View {
         }
         .background(Color.clear)
         .edgesIgnoringSafeArea(.bottom)
+        .offset(y: BinkButtonsView.bottomSafePadding - BinkButtonsView.bottomPadding)
     }
 }
 

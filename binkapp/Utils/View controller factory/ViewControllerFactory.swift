@@ -32,9 +32,9 @@ enum ViewControllerFactory {
         return viewController
     }
     
-    static func makeAddPaymentCardViewController(model: PaymentCardCreateModel? = nil, journey: AddPaymentCardJourney) -> AddPaymentCardViewController {
+    static func makeAddPaymentCardViewController(model: PaymentCardCreateModel? = nil, journey: AddPaymentCardJourney) -> UIViewController {
         let viewModel = AddPaymentCardViewModel(paymentCard: model, journey: journey)
-        return AddPaymentCardViewController(viewModel: viewModel)
+        return UIHostingController(rootView: AddPaymentCardView(viewModel: viewModel))
     }
     
     static func makeAddOrJoinViewController(membershipPlan: CD_MembershipPlan, membershipCard: CD_MembershipCard? = nil) -> AddOrJoinViewController {
@@ -44,8 +44,7 @@ enum ViewControllerFactory {
     
     static func makeAuthAndAddViewController(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) -> UIViewController {
         let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, prefilledFormValues: prefilledFormValues)
-        let vc = UIHostingController(rootView: AuthAndAddView(viewModel: viewModel))
-        return vc
+        return UIHostingController(rootView: AuthAndAddView(viewModel: viewModel))
     }
     
     static func makePaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration) -> ReusableTemplateViewController {

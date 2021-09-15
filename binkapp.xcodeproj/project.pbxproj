@@ -353,6 +353,7 @@
 		CEAF2A002695EA09006B6EB5 /* AutomatedTesting_3_ZendeskFAQs.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF29FF2695EA09006B6EB5 /* AutomatedTesting_3_ZendeskFAQs.swift */; };
 		CEAF2A0226974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF2A0126974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift */; };
 		CEAF2A04269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF2A03269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift */; };
+		CEB7ADEF26F1EE2700BD138C /* AddPaymentCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADEE26F1EE2700BD138C /* AddPaymentCardView.swift */; };
 		CEC0ACBC2636AD0000845813 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBA2636AD0000845813 /* Assets.swift */; };
 		CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBB2636AD0000845813 /* Strings.swift */; };
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
@@ -983,6 +984,7 @@
 		CEAF29FF2695EA09006B6EB5 /* AutomatedTesting_3_ZendeskFAQs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_3_ZendeskFAQs.swift; sourceTree = "<group>"; };
 		CEAF2A0126974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_4_GoToSite.swift; sourceTree = "<group>"; };
 		CEAF2A03269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_5_WireframesNavigation.swift; sourceTree = "<group>"; };
+		CEB7ADEE26F1EE2700BD138C /* AddPaymentCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentCardView.swift; sourceTree = "<group>"; };
 		CEC0AC3B2636AAA400845813 /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		CEC0ACBA2636AD0000845813 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		CEC0ACBB2636AD0000845813 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -2295,6 +2297,7 @@
 			isa = PBXGroup;
 			children = (
 				EF8BF1F0233E06ED00D2E5F3 /* AddPaymentCardViewModel.swift */,
+				CEB7ADEE26F1EE2700BD138C /* AddPaymentCardView.swift */,
 				BDB01868232D949A00BFFA18 /* AddPaymentCardViewController.swift */,
 				BDB0187B232E1B5900BFFA18 /* PaymentCardCreateModel.swift */,
 				BDB0187D232E1FC800BFFA18 /* PaymentCardType.swift */,
@@ -3777,6 +3780,7 @@
 				EF94AF0F23DF55EE00AAA039 /* BinkTrackableButton.swift in Sources */,
 				CEE2091A2689E1B7004D3759 /* FileManager+Extension.swift in Sources */,
 				EFA5F7242379A7C70027AB80 /* _CD_RegistrationField.swift in Sources */,
+				CEB7ADEF26F1EE2700BD138C /* AddPaymentCardView.swift in Sources */,
 				EFA5F73C2379A7C70027AB80 /* CD_PaymentCardCard.swift in Sources */,
 				70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */,
 				EFA5F71F2379A7C70027AB80 /* _CD_MembershipCardBalance.swift in Sources */,

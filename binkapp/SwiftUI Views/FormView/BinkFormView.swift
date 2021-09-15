@@ -26,8 +26,10 @@ struct BinkFormView: View {
                 VStack(alignment: .center, spacing: 20.0) {
                     RemoteImage(image: viewModel.brandImage ?? imageLoader.image)
                         .onAppear {
-                            imageLoader.retrieveImage(for: viewModel.membershipPlan, colorScheme: colorScheme)
-                            viewModel.brandImage = imageLoader.image
+                            if let membershipPlan = viewModel.membershipPlan {
+                                imageLoader.retrieveImage(for: membershipPlan, colorScheme: colorScheme)
+                                viewModel.brandImage = imageLoader.image
+                            }
                         }
                         .frame(width: 70, height: 70, alignment: .center)
                         .aspectRatio(contentMode: .fit)

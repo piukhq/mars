@@ -40,6 +40,8 @@ internal enum L10n {
   internal static let accessFormPasswordTitle = L10n.tr("Localizable", "access_form_password_title")
   /// Password should be 8 or more characters, with at least 1 uppercase, 1 lowercase and a number
   internal static let accessFormPasswordValidation = L10n.tr("Localizable", "access_form_password_validation")
+  /// Add
+  internal static let addButtonTitle = L10n.tr("Localizable", "add_button_title")
   /// Please add your email address below.
   internal static let addEmailSubtitle = L10n.tr("Localizable", "add_email_subtitle")
   /// Add email
@@ -66,6 +68,8 @@ internal enum L10n {
   internal static let addLoyaltyCardTitle = L10n.tr("Localizable", "add_loyalty_card_title")
   /// Add my card
   internal static let addMyCardButton = L10n.tr("Localizable", "add_my_card_button")
+  /// Enter your details below to add your payment
+  internal static let addPaymentCardDescription = L10n.tr("Localizable", "add_payment_card_description")
   /// Add payment card
   internal static let addPaymentCardTitle = L10n.tr("Localizable", "add_payment_card_title")
   /// There was a problem adding your payment card. Please try again.

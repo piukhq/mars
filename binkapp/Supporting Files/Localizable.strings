@@ -467,3 +467,6 @@
 "scan_button_title" = "Scan loyalty card";
 "scan_utton_subtitle" = "Quickly add a card you already have";
 
+// MARK: - Add Payment Card View
+"add_button_title" = "Add";
+"add_payment_card_description" = "Enter your details below to add your payment";
