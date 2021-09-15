@@ -467,3 +467,8 @@
 "scan_button_title" = "Scan loyalty card";
 "scan_utton_subtitle" = "Quickly add a card you already have";
 
+// MARK: - Local Points Collection
+"lpc_points_module_balance_explainer_title" = "Balance";
+"lpc_points_module_balance_explainer_body" = "Your %@ account balance was last updated %@. Bink will try to update this account every 12 hours.\n\nYou can manually update your balance using the button below.";
+"lpc_points_module_balance_explainer_body_time_ago" = "%@ ago";
+"lpc_points_module_balance_explainer_button_title" = "Refresh";

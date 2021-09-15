@@ -208,13 +208,22 @@ class LoyaltyCardFullDetailsViewModel {
             let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan, membershipCard: membershipCard)
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
-        case .lpcBalance:
+        case .lpcBalance(_, let lastCheckedDate):
             let buttonAction: BinkButtonAction = {
                 Current.navigate.close {
                     print("Refreshing")
                 }
             }
-            let config = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "Balance", description: "Your account was updated 9m ago. We'll check again soon."), primaryButtonTitle: "Refresh", primaryButtonAction: buttonAction, secondaryButtonTitle: nil, secondaryButtonAction: nil, membershipPlan: membershipCard.membershipPlan)
+            let planName = membershipCard.membershipPlan?.account?.planName ?? ""
+            let lastCheckedString = L10n.lpcPointsModuleBalanceExplainerBodyTimeAgo(lastCheckedDate?.timeAgoString() ?? "")
+            
+            let bodyText = L10n.lpcPointsModuleBalanceExplainerBody(planName, lastCheckedString)
+            let attributedString = ReusableModalConfiguration.makeAttributedString(title: L10n.lpcPointsModuleBalanceExplainerTitle, description: bodyText)
+            let baseBodyText = NSString(string: attributedString.string)
+            let lastCheckedRange = baseBodyText.range(of: lastCheckedString)
+            attributedString.addAttribute(NSAttributedString.Key.font, value: UIFont.buttonText, range: lastCheckedRange)
+            
+            let config = ReusableModalConfiguration(title: "", text: attributedString, primaryButtonTitle: L10n.lpcPointsModuleBalanceExplainerButtonTitle, primaryButtonAction: buttonAction, secondaryButtonTitle: nil, secondaryButtonAction: nil, membershipPlan: membershipCard.membershipPlan)
             let viewController = ReusableTemplateViewController(viewModel: ReusableModalViewModel(configurationModel: config))
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
