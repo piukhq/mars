@@ -86,10 +86,7 @@ class ReusableTemplateViewController: BinkViewController, LoyaltyButtonDelegate 
     }
     
     func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
-        guard let plan = viewModel.membershipPlan else { return }
-        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: plan)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
-        Current.navigate.to(navigationRequest)
+        viewModel.toAboutMembershipPlan()
     }
 
     private func configureButtons() {

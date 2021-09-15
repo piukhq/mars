@@ -34,7 +34,7 @@ enum ModuleState: Equatable {
     case pllNoPaymentCards
     case pllError
     case lpcLoginRequired
-    case lpcBalance(formattedTitle: String?, lastChecked: String?)
+    case lpcBalance(formattedTitle: String?, lastCheckedDate: Date?)
     
     var imageName: String {
         switch self {
@@ -154,8 +154,9 @@ enum ModuleState: Equatable {
             return L10n.linkModuleToPaymentCardsMessage
         case .lpcLoginRequired:
             return L10n.pointsModuleToSeeHistory
-        case .lpcBalance(_, let lastChecked):
-            return "\(L10n.pointsModuleLastChecked) \(lastChecked ?? "")"
+        case .lpcBalance(_, let lastCheckedDate):
+            let lastCheckedString = lastCheckedDate?.timeAgoString(short: true) ?? ""
+            return "\(L10n.pointsModuleLastChecked) \(lastCheckedString)"
         }
     }
     
