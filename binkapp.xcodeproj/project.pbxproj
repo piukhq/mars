@@ -313,6 +313,11 @@
 		CE3D31DC2649660C0072BD97 /* ScanLoyaltyCardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D31DA2649660C0072BD97 /* ScanLoyaltyCardButton.swift */; };
 		CE3D31DD2649660C0072BD97 /* ScanLoyaltyCardButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */; };
 		CE4A624925714EAE003271F6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* Sentry */; };
+		CE52E15B26F0ABE400CAFBBF /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492922F99E1D000C1F4D /* NunitoSans-Regular.ttf */; };
+		CE52E15C26F0AE0400CAFBBF /* NunitoSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492E22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf */; };
+		CE52E16026F0BBBF00CAFBBF /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E15E26F0BBBF00CAFBBF /* UIColor+Extension.swift */; };
+		CE52E16326F0FE0E00CAFBBF /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E16226F0FE0E00CAFBBF /* Font+Extension.swift */; };
+		CE52E16426F0FE0E00CAFBBF /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E16226F0FE0E00CAFBBF /* Font+Extension.swift */; };
 		CE539DAE25E80C1100BDA5EF /* BinkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE539DAD25E80C1100BDA5EF /* BinkTableViewController.swift */; };
 		CE539DBF25E943DD00BDA5EF /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE539DBE25E943DD00BDA5EF /* Feature.swift */; };
 		CE539DFD25F0EBAB00BDA5EF /* BinkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE539DFC25F0EBAB00BDA5EF /* BinkLogger.swift */; };
@@ -352,6 +357,7 @@
 		CEAF2A002695EA09006B6EB5 /* AutomatedTesting_3_ZendeskFAQs.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF29FF2695EA09006B6EB5 /* AutomatedTesting_3_ZendeskFAQs.swift */; };
 		CEAF2A0226974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF2A0126974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift */; };
 		CEAF2A04269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF2A03269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift */; };
+		CEB7ADF026F1FF7C00BD138C /* NunitoSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492D22F99E1D000C1F4D /* NunitoSans-Bold.ttf */; };
 		CEC0ACBC2636AD0000845813 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBA2636AD0000845813 /* Assets.swift */; };
 		CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBB2636AD0000845813 /* Strings.swift */; };
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
@@ -934,6 +940,8 @@
 		CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanLoyaltyCardButton.xib; sourceTree = "<group>"; };
 		CE4A628025715519003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A6285257155AE003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE52E15E26F0BBBF00CAFBBF /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		CE52E16226F0FE0E00CAFBBF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 		CE539DAD25E80C1100BDA5EF /* BinkTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkTableViewController.swift; sourceTree = "<group>"; };
 		CE539DBE25E943DD00BDA5EF /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
 		CE539DFC25F0EBAB00BDA5EF /* BinkLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLogger.swift; sourceTree = "<group>"; };
@@ -1697,6 +1705,7 @@
 				3C873FD122F073B500FA3031 /* Routing */,
 				5ECE049F22CE57F5001BA964 /* Screens */,
 				EFCB2C172329366A0060F73B /* Supporting Files */,
+				CE52E16126F0FDD700CAFBBF /* SwiftUIExtensions */,
 				70A499DB267916D100F648F0 /* SwiftUI Views */,
 				3CF029F422F45B48009A0E61 /* Utils */,
 				EF3BC90B234750ED00FE52ED /* Wallet */,
@@ -2360,6 +2369,14 @@
 			path = BinkUI;
 			sourceTree = "<group>";
 		};
+		CE52E16126F0FDD700CAFBBF /* SwiftUIExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				CE52E16226F0FE0E00CAFBBF /* Font+Extension.swift */,
+			);
+			path = SwiftUIExtensions;
+			sourceTree = "<group>";
+		};
 		CE539DFB25F0EB8C00BDA5EF /* Logging */ = {
 			isa = PBXGroup;
 			children = (
@@ -2375,6 +2392,7 @@
 			children = (
 				CE6DE56C2681E82C0063A3A9 /* Assets.xcassets */,
 				CE6DE56E2681E82C0063A3A9 /* Info.plist */,
+				CE52E15E26F0BBBF00CAFBBF /* UIColor+Extension.swift */,
 				CEE209132684653A004D3759 /* WidgetContent.swift */,
 				CEE2091C268CC5C4004D3759 /* WidgetController.swift */,
 				CEE20926268E1E76004D3759 /* QuickLaunch */,
@@ -3337,6 +3355,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEB7ADF026F1FF7C00BD138C /* NunitoSans-Bold.ttf in Resources */,
+				CE52E15C26F0AE0400CAFBBF /* NunitoSans-SemiBold.ttf in Resources */,
+				CE52E15B26F0ABE400CAFBBF /* NunitoSans-Regular.ttf in Resources */,
 				CE6DE56D2681E82C0063A3A9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3681,6 +3702,7 @@
 				EF46E288235E01DD00BA2CAF /* BinkPillButton.swift in Sources */,
 				BDB01882232E93A100BFFA18 /* FormMultipleChoiceInput.swift in Sources */,
 				CEAB2D73266671C5006A0F43 /* HTMLParsingUtil.swift in Sources */,
+				CE52E16326F0FE0E00CAFBBF /* Font+Extension.swift in Sources */,
 				3C9B1A2223854B9D0078A1EC /* PreferencesViewController.swift in Sources */,
 				CE539DFD25F0EBAB00BDA5EF /* BinkLogger.swift in Sources */,
 				3CEABFCA2316AB42009B1122 /* MembershipTransaction.swift in Sources */,
@@ -3982,7 +4004,9 @@
 			files = (
 				CEE20925268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift in Sources */,
 				CEE2091B2689E1B7004D3759 /* FileManager+Extension.swift in Sources */,
+				CE52E16426F0FE0E00CAFBBF /* Font+Extension.swift in Sources */,
 				CEE209152684653A004D3759 /* WidgetContent.swift in Sources */,
+				CE52E16026F0BBBF00CAFBBF /* UIColor+Extension.swift in Sources */,
 				CEE20923268E1E0E004D3759 /* AddCardView.swift in Sources */,
 				CEAF29FD2695A051006B6EB5 /* BinkLoggerErrors.swift in Sources */,
 				CEAF29FC26959FA7006B6EB5 /* BinkLoggerEvents.swift in Sources */,

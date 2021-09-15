@@ -11,6 +11,11 @@ import SwiftUI
 struct WalletCardView: View {
     let membershipCard: MembershipCardWidget
     
+    var backgroundColorIsLight: Bool {
+        let backgroundColor = UIColor(hexString: membershipCard.backgroundColor ?? "")
+        return backgroundColor.isLight(threshold: 0.7)
+    }
+    
     enum Constants {
         static let insets = EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12)
         static let cornerRadius: CGFloat = 12
@@ -24,6 +29,9 @@ struct WalletCardView: View {
         static let shadowOpacity: Double = 0.5
         static let shadowRadius: CGFloat = 2
         static let shadowOffset: CGFloat = 1.0
+        static let textLeadingPadding: CGFloat = 10
+        static let textTrailingPadding: CGFloat = -5
+        static let textLineLimit: Int = 2
     }
     
     var body: some View {
@@ -40,11 +48,25 @@ struct WalletCardView: View {
                             .frame(width: Constants.imageSize, height: Constants.imageSize)
                             .clipShape(RoundedRectangle(cornerRadius: Constants.imageCornerRadius, style: .continuous))
                     }
+
+                    Text(membershipCard.planName ?? "")
+                        .padding(.leading, Constants.textLeadingPadding)
+                        .padding(.trailing, Constants.textTrailingPadding)
+                        .lineLimit(Constants.textLineLimit)
+                        .foregroundColor(backgroundColorIsLight ? .black : .white)
+                        .font(.nunitoBold(12))
                     Spacer()
                 } else {
                     RoundedRectangle(cornerRadius: Constants.placeholderImageCornerRadius)
                         .frame(width: Constants.imageSize, height: Constants.imageSize, alignment: .center)
                         .foregroundColor(Color(UIColor(hexString: "#FFFFFF", alpha: Constants.placeholderForegroundColorAlpha)))
+                    
+                    Text(membershipCard.planName ?? "")
+                        .padding(.leading, Constants.textLeadingPadding)
+                        .padding(.trailing, Constants.textTrailingPadding)
+                        .lineLimit(Constants.textLineLimit)
+                        .foregroundColor(backgroundColorIsLight ? .black : .white)
+                        .font(.nunitoBold(12))
                     Spacer()
                 }
             }
