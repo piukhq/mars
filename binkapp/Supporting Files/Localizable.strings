@@ -472,3 +472,5 @@
 "lpc_points_module_balance_explainer_body" = "Your %@ account balance was last updated %@. Bink will try to update this account every 12 hours.\n\nYou can manually update your balance using the button below.";
 "lpc_points_module_balance_explainer_body_time_ago" = "%@ ago";
 "lpc_points_module_balance_explainer_button_title" = "Refresh";
+"lpc_points_module_balance_explainer_alert_title" = "Balance refresh pending";
+"lpc_points_module_balance_explainer_alert_body" = "You have already requested a balance refresh for this card. The request is in a queue and your balance will be updated shortly.";
