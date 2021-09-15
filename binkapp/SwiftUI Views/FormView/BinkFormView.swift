@@ -22,7 +22,7 @@ struct BinkFormView: View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
             ScrollView {
                 VStack(alignment: .center, spacing: 20.0) {
-                    FormHeaderView(membershipPlan: viewModel.membershipPlan)
+                    FormHeaderView(membershipPlan: viewModel.membershipPlan, formType: viewModel.datasource.formtype)
                     
                     VStack(alignment: .leading, spacing: 5, content: {
                         Text(viewModel.titleText ?? "")

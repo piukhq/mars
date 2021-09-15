@@ -47,6 +47,12 @@ enum AccessForm {
     case success
 }
 
+enum FormType {
+    case authAndAdd
+    case addPaymentCard
+    case login
+}
+
 class FormDataSource: NSObject, ObservableObject {
     struct PrefilledValue: Equatable {
         var commonName: FieldCommonName?
@@ -64,6 +70,7 @@ class FormDataSource: NSObject, ObservableObject {
     
     @Published var fields: [FormField] = []
     @Published var formPurpose: FormPurpose?
+    var formtype: FormType = .login
     var visibleFields: [FormField] {
         return fields.filter { !$0.hidden }
     }
@@ -99,6 +106,7 @@ extension FormDataSource {
     convenience init(_ paymentCardModel: PaymentCardCreateModel, delegate: MultiDelegate? = nil) {
         self.init()
         self.delegate = delegate
+        formtype = .addPaymentCard
         setupFields(with: paymentCardModel)
     }
     
@@ -187,6 +195,7 @@ extension FormDataSource {
         self.delegate = delegate
         self.formPurpose = formPurpose
         self.membershipPlan = membershipPlan
+        formtype = .authAndAdd
         setupFields(with: membershipPlan, formPurpose: formPurpose, prefilledValues: prefilledValues)
     }
     
@@ -469,6 +478,7 @@ extension FormDataSource {
     convenience init(accessForm: AccessForm, prefilledValues: [PrefilledValue]? = nil) {
         self.init()
         self.delegate = delegate
+        formtype = .login
         setupFields(accessForm: accessForm, prefilledValues: prefilledValues)
     }
     

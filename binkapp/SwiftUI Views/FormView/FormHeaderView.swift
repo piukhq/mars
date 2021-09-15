@@ -11,9 +11,11 @@ import SwiftUI
 final class FormHeaderViewViewModel: ObservableObject {
     @Published var brandImage: Image?
     var membershipPlan: CD_MembershipPlan?
+    var formType: FormType
     
-    init(membershipPlan: CD_MembershipPlan?) {
+    init(membershipPlan: CD_MembershipPlan?, formType: FormType) {
         self.membershipPlan = membershipPlan
+        self.formType = formType
     }
 
     var infoButtonText: String? {
@@ -36,37 +38,43 @@ final class FormHeaderViewViewModel: ObservableObject {
 }
 
 struct FormHeaderView: View {
-//    @ObservedObject var viewModel: FormViewModel
     @ObservedObject var viewModel: FormHeaderViewViewModel
     @ObservedObject private var imageLoader = ImageLoader()
     @Environment(\.colorScheme) var colorScheme
     
-    init(membershipPlan: CD_MembershipPlan?) {
-        viewModel = FormHeaderViewViewModel(membershipPlan: membershipPlan)
+    init(membershipPlan: CD_MembershipPlan?, formType: FormType) {
+        viewModel = FormHeaderViewViewModel(membershipPlan: membershipPlan, formType: formType)
     }
 
     var body: some View {
-        RemoteImage(image: viewModel.brandImage ?? imageLoader.image)
-            .onAppear {
-                if let membershipPlan = viewModel.membershipPlan {
-                    imageLoader.retrieveImage(for: membershipPlan, colorScheme: colorScheme)
-                    viewModel.brandImage = imageLoader.image
+        switch viewModel.formType {
+        case .authAndAdd:
+            RemoteImage(image: viewModel.brandImage ?? imageLoader.image)
+                .onAppear {
+                    if let membershipPlan = viewModel.membershipPlan {
+                        imageLoader.retrieveImage(for: membershipPlan, colorScheme: colorScheme)
+                        viewModel.brandImage = imageLoader.image
+                    }
                 }
+                .frame(width: 70, height: 70, alignment: .center)
+                .aspectRatio(contentMode: .fit)
+            
+            if viewModel.shouldShowInfoButton {
+                Button(action: {
+                    viewModel.infoButtonWasTapped()
+                }, label: {
+                    Text(viewModel.infoButtonText ?? "")
+                        .font(.custom(UIFont.linkTextButtonNormal.fontName, size: UIFont.linkTextButtonNormal.pointSize))
+                    Image(uiImage: Asset.iconsChevronRight.image.withRenderingMode(.alwaysTemplate))
+                        .resizable()
+                        .frame(width: 10, height: 10, alignment: .center)
+                })
+                .foregroundColor(Color(.blueAccent))
             }
-            .frame(width: 70, height: 70, alignment: .center)
-            .aspectRatio(contentMode: .fit)
-        
-        if viewModel.shouldShowInfoButton {
-            Button(action: {
-                viewModel.infoButtonWasTapped()
-            }, label: {
-                Text(viewModel.infoButtonText ?? "")
-                    .font(.custom(UIFont.linkTextButtonNormal.fontName, size: UIFont.linkTextButtonNormal.pointSize))
-                Image(uiImage: Asset.iconsChevronRight.image.withRenderingMode(.alwaysTemplate))
-                    .resizable()
-                    .frame(width: 10, height: 10, alignment: .center)
-            })
-            .foregroundColor(Color(.blueAccent))
+        case .addPaymentCard:
+            Text("Sean")
+        case .login:
+            Text("Sean")
         }
     }
 }
