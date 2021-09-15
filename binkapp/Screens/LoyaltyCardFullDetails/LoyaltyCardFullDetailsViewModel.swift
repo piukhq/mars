@@ -224,7 +224,7 @@ class LoyaltyCardFullDetailsViewModel {
             let planName = membershipCard.membershipPlan?.account?.planName ?? ""
             let lastCheckedString = L10n.lpcPointsModuleBalanceExplainerBodyTimeAgo(lastCheckedDate?.timeAgoString() ?? "")
             
-            let bodyText = L10n.lpcPointsModuleBalanceExplainerBody(planName, lastCheckedString, Current.pointsScrapingManager.isDebugMode ? "2" : "12")
+            let bodyText = L10n.lpcPointsModuleBalanceExplainerBody(planName, lastCheckedString, Current.pointsScrapingManager.isDebugMode ? "2 minutes (DEBUG)" : "12 hours")
             let attributedString = ReusableModalConfiguration.makeAttributedString(title: L10n.lpcPointsModuleBalanceExplainerTitle, description: bodyText)
             let baseBodyText = NSString(string: attributedString.string)
             let lastCheckedRange = baseBodyText.range(of: lastCheckedString)
