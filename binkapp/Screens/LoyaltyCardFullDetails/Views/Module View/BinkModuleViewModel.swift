@@ -62,7 +62,7 @@ private extension BinkModuleViewModel {
                 
                 if let planIdString = membershipCard.membershipPlan?.id, let planId = Int(planIdString), Current.pointsScrapingManager.planIdIsWebScrapable(planId) {
                     // LPC
-                    return .lpcBalance(formattedTitle: balance.formattedBalance, lastChecked: date.timeAgoString(short: true))
+                    return .lpcBalance(formattedTitle: balance.formattedBalance, lastCheckedDate: date)
                 }
                 
                 return .pllTransactions(transactionsAvailable: transactionsAvailable, formattedTitle: balance.formattedBalance, lastChecked: date.timeAgoString(short: true))
