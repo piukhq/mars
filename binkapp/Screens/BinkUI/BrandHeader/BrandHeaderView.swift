@@ -33,7 +33,6 @@ class BrandHeaderView: CustomView {
             let attributes: [NSAttributedString.Key: Any] = [.underlineStyle: NSUnderlineStyle.single.rawValue]
             let titleAttributedString = NSMutableAttributedString(string: "About \(planName)", attributes: attributes)
             loyaltyPlanButton.setAttributedTitle(titleAttributedString, for: .normal)
-//            loyaltyPlanButton.setImage(Asset.iconsChevronRight.image.withRenderingMode(.alwaysTemplate), for: .normal)
         } else {
             loyaltyPlanButton.isHidden = true
         }
