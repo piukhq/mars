@@ -22,16 +22,19 @@ struct BinkFormView: View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
             ScrollView {
                 VStack(alignment: .center, spacing: 20.0) {
-                    FormHeaderView(membershipPlan: viewModel.membershipPlan, formType: viewModel.datasource.formtype)
+                    FormHeaderView(formType: viewModel.datasource.formtype, membershipPlan: viewModel.membershipPlan, paymentCard: viewModel.addPaymentCardViewModel?.paymentCard)
                     
                     VStack(alignment: .leading, spacing: 5, content: {
                         Text(viewModel.titleText ?? "")
                             .font(.custom(UIFont.headline.fontName, size: UIFont.headline.pointSize))
                             .fixedSize(horizontal: false, vertical: true)
+                            
                         Text(viewModel.descriptionText ?? "")
                             .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
                             .fixedSize(horizontal: false, vertical: true)
                     })
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 5)
                     
                     // Textfields
                     ForEach(viewModel.datasource.fields) { field in

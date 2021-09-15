@@ -28,10 +28,10 @@ final class FormViewModel: ObservableObject {
 
     var titleText: String?
     var descriptionText: String?
+    var addPaymentCardViewModel: AddPaymentCardViewModel?
     let membershipPlan: CD_MembershipPlan?
     private var privacyPolicy: NSMutableAttributedString?
     private var termsAndConditions: NSMutableAttributedString?
-    private var addPaymentCardViewModel: AddPaymentCardViewModel?
     private let strings = PaymentCardScannerStrings()
     
     init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan? = nil, addPaymentCardViewModel: AddPaymentCardViewModel? = nil) {

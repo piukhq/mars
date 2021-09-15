@@ -68,7 +68,7 @@ internal enum L10n {
   internal static let addLoyaltyCardTitle = L10n.tr("Localizable", "add_loyalty_card_title")
   /// Add my card
   internal static let addMyCardButton = L10n.tr("Localizable", "add_my_card_button")
-  /// Enter your details below to add your payment
+  /// Enter your details below to add your payment card into Bink.
   internal static let addPaymentCardDescription = L10n.tr("Localizable", "add_payment_card_description")
   /// Add payment card
   internal static let addPaymentCardTitle = L10n.tr("Localizable", "add_payment_card_title")

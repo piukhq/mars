@@ -17,7 +17,7 @@ struct AddPaymentCardView: View {
     
     init(viewModel: AddPaymentCardViewModel) {
         self.viewModel = viewModel
-        self.formViewModel = FormViewModel(datasource: viewModel.formDataSource, title: L10n.addPaymentCardTitle, description: L10n.addPaymentCardDescription)
+        self.formViewModel = FormViewModel(datasource: viewModel.formDataSource, title: L10n.addPaymentCardTitle, description: L10n.addPaymentCardDescription, addPaymentCardViewModel: viewModel)
     }
     
     var body: some View {

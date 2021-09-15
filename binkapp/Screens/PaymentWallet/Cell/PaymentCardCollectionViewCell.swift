@@ -8,6 +8,26 @@
 
 import UIKit
 
+import SwiftUI
+
+struct PaymentCardCellSwiftUIView: UIViewRepresentable {
+    var paymentCard: PaymentCardCreateModel?
+//    func makeCoordinator() -> Coordinator {
+//        Coordinator(checkedState: $checkedState, url: $didTapOnURL)
+//    }
+    
+    func makeUIView(context: Context) -> PaymentCardCollectionViewCell {
+        let cell: PaymentCardCollectionViewCell = .fromNib()
+        guard let paymentCard = paymentCard else { return cell }
+        cell.configureWithAddViewModel(paymentCard)
+        return cell
+    }
+    
+    func updateUIView(_ uiView: UIViewType, context: Context) {
+        
+    }
+}
+
 // TECH DEBT: This is duplicated from loyalty cards.
 protocol WalletPaymentCardCollectionViewCellDelegate: AnyObject {
     func cellSwipeBegan(cell: PaymentCardCollectionViewCell)
