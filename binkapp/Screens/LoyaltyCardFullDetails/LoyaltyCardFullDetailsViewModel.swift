@@ -210,8 +210,9 @@ class LoyaltyCardFullDetailsViewModel {
             Current.navigate.to(navigationRequest)
         case .lpcBalance(_, let lastCheckedDate):
             let buttonAction: BinkButtonAction = {
-                Current.navigate.close {
-                    print("Refreshing")
+                Current.navigate.close { [weak self] in
+                    guard let self = self else { return }
+                    Current.pointsScrapingManager.performBalanceRefresh(for: self.membershipCard)
                 }
             }
             let planName = membershipCard.membershipPlan?.account?.planName ?? ""
