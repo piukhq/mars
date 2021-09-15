@@ -118,9 +118,9 @@ struct BinkTextfieldView: View {
                     if (field.fieldCommonName == .cardNumber || field.fieldCommonName == .barcode) && !isEditing && !field.isValid() {
                         Button(action: {
                             if field.fieldType == .paymentCardNumber {
-                                viewModel.presentScanner = .payment
+                                viewModel.toPaymentCardScanner()
                             } else {
-                                viewModel.presentScanner = .loyalty
+                                viewModel.toLoyaltyScanner()
                             }
                         }) {
                             Image(Asset.scanIcon.name)

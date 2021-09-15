@@ -5,7 +5,7 @@
 //  Created by Sean Williams on 08/09/2021.
 //  Copyright © 2021 Bink. All rights reserved.
 
-
+import CardScan
 import SwiftUI
 
 final class FormViewModel: ObservableObject {
@@ -16,11 +16,6 @@ final class FormViewModel: ObservableObject {
     @Published var pickerType: PickerType = .none
     @Published var date = Date()
     @Published var pickerData = ""
-    @Published var presentScanner: BarcodeScannerType = .loyalty {
-        didSet {
-            toLoyaltyScanner()
-        }
-    }
     @Published var didTapOnURL: URL? {
         didSet {
             if let url = didTapOnURL {
@@ -36,12 +31,15 @@ final class FormViewModel: ObservableObject {
     let membershipPlan: CD_MembershipPlan?
     private var privacyPolicy: NSMutableAttributedString?
     private var termsAndConditions: NSMutableAttributedString?
+    private var addPaymentCardViewModel: AddPaymentCardViewModel?
+    private let strings = PaymentCardScannerStrings()
     
-    init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan? = nil) {
+    init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan? = nil, addPaymentCardViewModel: AddPaymentCardViewModel? = nil) {
         self.datasource = datasource
         self.titleText = title
         self.descriptionText = description
         self.membershipPlan = membershipPlan
+        self.addPaymentCardViewModel = addPaymentCardViewModel
     }
     
     var checkboxStackHeight: CGFloat {
@@ -75,12 +73,18 @@ final class FormViewModel: ObservableObject {
     }
     
     func toLoyaltyScanner() {
-        if presentScanner == .loyalty {
-            let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(forPlan: membershipPlan, delegate: self)
-            PermissionsUtility.launchLoyaltyScanner(viewController) {
-                let navigationRequest = ModalNavigationRequest(viewController: viewController)
-                Current.navigate.to(navigationRequest)
-            }
+        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(forPlan: membershipPlan, delegate: self)
+        PermissionsUtility.launchLoyaltyScanner(viewController) {
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }
+    }
+    
+    func toPaymentCardScanner() {
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: strings, delegate: self) else { return }
+        PermissionsUtility.launchPaymentScanner(viewController) {
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         }
     }
 }
@@ -98,6 +102,33 @@ extension FormViewModel: BarcodeScannerViewControllerDelegate {
     
     func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
         viewController.dismiss(animated: true)
+    }
+}
+
+extension FormViewModel: ScanDelegate {
+    func userDidCancel(_ scanViewController: ScanViewController) {
+        Current.navigate.close()
+    }
+    
+    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
+        guard let viewModel = addPaymentCardViewModel else { return }
+        if #available(iOS 14.0, *) {
+            BinkLogger.infoPrivateHash(event: AppLoggerEvent.paymentCardScanned, value: creditCard.number)
+        }
+        BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
+        let month = creditCard.expiryMonthInteger() ?? viewModel.paymentCard.month
+        let year = creditCard.expiryYearInteger() ?? viewModel.paymentCard.year
+        Current.navigate.close(animated: true) {
+            let paymentCardCreateModel = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: viewModel.paymentCard.nameOnCard, month: month, year: year)
+//            self.card.configureWithAddViewModel(paymentCardCreateModel)
+            viewModel.paymentCard = paymentCardCreateModel
+            self.datasource = FormDataSource(paymentCardCreateModel)
+//            self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
+        }
+    }
+    
+    func userDidSkip(_ scanViewController: ScanViewController) {
+        Current.navigate.close()
     }
 }
 
