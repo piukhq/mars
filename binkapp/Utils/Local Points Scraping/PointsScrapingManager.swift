@@ -184,6 +184,12 @@ class PointsScrapingManager {
     
     // MARK: - Processing queue
     
+    func performBalanceRefresh(for card: CD_MembershipCard) {
+        let queuedItem = QueuedItem(card: card, isBalanceRefresh: true)
+        addQueuedItem(queuedItem)
+        processQueuedItems()
+    }
+    
     private func addQueuedItem(_ item: QueuedItem) {
         if processingQueue.contains(where: { $0.card.id == item.card.id }) { return }
         processingQueue.append(item)
