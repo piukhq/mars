@@ -12,4 +12,8 @@ extension Font {
     static func nunitoSemiBold(_ size: CGFloat) -> Font {
         return .custom("NunitoSans-SemiBold", size: size)
     }
+    
+    static func nunitoBold(_ size: CGFloat) -> Font {
+        return .custom("NunitoSans-Bold", size: size)
+    }
 }
