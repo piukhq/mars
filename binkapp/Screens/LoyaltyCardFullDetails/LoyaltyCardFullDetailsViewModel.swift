@@ -209,10 +209,16 @@ class LoyaltyCardFullDetailsViewModel {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         case .lpcBalance(_, let lastCheckedDate):
-            let buttonAction: BinkButtonAction = {
-                Current.navigate.close { [weak self] in
-                    guard let self = self else { return }
-                    Current.pointsScrapingManager.performBalanceRefresh(for: self.membershipCard)
+            let buttonAction: BinkButtonAction = { [weak self] in
+                guard let self = self else { return }
+                if Current.pointsScrapingManager.isCurrentlyScraping(forMembershipCard: self.membershipCard) {
+                    let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.lpcPointsModuleBalanceExplainerAlertTitle, message: L10n.lpcPointsModuleBalanceExplainerAlertBody)
+                    let navigationRequest = AlertNavigationRequest(alertController: alert)
+                    Current.navigate.to(navigationRequest)
+                } else {
+                    Current.navigate.close {
+                        Current.pointsScrapingManager.performBalanceRefresh(for: self.membershipCard)
+                    }
                 }
             }
             let planName = membershipCard.membershipPlan?.account?.planName ?? ""
