@@ -34,6 +34,11 @@ final class FormViewModel: ObservableObject {
     private var privacyPolicy: NSMutableAttributedString?
     private var termsAndConditions: NSMutableAttributedString?
     private let strings = PaymentCardScannerStrings()
+    var previousTextfieldValue = "" {
+        didSet {
+            print(previousTextfieldValue)
+        }
+    }
     
     init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan? = nil, addPaymentCardViewModel: AddPaymentCardViewModel? = nil) {
         self.datasource = datasource

@@ -165,25 +165,8 @@ struct BinkTextfieldView: View {
             
             guard let newCharacter = value.last else { return }
             let rangesOfLastCharacter = value.ranges(of: String(newCharacter))
-
-            if let type = viewModel.addPaymentCardViewModel?.paymentCardType, let range = rangesOfLastCharacter.last, field.fieldType == .paymentCardNumber {
-                let newValue = String(newCharacter)
-                if !newValue.isEmpty {
-                    let values = type.lengthRange()
-                    let cardLength = values.length + values.whitespaceIndexes.count
-
-                    if value.count >= cardLength {
-                        return
-                    } else {
-//                        let filtered = newValue.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
-//                        return newValue == filtered
-                    }
-                    
-                    if values.whitespaceIndexes.contains(range.location) && !newValue.isEmpty {
-                        value.removeLast(1)
-                        value += " \(newValue)"
-                    }
-                } else {
+            if let range = rangesOfLastCharacter.last {
+                if viewModel.previousTextfieldValue.count > value.count {
                     // If newValue length is 0 then we can assume this is a delete, and if the next character after
                     // this one is a whitespace string then let's remove it.
 
@@ -198,8 +181,31 @@ struct BinkTextfieldView: View {
                             value = mutableText
                         }
                     }
+                } else {
+                    if let type = viewModel.addPaymentCardViewModel?.paymentCardType, field.fieldType == .paymentCardNumber {
+                        let newValue = String(newCharacter)
+                        if !newValue.isEmpty {
+                            let values = type.lengthRange()
+        //                    let cardLength = values.length + values.whitespaceIndexes.count
+        //
+        //                    if value.count >= cardLength {
+        //                        return
+        //                    } else {
+        ////                        let filtered = newValue.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
+        ////                        return newValue == filtered
+        //                    }
+//                            viewModel.previousTextfieldValue = value
+
+                            if values.whitespaceIndexes.contains(range.location) && !newValue.isEmpty {
+                                value.removeLast(1)
+                                value += " \(newValue)"
+//                                viewModel.previousTextfieldValue = value
+                            }
+                        }
+                    }
                 }
             }
+            viewModel.previousTextfieldValue = value
         }
     }
     
