@@ -16,6 +16,8 @@ final class FormViewModel: ObservableObject {
     @Published var pickerType: PickerType = .none
     @Published var date = Date()
     @Published var pickerData = ""
+    @Published var addPaymentCardViewModel: AddPaymentCardViewModel?
+    @Published var paymentCard: PaymentCardCreateModel?
     @Published var didTapOnURL: URL? {
         didSet {
             if let url = didTapOnURL {
@@ -28,7 +30,6 @@ final class FormViewModel: ObservableObject {
 
     var titleText: String?
     var descriptionText: String?
-    var addPaymentCardViewModel: AddPaymentCardViewModel?
     let membershipPlan: CD_MembershipPlan?
     private var privacyPolicy: NSMutableAttributedString?
     private var termsAndConditions: NSMutableAttributedString?
@@ -40,6 +41,7 @@ final class FormViewModel: ObservableObject {
         self.descriptionText = description
         self.membershipPlan = membershipPlan
         self.addPaymentCardViewModel = addPaymentCardViewModel
+        self.paymentCard = addPaymentCardViewModel?.paymentCard
     }
     
     var checkboxStackHeight: CGFloat {
@@ -86,6 +88,17 @@ final class FormViewModel: ObservableObject {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         }
+    }
+    
+    func configurePaymentCard(field: FormField, value: Binding<String>) {
+        if field.fieldType == .paymentCardNumber {
+            let type = PaymentCardType.type(from: value.wrappedValue)
+            addPaymentCardViewModel?.setPaymentCardType(type)
+            addPaymentCardViewModel?.setPaymentCardFullPan(value.wrappedValue)
+        }
+        
+        if field.fieldType == .text { addPaymentCardViewModel?.setPaymentCardName(value.wrappedValue) }
+        paymentCard = addPaymentCardViewModel?.paymentCard
     }
 }
 

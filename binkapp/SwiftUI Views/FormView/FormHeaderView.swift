@@ -10,14 +10,14 @@ import SwiftUI
 
 final class FormHeaderViewViewModel: ObservableObject {
     @Published var brandImage: Image?
+    @State var paymentCard: PaymentCardCreateModel?
     var membershipPlan: CD_MembershipPlan?
-    var paymentCard: PaymentCardCreateModel?
     var formType: FormType
     
-    init(formType: FormType, membershipPlan: CD_MembershipPlan?, paymentCard: PaymentCardCreateModel?) {
+    init(formType: FormType, membershipPlan: CD_MembershipPlan?, paymentCard: Binding<PaymentCardCreateModel?>) {
         self.formType = formType
         self.membershipPlan = membershipPlan
-        self.paymentCard = paymentCard
+        _paymentCard = State(initialValue: paymentCard.wrappedValue)
     }
 
     var infoButtonText: String? {
@@ -44,7 +44,7 @@ struct FormHeaderView: View {
     @ObservedObject private var imageLoader = ImageLoader()
     @Environment(\.colorScheme) var colorScheme
     
-    init(formType: FormType, membershipPlan: CD_MembershipPlan?, paymentCard: PaymentCardCreateModel?) {
+    init(formType: FormType, membershipPlan: CD_MembershipPlan?, paymentCard: Binding<PaymentCardCreateModel?>) {
         viewModel = FormHeaderViewViewModel(formType: formType, membershipPlan: membershipPlan, paymentCard: paymentCard)
     }
 
@@ -74,7 +74,7 @@ struct FormHeaderView: View {
                 .foregroundColor(Color(.blueAccent))
             }
         case .addPaymentCard:
-            PaymentCardCellSwiftUIView(paymentCard: viewModel.paymentCard)
+            PaymentCardCellSwiftUIView(paymentCard: $viewModel.paymentCard)
                 .frame(maxWidth: .infinity)
                 .frame(height: 120)
                 .padding(.bottom, 20)

@@ -89,11 +89,13 @@ struct BinkTextfieldView: View {
                                 isEditing = true
                             }
                         default:
-                            TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
+                            TextField(field.placeholder, text: $value.onChange({ _ in
+                                valueChangedHandler()
+                            }), onEditingChanged: { isEditing in
                                 self.isEditing = isEditing
                                 self.field.updateValue(value)
                                 self.viewModel.textfieldDidExit = isEditing
-                                
+
                                 if isEditing {
 //                                    self.datasource.formViewDidSelectField(self)
                                     viewModel.showtextFieldToolbar = true
@@ -156,6 +158,12 @@ struct BinkTextfieldView: View {
     }
     
     // MARK: - Helper Methods
+    
+    private func valueChangedHandler() {
+        if viewModel.datasource.formtype == .addPaymentCard {
+            viewModel.configurePaymentCard(field: field, value: $value)
+        }
+    }
     
     private func textfieldValidationFailed(value: Binding<String>) -> Bool {
         field.updateValue(value.wrappedValue)

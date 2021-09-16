@@ -170,16 +170,16 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
         return true
     }
     
-    func formDataSource(_ dataSource: FormDataSource, changed value: String?, for field: FormField) {
-        if field.fieldType == .paymentCardNumber {
-            let type = PaymentCardType.type(from: value)
-            viewModel.setPaymentCardType(type)
-            viewModel.setPaymentCardFullPan(value)
-        }
-        
-        if field.fieldType == .text { viewModel.setPaymentCardName(value) }
-        card.configureWithAddViewModel(viewModel.paymentCard)
-    }
+//    func formDataSource(_ dataSource: FormDataSource, changed value: String?, for field: FormField) {
+//        if field.fieldType == .paymentCardNumber {
+//            let type = PaymentCardType.type(from: value)
+//            viewModel.setPaymentCardType(type)
+//            viewModel.setPaymentCardFullPan(value)
+//        }
+//        
+//        if field.fieldType == .text { viewModel.setPaymentCardName(value) }
+//        card.configureWithAddViewModel(viewModel.paymentCard)
+//    }
     
     func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField) {
         // For mapping to the payment card expiry fields, we only care if we have BOTH
