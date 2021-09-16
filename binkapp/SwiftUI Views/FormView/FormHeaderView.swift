@@ -37,27 +37,29 @@ final class FormHeaderViewViewModel: ObservableObject {
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
+    
+    func retrieveImage(colorScheme: ColorScheme) {
+        guard let membershipPlan = membershipPlan else { return }
+        ImageService.getImage(forPathType: .membershipPlanIcon(plan: membershipPlan), traitCollection: nil, colorScheme: colorScheme) { uiImage in
+            guard let uiImage = uiImage else { return }
+            self.brandImage = Image(uiImage: uiImage)
+        }
+    }
 }
 
 struct FormHeaderView: View {
     @ObservedObject var viewModel: FormHeaderViewViewModel
-    @ObservedObject private var imageLoader = ImageLoader()
     @Environment(\.colorScheme) var colorScheme
     
     init(formType: FormType, membershipPlan: CD_MembershipPlan?, paymentCard: Binding<PaymentCardCreateModel?>) {
         viewModel = FormHeaderViewViewModel(formType: formType, membershipPlan: membershipPlan, paymentCard: paymentCard)
+        viewModel.retrieveImage(colorScheme: colorScheme)
     }
 
     var body: some View {
         switch viewModel.formType {
         case .authAndAdd:
-            RemoteImage(image: viewModel.brandImage ?? imageLoader.image)
-                .onAppear {
-                    if let membershipPlan = viewModel.membershipPlan {
-                        imageLoader.retrieveImage(for: membershipPlan, colorScheme: colorScheme)
-                        viewModel.brandImage = imageLoader.image
-                    }
-                }
+            RemoteImage(image: viewModel.brandImage)
                 .frame(width: 70, height: 70, alignment: .center)
                 .aspectRatio(contentMode: .fit)
             

@@ -90,14 +90,14 @@ final class FormViewModel: ObservableObject {
         }
     }
     
-    func configurePaymentCard(field: FormField, value: Binding<String>) {
+    func configurePaymentCard(field: FormField, value: String) {
         if field.fieldType == .paymentCardNumber {
-            let type = PaymentCardType.type(from: value.wrappedValue)
+            let type = PaymentCardType.type(from: value)
             addPaymentCardViewModel?.setPaymentCardType(type)
-            addPaymentCardViewModel?.setPaymentCardFullPan(value.wrappedValue)
+            addPaymentCardViewModel?.setPaymentCardFullPan(value)
         }
         
-        if field.fieldType == .text { addPaymentCardViewModel?.setPaymentCardName(value.wrappedValue) }
+        if field.fieldType == .text { addPaymentCardViewModel?.setPaymentCardName(value) }
         paymentCard = addPaymentCardViewModel?.paymentCard
     }
 }

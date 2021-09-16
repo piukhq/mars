@@ -6,10 +6,11 @@
 //  Copyright © 2021 Bink. All rights reserved.
 //
 
+import Combine
 import SwiftUI
 
 struct BinkTextfieldView: View {
-    @ObservedObject var viewModel: FormViewModel
+    var viewModel: FormViewModel
     @State var field: FormField
     @State private var isEditing = false
     @State var value: String
@@ -89,9 +90,7 @@ struct BinkTextfieldView: View {
                                 isEditing = true
                             }
                         default:
-                            TextField(field.placeholder, text: $value.onChange({ _ in
-                                valueChangedHandler()
-                            }), onEditingChanged: { isEditing in
+                            TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
                                 self.isEditing = isEditing
                                 self.field.updateValue(value)
                                 self.viewModel.textfieldDidExit = isEditing
@@ -106,6 +105,7 @@ struct BinkTextfieldView: View {
                             }, onCommit: {
                                 self.showErrorState = true
                             })
+                            .onReceive(Just(value)) { _ in valueChangedHandler() }
                             .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
                             .autocapitalization(field.fieldType.capitalization())
                         }
@@ -161,7 +161,48 @@ struct BinkTextfieldView: View {
     
     private func valueChangedHandler() {
         if viewModel.datasource.formtype == .addPaymentCard {
-            viewModel.configurePaymentCard(field: field, value: $value)
+            viewModel.configurePaymentCard(field: field, value: value)
+            
+//            if let type = viewModel.addPaymentCardViewModel?.paymentCardType, let newValue = val, let text = textField.text, field.fieldType == .paymentCardNumber {
+//                /*
+//                Potentially "needlessly" complex, but the below will insert whitespace to format card numbers correctly according
+//                to the pattern available in PaymentCardType.
+//                EXAMPLE: 4242424242424242 becomes 4242 4242 4242 4242
+//                */
+//
+//                if !newValue.isEmpty {
+//                    let values = type.lengthRange()
+//                    let cardLength = values.length + values.whitespaceIndexes.count
+//
+//                    if let textFieldText = textField.text, values.whitespaceIndexes.contains(range.location) && !newValue.isEmpty {
+//                        textField.text = textFieldText + " "
+//                    }
+//
+//                    if text.count >= cardLength && range.length == 0 {
+//                        return false
+//                    } else {
+//                        let filtered = newValue.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
+//                        return newValue == filtered
+//                    }
+//                } else {
+//                    // If newValue length is 0 then we can assume this is a delete, and if the next character after
+//                    // this one is a whitespace string then let's remove it.
+//
+//                    let secondToLastCharacterLocation = range.location - 1
+//                    if secondToLastCharacterLocation > 0, text.count > secondToLastCharacterLocation {
+//                        let stringRange = text.index(text.startIndex, offsetBy: secondToLastCharacterLocation)
+//                        let secondToLastCharacter = text[stringRange]
+//
+//                        if secondToLastCharacter == " " {
+//                            var mutableText = text
+//                            mutableText.remove(at: stringRange)
+//                            textField.text = mutableText
+//                        }
+//                    }
+//
+//                    return true
+//                }
+//            }
         }
     }
     
