@@ -152,7 +152,6 @@
 		7075382A26DFA72800690965 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 7075382926DFA72800690965 /* KeychainAccess */; };
 		7075382D26DFA96800690965 /* Disk in Frameworks */ = {isa = PBXBuildFile; productRef = 7075382C26DFA96800690965 /* Disk */; };
 		7075383026DFAB2B00690965 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 7075382F26DFAB2B00690965 /* JWTDecode */; };
-		7075383326DFABE400690965 /* ZXingObjC in Frameworks */ = {isa = PBXBuildFile; productRef = 7075383226DFABE400690965 /* ZXingObjC */; };
 		70840E6C2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70840E6B2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift */; };
 		70841DEB26417E2800AF5810 /* MagicLinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70841DEA26417E2800AF5810 /* MagicLinkModel.swift */; };
 		70907E0825C8683C007629BB /* LocalPointsCollection_Login_Tesco.js in Resources */ = {isa = PBXBuildFile; fileRef = 70907E0725C8683C007629BB /* LocalPointsCollection_Login_Tesco.js */; };
@@ -1208,7 +1207,6 @@
 				7075382D26DFA96800690965 /* Disk in Frameworks */,
 				7075381E26DFA26C00690965 /* Alamofire in Frameworks */,
 				7075382A26DFA72800690965 /* KeychainAccess in Frameworks */,
-				7075383326DFABE400690965 /* ZXingObjC in Frameworks */,
 				CE85A1DB26B05D95003B74CD /* Lottie in Frameworks */,
 				7075382426DFA38100690965 /* AlamofireNetworkActivityLogger in Frameworks */,
 				7075381B26DFA08300690965 /* FirebaseRemoteConfig in Frameworks */,
@@ -3084,7 +3082,6 @@
 				7075382926DFA72800690965 /* KeychainAccess */,
 				7075382C26DFA96800690965 /* Disk */,
 				7075382F26DFAB2B00690965 /* JWTDecode */,
-				7075383226DFABE400690965 /* ZXingObjC */,
 			);
 			productName = binkapp;
 			productReference = 5ECE046822CE5798001BA964 /* Bink α.app */;
@@ -3200,7 +3197,6 @@
 				7075382826DFA72800690965 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				7075382B26DFA96700690965 /* XCRemoteSwiftPackageReference "Disk" */,
 				7075382E26DFAB2B00690965 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
-				7075383126DFABE400690965 /* XCRemoteSwiftPackageReference "zxingify-objc" */,
 			);
 			productRefGroup = 5ECE046922CE5798001BA964 /* Products */;
 			projectDirPath = "";
@@ -5117,14 +5113,6 @@
 				minimumVersion = 2.6.2;
 			};
 		};
-		7075383126DFABE400690965 /* XCRemoteSwiftPackageReference "zxingify-objc" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/zxingify/zxingify-objc.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.6.7;
-			};
-		};
 		96F22DFE2507C5AC0009951B /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
@@ -5188,11 +5176,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7075382E26DFAB2B00690965 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
 			productName = JWTDecode;
-		};
-		7075383226DFABE400690965 /* ZXingObjC */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7075383126DFABE400690965 /* XCRemoteSwiftPackageReference "zxingify-objc" */;
-			productName = ZXingObjC;
 		};
 		96F22DFF2507C5AC0009951B /* Sentry */ = {
 			isa = XCSwiftPackageProductDependency;

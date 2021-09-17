@@ -189,15 +189,6 @@
           "revision": "1f62db409f2c9b0223a3f68567b4a01333aae778",
           "version": "1.17.0"
         }
-      },
-      {
-        "package": "ZXingObjC",
-        "repositoryURL": "https://github.com/zxingify/zxingify-objc.git",
-        "state": {
-          "branch": null,
-          "revision": "e75eeff2089d66fc94514b43db3678a8812a9bbe",
-          "version": "3.6.7"
-        }
       }
     ]
   },
