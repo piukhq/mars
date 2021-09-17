@@ -284,7 +284,13 @@ class WebScrapingUtility: NSObject {
         
         if let error = error {
             if Current.pointsScrapingManager.isDebugMode {
-                DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - \(error.localizedDescription)", type: .failure)
+                DispatchQueue.main.async {
+                    DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - \(error.localizedDescription)", type: .failure)
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    self.presentWebView()
+                }
             }
             SentryService.triggerException(.localPointsCollectionFailed(error, agent.merchant, balanceRefresh: isBalanceRefresh))
             delegate?.webScrapingUtility(self, didCompleteWithError: error, item: item, withAgent: agent)
