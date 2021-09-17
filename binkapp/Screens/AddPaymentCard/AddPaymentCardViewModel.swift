@@ -14,7 +14,7 @@ enum AddPaymentCardJourney {
     case pll
 }
 
-class AddPaymentCardViewModel {
+final class AddPaymentCardViewModel: NSObject {    
     private let repository = PaymentWalletRepository()
     private let journey: AddPaymentCardJourney
     private let strings = PaymentCardScannerStrings()
@@ -30,7 +30,9 @@ class AddPaymentCardViewModel {
     }
 
     var formDataSource: FormDataSource {
-        return FormDataSource(paymentCard)
+        let datasource = FormDataSource(paymentCard)
+        datasource.delegate = self
+        return datasource
     }
 
     var paymentCardType: PaymentCardType? {
@@ -126,4 +128,32 @@ class AddPaymentCardViewModel {
             Current.navigate.to(navigationRequest)
         }
     }
+}
+
+extension AddPaymentCardViewModel: FormDataSourceDelegate, CheckboxViewDelegate, FormCollectionViewCellDelegate {
+    func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool { return false }
+    
+    func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool {
+        switch field.fieldType {
+        case .expiry(months: _, years: _):
+            // Create date using components from string e.g. 11/2019
+            guard let dateStrings = field.value?.components(separatedBy: "/") else { return false }
+            guard let monthString = dateStrings[safe: 0] else { return false }
+            guard let yearString = dateStrings[safe: 1] else { return false }
+            guard let month = Int(monthString) else { return false }
+            guard let year = Int(yearString) else { return false }
+            guard let expiryDate = Date.makeDate(year: year, month: month, day: 01, hr: 12, min: 00, sec: 00) else { return false }
+
+            return expiryDate.monthHasNotExpired
+        default:
+            return false
+        }
+    }
+    
+    func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {}
+    func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {}
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {}
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField) {}
+    func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell) {}
+    func formCollectionViewCellDidReceivePaymentScannerButtonTap(_ cell: FormCollectionViewCell) {}
 }

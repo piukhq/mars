@@ -30,9 +30,23 @@ struct AddPaymentCardView: View {
     }
     
     private func handlePrimaryButtonTap() {
-//        try? viewModel.addMembershipCard(with: formViewModel.datasource.fields, checkboxes: formViewModel.datasource.checkboxes, completion: {
-//            primaryButton.isLoading = false
-//        })
+        if viewModel.shouldDisplayTermsAndConditions {
+            viewModel.toPaymentTermsAndConditions(acceptAction: {
+                Current.navigate.close {
+//                    self?.addButton.toggleLoading(isLoading: true)
+                    self.viewModel.addPaymentCard {
+                        primaryButton.isLoading = false
+                    }
+                }
+            }, declineAction: {
+                Current.navigate.close()
+            })
+        } else {
+//            addButton.toggleLoading(isLoading: true)
+            viewModel.addPaymentCard {
+                primaryButton.isLoading = false
+            }
+        }
     }
 }
 

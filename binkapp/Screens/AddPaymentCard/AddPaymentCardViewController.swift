@@ -182,30 +182,30 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
 //    }
     
     func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField) {
-        // For mapping to the payment card expiry fields, we only care if we have BOTH
-        guard options.count > 1 else { return }
-        
-        let month = options.first as? Int
-        let year = options.last as? Int
-        
-        viewModel.setPaymentCardExpiry(month: month, year: year)
+//        // For mapping to the payment card expiry fields, we only care if we have BOTH
+//        guard options.count > 1 else { return }
+//
+//        let month = options.first as? Int
+//        let year = options.last as? Int
+//
+//        viewModel.setPaymentCardExpiry(month: month, year: year)
     }
     
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool {
-        switch field.fieldType {
-        case .expiry(months: _, years: _):
-            // Create date using components from string e.g. 11/2019
-            guard let dateStrings = field.value?.components(separatedBy: "/") else { return false }
-            guard let monthString = dateStrings[safe: 0] else { return false }
-            guard let yearString = dateStrings[safe: 1] else { return false }
-            guard let month = Int(monthString) else { return false }
-            guard let year = Int(yearString) else { return false }
-            guard let expiryDate = Date.makeDate(year: year, month: month, day: 01, hr: 12, min: 00, sec: 00) else { return false }
-            
-            return expiryDate.monthHasNotExpired
-        default:
+//        switch field.fieldType {
+//        case .expiry(months: _, years: _):
+//            // Create date using components from string e.g. 11/2019
+//            guard let dateStrings = field.value?.components(separatedBy: "/") else { return false }
+//            guard let monthString = dateStrings[safe: 0] else { return false }
+//            guard let yearString = dateStrings[safe: 1] else { return false }
+//            guard let month = Int(monthString) else { return false }
+//            guard let year = Int(yearString) else { return false }
+//            guard let expiryDate = Date.makeDate(year: year, month: month, day: 01, hr: 12, min: 00, sec: 00) else { return false }
+//            
+//            return expiryDate.monthHasNotExpired
+//        default:
             return false
-        }
+//        }
     }
     
     func formDataSourceShouldPresentPaymentScanner(_ dataSource: FormDataSource) {

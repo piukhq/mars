@@ -10,7 +10,7 @@ import Combine
 import SwiftUI
 
 struct BinkTextfieldView: View {
-    var viewModel: FormViewModel
+    var formViewModel: FormViewModel
     @State var field: FormField
     @State private var isEditing = false
     @State var value: String
@@ -19,7 +19,7 @@ struct BinkTextfieldView: View {
     init(field: FormField, viewModel: FormViewModel) {
         _field = State(initialValue: field)
         _value = State(initialValue: field.forcedValue ?? "")
-        self.viewModel = viewModel
+        self.formViewModel = viewModel
         UITextField.appearance().clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
     }
     
@@ -38,18 +38,18 @@ struct BinkTextfieldView: View {
                         case .choice(let data):
                             HStack {
                                 Button {
-                                    viewModel.pickerType = .choice(data: data)
+                                    formViewModel.pickerType = .choice(data: data)
                                     isEditing = true
                                 } label: {
                                     TextField(data.first?.title ?? "", text: $value)
                                         .disabled(true)
-                                        .onReceive(viewModel.$pickerData) { pickerData in
+                                        .onReceive(formViewModel.$pickerData) { pickerData in
                                             guard isEditing else { return }
                                             self.value = pickerData.value
                                             self.field.updateValue(pickerData.value)
                                         }
                                 }
-                                .onReceive(viewModel.$pickerType) { pickerType in
+                                .onReceive(formViewModel.$pickerType) { pickerType in
                                     if case .none = pickerType {
                                         isEditing = false
                                     }
@@ -59,12 +59,12 @@ struct BinkTextfieldView: View {
                         case .date:
                             HStack {
                                 Button {
-                                    viewModel.pickerType = .date
+                                    formViewModel.pickerType = .date
                                     isEditing = true
                                 } label: {
                                     TextField(field.placeholder, text: $value)
                                         .disabled(true)
-                                        .onReceive(viewModel.$date) { date in
+                                        .onReceive(formViewModel.$date) { date in
                                             guard isEditing else { return }
                                             let dateString = date.getFormattedString(format: .dayShortMonthYearWithSlash)
                                             self.value = dateString
@@ -72,7 +72,7 @@ struct BinkTextfieldView: View {
                                             self.isEditing = false
                                         }
                                 }
-                                .onReceive(viewModel.$pickerType) { pickerType in
+                                .onReceive(formViewModel.$pickerType) { pickerType in
                                     if case .none = pickerType {
                                         isEditing = false
                                     }
@@ -82,22 +82,22 @@ struct BinkTextfieldView: View {
                         case .expiry(let months, let years):
                             HStack {
                                 Button {
-                                    viewModel.pickerType = .expiry(months: months, years: years)
+                                    formViewModel.pickerType = .expiry(months: months, years: years)
                                     isEditing = true
                                 } label: {
                                     TextField(field.placeholder, text: $value)
                                         .disabled(true)
-                                        .onReceive(viewModel.$pickerData) { pickerData in
+                                        .onReceive(formViewModel.$pickerData) { pickerData in
                                             guard isEditing else { return }
                                             self.value = pickerData.value
                                             self.field.updateValue(pickerData.value)
                                             // For mapping to the payment card expiry fields, we only care if we have BOTH
                                             guard pickerData.fieldCount > 1 else { return }
                                             let splitData = pickerData.value.components(separatedBy: "/")
-                                            self.viewModel.addPaymentCardViewModel?.setPaymentCardExpiry(month: Int(splitData.first ?? ""), year: Int(splitData.last ?? ""))
+                                            self.formViewModel.addPaymentCardViewModel?.setPaymentCardExpiry(month: Int(splitData.first ?? ""), year: Int(splitData.last ?? ""))
                                         }
                                 }
-                                .onReceive(viewModel.$pickerType) { pickerType in
+                                .onReceive(formViewModel.$pickerType) { pickerType in
                                     if case .none = pickerType {
                                         isEditing = false
                                     }
@@ -117,11 +117,11 @@ struct BinkTextfieldView: View {
                             TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
                                 self.isEditing = isEditing
                                 self.field.updateValue(value)
-                                self.viewModel.textfieldDidExit = isEditing
+                                self.formViewModel.textfieldDidExit = isEditing
                                 
                                 if isEditing {
 //                                    self.datasource.formViewDidSelectField(self)
-                                    viewModel.showtextFieldToolbar = true
+                                    formViewModel.showtextFieldToolbar = true
                                 } else {
                                     self.field.fieldWasExited()
                                 }
@@ -144,9 +144,9 @@ struct BinkTextfieldView: View {
                     if (field.fieldCommonName == .cardNumber || field.fieldCommonName == .barcode) && !isEditing && !field.isValid() {
                         Button(action: {
                             if field.fieldType == .paymentCardNumber {
-                                viewModel.toPaymentCardScanner()
+                                formViewModel.toPaymentCardScanner()
                             } else {
-                                viewModel.toLoyaltyScanner()
+                                formViewModel.toLoyaltyScanner()
                             }
                         }) {
                             Image(Asset.scanIcon.name)
@@ -184,8 +184,8 @@ struct BinkTextfieldView: View {
     // MARK: - Helper Methods
     
     private func valueChangedHandler() {
-        if viewModel.datasource.formtype == .addPaymentCard {
-            viewModel.configurePaymentCard(field: field, value: value)
+        if formViewModel.datasource.formtype == .addPaymentCard {
+            formViewModel.configurePaymentCard(field: field, value: value)
             
             if field.fieldCommonName == .cardNumber {
                 configureCardNumberText()
@@ -197,7 +197,7 @@ struct BinkTextfieldView: View {
         guard let newCharacter = value.last else { return }
         let rangesOfLastCharacter = value.ranges(of: String(newCharacter))
         if let rangeOfLastCharacter = rangesOfLastCharacter.last {
-            if viewModel.previousTextfieldValue.count > value.count {
+            if formViewModel.previousTextfieldValue.count > value.count {
                 // If current value length is less than the previous value length then we can assume this is a delete, and if the next character after
                 // this one is a whitespace string then let's remove it.
                 
@@ -213,7 +213,7 @@ struct BinkTextfieldView: View {
                     }
                 }
             } else {
-                if let type = viewModel.addPaymentCardViewModel?.paymentCardType, field.fieldType == .paymentCardNumber {
+                if let type = formViewModel.addPaymentCardViewModel?.paymentCardType, field.fieldType == .paymentCardNumber {
                     let newValue = String(newCharacter)
                     let values = type.lengthRange()
                     let cardLength = values.length + values.whitespaceIndexes.count
@@ -229,7 +229,7 @@ struct BinkTextfieldView: View {
                 }
             }
         }
-        viewModel.previousTextfieldValue = value
+        formViewModel.previousTextfieldValue = value
     }
     
     private func textfieldValidationFailed(value: Binding<String>) -> Bool {
