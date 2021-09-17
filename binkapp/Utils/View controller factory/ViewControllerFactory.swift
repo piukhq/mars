@@ -167,10 +167,6 @@ enum ViewControllerFactory {
         return LoginSuccessViewController()
     }
 
-//    static func makeRegisterViewController() -> RegisterViewController {
-//        return RegisterViewController()
-//    }
-
     static func makeLoginViewController() -> LoginViewController {
         return LoginViewController()
     }
@@ -178,6 +174,42 @@ enum ViewControllerFactory {
     static func makeForgottenPasswordViewController() -> ForgotPasswordViewController {
         let viewModel = ForgotPasswordViewModel(repository: ForgotPasswordRepository())
         return ForgotPasswordViewController(viewModel: viewModel)
+    }
+    
+    // MARK: - Local Points Collection
+    
+    static func makeLocalPointsCollectionBalanceRefreshViewController(membershipCard: CD_MembershipCard, lastCheckedDate: Date?) -> ReusableTemplateViewController {
+        let buttonAction: BinkButtonAction = {
+            Current.navigate.close {
+                Current.pointsScrapingManager.performBalanceRefresh(for: membershipCard)
+            }
+        }
+        let planName = membershipCard.membershipPlan?.account?.planName ?? ""
+        let lastCheckedString = L10n.lpcPointsModuleBalanceExplainerBodyTimeAgo(lastCheckedDate?.timeAgoString() ?? "")
+        let refreshIntervalString = Current.pointsScrapingManager.isDebugMode ? WalletRefreshManager.RefreshInterval.twoMinutes.readableValue : WalletRefreshManager.RefreshInterval.twelveHours.readableValue
+        
+        var bodyText = ""
+        var showRefreshButton = false
+        switch WalletRefreshManager.cardCanBeForceRefreshed(membershipCard) {
+        case true:
+            if Current.pointsScrapingManager.isCurrentlyScraping(forMembershipCard: membershipCard) {
+                bodyText = L10n.lpcPointsModuleBalanceExplainerBodyRefreshRequested(planName, lastCheckedString, refreshIntervalString)
+            } else {
+                bodyText = L10n.lpcPointsModuleBalanceExplainerBodyRefreshable(planName, lastCheckedString, refreshIntervalString)
+                showRefreshButton = true
+            }
+        case false:
+            bodyText = L10n.lpcPointsModuleBalanceExplainerBody(planName, lastCheckedString, refreshIntervalString)
+        }
+        let attributedString = ReusableModalConfiguration.makeAttributedString(title: L10n.lpcPointsModuleBalanceExplainerTitle, description: bodyText)
+        let baseBodyText = NSString(string: attributedString.string)
+        let lastCheckedRange = baseBodyText.range(of: lastCheckedString)
+        attributedString.addAttribute(NSAttributedString.Key.font, value: UIFont.buttonText, range: lastCheckedRange)
+        
+        let config = ReusableModalConfiguration(title: "", text: attributedString, primaryButtonTitle: showRefreshButton ?  L10n.lpcPointsModuleBalanceExplainerButtonTitle : nil, primaryButtonAction: showRefreshButton ? buttonAction : nil, secondaryButtonTitle: nil, secondaryButtonAction: nil, membershipPlan: membershipCard.membershipPlan)
+        
+        let viewModel = ReusableModalViewModel(configurationModel: config)
+        return ReusableTemplateViewController(viewModel: viewModel)
     }
     
     // MARK: - Reusable
