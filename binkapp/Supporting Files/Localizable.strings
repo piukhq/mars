@@ -469,8 +469,8 @@
 
 // MARK: - Local Points Collection
 "lpc_points_module_balance_explainer_title" = "Balance";
-"lpc_points_module_balance_explainer_body" = "Your %@ account balance was last updated %@. Bink will try to update this account every %@.\n\nYou can manually update your balance using the button below.";
+"lpc_points_module_balance_explainer_body" = "Your %@ account balance was last updated %@. Bink will try to update this account every %@.";
+"lpc_points_module_balance_explainer_body_refreshable" = "Your %@ account balance was last updated %@. Bink will try to update this account every %@.\n\nYou can manually update your balance using the button below.";
+"lpc_points_module_balance_explainer_body_refresh_requested" = "Your %@ account balance was last updated %@. Bink will try to update this account every %@.\n\nA balance refresh for this card is currently in progress and will update shortly.";
 "lpc_points_module_balance_explainer_body_time_ago" = "%@ ago";
 "lpc_points_module_balance_explainer_button_title" = "Refresh";
-"lpc_points_module_balance_explainer_alert_title" = "Balance refresh pending";
-"lpc_points_module_balance_explainer_alert_body" = "You have already requested a balance refresh for this card. The request is in a queue and your balance will be updated shortly.";
