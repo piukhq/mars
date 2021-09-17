@@ -15,7 +15,7 @@ struct BinkTextfieldView: View {
     @State private var isEditing = false
     @State var value: String
     @State var showErrorState = false
-
+    
     init(field: FormField, viewModel: FormViewModel) {
         _field = State(initialValue: field)
         _value = State(initialValue: field.forcedValue ?? "")
@@ -47,7 +47,7 @@ struct BinkTextfieldView: View {
                                             guard isEditing else { return }
                                             self.value = pickerData
                                             self.field.updateValue(pickerData)
-//                                            self.isEditing = false
+                                            //                                            self.isEditing = false
                                         }
                                 }
                                 .onReceive(viewModel.$pickerType) { pickerType in
@@ -94,9 +94,9 @@ struct BinkTextfieldView: View {
                                 self.isEditing = isEditing
                                 self.field.updateValue(value)
                                 self.viewModel.textfieldDidExit = isEditing
-
+                                
                                 if isEditing {
-//                                    self.datasource.formViewDidSelectField(self)
+                                    //                                    self.datasource.formViewDidSelectField(self)
                                     viewModel.showtextFieldToolbar = true
                                 } else {
                                     self.field.fieldWasExited()
@@ -163,48 +163,49 @@ struct BinkTextfieldView: View {
         if viewModel.datasource.formtype == .addPaymentCard {
             viewModel.configurePaymentCard(field: field, value: value)
             
-            guard let newCharacter = value.last else { return }
-            let rangesOfLastCharacter = value.ranges(of: String(newCharacter))
-            if let range = rangesOfLastCharacter.last {
-                if viewModel.previousTextfieldValue.count > value.count {
-                    // If current value length is less than the previous value length then we can assume this is a delete, and if the next character after
-                    // this one is a whitespace string then let's remove it.
-
-                    let secondToLastCharacterLocation = range.location - 1
-                    if secondToLastCharacterLocation > 0, value.count > secondToLastCharacterLocation {
-                        let stringRange = value.index(value.startIndex, offsetBy: secondToLastCharacterLocation)
-                        let secondToLastCharacter = value[stringRange]
-
-                        if secondToLastCharacter == " " {
-                            var mutableText = value
-                            mutableText.remove(at: stringRange)
-                            value = mutableText
-                        }
+            if field.fieldCommonName == .cardNumber {
+                configureCardNumberText()
+            }
+        }
+    }
+    
+    private func configureCardNumberText() {
+        guard let newCharacter = value.last else { return }
+        let rangesOfLastCharacter = value.ranges(of: String(newCharacter))
+        if let range = rangesOfLastCharacter.last {
+            if viewModel.previousTextfieldValue.count > value.count {
+                // If current value length is less than the previous value length then we can assume this is a delete, and if the next character after
+                // this one is a whitespace string then let's remove it.
+                
+                let secondToLastCharacterLocation = range.location - 1
+                if secondToLastCharacterLocation > 0, value.count > secondToLastCharacterLocation {
+                    let stringRange = value.index(value.startIndex, offsetBy: secondToLastCharacterLocation)
+                    let secondToLastCharacter = value[stringRange]
+                    
+                    if secondToLastCharacter == " " {
+                        var mutableText = value
+                        mutableText.remove(at: stringRange)
+                        value = mutableText
                     }
-                } else {
-                    if let type = viewModel.addPaymentCardViewModel?.paymentCardType, field.fieldType == .paymentCardNumber {
-                        let newValue = String(newCharacter)
-                        if !newValue.isEmpty {
-                            let values = type.lengthRange()
-                            let cardLength = values.length + values.whitespaceIndexes.count
-        
-                            if value.count >= cardLength {
-                                value = String(value.prefix(cardLength))
-                            } else {
-        //                        let filtered = newValue.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
-        //                        return newValue == filtered
-                            }
-
-                            if values.whitespaceIndexes.contains(range.location) && !newValue.isEmpty {
-                                value.removeLast(1)
-                                value += " \(newValue)"
-                            }
-                        }
+                }
+            } else {
+                if let type = viewModel.addPaymentCardViewModel?.paymentCardType, field.fieldType == .paymentCardNumber {
+                    let newValue = String(newCharacter)
+                    let values = type.lengthRange()
+                    let cardLength = values.length + values.whitespaceIndexes.count
+                    
+                    if value.count >= cardLength {
+                        value = String(value.prefix(cardLength))
+                    }
+                    
+                    if values.whitespaceIndexes.contains(range.location) && !newValue.isEmpty {
+                        value.removeLast(1)
+                        value += " \(newValue)"
                     }
                 }
             }
-            viewModel.previousTextfieldValue = value
         }
+        viewModel.previousTextfieldValue = value
     }
     
     private func textfieldValidationFailed(value: Binding<String>) -> Bool {
