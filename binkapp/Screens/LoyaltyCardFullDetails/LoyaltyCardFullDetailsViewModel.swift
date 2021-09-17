@@ -206,26 +206,33 @@ class LoyaltyCardFullDetailsViewModel {
         case .lpcBalance(_, let lastCheckedDate):
             let buttonAction: BinkButtonAction = { [weak self] in
                 guard let self = self else { return }
-                if Current.pointsScrapingManager.isCurrentlyScraping(forMembershipCard: self.membershipCard) {
-                    let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.lpcPointsModuleBalanceExplainerAlertTitle, message: L10n.lpcPointsModuleBalanceExplainerAlertBody)
-                    let navigationRequest = AlertNavigationRequest(alertController: alert)
-                    Current.navigate.to(navigationRequest)
-                } else {
-                    Current.navigate.close {
-                        Current.pointsScrapingManager.performBalanceRefresh(for: self.membershipCard)
-                    }
+                Current.navigate.close {
+                    Current.pointsScrapingManager.performBalanceRefresh(for: self.membershipCard)
                 }
             }
             let planName = membershipCard.membershipPlan?.account?.planName ?? ""
             let lastCheckedString = L10n.lpcPointsModuleBalanceExplainerBodyTimeAgo(lastCheckedDate?.timeAgoString() ?? "")
+            let refreshIntervalString = Current.pointsScrapingManager.isDebugMode ? WalletRefreshManager.RefreshInterval.twoMinutes.readableValue : WalletRefreshManager.RefreshInterval.twelveHours.readableValue
             
-            let bodyText = L10n.lpcPointsModuleBalanceExplainerBody(planName, lastCheckedString, Current.pointsScrapingManager.isDebugMode ? "2 minutes (DEBUG)" : "12 hours")
+            var bodyText = ""
+            var showRefreshButton = false
+            switch WalletRefreshManager.cardCanBeForceRefreshed(membershipCard) {
+            case true:
+                if Current.pointsScrapingManager.isCurrentlyScraping(forMembershipCard: membershipCard) {
+                    bodyText = L10n.lpcPointsModuleBalanceExplainerBodyRefreshRequested(planName, lastCheckedString, refreshIntervalString)
+                } else {
+                    bodyText = L10n.lpcPointsModuleBalanceExplainerBodyRefreshable(planName, lastCheckedString, refreshIntervalString)
+                    showRefreshButton = true
+                }
+            case false:
+                bodyText = L10n.lpcPointsModuleBalanceExplainerBody(planName, lastCheckedString, refreshIntervalString)
+            }
             let attributedString = ReusableModalConfiguration.makeAttributedString(title: L10n.lpcPointsModuleBalanceExplainerTitle, description: bodyText)
             let baseBodyText = NSString(string: attributedString.string)
             let lastCheckedRange = baseBodyText.range(of: lastCheckedString)
             attributedString.addAttribute(NSAttributedString.Key.font, value: UIFont.buttonText, range: lastCheckedRange)
             
-            let config = ReusableModalConfiguration(title: "", text: attributedString, primaryButtonTitle: L10n.lpcPointsModuleBalanceExplainerButtonTitle, primaryButtonAction: buttonAction, secondaryButtonTitle: nil, secondaryButtonAction: nil, membershipPlan: membershipCard.membershipPlan)
+            let config = ReusableModalConfiguration(title: "", text: attributedString, primaryButtonTitle: showRefreshButton ?  L10n.lpcPointsModuleBalanceExplainerButtonTitle : nil, primaryButtonAction: showRefreshButton ? buttonAction : nil, secondaryButtonTitle: nil, secondaryButtonAction: nil, membershipPlan: membershipCard.membershipPlan)
             let viewController = ReusableTemplateViewController(viewModel: ReusableModalViewModel(configurationModel: config))
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
