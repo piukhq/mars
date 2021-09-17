@@ -45,9 +45,8 @@ struct BinkTextfieldView: View {
                                         .disabled(true)
                                         .onReceive(viewModel.$pickerData) { pickerData in
                                             guard isEditing else { return }
-                                            self.value = pickerData
-                                            self.field.updateValue(pickerData)
-                                            //                                            self.isEditing = false
+                                            self.value = pickerData.value
+                                            self.field.updateValue(pickerData.value)
                                         }
                                 }
                                 .onReceive(viewModel.$pickerType) { pickerType in
@@ -80,6 +79,31 @@ struct BinkTextfieldView: View {
                                 }
                                 Spacer()
                             }
+                        case .expiry(let months, let years):
+                            HStack {
+                                Button {
+                                    viewModel.pickerType = .expiry(months: months, years: years)
+                                    isEditing = true
+                                } label: {
+                                    TextField(field.placeholder, text: $value)
+                                        .disabled(true)
+                                        .onReceive(viewModel.$pickerData) { pickerData in
+                                            guard isEditing else { return }
+                                            self.value = pickerData.value
+                                            self.field.updateValue(pickerData.value)
+                                            // For mapping to the payment card expiry fields, we only care if we have BOTH
+                                            guard pickerData.fieldCount > 1 else { return }
+                                            let splitData = pickerData.value.components(separatedBy: "/")
+                                            self.viewModel.addPaymentCardViewModel?.setPaymentCardExpiry(month: Int(splitData.first ?? ""), year: Int(splitData.last ?? ""))
+                                        }
+                                }
+                                .onReceive(viewModel.$pickerType) { pickerType in
+                                    if case .none = pickerType {
+                                        isEditing = false
+                                    }
+                                }
+                                Spacer()
+                            }
                         case .sensitive, .confirmPassword:
                             SecureField(field.placeholder, text: $value) {
                                 self.field.updateValue(value)
@@ -96,7 +120,7 @@ struct BinkTextfieldView: View {
                                 self.viewModel.textfieldDidExit = isEditing
                                 
                                 if isEditing {
-                                    //                                    self.datasource.formViewDidSelectField(self)
+//                                    self.datasource.formViewDidSelectField(self)
                                     viewModel.showtextFieldToolbar = true
                                 } else {
                                     self.field.fieldWasExited()

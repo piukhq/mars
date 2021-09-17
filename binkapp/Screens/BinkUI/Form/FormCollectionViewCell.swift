@@ -324,7 +324,9 @@ extension FormCollectionViewCell: FormMultipleChoiceInputDelegate {
         pickerSelectedChoice = newValue
         formField?.updateValue(newValue)
         textField.text = newValue
-        if let options = backingData { formField?.pickerDidSelect(options) }
+        if let options = backingData {
+            formField?.pickerDidSelect(options)
+        }
     }
 }
 

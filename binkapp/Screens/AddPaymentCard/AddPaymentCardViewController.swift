@@ -126,46 +126,46 @@ extension AddPaymentCardViewController: URLSessionDelegate {
 
 extension AddPaymentCardViewController: FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
-        if let type = viewModel.paymentCardType, let newValue = newValue, let text = textField.text, field.fieldType == .paymentCardNumber {
-            /*
-            Potentially "needlessly" complex, but the below will insert whitespace to format card numbers correctly according
-            to the pattern available in PaymentCardType.
-            EXAMPLE: 4242424242424242 becomes 4242 4242 4242 4242
-            */
-            
-            if !newValue.isEmpty {
-                let values = type.lengthRange()
-                let cardLength = values.length + values.whitespaceIndexes.count
-                
-                if let textFieldText = textField.text, values.whitespaceIndexes.contains(range.location) && !newValue.isEmpty {
-                    textField.text = textFieldText + " "
-                }
-                
-                if text.count >= cardLength && range.length == 0 {
-                    return false
-                } else {
-                    let filtered = newValue.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
-                    return newValue == filtered
-                }
-            } else {
-                // If newValue length is 0 then we can assume this is a delete, and if the next character after
-                // this one is a whitespace string then let's remove it.
-                
-                let secondToLastCharacterLocation = range.location - 1
-                if secondToLastCharacterLocation > 0, text.count > secondToLastCharacterLocation {
-                    let stringRange = text.index(text.startIndex, offsetBy: secondToLastCharacterLocation)
-                    let secondToLastCharacter = text[stringRange]
-                    
-                    if secondToLastCharacter == " " {
-                        var mutableText = text
-                        mutableText.remove(at: stringRange)
-                        textField.text = mutableText
-                    }
-                }
-                
-                return true
-            }
-        }
+//        if let type = viewModel.paymentCardType, let newValue = newValue, let text = textField.text, field.fieldType == .paymentCardNumber {
+//            /*
+//            Potentially "needlessly" complex, but the below will insert whitespace to format card numbers correctly according
+//            to the pattern available in PaymentCardType.
+//            EXAMPLE: 4242424242424242 becomes 4242 4242 4242 4242
+//            */
+//
+//            if !newValue.isEmpty {
+//                let values = type.lengthRange()
+//                let cardLength = values.length + values.whitespaceIndexes.count
+//
+//                if let textFieldText = textField.text, values.whitespaceIndexes.contains(range.location) && !newValue.isEmpty {
+//                    textField.text = textFieldText + " "
+//                }
+//
+//                if text.count >= cardLength && range.length == 0 {
+//                    return false
+//                } else {
+//                    let filtered = newValue.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
+//                    return newValue == filtered
+//                }
+//            } else {
+//                // If newValue length is 0 then we can assume this is a delete, and if the next character after
+//                // this one is a whitespace string then let's remove it.
+//
+//                let secondToLastCharacterLocation = range.location - 1
+//                if secondToLastCharacterLocation > 0, text.count > secondToLastCharacterLocation {
+//                    let stringRange = text.index(text.startIndex, offsetBy: secondToLastCharacterLocation)
+//                    let secondToLastCharacter = text[stringRange]
+//
+//                    if secondToLastCharacter == " " {
+//                        var mutableText = text
+//                        mutableText.remove(at: stringRange)
+//                        textField.text = mutableText
+//                    }
+//                }
+//
+//                return true
+//            }
+//        }
         
         return true
     }

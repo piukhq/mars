@@ -15,7 +15,7 @@ final class FormViewModel: ObservableObject {
     @Published var checkedState = false
     @Published var pickerType: PickerType = .none
     @Published var date = Date()
-    @Published var pickerData = ""
+    @Published var pickerData = (value: "", fieldCount: 0)
     @Published var addPaymentCardViewModel: AddPaymentCardViewModel?
     @Published var paymentCard: PaymentCardCreateModel?
     @Published var didTapOnURL: URL? {
@@ -34,11 +34,7 @@ final class FormViewModel: ObservableObject {
     private var privacyPolicy: NSMutableAttributedString?
     private var termsAndConditions: NSMutableAttributedString?
     private let strings = PaymentCardScannerStrings()
-    var previousTextfieldValue = "" {
-        didSet {
-            print(previousTextfieldValue)
-        }
-    }
+    var previousTextfieldValue = ""
     
     init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan? = nil, addPaymentCardViewModel: AddPaymentCardViewModel? = nil) {
         self.datasource = datasource
@@ -105,6 +101,21 @@ final class FormViewModel: ObservableObject {
         if field.fieldType == .text { addPaymentCardViewModel?.setPaymentCardName(value) }
         paymentCard = addPaymentCardViewModel?.paymentCard
     }
+    
+    func formatPickerData(pickerOne: String, pickerTwo: String ) {
+        switch pickerType {
+        case .expiry:
+            if pickerTwo.isEmpty {
+                pickerData = (pickerOne, 1)
+            } else if pickerOne.isEmpty {
+                pickerData = (pickerTwo, 1)
+            } else {
+                pickerData = (pickerOne + "/" + pickerTwo, 2)
+            }
+        default:
+            pickerData = (pickerOne, 1)
+        }
+    }
 }
 
 extension FormViewModel: BarcodeScannerViewControllerDelegate {
@@ -158,6 +169,6 @@ enum BarcodeScannerType {
 enum PickerType {
     case date
     case choice(data: [FormPickerData])
-    case expiry
+    case expiry(months: [FormPickerData], years: [FormPickerData])
     case none
 }

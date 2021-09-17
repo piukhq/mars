@@ -16,7 +16,8 @@ struct BinkFormView: View {
     
     @ObservedObject var viewModel: FormViewModel
     @ObservedObject private var themeManager = Current.themeManager
-    @State var pickerSelection = ""
+    @State var pickerOneSelection = ""
+    @State var pickerTwoSelection = ""
 
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
@@ -97,8 +98,8 @@ struct BinkFormView: View {
                     InputToolbarView(buttonAction: { viewModel.pickerType = .none })
 
                     let formData = data.map { $0.title }
-                    Picker("Title", selection: $pickerSelection.onChange({ _ in
-                        viewModel.pickerData = pickerSelection
+                    Picker("Title", selection: $pickerOneSelection.onChange({ _ in
+                        viewModel.pickerData = (pickerOneSelection, 1)
                     })) {
                         ForEach(formData, id: \.self) {
                             Text($0)
@@ -107,8 +108,40 @@ struct BinkFormView: View {
                     .background(Color(themeManager.color(for: .viewBackground)))
                 }
                 .offset(y: UIApplication.bottomSafeArea)
-            case .expiry:
-                Text("")
+            case .expiry(let months, let years):
+                GeometryReader { geometry in
+                    VStack(spacing: 0) {
+                        Spacer()
+                        InputToolbarView(buttonAction: { viewModel.pickerType = .none })
+                        
+                        HStack(spacing: 0) {
+                            let monthsMapped = months.map { $0.title }
+                            Picker("Expiry date", selection: $pickerOneSelection.onChange({ _ in
+                                viewModel.formatPickerData(pickerOne: pickerOneSelection, pickerTwo: pickerTwoSelection)
+                            })) {
+                                ForEach(monthsMapped, id: \.self) {
+                                    Text($0)
+                                }
+                            }
+                            .background(Color(themeManager.color(for: .viewBackground)))
+                            .frame(width: geometry.size.width / 2)
+                            .clipped()
+                            
+                            let yearsMapped = years.map { $0.title }
+                            Picker("Expiry date", selection: $pickerTwoSelection.onChange({ _ in
+                                viewModel.formatPickerData(pickerOne: pickerOneSelection, pickerTwo: pickerTwoSelection)
+                            })) {
+                                ForEach(yearsMapped, id: \.self) {
+                                    Text($0)
+                                }
+                            }
+                            .background(Color(themeManager.color(for: .viewBackground)))
+                            .frame(width: geometry.size.width / 2)
+                            .clipped()
+                        }
+                    }
+//                    .frame(width: geometry.size.width)
+                }
             case .none:
                 Text("")
             }
