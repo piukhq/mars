@@ -172,14 +172,14 @@ struct BinkTextfieldView: View {
     private func configureCardNumberText() {
         guard let newCharacter = value.last else { return }
         let rangesOfLastCharacter = value.ranges(of: String(newCharacter))
-        if let range = rangesOfLastCharacter.last {
+        if let rangeOfLastCharacter = rangesOfLastCharacter.last {
             if viewModel.previousTextfieldValue.count > value.count {
                 // If current value length is less than the previous value length then we can assume this is a delete, and if the next character after
                 // this one is a whitespace string then let's remove it.
                 
-                let secondToLastCharacterLocation = range.location - 1
-                if secondToLastCharacterLocation > 0, value.count > secondToLastCharacterLocation {
-                    let stringRange = value.index(value.startIndex, offsetBy: secondToLastCharacterLocation)
+                let lastCharacterLocation = rangeOfLastCharacter.location
+                if lastCharacterLocation > 0, value.count > lastCharacterLocation {
+                    let stringRange = value.index(value.startIndex, offsetBy: lastCharacterLocation)
                     let secondToLastCharacter = value[stringRange]
                     
                     if secondToLastCharacter == " " {
@@ -198,7 +198,7 @@ struct BinkTextfieldView: View {
                         value = String(value.prefix(cardLength))
                     }
                     
-                    if values.whitespaceIndexes.contains(range.location) && !newValue.isEmpty {
+                    if values.whitespaceIndexes.contains(rangeOfLastCharacter.location) && !newValue.isEmpty {
                         value.removeLast(1)
                         value += " \(newValue)"
                     }
