@@ -167,7 +167,7 @@ struct BinkTextfieldView: View {
             let rangesOfLastCharacter = value.ranges(of: String(newCharacter))
             if let range = rangesOfLastCharacter.last {
                 if viewModel.previousTextfieldValue.count > value.count {
-                    // If newValue length is 0 then we can assume this is a delete, and if the next character after
+                    // If current value length is less than the previous value length then we can assume this is a delete, and if the next character after
                     // this one is a whitespace string then let's remove it.
 
                     let secondToLastCharacterLocation = range.location - 1
@@ -186,20 +186,18 @@ struct BinkTextfieldView: View {
                         let newValue = String(newCharacter)
                         if !newValue.isEmpty {
                             let values = type.lengthRange()
-        //                    let cardLength = values.length + values.whitespaceIndexes.count
-        //
-        //                    if value.count >= cardLength {
-        //                        return
-        //                    } else {
-        ////                        let filtered = newValue.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
-        ////                        return newValue == filtered
-        //                    }
-//                            viewModel.previousTextfieldValue = value
+                            let cardLength = values.length + values.whitespaceIndexes.count
+        
+                            if value.count >= cardLength {
+                                value = String(value.prefix(cardLength))
+                            } else {
+        //                        let filtered = newValue.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
+        //                        return newValue == filtered
+                            }
 
                             if values.whitespaceIndexes.contains(range.location) && !newValue.isEmpty {
                                 value.removeLast(1)
                                 value += " \(newValue)"
-//                                viewModel.previousTextfieldValue = value
                             }
                         }
                     }
