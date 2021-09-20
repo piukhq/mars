@@ -99,7 +99,7 @@ struct BinkFormView: View {
 
                     let formData = data.map { $0.title }
                     Picker("Title", selection: $pickerOneSelection.onChange({ _ in
-                        viewModel.pickerData = (pickerOneSelection, 1)
+                        viewModel.formatPickerData(pickerOne: pickerOneSelection, pickerTwo: pickerTwoSelection)
                     })) {
                         ForEach(formData, id: \.self) {
                             Text($0)
@@ -140,7 +140,6 @@ struct BinkFormView: View {
                             .clipped()
                         }
                     }
-//                    .frame(width: geometry.size.width)
                 }
             case .none:
                 Text("")

@@ -74,6 +74,7 @@ final class FormViewModel: ObservableObject {
         default:
             pickerData = (pickerOne, 1)
         }
+        datasource.checkFormValidity()
     }
 }
 
