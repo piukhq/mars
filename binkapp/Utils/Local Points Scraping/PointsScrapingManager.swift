@@ -370,7 +370,6 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                     self.transitionToFailed(item: item)
                 }
 
-                self.pointsScrapingDidComplete(for: item)
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionSuccess(membershipCard: membershipCard))
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
             }
@@ -416,12 +415,6 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                     self.transitionToFailed(item: item)
                 }
                 
-                self.pointsScrapingDidComplete(for: item)
-                
-                if self.isDebugMode {
-                    self.webScrapingUtility?.debug()
-                }
-                
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
             }
         }
@@ -462,9 +455,11 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
             BinkLogger.infoPrivateHash(event: WalletLoggerEvent.pointsScrapingSuccess, value: item.card.id)
         }
         transitionToAuthorized(pointsValue: value, item: item, agent: agent)
+        pointsScrapingDidComplete(for: item)
     }
     
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, item: QueuedItem, withAgent agent: WebScrapable) {
+        pointsScrapingDidComplete(for: item)
         if item.isBalanceRefresh, WalletRefreshManager.cardCanRetainStaleBalance(item.card) { return }
         
         SentryService.triggerException(.localPointsCollectionFailed(error, agent.merchant, balanceRefresh: item.isBalanceRefresh))
