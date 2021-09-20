@@ -70,6 +70,8 @@ class FormDataSource: NSObject, ObservableObject {
     
     @Published var fields: [FormField] = []
     @Published var formPurpose: FormPurpose?
+    @Published var fullFormIsValid = false
+
     var formtype: FormType = .login
     var visibleFields: [FormField] {
         return fields.filter { !$0.hidden }
@@ -79,7 +81,7 @@ class FormDataSource: NSObject, ObservableObject {
     private var selectedCheckboxIndex = 0
     weak var delegate: MultiDelegate?
     
-    var fullFormIsValid: Bool {
+    func checkFormValidity() {
         let formFieldsValid = fields.allSatisfy({ $0.isValid() })
         var checkboxesValid = true
         checkboxes.forEach { checkbox in
@@ -90,7 +92,7 @@ class FormDataSource: NSObject, ObservableObject {
             }
         }
         
-        return formFieldsValid && checkboxesValid
+        fullFormIsValid = formFieldsValid && checkboxesValid
     }
     
     func currentFieldValues() -> [String: String] {

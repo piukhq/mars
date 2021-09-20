@@ -55,31 +55,7 @@ struct BinkFormView: View {
                         }
                     }
                     
-                    switch viewModel.datasource.formtype {
-                    case .authAndAdd:
-                        // Checkboxes
-                        VStack(spacing: -10) {
-                            ForEach(viewModel.datasource.checkboxes) { checkbox in
-                                CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $viewModel.checkedState, didTapOnURL: $viewModel.didTapOnURL)
-                                    .padding(.horizontal, 10)
-                            }
-                        }
-                        .frame(height: viewModel.checkboxStackHeight)
-                    case .addPaymentCard:
-                        Button {
-                            
-                        } label: {
-                            HStack {
-                                Text(L10n.securityAndPrivacyTitle)
-                                    .underline()
-                                    .foregroundColor(Color(.blueAccent))
-    //                                .font(<#T##font: Font?##Font?#>)
-                                Spacer()
-                            }
-                        }
-                    case .login:
-                        Text("")
-                    }
+                    FormFooterView(viewModel: viewModel)
                 }
                 .padding(Constants.vStackInsets)
             }

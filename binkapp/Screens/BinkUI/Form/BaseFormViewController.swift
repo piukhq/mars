@@ -250,14 +250,14 @@ extension BaseFormViewController: UICollectionViewDelegateFlowLayout {
 extension BaseFormViewController {
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField) {
         collectionView.collectionViewLayout.invalidateLayout()
-        formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
+//        formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
         stackScrollView.contentInset.bottom = Constants.bottomInset
     }
 }
 
 extension BaseFormViewController: CheckboxViewDelegate {
     func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {
-        formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
+//        formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
     }
 }
 

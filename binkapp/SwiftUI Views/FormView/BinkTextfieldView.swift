@@ -117,7 +117,7 @@ struct BinkTextfieldView: View {
                             TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
                                 self.isEditing = isEditing
                                 self.field.updateValue(value)
-                                self.formViewModel.textfieldDidExit = isEditing
+                                self.formViewModel.datasource.checkFormValidity()
                                 
                                 if isEditing {
 //                                    self.datasource.formViewDidSelectField(self)

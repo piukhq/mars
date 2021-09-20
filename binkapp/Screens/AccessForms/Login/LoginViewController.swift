@@ -109,7 +109,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         let prefilledValues = FormDataSource.PrefilledValue(commonName: .email, value: emailAddress)
         dataSource = FormDataSource(accessForm: loginType, prefilledValues: [prefilledValues])
         dataSource.delegate = self
-        formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
+//        formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
         switchLoginTypeButton.setTitle(loginType == .magicLink ? L10n.loginWithPassword : L10n.emailMagicLink)
         
         if loginType == .magicLink {

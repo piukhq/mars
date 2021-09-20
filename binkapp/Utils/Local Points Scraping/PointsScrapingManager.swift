@@ -15,6 +15,7 @@ class PointsScrapingManager {
     enum CredentialStoreType: String {
         case username
         case password
+        case cardNumber
     }
     
     class QueuedItem {
@@ -93,12 +94,20 @@ class PointsScrapingManager {
     func makeCredentials(fromFormFields fields: [FormField], membershipPlanId: String) -> WebScrapingCredentials? {
         guard let planId = Int(membershipPlanId) else { return nil }
         guard let agent = agent(forPlanId: planId) else { return nil }
+        
         let authFields = fields.filter { $0.columnKind == .lpcAuth }
         let usernameField = authFields.first(where: { $0.fieldCommonName == agent.usernameField })
         let passwordField = authFields.first(where: { $0.fieldCommonName == .password })
         
         guard let usernameValue = usernameField?.value else { return nil }
         guard let passwordValue = passwordField?.value else { return nil }
+        
+        if agent.requiredCredentials.contains(.cardNumber) {
+            let addFields = fields.filter { $0.columnKind == .add }
+            let cardNumberField = addFields.first(where: { $0.fieldCommonName == .cardNumber })
+            let cardNumberValue = cardNumberField?.value
+            return WebScrapingCredentials(username: usernameValue, password: passwordValue, cardNumber: cardNumberValue)
+        }
         
         return WebScrapingCredentials(username: usernameValue, password: passwordValue)
     }
@@ -107,6 +116,10 @@ class PointsScrapingManager {
         do {
             try keychain.set(credentials.username, key: keychainKeyForCardId(cardId, credentialType: .username))
             try keychain.set(credentials.password, key: keychainKeyForCardId(cardId, credentialType: .password))
+            
+            if let cardNumber = credentials.cardNumber {
+                try keychain.set(cardNumber, key: keychainKeyForCardId(cardId, credentialType: .cardNumber))
+            }
         } catch {
             throw PointsScrapingManagerError.failedToStoreCredentials
         }
@@ -117,7 +130,10 @@ class PointsScrapingManager {
             guard let username = try keychain.get(keychainKeyForCardId(cardId, credentialType: .username)), let password = try keychain.get(keychainKeyForCardId(cardId, credentialType: .password)) else {
                 throw PointsScrapingManagerError.failedToRetrieveCredentials
             }
-            return WebScrapingCredentials(username: username, password: password)
+            
+            let cardNumber = try? keychain.get(keychainKeyForCardId(cardId, credentialType: .cardNumber))
+            
+            return WebScrapingCredentials(username: username, password: password, cardNumber: cardNumber)
         } catch {
             throw PointsScrapingManagerError.failedToRetrieveCredentials
         }
@@ -126,6 +142,7 @@ class PointsScrapingManager {
     private func removeCredentials(forMembershipCardId cardId: String) {
         try? keychain.remove(keychainKeyForCardId(cardId, credentialType: .username))
         try? keychain.remove(keychainKeyForCardId(cardId, credentialType: .password))
+        try? keychain.remove(keychainKeyForCardId(cardId, credentialType: .cardNumber))
     }
     
     private func keychainKeyForCardId(_ cardId: String, credentialType: CredentialStoreType) -> String {
@@ -280,7 +297,6 @@ class PointsScrapingManager {
     
     func handleLogout() {
         webScrapingUtility?.stop()
-        webScrapingUtility = nil
         processingQueue.removeAll()
         fetchPointsScrapableMembershipCards { cards in
             cards?.compactMap { $0.id }.forEach { id in
@@ -292,7 +308,6 @@ class PointsScrapingManager {
     func handleDelete(for card: CD_MembershipCard) {
         if isCurrentlyScraping(forMembershipCard: card) {
             webScrapingUtility?.stop()
-            webScrapingUtility = nil
         }
         processingQueue.removeAll(where: { $0.card == card })
         disableLocalPointsScraping(forMembershipCardId: card.id)
@@ -394,6 +409,11 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 }
                 
                 self.pointsScrapingDidComplete(for: item)
+                
+                if self.isDebugMode {
+                    self.webScrapingUtility?.debug()
+                }
+                
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
             }
         }

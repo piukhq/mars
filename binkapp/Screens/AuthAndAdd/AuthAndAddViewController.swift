@@ -125,7 +125,7 @@ extension AuthAndAddViewController: BarcodeScannerViewControllerDelegate {
             prefilledValues.append(FormDataSource.PrefilledValue(commonName: .barcode, value: barcode))
             self.dataSource = FormDataSource(authAdd: self.viewModel.getMembershipPlan(), formPurpose: .addFromScanner, delegate: self, prefilledValues: prefilledValues)
             self.viewModel.formPurpose = .addFromScanner
-            self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
+//            self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
         }
     }
     
@@ -171,7 +171,7 @@ extension AuthAndAddViewController: FormDataSourceDelegate {
         
         self.dataSource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: .add, delegate: self, prefilledValues: prefilledValues)
         viewModel.formPurpose = .add
-        formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
+//        formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
     }
     
     // Swift UI

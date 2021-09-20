@@ -10,6 +10,7 @@ import SwiftUI
 
 struct BinkGradientButtonSwiftUIView: View, Identifiable {
     @ObservedObject private var themeManager = Current.themeManager
+    @ObservedObject var datasource: FormDataSource
     @State var enabled = true
     @State var isLoading: Bool
 
@@ -37,6 +38,9 @@ struct BinkGradientButtonSwiftUIView: View, Identifiable {
                 .overlay(ActivityIndicator(animate: $isLoading, style: .medium), alignment: .center)
         }
         .disabled(!enabled)
+        .onReceive(datasource.$fullFormIsValid) { isValid in
+            self.enabled = isValid
+        }
     }
 }
 
@@ -94,7 +98,7 @@ struct BinkButtonStackView_Previews: PreviewProvider {
             ZStack {
                 Rectangle()
                     .foregroundColor(Color(UIColor.grey10))
-                BinkButtonsStackView(buttons: [BinkGradientButtonSwiftUIView(enabled: false, isLoading: false, title: "Bello", buttonTapped: {}), BinkGradientButtonSwiftUIView(enabled: true, isLoading: false, title: "Continue", buttonTapped: {})])
+                BinkButtonsStackView(buttons: [BinkGradientButtonSwiftUIView(datasource: FormDataSource(accessForm: .success), enabled: false, isLoading: false, title: "Bello", buttonTapped: {}), BinkGradientButtonSwiftUIView(datasource: FormDataSource(accessForm: .addEmail), enabled: true, isLoading: false, title: "Continue", buttonTapped: {})])
             }
         }
     }
