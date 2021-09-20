@@ -9,21 +9,12 @@
 import SwiftUI
 
 final class FormFooterViewViewModel: ObservableObject {
-    @Published var datasource: FormDataSource {
-        didSet {
-            print("datasource update")
-        }
-    }
-    private var privacyPolicy: NSMutableAttributedString?
-    private var termsAndConditions: NSMutableAttributedString?
-    
+    @Published var datasource: FormDataSource
     @Published var checkboxStates: [Bool] = [] {
         didSet {
-            print(checkboxStates)
             datasource.checkFormValidity()
         }
     }
-
     @Published var didTapOnURL: URL? {
         didSet {
             if let url = didTapOnURL {
@@ -31,6 +22,8 @@ final class FormFooterViewViewModel: ObservableObject {
             }
         }
     }
+    private var privacyPolicy: NSMutableAttributedString?
+    private var termsAndConditions: NSMutableAttributedString?
     
     init(datasource: FormDataSource) {
         self.datasource = datasource
@@ -72,28 +65,26 @@ final class FormFooterViewViewModel: ObservableObject {
 }
 
 struct FormFooterView: View {
-    private var formViewModel: FormViewModel
-    @ObservedObject private var model: FormFooterViewViewModel
+    @ObservedObject private var viewModel: FormFooterViewViewModel
     
-    init(viewModel: FormViewModel) {
-        self.formViewModel = viewModel
-        self.model = FormFooterViewViewModel(datasource: formViewModel.datasource)
+    init(datasource: FormDataSource) {
+        self.viewModel = FormFooterViewViewModel(datasource: datasource)
     }
     
     var body: some View {
-        switch formViewModel.datasource.formtype {
+        switch viewModel.datasource.formtype {
         case .authAndAdd:
             // Checkboxes
             VStack(spacing: -10) {
-                ForEach(Array(formViewModel.datasource.checkboxes.enumerated()), id: \.offset) { offset, checkbox in
-                    CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $model.checkboxStates[offset], didTapOnURL: $model.didTapOnURL)
-                       .padding(.horizontal, 10)
+                ForEach(Array(viewModel.datasource.checkboxes.enumerated()), id: \.offset) { offset, checkbox in
+                    CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $viewModel.checkboxStates[offset], didTapOnURL: $viewModel.didTapOnURL)
+                        .padding(.horizontal, 10)
                 }
             }
-            .frame(height: model.checkboxStackHeight)
+            .frame(height: viewModel.checkboxStackHeight)
             .onAppear(perform: {
                 DispatchQueue.global(qos: .userInitiated).async {
-                    model.configureAttributedStrings()
+                    viewModel.configureAttributedStrings()
                 }
             })
         case .addPaymentCard:

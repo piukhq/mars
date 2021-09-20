@@ -55,7 +55,7 @@ struct BinkFormView: View {
                         }
                     }
                     
-                    FormFooterView(viewModel: viewModel)
+                    FormFooterView(datasource: viewModel.datasource)
                 }
                 .padding(Constants.vStackInsets)
             }

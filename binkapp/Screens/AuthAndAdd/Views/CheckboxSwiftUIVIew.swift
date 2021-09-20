@@ -14,7 +14,6 @@ struct CheckboxSwiftUIVIew: UIViewRepresentable {
     @Binding var checkedState: Bool
     @Binding var didTapOnURL: URL?
 
-    
     func makeCoordinator() -> Coordinator {
         Coordinator(checkedState: $checkedState, url: $didTapOnURL)
     }
