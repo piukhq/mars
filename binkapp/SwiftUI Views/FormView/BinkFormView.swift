@@ -69,10 +69,13 @@ struct BinkFormView: View {
                         Button {
                             
                         } label: {
-                            Text(L10n.securityAndPrivacyTitle)
-                                .underline()
-                                .foregroundColor(Color(.blueAccent))
-//                                .font(<#T##font: Font?##Font?#>)
+                            HStack {
+                                Text(L10n.securityAndPrivacyTitle)
+                                    .underline()
+                                    .foregroundColor(Color(.blueAccent))
+    //                                .font(<#T##font: Font?##Font?#>)
+                                Spacer()
+                            }
                         }
                     case .login:
                         Text("")
