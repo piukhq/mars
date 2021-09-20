@@ -110,7 +110,7 @@ class AddPaymentCardViewController: BaseFormViewController {
     }
     
     @objc func privacyButtonTapped() {
-        viewModel.toPrivacyAndSecurity()
+//        viewModel.toPrivacyAndSecurity()
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {

@@ -62,6 +62,15 @@ final class FormFooterViewViewModel: ObservableObject {
             Current.navigate.to(navigationRequest)
         }
     }
+    
+    func toSecurityAndPrivacy() {
+        let title: String = L10n.securityAndPrivacyTitle
+        let description: String = L10n.securityAndPrivacyDescription
+        let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
+        let viewController = ViewControllerFactory.makeSecurityAndPrivacyViewController(configuration: configuration)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+    }
 }
 
 struct FormFooterView: View {
@@ -89,7 +98,7 @@ struct FormFooterView: View {
             })
         case .addPaymentCard:
             Button {
-                
+                viewModel.toSecurityAndPrivacy()
             } label: {
                 HStack {
                     Text(L10n.securityAndPrivacyTitle)
