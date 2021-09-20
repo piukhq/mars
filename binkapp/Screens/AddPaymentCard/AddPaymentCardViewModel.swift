@@ -14,7 +14,7 @@ enum AddPaymentCardJourney {
     case pll
 }
 
-final class AddPaymentCardViewModel: NSObject {    
+final class AddPaymentCardViewModel: NSObject {
     private let repository = PaymentWalletRepository()
     private let journey: AddPaymentCardJourney
     private let strings = PaymentCardScannerStrings()

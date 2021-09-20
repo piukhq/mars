@@ -18,6 +18,13 @@ struct BinkFormView: View {
     @ObservedObject private var themeManager = Current.themeManager
     @State var pickerOneSelection = ""
     @State var pickerTwoSelection = ""
+    
+    var hyperlinkAttrString: NSAttributedString {
+        return NSAttributedString(
+            string: L10n.securityAndPrivacyTitle,
+            attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
+        )
+    }
 
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
@@ -44,18 +51,32 @@ struct BinkFormView: View {
                                 .accessibilityIdentifier(field.title)
                                 .keyboardType(field.fieldType.keyboardType())
                         } else {
-//                            BinkTextfieldView(field: field, didExit: $viewModel.textfieldDidExit)
+                            BinkTextfieldView(field: field, viewModel: viewModel)
                         }
                     }
                     
-                    // Checkboxes
-                    VStack(spacing: -10) {
-                        ForEach(viewModel.datasource.checkboxes) { checkbox in
-                            CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $viewModel.checkedState, didTapOnURL: $viewModel.didTapOnURL)
-                                .padding(.horizontal, 10)
+                    switch viewModel.datasource.formtype {
+                    case .authAndAdd:
+                        // Checkboxes
+                        VStack(spacing: -10) {
+                            ForEach(viewModel.datasource.checkboxes) { checkbox in
+                                CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $viewModel.checkedState, didTapOnURL: $viewModel.didTapOnURL)
+                                    .padding(.horizontal, 10)
+                            }
                         }
+                        .frame(height: viewModel.checkboxStackHeight)
+                    case .addPaymentCard:
+                        Button {
+                            
+                        } label: {
+                            Text(L10n.securityAndPrivacyTitle)
+                                .underline()
+                                .foregroundColor(Color(.blueAccent))
+//                                .font(<#T##font: Font?##Font?#>)
+                        }
+                    case .login:
+                        Text("")
                     }
-                    .frame(height: viewModel.checkboxStackHeight)
                 }
                 .padding(Constants.vStackInsets)
             }

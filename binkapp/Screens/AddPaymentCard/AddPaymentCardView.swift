@@ -33,7 +33,6 @@ struct AddPaymentCardView: View {
         if viewModel.shouldDisplayTermsAndConditions {
             viewModel.toPaymentTermsAndConditions(acceptAction: {
                 Current.navigate.close {
-//                    self?.addButton.toggleLoading(isLoading: true)
                     self.viewModel.addPaymentCard {
                         primaryButton.isLoading = false
                     }
@@ -42,7 +41,6 @@ struct AddPaymentCardView: View {
                 Current.navigate.close()
             })
         } else {
-//            addButton.toggleLoading(isLoading: true)
             viewModel.addPaymentCard {
                 primaryButton.isLoading = false
             }
