@@ -370,6 +370,8 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 } catch {
                     self.transitionToFailed(item: item)
                 }
+                
+                self.pointsScrapingDidComplete(for: item)
 
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionSuccess(membershipCard: membershipCard))
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
@@ -416,6 +418,8 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                     self.transitionToFailed(item: item)
                 }
                 
+                self.pointsScrapingDidComplete(for: item)
+                
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
             }
         }
@@ -456,12 +460,13 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
             BinkLogger.infoPrivateHash(event: WalletLoggerEvent.pointsScrapingSuccess, value: item.card.id)
         }
         transitionToAuthorized(pointsValue: value, item: item, agent: agent)
-        pointsScrapingDidComplete(for: item)
     }
     
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, item: QueuedItem, withAgent agent: WebScrapable) {
-        pointsScrapingDidComplete(for: item)
-        if item.isBalanceRefresh, WalletRefreshManager.cardCanRetainStaleBalance(item.card) { return }
+        if item.isBalanceRefresh, WalletRefreshManager.cardCanRetainStaleBalance(item.card) {
+            self.pointsScrapingDidComplete(for: item)
+            return
+        }
         
         SentryService.triggerException(.localPointsCollectionFailed(error, agent.merchant, balanceRefresh: item.isBalanceRefresh))
         
@@ -475,5 +480,7 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
         if #available(iOS 14.0, *) {
             BinkLogger.error(WalletLoggerError.pointsScrapingFailure, value: error.message)
         }
+        
+        transitionToFailed(item: item)
     }
 }
