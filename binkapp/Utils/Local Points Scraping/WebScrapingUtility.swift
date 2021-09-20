@@ -292,7 +292,6 @@ class WebScrapingUtility: NSObject {
                     self.presentWebView()
                 }
             }
-            SentryService.triggerException(.localPointsCollectionFailed(error, agent.merchant, balanceRefresh: isBalanceRefresh))
             delegate?.webScrapingUtility(self, didCompleteWithError: error, item: item, withAgent: agent)
             
             priorityScrapableCards.removeAll(where: { $0.cardId == item.card.id })
