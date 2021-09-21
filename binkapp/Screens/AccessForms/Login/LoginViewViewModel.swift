@@ -7,17 +7,19 @@
 //
 
 import UIKit
+import SwiftUI
 
 final class LoginViewViewModel: UserServiceProtocol, ObservableObject {
     lazy var continueButton: BinkButtonView = {
-        return BinkButtonView(datasource: datasource, title: L10n.continueButtonTitle, buttonTapped: continueButtonTapped, type: .gradient)
+        return BinkButtonView(datasource: datasource, viewModel: buttonViewModel, title: L10n.continueButtonTitle, buttonTapped: continueButtonTapped, type: .gradient)
     }()
     
     lazy var switchLoginTypeButton: BinkButtonView = {
-        return BinkButtonView(datasource: datasource, title: L10n.loginWithPassword, buttonTapped: switchLoginTypeButtonHandler, type: .plain, alwaysEnabled: true)
+        return BinkButtonView(datasource: datasource, viewModel: buttonViewModel, title: L10n.loginWithPassword, buttonTapped: switchLoginTypeButtonHandler, type: .plain, alwaysEnabled: true)
     }()
     
     @Published var datasource = FormDataSource(accessForm: .magicLink)
+    let buttonViewModel = ButtonViewModel()
 
     private var loginType: AccessForm = .magicLink
     var title = L10n.magicLinkTitle
@@ -42,22 +44,19 @@ final class LoginViewViewModel: UserServiceProtocol, ObservableObject {
         
         requestMagicLink(email: email) { [weak self] (success, _) in
             guard let self = self else { return }
-            self.continueButton.isLoading = false
-            
             guard success else {
                 Current.loginController.displayMagicLinkErrorAlert()
                 return
             }
             
             Current.loginController.handleMagicLinkCheckInbox(formDataSource: self.datasource)
+            self.buttonViewModel.isLoading = false
         }
     }
     
     private func performLogin() {
         let fields = datasource.currentFieldValues()
-        
         let loginRequest: LoginRequest
-        
         let customBundleClientEnabled = Current.userDefaults.bool(forDefaultsKey: .allowCustomBundleClientOnLogin)
         
         if !Current.isReleaseTypeBuild && customBundleClientEnabled {
@@ -111,7 +110,7 @@ final class LoginViewViewModel: UserServiceProtocol, ObservableObject {
     
     private func handleLoginError() {
         Current.userManager.removeUser()
-        continueButton.isLoading = false
+        buttonViewModel.isLoading = false
         showError()
     }
 }

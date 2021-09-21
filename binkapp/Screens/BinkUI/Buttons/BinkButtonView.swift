@@ -8,11 +8,16 @@
 
 import SwiftUI
 
+class ButtonViewModel: ObservableObject {
+    @Published var isLoading = false
+}
+
 struct BinkButtonView: View, Identifiable {
     @ObservedObject private var themeManager = Current.themeManager
     @ObservedObject var datasource: FormDataSource
+    @ObservedObject var viewModel: ButtonViewModel
     @State var enabled = false
-    @State var isLoading = false
+    @State var loading = false
     
     enum ButtonType {
         case gradient
@@ -31,10 +36,10 @@ struct BinkButtonView: View, Identifiable {
     
     var body: some View {
         Button {
-            isLoading = type == .gradient ? true : false
+            loading = type == .gradient ? true : false
             buttonTapped()
         } label: {
-            Text(isLoading ? "" : title)
+            Text(loading ? "" : title)
                 .frame(width: UIScreen.main.bounds.width * 0.75, height: 52.0)
                 .background(
                     ZStack {
@@ -48,13 +53,16 @@ struct BinkButtonView: View, Identifiable {
                 .foregroundColor(enabled ? textColor : .white.opacity(0.5))
                 .font(.custom(UIFont.buttonText.fontName, size: UIFont.buttonText.pointSize))
                 .shadow(color: .black.opacity(type == .gradient ? 0.2 : 0.0), radius: 10, x: 3.0, y: 8.0)
-                .overlay(ActivityIndicator(animate: $isLoading, style: .medium), alignment: .center)
+                .overlay(ActivityIndicator(animate: $loading, style: .medium), alignment: .center)
         }
         .disabled(!enabled)
         .onReceive(datasource.$fullFormIsValid) { isValid in
             enabled = alwaysEnabled
             guard !alwaysEnabled else { return }
             enabled = isValid
+        }
+        .onReceive(viewModel.$isLoading) { isLoading in
+            self.loading = isLoading
         }
     }
 }
@@ -107,17 +115,17 @@ struct BinkButtonsStackView: View {
     }
 }
 
-struct BinkButtonStackView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            ZStack {
-                Rectangle()
-                    .foregroundColor(Color(UIColor.grey10))
-                BinkButtonsStackView(buttons: [
-                    BinkButtonView(datasource: FormDataSource(accessForm: .success), isLoading: false, title: "Bello", buttonTapped: {}, type: .gradient),
-                    BinkButtonView(datasource: FormDataSource(accessForm: .addEmail), enabled: true, title: "Continue", buttonTapped: {}, type: .plain)
-                ])
-            }
-        }
-    }
-}
+//struct BinkButtonStackView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Group {
+//            ZStack {
+//                Rectangle()
+//                    .foregroundColor(Color(UIColor.grey10))
+//                BinkButtonsStackView(buttons: [
+//                    BinkButtonView(datasource: FormDataSource(accessForm: .success), isLoading: false, title: "Bello", buttonTapped: {}, type: .gradient),
+//                    BinkButtonView(datasource: FormDataSource(accessForm: .addEmail), enabled: true, title: "Continue", buttonTapped: {}, type: .plain)
+//                ])
+//            }
+//        }
+//    }
+//}

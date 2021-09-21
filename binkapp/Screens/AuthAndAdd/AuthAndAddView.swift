@@ -10,10 +10,12 @@ import SwiftUI
 
 struct AuthAndAddView: View {
     @ObservedObject var formViewModel: FormViewModel
+    @State var isLoading = false
 
     private let viewModel: AuthAndAddViewModel
+    private let buttonViewModel = ButtonViewModel()
     private var primaryButton: BinkButtonView {
-        return BinkButtonView(datasource: formViewModel.datasource, isLoading: false, title: viewModel.buttonTitle, buttonTapped: handlePrimaryButtonTap, type: .gradient)
+        return BinkButtonView(datasource: formViewModel.datasource, viewModel: buttonViewModel, title: viewModel.buttonTitle, buttonTapped: handlePrimaryButtonTap, type: .gradient)
     }
 
     init(viewModel: AuthAndAddViewModel) {
@@ -38,7 +40,7 @@ struct AuthAndAddView: View {
     
     private func handlePrimaryButtonTap() {
         try? viewModel.addMembershipCard(with: formViewModel.datasource.fields, checkboxes: formViewModel.datasource.checkboxes, completion: {
-            primaryButton.isLoading = false
+            self.buttonViewModel.isLoading = false
         })
     }
 }

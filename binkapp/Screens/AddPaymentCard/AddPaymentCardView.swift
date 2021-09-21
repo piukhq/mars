@@ -10,10 +10,10 @@ import SwiftUI
 
 struct AddPaymentCardView: View {
     @ObservedObject var formViewModel: FormViewModel
-    
+    private let buttonViewModel = ButtonViewModel()
     private let viewModel: AddPaymentCardViewModel
     private var primaryButton: BinkButtonView {
-        return BinkButtonView(datasource: formViewModel.datasource, isLoading: false, title: L10n.addButtonTitle, buttonTapped: handlePrimaryButtonTap, type: .gradient)
+        return BinkButtonView(datasource: formViewModel.datasource, viewModel: buttonViewModel, title: L10n.addButtonTitle, buttonTapped: handlePrimaryButtonTap, type: .gradient)
     }
     
     init(viewModel: AddPaymentCardViewModel) {
@@ -35,7 +35,7 @@ struct AddPaymentCardView: View {
             viewModel.toPaymentTermsAndConditions(acceptAction: {
                 Current.navigate.close {
                     self.viewModel.addPaymentCard {
-                        primaryButton.isLoading = false
+                        self.buttonViewModel.isLoading = false
                     }
                 }
             }, declineAction: {
@@ -43,7 +43,7 @@ struct AddPaymentCardView: View {
             })
         } else {
             viewModel.addPaymentCard {
-                primaryButton.isLoading = false
+                self.buttonViewModel.isLoading = false
             }
         }
     }
