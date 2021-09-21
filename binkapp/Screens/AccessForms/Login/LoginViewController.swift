@@ -95,11 +95,11 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         continueButton.toggleLoading(isLoading: true)
         
         if loginType == .emailPassword {
-            performLogin()
+//            performLogin()
         }
         
         if loginType == .magicLink {
-            performMagicLinkRequest()
+//            performMagicLinkRequest()
         }
     }
     
@@ -131,54 +131,54 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         Current.navigate.to(navigationRequest)
     }
     
-    private func performLogin() {
-        let fields = dataSource.currentFieldValues()
-        
-        let loginRequest: LoginRequest
-        
-        let customBundleClientEnabled = Current.userDefaults.bool(forDefaultsKey: .allowCustomBundleClientOnLogin)
-        
-        if !Current.isReleaseTypeBuild && customBundleClientEnabled {
-            loginRequest = LoginRequest(
-                email: fields["email"],
-                password: fields["password"],
-                clientID: fields["client id"] ?? "",
-                bundleID: fields["bundle id"] ?? ""
-            )
-        } else {
-            loginRequest = LoginRequest(
-                email: fields["email"],
-                password: fields["password"]
-            )
-        }
-        
-        Current.loginController.login(with: loginRequest) { error in
-            if error != nil {
-                self.handleLoginError()
-                return
-            }
-        }
-    }
+//    private func performLogin() {
+//        let fields = dataSource.currentFieldValues()
+//
+//        let loginRequest: LoginRequest
+//
+//        let customBundleClientEnabled = Current.userDefaults.bool(forDefaultsKey: .allowCustomBundleClientOnLogin)
+//
+//        if !Current.isReleaseTypeBuild && customBundleClientEnabled {
+//            loginRequest = LoginRequest(
+//                email: fields["email"],
+//                password: fields["password"],
+//                clientID: fields["client id"] ?? "",
+//                bundleID: fields["bundle id"] ?? ""
+//            )
+//        } else {
+//            loginRequest = LoginRequest(
+//                email: fields["email"],
+//                password: fields["password"]
+//            )
+//        }
+//
+//        Current.loginController.login(with: loginRequest) { error in
+//            if error != nil {
+//                self.handleLoginError()
+//                return
+//            }
+//        }
+//    }
     
-    private func performMagicLinkRequest() {
-        let fields = dataSource.currentFieldValues()
-        guard let email = fields["email"] else {
-            Current.loginController.displayMagicLinkErrorAlert()
-            return
-        }
-        
-        requestMagicLink(email: email) { [weak self] (success, _) in
-            guard let self = self else { return }
-            self.continueButton.toggleLoading(isLoading: false)
-            
-            guard success else {
-                Current.loginController.displayMagicLinkErrorAlert()
-                return
-            }
-            
-            Current.loginController.handleMagicLinkCheckInbox(formDataSource: self.dataSource)
-        }
-    }
+//    private func performMagicLinkRequest() {
+//        let fields = dataSource.currentFieldValues()
+//        guard let email = fields["email"] else {
+//            Current.loginController.displayMagicLinkErrorAlert()
+//            return
+//        }
+//        
+//        requestMagicLink(email: email) { [weak self] (success, _) in
+//            guard let self = self else { return }
+//            self.continueButton.toggleLoading(isLoading: false)
+//            
+//            guard success else {
+//                Current.loginController.displayMagicLinkErrorAlert()
+//                return
+//            }
+//            
+//            Current.loginController.handleMagicLinkCheckInbox(formDataSource: self.dataSource)
+//        }
+//    }
     
     func presentLoginIssuesScreen() {
         let viewController = ViewControllerFactory.makeWebViewController(urlString: "https://help.bink.com/hc/en-gb/categories/360002202520-Frequently-Asked-Questions")
@@ -191,12 +191,12 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         alert.addAction(UIAlertAction(title: L10n.ok, style: .default))
         present(alert, animated: true)
     }
-    
-    private func handleLoginError() {
-        Current.userManager.removeUser()
-        continueButton.toggleLoading(isLoading: false)
-        showError()
-    }
+//    
+//    private func handleLoginError() {
+//        Current.userManager.removeUser()
+//        continueButton.toggleLoading(isLoading: false)
+//        showError()
+//    }
     
     override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
         let viewController = ViewControllerFactory.makeWebViewController(urlString: URL.absoluteString)

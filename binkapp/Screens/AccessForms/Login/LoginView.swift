@@ -10,26 +10,25 @@ import SwiftUI
 
 struct LoginView: View {
     @ObservedObject var formViewModel: FormViewModel
-
-    private var primaryButton: BinkGradientButtonSwiftUIView {
-        return BinkGradientButtonSwiftUIView(datasource: formViewModel.datasource, isLoading: false, title: L10n.continueButtonTitle, buttonTapped: handlePrimaryButtonTap)
-    }
+    private var viewModel: LoginViewViewModel
     
     init() {
-        self.formViewModel = FormViewModel(datasource: FormDataSource(accessForm: .magicLink), title: L10n.magicLinkTitle, description: L10n.magicLinkDescription)
+        let datasource = FormDataSource(accessForm: .magicLink)
+        self.formViewModel = FormViewModel(datasource: datasource, title: L10n.magicLinkTitle, description: L10n.magicLinkDescription)
+        self.viewModel = LoginViewViewModel(datasource: datasource)
     }
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
             BinkFormView(viewModel: formViewModel)
             if case .none = formViewModel.pickerType {
-                BinkButtonsStackView(buttons: [primaryButton])
+                BinkButtonsStackView(buttons: [viewModel.primaryButton])
             }
         })
     }
     
-    private func handlePrimaryButtonTap() {
-
-    }
+//    private func handlePrimaryButtonTap() {
+//        viewModel.continueButtonTapped()
+//    }
 }
 
 struct LoginView_Previews: PreviewProvider {
