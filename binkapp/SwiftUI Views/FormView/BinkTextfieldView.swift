@@ -70,6 +70,7 @@ struct BinkTextfieldView: View {
                                             self.value = dateString
                                             self.field.updateValue(dateString)
                                             self.isEditing = false
+                                            self.formViewModel.datasource.checkFormValidity()
                                         }
                                 }
                                 .onReceive(formViewModel.$pickerType) { pickerType in

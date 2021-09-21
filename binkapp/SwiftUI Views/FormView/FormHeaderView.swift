@@ -22,7 +22,7 @@ final class FormHeaderViewViewModel: ObservableObject {
 
     var infoButtonText: String? {
         if let planName = membershipPlan?.account?.planName {
-            return "\(planName) info"
+            return "About \(planName)"
         }
         return nil
     }
@@ -69,9 +69,7 @@ struct FormHeaderView: View {
                 }, label: {
                     Text(viewModel.infoButtonText ?? "")
                         .font(.custom(UIFont.linkTextButtonNormal.fontName, size: UIFont.linkTextButtonNormal.pointSize))
-                    Image(uiImage: Asset.iconsChevronRight.image.withRenderingMode(.alwaysTemplate))
-                        .resizable()
-                        .frame(width: 10, height: 10, alignment: .center)
+                        .underline()
                 })
                 .foregroundColor(Color(.blueAccent))
             }
