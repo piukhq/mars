@@ -22,7 +22,7 @@ final class FormHeaderViewViewModel: ObservableObject {
 
     var infoButtonText: String? {
         if let planName = membershipPlan?.account?.planName {
-            return "About \(planName)"
+            return L10n.aboutCustomTitle(planName)
         }
         return nil
     }
