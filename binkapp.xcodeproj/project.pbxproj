@@ -342,7 +342,7 @@
 		CE81AAB126CC0A4600102283 /* BinkFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81AAB026CC0A4600102283 /* BinkFormView.swift */; };
 		CE81AAB326D5696600102283 /* AuthAndAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81AAB226D5696600102283 /* AuthAndAddView.swift */; };
 		CE81AAB626E63A3700102283 /* CheckboxSwiftUIVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81AAB526E63A3700102283 /* CheckboxSwiftUIVIew.swift */; };
-		CE81AAB826E7619E00102283 /* BinkGradientButtonSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81AAB726E7619E00102283 /* BinkGradientButtonSwiftUIView.swift */; };
+		CE81AAB826E7619E00102283 /* BinkButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81AAB726E7619E00102283 /* BinkButtonView.swift */; };
 		CE85A1D226A5DB43003B74CD /* EmailClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D126A5DB43003B74CD /* EmailClient.swift */; };
 		CE85A1D626A6CD97003B74CD /* LoginSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D526A6CD97003B74CD /* LoginSuccessViewController.swift */; };
 		CE85A1D826B0096B003B74CD /* UniversalLinkUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D726B0096A003B74CD /* UniversalLinkUtility.swift */; };
@@ -983,7 +983,7 @@
 		CE81AAB026CC0A4600102283 /* BinkFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkFormView.swift; sourceTree = "<group>"; };
 		CE81AAB226D5696600102283 /* AuthAndAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAndAddView.swift; sourceTree = "<group>"; };
 		CE81AAB526E63A3700102283 /* CheckboxSwiftUIVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxSwiftUIVIew.swift; sourceTree = "<group>"; };
-		CE81AAB726E7619E00102283 /* BinkGradientButtonSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkGradientButtonSwiftUIView.swift; sourceTree = "<group>"; };
+		CE81AAB726E7619E00102283 /* BinkButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkButtonView.swift; sourceTree = "<group>"; };
 		CE85A1D126A5DB43003B74CD /* EmailClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailClient.swift; sourceTree = "<group>"; };
 		CE85A1D526A6CD97003B74CD /* LoginSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSuccessViewController.swift; sourceTree = "<group>"; };
 		CE85A1D726B0096A003B74CD /* UniversalLinkUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalLinkUtility.swift; sourceTree = "<group>"; };
@@ -1825,7 +1825,7 @@
 			children = (
 				70285D832588B674007B4298 /* BinkButtonsView.swift */,
 				70CE8966258A807E00078ADA /* BinkButton.swift */,
-				CE81AAB726E7619E00102283 /* BinkGradientButtonSwiftUIView.swift */,
+				CE81AAB726E7619E00102283 /* BinkButtonView.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -3759,7 +3759,7 @@
 				CE27A0DA25DA990E00C58412 /* OnboardingCardCollectionViewCell.swift in Sources */,
 				B726334923058A1E00951037 /* EnrolFieldModel.swift in Sources */,
 				EF46E288235E01DD00BA2CAF /* BinkPillButton.swift in Sources */,
-				CE81AAB826E7619E00102283 /* BinkGradientButtonSwiftUIView.swift in Sources */,
+				CE81AAB826E7619E00102283 /* BinkButtonView.swift in Sources */,
 				BDB01882232E93A100BFFA18 /* FormMultipleChoiceInput.swift in Sources */,
 				CEAB2D73266671C5006A0F43 /* HTMLParsingUtil.swift in Sources */,
 				CE52E16326F0FE0E00CAFBBF /* Font+Extension.swift in Sources */,

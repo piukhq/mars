@@ -1,5 +1,5 @@
 //
-//  BinkButtonSwiftUIView.swift
+//  BinkButtonView.swift
 //  binkapp
 //
 //  Created by Sean Williams on 07/09/2021.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct BinkGradientButtonSwiftUIView: View, Identifiable {
+struct BinkButtonView: View, Identifiable {
     @ObservedObject private var themeManager = Current.themeManager
     @ObservedObject var datasource: FormDataSource
     @State var enabled = false
@@ -23,6 +23,7 @@ struct BinkGradientButtonSwiftUIView: View, Identifiable {
     var title: String
     var buttonTapped: () -> Void
     var type: ButtonType
+    var alwaysEnabled = false
     
     var textColor: Color {
         return type == .gradient ? .white : .black
@@ -51,8 +52,9 @@ struct BinkGradientButtonSwiftUIView: View, Identifiable {
         }
         .disabled(!enabled)
         .onReceive(datasource.$fullFormIsValid) { isValid in
-            guard !enabled else { return }
-            self.enabled = isValid
+            enabled = alwaysEnabled
+            guard !alwaysEnabled else { return }
+            enabled = isValid
         }
     }
 }
@@ -80,7 +82,7 @@ struct BinkButtonsStackView: View {
     }
     
     @ObservedObject private var themeManager = Current.themeManager
-    var buttons: [BinkGradientButtonSwiftUIView]
+    var buttons: [BinkButtonView]
     
     var body: some View {
         VStack {
@@ -111,7 +113,10 @@ struct BinkButtonStackView_Previews: PreviewProvider {
             ZStack {
                 Rectangle()
                     .foregroundColor(Color(UIColor.grey10))
-                BinkButtonsStackView(buttons: [BinkGradientButtonSwiftUIView(datasource: FormDataSource(accessForm: .success), enabled: false, isLoading: false, title: "Bello", buttonTapped: {}, type: .gradient), BinkGradientButtonSwiftUIView(datasource: FormDataSource(accessForm: .addEmail), enabled: true, isLoading: false, title: "Continue", buttonTapped: {}, type: .plain)])
+                BinkButtonsStackView(buttons: [
+                    BinkButtonView(datasource: FormDataSource(accessForm: .success), isLoading: false, title: "Bello", buttonTapped: {}, type: .gradient),
+                    BinkButtonView(datasource: FormDataSource(accessForm: .addEmail), enabled: true, title: "Continue", buttonTapped: {}, type: .plain)
+                ])
             }
         }
     }

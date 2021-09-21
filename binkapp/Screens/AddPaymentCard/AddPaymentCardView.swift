@@ -12,8 +12,8 @@ struct AddPaymentCardView: View {
     @ObservedObject var formViewModel: FormViewModel
     
     private let viewModel: AddPaymentCardViewModel
-    private var primaryButton: BinkGradientButtonSwiftUIView {
-        return BinkGradientButtonSwiftUIView(datasource: formViewModel.datasource, isLoading: false, title: L10n.addButtonTitle, buttonTapped: handlePrimaryButtonTap, type: .gradient)
+    private var primaryButton: BinkButtonView {
+        return BinkButtonView(datasource: formViewModel.datasource, isLoading: false, title: L10n.addButtonTitle, buttonTapped: handlePrimaryButtonTap, type: .gradient)
     }
     
     init(viewModel: AddPaymentCardViewModel) {

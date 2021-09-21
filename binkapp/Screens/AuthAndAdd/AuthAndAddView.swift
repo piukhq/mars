@@ -12,11 +12,8 @@ struct AuthAndAddView: View {
     @ObservedObject var formViewModel: FormViewModel
 
     private let viewModel: AuthAndAddViewModel
-    private var primaryButton: BinkGradientButtonSwiftUIView {
-        return BinkGradientButtonSwiftUIView(datasource: formViewModel.datasource, isLoading: false, title: viewModel.buttonTitle, buttonTapped: handlePrimaryButtonTap, type: .gradient)
-//            .onReceive(formViewModel.datasource.$formIsValid) { isValid in
-//                <#code#>
-//            }
+    private var primaryButton: BinkButtonView {
+        return BinkButtonView(datasource: formViewModel.datasource, isLoading: false, title: viewModel.buttonTitle, buttonTapped: handlePrimaryButtonTap, type: .gradient)
     }
 
     init(viewModel: AuthAndAddViewModel) {
@@ -32,11 +29,6 @@ struct AuthAndAddView: View {
                 BinkButtonsStackView(buttons: [primaryButton])
             }
         })
-//        .onAppear(perform: {
-//            DispatchQueue.global(qos: .userInitiated).async {
-//                formViewModel.configureAttributedStrings()
-//            }
-//        })
         .onReceive(formViewModel.datasource.$formPurpose) { output in
             if let formPurpose = output {
                 viewModel.formPurpose = formPurpose

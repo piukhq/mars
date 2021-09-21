@@ -12,12 +12,12 @@ final class LoginViewViewModel: UserServiceProtocol {
     private var loginType: AccessForm = .magicLink
     private var datasource: FormDataSource
     
-    var continueButton: BinkGradientButtonSwiftUIView {
-        return BinkGradientButtonSwiftUIView(datasource: datasource, title: L10n.continueButtonTitle, buttonTapped: continueButtonTapped, type: .gradient)
+    var continueButton: BinkButtonView {
+        return BinkButtonView(datasource: datasource, title: L10n.continueButtonTitle, buttonTapped: continueButtonTapped, type: .gradient)
     }
     
-    var switchLoginTypeButton: BinkGradientButtonSwiftUIView {
-        return BinkGradientButtonSwiftUIView(datasource: datasource, enabled: true, title: L10n.loginWithPassword, buttonTapped: switchLoginTypeButtonHandler, type: .plain)
+    var switchLoginTypeButton: BinkButtonView {
+        return BinkButtonView(datasource: datasource, title: L10n.loginWithPassword, buttonTapped: switchLoginTypeButtonHandler, type: .plain, alwaysEnabled: true)
     }
     
     init(datasource: FormDataSource) {
