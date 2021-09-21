@@ -296,8 +296,10 @@ internal enum L10n {
   }
   /// Already Logged In
   internal static let magicLinkAlreadyLoggedInTitle = L10n.tr("Localizable", "magic_link_already_logged_in_title")
-  /// Get a link sent to your inbox so you can register or access your account instantly!\n\nNote: We will send you a Magic Link
+  /// Get a link sent to your inbox so you can register or access your account instantly!
   internal static let magicLinkDescription = L10n.tr("Localizable", "magic_link_description")
+  /// We will send you a
+  internal static let magicLinkDescriptionHyperlinkBody = L10n.tr("Localizable", "magic_link_description_hyperlink_body")
   /// Note:
   internal static let magicLinkDescriptionNoteHighlight = L10n.tr("Localizable", "magic_link_description_note_highlight")
   /// Magic Link is temporarily unavailable, please try again later.

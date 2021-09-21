@@ -171,8 +171,8 @@ enum ViewControllerFactory {
 //        return RegisterViewController()
 //    }
 
-    static func makeLoginViewController() -> LoginViewController {
-        return LoginViewController()
+    static func makeLoginViewController() -> UIViewController {
+        return UIHostingController(rootView: LoginView())
     }
 
     static func makeForgottenPasswordViewController() -> ForgotPasswordViewController {

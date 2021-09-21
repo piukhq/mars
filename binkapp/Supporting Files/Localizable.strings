@@ -323,9 +323,10 @@
 "issues_logging_in" = "Issues logging in?";
 
 "magic_link_title" = "Continue with email";
-"magic_link_description" = "Get a link sent to your inbox so you can register or access your account instantly!\n\nNote: We will send you a Magic Link";
-"what_is_magic_link_hyperlink" = "Magic Link";
+"magic_link_description" = "Get a link sent to your inbox so you can register or access your account instantly!";
 "magic_link_description_note_highlight" = "Note:";
+"magic_link_description_hyperlink_body" = "We will send you a";
+"what_is_magic_link_hyperlink" = "Magic Link";
 "check_inbox_title" = "Check your inbox!";
 "check_inbox_description" = "We have just emailed a link to %@. Click the link and you will be signed in.";
 "nil_email_address" = "your email address";

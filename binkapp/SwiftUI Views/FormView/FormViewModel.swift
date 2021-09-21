@@ -50,6 +50,12 @@ final class FormViewModel: ObservableObject {
         }
     }
     
+    func toMagicLinkModal() {
+        let viewController = ViewControllerFactory.makeWebViewController(urlString: "https://help.bink.com/hc/en-gb/articles/4404303824786")
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+    }
+    
     func configurePaymentCard(field: FormField, value: String) {
         if field.fieldType == .paymentCardNumber {
             let type = PaymentCardType.type(from: value)

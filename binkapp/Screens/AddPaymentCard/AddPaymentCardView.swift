@@ -10,6 +10,7 @@ import SwiftUI
 
 struct AddPaymentCardView: View {
     @ObservedObject var formViewModel: FormViewModel
+    
     private let viewModel: AddPaymentCardViewModel
     private var primaryButton: BinkGradientButtonSwiftUIView {
         return BinkGradientButtonSwiftUIView(datasource: formViewModel.datasource, isLoading: false, title: L10n.addButtonTitle, buttonTapped: handlePrimaryButtonTap)

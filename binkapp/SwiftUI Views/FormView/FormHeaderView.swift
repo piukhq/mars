@@ -57,8 +57,7 @@ struct FormHeaderView: View {
     }
 
     var body: some View {
-        switch viewModel.formType {
-        case .authAndAdd:
+        if viewModel.formType == .authAndAdd {
             RemoteImage(image: viewModel.brandImage)
                 .frame(width: 70, height: 70, alignment: .center)
                 .aspectRatio(contentMode: .fit)
@@ -73,13 +72,11 @@ struct FormHeaderView: View {
                 })
                 .foregroundColor(Color(.blueAccent))
             }
-        case .addPaymentCard:
+        } else if viewModel.formType == .addPaymentCard {
             PaymentCardCellSwiftUIView(paymentCard: $viewModel.paymentCard)
                 .frame(maxWidth: .infinity)
                 .frame(height: 120)
                 .padding(.bottom, 20)
-        case .login:
-            Text("Sean")
         }
     }
 }
