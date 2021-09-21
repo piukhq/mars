@@ -60,6 +60,10 @@ final class FormFooterViewViewModel: ObservableObject {
             let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: modalConfig)
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
+        } else {
+            let viewController = ViewControllerFactory.makeWebViewController(urlString: url.absoluteString)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         }
     }
     
@@ -82,8 +86,7 @@ struct FormFooterView: View {
     
     var body: some View {
         switch viewModel.datasource.formtype {
-        case .authAndAdd:
-            // Checkboxes
+        case .authAndAdd, .login:
             VStack(spacing: -10) {
                 ForEach(Array(viewModel.datasource.checkboxes.enumerated()), id: \.offset) { offset, checkbox in
                     CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $viewModel.checkboxStates[offset], didTapOnURL: $viewModel.didTapOnURL)
@@ -109,9 +112,6 @@ struct FormFooterView: View {
                 }
             }
             .padding(.horizontal, 5)
-            
-        case .login:
-            Text("")
         }
     }
 }
