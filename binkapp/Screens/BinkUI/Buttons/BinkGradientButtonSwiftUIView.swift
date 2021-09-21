@@ -11,16 +11,26 @@ import SwiftUI
 struct BinkGradientButtonSwiftUIView: View, Identifiable {
     @ObservedObject private var themeManager = Current.themeManager
     @ObservedObject var datasource: FormDataSource
-    @State var enabled = true
-    @State var isLoading: Bool
+    @State var enabled = false
+    @State var isLoading = false
+    
+    enum ButtonType {
+        case gradient
+        case plain
+    }
 
     var id = UUID()
     var title: String
     var buttonTapped: () -> Void
+    var type: ButtonType
+    
+    var textColor: Color {
+        return type == .gradient ? .white : .black
+    }
     
     var body: some View {
         Button {
-            isLoading = true
+            isLoading = type == .gradient ? true : false
             buttonTapped()
         } label: {
             Text(isLoading ? "" : title)
@@ -28,17 +38,20 @@ struct BinkGradientButtonSwiftUIView: View, Identifiable {
                 .background(
                     ZStack {
                         Color(themeManager.color(for: .viewBackground))
-                        LinearGradient(gradient: Gradient(colors: [Color(.binkGradientBlueRight), Color(.binkGradientBlueLeft)]), startPoint: .leading, endPoint: .trailing)
-                            .opacity(enabled ? 1.0 : 0.5)
+                        if type == .gradient {
+                            LinearGradient(gradient: Gradient(colors: [Color(.binkGradientBlueRight), Color(.binkGradientBlueLeft)]), startPoint: .leading, endPoint: .trailing)
+                                .opacity(enabled ? 1.0 : 0.5)
+                        }
                     })
                 .cornerRadius(52 / 2)
-                .foregroundColor(enabled ? .white : .white.opacity(0.5))
+                .foregroundColor(enabled ? textColor : .white.opacity(0.5))
                 .font(.custom(UIFont.buttonText.fontName, size: UIFont.buttonText.pointSize))
-                .shadow(color: .black.opacity(0.2), radius: 10, x: 3.0, y: 8.0)
+                .shadow(color: .black.opacity(type == .gradient ? 0.2 : 0.0), radius: 10, x: 3.0, y: 8.0)
                 .overlay(ActivityIndicator(animate: $isLoading, style: .medium), alignment: .center)
         }
         .disabled(!enabled)
         .onReceive(datasource.$fullFormIsValid) { isValid in
+            guard !enabled else { return }
             self.enabled = isValid
         }
     }
@@ -98,7 +111,7 @@ struct BinkButtonStackView_Previews: PreviewProvider {
             ZStack {
                 Rectangle()
                     .foregroundColor(Color(UIColor.grey10))
-                BinkButtonsStackView(buttons: [BinkGradientButtonSwiftUIView(datasource: FormDataSource(accessForm: .success), enabled: false, isLoading: false, title: "Bello", buttonTapped: {}), BinkGradientButtonSwiftUIView(datasource: FormDataSource(accessForm: .addEmail), enabled: true, isLoading: false, title: "Continue", buttonTapped: {})])
+                BinkButtonsStackView(buttons: [BinkGradientButtonSwiftUIView(datasource: FormDataSource(accessForm: .success), enabled: false, isLoading: false, title: "Bello", buttonTapped: {}, type: .gradient), BinkGradientButtonSwiftUIView(datasource: FormDataSource(accessForm: .addEmail), enabled: true, isLoading: false, title: "Continue", buttonTapped: {}, type: .plain)])
             }
         }
     }

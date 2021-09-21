@@ -12,8 +12,12 @@ final class LoginViewViewModel: UserServiceProtocol {
     private var loginType: AccessForm = .magicLink
     private var datasource: FormDataSource
     
-    var primaryButton: BinkGradientButtonSwiftUIView {
-        return BinkGradientButtonSwiftUIView(datasource: datasource, isLoading: false, title: L10n.continueButtonTitle, buttonTapped: continueButtonTapped)
+    var continueButton: BinkGradientButtonSwiftUIView {
+        return BinkGradientButtonSwiftUIView(datasource: datasource, title: L10n.continueButtonTitle, buttonTapped: continueButtonTapped, type: .gradient)
+    }
+    
+    var switchLoginTypeButton: BinkGradientButtonSwiftUIView {
+        return BinkGradientButtonSwiftUIView(datasource: datasource, enabled: true, title: L10n.loginWithPassword, buttonTapped: switchLoginTypeButtonHandler, type: .plain)
     }
     
     init(datasource: FormDataSource) {
@@ -39,7 +43,7 @@ final class LoginViewViewModel: UserServiceProtocol {
         
         requestMagicLink(email: email) { [weak self] (success, _) in
             guard let self = self else { return }
-            self.primaryButton.isLoading = false
+            self.continueButton.isLoading = false
             
             guard success else {
                 Current.loginController.displayMagicLinkErrorAlert()
@@ -79,6 +83,28 @@ final class LoginViewViewModel: UserServiceProtocol {
         }
     }
     
+    private func switchLoginTypeButtonHandler() {
+//        loginType = loginType == .magicLink ? .emailPassword : .magicLink
+//        let emailAddress = dataSource.fields.first(where: { $0.fieldCommonName == .email })?.value
+//        let prefilledValues = FormDataSource.PrefilledValue(commonName: .email, value: emailAddress)
+//        dataSource = FormDataSource(accessForm: loginType, prefilledValues: [prefilledValues])
+//        dataSource.delegate = self
+////        formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
+//        switchLoginTypeButton.setTitle(loginType == .magicLink ? L10n.loginWithPassword : L10n.emailMagicLink)
+//        
+//        if loginType == .magicLink {
+//            titleLabel.text = L10n.magicLinkTitle
+//            textView.attributedText = magicLinkattributedDescription
+//            descriptionLabel.text = nil
+//            hyperlinkButton.isHidden = true
+//        } else {
+//            titleLabel.text = L10n.loginTitle
+//            textView.text = nil
+//            descriptionLabel.text = L10n.loginSubtitle
+//            hyperlinkButton.isHidden = false
+//        }
+    }
+    
     private func showError() {
 //        let alert = BinkAlertController(title: L10n.errorTitle, message: L10n.loginError, preferredStyle: .alert)
 //        alert.addAction(UIAlertAction(title: L10n.ok, style: .default))
@@ -88,7 +114,7 @@ final class LoginViewViewModel: UserServiceProtocol {
     
     private func handleLoginError() {
         Current.userManager.removeUser()
-        primaryButton.isLoading = false
+        continueButton.isLoading = false
         showError()
     }
 }

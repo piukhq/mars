@@ -13,7 +13,7 @@ struct AuthAndAddView: View {
 
     private let viewModel: AuthAndAddViewModel
     private var primaryButton: BinkGradientButtonSwiftUIView {
-        return BinkGradientButtonSwiftUIView(datasource: formViewModel.datasource, isLoading: false, title: viewModel.buttonTitle, buttonTapped: handlePrimaryButtonTap)
+        return BinkGradientButtonSwiftUIView(datasource: formViewModel.datasource, isLoading: false, title: viewModel.buttonTitle, buttonTapped: handlePrimaryButtonTap, type: .gradient)
 //            .onReceive(formViewModel.datasource.$formIsValid) { isValid in
 //                <#code#>
 //            }

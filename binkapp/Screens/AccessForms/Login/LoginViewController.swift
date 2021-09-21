@@ -27,7 +27,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     
     private lazy var switchLoginTypeButton: BinkButton = {
         BinkButton(type: .plain, title: L10n.loginWithPassword, enabled: true) { [weak self] in
-            self?.switchLoginTypeButtonHandler()
+//            self?.switchLoginTypeButtonHandler()
         }
     }()
     
@@ -103,27 +103,27 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         }
     }
     
-    private func switchLoginTypeButtonHandler() {
-        loginType = loginType == .magicLink ? .emailPassword : .magicLink
-        let emailAddress = dataSource.fields.first(where: { $0.fieldCommonName == .email })?.value
-        let prefilledValues = FormDataSource.PrefilledValue(commonName: .email, value: emailAddress)
-        dataSource = FormDataSource(accessForm: loginType, prefilledValues: [prefilledValues])
-        dataSource.delegate = self
-//        formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
-        switchLoginTypeButton.setTitle(loginType == .magicLink ? L10n.loginWithPassword : L10n.emailMagicLink)
-        
-        if loginType == .magicLink {
-            titleLabel.text = L10n.magicLinkTitle
-            textView.attributedText = magicLinkattributedDescription
-            descriptionLabel.text = nil
-            hyperlinkButton.isHidden = true
-        } else {
-            titleLabel.text = L10n.loginTitle
-            textView.text = nil
-            descriptionLabel.text = L10n.loginSubtitle
-            hyperlinkButton.isHidden = false
-        }
-    }
+//    private func switchLoginTypeButtonHandler() {
+//        loginType = loginType == .magicLink ? .emailPassword : .magicLink
+//        let emailAddress = dataSource.fields.first(where: { $0.fieldCommonName == .email })?.value
+//        let prefilledValues = FormDataSource.PrefilledValue(commonName: .email, value: emailAddress)
+//        dataSource = FormDataSource(accessForm: loginType, prefilledValues: [prefilledValues])
+//        dataSource.delegate = self
+////        formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
+//        switchLoginTypeButton.setTitle(loginType == .magicLink ? L10n.loginWithPassword : L10n.emailMagicLink)
+//
+//        if loginType == .magicLink {
+//            titleLabel.text = L10n.magicLinkTitle
+//            textView.attributedText = magicLinkattributedDescription
+//            descriptionLabel.text = nil
+//            hyperlinkButton.isHidden = true
+//        } else {
+//            titleLabel.text = L10n.loginTitle
+//            textView.text = nil
+//            descriptionLabel.text = L10n.loginSubtitle
+//            hyperlinkButton.isHidden = false
+//        }
+//    }
     
     @objc func forgotPasswordTapped() {
         let viewController = ViewControllerFactory.makeForgottenPasswordViewController()

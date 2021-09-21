@@ -21,7 +21,7 @@ struct LoginView: View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
             BinkFormView(viewModel: formViewModel)
             if case .none = formViewModel.pickerType {
-                BinkButtonsStackView(buttons: [viewModel.primaryButton])
+                BinkButtonsStackView(buttons: [viewModel.continueButton, viewModel.switchLoginTypeButton])
             }
         })
     }
