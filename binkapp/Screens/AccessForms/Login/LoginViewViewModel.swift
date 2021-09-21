@@ -8,21 +8,20 @@
 
 import UIKit
 
-final class LoginViewViewModel: UserServiceProtocol {
-    private var loginType: AccessForm = .magicLink
-    private var datasource: FormDataSource
-    
-    var continueButton: BinkButtonView {
+final class LoginViewViewModel: UserServiceProtocol, ObservableObject {
+    lazy var continueButton: BinkButtonView = {
         return BinkButtonView(datasource: datasource, title: L10n.continueButtonTitle, buttonTapped: continueButtonTapped, type: .gradient)
-    }
+    }()
     
-    var switchLoginTypeButton: BinkButtonView {
+    lazy var switchLoginTypeButton: BinkButtonView = {
         return BinkButtonView(datasource: datasource, title: L10n.loginWithPassword, buttonTapped: switchLoginTypeButtonHandler, type: .plain, alwaysEnabled: true)
-    }
+    }()
     
-    init(datasource: FormDataSource) {
-        self.datasource = datasource
-    }
+    @Published var datasource = FormDataSource(accessForm: .magicLink)
+
+    private var loginType: AccessForm = .magicLink
+    var title = L10n.magicLinkTitle
+    var description = L10n.magicLinkDescription
 
     func continueButtonTapped() {
         if loginType == .emailPassword {
@@ -84,25 +83,23 @@ final class LoginViewViewModel: UserServiceProtocol {
     }
     
     private func switchLoginTypeButtonHandler() {
-//        loginType = loginType == .magicLink ? .emailPassword : .magicLink
-//        let emailAddress = dataSource.fields.first(where: { $0.fieldCommonName == .email })?.value
-//        let prefilledValues = FormDataSource.PrefilledValue(commonName: .email, value: emailAddress)
-//        dataSource = FormDataSource(accessForm: loginType, prefilledValues: [prefilledValues])
-//        dataSource.delegate = self
-////        formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
-//        switchLoginTypeButton.setTitle(loginType == .magicLink ? L10n.loginWithPassword : L10n.emailMagicLink)
-//        
-//        if loginType == .magicLink {
-//            titleLabel.text = L10n.magicLinkTitle
-//            textView.attributedText = magicLinkattributedDescription
-//            descriptionLabel.text = nil
+        loginType = loginType == .magicLink ? .emailPassword : .magicLink
+        let emailAddress = datasource.fields.first(where: { $0.fieldCommonName == .email })?.value
+        let prefilledValues = FormDataSource.PrefilledValue(commonName: .email, value: emailAddress)
+        datasource = FormDataSource(accessForm: loginType, prefilledValues: [prefilledValues])
+        datasource.checkFormValidity()
+        
+        switchLoginTypeButton.title = loginType == .magicLink ? L10n.loginWithPassword : L10n.emailMagicLink
+        
+        if loginType == .magicLink {
+            title = L10n.magicLinkTitle
+            description = L10n.magicLinkDescription
 //            hyperlinkButton.isHidden = true
-//        } else {
-//            titleLabel.text = L10n.loginTitle
-//            textView.text = nil
-//            descriptionLabel.text = L10n.loginSubtitle
+        } else {
+            title = L10n.loginTitle
+            description = L10n.loginSubtitle
 //            hyperlinkButton.isHidden = false
-//        }
+        }
     }
     
     private func showError() {
