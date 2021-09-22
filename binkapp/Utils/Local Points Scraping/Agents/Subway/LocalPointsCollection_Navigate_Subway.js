@@ -12,7 +12,7 @@ var recaptchaMessage = "You must resolve the CAPTCHA challenge to see your updat
 
 var pointsValueQuery = ".green-btn-balance"
 
-var incorrectCredentialsQuery = ""
+var incorrectCredentialsQuery = "div#errorModal"
 
 //r = document.querySelector('div .recaptcha-submit .g-recaptcha')
 
@@ -23,6 +23,15 @@ function handleNavigation() {
     if (pts) {
         return {
             "points": pts.innerText
+        }
+    }
+
+    var error = document.querySelector(incorrectCredentialsQuery)
+    if (error && error.style.display === "block") {
+        var errorMessage = document.querySelector('div#errorModal p')
+        return {
+            "did_attempt_login": true,
+            "error_message": "Login failed. Incorrect credentials identified: " + errorMessage.innerText
         }
     }
 
@@ -73,10 +82,7 @@ function handleNavigation() {
 
     // var error = document.querySelector(incorrectCredentialsQuery)
     // if (error && error.innerHTML !== "") {
-    //     return {
-    //         "did_attempt_login": true,
-    //         "error_message": "Login failed. Incorrect credentials identified: " + error.innerHTML
-    //     }
+        
     // }
 
     // if (rInvalid) {
