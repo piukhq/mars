@@ -13,7 +13,7 @@ class ForgotPasswordViewController: BaseFormViewController {
 
     private lazy var continueButton: BinkButton = {
         return BinkButton(type: .gradient, title: L10n.continueButtonTitle, enabled: false) { [weak self] in
-            self?.continueButtonTapped()
+//            self?.continueButtonTapped()
         }
     }()
     
@@ -30,7 +30,7 @@ class ForgotPasswordViewController: BaseFormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLayout()
-        viewModel.navigationController = navigationController
+//        viewModel.navigationController = navigationController
     }
     
     func configureLayout() {
@@ -41,12 +41,12 @@ class ForgotPasswordViewController: BaseFormViewController {
         continueButton.enabled = fullFormIsValid
     }
     
-    func continueButtonTapped() {
-        continueButton.toggleLoading(isLoading: true)
-        viewModel.continueButtonTapped(completion: {
-            self.continueButton.toggleLoading(isLoading: false)
-        })
-    }
+//    func continueButtonTapped() {
+//        continueButton.toggleLoading(isLoading: true)
+//        viewModel.continueButtonTapped(completion: {
+//            self.continueButton.toggleLoading(isLoading: false)
+//        })
+//    }
 }
 
 extension ForgotPasswordViewController: FormDataSourceDelegate {

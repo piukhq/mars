@@ -175,9 +175,8 @@ enum ViewControllerFactory {
         return UIHostingController(rootView: LoginView())
     }
 
-    static func makeForgottenPasswordViewController() -> ForgotPasswordViewController {
-        let viewModel = ForgotPasswordViewModel(repository: ForgotPasswordRepository())
-        return ForgotPasswordViewController(viewModel: viewModel)
+    static func makeForgottenPasswordViewController() -> UIViewController {
+        return ForgotPasswordViewHostingController()
     }
     
     // MARK: - Reusable

@@ -194,7 +194,7 @@ internal enum L10n {
   internal static let findAndJoinDescription = L10n.tr("Localizable", "find_and_join_description")
   /// If the email address you entered is associated with a Bink account, then a password reset email will be sent.
   internal static let fogrotPasswordPopupText = L10n.tr("Localizable", "fogrot_password_popup_text")
-  /// Please enter your email address and if it is associated with a Bink account, then a password reset email will be sent
+  /// Please enter your email address and if it is associated with a Bink account, then a password reset email will be sent.
   internal static let forgotPasswordDescription = L10n.tr("Localizable", "forgot_password_description")
   /// Incorrect Format
   internal static let formFieldValidationError = L10n.tr("Localizable", "form_field_validation_error")
