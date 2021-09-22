@@ -53,7 +53,7 @@ class PreferencesViewController: BinkViewController {
         let offersRange = base.range(of: L10n.preferencesPromptHighlightOffers)
         let updatesRange = base.range(of: L10n.preferencesPromptHighlightUpdates)
         
-        let attributes: [NSAttributedString.Key: Any]  = [.font: UIFont.subtitle]
+        let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.subtitle]
         
         attributedString.addAttributes(attributes, range: rewardsRange)
         attributedString.addAttributes(attributes, range: offersRange)
