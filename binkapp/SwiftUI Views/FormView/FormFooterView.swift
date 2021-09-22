@@ -96,7 +96,7 @@ struct FormFooterView: View {
             VStack(spacing: -10) {
                 ForEach(Array(viewModel.datasource.checkboxes.enumerated()), id: \.offset) { offset, checkbox in
                     CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $viewModel.checkboxStates[offset], didTapOnURL: $viewModel.didTapOnURL)
-                        .padding(.horizontal, 10)
+                        .padding(.horizontal, 5)
                 }
             }
             .frame(height: viewModel.checkboxStackHeight)
@@ -123,7 +123,7 @@ struct FormFooterView: View {
                 VStack(spacing: -10) {
                     ForEach(Array(viewModel.datasource.checkboxes.enumerated()), id: \.offset) { offset, checkbox in
                         CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $viewModel.checkboxStates[offset], didTapOnURL: $viewModel.didTapOnURL)
-                            .padding(.horizontal, 10)
+                            .padding(.horizontal, 5)
                     }
                 }
                 .frame(height: viewModel.checkboxStackHeight)

@@ -159,8 +159,8 @@ enum ViewControllerFactory {
         return PortraitNavigationController(rootViewController: OnboardingViewController())
     }
 
-    static func makeSocialTermsAndConditionsViewController(requestType: LoginRequestType) -> TermsAndConditionsViewController {
-        return TermsAndConditionsViewController(requestType: requestType)
+    static func makeSocialTermsAndConditionsViewController(requestType: LoginRequestType) -> UIViewController {
+        return UIHostingController(rootView: TermsAndConditionsView(requestType: requestType))
     }
     
     static func makeLoginSuccessViewController() -> LoginSuccessViewController {

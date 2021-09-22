@@ -41,6 +41,7 @@ struct ForgotPasswordView: View {
     }
     
     private func continueButtonTapped() {
+        buttonViewModel.isLoading = true
         guard let safeEmail = viewModel.email else { return }
         viewModel.repository.continueButtonTapped(email: safeEmail, completion: {
             showingAlert = true
