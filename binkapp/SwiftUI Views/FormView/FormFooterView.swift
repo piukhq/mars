@@ -75,6 +75,12 @@ final class FormFooterViewViewModel: ObservableObject {
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
+    
+    func forgotPasswordTapped() {
+        let viewController = ViewControllerFactory.makeForgottenPasswordViewController()
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+    }
 }
 
 struct FormFooterView: View {
@@ -86,7 +92,7 @@ struct FormFooterView: View {
     
     var body: some View {
         switch viewModel.datasource.formtype {
-        case .authAndAdd, .login:
+        case .authAndAdd:
             VStack(spacing: -10) {
                 ForEach(Array(viewModel.datasource.checkboxes.enumerated()), id: \.offset) { offset, checkbox in
                     CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $viewModel.checkboxStates[offset], didTapOnURL: $viewModel.didTapOnURL)
@@ -112,12 +118,31 @@ struct FormFooterView: View {
                 }
             }
             .padding(.horizontal, 5)
+        case .login(let loginType):
+            if !viewModel.datasource.checkboxes.isEmpty {
+                VStack(spacing: -10) {
+                    ForEach(Array(viewModel.datasource.checkboxes.enumerated()), id: \.offset) { offset, checkbox in
+                        CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $viewModel.checkboxStates[offset], didTapOnURL: $viewModel.didTapOnURL)
+                            .padding(.horizontal, 10)
+                    }
+                }
+                .frame(height: viewModel.checkboxStackHeight)
+            }
+
+            HStack {
+                if loginType == .emailPassword {
+                    Button {
+                        viewModel.forgotPasswordTapped()
+                    } label: {
+                        Text(L10n.loginForgotPassword)
+                            .foregroundColor(Color(.blueAccent))
+                            .underline()
+                            .font(.nunitoSemiBold(18))
+                    }
+                }
+                Spacer()
+            }
+            .padding(.horizontal, 5)
         }
     }
 }
-
-//struct FormFooterView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        FormFooterView()
-//    }
-//}

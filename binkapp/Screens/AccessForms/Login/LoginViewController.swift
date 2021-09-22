@@ -31,20 +31,20 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         }
     }()
     
-    private lazy var hyperlinkButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        let attrString = NSAttributedString(
-            string: L10n.loginForgotPassword,
-            attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
-        )
-        button.setAttributedTitle(attrString, for: .normal)
-        button.contentHorizontalAlignment = .left
-        button.heightAnchor.constraint(equalToConstant: Constants.hyperlinkHeight).isActive = true
-        button.addTarget(self, action: .forgotPasswordTapped, for: .touchUpInside)
-        button.isHidden = true
-        return button
-    }()
+//    private lazy var hyperlinkButton: UIButton = {
+//        let button = UIButton(type: .custom)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        let attrString = NSAttributedString(
+//            string: L10n.loginForgotPassword,
+//            attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
+//        )
+//        button.setAttributedTitle(attrString, for: .normal)
+//        button.contentHorizontalAlignment = .left
+//        button.heightAnchor.constraint(equalToConstant: Constants.hyperlinkHeight).isActive = true
+//        button.addTarget(self, action: .forgotPasswordTapped, for: .touchUpInside)
+//        button.isHidden = true
+//        return button
+//    }()
     
     private var magicLinkattributedDescription: NSMutableAttributedString = {
         let attributedDescription = NSMutableAttributedString(string: L10n.magicLinkDescription, attributes: [.font: UIFont.bodyTextLarge])
@@ -78,7 +78,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        stackScrollView.add(arrangedSubviews: [hyperlinkButton])
+//        stackScrollView.add(arrangedSubviews: [hyperlinkButton])
         footerButtons = [continueButton, switchLoginTypeButton]
     }
     
@@ -125,11 +125,11 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
 //        }
 //    }
     
-    @objc func forgotPasswordTapped() {
-        let viewController = ViewControllerFactory.makeForgottenPasswordViewController()
-        let navigationRequest = PushNavigationRequest(viewController: viewController)
-        Current.navigate.to(navigationRequest)
-    }
+//    @objc func forgotPasswordTapped() {
+//        let viewController = ViewControllerFactory.makeForgottenPasswordViewController()
+//        let navigationRequest = PushNavigationRequest(viewController: viewController)
+//        Current.navigate.to(navigationRequest)
+//    }
     
 //    private func performLogin() {
 //        let fields = dataSource.currentFieldValues()
@@ -218,5 +218,5 @@ extension LoginViewController: FormCollectionViewCellDelegate {
 
 private extension Selector {
     static let continueButtonTapped = #selector(LoginViewController.continueButtonTapped)
-    static let forgotPasswordTapped = #selector(LoginViewController.forgotPasswordTapped)
+//    static let forgotPasswordTapped = #selector(LoginViewController.forgotPasswordTapped)
 }
