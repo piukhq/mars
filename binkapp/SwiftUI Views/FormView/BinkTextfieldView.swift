@@ -185,7 +185,7 @@ struct BinkTextfieldView: View {
     // MARK: - Helper Methods
     
     private func valueChangedHandler() {
-        if formViewModel.datasource.formtype == .addPaymentCard {
+        if case .addPaymentCard = formViewModel.datasource.formtype {
             formViewModel.configurePaymentCard(field: field, value: value)
             
             if field.fieldCommonName == .cardNumber {

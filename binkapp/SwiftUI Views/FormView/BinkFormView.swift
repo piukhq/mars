@@ -44,24 +44,7 @@ struct BinkFormView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 5)
                     
-                    if viewModel.datasource.formtype == .login {
-                        HStack(spacing: 4) {
-                            Text(L10n.magicLinkDescriptionNoteHighlight)
-                                .font(.nunitoExtraBold(18))
-                            Text(L10n.magicLinkDescriptionHyperlinkBody)
-                                .font(.nunitoLight(18))
-                            Button {
-                                viewModel.toMagicLinkModal()
-                            } label: {
-                                Text(L10n.whatIsMagicLinkHyperlink)
-                                    .font(.nunitoLight(18))
-                                    .foregroundColor(Color(.binkGradientBlueLeft))
-                                    .underline()
-                            }
-                            Spacer()
-                        }
-                        .padding(.horizontal, 5)
-                    }
+                    AttributedTextView(viewModel: viewModel)
                     
                     // Textfields
                     ForEach(viewModel.datasource.fields) { field in

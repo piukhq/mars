@@ -19,8 +19,7 @@ final class LoginViewViewModel: UserServiceProtocol, ObservableObject {
     }()
     
     @Published var datasource = FormDataSource(accessForm: .magicLink)
-    let buttonViewModel = ButtonViewModel()
-
+    private let buttonViewModel = ButtonViewModel()
     private var loginType: AccessForm = .magicLink
     var title = L10n.magicLinkTitle
     var description = L10n.magicLinkDescription

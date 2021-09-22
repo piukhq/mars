@@ -50,7 +50,7 @@ enum AccessForm {
 enum FormType {
     case authAndAdd
     case addPaymentCard
-    case login
+    case login(accessForm: AccessForm)
 }
 
 class FormDataSource: NSObject, ObservableObject {
@@ -72,7 +72,7 @@ class FormDataSource: NSObject, ObservableObject {
     @Published var formPurpose: FormPurpose?
     @Published var fullFormIsValid = false
 
-    var formtype: FormType = .login
+    var formtype: FormType = .login(accessForm: .magicLink)
     var visibleFields: [FormField] {
         return fields.filter { !$0.hidden }
     }
@@ -480,7 +480,7 @@ extension FormDataSource {
     convenience init(accessForm: AccessForm, prefilledValues: [PrefilledValue]? = nil) {
         self.init()
         self.delegate = delegate
-        formtype = .login
+        formtype = .login(accessForm: accessForm)
         setupFields(accessForm: accessForm, prefilledValues: prefilledValues)
     }
     

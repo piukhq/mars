@@ -374,6 +374,7 @@
 		CEB7ADF626F880EB00BD138C /* FormFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADF526F880EB00BD138C /* FormFooterView.swift */; };
 		CEB7ADF826F9BF9000BD138C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADF726F9BF9000BD138C /* LoginView.swift */; };
 		CEB7ADFA26F9EC7B00BD138C /* LoginViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADF926F9EC7B00BD138C /* LoginViewViewModel.swift */; };
+		CEB7ADFC26FB135900BD138C /* AttributedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADFB26FB135900BD138C /* AttributedTextView.swift */; };
 		CEC0ACBC2636AD0000845813 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBA2636AD0000845813 /* Assets.swift */; };
 		CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBB2636AD0000845813 /* Strings.swift */; };
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
@@ -1011,6 +1012,7 @@
 		CEB7ADF526F880EB00BD138C /* FormFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormFooterView.swift; sourceTree = "<group>"; };
 		CEB7ADF726F9BF9000BD138C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		CEB7ADF926F9EC7B00BD138C /* LoginViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewViewModel.swift; sourceTree = "<group>"; };
+		CEB7ADFB26FB135900BD138C /* AttributedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextView.swift; sourceTree = "<group>"; };
 		CEC0AC3B2636AAA400845813 /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		CEC0ACBA2636AD0000845813 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		CEC0ACBB2636AD0000845813 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -2450,6 +2452,7 @@
 				CE52E13526EFB1F600CAFBBF /* InputToolbarView.swift */,
 				CEB7ADF126F22DC400BD138C /* FormHeaderView.swift */,
 				CEB7ADF526F880EB00BD138C /* FormFooterView.swift */,
+				CEB7ADFB26FB135900BD138C /* AttributedTextView.swift */,
 			);
 			path = FormView;
 			sourceTree = "<group>";
@@ -3797,6 +3800,7 @@
 				3C873FF522F073CF00FA3031 /* MainTabBarViewModel.swift in Sources */,
 				EFA5F7542379AAB20027AB80 /* CD_VoucherEarn.swift in Sources */,
 				70A4EE7524BC651700FA33B1 /* PointsScrapingManager.swift in Sources */,
+				CEB7ADFC26FB135900BD138C /* AttributedTextView.swift in Sources */,
 				96F22E022508B6060009951B /* SentryService.swift in Sources */,
 				EFA5F7202379A7C70027AB80 /* CD_MembershipCardStatus.swift in Sources */,
 				EFEB5BF3237C7BC000E18743 /* PLRRewardsHistoryViewModel.swift in Sources */,
