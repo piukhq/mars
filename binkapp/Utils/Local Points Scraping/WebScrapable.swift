@@ -18,6 +18,7 @@ enum WebScrapableMerchant: String {
     case perfumeshop
     case starbucks
     case kfc
+    case subway
 }
 
 protocol WebScrapable {

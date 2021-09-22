@@ -83,7 +83,8 @@ class PointsScrapingManager {
         PerfumeShopScrapingAgent(),
         WaterstonesScrapingAgent(),
         StarbucksPointsScrapingAgent(),
-        KFCPointsScrapingAgent()
+        KFCPointsScrapingAgent(),
+        SubwayPointsScrapingAgent()
     ]
     
     var processingQueue: [QueuedItem] = []
