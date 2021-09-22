@@ -14,6 +14,7 @@ struct ForgotPasswordView: View {
     }
     
     @State private var formViewModel: FormViewModel
+    @State private var showingAlert = false
     private let viewModel: ForgotPasswordViewModel
     private let datasource = FormDataSource(accessForm: .forgottenPassword)
     private let buttonViewModel = ButtonViewModel()
@@ -29,6 +30,12 @@ struct ForgotPasswordView: View {
             BinkFormView(viewModel: formViewModel)
             if case .none = formViewModel.pickerType {
                 BinkButtonsStackView(buttons: [continueButton])
+                    .alert(isPresented: $showingAlert) {
+                        Alert(title: Text(L10n.loginForgotPassword), message: Text(L10n.fogrotPasswordPopupText), dismissButton: .cancel(Text(L10n.ok), action: {
+                            buttonViewModel.isLoading = false
+                            popToRoot()
+                        }))
+                    }
             }
         })
     }
@@ -36,33 +43,13 @@ struct ForgotPasswordView: View {
     private func continueButtonTapped() {
         guard let safeEmail = viewModel.email else { return }
         viewModel.repository.continueButtonTapped(email: safeEmail, completion: {
-            self.displaySimplePopup()
+            showingAlert = true
         })
-        
-//        continueButtonTapped {
-//            self.buttonViewModel.isLoading = false
-//        }
-    }
-    
-//    func continueButtonTapped(completion: @escaping () -> Void) {
-//        guard let safeEmail = viewModel.email else { return }
-//        viewModel.repository.continueButtonTapped(email: safeEmail, completion: {
-//            self.displaySimplePopup()
-//        })
-//    }
-    
-    private func displaySimplePopup() {
-        popToRoot()
-//        let alert = BinkAlertController(title: L10n.loginForgotPassword, message: L10n.fogrotPasswordPopupText, preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: L10n.ok, style: .cancel, handler: { _ in
-//            self.navigationController?.popToRootViewController(animated: true)
-//        }))
-//        navigationController?.present(alert, animated: true, completion: nil)
     }
 }
 
 
-final class ForgotPasswordViewHostingController: UIHostingController<ForgotPasswordView> {   
+final class ForgotPasswordViewHostingController: UIHostingController<ForgotPasswordView> {
     init() {
         super.init(rootView: ForgotPasswordView())
         rootView.popToRoot = popToRoot

@@ -11,7 +11,6 @@ import UIKit
 
 class ForgotPasswordViewModel: NSObject {
     let repository: ForgotPasswordRepository
-//    var navigationController: UINavigationController?
     var email: String?
     var datasource: FormDataSource
     
