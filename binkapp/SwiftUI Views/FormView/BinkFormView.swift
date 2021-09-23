@@ -83,7 +83,7 @@ struct BinkFormView: View {
                     VStack(spacing: 0) {
                         InputToolbarView(buttonAction: { viewModel.pickerType = .none })
                         
-                        DatePicker("D.O.B.", selection: $viewModel.date)
+                        DatePicker("D.O.B.", selection: $viewModel.date, displayedComponents: .date)
                             .datePickerStyle(GraphicalDatePickerStyle())
                             .frame(maxHeight: 400)
                             .background(Color(themeManager.color(for: .viewBackground)))
