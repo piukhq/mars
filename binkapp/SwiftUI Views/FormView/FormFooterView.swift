@@ -34,7 +34,17 @@ final class FormFooterViewViewModel: ObservableObject {
     }
     
     var checkboxStackHeight: CGFloat {
-        return datasource.checkboxes.count == 3 ? 150 : 100
+        switch datasource.formtype {
+        case .authAndAdd, .addPaymentCard:
+            return datasource.checkboxes.count == 3 ? 420 : 100
+        case .login(let accessForm):
+            switch accessForm {
+            case .termsAndConditions:
+                return 230
+            default:
+                return 100
+            }
+        }
     }
     
     func configureAttributedStrings() {
@@ -97,6 +107,8 @@ struct FormFooterView: View {
                 ForEach(Array(viewModel.datasource.checkboxes.enumerated()), id: \.offset) { offset, checkbox in
                     CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $viewModel.checkboxStates[offset], didTapOnURL: $viewModel.didTapOnURL)
                         .padding(.horizontal, 5)
+//                        .background(Color(.amber))
+//                        .border(Color(.blue))
                 }
             }
             .frame(height: viewModel.checkboxStackHeight)

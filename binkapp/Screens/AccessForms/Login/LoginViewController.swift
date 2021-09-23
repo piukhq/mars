@@ -8,12 +8,6 @@
 
 import UIKit
 
-enum MagicLinkStatus {
-    case checkInbox
-    case expired
-    case failed
-}
-
 class LoginViewController: BaseFormViewController, UserServiceProtocol {
     private enum Constants {
         static let hyperlinkHeight: CGFloat = 54.0

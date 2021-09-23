@@ -130,7 +130,8 @@ extension FormDataSource {
         
         let fieldExitedBlock: FormField.FieldExitedBlock = { [weak self] field in
             guard let self = self else { return }
-            self.delegate?.formDataSource(self, fieldDidExit: field)
+            self.checkFormValidity()
+//            self.delegate?.formDataSource(self, fieldDidExit: field)
         }
 
         let manualValidateBlock: FormField.ManualValidateBlock = { [weak self] field in
@@ -219,7 +220,8 @@ extension FormDataSource {
         
         let fieldExitedBlock: FormField.FieldExitedBlock = { [weak self] field in
             guard let self = self else { return }
-            self.delegate?.formDataSource(self, fieldDidExit: field)
+            self.checkFormValidity()
+//            self.delegate?.formDataSource(self, fieldDidExit: field)
         }
         
         let dataSourceRefreshBlock: FormField.DataSourceRefreshBlock = { [weak self] in
@@ -497,7 +499,8 @@ extension FormDataSource {
         
         let fieldExitedBlock: FormField.FieldExitedBlock = { [weak self] field in
             guard let self = self else { return }
-            self.delegate?.formDataSource(self, fieldDidExit: field)
+            self.checkFormValidity()
+//            self.delegate?.formDataSource(self, fieldDidExit: field)
         }
         
         // Email

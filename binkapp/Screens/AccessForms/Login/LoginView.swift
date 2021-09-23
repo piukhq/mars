@@ -20,7 +20,7 @@ struct LoginView: View {
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
             BinkFormView(viewModel: formViewModel)
-                .onReceive(viewModel.$datasource, perform: { datasource in
+                .onReceive(viewModel.$datasourcePublisher, perform: { datasource in
                     formViewModel = FormViewModel(datasource: datasource, title: viewModel.title, description: viewModel.description)
                 })
             if case .none = formViewModel.pickerType {

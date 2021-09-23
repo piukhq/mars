@@ -11,18 +11,29 @@ import SwiftUI
 
 final class LoginViewViewModel: UserServiceProtocol, ObservableObject {
     lazy var continueButton: BinkButtonView = {
-        return BinkButtonView(datasource: datasource, viewModel: buttonViewModel, title: L10n.continueButtonTitle, buttonTapped: continueButtonTapped, type: .gradient)
+        return BinkButtonView(viewModel: buttonViewModel, title: L10n.continueButtonTitle, buttonTapped: continueButtonTapped, type: .gradient)
     }()
     
     lazy var switchLoginTypeButton: BinkButtonView = {
-        return BinkButtonView(datasource: datasource, viewModel: buttonViewModel, title: L10n.loginWithPassword, buttonTapped: switchLoginTypeButtonHandler, type: .plain, alwaysEnabled: true)
+        return BinkButtonView(viewModel: buttonViewModel, title: L10n.loginWithPassword, buttonTapped: switchLoginTypeButtonHandler, type: .plain, alwaysEnabled: true)
     }()
     
-    @Published var datasource = FormDataSource(accessForm: .magicLink)
-    private let buttonViewModel = ButtonViewModel()
+    @Published var datasourcePublisher: FormDataSource
+    var datasource: FormDataSource {
+        didSet {
+            datasourcePublisher = datasource
+        }
+    }
+    private var buttonViewModel: ButtonViewModel
     private var loginType: AccessForm = .magicLink
     var title = L10n.magicLinkTitle
     var description = L10n.magicLinkDescription
+    
+    init() {
+        self.datasource = FormDataSource(accessForm: .magicLink)
+        self.datasourcePublisher = datasource
+        self.buttonViewModel = ButtonViewModel(datasource: datasource)
+    }
 
     func continueButtonTapped() {
         if loginType == .emailPassword {
@@ -85,6 +96,7 @@ final class LoginViewViewModel: UserServiceProtocol, ObservableObject {
         let emailAddress = datasource.fields.first(where: { $0.fieldCommonName == .email })?.value
         let prefilledValues = FormDataSource.PrefilledValue(commonName: .email, value: emailAddress)
         datasource = FormDataSource(accessForm: loginType, prefilledValues: [prefilledValues])
+        buttonViewModel.datasource = datasource
         datasource.checkFormValidity()
         
         switchLoginTypeButton.title = loginType == .magicLink ? L10n.loginWithPassword : L10n.emailMagicLink
@@ -92,15 +104,15 @@ final class LoginViewViewModel: UserServiceProtocol, ObservableObject {
         if loginType == .magicLink {
             title = L10n.magicLinkTitle
             description = L10n.magicLinkDescription
-//            hyperlinkButton.isHidden = true
         } else {
             title = L10n.loginTitle
             description = L10n.loginSubtitle
-//            hyperlinkButton.isHidden = false
         }
     }
     
     private func showError() {
+        // TODO >>>>>>>>>>>>>>>>>>>>
+        
 //        let alert = BinkAlertController(title: L10n.errorTitle, message: L10n.loginError, preferredStyle: .alert)
 //        alert.addAction(UIAlertAction(title: L10n.ok, style: .default))
 //        present(alert, animated: true)

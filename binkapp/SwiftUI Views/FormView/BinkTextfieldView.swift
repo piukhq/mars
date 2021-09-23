@@ -14,7 +14,7 @@ struct BinkTextfieldView: View {
     @State var field: FormField
     @State private var isEditing = false
     @State var value: String
-    @State var showErrorState = false
+    @State var canShowErrorState = false
     
     init(field: FormField, viewModel: FormViewModel) {
         _field = State(initialValue: field)
@@ -107,28 +107,37 @@ struct BinkTextfieldView: View {
                             }
                         case .sensitive, .confirmPassword:
                             SecureField(field.placeholder, text: $value) {
+                                // On Commit
+                                self.isEditing = false
                                 self.field.updateValue(value)
                                 self.field.fieldWasExited()
-                                self.isEditing = false
+                                formViewModel.showtextFieldToolbar = false
+                                canShowErrorState = true
+                                
                             }
                             .onTapGesture {
+                                // Begin editing
                                 isEditing = true
+                                formViewModel.showtextFieldToolbar = true
+                                canShowErrorState = !field.isValid() && !value.isEmpty
                             }
                         default:
                             TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
                                 self.isEditing = isEditing
                                 self.field.updateValue(value)
                                 self.formViewModel.datasource.checkFormValidity()
-                                
+                                canShowErrorState = !field.isValid() && !value.isEmpty
+
                                 if isEditing {
+                                    // Begin editing
 //                                    self.datasource.formViewDidSelectField(self)
                                     formViewModel.showtextFieldToolbar = true
                                 } else {
+                                    // On Commit
                                     self.field.fieldWasExited()
                                 }
-                                showErrorState = !field.isValid() && !value.isEmpty
                             }, onCommit: {
-                                self.showErrorState = true
+                                self.canShowErrorState = true
                             })
                             .onReceive(Just(value)) { _ in valueChangedHandler() }
                             .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
@@ -171,6 +180,12 @@ struct BinkTextfieldView: View {
             
             if field.fieldType.isSecureTextEntry {
                 // TODO: - Validation point TextViews
+                if textfieldValidationFailed(value: $value) {
+                    Text(field.validationErrorMessage ?? L10n.formFieldValidationError)
+                        .font(.custom(UIFont.textFieldExplainer.fontName, size: UIFont.textFieldExplainer.pointSize))
+                        .foregroundColor(Color(.errorRed))
+                        .padding(.leading)
+                }
             } else {
                 if textfieldValidationFailed(value: $value) {
                     Text(field.validationErrorMessage ?? L10n.formFieldValidationError)
@@ -235,7 +250,7 @@ struct BinkTextfieldView: View {
     
     private func textfieldValidationFailed(value: Binding<String>) -> Bool {
         field.updateValue(value.wrappedValue)
-        guard showErrorState else { return false }
+        guard canShowErrorState else { return false }
         return !field.isValid() && !value.wrappedValue.isEmpty
     }
     

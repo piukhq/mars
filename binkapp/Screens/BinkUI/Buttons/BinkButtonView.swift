@@ -9,12 +9,16 @@
 import SwiftUI
 
 class ButtonViewModel: ObservableObject {
+    @Published var datasource: FormDataSource
     @Published var isLoading = false
+    
+    init(datasource: FormDataSource) {
+        self.datasource = datasource
+    }
 }
 
 struct BinkButtonView: View, Identifiable {
     @ObservedObject private var themeManager = Current.themeManager
-    @ObservedObject var datasource: FormDataSource
     @ObservedObject var viewModel: ButtonViewModel
     @State var enabled = false
     @State var loading = false
@@ -56,7 +60,7 @@ struct BinkButtonView: View, Identifiable {
                 .overlay(ActivityIndicator(animate: $loading, style: .medium), alignment: .center)
         }
         .disabled(!enabled)
-        .onReceive(datasource.$fullFormIsValid) { isValid in
+        .onReceive(viewModel.datasource.$fullFormIsValid) { isValid in
             enabled = alwaysEnabled
             guard !alwaysEnabled else { return }
             enabled = isValid
