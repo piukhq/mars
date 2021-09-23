@@ -128,8 +128,8 @@
 		700900D725C1DB7500548F50 /* LocalPointsCollection_DetectElement.js in Resources */ = {isa = PBXBuildFile; fileRef = 700900D625C1DB7500548F50 /* LocalPointsCollection_DetectElement.js */; };
 		701418CA26FB306100BE4DF0 /* SubwayPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701418C926FB306100BE4DF0 /* SubwayPointsScrapingAgent.swift */; };
 		701418CD26FB312100BE4DF0 /* LocalPointsCollection_Navigate_Subway.js in Resources */ = {isa = PBXBuildFile; fileRef = 701418CC26FB312100BE4DF0 /* LocalPointsCollection_Navigate_Subway.js */; };
-		701418C326F4BCFE00BE4DF0 /* KFCPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701418C226F4BCFE00BE4DF0 /* KFCPointsScrapingAgent.swift */; };
-		701418C726F8CA6100BE4DF0 /* LocalPointsCollection_Navigate_Kfc.js in Resources */ = {isa = PBXBuildFile; fileRef = 701418C626F8CA6000BE4DF0 /* LocalPointsCollection_Navigate_Kfc.js */; };
+		701418D526FC853C00BE4DF0 /* KFCPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701418D326FC853C00BE4DF0 /* KFCPointsScrapingAgent.swift */; };
+		701418D626FC853C00BE4DF0 /* LocalPointsCollection_Navigate_Kfc.js in Resources */ = {isa = PBXBuildFile; fileRef = 701418D426FC853C00BE4DF0 /* LocalPointsCollection_Navigate_Kfc.js */; };
 		701E2C4A2677567E003F903B /* DebugMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701E2C492677567E003F903B /* DebugMenuView.swift */; };
 		70285D842588B674007B4298 /* BinkButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70285D832588B674007B4298 /* BinkButtonsView.swift */; };
 		702D0E3526306F8E0067E370 /* BinkModuleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D0E3426306F8E0067E370 /* BinkModuleViewModel.swift */; };
@@ -753,8 +753,8 @@
 		700900D625C1DB7500548F50 /* LocalPointsCollection_DetectElement.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_DetectElement.js; sourceTree = "<group>"; };
 		701418C926FB306100BE4DF0 /* SubwayPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		701418CC26FB312100BE4DF0 /* LocalPointsCollection_Navigate_Subway.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Subway.js; sourceTree = "<group>"; };
-		701418C226F4BCFE00BE4DF0 /* KFCPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KFCPointsScrapingAgent.swift; sourceTree = "<group>"; };
-		701418C626F8CA6000BE4DF0 /* LocalPointsCollection_Navigate_Kfc.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Kfc.js; sourceTree = "<group>"; };
+		701418D326FC853C00BE4DF0 /* KFCPointsScrapingAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFCPointsScrapingAgent.swift; sourceTree = "<group>"; };
+		701418D426FC853C00BE4DF0 /* LocalPointsCollection_Navigate_Kfc.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Kfc.js; sourceTree = "<group>"; };
 		701E2C492677567E003F903B /* DebugMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuView.swift; sourceTree = "<group>"; };
 		70285D832588B674007B4298 /* BinkButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkButtonsView.swift; sourceTree = "<group>"; };
 		702B1F0725A479CA00C7563F /* binkapp - 5-1-21 - Membership plan image cta url.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 5-1-21 - Membership plan image cta url.xcdatamodel"; sourceTree = "<group>"; };
@@ -1795,10 +1795,17 @@
 			children = (
 				701418CC26FB312100BE4DF0 /* LocalPointsCollection_Navigate_Subway.js */,
 				701418C926FB306100BE4DF0 /* SubwayPointsScrapingAgent.swift */,
-				701418C626F8CA6000BE4DF0 /* LocalPointsCollection_Navigate_Kfc.js */,
-				701418C226F4BCFE00BE4DF0 /* KFCPointsScrapingAgent.swift */,
 			);
 			path = Subway;
+			sourceTree = "<group>";
+		};
+		701418D226FC852F00BE4DF0 /* KFC */ = {
+			isa = PBXGroup;
+			children = (
+				701418D326FC853C00BE4DF0 /* KFCPointsScrapingAgent.swift */,
+				701418D426FC853C00BE4DF0 /* LocalPointsCollection_Navigate_Kfc.js */,
+			);
+			path = KFC;
 			sourceTree = "<group>";
 		};
 		70285D822588B657007B4298 /* Buttons */ = {
@@ -1967,6 +1974,7 @@
 		70BD4BD024B774EB006E4E3D /* Agents */ = {
 			isa = PBXGroup;
 			children = (
+				701418D226FC852F00BE4DF0 /* KFC */,
 				701418C826FB304300BE4DF0 /* Subway */,
 				70703420268CC11D0072F3BF /* Starbucks */,
 				70661B86250792C0006DB009 /* Boots */,
@@ -3259,7 +3267,6 @@
 				EF335C83234F565B00D49223 /* WalletPromptCollectionViewCell.xib in Resources */,
 				700900D725C1DB7500548F50 /* LocalPointsCollection_DetectElement.js in Resources */,
 				70C530EB26121358007E2147 /* LocalPointsCollection_Navigate_Superdrug.js in Resources */,
-				701418C726F8CA6100BE4DF0 /* LocalPointsCollection_Navigate_Kfc.js in Resources */,
 				70907E2F25C883C3007629BB /* LocalPointsCollection_Points_Superdrug.js in Resources */,
 				3C25BE0023019BC100E931EE /* BrandTableViewCell.xib in Resources */,
 				70907E3E25C883E2007629BB /* LocalPointsCollection_Points_Waterstones.js in Resources */,
@@ -3292,6 +3299,7 @@
 				3CD3493F22F99E1D000C1F4D /* NunitoSans-ExtraBoldItalic.ttf in Resources */,
 				3CD3493C22F99E1D000C1F4D /* NunitoSans-Bold.ttf in Resources */,
 				70907E1225C87B82007629BB /* LocalPointsCollection_Login_Superdrug.js in Resources */,
+				701418D626FC853C00BE4DF0 /* LocalPointsCollection_Navigate_Kfc.js in Resources */,
 				70907E3925C883D9007629BB /* LocalPointsCollection_Points_Tesco.js in Resources */,
 				3C794D8D23018C25000A31FD /* BrowseBrandsViewController.xib in Resources */,
 				EF5229B82423FC4E004AC972 /* stagingPublicKey.der in Resources */,
@@ -3788,6 +3796,7 @@
 				70CE8967258A807E00078ADA /* BinkButton.swift in Sources */,
 				EF59A12824473589001B60B8 /* APIClient.swift in Sources */,
 				B7E2EC0822E5ED6600BB201A /* String+Encrypting.swift in Sources */,
+				701418D526FC853C00BE4DF0 /* KFCPointsScrapingAgent.swift in Sources */,
 				CE2CFE5E25E3C5CB00B1CB93 /* MerchantHeroCell.swift in Sources */,
 				CEA9057E25C81994000F69E1 /* BinkAlertController.swift in Sources */,
 				EF8F0481238D582300BD708B /* _CD_PlanDocument.swift in Sources */,
