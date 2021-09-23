@@ -377,7 +377,6 @@
 		CEB7ADFA26F9EC7B00BD138C /* LoginViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADF926F9EC7B00BD138C /* LoginViewViewModel.swift */; };
 		CEB7ADFC26FB135900BD138C /* AttributedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADFB26FB135900BD138C /* AttributedTextView.swift */; };
 		CEB7ADFE26FB1E3D00BD138C /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADFD26FB1E3D00BD138C /* ForgotPasswordView.swift */; };
-		CEB7AE0026FB44F600BD138C /* TermsAndConditionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADFF26FB44F600BD138C /* TermsAndConditionsView.swift */; };
 		CEC0ACBC2636AD0000845813 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBA2636AD0000845813 /* Assets.swift */; };
 		CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBB2636AD0000845813 /* Strings.swift */; };
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
@@ -1018,7 +1017,6 @@
 		CEB7ADF926F9EC7B00BD138C /* LoginViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewViewModel.swift; sourceTree = "<group>"; };
 		CEB7ADFB26FB135900BD138C /* AttributedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextView.swift; sourceTree = "<group>"; };
 		CEB7ADFD26FB1E3D00BD138C /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
-		CEB7ADFF26FB44F600BD138C /* TermsAndConditionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TermsAndConditionsView.swift; path = ../../../../../../../TermsAndConditionsView.swift; sourceTree = "<group>"; };
 		CEC0AC3B2636AAA400845813 /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		CEC0ACBA2636AD0000845813 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		CEC0ACBB2636AD0000845813 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -2295,7 +2293,6 @@
 			children = (
 				BD9E4CC6236EE67900C6F098 /* TermsAndConditionsViewController.swift */,
 				CE949EA926FC9BDB00F578DC /* TermsAndConditionsView.swift */,
-				CEB7ADFF26FB44F600BD138C /* TermsAndConditionsView.swift */,
 			);
 			path = Social;
 			sourceTree = "<group>";
@@ -3806,7 +3803,6 @@
 				CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */,
 				7061053125B7349600A16DA5 /* ThemeManager.swift in Sources */,
 				3C36071F230FF03000AC76A3 /* BrandHeaderView.swift in Sources */,
-				CEB7AE0026FB44F600BD138C /* TermsAndConditionsView.swift in Sources */,
 				EFF59F19234B73C900CF3992 /* CardDetailInfoTableViewCell.swift in Sources */,
 				3C873FF522F073CF00FA3031 /* MainTabBarViewModel.swift in Sources */,
 				EFA5F7542379AAB20027AB80 /* CD_VoucherEarn.swift in Sources */,
