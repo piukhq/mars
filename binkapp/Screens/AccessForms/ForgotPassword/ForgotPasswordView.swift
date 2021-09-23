@@ -10,19 +10,20 @@ import SwiftUI
 
 struct ForgotPasswordView: View {
     private var continueButton: BinkButtonView {
-        return BinkButtonView(datasource: datasource, viewModel: buttonViewModel, title: L10n.continueButtonTitle, buttonTapped: continueButtonTapped, type: .gradient)
+        return BinkButtonView(viewModel: buttonViewModel, title: L10n.continueButtonTitle, buttonTapped: continueButtonTapped, type: .gradient)
     }
-    
+
     @State private var formViewModel: FormViewModel
     @State private var showingAlert = false
     private let viewModel: ForgotPasswordViewModel
     private let datasource = FormDataSource(accessForm: .forgottenPassword)
-    private let buttonViewModel = ButtonViewModel()
+    private let buttonViewModel: ButtonViewModel
     var popToRoot: () -> Void = {}
 
     init() {
         self.viewModel = ForgotPasswordViewModel(repository: ForgotPasswordRepository(), datasource: datasource)
         formViewModel = FormViewModel(datasource: datasource, title: L10n.loginForgotPassword, description: L10n.forgotPasswordDescription)
+        buttonViewModel = ButtonViewModel(datasource: datasource)
     }
     
     var body: some View {
