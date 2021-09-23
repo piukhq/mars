@@ -29,9 +29,9 @@ function handleNavigation() {
         console.log("getting points")
         var pts = document.querySelector(pointsValueQuery)
         if (pts) {
-            // return {
-            //     "points": pts.innerHTML
-            // }
+            return {
+                "points": pts.innerHTML
+            }
             console.log(pts.innerHTML)
         }
     }
@@ -52,9 +52,9 @@ function handleNavigation() {
 
             b.click()
 
-            // return {
-            //     "did_attempt_login": true
-            // }
+            return {
+                "did_attempt_login": true
+            }
             console.log("did attempt login")
         }
     }

@@ -283,7 +283,7 @@ class PointsScrapingManager {
         NotificationCenter.default.post(name: .webScrapingUtilityDidUpdate, object: nil)
         
         /// If requiresRetry is false, then we know the item either succeeded points collection, or failed it's only retry. In either case, remove the item from the processing queue
-        /// If requiredRetry is true, then we know we want to perform a retry, so we should leave the item in the queue. It won't be processed with other cards, but only when the points module in LCD is tapped
+        /// If requiresRetry is true, then we know we want to perform a retry, so we should leave the item in the queue. It won't be processed with other cards, but only when the points module in LCD is tapped
         
         processingQueue.removeAll(where: { $0.card.id == item.card.id && $0.requiresRetry == false })
         processQueuedItems()
