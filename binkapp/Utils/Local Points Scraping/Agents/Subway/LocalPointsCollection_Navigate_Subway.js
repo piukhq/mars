@@ -69,50 +69,56 @@ function handleNavigation() {
                 "did_attempt_login": true
             }
         } else {
-            // The user needs to complete recaptcha
-            return {
-                "user_action_required": true
+            // The user needs to complete recaptcha - set the screen up for this
+
+            var navBarButton = document.querySelector('button.navbar-toggle')
+            var signInButton = document.querySelector('a[title="Sign in"]')
+            if (navBarButton && signInButton) {
+                navBarButton.click()
+                signInButton.click()
+
+                var node = document.createElement('div')
+                node.style.backgroundColor = 'white'
+                node.style.opacity = 1.0
+                node.style.position = 'fixed'
+                node.style.top = '0'
+                node.style.bottom = '0'
+                node.style.left = '0'
+                node.style.right = '0'
+                node.style.zIndex = '-1'
+
+                var loginModal = document.querySelector('#loginModal')
+                loginModal.appendChild(node)
+
+                var modalContent = loginModal.querySelector('.modal-content')
+                modalContent.style.boxShadow = "0px 0px 0px white"
+
+                var header = modalContent.querySelector('.modal-header')
+                var fields = modalContent.querySelectorAll('.form-group')
+                var options = modalContent.querySelector('.form-options')
+                var submitButton = modalContent.querySelector('recaptcha-submit button')
+
+                header.hidden = true
+                options.hidden = true
+
+                for (i = 0; i < fields.length; ++i) {
+                    fields[i].hidden = true
+                }
+
+                var message = document.createElement('h2')
+                message.innerText = recaptchaMessage
+                message.style.position = 'relative'
+                message.style.zIndex = '1000'
+
+                modalBody = modalContent.querySelector('.modal-body')
+                modalContent.insertBefore(message, modalBody)
+
+                return {
+                    "user_action_required": true
+                }
             }
         }
     }
-
-
-    // If we can't identify a points value, can we identify one of the following:
-    // Recaptcha, incorrect credentials message
-
-    // var error = document.querySelector(incorrectCredentialsQuery)
-    // if (error && error.innerHTML !== "") {
-        
-    // }
-
-    // if (rInvalid) {
-    //     var node = document.createElement('div')
-    //     node.style.backgroundColor = 'white'
-    //     node.style.position = 'fixed'
-    //     node.style.top = '0'
-    //     node.style.bottom = '0'
-    //     node.style.left = '0'
-    //     node.style.right = '0'
-    //     node.style.zIndex = '999'
-
-    //     let container = document.querySelector(recaptchaAnchorContainerQuery)
-    //     container.style.position = 'relative'
-    //     container.style.zIndex = '1000'
-
-    //     var message = document.createElement('h2')
-    //     message.innerText = recaptchaMessage
-    //     message.style.position = 'relative'
-    //     message.style.zIndex = '1000'
-
-    //     rInvalid.appendChild(node)
-    //     rInvalid.insertBefore(message, container)
-
-    //     f.scrollIntoView()
-
-    //     return {
-    //         "user_action_required": true
-    //     }
-    // }
 
     // If we cannot identify a login form, points value, recaptcha or incorrect credentials
     // We should assume the client is redirecting, and the idle timer should handle moving to retry state
