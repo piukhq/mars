@@ -100,7 +100,7 @@ extension WalletRefreshManager {
         let balanceUpdated = Date(timeIntervalSince1970: getCardBalanceUpdatedTimestamp(card))
         let elapsed = Int(Date().timeIntervalSince(balanceUpdated))
         
-        return elapsed >= Int(Current.pointsScrapingManager.isDebugMode ? RefreshInterval.threeDays.rawValue : RefreshInterval.threeDays.rawValue)
+        return elapsed <= Int(Current.pointsScrapingManager.isDebugMode ? RefreshInterval.threeDays.rawValue : RefreshInterval.threeDays.rawValue)
     }
     
     private static func getCardBalanceUpdatedTimestamp(_ card: CD_MembershipCard) -> Double {
