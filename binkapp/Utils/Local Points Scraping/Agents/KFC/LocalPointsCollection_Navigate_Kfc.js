@@ -18,90 +18,123 @@ var incorrectCredentialsQuery = "p.js-title"
 handleNavigation()
 
 function handleNavigation() {
-    if (window.location === "https://order.kfc.co.uk") {
-        window.location === "https://order.kfc.co.uk/account/login"
+    // if (window.location.href === "https://order.kfc.co.uk/account/my-rewards") {
+    //     var pts = document.querySelector(pointsValueQuery)
+    //     if (pts) {
+
+    //         console.log('2')
+    //         // 2. Scrape the balance if possible
+    //         return {
+    //             "points": pts.innerHTML
+    //         }
+    //     }
+    // } else {
+    //     window.location.href = "https://order.kfc.co.uk/account/login"
+
+    //     var u = document.querySelector(usernameInputQuery)
+    //     var p = document.querySelector(passwordInputQuery)
+    //     var b = document.querySelector(submitButtonQuery)
+    //     if (u && p && b && b.innerHTML === "Sign In") {
+
+    //         // 4. Can we identify an incorrect credentials error message?
+
+    //         // 5. Return the error message
+
+    //         console.log('6')
+    //         // 6. Attempt to login
+    //         var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set
+    //         nativeInputValueSetter.call(u, username)
+    //         nativeInputValueSetter.call(p, password)
+
+    //         var valueSetterEvent = new Event('input', { bubbles: true })
+    //         u.dispatchEvent(valueSetterEvent)
+    //         p.dispatchEvent(valueSetterEvent)
+
+    //         b.click()
+
+    //         return {
+    //             "did_attempt_login": true
+    //         }
+    //     }
+    // }
+    
+
+
+    console.log('1')
+    // 1. Can we identify a points balance?
+
+    var pts = document.querySelector(pointsValueQuery)
+    if (pts) {
+
+        console.log('2')
+        // 2. Scrape the balance if possible
+        return {
+            "points": pts.innerHTML
+        }
     }
 
-    if (window.location === "https://order.kfc.co.uk/account/login") {
-        window.location === "https://www.google.co.uk"
+    console.log('3')
+    // 3. Can we identify a login form?
+
+    var u = document.querySelector(usernameInputQuery)
+    var p = document.querySelector(passwordInputQuery)
+    var b = document.querySelector(submitButtonQuery)
+    if (u && p && b && b.innerHTML === "Sign In") {
+
+        // 4. Can we identify an incorrect credentials error message?
+
+        // 5. Return the error message
+
+        console.log('6')
+        // 6. Attempt to login
+        var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set
+        nativeInputValueSetter.call(u, username)
+        nativeInputValueSetter.call(p, password)
+
+        var valueSetterEvent = new Event('input', { bubbles: true })
+        u.dispatchEvent(valueSetterEvent)
+        p.dispatchEvent(valueSetterEvent)
+
+        b.click()
+
+        return {
+            "did_attempt_login": true
+        }
     }
 
+    console.log('7')
+    // 7. Can we identify a menu icon?
 
-    // console.log('1')
-    // // 1. Can we identify a points balance?
+    var m = document.querySelector(menuIconQuery)
+    if (m) {
 
-    // var pts = document.querySelector(pointsValueQuery)
-    // if (pts) {
+        console.log('8')
+        // 8. Tap the menu icon
+        m.parentElement.click()
 
-    //     console.log('2')
-    //     // 2. Scrape the balance if possible
-    //     return {
-    //         "points": pts.innerHTML
-    //     }
-    // }
+        console.log('9')
+        // 9. Can we identify a link to account/my-rewards?
+        var rewards = document.querySelector(rewardsNavButtonQuery)
+        if (rewards) {
 
-    // console.log('3')
-    // // 3. Can we identify a login form?
+            console.log('10')
+            // 10. Tap the reward link link
+            rewards.click()
+            return {}
+        }
 
-    // var u = document.querySelector(usernameInputQuery)
-    // var p = document.querySelector(passwordInputQuery)
-    // var b = document.querySelector(submitButtonQuery)
-    // if (u && p && b && b.innerHTML === "Sign In") {
+        console.log('11')
+        // 11. Can we identify a link to the login screen?
 
-    //     // 4. Can we identify an incorrect credentials error message?
+        var login = document.querySelector(loginNavButtonQuery)
+        if (login) {
 
-    //     // 5. Return the error message
-
-    //     console.log('6')
-    //     // 6. Attempt to login
-    //     var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set
-    //     nativeInputValueSetter.call(u, username)
-    //     nativeInputValueSetter.call(p, password)
-
-    //     var valueSetterEvent = new Event('input', { bubbles: true })
-    //     u.dispatchEvent(valueSetterEvent)
-    //     p.dispatchEvent(valueSetterEvent)
-
-    //     b.click()
-
-    //     return {
-    //         "did_attempt_login": true
-    //     }
-    // }
-
-    // console.log('7')
-    // // 7. Can we identify a menu icon?
-
-    // var m = document.querySelector(menuIconQuery)
-    // if (m) {
-
-    //     console.log('8')
-    //     // 8. Tap the menu icon
-    //     m.parentElement.click()
-
-    //     console.log('9')
-    //     // 9. Can we identify a link to account/my-rewards?
-    //     var rewards = document.querySelector(rewardsNavButtonQuery)
-    //     if (rewards) {
-
-    //         console.log('10')
-    //         // 10. Tap the reward link link
-    //         rewards.click()
-    //         return {}
-    //     }
-
-    //     console.log('11')
-    //     // 11. Can we identify a link to the login screen?
-
-    //     var login = document.querySelector(loginNavButtonQuery)
-    //     if (login) {
-
-    //         console.log('12')
-    //         // 12. Tap the login link
-    //         login.click()
-    //         return {}
-    //     }
-    // }
+            console.log('12')
+            // 12. Tap the login link
+            login.click()
+            return {}
+        }
+    }
 
     // If we can't identify a points value, can we identify one of the following an incorrect credentials message
 

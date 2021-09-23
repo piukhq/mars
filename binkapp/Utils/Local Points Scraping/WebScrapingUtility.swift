@@ -54,7 +54,7 @@ class WebScrapingUtility: NSObject {
     
     private var idleTimer: Timer?
     private let idleThreshold: TimeInterval = 20
-    private let idleRetryLimit = 2
+    private let idleRetryLimit = 4
     private var idleRetryCount = 0
     private var sessionHasAttemptedLogin = false
     
@@ -100,18 +100,23 @@ class WebScrapingUtility: NSObject {
         let request = URLRequest(url: url)
         
         getAppropriateWebview { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let webview):
-                self?.activeWebview = webview
+                self.activeWebview = webview
+                
+//                if self.isInDebugMode {
+//                    self.presentWebView()
+//                }
                 
                 DispatchQueue.main.async {
-                    self?.activeWebview?.navigationDelegate = self
-                    self?.activeWebview?.load(request)
+                    self.activeWebview?.navigationDelegate = self
+                    self.activeWebview?.load(request)
                 }
                 
-                self?.resetIdlingTimer()
+                self.resetIdlingTimer()
             case .failure(let error):
-                self?.finish(withError: error)
+                self.finish(withError: error)
             }
         }
     }
