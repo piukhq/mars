@@ -10,47 +10,19 @@ import SwiftUI
 
 struct AddPaymentCardView: View {
     @ObservedObject var formViewModel: FormViewModel
-    private let buttonViewModel = ButtonViewModel()
-    private let viewModel: AddPaymentCardViewModel
-    private var primaryButton: BinkButtonView {
-        return BinkButtonView(datasource: formViewModel.datasource, viewModel: buttonViewModel, title: L10n.addButtonTitle, buttonTapped: handlePrimaryButtonTap, type: .gradient)
-    }
-    
+    private var viewModel: AddPaymentCardViewModel
+
     init(viewModel: AddPaymentCardViewModel) {
         self.viewModel = viewModel
-        self.formViewModel = FormViewModel(datasource: viewModel.formDataSource, title: L10n.addPaymentCardTitle, description: L10n.addPaymentCardDescription, addPaymentCardViewModel: viewModel)
+        self.formViewModel = FormViewModel(datasource: viewModel.datasource, title: L10n.addPaymentCardTitle, description: L10n.addPaymentCardDescription, addPaymentCardViewModel: viewModel)
     }
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
             BinkFormView(viewModel: formViewModel)
             if case .none = formViewModel.pickerType {
-                BinkButtonsStackView(buttons: [primaryButton])
+                BinkButtonsStackView(buttons: [viewModel.primaryButton])
             }
         })
     }
-    
-    private func handlePrimaryButtonTap() {
-        if viewModel.shouldDisplayTermsAndConditions {
-            viewModel.toPaymentTermsAndConditions(acceptAction: {
-                Current.navigate.close {
-                    self.viewModel.addPaymentCard {
-                        self.buttonViewModel.isLoading = false
-                    }
-                }
-            }, declineAction: {
-                Current.navigate.close()
-            })
-        } else {
-            viewModel.addPaymentCard {
-                self.buttonViewModel.isLoading = false
-            }
-        }
-    }
 }
-
-//struct AddPaymentCardView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AddPaymentCardView(formViewModel: FormViewModel(datasource: FormDataSource(PaymentCardCreateModel(fullPan: "", nameOnCard: "Sean", month: 1, year: 12)), title: <#T##String?#>, description: <#T##String?#>, membershipPlan: <#T##CD_MembershipPlan#>), viewModel: <#AddPaymentCardViewModel#>)
-//    }
-//}

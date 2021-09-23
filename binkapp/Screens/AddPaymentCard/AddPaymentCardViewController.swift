@@ -37,7 +37,7 @@ class AddPaymentCardViewController: BaseFormViewController {
     
     init(viewModel: AddPaymentCardViewModel) {
         self.viewModel = viewModel
-        super.init(title: "Add payment card", description: "Enter your details below to add your payment card into Bink.", dataSource: viewModel.formDataSource)
+        super.init(title: "Add payment card", description: "Enter your details below to add your payment card into Bink.", dataSource: viewModel.datasource)
         dataSource.delegate = self
     }
     

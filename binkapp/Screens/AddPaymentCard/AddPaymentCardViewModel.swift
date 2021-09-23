@@ -14,25 +14,30 @@ enum AddPaymentCardJourney {
     case pll
 }
 
-final class AddPaymentCardViewModel: NSObject {
+final class AddPaymentCardViewModel: NSObject, ObservableObject {
+    lazy var primaryButton: BinkButtonView = {
+        return BinkButtonView(viewModel: buttonViewModel, title: L10n.addButtonTitle, buttonTapped: handlePrimaryButtonTap, type: .gradient)
+    }()
+    
     private let repository = PaymentWalletRepository()
-    private let journey: AddPaymentCardJourney
     private let strings = PaymentCardScannerStrings()
-    var paymentCard: PaymentCardCreateModel // Exposed to allow realtime updating
+    private let journey: AddPaymentCardJourney
+    private var buttonViewModel: ButtonViewModel
 
-    var shouldDisplayTermsAndConditions: Bool {
-        return true
-    }
+    var paymentCard: PaymentCardCreateModel // Exposed to allow realtime updating
+    var datasource: FormDataSource
     
     init(paymentCard: PaymentCardCreateModel? = nil, journey: AddPaymentCardJourney) {
-        self.paymentCard = paymentCard ?? PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil)
         self.journey = journey
-    }
-
-    var formDataSource: FormDataSource {
-        let datasource = FormDataSource(paymentCard)
+        self.paymentCard = paymentCard ?? PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil)
+        self.datasource = FormDataSource(self.paymentCard)
+        self.buttonViewModel = ButtonViewModel(datasource: datasource)
+        super.init()
         datasource.delegate = self
-        return datasource
+    }
+    
+    var shouldDisplayTermsAndConditions: Bool {
+        return true
     }
 
     var paymentCardType: PaymentCardType? {
@@ -55,8 +60,26 @@ final class AddPaymentCardViewModel: NSObject {
         paymentCard.month = month
         paymentCard.year = year
     }
+    
+    private func handlePrimaryButtonTap() {
+        if shouldDisplayTermsAndConditions {
+            toPaymentTermsAndConditions(acceptAction: {
+                Current.navigate.close {
+                    self.addPaymentCard {
+                        self.buttonViewModel.isLoading = false
+                    }
+                }
+            }, declineAction: {
+                Current.navigate.close()
+            })
+        } else {
+            addPaymentCard {
+                self.buttonViewModel.isLoading = false
+            }
+        }
+    }
 
-    func toPaymentTermsAndConditions(acceptAction: @escaping BinkButtonAction, declineAction: @escaping BinkButtonAction) {
+    private func toPaymentTermsAndConditions(acceptAction: @escaping BinkButtonAction, declineAction: @escaping BinkButtonAction) {
         let description = L10n.termsAndConditionsDescription
         let titleAttributedString = NSMutableAttributedString(string: L10n.termsAndConditionsTitle + "\n", attributes: [
             .font: UIFont.headline
@@ -80,7 +103,7 @@ final class AddPaymentCardViewModel: NSObject {
         Current.navigate.to(navigationRequest)
     }
 
-    func addPaymentCard(onError: @escaping () -> Void) {
+    private func addPaymentCard(onError: @escaping () -> Void) {
         repository.addPaymentCard(paymentCard, onSuccess: { [weak self] paymentCard in
             guard let self = self else { return }
             guard let paymentCard = paymentCard else { return }

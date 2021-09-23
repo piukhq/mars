@@ -92,6 +92,7 @@ struct BinkTextfieldView: View {
                                             guard isEditing else { return }
                                             self.value = pickerData.value
                                             self.field.updateValue(pickerData.value)
+
                                             // For mapping to the payment card expiry fields, we only care if we have BOTH
                                             guard pickerData.fieldCount > 1 else { return }
                                             let splitData = pickerData.value.components(separatedBy: "/")
@@ -113,7 +114,6 @@ struct BinkTextfieldView: View {
                                 self.field.fieldWasExited()
                                 formViewModel.showtextFieldToolbar = false
                                 canShowErrorState = true
-                                
                             }
                             .onTapGesture {
                                 // Begin editing
