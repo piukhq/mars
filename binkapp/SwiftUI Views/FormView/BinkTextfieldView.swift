@@ -20,7 +20,6 @@ struct BinkTextfieldView: View {
         _field = State(initialValue: field)
         _value = State(initialValue: field.forcedValue ?? "")
         self.formViewModel = viewModel
-        UITextField.appearance().clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
     }
     
     var body: some View {
@@ -121,6 +120,7 @@ struct BinkTextfieldView: View {
                                 formViewModel.showtextFieldToolbar = true
                                 canShowErrorState = !field.isValid() && !value.isEmpty
                             }
+                            .modifier(ClearButton(text: $value, isEditing: $isEditing))
                         default:
                             TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
                                 self.isEditing = isEditing
@@ -142,6 +142,7 @@ struct BinkTextfieldView: View {
                             .onReceive(Just(value)) { _ in valueChangedHandler() }
                             .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
                             .autocapitalization(field.fieldType.capitalization())
+                            .modifier(ClearButton(text: $value, isEditing: $isEditing))
                         }
                     }
                     
@@ -151,7 +152,7 @@ struct BinkTextfieldView: View {
                     }
                     
                     // Camera Button
-                    if (field.fieldCommonName == .cardNumber || field.fieldCommonName == .barcode) && !isEditing && !field.isValid() {
+                    if (field.fieldCommonName == .cardNumber || field.fieldCommonName == .barcode) && (!isEditing && !field.isValid()) || (isEditing && value.isEmpty) {
                         Button(action: {
                             if field.fieldType == .paymentCardNumber {
                                 formViewModel.toPaymentCardScanner()

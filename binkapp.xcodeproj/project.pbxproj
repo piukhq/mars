@@ -380,6 +380,7 @@
 		CEC0ACBC2636AD0000845813 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBA2636AD0000845813 /* Assets.swift */; };
 		CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBB2636AD0000845813 /* Strings.swift */; };
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
+		CECF0D2B26FCCBFA00163E9B /* ClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECF0D2A26FCCBFA00163E9B /* ClearButton.swift */; };
 		CED69E6B253D7A5700A4CA21 /* HyperlinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */; };
 		CEE209142684653A004D3759 /* WidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209132684653A004D3759 /* WidgetContent.swift */; };
 		CEE209152684653A004D3759 /* WidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209132684653A004D3759 /* WidgetContent.swift */; };
@@ -1021,6 +1022,7 @@
 		CEC0ACBA2636AD0000845813 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		CEC0ACBB2636AD0000845813 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardScannerStrings.swift; sourceTree = "<group>"; };
+		CECF0D2A26FCCBFA00163E9B /* ClearButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearButton.swift; sourceTree = "<group>"; };
 		CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkLabel.swift; sourceTree = "<group>"; };
 		CEE209132684653A004D3759 /* WidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetContent.swift; sourceTree = "<group>"; };
 		CEE209192689E1B7004D3759 /* FileManager+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extension.swift"; sourceTree = "<group>"; };
@@ -2459,6 +2461,7 @@
 				CEB7ADF126F22DC400BD138C /* FormHeaderView.swift */,
 				CEB7ADF526F880EB00BD138C /* FormFooterView.swift */,
 				CEB7ADFB26FB135900BD138C /* AttributedTextView.swift */,
+				CECF0D2A26FCCBFA00163E9B /* ClearButton.swift */,
 			);
 			path = FormView;
 			sourceTree = "<group>";
@@ -3807,6 +3810,7 @@
 				3C873FF522F073CF00FA3031 /* MainTabBarViewModel.swift in Sources */,
 				EFA5F7542379AAB20027AB80 /* CD_VoucherEarn.swift in Sources */,
 				70A4EE7524BC651700FA33B1 /* PointsScrapingManager.swift in Sources */,
+				CECF0D2B26FCCBFA00163E9B /* ClearButton.swift in Sources */,
 				CEB7ADFC26FB135900BD138C /* AttributedTextView.swift in Sources */,
 				96F22E022508B6060009951B /* SentryService.swift in Sources */,
 				EFA5F7202379A7C70027AB80 /* CD_MembershipCardStatus.swift in Sources */,
