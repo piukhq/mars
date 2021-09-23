@@ -349,6 +349,7 @@
 		CE85A1DB26B05D95003B74CD /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CE85A1DA26B05D95003B74CD /* Lottie */; };
 		CE85A20126B15436003B74CD /* success.json in Resources */ = {isa = PBXBuildFile; fileRef = CE85A20026B15436003B74CD /* success.json */; };
 		CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */; };
+		CE949EAA26FC9BDB00F578DC /* TermsAndConditionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE949EA926FC9BDB00F578DC /* TermsAndConditionsView.swift */; };
 		CE990E13261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */; };
 		CEA16EC526249C6300D449E1 /* BarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA16EC426249C6300D449E1 /* BarcodeView.swift */; };
 		CEA16ED62624B0EE00D449E1 /* BarcodeViewWide.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA16ED52624B0EE00D449E1 /* BarcodeViewWide.swift */; };
@@ -992,6 +993,7 @@
 		CE85A1D726B0096A003B74CD /* UniversalLinkUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalLinkUtility.swift; sourceTree = "<group>"; };
 		CE85A20026B15436003B74CD /* success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = success.json; sourceTree = "<group>"; };
 		CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkCopyableLabel.swift; sourceTree = "<group>"; };
+		CE949EA926FC9BDB00F578DC /* TermsAndConditionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsAndConditionsView.swift; sourceTree = "<group>"; };
 		CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_1_LoyaltyCards.swift; sourceTree = "<group>"; };
 		CEA16EC426249C6300D449E1 /* BarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeView.swift; sourceTree = "<group>"; };
 		CEA16ED52624B0EE00D449E1 /* BarcodeViewWide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewWide.swift; sourceTree = "<group>"; };
@@ -2292,6 +2294,7 @@
 			isa = PBXGroup;
 			children = (
 				BD9E4CC6236EE67900C6F098 /* TermsAndConditionsViewController.swift */,
+				CE949EA926FC9BDB00F578DC /* TermsAndConditionsView.swift */,
 				CEB7ADFF26FB44F600BD138C /* TermsAndConditionsView.swift */,
 			);
 			path = Social;
@@ -4023,6 +4026,7 @@
 				3C05F27A240FC23A00060818 /* StringExtension.swift in Sources */,
 				EFA5F7622379BD520027AB80 /* PLRAccumulatorInactiveCell.swift in Sources */,
 				3C63ABCA22F9D52F00BE143B /* UIFont+binkapp.swift in Sources */,
+				CE949EAA26FC9BDB00F578DC /* TermsAndConditionsView.swift in Sources */,
 				EFA5F7332379A7C70027AB80 /* CD_AuthoriseField.swift in Sources */,
 				70FD1DB2262D8E59003C0DA0 /* BinkModuleType.swift in Sources */,
 				CE6DE55F267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift in Sources */,
