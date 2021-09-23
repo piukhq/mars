@@ -126,8 +126,6 @@
 		5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE047722CE579B001BA964 /* LaunchScreen.storyboard */; };
 		5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048322CE579B001BA964 /* binkappTests.swift */; };
 		700900D725C1DB7500548F50 /* LocalPointsCollection_DetectElement.js in Resources */ = {isa = PBXBuildFile; fileRef = 700900D625C1DB7500548F50 /* LocalPointsCollection_DetectElement.js */; };
-		701418C326F4BCFE00BE4DF0 /* KFCPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701418C226F4BCFE00BE4DF0 /* KFCPointsScrapingAgent.swift */; };
-		701418C726F8CA6100BE4DF0 /* LocalPointsCollection_Navigate_Kfc.js in Resources */ = {isa = PBXBuildFile; fileRef = 701418C626F8CA6000BE4DF0 /* LocalPointsCollection_Navigate_Kfc.js */; };
 		701418CA26FB306100BE4DF0 /* SubwayPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701418C926FB306100BE4DF0 /* SubwayPointsScrapingAgent.swift */; };
 		701418CD26FB312100BE4DF0 /* LocalPointsCollection_Navigate_Subway.js in Resources */ = {isa = PBXBuildFile; fileRef = 701418CC26FB312100BE4DF0 /* LocalPointsCollection_Navigate_Subway.js */; };
 		701E2C4A2677567E003F903B /* DebugMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701E2C492677567E003F903B /* DebugMenuView.swift */; };
@@ -751,8 +749,6 @@
 		67B8D6E0B8AB406C5DE33137 /* Pods-binkapp.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.app store (internal).xcconfig"; sourceTree = "<group>"; };
 		6D524C6191655F19A0B9384F /* Pods-binkappUITests.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.app store.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.app store.xcconfig"; sourceTree = "<group>"; };
 		700900D625C1DB7500548F50 /* LocalPointsCollection_DetectElement.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_DetectElement.js; sourceTree = "<group>"; };
-		701418C226F4BCFE00BE4DF0 /* KFCPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KFCPointsScrapingAgent.swift; sourceTree = "<group>"; };
-		701418C626F8CA6000BE4DF0 /* LocalPointsCollection_Navigate_Kfc.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Kfc.js; sourceTree = "<group>"; };
 		701418C926FB306100BE4DF0 /* SubwayPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		701418CC26FB312100BE4DF0 /* LocalPointsCollection_Navigate_Subway.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Subway.js; sourceTree = "<group>"; };
 		701E2C492677567E003F903B /* DebugMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuView.swift; sourceTree = "<group>"; };
@@ -1790,15 +1786,6 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		701418C126F4BCEA00BE4DF0 /* KFC */ = {
-			isa = PBXGroup;
-			children = (
-				701418C626F8CA6000BE4DF0 /* LocalPointsCollection_Navigate_Kfc.js */,
-				701418C226F4BCFE00BE4DF0 /* KFCPointsScrapingAgent.swift */,
-			);
-			path = KFC;
-			sourceTree = "<group>";
-		};
 		701418C826FB304300BE4DF0 /* Subway */ = {
 			isa = PBXGroup;
 			children = (
@@ -1975,7 +1962,6 @@
 			isa = PBXGroup;
 			children = (
 				701418C826FB304300BE4DF0 /* Subway */,
-				701418C126F4BCEA00BE4DF0 /* KFC */,
 				70703420268CC11D0072F3BF /* Starbucks */,
 				70661B86250792C0006DB009 /* Boots */,
 				70E8DFDB2563E2F20027A244 /* Heathrow */,
@@ -3267,7 +3253,6 @@
 				EF335C83234F565B00D49223 /* WalletPromptCollectionViewCell.xib in Resources */,
 				700900D725C1DB7500548F50 /* LocalPointsCollection_DetectElement.js in Resources */,
 				70C530EB26121358007E2147 /* LocalPointsCollection_Navigate_Superdrug.js in Resources */,
-				701418C726F8CA6100BE4DF0 /* LocalPointsCollection_Navigate_Kfc.js in Resources */,
 				70907E2F25C883C3007629BB /* LocalPointsCollection_Points_Superdrug.js in Resources */,
 				3C25BE0023019BC100E931EE /* BrandTableViewCell.xib in Resources */,
 				70907E3E25C883E2007629BB /* LocalPointsCollection_Points_Waterstones.js in Resources */,
@@ -3790,7 +3775,6 @@
 				EFD602EC243B9454003AC746 /* Animations.swift in Sources */,
 				BDB01869232D949A00BFFA18 /* AddPaymentCardViewController.swift in Sources */,
 				EFA5F7372379A7C70027AB80 /* CD_FieldChoice.swift in Sources */,
-				701418C326F4BCFE00BE4DF0 /* KFCPointsScrapingAgent.swift in Sources */,
 				3C873FFA22F073CF00FA3031 /* LoyaltyWalletViewModel.swift in Sources */,
 				3CD802822391314900D26888 /* ForgotPasswordRepository.swift in Sources */,
 				70E31A8124E56B3B005A30D2 /* UserService.swift in Sources */,

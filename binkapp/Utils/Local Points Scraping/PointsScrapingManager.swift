@@ -83,7 +83,6 @@ class PointsScrapingManager {
         PerfumeShopScrapingAgent(),
         WaterstonesScrapingAgent(),
         StarbucksPointsScrapingAgent(),
-        KFCPointsScrapingAgent(),
         SubwayPointsScrapingAgent()
     ]
     
