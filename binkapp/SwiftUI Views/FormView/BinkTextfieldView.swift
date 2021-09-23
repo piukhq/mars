@@ -178,21 +178,11 @@ struct BinkTextfieldView: View {
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .frame(width: nil, height: 70, alignment: .center)
             
-            if field.fieldType.isSecureTextEntry {
-                // TODO: - Validation point TextViews
-                if textfieldValidationFailed(value: $value) {
-                    Text(field.validationErrorMessage ?? L10n.formFieldValidationError)
-                        .font(.custom(UIFont.textFieldExplainer.fontName, size: UIFont.textFieldExplainer.pointSize))
-                        .foregroundColor(Color(.errorRed))
-                        .padding(.leading)
-                }
-            } else {
-                if textfieldValidationFailed(value: $value) {
-                    Text(field.validationErrorMessage ?? L10n.formFieldValidationError)
-                        .font(.custom(UIFont.textFieldExplainer.fontName, size: UIFont.textFieldExplainer.pointSize))
-                        .foregroundColor(Color(.errorRed))
-                        .padding(.leading)
-                }
+            if textfieldValidationFailed(value: $value) {
+                Text(field.validationErrorMessage ?? L10n.formFieldValidationError)
+                    .font(.custom(UIFont.textFieldExplainer.fontName, size: UIFont.textFieldExplainer.pointSize))
+                    .foregroundColor(Color(.errorRed))
+                    .padding(.leading)
             }
         }
     }
