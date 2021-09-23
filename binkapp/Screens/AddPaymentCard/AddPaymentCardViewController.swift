@@ -27,7 +27,7 @@ class AddPaymentCardViewController: BaseFormViewController {
 
     private lazy var addButton: BinkButton = {
         return BinkButton(type: .gradient, title: "Add", enabled: false) { [weak self] in
-            self?.addButtonTapped()
+//            self?.addButtonTapped()
         }
     }()
     
@@ -89,25 +89,25 @@ class AddPaymentCardViewController: BaseFormViewController {
     
     // MARK: - Actions
     
-    private func addButtonTapped() {
-        if viewModel.shouldDisplayTermsAndConditions {
-            viewModel.toPaymentTermsAndConditions(acceptAction: { [weak self] in
-                Current.navigate.close {
-                    self?.addButton.toggleLoading(isLoading: true)
-                    self?.viewModel.addPaymentCard { [weak self] in
-                        self?.addButton.toggleLoading(isLoading: false)
-                    }
-                }
-            }, declineAction: {
-                Current.navigate.close()
-            })
-        } else {
-            addButton.toggleLoading(isLoading: true)
-            viewModel.addPaymentCard { [weak self] in
-                self?.addButton.toggleLoading(isLoading: false)
-            }
-        }
-    }
+//    private func addButtonTapped() {
+//        if viewModel.shouldDisplayTermsAndConditions {
+//            viewModel.toPaymentTermsAndConditions(acceptAction: { [weak self] in
+//                Current.navigate.close {
+//                    self?.addButton.toggleLoading(isLoading: true)
+//                    self?.viewModel.addPaymentCard { [weak self] in
+//                        self?.addButton.toggleLoading(isLoading: false)
+//                    }
+//                }
+//            }, declineAction: {
+//                Current.navigate.close()
+//            })
+//        } else {
+//            addButton.toggleLoading(isLoading: true)
+//            viewModel.addPaymentCard { [weak self] in
+//                self?.addButton.toggleLoading(isLoading: false)
+//            }
+//        }
+//    }
     
     @objc func privacyButtonTapped() {
 //        viewModel.toPrivacyAndSecurity()
