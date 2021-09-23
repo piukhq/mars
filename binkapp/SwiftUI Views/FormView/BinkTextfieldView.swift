@@ -111,13 +111,13 @@ struct BinkTextfieldView: View {
                                 self.isEditing = false
                                 self.field.updateValue(value)
                                 self.field.fieldWasExited()
-                                formViewModel.showtextFieldToolbar = false
+                                formViewModel.showTextFieldToolbar = false
                                 canShowErrorState = true
                             }
                             .onTapGesture {
                                 // Begin editing
                                 isEditing = true
-                                formViewModel.showtextFieldToolbar = true
+                                formViewModel.showTextFieldToolbar = true
                                 canShowErrorState = !field.isValid() && !value.isEmpty
                             }
                             .modifier(ClearButton(text: $value, isEditing: $isEditing))
@@ -131,7 +131,7 @@ struct BinkTextfieldView: View {
                                 if isEditing {
                                     // Begin editing
 //                                    self.datasource.formViewDidSelectField(self)
-                                    formViewModel.showtextFieldToolbar = true
+                                    formViewModel.showTextFieldToolbar = true
                                 } else {
                                     // On Commit
                                     self.field.fieldWasExited()
@@ -171,7 +171,7 @@ struct BinkTextfieldView: View {
                 .padding([.leading, .trailing], 15)
                 
                 Rectangle()
-                    .fill(underlineColor(isEdting: $isEditing))
+                    .fill(underlineColor())
                     .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 6, alignment: .top)
                     .clipped()
                     .offset(y: 34)
@@ -245,7 +245,7 @@ struct BinkTextfieldView: View {
         return !field.isValid() && !value.wrappedValue.isEmpty
     }
     
-    private func underlineColor(isEdting: Binding<Bool>) -> Color {
+    private func underlineColor() -> Color {
         var color: UIColor
         if isEditing {
             color = .activeBlue

@@ -69,9 +69,9 @@ struct BinkFormView: View {
             // Keyboard Toolbar
             VStack {
                 Spacer()
-                if viewModel.showtextFieldToolbar {
+                if viewModel.showTextFieldToolbar {
                     InputToolbarView {
-                        viewModel.showtextFieldToolbar = false
+                        viewModel.showTextFieldToolbar = false
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     }
                 }
