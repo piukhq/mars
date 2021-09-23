@@ -14,8 +14,6 @@ var pointsValueQuery = ".green-btn-balance"
 
 var incorrectCredentialsQuery = "div#errorModal"
 
-//r = document.querySelector('div .recaptcha-submit .g-recaptcha')
-
 handleNavigation()
 
 function handleNavigation() {
