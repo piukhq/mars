@@ -382,6 +382,7 @@
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
 		CECF0D2B26FCCBFA00163E9B /* ClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECF0D2A26FCCBFA00163E9B /* ClearButton.swift */; };
 		CECF0D2E26FDC5BA00163E9B /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E13726EFB38800CAFBBF /* Binding+Extension.swift */; };
+		CECF0D3026FE229B00163E9B /* CheckboxSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECF0D2F26FE229B00163E9B /* CheckboxSwiftUIView.swift */; };
 		CED69E6B253D7A5700A4CA21 /* HyperlinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */; };
 		CEE209142684653A004D3759 /* WidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209132684653A004D3759 /* WidgetContent.swift */; };
 		CEE209152684653A004D3759 /* WidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209132684653A004D3759 /* WidgetContent.swift */; };
@@ -1024,6 +1025,7 @@
 		CEC0ACBB2636AD0000845813 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardScannerStrings.swift; sourceTree = "<group>"; };
 		CECF0D2A26FCCBFA00163E9B /* ClearButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearButton.swift; sourceTree = "<group>"; };
+		CECF0D2F26FE229B00163E9B /* CheckboxSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxSwiftUIView.swift; sourceTree = "<group>"; };
 		CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkLabel.swift; sourceTree = "<group>"; };
 		CEE209132684653A004D3759 /* WidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetContent.swift; sourceTree = "<group>"; };
 		CEE209192689E1B7004D3759 /* FileManager+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extension.swift"; sourceTree = "<group>"; };
@@ -2461,6 +2463,7 @@
 				CE52E13526EFB1F600CAFBBF /* InputToolbarView.swift */,
 				CEB7ADF126F22DC400BD138C /* FormHeaderView.swift */,
 				CEB7ADF526F880EB00BD138C /* FormFooterView.swift */,
+				CECF0D2F26FE229B00163E9B /* CheckboxSwiftUIView.swift */,
 				CEB7ADFB26FB135900BD138C /* AttributedTextView.swift */,
 				CECF0D2A26FCCBFA00163E9B /* ClearButton.swift */,
 			);
@@ -4011,6 +4014,7 @@
 				DBA6CB4F237C94CD000313D4 /* UIViewController+binkapp.swift in Sources */,
 				BD475E7123A2AED80071302A /* CD_PlanDocumentDisplay.swift in Sources */,
 				EF480C21235754C20060B7C1 /* WalletPromptFactory.swift in Sources */,
+				CECF0D3026FE229B00163E9B /* CheckboxSwiftUIView.swift in Sources */,
 				BDB01870232D99D200BFFA18 /* FormField.swift in Sources */,
 				B76659992320F68D00B327BE /* HyperlinkAlertController.swift in Sources */,
 				EFA5F7322379A7C70027AB80 /* _CD_MembershipCardStatus.swift in Sources */,

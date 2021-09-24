@@ -24,4 +24,8 @@ extension Font {
     static func nunitoLight(_ size: CGFloat) -> Font {
         return .custom("NunitoSans-Light", size: size)
     }
+    
+    static func nunitoSans(_ size: CGFloat) -> Font {
+        return .custom("NunitoSans-Regular", size: size)
+    }
 }

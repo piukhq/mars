@@ -93,32 +93,11 @@ final class FormFooterViewViewModel: ObservableObject {
     }
 }
 
-struct FormFooterView_Previews: PreviewProvider {
-    static var previews: some View {
-        NewCheckboxView()
-    }
-}
-
-struct NewCheckboxView: View {
-    @State var checkboxText = ""
-    
-    var body: some View {
-        HStack {
-            VStack {
-                Button(action: {
-                    print("it works!")
-                }, label: {
-                    Rectangle()
-                        .foregroundColor(.red)
-                        .frame(width: 22, height: 22)
-                })
-            }
-            
-            Text(checkboxText)
-            Spacer()
-        }
-    }
-}
+//struct FormFooterView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NewCheckboxView()
+//    }
+//}
 
 struct FormFooterView: View {
     @ObservedObject private var viewModel: FormFooterViewViewModel
@@ -130,16 +109,16 @@ struct FormFooterView: View {
     var body: some View {
         switch viewModel.datasource.formtype {
         case .authAndAdd:
-            VStack() {
-                NewCheckboxView(checkboxText: "Check this box to receive money off promotion, special offers and information on latest deals and more from Iceland by email")
-                NewCheckboxView(checkboxText: "I accept the retailer terms and conditions")
-                NewCheckboxView(checkboxText: "Please read the Iceland Privacy Policy")
+//            VStack() {
+            CheckboxSwiftUIView(checkboxText: "Check this box to receive money off promotion, special offers and information on latest deals and more from Iceland by email")
+            CheckboxSwiftUIView(checkboxText: "I accept the retailer terms and conditions")
+            CheckboxSwiftUIView(checkboxText: "Please read the Iceland Privacy Policy")
 //                ForEach(Array(viewModel.datasource.checkboxes.enumerated()), id: \.offset) { offset, checkbox in
-////                    CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $viewModel.checkboxStates[offset], didTapOnURL: $viewModel.didTapOnURL)
-////                        .padding(.horizontal, 5)
-////                        .frame(minHeight: 30, idealHeight: 100, maxHeight: .infinity)
+//                    CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $viewModel.checkboxStates[offset], didTapOnURL: $viewModel.didTapOnURL)
+//                        .padding(.horizontal, 5)
+//                        .frame(minHeight: 30, idealHeight: 100, maxHeight: .infinity)
 //                }
-            }
+//            }
 //            .frame(height: viewModel.checkboxStackHeight)
             .onAppear(perform: {
                 DispatchQueue.global(qos: .userInitiated).async {
