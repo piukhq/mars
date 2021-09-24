@@ -107,8 +107,6 @@ struct FormFooterView: View {
                 ForEach(Array(viewModel.datasource.checkboxes.enumerated()), id: \.offset) { offset, checkbox in
                     CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $viewModel.checkboxStates[offset], didTapOnURL: $viewModel.didTapOnURL)
                         .padding(.horizontal, 5)
-//                        .background(Color(.amber))
-//                        .border(Color(.blue))
                 }
             }
             .frame(height: viewModel.checkboxStackHeight)

@@ -44,8 +44,8 @@ struct BinkTextfieldView: View {
                                         .disabled(true)
                                         .onReceive(formViewModel.$pickerData) { pickerData in
                                             guard isEditing else { return }
-                                            self.value = pickerData.value
-                                            self.field.updateValue(pickerData.value)
+                                            value = pickerData.value
+                                            field.updateValue(pickerData.value)
                                         }
                                 }
                                 .onReceive(formViewModel.$pickerType) { pickerType in
@@ -66,10 +66,10 @@ struct BinkTextfieldView: View {
                                         .onReceive(formViewModel.$date) { date in
                                             guard let date = date else { return }
                                             let dateString = date.getFormattedString(format: .dayShortMonthYearWithSlash)
-                                            self.value = dateString
-                                            self.field.updateValue(dateString)
-                                            self.isEditing = false
-                                            self.formViewModel.datasource.checkFormValidity()
+                                            value = dateString
+                                            field.updateValue(dateString)
+                                            isEditing = false
+                                            formViewModel.datasource.checkFormValidity()
                                         }
                                 }
                                 .onReceive(formViewModel.$pickerType) { pickerType in
@@ -109,9 +109,9 @@ struct BinkTextfieldView: View {
                         case .sensitive, .confirmPassword:
                             SecureField(field.placeholder, text: $value) {
                                 // On Commit
-                                self.isEditing = false
-                                self.field.updateValue(value)
-                                self.field.fieldWasExited()
+                                isEditing = false
+                                field.updateValue(value)
+                                field.fieldWasExited()
                                 formViewModel.showTextFieldToolbar = false
                                 canShowErrorState = true
                             }
@@ -125,20 +125,20 @@ struct BinkTextfieldView: View {
                         default:
                             TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
                                 self.isEditing = isEditing
-                                self.field.updateValue(value)
-                                self.formViewModel.datasource.checkFormValidity()
+                                field.updateValue(value)
+                                formViewModel.datasource.checkFormValidity()
                                 canShowErrorState = !field.isValid() && !value.isEmpty
 
                                 if isEditing {
                                     // Begin editing
-//                                    self.datasource.formViewDidSelectField(self)
+                                    self.formViewModel.formViewDidSelectField(self)
                                     formViewModel.showTextFieldToolbar = true
                                 } else {
                                     // On Commit
-                                    self.field.fieldWasExited()
+                                    field.fieldWasExited()
                                 }
                             }, onCommit: {
-                                self.canShowErrorState = true
+                                canShowErrorState = true
                             })
                             .onReceive(Just(value)) { _ in valueChangedHandler() }
                             .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
