@@ -6,7 +6,7 @@
 //  Copyright © 2020 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import Alamofire
 import AlamofireImage
 

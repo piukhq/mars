@@ -143,6 +143,16 @@
 		706D204224D97104004BCCF3 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D204124D97104004BCCF3 /* AnalyticsEvent.swift */; };
 		70703422268CC1460072F3BF /* LocalPointsCollection_Navigate_Starbucks.js in Resources */ = {isa = PBXBuildFile; fileRef = 70703421268CC1460072F3BF /* LocalPointsCollection_Navigate_Starbucks.js */; };
 		70703424268CC15F0072F3BF /* StarbucksPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70703423268CC15F0072F3BF /* StarbucksPointsScrapingAgent.swift */; };
+		7075381926DFA08300690965 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 7075381826DFA08300690965 /* FirebaseAnalytics */; };
+		7075381B26DFA08300690965 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 7075381A26DFA08300690965 /* FirebaseRemoteConfig */; };
+		7075381E26DFA26C00690965 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 7075381D26DFA26C00690965 /* Alamofire */; };
+		7075382126DFA31100690965 /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 7075382026DFA31100690965 /* AlamofireImage */; };
+		7075382426DFA38100690965 /* AlamofireNetworkActivityLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 7075382326DFA38100690965 /* AlamofireNetworkActivityLogger */; };
+		7075382726DFA5F600690965 /* DeepDiff in Frameworks */ = {isa = PBXBuildFile; productRef = 7075382626DFA5F600690965 /* DeepDiff */; };
+		7075382A26DFA72800690965 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 7075382926DFA72800690965 /* KeychainAccess */; };
+		7075382D26DFA96800690965 /* Disk in Frameworks */ = {isa = PBXBuildFile; productRef = 7075382C26DFA96800690965 /* Disk */; };
+		7075383026DFAB2B00690965 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 7075382F26DFAB2B00690965 /* JWTDecode */; };
+		7075383326DFABE400690965 /* ZXingObjC in Frameworks */ = {isa = PBXBuildFile; productRef = 7075383226DFABE400690965 /* ZXingObjC */; };
 		70840E6C2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70840E6B2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift */; };
 		70841DEB26417E2800AF5810 /* MagicLinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70841DEA26417E2800AF5810 /* MagicLinkModel.swift */; };
 		70907E0825C8683C007629BB /* LocalPointsCollection_Login_Tesco.js in Resources */ = {isa = PBXBuildFile; fileRef = 70907E0725C8683C007629BB /* LocalPointsCollection_Login_Tesco.js */; };
@@ -1193,7 +1203,17 @@
 			files = (
 				96F22E002507C5AC0009951B /* Sentry in Frameworks */,
 				C6812158579C0CBB400A495C /* Pods_binkapp.framework in Frameworks */,
+				7075383026DFAB2B00690965 /* JWTDecode in Frameworks */,
+				7075381926DFA08300690965 /* FirebaseAnalytics in Frameworks */,
+				7075382D26DFA96800690965 /* Disk in Frameworks */,
+				7075381E26DFA26C00690965 /* Alamofire in Frameworks */,
+				7075382A26DFA72800690965 /* KeychainAccess in Frameworks */,
+				7075383326DFABE400690965 /* ZXingObjC in Frameworks */,
 				CE85A1DB26B05D95003B74CD /* Lottie in Frameworks */,
+				7075382426DFA38100690965 /* AlamofireNetworkActivityLogger in Frameworks */,
+				7075381B26DFA08300690965 /* FirebaseRemoteConfig in Frameworks */,
+				7075382726DFA5F600690965 /* DeepDiff in Frameworks */,
+				7075382126DFA31100690965 /* AlamofireImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3055,6 +3075,16 @@
 			packageProductDependencies = (
 				96F22DFF2507C5AC0009951B /* Sentry */,
 				CE85A1DA26B05D95003B74CD /* Lottie */,
+				7075381826DFA08300690965 /* FirebaseAnalytics */,
+				7075381A26DFA08300690965 /* FirebaseRemoteConfig */,
+				7075381D26DFA26C00690965 /* Alamofire */,
+				7075382026DFA31100690965 /* AlamofireImage */,
+				7075382326DFA38100690965 /* AlamofireNetworkActivityLogger */,
+				7075382626DFA5F600690965 /* DeepDiff */,
+				7075382926DFA72800690965 /* KeychainAccess */,
+				7075382C26DFA96800690965 /* Disk */,
+				7075382F26DFAB2B00690965 /* JWTDecode */,
+				7075383226DFABE400690965 /* ZXingObjC */,
 			);
 			productName = binkapp;
 			productReference = 5ECE046822CE5798001BA964 /* Bink α.app */;
@@ -3162,6 +3192,15 @@
 			packageReferences = (
 				96F22DFE2507C5AC0009951B /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				CE85A1D926B05D95003B74CD /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				7075381726DFA08300690965 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				7075381C26DFA26C00690965 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				7075381F26DFA31100690965 /* XCRemoteSwiftPackageReference "AlamofireImage" */,
+				7075382226DFA38100690965 /* XCRemoteSwiftPackageReference "AlamofireNetworkActivityLogger" */,
+				7075382526DFA5F600690965 /* XCRemoteSwiftPackageReference "DeepDiff" */,
+				7075382826DFA72800690965 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				7075382B26DFA96700690965 /* XCRemoteSwiftPackageReference "Disk" */,
+				7075382E26DFAB2B00690965 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
+				7075383126DFABE400690965 /* XCRemoteSwiftPackageReference "zxingify-objc" */,
 			);
 			productRefGroup = 5ECE046922CE5798001BA964 /* Products */;
 			projectDirPath = "";
@@ -4134,7 +4173,7 @@
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
@@ -4148,7 +4187,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.6;
+				MARKETING_VERSION = 2.3.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink α";
@@ -4170,7 +4209,7 @@
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
@@ -4192,7 +4231,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.6;
+				MARKETING_VERSION = 2.3.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink β";
@@ -4378,7 +4417,7 @@
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG = "";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
@@ -4392,7 +4431,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.6;
+				MARKETING_VERSION = 2.3.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = Bink;
@@ -4527,7 +4566,7 @@
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
@@ -4541,7 +4580,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.6;
+				MARKETING_VERSION = 2.3.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink β";
@@ -5014,6 +5053,78 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		7075381726DFA08300690965 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.6.1;
+			};
+		};
+		7075381C26DFA26C00690965 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.4.3;
+			};
+		};
+		7075381F26DFA31100690965 /* XCRemoteSwiftPackageReference "AlamofireImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/AlamofireImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.0;
+			};
+		};
+		7075382226DFA38100690965 /* XCRemoteSwiftPackageReference "AlamofireNetworkActivityLogger" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/konkab/AlamofireNetworkActivityLogger.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.4.0;
+			};
+		};
+		7075382526DFA5F600690965 /* XCRemoteSwiftPackageReference "DeepDiff" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onmyway133/DeepDiff.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.3;
+			};
+		};
+		7075382826DFA72800690965 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.2;
+			};
+		};
+		7075382B26DFA96700690965 /* XCRemoteSwiftPackageReference "Disk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/saoudrizwan/Disk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.6.4;
+			};
+		};
+		7075382E26DFAB2B00690965 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.2;
+			};
+		};
+		7075383126DFABE400690965 /* XCRemoteSwiftPackageReference "zxingify-objc" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/zxingify/zxingify-objc.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.6.7;
+			};
+		};
 		96F22DFE2507C5AC0009951B /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
@@ -5033,6 +5144,56 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7075381826DFA08300690965 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7075381726DFA08300690965 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		7075381A26DFA08300690965 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7075381726DFA08300690965 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
+		};
+		7075381D26DFA26C00690965 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7075381C26DFA26C00690965 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		7075382026DFA31100690965 /* AlamofireImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7075381F26DFA31100690965 /* XCRemoteSwiftPackageReference "AlamofireImage" */;
+			productName = AlamofireImage;
+		};
+		7075382326DFA38100690965 /* AlamofireNetworkActivityLogger */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7075382226DFA38100690965 /* XCRemoteSwiftPackageReference "AlamofireNetworkActivityLogger" */;
+			productName = AlamofireNetworkActivityLogger;
+		};
+		7075382626DFA5F600690965 /* DeepDiff */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7075382526DFA5F600690965 /* XCRemoteSwiftPackageReference "DeepDiff" */;
+			productName = DeepDiff;
+		};
+		7075382926DFA72800690965 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7075382826DFA72800690965 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		7075382C26DFA96800690965 /* Disk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7075382B26DFA96700690965 /* XCRemoteSwiftPackageReference "Disk" */;
+			productName = Disk;
+		};
+		7075382F26DFAB2B00690965 /* JWTDecode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7075382E26DFAB2B00690965 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
+			productName = JWTDecode;
+		};
+		7075383226DFABE400690965 /* ZXingObjC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7075383126DFABE400690965 /* XCRemoteSwiftPackageReference "zxingify-objc" */;
+			productName = ZXingObjC;
+		};
 		96F22DFF2507C5AC0009951B /* Sentry */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 96F22DFE2507C5AC0009951B /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
