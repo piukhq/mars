@@ -131,7 +131,7 @@ struct BinkTextfieldView: View {
 
                                 if isEditing {
                                     // Begin editing
-                                    self.formViewModel.formViewDidSelectField(self)
+//                                    self.formViewModel.formViewDidSelectField(self)
                                     formViewModel.showTextFieldToolbar = true
                                 } else {
                                     // On Commit
