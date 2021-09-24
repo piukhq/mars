@@ -89,13 +89,14 @@ struct BinkTextfieldView: View {
                                         .disabled(true)
                                         .onReceive(formViewModel.$pickerData) { pickerData in
                                             guard isEditing else { return }
-                                            self.value = pickerData.value
-                                            self.field.updateValue(pickerData.value)
+                                            value = pickerData.value
+                                            field.updateValue(pickerData.value)
+                                            canShowErrorState = true
 
                                             // For mapping to the payment card expiry fields, we only care if we have BOTH
                                             guard pickerData.fieldCount > 1 else { return }
                                             let splitData = pickerData.value.components(separatedBy: "/")
-                                            self.formViewModel.addPaymentCardViewModel?.setPaymentCardExpiry(month: Int(splitData.first ?? ""), year: Int(splitData.last ?? ""))
+                                            formViewModel.addPaymentCardViewModel?.setPaymentCardExpiry(month: Int(splitData.first ?? ""), year: Int(splitData.last ?? ""))
                                         }
                                 }
                                 .onReceive(formViewModel.$pickerType) { pickerType in
