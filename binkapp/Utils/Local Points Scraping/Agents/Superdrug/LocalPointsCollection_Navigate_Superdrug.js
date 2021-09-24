@@ -2,7 +2,7 @@ var username = "%@"
 var password = "%@"
 
 var formQuery = "form#loginForm"
-var usernameInputQuery = "form#login-form input[name=j_username]"
+var usernameInputQuery = "form#login-form input[name=username]"
 var passwordInputQuery = "form#login-form input[type=password]"
 var submitButtonQuery = "form#login-form button[type=submit]"
 
@@ -13,7 +13,7 @@ var incorrectCredentialsQuery = "div[class*=\"information_message negative\""
 handleNavigation()
 
 function handleNavigation() {
-    // If we can identify the points value, scrape
+    // If we can identify the points value, scrape it
 
     var pts = document.querySelector(pointsValueQuery)
     if (pts && pts.innerHTML !== "") {
@@ -34,9 +34,7 @@ function handleNavigation() {
         }
     }
 
-    // TODO: Recaptcha
-
-
+    
     // If we can identify the login form, login
 
     var f = document.querySelector(formQuery)
