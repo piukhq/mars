@@ -10,7 +10,7 @@ import Combine
 import SwiftUI
 
 struct BinkTextfieldView: View {
-    var formViewModel: FormViewModel
+    private let formViewModel: FormViewModel
     @State var field: FormField
     @State private var isEditing = false
     @State var value: String
@@ -64,7 +64,7 @@ struct BinkTextfieldView: View {
                                     TextField(field.placeholder, text: $value)
                                         .disabled(true)
                                         .onReceive(formViewModel.$date) { date in
-                                            guard isEditing else { return }
+                                            guard let date = date else { return }
                                             let dateString = date.getFormattedString(format: .dayShortMonthYearWithSlash)
                                             self.value = dateString
                                             self.field.updateValue(dateString)

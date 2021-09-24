@@ -12,7 +12,7 @@ final class FormViewModel: ObservableObject {
     @Published var datasource: FormDataSource
     @Published var showTextFieldToolbar = false
     @Published var pickerType: PickerType = .none
-    @Published var date = Date()
+    @Published var date: Date?
     @Published var pickerData = (value: "", fieldCount: 0)
     @Published var addPaymentCardViewModel: AddPaymentCardViewModel?
     @Published var paymentCard: PaymentCardCreateModel?

@@ -381,6 +381,7 @@
 		CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBB2636AD0000845813 /* Strings.swift */; };
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
 		CECF0D2B26FCCBFA00163E9B /* ClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECF0D2A26FCCBFA00163E9B /* ClearButton.swift */; };
+		CECF0D2E26FDC5BA00163E9B /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E13726EFB38800CAFBBF /* Binding+Extension.swift */; };
 		CED69E6B253D7A5700A4CA21 /* HyperlinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */; };
 		CEE209142684653A004D3759 /* WidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209132684653A004D3759 /* WidgetContent.swift */; };
 		CEE209152684653A004D3759 /* WidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209132684653A004D3759 /* WidgetContent.swift */; };
@@ -2239,7 +2240,6 @@
 				70E8E5A62567FB690027A244 /* OptionalExtension.swift */,
 				CEE209192689E1B7004D3759 /* FileManager+Extension.swift */,
 				CE52E13326EFB18C00CAFBBF /* UIApplication+Extension.swift */,
-				CE52E13726EFB38800CAFBBF /* Binding+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2424,6 +2424,7 @@
 			isa = PBXGroup;
 			children = (
 				CE52E16226F0FE0E00CAFBBF /* Font+Extension.swift */,
+				CE52E13726EFB38800CAFBBF /* Binding+Extension.swift */,
 			);
 			path = SwiftUIExtensions;
 			sourceTree = "<group>";
@@ -4099,6 +4100,7 @@
 				CEAF29FD2695A051006B6EB5 /* BinkLoggerErrors.swift in Sources */,
 				CEAF29FC26959FA7006B6EB5 /* BinkLoggerEvents.swift in Sources */,
 				CE6DE57D268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift in Sources */,
+				CECF0D2E26FDC5BA00163E9B /* Binding+Extension.swift in Sources */,
 				CE6DE56B2681E8280063A3A9 /* BinkWidget.swift in Sources */,
 				CEE20921268E1DAA004D3759 /* WalletCardView.swift in Sources */,
 				CEAF29FB26959E98006B6EB5 /* BinkLogger.swift in Sources */,
