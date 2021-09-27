@@ -8,25 +8,75 @@
 
 import SwiftUI
 
+class CheckboxSwiftUIViewViewModel {
+    private var privacyPolicy: NSMutableAttributedString?
+    private var termsAndConditions: NSMutableAttributedString?
+    var membershipPlan: CD_MembershipPlan?
+    
+    init(membershipPlan: CD_MembershipPlan?) {
+        self.membershipPlan = membershipPlan
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.configureAttributedStrings()
+        }
+    }
+
+    func configureAttributedStrings() {
+        for document in (membershipPlan?.account?.planDocuments) ?? [] {
+            let planDocument = document as? CD_PlanDocument
+            if planDocument?.name?.contains("policy") == true {
+                if let urlString = planDocument?.url, let url = URL(string: urlString) {
+                    privacyPolicy = HTMLParsingUtil.makeAttributedStringFromHTML(url: url)
+                }
+            }
+            
+            if planDocument?.name?.contains("conditions") == true {
+                if let urlString = planDocument?.url, let url = URL(string: urlString) {
+                    termsAndConditions = HTMLParsingUtil.makeAttributedStringFromHTML(url: url)
+                }
+            }
+        }
+    }
+    
+    func presentPlanDocumentsModal(withUrl url: URL) {
+        if let text = url.absoluteString.contains("pp") ? privacyPolicy : termsAndConditions {
+            let modalConfig = ReusableModalConfiguration(text: text, membershipPlan: membershipPlan)
+            let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: modalConfig)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        } else {
+            let viewController = ViewControllerFactory.makeWebViewController(urlString: url.absoluteString)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }
+    }
+}
+
 struct CheckboxSwiftUIView: View {
+    typealias CheckValidity = () -> Void
+
     @State var checkboxText: String
     @State var checkedState = false
+    var viewModel: CheckboxSwiftUIViewViewModel
     var hideCheckbox: Bool
     var columnKind: FormField.ColumnKind?
     var optional: Bool
     var columnName: String?
     var url: URL?
+    var checkValidity: CheckValidity
+    
     var value: String {
         return checkedState ? "1" : "0"
     }
     
-    init (text: String, columnName: String?, columnKind: FormField.ColumnKind?, url: URL? = nil, optional: Bool = false, hideCheckbox: Bool = false) {
+    init (text: String, columnName: String?, columnKind: FormField.ColumnKind?, url: URL? = nil, optional: Bool = false, hideCheckbox: Bool = false, membershipPlan: CD_MembershipPlan? = nil, checkValidity: @escaping CheckValidity) {
         self._checkboxText = State(initialValue: text)
         self.columnName = columnName
         self.columnKind = columnKind
         self.url = url
         self.optional = optional
         self.hideCheckbox = hideCheckbox
+        self.viewModel = CheckboxSwiftUIViewViewModel(membershipPlan: membershipPlan)
+        self.checkValidity = checkValidity
     }
     
     var body: some View {
@@ -35,6 +85,7 @@ struct CheckboxSwiftUIView: View {
                 VStack {
                     Button(action: {
                         checkedState.toggle()
+                        checkValidity()
                     }, label: {
                         ZStack {
                             RoundedRectangle(cornerRadius: 4, style: .continuous)
@@ -62,7 +113,9 @@ struct CheckboxSwiftUIView: View {
                 
                 if let columnName = columnName {
                     Button {
-                        
+                        if let url = url {
+                            viewModel.presentPlanDocumentsModal(withUrl: url)
+                        }
                     } label: {
                         Text(columnName)
                             .font(.nunitoLight(14))
@@ -75,12 +128,13 @@ struct CheckboxSwiftUIView: View {
         }
     }
 }
+
 struct CheckboxSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            CheckboxSwiftUIView(text: "Check this box to receive money off promotion, special offers and information on latest deals and more from Iceland by email", columnName: nil, columnKind: .planDocument, url: URL(string: ""), optional: false, hideCheckbox: false)
-            CheckboxSwiftUIView(text: "I accept the", columnName: "Retailer terms and conditions", columnKind: .planDocument, url: URL(string: ""), optional: false, hideCheckbox: false)
-            CheckboxSwiftUIView(text: "I accept the", columnName: "Iceland privacy policy", columnKind: .planDocument, url: URL(string: ""), optional: false, hideCheckbox: true)
+            CheckboxSwiftUIView(text: "Check this box to receive money off promotion, special offers and information on latest deals and more from Iceland by email", columnName: nil, columnKind: .planDocument, url: URL(string: ""), optional: false, hideCheckbox: false, checkValidity: {})
+            CheckboxSwiftUIView(text: "I accept the", columnName: "Retailer terms and conditions", columnKind: .planDocument, url: URL(string: ""), optional: false, hideCheckbox: false, checkValidity: {})
+            CheckboxSwiftUIView(text: "I accept the", columnName: "Iceland privacy policy", columnKind: .planDocument, url: URL(string: ""), optional: false, hideCheckbox: true, checkValidity: {})
         }
     }
 }
