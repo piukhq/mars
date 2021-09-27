@@ -736,6 +736,12 @@ internal enum L10n {
   }
   /// Bink App Support
   internal static let supportMailSubject = L10n.tr("Localizable", "support_mail_subject")
+  /// I agree to Bink's 
+  internal static let tandcs1 = L10n.tr("Localizable", "tandcs_1")
+  /// Please read the Bink 
+  internal static let tandcs2 = L10n.tr("Localizable", "tandcs_2")
+  ///  for further details of how your data will be processed
+  internal static let tandcs3 = L10n.tr("Localizable", "tandcs_3")
   /// Please read the Bink Privacy Policy for further details of how your data will be processed
   internal static let tandcsDescription = L10n.tr("Localizable", "tandcs_description")
   /// Terms and Conditions

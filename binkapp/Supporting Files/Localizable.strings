@@ -345,10 +345,15 @@
 
 "tandcs_title" = "I agree to Bink's Terms and Conditions";
 "tandcs_description" = "Please read the Bink Privacy Policy for further details of how your data will be processed";
-"tandcs_link" = "Terms and Conditions";
 "ppolicy_title" = "I accept Bink's Privacy Policy";
-"ppolicy_link" = "Privacy Policy";
 "marketing_title" = "Opt in to receive marketing messages";
+
+"tandcs_1" = "I agree to Bink's ";
+"tandcs_link" = "Terms and Conditions";
+"tandcs_2" = "Please read the Bink ";
+"ppolicy_link" = "Privacy Policy";
+"tandcs_3" = " for further details of how your data will be processed";
+
 
 "access_form_email_title" = "Email";
 "access_form_email_placeholder" = "Enter email address";

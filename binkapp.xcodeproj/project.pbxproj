@@ -312,6 +312,7 @@
 		CE3A5518253EE89A007989FE /* DebugInfoAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A5517253EE89A007989FE /* DebugInfoAlertView.swift */; };
 		CE3D31DC2649660C0072BD97 /* ScanLoyaltyCardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D31DA2649660C0072BD97 /* ScanLoyaltyCardButton.swift */; };
 		CE3D31DD2649660C0072BD97 /* ScanLoyaltyCardButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */; };
+		CE44B49727022B1800124714 /* TextWithAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44B49627022B1800124714 /* TextWithAttributedString.swift */; };
 		CE4A624925714EAE003271F6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* Sentry */; };
 		CE52E13426EFB18C00CAFBBF /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E13326EFB18C00CAFBBF /* UIApplication+Extension.swift */; };
 		CE52E13626EFB1F600CAFBBF /* InputToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E13526EFB1F600CAFBBF /* InputToolbarView.swift */; };
@@ -960,6 +961,7 @@
 		CE3A5517253EE89A007989FE /* DebugInfoAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugInfoAlertView.swift; sourceTree = "<group>"; };
 		CE3D31DA2649660C0072BD97 /* ScanLoyaltyCardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanLoyaltyCardButton.swift; sourceTree = "<group>"; };
 		CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanLoyaltyCardButton.xib; sourceTree = "<group>"; };
+		CE44B49627022B1800124714 /* TextWithAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithAttributedString.swift; sourceTree = "<group>"; };
 		CE4A628025715519003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A6285257155AE003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE52E13326EFB18C00CAFBBF /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
@@ -2465,6 +2467,7 @@
 				CEB7ADF526F880EB00BD138C /* FormFooterView.swift */,
 				CECF0D2F26FE229B00163E9B /* CheckboxSwiftUIView.swift */,
 				CEB7ADFB26FB135900BD138C /* AttributedTextView.swift */,
+				CE44B49627022B1800124714 /* TextWithAttributedString.swift */,
 				CECF0D2A26FCCBFA00163E9B /* ClearButton.swift */,
 			);
 			path = FormView;
@@ -3865,6 +3868,7 @@
 				3C9CCD2D2316958300FAF589 /* CheckboxView.swift in Sources */,
 				3CF054CE22FD7DC80069E98A /* UIView+Extension.swift in Sources */,
 				EF7B65D6232FDB8A0025D167 /* FieldChoice.swift in Sources */,
+				CE44B49727022B1800124714 /* TextWithAttributedString.swift in Sources */,
 				EFA5F7552379AAB20027AB80 /* _CD_VoucherBurn.swift in Sources */,
 				70EB83882644410A00DD8935 /* LoginController.swift in Sources */,
 				EFBDB103237B1468002D7898 /* CALayerExtension.swift in Sources */,

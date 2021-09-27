@@ -8,12 +8,20 @@
 
 import SwiftUI
 
-class CheckboxSwiftUIViewViewModel {
+class CheckboxSwiftUIViewViewModel: ObservableObject {
     private var privacyPolicy: NSMutableAttributedString?
     private var termsAndConditions: NSMutableAttributedString?
     var membershipPlan: CD_MembershipPlan?
     var checkedState = false
     
+    @Published var url: URL? {
+        didSet {
+            if let url = url {
+                presentPlanDocumentsModal(withUrl: url)
+            }
+        }
+    }
+
     init(membershipPlan: CD_MembershipPlan?) {
         self.membershipPlan = membershipPlan
         DispatchQueue.global(qos: .userInitiated).async {
@@ -55,13 +63,15 @@ class CheckboxSwiftUIViewViewModel {
 struct CheckboxSwiftUIView: View {
     typealias CheckValidity = () -> Void
 
+    @ObservedObject private var viewModel: CheckboxSwiftUIViewViewModel
     @State var checkboxText: String
     @State var checkedState = false {
         didSet {
             viewModel.checkedState = checkedState
         }
     }
-    private var viewModel: CheckboxSwiftUIViewViewModel
+
+    var attributedText: NSAttributedString?
     var hideCheckbox: Bool
     var columnKind: FormField.ColumnKind
     var optional: Bool
@@ -80,7 +90,7 @@ struct CheckboxSwiftUIView: View {
         return optional ? true : viewModel.checkedState
     }
     
-    init (text: String, columnName: String?, columnKind: FormField.ColumnKind, url: URL? = nil, optional: Bool = false, hideCheckbox: Bool = false, membershipPlan: CD_MembershipPlan? = nil, checkValidity: @escaping CheckValidity) {
+    init (text: String, attributedText: NSAttributedString? = nil, columnName: String?, columnKind: FormField.ColumnKind, url: URL? = nil, optional: Bool = false, hideCheckbox: Bool = false, membershipPlan: CD_MembershipPlan? = nil, checkValidity: @escaping CheckValidity) {
         self._checkboxText = State(initialValue: text)
         self.columnName = columnName
         self.columnKind = columnKind
@@ -89,6 +99,7 @@ struct CheckboxSwiftUIView: View {
         self.hideCheckbox = hideCheckbox
         self.viewModel = CheckboxSwiftUIViewViewModel(membershipPlan: membershipPlan)
         self.checkValidity = checkValidity
+        self.attributedText = attributedText
     }
     
     var body: some View {
@@ -119,12 +130,12 @@ struct CheckboxSwiftUIView: View {
                 }
             }
             
-            HStack(spacing: 4) {
-                Text(checkboxText)
-                    .foregroundColor(Color(Current.themeManager.color(for: .text)))
-                    .font(.nunitoLight(14))
-                
+//            HStack(spacing: 4) {
                 if columnKind == .planDocument, let columnName = columnName {
+                    Text(checkboxText)
+                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                        .font(.nunitoLight(14))
+                    
                     Button {
                         if let url = url {
                             viewModel.presentPlanDocumentsModal(withUrl: url)
@@ -135,8 +146,12 @@ struct CheckboxSwiftUIView: View {
                             .foregroundColor(Color(.binkGradientBlueLeft))
                             .underline()
                     }
+                } else if columnKind == .none {
+                    if let attrText = attributedText {
+                        TextWithAttributedString(attributedText: attrText, url: $viewModel.url)
+                    }
                 }
-            }
+//            }
             Spacer()
         }
     }
