@@ -11,12 +11,24 @@ import SwiftUI
 struct CheckboxSwiftUIView: View {
     @State var checkboxText = ""
     @State var checkedState = false
-    private(set) var columnKind: FormField.ColumnKind?
-    private(set) var optional = false
-    private(set) var columnName: String?
+    var hideCheckbox = false
+    var columnKind: FormField.ColumnKind?
+    var optional = false
+    var columnName: String?
+    var url: URL?
     var value: String {
         return checkedState ? "1" : "0"
     }
+    
+    init (text: String, columnName: String?, columnKind: FormField.ColumnKind, url: URL? = nil, optional: Bool = false, hideCheckbox: Bool = false) {
+        self._checkboxText = State(initialValue: text)
+        self.columnName = columnName
+        self.columnKind = columnKind
+        self.url = url
+        self.optional = optional
+        self.hideCheckbox = hideCheckbox
+    }
+
     
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
@@ -38,7 +50,6 @@ struct CheckboxSwiftUIView: View {
                             RoundedRectangle(cornerRadius: 2.7, style: .continuous)
                                 .fill(Color.white)
                                 .frame(width: 18, height: 18)
-
                         }
                     }
 
@@ -50,11 +61,10 @@ struct CheckboxSwiftUIView: View {
                 .font(.nunitoLight(14))
             Spacer()
         }
-//        .padding()
     }
 }
-struct CheckboxSwiftUIView_Previews: PreviewProvider {
-    static var previews: some View {
-        CheckboxSwiftUIView(checkboxText: "Check this box to receive money off promotion, special offers and information on latest deals and more from Iceland by email")
-    }
-}
+//struct CheckboxSwiftUIView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CheckboxSwiftUIView(checkboxText: "Check this box to receive money off promotion, special offers and information on latest deals and more from Iceland by email")
+//    }
+//}
