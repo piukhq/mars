@@ -160,11 +160,11 @@ platform :ios do
       in_house: false
     )
 
-    # run_tests(
-    #   workspace: "binkapp.xcworkspace",
-    #   device: "iPhone 12 Pro",
-    #   scheme: "binkapp tests"
-    # )
+    run_tests(
+      workspace: "binkapp.xcworkspace",
+      device: "iPhone 12 Pro",
+      scheme: "binkapp tests"
+    )
 
     build_app(
       workspace: "binkapp.xcworkspace",
