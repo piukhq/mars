@@ -141,6 +141,7 @@ struct CheckboxSwiftUIView: View {
             TextWithAttributedString(attributedText: attributedText ?? NSAttributedString(string: checkboxText), url: $viewModel.url)
             Spacer()
         }
+        .padding(.bottom, columnName == L10n.tandcsLink ? 20 : 0)
     }
 }
 
