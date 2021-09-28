@@ -93,14 +93,14 @@ struct BinkButtonsStackView: View {
         static let height: CGFloat = buttonHeight + buttonSpacing
     }
     
-    @ObservedObject private var themeManager = Current.themeManager
+    @Environment(\.colorScheme) private var colorScheme
     var buttons: [BinkButtonView]
     
     var body: some View {
         VStack {
             Spacer()
             ZStack {
-                LinearGradient(gradient: Gradient(colors: [Color(themeManager.color(for: .viewBackground)), .white.opacity(0.01)]), startPoint: .bottom, endPoint: .top)
+                LinearGradient(gradient: Gradient(colors: [Color(Current.themeManager.color(for: .viewBackground)), dynamicMaskGradientClearColor]), startPoint: .bottom, endPoint: .top)
                     .padding(.top, 20)
                 
                 VStack(alignment: .center, spacing: Constants.buttonSpacing) {
@@ -116,6 +116,24 @@ struct BinkButtonsStackView: View {
         .background(Color.clear)
         .edgesIgnoringSafeArea(.bottom)
         .offset(y: BinkButtonsView.bottomSafePadding - BinkButtonsView.bottomPadding)
+    }
+    
+    private var dynamicMaskGradientClearColor: Color {
+        switch Current.themeManager.currentTheme.type {
+        case .system:
+            switch colorScheme {
+            case .light:
+                return .white.opacity(0.01)
+            case .dark:
+                return .clear
+            @unknown default:
+                return .white.opacity(0.01)
+        }
+        case .light:
+            return .white.opacity(0.01)
+        case .dark:
+            return .clear
+        }
     }
 }
 
