@@ -68,7 +68,7 @@ struct CheckboxSwiftUIView: View {
                     }, label: {
                         ZStack {
                             RoundedRectangle(cornerRadius: 4, style: .continuous)
-                                .fill(checkedState ? Color.black : Color.gray.opacity(0.4))
+                                .fill(checkedState ? Color.black : Color((.systemGray.lighter() ?? .systemGray)))
                                 .frame(width: 22, height: 22)
                             
                             if checkedState {

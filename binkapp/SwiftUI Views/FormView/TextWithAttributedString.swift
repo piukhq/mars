@@ -43,11 +43,13 @@ struct InternalTextView: UIViewRepresentable {
         textView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
         textView.delegate = context.coordinator
+        textView.textColor = Current.themeManager.color(for: .text)
         return textView
     }
     
     func updateUIView(_ uiView: UITextView, context: Context) {
         uiView.attributedText = attributedText
+        uiView.textColor = Current.themeManager.color(for: .text)
         DispatchQueue.main.async {
             dynamicHeight = uiView.sizeThatFits(CGSize(width: uiView.bounds.width, height: CGFloat.greatestFiniteMagnitude)).height
         }
