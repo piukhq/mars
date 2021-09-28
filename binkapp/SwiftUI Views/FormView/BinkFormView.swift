@@ -15,7 +15,6 @@ struct BinkFormView: View {
     }
     
     @ObservedObject var viewModel: FormViewModel
-    @ObservedObject private var themeManager = Current.themeManager
     @State var pickerOneSelection = ""
     @State var pickerTwoSelection = ""
     
@@ -61,7 +60,7 @@ struct BinkFormView: View {
                 }
                 .padding(Constants.vStackInsets)
             }
-            .background(Color(themeManager.color(for: .viewBackground)))
+            .background(Color(Current.themeManager.color(for: .viewBackground)))
             .edgesIgnoringSafeArea(.bottom)
             .padding(.bottom, viewModel.keyboardHeight)
             .onReceive(Publishers.keyboardHeight, perform: { self.viewModel.keyboardHeight = $0 })
@@ -86,14 +85,15 @@ struct BinkFormView: View {
                         DatePicker("D.O.B.", selection: $viewModel.date ?? Date(), displayedComponents: .date)
                             .datePickerStyle(GraphicalDatePickerStyle())
                             .frame(maxHeight: 400)
-                            .background(Color(themeManager.color(for: .viewBackground)))
+                            .background(Color(Current.themeManager.color(for: .viewBackground)))
+                            .accentColor(Color(.blueAccent))
                     }
                 } else {
                     InputToolbarView(buttonAction: { viewModel.pickerType = .none })
 
                     DatePicker("D.O.B.", selection: $viewModel.date ?? Date())
                         .frame(maxHeight: 400)
-                        .background(Color(themeManager.color(for: .viewBackground)))
+                        .background(Color(Current.themeManager.color(for: .viewBackground)))
                 }
             case .choice(let data):
                 VStack(spacing: 0) {
@@ -107,7 +107,7 @@ struct BinkFormView: View {
                             Text($0)
                         }
                     }
-                    .background(Color(themeManager.color(for: .viewBackground)))
+                    .background(Color(Current.themeManager.color(for: .viewBackground)))
                 }
                 .offset(y: UIApplication.bottomSafeArea)
             case .expiry(let months, let years):
@@ -125,7 +125,7 @@ struct BinkFormView: View {
                                     Text($0)
                                 }
                             }
-                            .background(Color(themeManager.color(for: .viewBackground)))
+                            .background(Color(Current.themeManager.color(for: .viewBackground)))
                             .frame(width: geometry.size.width / 2)
                             .clipped()
                             
@@ -137,7 +137,7 @@ struct BinkFormView: View {
                                     Text($0)
                                 }
                             }
-                            .background(Color(themeManager.color(for: .viewBackground)))
+                            .background(Color(Current.themeManager.color(for: .viewBackground)))
                             .frame(width: geometry.size.width / 2)
                             .clipped()
                         }

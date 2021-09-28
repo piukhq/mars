@@ -11,6 +11,7 @@ import SwiftUI
 
 struct BinkTextfieldView: View {
     private let formViewModel: FormViewModel
+//    @ObservedObject private var themeManager = Current.themeManager
     @State var field: FormField
     @State private var isEditing = false
     @State var value: String
@@ -20,13 +21,14 @@ struct BinkTextfieldView: View {
         _field = State(initialValue: field)
         _value = State(initialValue: field.forcedValue ?? "")
         self.formViewModel = viewModel
+//        Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
     }
     
     var body: some View {
         VStack(alignment: .leading) {
             ZStack(alignment: .center) {
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .foregroundColor(.white)
+                    .foregroundColor(Color(Current.themeManager.color(for: .walletCardBackground)))
                 
                 HStack {
                     VStack(alignment: .leading, spacing: 3) {
@@ -41,6 +43,7 @@ struct BinkTextfieldView: View {
                                     isEditing = true
                                 } label: {
                                     TextField(data.first?.title ?? "", text: $value)
+                                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
                                         .disabled(true)
                                         .onReceive(formViewModel.$pickerData) { pickerData in
                                             guard isEditing else { return }
@@ -62,6 +65,7 @@ struct BinkTextfieldView: View {
                                     isEditing = true
                                 } label: {
                                     TextField(field.placeholder, text: $value)
+                                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
                                         .disabled(true)
                                         .onReceive(formViewModel.$date) { date in
                                             guard let date = date else { return }
@@ -86,6 +90,7 @@ struct BinkTextfieldView: View {
                                     isEditing = true
                                 } label: {
                                     TextField(field.placeholder, text: $value)
+                                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
                                         .disabled(true)
                                         .onReceive(formViewModel.$pickerData) { pickerData in
                                             guard isEditing else { return }
@@ -115,6 +120,7 @@ struct BinkTextfieldView: View {
                                 formViewModel.showTextFieldToolbar = false
                                 canShowErrorState = true
                             }
+                            .accentColor(Color(Current.themeManager.color(for: .text)))
                             .onTapGesture {
                                 // Begin editing
                                 isEditing = true
@@ -130,11 +136,8 @@ struct BinkTextfieldView: View {
                                 canShowErrorState = !field.isValid() && !value.isEmpty
 
                                 if isEditing {
-                                    // Begin editing
-//                                    self.formViewModel.formViewDidSelectField(self)
                                     formViewModel.showTextFieldToolbar = true
                                 } else {
-                                    // On Commit
                                     field.fieldWasExited()
                                 }
                             }, onCommit: {
@@ -144,6 +147,7 @@ struct BinkTextfieldView: View {
                             .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
                             .autocapitalization(field.fieldType.capitalization())
                             .modifier(ClearButton(text: $value, isEditing: $isEditing))
+                            .accentColor(Color(Current.themeManager.color(for: .text)))
                         }
                     }
                     
@@ -170,6 +174,7 @@ struct BinkTextfieldView: View {
                     }
                 }
                 .padding([.leading, .trailing], 15)
+                .background(Color.clear)
                 
                 Rectangle()
                     .fill(underlineColor())
@@ -183,7 +188,7 @@ struct BinkTextfieldView: View {
             if textfieldValidationFailed(value: $value) {
                 Text(field.validationErrorMessage ?? L10n.formFieldValidationError)
                     .font(.custom(UIFont.textFieldExplainer.fontName, size: UIFont.textFieldExplainer.pointSize))
-                    .foregroundColor(Color(.errorRed))
+                    .foregroundColor(Color(.binkDynamicRed))
                     .padding(.leading)
             }
         }
@@ -252,15 +257,21 @@ struct BinkTextfieldView: View {
             color = .activeBlue
             
             if textfieldValidationFailed(value: $value) {
-                color = .errorRed
+                color = .binkDynamicRed
             }
         } else {
-            color = field.isValid() ? .successGreen : .errorRed
+            color = field.isValid() ? .successGreen : .binkDynamicRed
         }
         
         if value.isEmpty && !isEditing {
             color = .clear
         }
         return Color(color)
+    }
+}
+
+struct BinkTextfieldView_Previews: PreviewProvider {
+    static var previews: some View {
+        BinkTextfieldView(field: FormField(title: "email", placeholder: "Eneter email", validation: "", fieldType: .email, updated: {_,_ in }, shouldChange: {_,_,_,_ in return true }, fieldExited: {_ in }), viewModel: FormViewModel(datasource: FormDataSource(accessForm: .emailPassword), title: "Eneter", description: "kjhdskjhsjkhsjkhdsf"))
     }
 }

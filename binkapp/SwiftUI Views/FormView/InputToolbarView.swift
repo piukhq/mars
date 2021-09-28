@@ -20,11 +20,11 @@ struct InputToolbarView: View {
                 Button(L10n.done) {
                     buttonAction()
                 }
-                .foregroundColor(Color(.binkGradientBlueLeft))
+                .foregroundColor(Color(.blueAccent))
                 .padding(.trailing, 12)
             }
             .frame(idealWidth: .infinity, maxWidth: .infinity, idealHeight: 44, maxHeight: 44, alignment: .center)
-            .background(Color.white)
+            .background(Color(Current.themeManager.color(for: .walletCardBackground)))
         }
     }
 }

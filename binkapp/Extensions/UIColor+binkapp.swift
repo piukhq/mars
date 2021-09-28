@@ -193,7 +193,7 @@ extension UIColor {
         case .system:
             return .systemRed
         case .light:
-            return UIColor(hexString: "ff3b30")
+            return UIColor(hexString: "FF0000")
         case .dark:
             return UIColor(hexString: "ff453a")
         }
