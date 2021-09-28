@@ -136,6 +136,7 @@
 		7061054125B8555600A16DA5 /* Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7061054025B8555600A16DA5 /* Styling.swift */; };
 		706157BF26499CC60002701E /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706157BE26499CC60002701E /* AppVersion.swift */; };
 		706157C8264A84AF0002701E /* AppVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706157C7264A84AF0002701E /* AppVersionTests.swift */; };
+		7063B1E62703720B00C5C633 /* RemoteConfigFileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7063B1E52703720B00C5C633 /* RemoteConfigFileModel.swift */; };
 		70661B88250792DB006DB009 /* BootsPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */; };
 		70661B93250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70661B92250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift */; };
 		706D203924D851BA004BCCF3 /* _CD_CardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D203724D851BA004BCCF3 /* _CD_CardAccount.swift */; };
@@ -217,7 +218,7 @@
 		70F7EC2B25CAF97A005DE935 /* WebScrapingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2A25CAF97A005DE935 /* WebScrapingViewController.swift */; };
 		70F7EC3025CAF9A2005DE935 /* WebScrapingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2F25CAF9A2005DE935 /* WebScrapingResponse.swift */; };
 		70FD1DB2262D8E59003C0DA0 /* BinkModuleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FD1DB1262D8E59003C0DA0 /* BinkModuleType.swift */; };
-		70FF2B6F2649543200A64DD3 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FF2B6E2649543200A64DD3 /* AppConfiguration.swift */; };
+		70FF2B6F2649543200A64DD3 /* RecommendedVersionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FF2B6E2649543200A64DD3 /* RecommendedVersionUtil.swift */; };
 		96F22E002507C5AC0009951B /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 96F22DFF2507C5AC0009951B /* Sentry */; };
 		96F22E022508B6060009951B /* SentryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F22E012508B6060009951B /* SentryService.swift */; };
 		9B0A103BBA0F62048017D0B8 /* Pods_binkappTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 352CBEDF33DDEB7B603C909B /* Pods_binkappTests.framework */; };
@@ -762,6 +763,7 @@
 		7061054025B8555600A16DA5 /* Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styling.swift; sourceTree = "<group>"; };
 		706157BE26499CC60002701E /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
 		706157C7264A84AF0002701E /* AppVersionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionTests.swift; sourceTree = "<group>"; };
+		7063B1E52703720B00C5C633 /* RemoteConfigFileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigFileModel.swift; sourceTree = "<group>"; };
 		70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootsPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70661B92250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorrisonsPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		706D203624D85125004BCCF3 /* binkapp - 03-08-20 - Card accounts uuid.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 03-08-20 - Card accounts uuid.xcdatamodel"; sourceTree = "<group>"; };
@@ -838,7 +840,7 @@
 		70F7EC2A25CAF97A005DE935 /* WebScrapingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingViewController.swift; sourceTree = "<group>"; };
 		70F7EC2F25CAF9A2005DE935 /* WebScrapingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingResponse.swift; sourceTree = "<group>"; };
 		70FD1DB1262D8E59003C0DA0 /* BinkModuleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkModuleType.swift; sourceTree = "<group>"; };
-		70FF2B6E2649543200A64DD3 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
+		70FF2B6E2649543200A64DD3 /* RecommendedVersionUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendedVersionUtil.swift; sourceTree = "<group>"; };
 		782FD7EAEC7253B4F80C33EF /* Pods-binkappTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.beta.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.beta.xcconfig"; sourceTree = "<group>"; };
 		96F22E012508B6060009951B /* SentryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentryService.swift; sourceTree = "<group>"; };
 		9AF638C55EA3C2FE09150516 /* Pods-binkappTests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.app store (internal).xcconfig"; sourceTree = "<group>"; };
@@ -1840,6 +1842,14 @@
 			path = "Recommended App Update";
 			sourceTree = "<group>";
 		};
+		7063B1E4270371EF00C5C633 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7063B1E52703720B00C5C633 /* RemoteConfigFileModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		70661B85250792B6006DB009 /* Tesco */ = {
 			isa = PBXGroup;
 			children = (
@@ -1920,7 +1930,8 @@
 		7097489E24D32A42008D0E29 /* Remote Config */ = {
 			isa = PBXGroup;
 			children = (
-				70FF2B6D2649541B00A64DD3 /* Models */,
+				7063B1E4270371EF00C5C633 /* Model */,
+				70FF2B6E2649543200A64DD3 /* RecommendedVersionUtil.swift */,
 				7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */,
 			);
 			path = "Remote Config";
@@ -2090,14 +2101,6 @@
 				700900D625C1DB7500548F50 /* LocalPointsCollection_DetectElement.js */,
 			);
 			path = Scripts;
-			sourceTree = "<group>";
-		};
-		70FF2B6D2649541B00A64DD3 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				70FF2B6E2649543200A64DD3 /* AppConfiguration.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		AF06D86448D661A8F4142F87 /* Persistence */ = {
@@ -3756,6 +3759,7 @@
 				EFA5F7392379A7C70027AB80 /* _CD_MembershipCardImage.swift in Sources */,
 				CE2CFE9025E3D48E00B1CB93 /* FeatureFlagsTableViewCell.swift in Sources */,
 				701418CA26FB306100BE4DF0 /* SubwayPointsScrapingAgent.swift in Sources */,
+				7063B1E62703720B00C5C633 /* RemoteConfigFileModel.swift in Sources */,
 				CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */,
 				3C61FCDE230AF0BB004721A3 /* AppsModel.swift in Sources */,
 				EFF5CD61244F34A8009021A4 /* WalletService.swift in Sources */,
@@ -3836,7 +3840,7 @@
 				DB8DE35A2373130100F07F11 /* Bundle+binkapp.swift in Sources */,
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
 				EFA5F7452379A7C70027AB80 /* _CD_PaymentCardAccountConsents.swift in Sources */,
-				70FF2B6F2649543200A64DD3 /* AppConfiguration.swift in Sources */,
+				70FF2B6F2649543200A64DD3 /* RecommendedVersionUtil.swift in Sources */,
 				EFA5F7312379A7C70027AB80 /* CD_Balance.swift in Sources */,
 				CE3A54DE253E0F27007989FE /* ZendeskTickets.swift in Sources */,
 				EFEB5BFF2382984B00E18743 /* HyperlinkButton.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  AppConfiguration.swift
+//  RecommendedVersionUtil.swift
 //  binkapp
 //
 //  Created by Nick Farrant on 10/05/2021.
@@ -8,25 +8,7 @@
 
 import UIKit
 
-struct AppConfiguration: Codable {
-    let recommendedLiveAppVersion: RecommendedLiveAppVersion?
-    
-    enum CodingKeys: String, CodingKey {
-        case recommendedLiveAppVersion = "recommended_live_app_version"
-    }
-    
-    struct RecommendedLiveAppVersion: Codable {
-        let iOS: String?
-        let android: String?
-        
-        enum CodingKeys: String, CodingKey {
-            case iOS = "ios_version"
-            case android = "android_version"
-        }
-    }
-}
-
-class RemoteAppConfigurationUtil {
+class RecommendedVersionUtil {
     private var canShowRecommendedUpdatePrompt = true
     
     func promptRecommendedUpdateIfNecessary() {
