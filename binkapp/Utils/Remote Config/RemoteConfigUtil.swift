@@ -11,13 +11,10 @@ import FirebaseRemoteConfig
 
 class RemoteConfigUtil {
     enum RemoteConfigKey {
-        case appConfiguration
         case configFile
         
         var formattedKey: String {
             switch self {
-            case .appConfiguration:
-                return "app_configuration"
             case .configFile:
                 return "config_file"
             }

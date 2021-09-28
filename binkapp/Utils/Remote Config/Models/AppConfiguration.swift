@@ -53,8 +53,8 @@ class RemoteAppConfigurationUtil {
     }
     
     private var recommendedLiveVersion: AppVersion? {
-        let appConfiguration = Current.remoteConfig.objectForConfigKey(.appConfiguration, forObjectType: AppConfiguration.self)
-        guard let versionString = appConfiguration?.recommendedLiveAppVersion?.iOS else { return nil }
+        let appConfig = Current.remoteConfig.configFile?.appConfig
+        guard let versionString = appConfig?.recommendedLiveAppVersion?.ios else { return nil }
         return AppVersion(versionString: versionString)
     }
     
