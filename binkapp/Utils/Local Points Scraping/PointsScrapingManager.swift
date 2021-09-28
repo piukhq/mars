@@ -63,9 +63,11 @@ class PointsScrapingManager {
     
     private static let baseCredentialStoreKey = "com.bink.wallet.pointsScraping.credentials.cardId_%@.%@"
     private let keychain = Keychain(service: APIConstants.bundleID)
-    private let config = Current.remoteConfig.configFile?.localPointsCollection
-
     private var webScrapingUtility: WebScrapingUtility?
+    
+    private var config: RemoteConfigFile.LocalPointsCollection? {
+        return Current.remoteConfig.configFile?.localPointsCollection
+    }
     
     private var isEnabled: Bool {
         return config?.enabled ?? false
@@ -75,17 +77,9 @@ class PointsScrapingManager {
         return Current.userDefaults.bool(forDefaultsKey: .lpcDebugMode)
     }
     
-    let agents: [LocalPointsCollectable] = [
-//        TescoScrapingAgent(),
-//        BootsScrapingAgent(),
-//        MorrisonsScrapingAgent(),
-//        SuperdrugScrapingAgent(),
-//        HeathrowScrapingAgent(),
-//        PerfumeShopScrapingAgent(),
-//        WaterstonesScrapingAgent(),
-//        StarbucksPointsScrapingAgent(),
-//        SubwayPointsScrapingAgent()
-    ]
+    var agents: [LocalPointsCollectable] {
+        return config?.agents ?? []
+    }
     
     var processingQueue: [QueuedItem] = []
     
@@ -106,7 +100,7 @@ class PointsScrapingManager {
         guard let usernameValue = usernameField?.value else { return nil }
         guard let passwordValue = passwordField?.value else { return nil }
         
-        if agent.fields!.requiredCredentials!.contains(.cardNumber) {
+        if let requiredCredentials = agent.fields?.requiredCredentials, requiredCredentials.contains(.cardNumber) {
             let addFields = fields.filter { $0.columnKind == .add }
             let cardNumberField = addFields.first(where: { $0.fieldCommonName == .cardNumber })
             let cardNumberValue = cardNumberField?.value
