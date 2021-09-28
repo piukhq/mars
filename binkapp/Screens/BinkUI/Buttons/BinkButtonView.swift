@@ -18,7 +18,7 @@ class ButtonViewModel: ObservableObject {
 }
 
 struct BinkButtonView: View, Identifiable {
-    @ObservedObject private var themeManager = Current.themeManager
+//    @ObservedObject private var themeManager = Current.themeManager
     @ObservedObject var viewModel: ButtonViewModel
     @State var enabled = false
     @State var loading = false
@@ -35,7 +35,7 @@ struct BinkButtonView: View, Identifiable {
     var alwaysEnabled = false
     
     var textColor: Color {
-        return type == .gradient ? .white : .black
+        return type == .gradient ? .white : Color(Current.themeManager.color(for: .text))
     }
     
     var body: some View {
@@ -47,7 +47,7 @@ struct BinkButtonView: View, Identifiable {
                 .frame(width: UIScreen.main.bounds.width * 0.75, height: 52.0)
                 .background(
                     ZStack {
-                        Color(themeManager.color(for: .viewBackground))
+                        Color(.clear)
                         if type == .gradient {
                             LinearGradient(gradient: Gradient(colors: [Color(.binkGradientBlueRight), Color(.binkGradientBlueLeft)]), startPoint: .leading, endPoint: .trailing)
                                 .opacity(enabled ? 1.0 : 0.5)
