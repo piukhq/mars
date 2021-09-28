@@ -26,7 +26,7 @@ final class FeatureTogglingManager {
 
     private var userIsBetaUser: Bool {
         let UID = Current.userManager.currentUserId ?? ""
-        let betaUsers = Current.remoteConfig.objectForConfigKey(.betaUsers, forObjectType: [BetaUser].self)
+        let betaUsers = Current.remoteConfig.configFile?.beta?.users
         return betaUsers?.contains(where: { $0.uid == UID }) ?? false
     }
 
