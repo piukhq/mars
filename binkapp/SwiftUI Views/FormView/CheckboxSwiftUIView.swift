@@ -90,8 +90,8 @@ struct CheckboxSwiftUIView: View {
         return optional ? true : viewModel.checkedState
     }
     
-    init (text: String, attributedText: NSAttributedString? = nil, columnName: String?, columnKind: FormField.ColumnKind, url: URL? = nil, optional: Bool = false, hideCheckbox: Bool = false, membershipPlan: CD_MembershipPlan? = nil, checkValidity: @escaping CheckValidity) {
-        self._checkboxText = State(initialValue: text)
+    init (text: String? = nil, attributedText: NSMutableAttributedString? = nil, columnName: String?, columnKind: FormField.ColumnKind, url: URL? = nil, optional: Bool = false, hideCheckbox: Bool = false, membershipPlan: CD_MembershipPlan? = nil, checkValidity: @escaping CheckValidity) {
+        self._checkboxText = State(initialValue: text ?? "")
         self.columnName = columnName
         self.columnKind = columnKind
         self.url = url
@@ -99,7 +99,15 @@ struct CheckboxSwiftUIView: View {
         self.hideCheckbox = hideCheckbox
         self.viewModel = CheckboxSwiftUIViewViewModel(membershipPlan: membershipPlan)
         self.checkValidity = checkValidity
-        self.attributedText = attributedText
+        
+        guard let safeUrl = url, let attributedText = attributedText, let columnName = columnName else {
+            self.attributedText = attributedText
+            return
+        }
+        
+        let string = attributedText
+        string.addAttribute(.link, value: safeUrl, range: NSRange(location: attributedText.length - columnName.count, length: columnName.count))
+        self.attributedText = string
     }
     
     var body: some View {
@@ -130,28 +138,7 @@ struct CheckboxSwiftUIView: View {
                 }
             }
             
-//            HStack(spacing: 4) {
-                if columnKind == .planDocument, let columnName = columnName {
-                    Text(checkboxText)
-                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
-                        .font(.nunitoLight(14))
-                    
-                    Button {
-                        if let url = url {
-                            viewModel.presentPlanDocumentsModal(withUrl: url)
-                        }
-                    } label: {
-                        Text(columnName)
-                            .font(.nunitoLight(14))
-                            .foregroundColor(Color(.binkGradientBlueLeft))
-                            .underline()
-                    }
-                } else if columnKind == .none {
-                    if let attrText = attributedText {
-                        TextWithAttributedString(attributedText: attrText, url: $viewModel.url)
-                    }
-                }
-//            }
+            TextWithAttributedString(attributedText: attributedText ?? NSAttributedString(string: checkboxText), url: $viewModel.url)
             Spacer()
         }
     }

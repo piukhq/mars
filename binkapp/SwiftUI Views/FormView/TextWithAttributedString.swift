@@ -30,7 +30,7 @@ struct InternalTextView: UIViewRepresentable {
     
     func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
-        textView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+        textView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         textView.textAlignment = .justified
         textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = true
@@ -38,6 +38,7 @@ struct InternalTextView: UIViewRepresentable {
         textView.showsHorizontalScrollIndicator = false
         textView.allowsEditingTextAttributes = false
         textView.backgroundColor = .clear
+        textView.tintColor = .clear
         textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         textView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
