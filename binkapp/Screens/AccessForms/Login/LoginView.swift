@@ -10,7 +10,7 @@ import SwiftUI
 
 struct LoginView: View {
     @State private var formViewModel: FormViewModel
-    private var viewModel: LoginViewViewModel
+    private let viewModel: LoginViewViewModel
 
     init() {
         viewModel = LoginViewViewModel()

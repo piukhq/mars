@@ -111,12 +111,10 @@ final class LoginViewViewModel: UserServiceProtocol, ObservableObject {
     }
     
     private func showError() {
-        // TODO >>>>>>>>>>>>>>>>>>>>
-        
-//        let alert = BinkAlertController(title: L10n.errorTitle, message: L10n.loginError, preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: L10n.ok, style: .default))
-//        present(alert, animated: true)
-//        Alert
+        let alert = BinkAlertController(title: L10n.errorTitle, message: L10n.loginError, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: L10n.ok, style: .default))
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
     }
     
     private func handleLoginError() {
