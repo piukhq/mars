@@ -10,73 +10,11 @@ import SwiftUI
 
 final class FormFooterViewViewModel: ObservableObject {
     @Published var datasource: FormDataSource
-    @Published var checkboxStates: [Bool] = [] {
-        didSet {
-            datasource.checkFormValidity()
-        }
-    }
-    @Published var didTapOnURL: URL? {
-        didSet {
-            if let url = didTapOnURL {
-                presentPlanDocumentsModal(withUrl: url)
-            }
-        }
-    }
-    private var privacyPolicy: NSMutableAttributedString?
-    private var termsAndConditions: NSMutableAttributedString?
     
     init(datasource: FormDataSource) {
         self.datasource = datasource
-        
-        datasource.checkboxes.forEach { checkBox in
-            self.checkboxStates.append(checkBox.checkedState)
-        }
     }
-    
-    var checkboxStackHeight: CGFloat {
-        switch datasource.formtype {
-        case .authAndAdd, .addPaymentCard:
-            return datasource.checkboxes.count == 3 ? 420 : 100
-        case .login(let accessForm):
-            switch accessForm {
-            case .termsAndConditions:
-                return 230
-            default:
-                return 100
-            }
-        }
-    }
-    
-    func configureAttributedStrings() {
-        for document in (datasource.membershipPlan?.account?.planDocuments) ?? [] {
-            let planDocument = document as? CD_PlanDocument
-            if planDocument?.name?.contains("policy") == true {
-                if let urlString = planDocument?.url, let url = URL(string: urlString) {
-                    privacyPolicy = HTMLParsingUtil.makeAttributedStringFromHTML(url: url)
-                }
-            }
-            
-            if planDocument?.name?.contains("conditions") == true {
-                if let urlString = planDocument?.url, let url = URL(string: urlString) {
-                    termsAndConditions = HTMLParsingUtil.makeAttributedStringFromHTML(url: url)
-                }
-            }
-        }
-    }
-    
-    func presentPlanDocumentsModal(withUrl url: URL) {
-        if let text = url.absoluteString.contains("pp") ? privacyPolicy : termsAndConditions {
-            let modalConfig = ReusableModalConfiguration(text: text, membershipPlan: datasource.membershipPlan)
-            let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: modalConfig)
-            let navigationRequest = ModalNavigationRequest(viewController: viewController)
-            Current.navigate.to(navigationRequest)
-        } else {
-            let viewController = ViewControllerFactory.makeWebViewController(urlString: url.absoluteString)
-            let navigationRequest = ModalNavigationRequest(viewController: viewController)
-            Current.navigate.to(navigationRequest)
-        }
-    }
-    
+
     func toSecurityAndPrivacy() {
         let title: String = L10n.securityAndPrivacyTitle
         let description: String = L10n.securityAndPrivacyDescription
@@ -109,22 +47,9 @@ struct FormFooterView: View {
     var body: some View {
         switch viewModel.datasource.formtype {
         case .authAndAdd:
-//            VStack() {
-            CheckboxSwiftUIView(checkboxText: "Check this box to receive money off promotion, special offers and information on latest deals and more from Iceland by email")
-            CheckboxSwiftUIView(checkboxText: "I accept the retailer terms and conditions")
-            CheckboxSwiftUIView(checkboxText: "Please read the Iceland Privacy Policy")
-//                ForEach(Array(viewModel.datasource.checkboxes.enumerated()), id: \.offset) { offset, checkbox in
-//                    CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $viewModel.checkboxStates[offset], didTapOnURL: $viewModel.didTapOnURL)
-//                        .padding(.horizontal, 5)
-//                        .frame(minHeight: 30, idealHeight: 100, maxHeight: .infinity)
-//                }
-//            }
-//            .frame(height: viewModel.checkboxStackHeight)
-            .onAppear(perform: {
-                DispatchQueue.global(qos: .userInitiated).async {
-                    viewModel.configureAttributedStrings()
-                }
-            })
+            ForEach(Array(viewModel.datasource.checkboxes.enumerated()), id: \.offset) { _, checkbox in
+                checkbox
+            }
         case .addPaymentCard:
             Button {
                 viewModel.toSecurityAndPrivacy()
@@ -141,14 +66,12 @@ struct FormFooterView: View {
         case .login(let loginType):
             if !viewModel.datasource.checkboxes.isEmpty {
                 VStack(spacing: -10) {
-                    ForEach(Array(viewModel.datasource.checkboxes.enumerated()), id: \.offset) { offset, checkbox in
-                        CheckboxSwiftUIVIew(checkbox: checkbox, checkedState: $viewModel.checkboxStates[offset], didTapOnURL: $viewModel.didTapOnURL)
-                            .padding(.horizontal, 5)
+                    ForEach(Array(viewModel.datasource.checkboxes.enumerated()), id: \.offset) { _, checkbox in
+                        checkbox
                     }
                 }
-                .frame(height: viewModel.checkboxStackHeight)
             }
-
+            
             HStack {
                 if loginType == .emailPassword {
                     Button {

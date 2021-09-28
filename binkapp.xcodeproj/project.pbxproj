@@ -313,6 +313,7 @@
 		CE3D31DC2649660C0072BD97 /* ScanLoyaltyCardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D31DA2649660C0072BD97 /* ScanLoyaltyCardButton.swift */; };
 		CE3D31DD2649660C0072BD97 /* ScanLoyaltyCardButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */; };
 		CE44B49727022B1800124714 /* TextWithAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44B49627022B1800124714 /* TextWithAttributedString.swift */; };
+		CE44B49A2703220400124714 /* CheckboxSwiftUIViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44B4992703220400124714 /* CheckboxSwiftUIViewViewModel.swift */; };
 		CE4A624925714EAE003271F6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* Sentry */; };
 		CE52E13426EFB18C00CAFBBF /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E13326EFB18C00CAFBBF /* UIApplication+Extension.swift */; };
 		CE52E13626EFB1F600CAFBBF /* InputToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E13526EFB1F600CAFBBF /* InputToolbarView.swift */; };
@@ -962,6 +963,7 @@
 		CE3D31DA2649660C0072BD97 /* ScanLoyaltyCardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanLoyaltyCardButton.swift; sourceTree = "<group>"; };
 		CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanLoyaltyCardButton.xib; sourceTree = "<group>"; };
 		CE44B49627022B1800124714 /* TextWithAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithAttributedString.swift; sourceTree = "<group>"; };
+		CE44B4992703220400124714 /* CheckboxSwiftUIViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxSwiftUIViewViewModel.swift; sourceTree = "<group>"; };
 		CE4A628025715519003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A6285257155AE003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE52E13326EFB18C00CAFBBF /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
@@ -2424,6 +2426,15 @@
 			path = BinkUI;
 			sourceTree = "<group>";
 		};
+		CE44B498270321E100124714 /* CheckboxView */ = {
+			isa = PBXGroup;
+			children = (
+				CECF0D2F26FE229B00163E9B /* CheckboxSwiftUIView.swift */,
+				CE44B4992703220400124714 /* CheckboxSwiftUIViewViewModel.swift */,
+			);
+			path = CheckboxView;
+			sourceTree = "<group>";
+		};
 		CE52E16126F0FDD700CAFBBF /* SwiftUIExtensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -2465,7 +2476,7 @@
 				CE52E13526EFB1F600CAFBBF /* InputToolbarView.swift */,
 				CEB7ADF126F22DC400BD138C /* FormHeaderView.swift */,
 				CEB7ADF526F880EB00BD138C /* FormFooterView.swift */,
-				CECF0D2F26FE229B00163E9B /* CheckboxSwiftUIView.swift */,
+				CE44B498270321E100124714 /* CheckboxView */,
 				CEB7ADFB26FB135900BD138C /* AttributedTextView.swift */,
 				CE44B49627022B1800124714 /* TextWithAttributedString.swift */,
 				CECF0D2A26FCCBFA00163E9B /* ClearButton.swift */,
@@ -3836,6 +3847,7 @@
 				EFA5F7362379A7C70027AB80 /* CD_EnrolField.swift in Sources */,
 				EF8BF1F1233E06ED00D2E5F3 /* AddPaymentCardViewModel.swift in Sources */,
 				EF54911E2371D93400FE17BE /* PaymentCardDetailLoyaltyCardStatusCellViewModel.swift in Sources */,
+				CE44B49A2703220400124714 /* CheckboxSwiftUIViewViewModel.swift in Sources */,
 				EFEB5BF5237D9F6900E18743 /* PLRCellViewModel.swift in Sources */,
 				EFDEBDF72408279900CB755E /* SecureUtility.swift in Sources */,
 				B713662B2329374D008A0ED7 /* OfferTileView.swift in Sources */,
