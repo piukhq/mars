@@ -11,7 +11,6 @@ import FirebaseRemoteConfig
 
 class RemoteConfigUtil {
     enum RemoteConfigKey {
-        case localPointsCollectionMasterEnabled
         case localPointsCollectionAgentEnabled(WebScrapable)
         case localPointsCollectionAuthFields(WebScrapable)
         case inAppReviewEnabled
@@ -25,8 +24,6 @@ class RemoteConfigUtil {
             let isDebug = !APIConstants.isProduction
 
             switch self {
-            case .localPointsCollectionMasterEnabled:
-                return "LPC_master_enabled\(isDebug ? "_debug" : "")"
             case .localPointsCollectionAgentEnabled(let agent):
                 return "LPC_\(agent.merchant)_enabled\(isDebug ? "_debug" : "")"
             case .localPointsCollectionAuthFields(let agent):
@@ -66,11 +63,6 @@ class RemoteConfigUtil {
         let settings = RemoteConfigSettings()
         settings.minimumFetchInterval = 0
         remoteConfig.configSettings = settings
-        remoteConfig.setDefaults([RemoteConfigKey.localPointsCollectionMasterEnabled.formattedKey: NSNumber(value: false)])
-        
-        Current.pointsScrapingManager.agents.forEach {
-            remoteConfig.setDefaults([RemoteConfigKey.localPointsCollectionAgentEnabled($0).formattedKey: NSNumber(value: false)])
-        }
     }
     
     func handleRemoteConfigFetch() {
@@ -184,8 +176,8 @@ struct RemoteConfigFile: Codable {
             }
             
             struct Fields: Codable {
-                let usernameFieldCommonName: String?
-                let requiredCredentials: [String]?
+                let usernameFieldCommonName: FieldCommonName?
+                let requiredCredentials: [PointsScrapingManager.CredentialStoreType]?
                 let authFields: [AuthoriseFieldModel]?
                 let scriptFileName: String?
                 
