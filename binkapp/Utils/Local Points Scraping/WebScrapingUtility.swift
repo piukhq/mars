@@ -33,8 +33,8 @@ struct PriorityScrapableCard: Equatable {
 }
 
 protocol WebScrapingUtilityDelegate: AnyObject {
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, item: PointsScrapingManager.QueuedItem, withAgent agent: WebScrapable)
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, item: PointsScrapingManager.QueuedItem, withAgent agent: WebScrapable)
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, item: PointsScrapingManager.QueuedItem, withAgent agent: LocalPointsCollectable)
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, item: PointsScrapingManager.QueuedItem, withAgent agent: LocalPointsCollectable)
 }
 
 class WebScrapingUtility: NSObject {
@@ -47,7 +47,7 @@ class WebScrapingUtility: NSObject {
     private var activeWebview: WKWebView?
     private var priorityScrapableCards: [PriorityScrapableCard] = []
     
-    private var agent: WebScrapable?
+    private var agent: LocalPointsCollectable?
     private var item: PointsScrapingManager.QueuedItem?
     
     private weak var delegate: WebScrapingUtilityDelegate?
@@ -84,13 +84,13 @@ class WebScrapingUtility: NSObject {
         super.init()
     }
     
-    func start(agent: WebScrapable, item: PointsScrapingManager.QueuedItem) throws {
+    func start(agent: LocalPointsCollectable, item: PointsScrapingManager.QueuedItem) throws {
         /// If we have a membership card or agent, then we are currently in the process of scraping and should not be interrupted
         guard !isRunning else { return }
         
         self.agent = agent
         
-        guard let url = URL(string: agent.scrapableUrlString) else {
+        guard let urlString = agent.pointsCollectionUrlString, let url = URL(string: urlString) else {
             throw WebScrapingUtilityError.agentProvidedInvalidUrl
         }
         
@@ -155,7 +155,10 @@ class WebScrapingUtility: NSObject {
                     /// If not, use priority web view
                     /// Clear all merchant data from datastore first to ensure no conflicts
                     defaultDataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), for: records.filter {
-                        $0.displayName.contains(agent.merchant.rawValue)
+                        if let merchant = agent.merchant?.rawValue {
+                            return $0.displayName.contains(merchant)
+                        }
+                        return false
                     }) {
                         completion(.success(self.priorityWebview))
                         return
@@ -276,16 +279,16 @@ class WebScrapingUtility: NSObject {
         item.isProcessing = false
         
         if let value = value {
-            if Current.pointsScrapingManager.isDebugMode {
-                DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - Retreived points balance", type: .success)
+            if Current.pointsScrapingManager.isDebugMode, let merchant = agent.merchant?.rawValue.capitalized {
+                DebugInfoAlertView.show("\(merchant) LPC - Retreived points balance", type: .success)
             }
             delegate?.webScrapingUtility(self, didCompleteWithValue: value, item: item, withAgent: agent)
         }
         
         if let error = error {
-            if Current.pointsScrapingManager.isDebugMode {
+            if Current.pointsScrapingManager.isDebugMode, let merchant = agent.merchant?.rawValue.capitalized {
                 DispatchQueue.main.async {
-                    DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - \(error.localizedDescription)", type: .failure)
+                    DebugInfoAlertView.show("\(merchant) LPC - \(error.localizedDescription)", type: .failure)
                 }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -317,7 +320,8 @@ extension WebScrapingUtility: WKNavigationDelegate {
     private func handleWebViewNavigation(stateConfigurator: WebScrapingStateConfigurator? = nil) {
         resetIdlingTimer()
         guard let agent = agent else { return }
-        guard let script = script(scriptName: agent.navigateScriptFileName) else {
+        guard let scriptFileName = agent.scriptFileName else { return }
+        guard let script = script(scriptName: scriptFileName) else {
             finish(withError: .scriptFileNotFound)
             return
         }
@@ -373,8 +377,8 @@ extension WebScrapingUtility: WKNavigationDelegate {
                         }
                     }
                     
-                    if Current.pointsScrapingManager.isDebugMode, let agent = self.agent {
-                        DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - Attempted to log in", type: .success)
+                    if Current.pointsScrapingManager.isDebugMode, let merchant = agent.merchant?.rawValue.capitalized {
+                        DebugInfoAlertView.show("\(merchant) LPC - Attempted to log in", type: .success)
                     }
                 }
                 

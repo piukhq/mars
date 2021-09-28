@@ -8,29 +8,29 @@
 
 import Foundation
 
-struct PerfumeShopScrapingAgent: WebScrapable {
-    var merchant: WebScrapableMerchant {
-        return .perfumeshop
-    }
-
-    var membershipPlanId: Int {
-        switch APIConstants.currentEnvironment {
-        case .dev:
-            return 78
-        case .staging:
-            return 78
-        case .preprod:
-            return 78
-        case .production:
-            return 78
-        }
-    }
-    
-    var loyaltySchemeBalanceSuffix: String? {
-        return "points"
-    }
-
-    var scrapableUrlString: String {
-        return "https://www.theperfumeshop.com/my-account"
-    }
-}
+//struct PerfumeShopScrapingAgent: LocalPointsCollectable {
+//    var merchant: LocalPointsCollectableMerchant {
+//        return .perfumeshop
+//    }
+//
+//    var membershipPlanId: Int {
+//        switch APIConstants.currentEnvironment {
+//        case .dev:
+//            return 78
+//        case .staging:
+//            return 78
+//        case .preprod:
+//            return 78
+//        case .production:
+//            return 78
+//        }
+//    }
+//    
+//    var loyaltySchemeBalanceSuffix: String? {
+//        return "points"
+//    }
+//
+//    var scrapableUrlString: String {
+//        return "https://www.theperfumeshop.com/my-account"
+//    }
+//}

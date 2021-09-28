@@ -8,37 +8,37 @@
 
 import Foundation
 
-struct HeathrowScrapingAgent: WebScrapable {
-    var merchant: WebScrapableMerchant {
-        return .heathrow
-    }
-
-    var membershipPlanId: Int {
-        switch APIConstants.currentEnvironment {
-        case .dev:
-            return 32
-        case .staging:
-            return 32
-        case .preprod:
-            return 32
-        case .production:
-            return 32
-        }
-    }
-
-    var usernameField: FieldCommonName {
-        return .username
-    }
-    
-    var requiredCredentials: [PointsScrapingManager.CredentialStoreType] {
-        return [.username, .password, .cardNumber]
-    }
-
-    var loyaltySchemeBalanceSuffix: String? {
-        return "points"
-    }
-
-    var scrapableUrlString: String {
-        return "https://www.heathrow.com/rewards/home"
-    }
-}
+//struct HeathrowScrapingAgent: LocalPointsCollectable {
+//    var merchant: LocalPointsCollectableMerchant {
+//        return .heathrow
+//    }
+//
+//    var membershipPlanId: Int {
+//        switch APIConstants.currentEnvironment {
+//        case .dev:
+//            return 32
+//        case .staging:
+//            return 32
+//        case .preprod:
+//            return 32
+//        case .production:
+//            return 32
+//        }
+//    }
+//
+//    var usernameField: FieldCommonName {
+//        return .username
+//    }
+//    
+//    var requiredCredentials: [PointsScrapingManager.CredentialStoreType] {
+//        return [.username, .password, .cardNumber]
+//    }
+//
+//    var loyaltySchemeBalanceSuffix: String? {
+//        return "points"
+//    }
+//
+//    var scrapableUrlString: String {
+//        return "https://www.heathrow.com/rewards/home"
+//    }
+//}

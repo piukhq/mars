@@ -11,8 +11,7 @@ import FirebaseRemoteConfig
 
 class RemoteConfigUtil {
     enum RemoteConfigKey {
-        case localPointsCollectionAgentEnabled(WebScrapable)
-        case localPointsCollectionAuthFields(WebScrapable)
+        case localPointsCollectionAuthFields(LocalPointsCollectable)
         case inAppReviewEnabled
         case dynamicActions
         case betaFeatures
@@ -24,10 +23,8 @@ class RemoteConfigUtil {
             let isDebug = !APIConstants.isProduction
 
             switch self {
-            case .localPointsCollectionAgentEnabled(let agent):
-                return "LPC_\(agent.merchant)_enabled\(isDebug ? "_debug" : "")"
             case .localPointsCollectionAuthFields(let agent):
-                return "LPC_\(agent.merchant)_auth_fields\(isDebug ? "_debug" : "")"
+                return "LPC_\(agent.merchant?.rawValue ?? "")_auth_fields\(isDebug ? "_debug" : "")"
             case .inAppReviewEnabled:
                 return "in_app_review_enabled"
             case .dynamicActions:
@@ -126,20 +123,35 @@ struct RemoteConfigFile: Codable {
         }
         
         struct Agent: Codable {
-            let merchantName: String?
-            let membershipPlanId: MembershipPlanId?
+            let merchant: LocalPointsCollectableMerchant?
+            let membershipPlanIds: MembershipPlanId?
             let enabled: Enabled?
             let loyaltyScheme: LoyaltyScheme?
             let pointsCollectionUrlString: String?
             let fields: Fields?
+            let scriptFileName: String?
+            
+            var membershipPlanId: Int? {
+                switch APIConstants.currentEnvironment {
+                case .dev:
+                    return membershipPlanIds?.dev
+                case .staging:
+                    return membershipPlanIds?.staging
+                case .preprod:
+                    return membershipPlanIds?.preprod
+                case .production:
+                    return membershipPlanIds?.production
+                }
+            }
             
             enum CodingKeys: String, CodingKey {
-                case merchantName = "merchant_name"
-                case membershipPlanId = "membership_plan_id"
+                case merchant
+                case membershipPlanIds = "membership_plan_id"
                 case enabled
                 case loyaltyScheme = "loyalty_scheme"
                 case pointsCollectionUrlString = "points_collection_url"
                 case fields
+                case scriptFileName = "script_file_name"
             }
             
             struct MembershipPlanId: Codable {

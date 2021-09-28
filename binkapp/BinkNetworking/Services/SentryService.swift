@@ -100,7 +100,7 @@ enum SentryException {
     case tokenisationServiceRejectedRequest(NetworkResponseData?)
     case apiRejectedPaymentCardRequest(NetworkResponseData?)
     case apiRejectedLoyaltyCardRequest(NetworkResponseData?)
-    case localPointsCollectionFailed(WebScrapingUtilityError, WebScrapableMerchant, balanceRefresh: Bool)
+    case localPointsCollectionFailed(WebScrapingUtilityError, LocalPointsCollectableMerchant, balanceRefresh: Bool)
 
     var formattedError: NSError {
         return NSError(domain: domain.rawValue, code: errorCode, userInfo: userInfo)
