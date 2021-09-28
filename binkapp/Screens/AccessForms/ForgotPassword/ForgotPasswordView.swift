@@ -14,7 +14,6 @@ struct ForgotPasswordView: View {
     }
 
     @State private var formViewModel: FormViewModel
-    @State private var showingAlert = false
     private let viewModel: ForgotPasswordViewModel
     private let datasource = FormDataSource(accessForm: .forgottenPassword)
     private let buttonViewModel: ButtonViewModel
@@ -31,12 +30,6 @@ struct ForgotPasswordView: View {
             BinkFormView(viewModel: formViewModel)
             if case .none = formViewModel.pickerType {
                 BinkButtonsStackView(buttons: [continueButton])
-                    .alert(isPresented: $showingAlert) {
-                        Alert(title: Text(L10n.loginForgotPassword), message: Text(L10n.fogrotPasswordPopupText), dismissButton: .cancel(Text(L10n.ok), action: {
-                            buttonViewModel.isLoading = false
-                            popToRoot()
-                        }))
-                    }
             }
         })
     }
@@ -45,7 +38,12 @@ struct ForgotPasswordView: View {
         buttonViewModel.isLoading = true
         guard let safeEmail = viewModel.email else { return }
         viewModel.repository.continueButtonTapped(email: safeEmail, completion: {
-            showingAlert = true
+            let alert = BinkAlertController(title: L10n.loginForgotPassword, message: L10n.fogrotPasswordPopupText, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: L10n.ok, style: .cancel, handler: { _ in
+                self.popToRoot()
+            }))
+            let navigationRequest = AlertNavigationRequest(alertController: alert)
+            Current.navigate.to(navigationRequest)
         })
     }
 }
