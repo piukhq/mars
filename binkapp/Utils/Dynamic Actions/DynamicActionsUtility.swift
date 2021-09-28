@@ -24,6 +24,6 @@ struct DynamicActionsUtility {
     }
 
     private var allActions: [DynamicAction]? {
-        return Current.remoteConfig.objectForConfigKey(.dynamicActions, forObjectType: [DynamicAction].self)
+        return Current.remoteConfig.configFile?.dynamicActions
     }
 }
