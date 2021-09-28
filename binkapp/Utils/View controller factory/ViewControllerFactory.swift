@@ -60,14 +60,14 @@ enum ViewControllerFactory {
         return PLLScreenViewController(viewModel: viewModel, journey: journey)
     }
     
-    static func makePatchGhostCardViewController(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) -> AuthAndAddViewController {
+    static func makePatchGhostCardViewController(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) -> UIViewController {
         let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: .patchGhostCard, existingMembershipCard: existingMembershipCard)
-        return AuthAndAddViewController(viewModel: viewModel)
+        return UIHostingController(rootView: AuthAndAddView(viewModel: viewModel))
     }
     
-    static func makeSignUpViewController(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) -> AuthAndAddViewController {
+    static func makeSignUpViewController(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) -> UIViewController {
         let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: .signUp, existingMembershipCard: existingMembershipCard)
-        return AuthAndAddViewController(viewModel: viewModel)
+        return UIHostingController(rootView: AuthAndAddView(viewModel: viewModel))
     }
     
     // MARK: - Loyalty Card Detail
