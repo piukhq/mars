@@ -18,18 +18,9 @@ struct TermsAndConditionsView: View {
     }
     
     @State private var formViewModel: FormViewModel
-    @State private var showingAlert = false
     private let datasource = FormDataSource(accessForm: .termsAndConditions)
     private let buttonViewModel: ButtonViewModel
     private let requestType: LoginRequestType
-    private var errorMessage: String {
-        let message: String
-        switch requestType {
-        case .apple:
-            message = L10n.socialTandcsSiwaError
-        }
-        return message
-    }
     
     init(requestType: LoginRequestType) {
         self.requestType = requestType
@@ -42,12 +33,6 @@ struct TermsAndConditionsView: View {
             BinkFormView(viewModel: formViewModel)
             if case .none = formViewModel.pickerType {
                 BinkButtonsStackView(buttons: [continueButton])
-                    .alert(isPresented: $showingAlert) {
-                        Alert(title: Text(L10n.errorTitle), message: Text(errorMessage), dismissButton: .default(Text(L10n.ok), action: {
-                            buttonViewModel.isLoading = false
-                            showingAlert = false
-                        }))
-                    }
             }
         })
     }
@@ -80,7 +65,15 @@ struct TermsAndConditionsView: View {
     
     private func handleAuthError() {
         Current.userManager.removeUser()
-        showingAlert = true
+        buttonViewModel.isLoading = false
+        showError()
+    }
+    
+    private func showError() {
+        let alert = BinkAlertController(title: L10n.errorTitle, message: L10n.socialTandcsSiwaError, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: L10n.ok, style: .default))
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
     }
 }
 
