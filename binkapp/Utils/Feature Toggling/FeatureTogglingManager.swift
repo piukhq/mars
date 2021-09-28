@@ -13,7 +13,9 @@ struct BetaUser: Codable {
 }
 
 final class FeatureTogglingManager {
-    let features = Current.remoteConfig.configFile?.beta?.features
+    var features: [BetaFeature]? {
+        return Current.remoteConfig.configFile?.beta?.features
+    }
 
     var shouldShowInSettings: Bool {
         return userIsBetaUser
