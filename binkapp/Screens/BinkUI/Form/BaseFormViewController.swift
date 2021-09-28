@@ -196,7 +196,7 @@ class BaseFormViewController: BinkViewController, FormDelegate, ObservableObject
             }
         }
         guard !dataSource.checkboxes.isEmpty else { return }
-        stackScrollView.add(arrangedSubviews: dataSource.checkboxes)
+//        stackScrollView.add(arrangedSubviews: dataSource.checkboxes)
     }
     
     @objc func handleKeyboardWillShow(_ notification: Notification) {

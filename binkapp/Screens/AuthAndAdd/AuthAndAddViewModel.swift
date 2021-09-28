@@ -132,7 +132,7 @@ class AuthAndAddViewModel: ObservableObject {
         return membershipPlan
     }
 
-    func addMembershipCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, completion: @escaping () -> Void) throws {
+    func addMembershipCard(with formFields: [FormField], checkboxes: [CheckboxSwiftUIView]? = nil, completion: @escaping () -> Void) throws {
         guard formPurpose != .ghostCard, formPurpose != .patchGhostCard else {
             try addGhostCard(with: formFields, checkboxes: checkboxes, existingMembershipCard: existingMembershipCard)
             return
@@ -179,7 +179,7 @@ class AuthAndAddViewModel: ObservableObject {
         })
     }
     
-    private func addGhostCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, existingMembershipCard: CD_MembershipCard?) throws {
+    private func addGhostCard(with formFields: [FormField], checkboxes: [CheckboxSwiftUIView]? = nil, existingMembershipCard: CD_MembershipCard?) throws {
         // Setup with both
         populateCard(with: formFields, checkboxes: checkboxes, columnKind: .add)
         populateCard(with: formFields, checkboxes: checkboxes, columnKind: .register)
@@ -219,7 +219,7 @@ class AuthAndAddViewModel: ObservableObject {
         }
     }
     
-    private func populateCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, columnKind: FormField.ColumnKind) {
+    private func populateCard(with formFields: [FormField], checkboxes: [CheckboxSwiftUIView]? = nil, columnKind: FormField.ColumnKind) {
         formFields.forEach {
             if $0.columnKind == columnKind {
                 addFieldToCard(formField: $0)
@@ -291,7 +291,7 @@ class AuthAndAddViewModel: ObservableObject {
         }
     }
     
-    func addCheckboxToCard(checkbox: CheckboxView) {
+    func addCheckboxToCard(checkbox: CheckboxSwiftUIView) {
         switch checkbox.columnKind {
         case .add:
             let addFieldsArray = membershipCardPostModel?.account?.addFields
