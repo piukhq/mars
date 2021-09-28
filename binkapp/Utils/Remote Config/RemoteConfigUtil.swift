@@ -11,7 +11,6 @@ import FirebaseRemoteConfig
 
 class RemoteConfigUtil {
     enum RemoteConfigKey {
-        case inAppReviewEnabled
         case dynamicActions
         case betaFeatures
         case betaUsers
@@ -20,8 +19,6 @@ class RemoteConfigUtil {
         
         var formattedKey: String {
             switch self {
-            case .inAppReviewEnabled:
-                return "in_app_review_enabled"
             case .dynamicActions:
                 return "dynamic_actions"
             case .betaFeatures:
