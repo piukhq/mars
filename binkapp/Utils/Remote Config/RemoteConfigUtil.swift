@@ -11,7 +11,6 @@ import FirebaseRemoteConfig
 
 class RemoteConfigUtil {
     enum RemoteConfigKey {
-        case localPointsCollectionAuthFields(LocalPointsCollectable)
         case inAppReviewEnabled
         case dynamicActions
         case betaFeatures
@@ -20,11 +19,7 @@ class RemoteConfigUtil {
         case configFile
         
         var formattedKey: String {
-            let isDebug = !APIConstants.isProduction
-
             switch self {
-            case .localPointsCollectionAuthFields(let agent):
-                return "LPC_\(agent.merchant?.rawValue ?? "")_auth_fields\(isDebug ? "_debug" : "")"
             case .inAppReviewEnabled:
                 return "in_app_review_enabled"
             case .dynamicActions:
