@@ -75,7 +75,7 @@ class FeatureFlagsTableViewController: BinkTableViewController {
 }
 
 extension FeatureFlagsTableViewController: FeatureFlagCellDelegate {
-    func featureWasToggled(_ feature: Feature?) {
+    func featureWasToggled(_ feature: BetaFeature?) {
         switch feature?.type {
         case .themes:
             configureForCurrentTheme()

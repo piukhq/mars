@@ -11,15 +11,12 @@ import FirebaseRemoteConfig
 
 class RemoteConfigUtil {
     enum RemoteConfigKey {
-        case betaFeatures
         case betaUsers
         case appConfiguration
         case configFile
         
         var formattedKey: String {
             switch self {
-            case .betaFeatures:
-                return "beta_features"
             case .betaUsers:
                 return "beta_users"
             case .appConfiguration:
@@ -208,16 +205,8 @@ struct RemoteConfigFile: Codable {
     }
     
     struct Beta: Codable {
-        let features: [Feature]?
+        let features: [BetaFeature]?
         let users: [User]?
-        
-        struct Feature: Codable {
-            let slug: String?
-            let type: String?
-            let title: String?
-            let description: String?
-            let enabled: Bool?
-        }
         
         struct User: Codable {
             let uid: String?

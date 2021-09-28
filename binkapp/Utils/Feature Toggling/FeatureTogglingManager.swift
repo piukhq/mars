@@ -13,14 +13,14 @@ struct BetaUser: Codable {
 }
 
 final class FeatureTogglingManager {
-    var features: [Feature]? = Current.remoteConfig.objectForConfigKey(.betaFeatures, forObjectType: [Feature].self)
+    let features = Current.remoteConfig.configFile?.beta?.features
 
     var shouldShowInSettings: Bool {
         return userIsBetaUser
     }
     
     func getFeaturesFromRemoteConfig() {
-        features = Current.remoteConfig.objectForConfigKey(.betaFeatures, forObjectType: [Feature].self)
+        // TODO: Should this be called on each remote config fetch?
         setupFeatures()
     }
 
@@ -36,7 +36,7 @@ final class FeatureTogglingManager {
     }
 
     
-    func toggle(_ feature: Feature, enabled: Bool) {
+    func toggle(_ feature: BetaFeature, enabled: Bool) {
         switch feature.type {
         case .themes:
             let theme = Theme(type: enabled ? .system : .light)
