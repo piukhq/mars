@@ -11,6 +11,7 @@ import SwiftUI
 final class FormViewModel: ObservableObject {
     @Published var datasource: FormDataSource
     @Published var showTextFieldToolbar = false
+    @Published var newResponderIsActive: Bool?
     @Published var pickerType: PickerType = .none
     @Published var date: Date?
     @Published var pickerData = (value: "", fieldCount: 0)

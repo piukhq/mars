@@ -11,7 +11,6 @@ import SwiftUI
 
 struct BinkTextfieldView: View {
     private let formViewModel: FormViewModel
-//    @ObservedObject private var themeManager = Current.themeManager
     @State var field: FormField
     @State private var isEditing = false
     @State var value: String
@@ -21,7 +20,6 @@ struct BinkTextfieldView: View {
         _field = State(initialValue: field)
         _value = State(initialValue: field.forcedValue ?? "")
         self.formViewModel = viewModel
-//        Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
     }
     
     var body: some View {
@@ -131,6 +129,11 @@ struct BinkTextfieldView: View {
                                 canShowErrorState = !field.isValid() && !value.isEmpty
                             }
                             .modifier(ClearButton(text: $value, isEditing: $isEditing))
+                            .onReceive(formViewModel.$newResponderIsActive) { newResponderIsActive in
+                                guard let newResponderIsActive = newResponderIsActive else { return }
+                                print(newResponderIsActive)
+                                isEditing = !newResponderIsActive
+                            }
                         default:
                             TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
                                 self.isEditing = isEditing
@@ -140,6 +143,7 @@ struct BinkTextfieldView: View {
 
                                 if isEditing {
                                     formViewModel.showTextFieldToolbar = true
+                                    formViewModel.newResponderIsActive = isEditing
                                 } else {
                                     field.fieldWasExited()
                                 }
@@ -162,7 +166,7 @@ struct BinkTextfieldView: View {
                     }
                     
                     // Camera Button
-                    if (field.fieldCommonName == .cardNumber || field.fieldCommonName == .barcode) && (!isEditing && !field.isValid()) || (isEditing && value.isEmpty) {
+                    if (field.fieldCommonName == .cardNumber || field.fieldCommonName == .barcode) && ((!isEditing && !field.isValid()) || (isEditing && value.isEmpty)) {
                         Button(action: {
                             if field.fieldType == .paymentCardNumber {
                                 formViewModel.toPaymentCardScanner()
