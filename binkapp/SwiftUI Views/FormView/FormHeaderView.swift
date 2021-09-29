@@ -48,6 +48,12 @@ final class FormHeaderViewViewModel: ObservableObject {
 }
 
 struct FormHeaderView: View {
+    enum Constants {
+        static let imageSize: CGFloat = 70
+        static let paymentCardCellHeight: CGFloat = 120
+        static let paymentCardCellBottomPadding: CGFloat = 20
+    }
+    
     @ObservedObject var viewModel: FormHeaderViewViewModel
     @Environment(\.colorScheme) var colorScheme
     
@@ -59,7 +65,7 @@ struct FormHeaderView: View {
     var body: some View {
         if case .authAndAdd = viewModel.formType {
             RemoteImage(image: viewModel.brandImage)
-                .frame(width: 70, height: 70, alignment: .center)
+                .frame(width: Constants.imageSize, height: Constants.imageSize, alignment: .center)
                 .aspectRatio(contentMode: .fit)
             if viewModel.shouldShowInfoButton {
                 Button(action: {
@@ -74,8 +80,8 @@ struct FormHeaderView: View {
         } else if case .addPaymentCard = viewModel.formType {
             PaymentCardCellSwiftUIView(paymentCard: $viewModel.paymentCard)
                 .frame(maxWidth: .infinity)
-                .frame(height: 120)
-                .padding(.bottom, 20)
+                .frame(height: Constants.paymentCardCellHeight)
+                .padding(.bottom, Constants.paymentCardCellBottomPadding)
         }
     }
 }

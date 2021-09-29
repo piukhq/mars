@@ -23,9 +23,11 @@ public struct ClearButton: ViewModifier {
             Spacer()
             if !text.isEmpty && isEditing {
                 Image(systemName: "multiply.circle.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
                     .foregroundColor(Color(Current.themeManager.color(for: .divider)))
-                    .offset(x: -3)
-                    .frame(width: 25.0)
+                    .offset(x: -6, y: 2)
+                    .frame(width: 19.0)
                     .onTapGesture { self.text = "" }
             }
         }
