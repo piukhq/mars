@@ -17,7 +17,6 @@ struct ForgotPasswordView: View {
     private let viewModel: ForgotPasswordViewModel
     private let datasource = FormDataSource(accessForm: .forgottenPassword)
     private let buttonViewModel: ButtonViewModel
-    var popToRoot: () -> Void = {}
 
     init() {
         self.viewModel = ForgotPasswordViewModel(repository: ForgotPasswordRepository(), datasource: datasource)
@@ -40,26 +39,10 @@ struct ForgotPasswordView: View {
         viewModel.repository.continueButtonTapped(email: safeEmail, completion: {
             let alert = BinkAlertController(title: L10n.loginForgotPassword, message: L10n.fogrotPasswordPopupText, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: L10n.ok, style: .cancel, handler: { _ in
-                self.popToRoot()
+                Current.navigate.back(toRoot: true, animated: true)
             }))
             let navigationRequest = AlertNavigationRequest(alertController: alert)
             Current.navigate.to(navigationRequest)
         })
-    }
-}
-
-
-final class ForgotPasswordViewHostingController: UIHostingController<ForgotPasswordView> {
-    init() {
-        super.init(rootView: ForgotPasswordView())
-        rootView.popToRoot = popToRoot
-    }
-    
-    @objc required dynamic init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func popToRoot() {
-        navigationController?.popToRootViewController(animated: true)
     }
 }

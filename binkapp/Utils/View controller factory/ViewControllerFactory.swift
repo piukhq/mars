@@ -34,7 +34,7 @@ enum ViewControllerFactory {
     
     static func makeAddPaymentCardViewController(model: PaymentCardCreateModel? = nil, journey: AddPaymentCardJourney) -> UIViewController {
         let viewModel = AddPaymentCardViewModel(paymentCard: model, journey: journey)
-        return UIHostingController(rootView: AddPaymentCardView(viewModel: viewModel))
+        return CustomUIHostingController(rootView: AddPaymentCardView(viewModel: viewModel), screenName: .addPaymentCard)
     }
     
     static func makeAddOrJoinViewController(membershipPlan: CD_MembershipPlan, membershipCard: CD_MembershipCard? = nil) -> AddOrJoinViewController {
@@ -44,7 +44,7 @@ enum ViewControllerFactory {
     
     static func makeAuthAndAddViewController(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) -> UIViewController {
         let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, prefilledFormValues: prefilledFormValues)
-        return UIHostingController(rootView: AuthAndAddView(viewModel: viewModel))
+        return CustomUIHostingController(rootView: AuthAndAddView(viewModel: viewModel), screenName: .addAuthForm)
     }
     
     static func makePaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration) -> ReusableTemplateViewController {
@@ -62,12 +62,12 @@ enum ViewControllerFactory {
     
     static func makePatchGhostCardViewController(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) -> UIViewController {
         let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: .patchGhostCard, existingMembershipCard: existingMembershipCard)
-        return UIHostingController(rootView: AuthAndAddView(viewModel: viewModel))
+        return CustomUIHostingController(rootView: AuthAndAddView(viewModel: viewModel), screenName: .addAuthForm)
     }
     
     static func makeSignUpViewController(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) -> UIViewController {
         let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: .signUp, existingMembershipCard: existingMembershipCard)
-        return UIHostingController(rootView: AuthAndAddView(viewModel: viewModel))
+        return CustomUIHostingController(rootView: AuthAndAddView(viewModel: viewModel), screenName: .addAuthForm)
     }
     
     // MARK: - Loyalty Card Detail
@@ -160,23 +160,19 @@ enum ViewControllerFactory {
     }
 
     static func makeSocialTermsAndConditionsViewController(requestType: LoginRequestType) -> UIViewController {
-        return UIHostingController(rootView: TermsAndConditionsView(requestType: requestType))
+        return CustomUIHostingController(rootView: TermsAndConditionsView(requestType: requestType))
     }
     
     static func makeLoginSuccessViewController() -> LoginSuccessViewController {
         return LoginSuccessViewController()
     }
 
-//    static func makeRegisterViewController() -> RegisterViewController {
-//        return RegisterViewController()
-//    }
-
     static func makeLoginViewController() -> UIViewController {
-        return UIHostingController(rootView: LoginView())
+        return CustomUIHostingController(rootView: LoginView(), screenName: .login)
     }
 
     static func makeForgottenPasswordViewController() -> UIViewController {
-        return ForgotPasswordViewHostingController()
+        return CustomUIHostingController(rootView: ForgotPasswordView())
     }
     
     // MARK: - Reusable
@@ -255,7 +251,7 @@ enum ViewControllerFactory {
 
     static func makeDebugViewController() -> UIViewController {
         if #available(iOS 14.0, *) {
-            return UIHostingController(rootView: DebugMenuView())
+            return CustomUIHostingController(rootView: DebugMenuView())
         } else {
             let debugMenuFactory = DebugMenuFactory()
             let debugMenuViewModel = DebugMenuViewModel(debugMenuFactory: debugMenuFactory)

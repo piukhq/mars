@@ -124,11 +124,6 @@ struct BinkTextfieldView: View {
                             .accentColor(Color(Current.themeManager.color(for: .text)))
                             .font(.nunitoLight(18))
                             .colorSchemeOverride()
-//                            .placeholder(when: value.isEmpty) {
-//                                Text(field.placeholder)
-//                                    .foregroundColor(Color(Current.themeManager.color(for: .divider)))
-//                                    .font(.nunitoLight(17))
-//                            }
                             .onTapGesture {
                                 // Begin editing
                                 isEditing = true
@@ -158,11 +153,6 @@ struct BinkTextfieldView: View {
                             .accentColor(Color(Current.themeManager.color(for: .text)))
                             .foregroundColor(Color(Current.themeManager.color(for: .text)))
                             .colorSchemeOverride()
-//                            .placeholder(when: value.isEmpty) {
-//                                Text(field.placeholder)
-//                                    .foregroundColor(Color(Current.themeManager.color(for: .divider)))
-//                                    .font(.nunitoLight(17))
-//                            }
                         }
                     }
                     
@@ -288,40 +278,5 @@ struct BinkTextfieldView: View {
 struct BinkTextfieldView_Previews: PreviewProvider {
     static var previews: some View {
         BinkTextfieldView(field: FormField(title: "email", placeholder: "Eneter email", validation: "", fieldType: .email, updated: {_,_ in }, shouldChange: {_,_,_,_ in return true }, fieldExited: {_ in }), viewModel: FormViewModel(datasource: FormDataSource(accessForm: .emailPassword), title: "Eneter", description: "kjhdskjhsjkhsjkhdsf"))
-    }
-}
-
-extension View {
-    func placeholder<Content: View>(when shouldShow: Bool, alignment: Alignment = .leading, @ViewBuilder placeholder: () -> Content) -> some View {
-        ZStack(alignment: alignment) {
-            placeholder().opacity(shouldShow ? 1 : 0)
-            self
-        }
-    }
-}
-
-
-struct AdaptiveColorSchemeModifier: ViewModifier {
-    @Environment(\.colorScheme) private var colorScheme
-    
-    func body(content: Content) -> some View {
-        content.colorScheme(resolvedColor)
-    }
-    
-    private var resolvedColor: ColorScheme {
-        switch Current.themeManager.currentTheme.type {
-        case .light:
-            return .light
-        case .dark:
-            return .dark
-        case .system:
-            return colorScheme
-        }
-    }
-}
-
-extension View {
-    func colorSchemeOverride() -> some View {
-        modifier(AdaptiveColorSchemeModifier())
     }
 }

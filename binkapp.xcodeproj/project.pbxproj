@@ -314,6 +314,8 @@
 		CE3D31DD2649660C0072BD97 /* ScanLoyaltyCardButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */; };
 		CE44B49727022B1800124714 /* TextWithAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44B49627022B1800124714 /* TextWithAttributedString.swift */; };
 		CE44B49A2703220400124714 /* CheckboxSwiftUIViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44B4992703220400124714 /* CheckboxSwiftUIViewViewModel.swift */; };
+		CE44B49D270480B400124714 /* AdaptiveColorSchemeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44B49C270480B400124714 /* AdaptiveColorSchemeModifier.swift */; };
+		CE44B49F27048B5B00124714 /* CustomUIHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44B49E27048B5B00124714 /* CustomUIHostingController.swift */; };
 		CE4A624925714EAE003271F6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* Sentry */; };
 		CE52E13426EFB18C00CAFBBF /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E13326EFB18C00CAFBBF /* UIApplication+Extension.swift */; };
 		CE52E13626EFB1F600CAFBBF /* InputToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E13526EFB1F600CAFBBF /* InputToolbarView.swift */; };
@@ -963,6 +965,8 @@
 		CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanLoyaltyCardButton.xib; sourceTree = "<group>"; };
 		CE44B49627022B1800124714 /* TextWithAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithAttributedString.swift; sourceTree = "<group>"; };
 		CE44B4992703220400124714 /* CheckboxSwiftUIViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxSwiftUIViewViewModel.swift; sourceTree = "<group>"; };
+		CE44B49C270480B400124714 /* AdaptiveColorSchemeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveColorSchemeModifier.swift; sourceTree = "<group>"; };
+		CE44B49E27048B5B00124714 /* CustomUIHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUIHostingController.swift; sourceTree = "<group>"; };
 		CE4A628025715519003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A6285257155AE003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE52E13326EFB18C00CAFBBF /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
@@ -1976,8 +1980,10 @@
 		70A499DB267916D100F648F0 /* SwiftUI Views */ = {
 			isa = PBXGroup;
 			children = (
+				CE44B49B2704809100124714 /* ViewModifiers */,
 				701E2C492677567E003F903B /* DebugMenuView.swift */,
 				CE81AAB426D687F100102283 /* FormView */,
+				CE44B49E27048B5B00124714 /* CustomUIHostingController.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -2432,6 +2438,15 @@
 			path = CheckboxView;
 			sourceTree = "<group>";
 		};
+		CE44B49B2704809100124714 /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				CE44B49C270480B400124714 /* AdaptiveColorSchemeModifier.swift */,
+				CECF0D2A26FCCBFA00163E9B /* ClearButton.swift */,
+			);
+			path = ViewModifiers;
+			sourceTree = "<group>";
+		};
 		CE52E16126F0FDD700CAFBBF /* SwiftUIExtensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -2476,7 +2491,6 @@
 				CE44B498270321E100124714 /* CheckboxView */,
 				CEB7ADFB26FB135900BD138C /* AttributedTextView.swift */,
 				CE44B49627022B1800124714 /* TextWithAttributedString.swift */,
-				CECF0D2A26FCCBFA00163E9B /* ClearButton.swift */,
 			);
 			path = FormView;
 			sourceTree = "<group>";
@@ -3691,6 +3705,7 @@
 				CE85A1D626A6CD97003B74CD /* LoginSuccessViewController.swift in Sources */,
 				BD458B38236B417D0029A538 /* LoginViewController.swift in Sources */,
 				EF4B46692346491E009A3651 /* PaymentCardDetailViewModel.swift in Sources */,
+				CE44B49D270480B400124714 /* AdaptiveColorSchemeModifier.swift in Sources */,
 				702D0E3526306F8E0067E370 /* BinkModuleViewModel.swift in Sources */,
 				EF758E0823225F35000D26A9 /* Database.swift in Sources */,
 				CEB7ADFE26FB1E3D00BD138C /* ForgotPasswordView.swift in Sources */,
@@ -3989,6 +4004,7 @@
 				CEE2091D268CC5C4004D3759 /* WidgetController.swift in Sources */,
 				EF8BF1FB234147F500D2E5F3 /* PaymentCardAccountResponse.swift in Sources */,
 				EF485572231D728A00FC9E5F /* DebugMenuSection.swift in Sources */,
+				CE44B49F27048B5B00124714 /* CustomUIHostingController.swift in Sources */,
 				7061053925B8552C00A16DA5 /* Theme.swift in Sources */,
 				BDB01884232EB14A00BFFA18 /* StackScrollView.swift in Sources */,
 				EFA5F7182379A7C70027AB80 /* CD_MembershipPlan.swift in Sources */,
