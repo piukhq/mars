@@ -47,7 +47,7 @@ struct BinkButtonView: View, Identifiable {
                 .frame(width: UIScreen.main.bounds.width * 0.75, height: 52.0)
                 .background(
                     ZStack {
-                        Color(.clear)
+                        Color(Current.themeManager.color(for: .viewBackground))
                         if type == .gradient {
                             LinearGradient(gradient: Gradient(colors: [Color(.binkGradientBlueRight), Color(.binkGradientBlueLeft)]), startPoint: .leading, endPoint: .trailing)
                                 .opacity(enabled ? 1.0 : 0.5)

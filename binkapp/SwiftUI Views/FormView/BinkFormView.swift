@@ -35,10 +35,12 @@ struct BinkFormView: View {
                         Text(viewModel.titleText ?? "")
                             .font(.custom(UIFont.headline.fontName, size: UIFont.headline.pointSize))
                             .fixedSize(horizontal: false, vertical: true)
+                            .foregroundColor(Color(Current.themeManager.color(for: .text)))
                         
                         Text(viewModel.descriptionText ?? "")
                             .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
                             .fixedSize(horizontal: false, vertical: true)
+                            .foregroundColor(Color(Current.themeManager.color(for: .text)))
                     })
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 5)

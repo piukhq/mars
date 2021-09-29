@@ -17,8 +17,10 @@ struct AttributedTextView: View {
                 HStack(spacing: 4) {
                     Text(L10n.magicLinkDescriptionNoteHighlight)
                         .font(.nunitoExtraBold(18))
+                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
                     Text(L10n.magicLinkDescriptionHyperlinkBody)
                         .font(.nunitoLight(18))
+                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
                     Button {
                         viewModel.toMagicLinkModal()
                     } label: {

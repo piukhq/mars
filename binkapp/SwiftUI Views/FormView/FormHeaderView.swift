@@ -61,7 +61,6 @@ struct FormHeaderView: View {
             RemoteImage(image: viewModel.brandImage)
                 .frame(width: 70, height: 70, alignment: .center)
                 .aspectRatio(contentMode: .fit)
-            
             if viewModel.shouldShowInfoButton {
                 Button(action: {
                     viewModel.infoButtonWasTapped()
@@ -80,9 +79,3 @@ struct FormHeaderView: View {
         }
     }
 }
-
-//struct FormHeaderView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        FormHeaderView()
-//    }
-//}
