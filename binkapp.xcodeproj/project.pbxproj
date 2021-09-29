@@ -137,6 +137,9 @@
 		706157BF26499CC60002701E /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706157BE26499CC60002701E /* AppVersion.swift */; };
 		706157C8264A84AF0002701E /* AppVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706157C7264A84AF0002701E /* AppVersionTests.swift */; };
 		7063B1E62703720B00C5C633 /* RemoteConfigFileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7063B1E52703720B00C5C633 /* RemoteConfigFileModel.swift */; };
+		7063B1E9270473EE00C5C633 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 7063B1E8270473EE00C5C633 /* FirebaseAnalytics */; };
+		7063B1EB270473EE00C5C633 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 7063B1EA270473EE00C5C633 /* FirebaseStorage */; };
+		7063B1ED270473EE00C5C633 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 7063B1EC270473EE00C5C633 /* FirebaseRemoteConfig */; };
 		70661B88250792DB006DB009 /* BootsPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */; };
 		70661B93250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70661B92250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift */; };
 		706D203924D851BA004BCCF3 /* _CD_CardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D203724D851BA004BCCF3 /* _CD_CardAccount.swift */; };
@@ -146,8 +149,6 @@
 		706D204224D97104004BCCF3 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D204124D97104004BCCF3 /* AnalyticsEvent.swift */; };
 		70703422268CC1460072F3BF /* LocalPointsCollection_Navigate_Starbucks.js in Resources */ = {isa = PBXBuildFile; fileRef = 70703421268CC1460072F3BF /* LocalPointsCollection_Navigate_Starbucks.js */; };
 		70703424268CC15F0072F3BF /* StarbucksPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70703423268CC15F0072F3BF /* StarbucksPointsScrapingAgent.swift */; };
-		7075381926DFA08300690965 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 7075381826DFA08300690965 /* FirebaseAnalytics */; };
-		7075381B26DFA08300690965 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 7075381A26DFA08300690965 /* FirebaseRemoteConfig */; };
 		7075381E26DFA26C00690965 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 7075381D26DFA26C00690965 /* Alamofire */; };
 		7075382126DFA31100690965 /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 7075382026DFA31100690965 /* AlamofireImage */; };
 		7075382426DFA38100690965 /* AlamofireNetworkActivityLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 7075382326DFA38100690965 /* AlamofireNetworkActivityLogger */; };
@@ -1217,13 +1218,14 @@
 				96F22E002507C5AC0009951B /* Sentry in Frameworks */,
 				C6812158579C0CBB400A495C /* Pods_binkapp.framework in Frameworks */,
 				7075383026DFAB2B00690965 /* JWTDecode in Frameworks */,
-				7075381926DFA08300690965 /* FirebaseAnalytics in Frameworks */,
 				7075382D26DFA96800690965 /* Disk in Frameworks */,
 				7075381E26DFA26C00690965 /* Alamofire in Frameworks */,
+				7063B1EB270473EE00C5C633 /* FirebaseStorage in Frameworks */,
 				7075382A26DFA72800690965 /* KeychainAccess in Frameworks */,
+				7063B1E9270473EE00C5C633 /* FirebaseAnalytics in Frameworks */,
 				CE85A1DB26B05D95003B74CD /* Lottie in Frameworks */,
 				7075382426DFA38100690965 /* AlamofireNetworkActivityLogger in Frameworks */,
-				7075381B26DFA08300690965 /* FirebaseRemoteConfig in Frameworks */,
+				7063B1ED270473EE00C5C633 /* FirebaseRemoteConfig in Frameworks */,
 				7075382726DFA5F600690965 /* DeepDiff in Frameworks */,
 				7075382126DFA31100690965 /* AlamofireImage in Frameworks */,
 			);
@@ -3108,8 +3110,6 @@
 			packageProductDependencies = (
 				96F22DFF2507C5AC0009951B /* Sentry */,
 				CE85A1DA26B05D95003B74CD /* Lottie */,
-				7075381826DFA08300690965 /* FirebaseAnalytics */,
-				7075381A26DFA08300690965 /* FirebaseRemoteConfig */,
 				7075381D26DFA26C00690965 /* Alamofire */,
 				7075382026DFA31100690965 /* AlamofireImage */,
 				7075382326DFA38100690965 /* AlamofireNetworkActivityLogger */,
@@ -3117,6 +3117,9 @@
 				7075382926DFA72800690965 /* KeychainAccess */,
 				7075382C26DFA96800690965 /* Disk */,
 				7075382F26DFAB2B00690965 /* JWTDecode */,
+				7063B1E8270473EE00C5C633 /* FirebaseAnalytics */,
+				7063B1EA270473EE00C5C633 /* FirebaseStorage */,
+				7063B1EC270473EE00C5C633 /* FirebaseRemoteConfig */,
 			);
 			productName = binkapp;
 			productReference = 5ECE046822CE5798001BA964 /* Bink α.app */;
@@ -3224,7 +3227,6 @@
 			packageReferences = (
 				96F22DFE2507C5AC0009951B /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				CE85A1D926B05D95003B74CD /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				7075381726DFA08300690965 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				7075381C26DFA26C00690965 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				7075381F26DFA31100690965 /* XCRemoteSwiftPackageReference "AlamofireImage" */,
 				7075382226DFA38100690965 /* XCRemoteSwiftPackageReference "AlamofireNetworkActivityLogger" */,
@@ -3232,6 +3234,7 @@
 				7075382826DFA72800690965 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				7075382B26DFA96700690965 /* XCRemoteSwiftPackageReference "Disk" */,
 				7075382E26DFAB2B00690965 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
+				7063B1E7270473EE00C5C633 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 5ECE046922CE5798001BA964 /* Products */;
 			projectDirPath = "";
@@ -5093,12 +5096,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		7075381726DFA08300690965 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		7063B1E7270473EE00C5C633 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 8.6.1;
+				minimumVersion = 8.8.0;
 			};
 		};
 		7075381C26DFA26C00690965 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
@@ -5176,14 +5179,19 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7075381826DFA08300690965 /* FirebaseAnalytics */ = {
+		7063B1E8270473EE00C5C633 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7075381726DFA08300690965 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 7063B1E7270473EE00C5C633 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
 		};
-		7075381A26DFA08300690965 /* FirebaseRemoteConfig */ = {
+		7063B1EA270473EE00C5C633 /* FirebaseStorage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7075381726DFA08300690965 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 7063B1E7270473EE00C5C633 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		7063B1EC270473EE00C5C633 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7063B1E7270473EE00C5C633 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseRemoteConfig;
 		};
 		7075381D26DFA26C00690965 /* Alamofire */ = {
