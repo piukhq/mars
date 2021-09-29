@@ -158,7 +158,7 @@ class PointsScrapingManager {
             transitionToFailed(item: itemToProcess)
             throw PointsScrapingManagerError.failedToEnableMembershipCardForPointsScraping
         }
-    
+        
         do {
             try storeCredentials(credentials, forMembershipCardId: membershipCard.id)
             
@@ -203,7 +203,7 @@ class PointsScrapingManager {
             self.transitionToFailed(item: itemToProcess)
             return
         }
-
+        
         do {
             try webScrapingUtility?.start(agent: agent, item: itemToProcess)
         } catch {
@@ -223,7 +223,7 @@ class PointsScrapingManager {
             self.transitionToFailed(item: itemToProcess)
             return
         }
-
+        
         do {
             transitionToPending(item: itemToProcess)
             try webScrapingUtility?.start(agent: agent, item: itemToProcess)
@@ -272,7 +272,7 @@ class PointsScrapingManager {
     func agent(forPlanId planId: Int) -> LocalPointsCollectable? {
         return agents.first(where: { $0.membershipPlanId == planId })
     }
-
+    
     private func hasAgent(forMembershipPlanId planId: Int) -> Bool {
         return agents.contains(where: { $0.membershipPlanId == planId })
     }
@@ -286,7 +286,7 @@ class PointsScrapingManager {
         processingQueue.removeAll(where: { $0.card.id == item.card.id && $0.requiresRetry == false })
         processQueuedItems()
     }
-
+    
     func isCurrentlyScraping(forMembershipCard card: CD_MembershipCard) -> Bool {
         return processingQueue.contains(where: { $0.card == card })
     }
@@ -371,7 +371,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 }
                 
                 self.pointsScrapingDidComplete(for: item)
-
+                
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionSuccess(membershipCard: membershipCard))
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
             }
