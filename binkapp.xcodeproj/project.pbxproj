@@ -273,7 +273,6 @@
 		BD9FB6B62338120700E5559A /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB6B32338120700E5559A /* TransactionsViewController.swift */; };
 		BD9FB6B72338120700E5559A /* TransactionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD9FB6B42338120700E5559A /* TransactionsViewController.xib */; };
 		BD9FB6B82338120700E5559A /* TransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB6B52338120700E5559A /* TransactionsViewModel.swift */; };
-		BDB0186C232D96EB00BFFA18 /* BaseFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB0186B232D96EB00BFFA18 /* BaseFormViewController.swift */; };
 		BDB0186E232D98C000BFFA18 /* FormDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB0186D232D98C000BFFA18 /* FormDataSource.swift */; };
 		BDB01870232D99D200BFFA18 /* FormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB0186F232D99D200BFFA18 /* FormField.swift */; };
 		BDB01872232D9E7900BFFA18 /* FormCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01871232D9E7900BFFA18 /* FormCollectionViewCell.swift */; };
@@ -918,7 +917,6 @@
 		BD9FB6B32338120700E5559A /* TransactionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
 		BD9FB6B42338120700E5559A /* TransactionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionsViewController.xib; sourceTree = "<group>"; };
 		BD9FB6B52338120700E5559A /* TransactionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsViewModel.swift; sourceTree = "<group>"; };
-		BDB0186B232D96EB00BFFA18 /* BaseFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFormViewController.swift; sourceTree = "<group>"; };
 		BDB0186D232D98C000BFFA18 /* FormDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDataSource.swift; sourceTree = "<group>"; };
 		BDB0186F232D99D200BFFA18 /* FormField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormField.swift; sourceTree = "<group>"; };
 		BDB01871232D9E7900BFFA18 /* FormCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -2352,7 +2350,6 @@
 		BDB0186A232D95EC00BFFA18 /* Form */ = {
 			isa = PBXGroup;
 			children = (
-				BDB0186B232D96EB00BFFA18 /* BaseFormViewController.swift */,
 				BDB0186D232D98C000BFFA18 /* FormDataSource.swift */,
 				BDB0186F232D99D200BFFA18 /* FormField.swift */,
 				BDB01871232D9E7900BFFA18 /* FormCollectionViewCell.swift */,
@@ -3961,7 +3958,6 @@
 				3C3C604F2302E65600D9EA25 /* BrandModel.swift in Sources */,
 				CEB7ADF426F3474600BD138C /* PaymentCardCellSwiftUIView.swift in Sources */,
 				B726334D23058D2700951037 /* PlanDocumentModel.swift in Sources */,
-				BDB0186C232D96EB00BFFA18 /* BaseFormViewController.swift in Sources */,
 				EFA5F71C2379A7C70027AB80 /* _CD_MembershipPlanAccount.swift in Sources */,
 				EF46E286235E007300BA2CAF /* OnboardingViewModel.swift in Sources */,
 				B726335123058E2300951037 /* TierModel.swift in Sources */,
