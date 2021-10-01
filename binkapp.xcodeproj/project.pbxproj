@@ -72,7 +72,6 @@
 		3C9CCD2F231695AE00FAF589 /* CheckboxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9CCD2E231695AE00FAF589 /* CheckboxView.xib */; };
 		3CADDEAF231566C9006C3D9C /* LoginTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CADDEAE231566C9006C3D9C /* LoginTextFieldView.swift */; };
 		3CADDEB1231566E5006C3D9C /* LoginTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CADDEB0231566E5006C3D9C /* LoginTextFieldView.xib */; };
-		3CB6BF7223141CF400B74882 /* AuthAndAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB6BF7023141CF400B74882 /* AuthAndAddViewController.swift */; };
 		3CB6BF7723141D1F00B74882 /* AuthAndAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB6BF7623141D1F00B74882 /* AuthAndAddViewModel.swift */; };
 		3CB6BF7923141D3000B74882 /* AuthAndAddRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB6BF7823141D3000B74882 /* AuthAndAddRepository.swift */; };
 		3CB81C13231E74220075D3AC /* ImageTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB81C12231E74220075D3AC /* ImageTypeEnum.swift */; };
@@ -101,7 +100,6 @@
 		3CD3494022F99E1D000C1F4D /* NunitoSans-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3493122F99E1D000C1F4D /* NunitoSans-ExtraLightItalic.ttf */; };
 		3CD39616231E8E7100CD5C31 /* LayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD39615231E8E7100CD5C31 /* LayoutHelper.swift */; };
 		3CD4F14E230D35AE0075F63C /* BinkInfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD4F14D230D35AE0075F63C /* BinkInfoButton.swift */; };
-		3CD8027E239130EE00D26888 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD8027D239130EE00D26888 /* ForgotPasswordViewController.swift */; };
 		3CD802802391313D00D26888 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD8027F2391313D00D26888 /* ForgotPasswordViewModel.swift */; };
 		3CD802822391314900D26888 /* ForgotPasswordRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD802812391314900D26888 /* ForgotPasswordRepository.swift */; };
 		3CE24B2B2304014600B258C8 /* AddOrJoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE24B282304014500B258C8 /* AddOrJoinViewController.swift */; };
@@ -252,7 +250,6 @@
 		BD25E6972388610B0027FF3E /* LoadingScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD25E6962388610B0027FF3E /* LoadingScreen.xib */; };
 		BD25E6992388677E0027FF3E /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD25E6982388677E0027FF3E /* LoadingScreen.swift */; };
 		BD3CB946232857BD005C37AE /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CB945232857BD005C37AE /* APIConstants.swift */; };
-		BD458B38236B417D0029A538 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B37236B417D0029A538 /* LoginViewController.swift */; };
 		BD458B3C236B5B710029A538 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B3B236B5B710029A538 /* LoginResponse.swift */; };
 		BD458B3E236B5C0E0029A538 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B3D236B5C0E0029A538 /* LoginRequest.swift */; };
 		BD458B40236C987F0029A538 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B3F236C987F0029A538 /* UserManager.swift */; };
@@ -708,7 +705,6 @@
 		3C9CCD2E231695AE00FAF589 /* CheckboxView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CheckboxView.xib; sourceTree = "<group>"; };
 		3CADDEAE231566C9006C3D9C /* LoginTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextFieldView.swift; sourceTree = "<group>"; };
 		3CADDEB0231566E5006C3D9C /* LoginTextFieldView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginTextFieldView.xib; sourceTree = "<group>"; };
-		3CB6BF7023141CF400B74882 /* AuthAndAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAndAddViewController.swift; sourceTree = "<group>"; };
 		3CB6BF7123141CF400B74882 /* AuthAndAddViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthAndAddViewController.xib; sourceTree = "<group>"; };
 		3CB6BF7623141D1F00B74882 /* AuthAndAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAndAddViewModel.swift; sourceTree = "<group>"; };
 		3CB6BF7823141D3000B74882 /* AuthAndAddRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAndAddRepository.swift; sourceTree = "<group>"; };
@@ -738,7 +734,6 @@
 		3CD3493122F99E1D000C1F4D /* NunitoSans-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NunitoSans-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
 		3CD39615231E8E7100CD5C31 /* LayoutHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutHelper.swift; sourceTree = "<group>"; };
 		3CD4F14D230D35AE0075F63C /* BinkInfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BinkInfoButton.swift; path = binkapp/Screens/LoyaltyWallet/Models/BinkInfoButton.swift; sourceTree = SOURCE_ROOT; };
-		3CD8027D239130EE00D26888 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		3CD8027F2391313D00D26888 /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
 		3CD802812391314900D26888 /* ForgotPasswordRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordRepository.swift; sourceTree = "<group>"; };
 		3CE24B282304014500B258C8 /* AddOrJoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrJoinViewController.swift; sourceTree = "<group>"; };
@@ -900,7 +895,6 @@
 		BD3CB9432328573C005C37AE /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
 		BD3CB9442328574A005C37AE /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		BD3CB945232857BD005C37AE /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
-		BD458B37236B417D0029A538 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		BD458B3B236B5B710029A538 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		BD458B3D236B5C0E0029A538 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 		BD458B3F236C987F0029A538 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
@@ -1524,7 +1518,6 @@
 				3CADDEAD23155B96006C3D9C /* Views */,
 				3CB6BF7823141D3000B74882 /* AuthAndAddRepository.swift */,
 				3CB6BF7623141D1F00B74882 /* AuthAndAddViewModel.swift */,
-				3CB6BF7023141CF400B74882 /* AuthAndAddViewController.swift */,
 				3CB6BF7123141CF400B74882 /* AuthAndAddViewController.xib */,
 				CE81AAB226D5696600102283 /* AuthAndAddView.swift */,
 			);
@@ -1575,7 +1568,6 @@
 		3CD8027C239130C700D26888 /* ForgotPassword */ = {
 			isa = PBXGroup;
 			children = (
-				3CD8027D239130EE00D26888 /* ForgotPasswordViewController.swift */,
 				CEB7ADFD26FB1E3D00BD138C /* ForgotPasswordView.swift */,
 				3CD8027F2391313D00D26888 /* ForgotPasswordViewModel.swift */,
 				3CD802812391314900D26888 /* ForgotPasswordRepository.swift */,
@@ -1827,7 +1819,6 @@
 		5ECE04B822CE583B001BA964 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				BD458B37236B417D0029A538 /* LoginViewController.swift */,
 				CEB7ADF726F9BF9000BD138C /* LoginView.swift */,
 				CEB7ADF926F9EC7B00BD138C /* LoginViewViewModel.swift */,
 				70EB83872644410A00DD8935 /* LoginController.swift */,
@@ -3694,7 +3685,6 @@
 				70E8DFED2563E8220027A244 /* PerfumeShopPointsScrapingAgent.swift in Sources */,
 				3CD4F14E230D35AE0075F63C /* BinkInfoButton.swift in Sources */,
 				EFEB5BFD237E96F500E18743 /* CGFloatExtension.swift in Sources */,
-				3CD8027E239130EE00D26888 /* ForgotPasswordViewController.swift in Sources */,
 				BD458B40236C987F0029A538 /* UserManager.swift in Sources */,
 				706D204224D97104004BCCF3 /* AnalyticsEvent.swift in Sources */,
 				BD9FB6B0233761C400E5559A /* UILayoutPriority+Extension.swift in Sources */,
@@ -3703,7 +3693,6 @@
 				EFA5F72A2379A7C70027AB80 /* CD_Voucher.swift in Sources */,
 				EFA5F71A2379A7C70027AB80 /* CD_BaseObject.swift in Sources */,
 				CE85A1D626A6CD97003B74CD /* LoginSuccessViewController.swift in Sources */,
-				BD458B38236B417D0029A538 /* LoginViewController.swift in Sources */,
 				EF4B46692346491E009A3651 /* PaymentCardDetailViewModel.swift in Sources */,
 				CE44B49D270480B400124714 /* AdaptiveColorSchemeModifier.swift in Sources */,
 				702D0E3526306F8E0067E370 /* BinkModuleViewModel.swift in Sources */,
@@ -4035,7 +4024,6 @@
 				CEA905BE25C986E6000F69E1 /* CD_BaseImage.swift in Sources */,
 				BDB0187E232E1FC800BFFA18 /* PaymentCardType.swift in Sources */,
 				B774E9AA233123BD006D4131 /* ReusableTemplateViewController.swift in Sources */,
-				3CB6BF7223141CF400B74882 /* AuthAndAddViewController.swift in Sources */,
 				EFA5F7112379A7C70027AB80 /* CD_MembershipPlanAccount.swift in Sources */,
 				EFB055A623F453C400D64F86 /* PLRStampView.swift in Sources */,
 				CE85A1D826B0096B003B74CD /* UniversalLinkUtility.swift in Sources */,

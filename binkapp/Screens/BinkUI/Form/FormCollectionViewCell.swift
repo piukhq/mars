@@ -8,20 +8,20 @@
 
 import UIKit
 
-protocol FormCollectionViewCellDelegate: AnyObject {
-    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField)
-    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField)
-    func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell)
-    func formCollectionViewCellDidReceivePaymentScannerButtonTap(_ cell: FormCollectionViewCell)
-}
+//protocol FormCollectionViewCellDelegate: AnyObject {
+//    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField)
+//    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField)
+//    func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell)
+//    func formCollectionViewCellDidReceivePaymentScannerButtonTap(_ cell: FormCollectionViewCell)
+//}
 
-extension FormCollectionViewCellDelegate {
-    func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell) {}
-    func formCollectionViewCellDidReceivePaymentScannerButtonTap(_ cell: FormCollectionViewCell) {}
-}
+//extension FormCollectionViewCellDelegate {
+//    func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell) {}
+//    func formCollectionViewCellDidReceivePaymentScannerButtonTap(_ cell: FormCollectionViewCell) {}
+//}
 
 class FormCollectionViewCell: UICollectionViewCell {
-    private weak var delegate: FormCollectionViewCellDelegate?
+//    private weak var delegate: FormCollectionViewCellDelegate?
     // MARK: - Helpers
     
     private enum Constants {
@@ -179,53 +179,53 @@ class FormCollectionViewCell: UICollectionViewCell {
         validationLabel.textColor = .binkDynamicRed
     }
 
-    func configure(with field: FormField, delegate: FormCollectionViewCellDelegate?) {
-        let isEnabled = !field.isReadOnly
-        
-        tintColor = Current.themeManager.color(for: .text)
-        titleLabel.text = field.title
-        titleLabel.textColor = isEnabled ? Current.themeManager.color(for: .text) : .binkDynamicGray
-        textField.textColor = isEnabled ? Current.themeManager.color(for: .text) : .binkDynamicGray
-        textField.text = field.forcedValue
-        textField.placeholder = field.placeholder
-        textField.isSecureTextEntry = field.fieldType.isSecureTextEntry
-        textField.keyboardType = field.fieldType.keyboardType()
-        textField.autocorrectionType = field.fieldType.autoCorrection()
-        textField.autocapitalizationType = field.fieldType.capitalization()
-        textField.clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
-        textField.accessibilityIdentifier = field.title
-        formField = field
-        configureTextFieldRightView(shouldDisplay: formField?.value == nil)
-        validationLabel.isHidden = textField.text?.isEmpty == true ? true : field.isValid()
-        separator.backgroundColor = Current.themeManager.color(for: .divider)
-        
-        if case let .expiry(months, years) = field.fieldType {
-            textField.inputView = FormMultipleChoiceInput(with: [months, years], delegate: self)
-        } else if case let .choice(data) = field.fieldType {
-            textField.inputView = FormMultipleChoiceInput(with: [data], delegate: self)
-            pickerSelectedChoice = data.first?.title
-            formField?.updateValue(pickerSelectedChoice)
-        } else if case .date = field.fieldType {
-            let datePicker = UIDatePicker()
-            datePicker.datePickerMode = .date
-            datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
-
-            if #available(iOS 14.0, *) {
-                datePicker.preferredDatePickerStyle = .inline
-                datePicker.backgroundColor = Current.themeManager.color(for: .viewBackground)
-                datePicker.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 400)
-            }
-
-            textField.inputView = datePicker
-            pickerSelectedChoice = datePicker.date.getFormattedString(format: .dayShortMonthYearWithSlash)
-            formField?.updateValue(pickerSelectedChoice)
-        } else {
-            textField.inputView = nil
-        }
-        
-        self.delegate = delegate
-    }
-    
+//    func configure(with field: FormField, delegate: FormCollectionViewCellDelegate?) {
+//        let isEnabled = !field.isReadOnly
+//        
+//        tintColor = Current.themeManager.color(for: .text)
+//        titleLabel.text = field.title
+//        titleLabel.textColor = isEnabled ? Current.themeManager.color(for: .text) : .binkDynamicGray
+//        textField.textColor = isEnabled ? Current.themeManager.color(for: .text) : .binkDynamicGray
+//        textField.text = field.forcedValue
+//        textField.placeholder = field.placeholder
+//        textField.isSecureTextEntry = field.fieldType.isSecureTextEntry
+//        textField.keyboardType = field.fieldType.keyboardType()
+//        textField.autocorrectionType = field.fieldType.autoCorrection()
+//        textField.autocapitalizationType = field.fieldType.capitalization()
+//        textField.clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
+//        textField.accessibilityIdentifier = field.title
+//        formField = field
+//        configureTextFieldRightView(shouldDisplay: formField?.value == nil)
+//        validationLabel.isHidden = textField.text?.isEmpty == true ? true : field.isValid()
+//        separator.backgroundColor = Current.themeManager.color(for: .divider)
+//        
+//        if case let .expiry(months, years) = field.fieldType {
+//            textField.inputView = FormMultipleChoiceInput(with: [months, years], delegate: self)
+//        } else if case let .choice(data) = field.fieldType {
+//            textField.inputView = FormMultipleChoiceInput(with: [data], delegate: self)
+//            pickerSelectedChoice = data.first?.title
+//            formField?.updateValue(pickerSelectedChoice)
+//        } else if case .date = field.fieldType {
+//            let datePicker = UIDatePicker()
+//            datePicker.datePickerMode = .date
+//            datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+//
+//            if #available(iOS 14.0, *) {
+//                datePicker.preferredDatePickerStyle = .inline
+//                datePicker.backgroundColor = Current.themeManager.color(for: .viewBackground)
+//                datePicker.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 400)
+//            }
+//
+//            textField.inputView = datePicker
+//            pickerSelectedChoice = datePicker.date.getFormattedString(format: .dayShortMonthYearWithSlash)
+//            formField?.updateValue(pickerSelectedChoice)
+//        } else {
+//            textField.inputView = nil
+//        }
+//        
+//        self.delegate = delegate
+//    }
+//    
     func setWidth(_ width: CGFloat) {
         preferredWidth = width
     }
@@ -280,7 +280,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         if formField?.fieldCommonName == .barcode {
-            formField?.dataSourceRefreshBlock?()
+//            formField?.dataSourceRefreshBlock?()
             return false
         }
         configureTextFieldRightView(shouldDisplay: true)
@@ -306,11 +306,11 @@ extension FormCollectionViewCell: UITextFieldDelegate {
             textField.text = pickerSelectedChoice
         }
         
-        self.delegate?.formCollectionViewCell(self, didSelectField: textField)
+//        self.delegate?.formCollectionViewCell(self, didSelectField: textField)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.delegate?.formCollectionViewCell(self, shouldResignTextField: textField)
+//        self.delegate?.formCollectionViewCell(self, shouldResignTextField: textField)
         return true
     }
 }

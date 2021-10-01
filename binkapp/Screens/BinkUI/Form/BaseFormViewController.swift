@@ -29,7 +29,7 @@ class BaseFormViewController: BinkViewController, FormDelegate, ObservableObject
     lazy var collectionView: NestedCollectionView = {
         let collectionView = NestedCollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.dataSource = dataSource
+//        collectionView.dataSource = dataSource
         collectionView.isScrollEnabled = false
         collectionView.delegate = self
         collectionView.backgroundColor = .clear
@@ -90,7 +90,7 @@ class BaseFormViewController: BinkViewController, FormDelegate, ObservableObject
     
     var dataSource: FormDataSource {
         didSet {
-            collectionView.dataSource = dataSource
+//            collectionView.dataSource = dataSource
             collectionView.reloadData()
 //            configureFormView(with: dataSource, update: true)
 //            formView.rootView = BinkFormView(datasource: dataSource)

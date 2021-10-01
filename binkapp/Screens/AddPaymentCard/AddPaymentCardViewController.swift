@@ -213,16 +213,6 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
     }
 }
 
-extension AddPaymentCardViewController: FormCollectionViewCellDelegate {
-    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {
-        let cellOrigin = collectionView.convert(cell.frame.origin, to: view)
-        self.selectedCellYOrigin = cellOrigin.y
-        selectedCellHeight = cell.isValidationLabelHidden ? cell.frame.size.height + Constants.cellErrorLabelSafeSpacing : cell.frame.size.height
-    }
-    
-    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField) {}
-}
-
 private extension Selector {
     static let privacyButtonTapped = #selector(AddPaymentCardViewController.privacyButtonTapped)
 }
@@ -244,7 +234,6 @@ extension AddPaymentCardViewController: ScanDelegate {
             self.card.configureWithAddViewModel(paymentCardCreateModel)
             self.viewModel.paymentCard = paymentCardCreateModel
             self.dataSource = FormDataSource(paymentCardCreateModel, delegate: self)
-//            self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
         }
     }
 

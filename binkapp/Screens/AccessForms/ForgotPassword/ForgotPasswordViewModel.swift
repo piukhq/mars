@@ -22,7 +22,7 @@ class ForgotPasswordViewModel: NSObject {
     }
 }
 
-extension ForgotPasswordViewModel: FormDataSourceDelegate, CheckboxViewDelegate, FormCollectionViewCellDelegate {
+extension ForgotPasswordViewModel: FormDataSourceDelegate, CheckboxViewDelegate {
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
         return true
     }
@@ -33,8 +33,4 @@ extension ForgotPasswordViewModel: FormDataSourceDelegate, CheckboxViewDelegate,
     
     func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {}
     func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {}
-    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {}
-    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField) {}
-    func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell) {}
-    func formCollectionViewCellDidReceivePaymentScannerButtonTap(_ cell: FormCollectionViewCell) {}
 }

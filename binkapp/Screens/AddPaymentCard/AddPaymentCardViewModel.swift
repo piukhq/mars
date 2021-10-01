@@ -144,7 +144,7 @@ final class AddPaymentCardViewModel: NSObject, ObservableObject {
     }
 }
 
-extension AddPaymentCardViewModel: FormDataSourceDelegate, CheckboxViewDelegate, FormCollectionViewCellDelegate {
+extension AddPaymentCardViewModel: FormDataSourceDelegate, CheckboxViewDelegate {
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool { return false }
     
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool {
@@ -166,8 +166,4 @@ extension AddPaymentCardViewModel: FormDataSourceDelegate, CheckboxViewDelegate,
     
     func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {}
     func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {}
-    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {}
-    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField) {}
-    func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell) {}
-    func formCollectionViewCellDidReceivePaymentScannerButtonTap(_ cell: FormCollectionViewCell) {}
 }

@@ -13,7 +13,7 @@ protocol FormDataSourceDelegate: NSObjectProtocol {
     func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField)
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField)
-    func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView)
+//    func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView)
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool
     func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource)
     func formDataSourceShouldRefresh(_ dataSource: FormDataSource)
@@ -27,7 +27,7 @@ extension FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, changed value: String?, for field: FormField) {}
     func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField) {}
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField) {}
-    func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView) {}
+//    func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView) {}
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool {
         return false
     }
@@ -59,7 +59,7 @@ class FormDataSource: NSObject, ObservableObject {
         var value: String?
     }
     
-    typealias MultiDelegate = FormDataSourceDelegate & CheckboxViewDelegate & FormCollectionViewCellDelegate
+    typealias MultiDelegate = FormDataSourceDelegate & CheckboxViewDelegate
     
     private enum Constants {
         static let expiryYearsInTheFuture = 50
@@ -223,11 +223,6 @@ extension FormDataSource {
             self.checkFormValidity()
 //            self.delegate?.formDataSource(self, fieldDidExit: field)
         }
-        
-        let dataSourceRefreshBlock: FormField.DataSourceRefreshBlock = { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.formDataSourceShouldRefresh(self)
-        }
 
         if case .addFromScanner = formPurpose {
             model.account?.formattedAddFields(omitting: [.cardNumber])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
@@ -250,8 +245,7 @@ extension FormDataSource {
                             forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
                             isReadOnly: field.fieldCommonName == .barcode,
                             fieldCommonName: field.fieldCommonName,
-                            alternatives: field.alternativeCommonNames(),
-                            dataSourceRefreshBlock: dataSourceRefreshBlock
+                            alternatives: field.alternativeCommonNames()
                         )
                     )
                 }
@@ -279,7 +273,6 @@ extension FormDataSource {
                             forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
                             fieldCommonName: field.fieldCommonName,
                             alternatives: field.alternativeCommonNames(),
-                            dataSourceRefreshBlock: dataSourceRefreshBlock,
                             hidden: (formPurpose == .addFailed && !(membershipPlan?.isPLL ?? false)) ? true : false
                         )
                     )
@@ -601,65 +594,13 @@ extension FormDataSource {
     }
 }
 
-extension FormDataSource: CheckboxViewDelegate {
-    func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {
-        delegate?.checkboxView(checkboxView, didCompleteWithColumn: column, value: value, fieldType: fieldType)
-        delegate?.formDataSource(self, checkboxUpdated: checkboxView)
-    }
-    
-    func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
-        delegate?.checkboxView(checkboxView, didTapOn: URL)
-    }
-}
-
-extension FormDataSource: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return visibleFields.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: FormCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-        
-        if let field = visibleFields[safe: indexPath.item] {
-            cell.configure(with: field, delegate: self)
-            cellTextFields[indexPath.row] = cell.textField
-        }
-        
-        return cell
-    }
-}
-
-extension FormDataSource: FormCollectionViewCellDelegate {
-    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {
-        delegate?.formCollectionViewCell(cell, didSelectField: didSelectField)
-        
-        if cellTextFields.first(where: { $0.value == didSelectField })?.key == cellTextFields.count - 1 {
-            didSelectField.returnKeyType = .done
-        } else {
-            didSelectField.returnKeyType = .next
-            selectedCheckboxIndex = 0
-        }
-    }
-    
-    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField) {
-        guard let key = cellTextFields.first(where: { $0.value == textField })?.key else { return }
-        
-        if let nextTextField = cellTextFields[key + 1] {
-            nextTextField.becomeFirstResponder()
-        } else {
-            textField.resignFirstResponder()
-            if !checkboxes.isEmpty {
-                delegate?.formDataSourceShouldScrollToBottom(self)
-            }
-        }
-    }
-    
-//    func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell) {
-//        guard let plan = membershipPlan else { return }
-//        delegate?.formDataSource(self, shouldPresentLoyaltyScannerForPlan: plan)
+//extension FormDataSource: CheckboxViewDelegate {
+//    func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {
+//        delegate?.checkboxView(checkboxView, didCompleteWithColumn: column, value: value, fieldType: fieldType)
+//        delegate?.formDataSource(self, checkboxUpdated: checkboxView)
 //    }
-//
-//    func formCollectionViewCellDidReceivePaymentScannerButtonTap(_ cell: FormCollectionViewCell) {
-//        delegate?.formDataSourceShouldPresentPaymentScanner(self)
+//    
+//    func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
+//        delegate?.checkboxView(checkboxView, didTapOn: URL)
 //    }
-}
+//}

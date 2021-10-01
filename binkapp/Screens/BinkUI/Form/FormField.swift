@@ -150,7 +150,6 @@ class FormField: Identifiable {
     let isReadOnly: Bool
     let fieldCommonName: FieldCommonName?
     let alternatives: [FieldCommonName]?
-    let dataSourceRefreshBlock: DataSourceRefreshBlock?
     let hidden: Bool
     private(set) var value: String?
     
@@ -159,10 +158,8 @@ class FormField: Identifiable {
     typealias TextFieldShouldChange = (FormField, UITextField, NSRange, String?) -> (Bool)
     typealias FieldExitedBlock = (FormField) -> Void
     typealias ManualValidateBlock = (FormField) -> (Bool)
-    
-    typealias DataSourceRefreshBlock = () -> Void
         
-    init(title: String, placeholder: String, validation: String?, validationErrorMessage: String? = nil, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock, pickerSelected: PickerUpdatedBlock? = nil, columnKind: ColumnKind? = nil, manualValidate: ManualValidateBlock? = nil, forcedValue: String? = nil, isReadOnly: Bool = false, fieldCommonName: FieldCommonName? = nil, alternatives: [FieldCommonName]? = nil, dataSourceRefreshBlock: DataSourceRefreshBlock? = nil, hidden: Bool = false) {
+    init(title: String, placeholder: String, validation: String?, validationErrorMessage: String? = nil, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock, pickerSelected: PickerUpdatedBlock? = nil, columnKind: ColumnKind? = nil, manualValidate: ManualValidateBlock? = nil, forcedValue: String? = nil, isReadOnly: Bool = false, fieldCommonName: FieldCommonName? = nil, alternatives: [FieldCommonName]? = nil, hidden: Bool = false) {
         self.title = title
         self.placeholder = placeholder
         self.validation = validation
@@ -180,7 +177,6 @@ class FormField: Identifiable {
         self.isReadOnly = isReadOnly
         self.fieldCommonName = fieldCommonName
         self.alternatives = alternatives
-        self.dataSourceRefreshBlock = dataSourceRefreshBlock
         self.hidden = hidden
     }
     
