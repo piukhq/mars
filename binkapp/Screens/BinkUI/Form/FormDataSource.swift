@@ -17,10 +17,6 @@ protocol FormDataSourceDelegate: NSObjectProtocol {
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool
     func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource)
     func formDataSourceShouldRefresh(_ dataSource: FormDataSource)
-    
-    // I don't particular like this being a data source delegate method, but do we have any other route from collection view cell to the view controller?
-    func formDataSource(_ dataSource: FormDataSource, shouldPresentLoyaltyScannerForPlan plan: CD_MembershipPlan)
-    func formDataSourceShouldPresentPaymentScanner(_ dataSource: FormDataSource)
 }
 
 extension FormDataSourceDelegate {
@@ -28,14 +24,9 @@ extension FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField) {}
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField) {}
 //    func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView) {}
-    func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool {
-        return false
-    }
+    func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool { return false }
     func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource) {}
     func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {}
-    
-    func formDataSource(_ dataSource: FormDataSource, shouldPresentLoyaltyScannerForPlan plan: CD_MembershipPlan) {}
-    func formDataSourceShouldPresentPaymentScanner(_ dataSource: FormDataSource) {}
 }
 
 enum AccessForm {
@@ -117,21 +108,21 @@ extension FormDataSource {
             guard let self = self else { return }
             self.delegate?.formDataSource(self, changed: newValue, for: field)
         }
-        
+
         let shouldChangeBlock: FormField.TextFieldShouldChange = { [weak self] (field, textField, range, newValue) in
             guard let self = self, let delegate = self.delegate else { return true }
             return delegate.formDataSource(self, textField: textField, shouldChangeTo: newValue, in: range, for: field)
         }
-        
+
         let pickerUpdatedBlock: FormField.PickerUpdatedBlock = { [weak self] field, options in
             guard let self = self else { return }
             self.delegate?.formDataSource(self, selected: options, for: field)
         }
-        
+
         let fieldExitedBlock: FormField.FieldExitedBlock = { [weak self] field in
             guard let self = self else { return }
             self.checkFormValidity()
-//            self.delegate?.formDataSource(self, fieldDidExit: field)
+            self.delegate?.formDataSource(self, fieldDidExit: field)
         }
 
         let manualValidateBlock: FormField.ManualValidateBlock = { [weak self] field in

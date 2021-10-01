@@ -71,10 +71,14 @@ struct BinkFormView: View {
             VStack {
                 Spacer()
                 if viewModel.showTextFieldToolbar {
-                    InputToolbarView {
-                        viewModel.showTextFieldToolbar = false
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                    }
+//                    VStack {
+                        InputToolbarView {
+                            viewModel.showTextFieldToolbar = false
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        }
+//                        .offset(y: viewModel.keyboardHeight).animation(.easeInOut)
+//                        .onReceive(Publishers.keyboardHeight, perform: { self.viewModel.keyboardHeight = $0 })
+//                    }
                 }
             }
 
@@ -84,34 +88,48 @@ struct BinkFormView: View {
                     VStack(spacing: 0) {
                         InputToolbarView(buttonAction: { viewModel.pickerType = .none })
                         
-                        DatePicker("D.O.B.", selection: $viewModel.date ?? Date(), displayedComponents: .date)
+                        DatePicker("", selection: $viewModel.date ?? Date(), displayedComponents: .date)
                             .datePickerStyle(GraphicalDatePickerStyle())
                             .frame(maxHeight: 400)
                             .background(Color(Current.themeManager.color(for: .viewBackground)))
                             .accentColor(Color(.blueAccent))
                     }
                 } else {
-                    InputToolbarView(buttonAction: { viewModel.pickerType = .none })
+                    VStack(spacing: 0) {
+                        InputToolbarView(buttonAction: { viewModel.pickerType = .none })
 
-                    DatePicker("D.O.B.", selection: $viewModel.date ?? Date())
-                        .frame(maxHeight: 400)
-                        .background(Color(Current.themeManager.color(for: .viewBackground)))
+                        DatePicker("", selection: $viewModel.date ?? Date(), displayedComponents: .date)
+                            .frame(width: UIScreen.main.bounds.width, height: 230, alignment: .center)
+                            .background(Color(Current.themeManager.color(for: .viewBackground)))
+                            .accentColor(Color(.blueAccent))
+                            .labelsHidden()
+                            .edgesIgnoringSafeArea(.bottom)
+                    }
+                    .offset(y: UIApplication.bottomSafeArea)
                 }
             case .choice(let data):
                 VStack(spacing: 0) {
                     InputToolbarView(buttonAction: { viewModel.pickerType = .none })
 
                     let formData = data.map { $0.title }
-                    Picker("Title", selection: $pickerOneSelection.onChange({ _ in
+                    Picker("", selection: $pickerOneSelection.onChange({ _ in
                         viewModel.formatPickerData(pickerOne: pickerOneSelection, pickerTwo: pickerTwoSelection)
                     })) {
                         ForEach(formData, id: \.self) {
                             Text($0)
                         }
                     }
+                    .frame(width: UIScreen.main.bounds.width, height: 200, alignment: .center)
                     .background(Color(Current.themeManager.color(for: .viewBackground)))
+                    .labelsHidden()
+//                    .offset(y: UIApplication.bottomSafeArea)
+                    
+//                    Spacer()
+//                        .frame(height: UIApplication.bottomSafeArea)
                 }
-                .offset(y: UIApplication.bottomSafeArea)
+//                .offset(y: UIApplication.bottomSafeArea)
+                .background(Color(Current.themeManager.color(for: .viewBackground))).offset(y: UIApplication.bottomSafeArea)
+
             case .expiry(let months, let years):
                 GeometryReader { geometry in
                     VStack(spacing: 0) {

@@ -38,6 +38,7 @@ struct BinkTextfieldView: View {
                         case .choice(let data):
                             HStack {
                                 Button {
+                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                     formViewModel.pickerType = .choice(data: data)
                                     isEditing = true
                                 } label: {
@@ -60,6 +61,7 @@ struct BinkTextfieldView: View {
                         case .date:
                             HStack {
                                 Button {
+                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                     formViewModel.pickerType = .date
                                     isEditing = true
                                 } label: {
@@ -85,6 +87,7 @@ struct BinkTextfieldView: View {
                         case .expiry(let months, let years):
                             HStack {
                                 Button {
+                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                     formViewModel.pickerType = .expiry(months: months, years: years)
                                     isEditing = true
                                 } label: {
@@ -131,7 +134,6 @@ struct BinkTextfieldView: View {
                             .modifier(ClearButton(text: $value, isEditing: $isEditing))
                             .onReceive(formViewModel.$newResponderIsActive) { newResponderIsActive in
                                 guard let newResponderIsActive = newResponderIsActive else { return }
-                                print(newResponderIsActive)
                                 isEditing = !newResponderIsActive
                             }
                         default:
