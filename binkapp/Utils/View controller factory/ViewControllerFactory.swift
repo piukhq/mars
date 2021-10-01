@@ -44,7 +44,7 @@ enum ViewControllerFactory {
     
     static func makeAuthAndAddViewController(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) -> UIViewController {
         let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, prefilledFormValues: prefilledFormValues)
-        return CustomUIHostingController(rootView: AuthAndAddView(viewModel: viewModel), screenName: .addAuthForm)
+        return CustomUIHostingController(rootView: AuthAndAddView(viewModel: viewModel), screenName: setScreenName(for: formPurpose))
     }
     
     static func makePaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration) -> ReusableTemplateViewController {
@@ -62,12 +62,12 @@ enum ViewControllerFactory {
     
     static func makePatchGhostCardViewController(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) -> UIViewController {
         let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: .patchGhostCard, existingMembershipCard: existingMembershipCard)
-        return CustomUIHostingController(rootView: AuthAndAddView(viewModel: viewModel), screenName: .addAuthForm)
+        return CustomUIHostingController(rootView: AuthAndAddView(viewModel: viewModel), screenName: setScreenName(for: .patchGhostCard))
     }
     
     static func makeSignUpViewController(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) -> UIViewController {
         let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: .signUp, existingMembershipCard: existingMembershipCard)
-        return CustomUIHostingController(rootView: AuthAndAddView(viewModel: viewModel), screenName: .addAuthForm)
+        return CustomUIHostingController(rootView: AuthAndAddView(viewModel: viewModel), screenName: setScreenName(for: .signUp))
     }
     
     // MARK: - Loyalty Card Detail
@@ -279,5 +279,16 @@ enum ViewControllerFactory {
         alert.addAction(cancelAction)
         
         return alert
+    }
+    
+    static func setScreenName(for formPurpose: FormPurpose) -> TrackedScreen {
+        switch formPurpose {
+        case .add, .addFailed, .addFromScanner:
+            return .addAuthForm
+        case .signUp, .signUpFailed:
+            return .enrolForm
+        case .ghostCard, .patchGhostCard:
+            return .registrationForm
+        }
     }
 }
