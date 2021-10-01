@@ -18,7 +18,6 @@ class ButtonViewModel: ObservableObject {
 }
 
 struct BinkButtonView: View, Identifiable {
-//    @ObservedObject private var themeManager = Current.themeManager
     @ObservedObject var viewModel: ButtonViewModel
     @State var enabled = false
     @State var loading = false
