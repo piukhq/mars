@@ -104,11 +104,11 @@ platform :ios do
 
     increment_build_number(build_number: options[:build_number])
 
-    # run_tests(
-    #   workspace: "binkapp.xcworkspace",
-    #   device: "iPhone 12 Pro",
-    #   scheme: "binkapp tests"
-    # )
+    run_tests(
+      workspace: "binkapp.xcworkspace",
+      device: "iPhone 12 Pro",
+      scheme: "binkapp tests"
+    )
 
     build_app(
       workspace: "binkapp.xcworkspace",
