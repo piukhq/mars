@@ -593,14 +593,3 @@ extension FormDataSource {
         return attributed
     }
 }
-
-//extension FormDataSource: CheckboxViewDelegate {
-//    func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {
-//        delegate?.checkboxView(checkboxView, didCompleteWithColumn: column, value: value, fieldType: fieldType)
-//        delegate?.formDataSource(self, checkboxUpdated: checkboxView)
-//    }
-//    
-//    func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
-//        delegate?.checkboxView(checkboxView, didTapOn: URL)
-//    }
-//}

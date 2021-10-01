@@ -275,7 +275,6 @@
 		BD9FB6B82338120700E5559A /* TransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB6B52338120700E5559A /* TransactionsViewModel.swift */; };
 		BDB0186E232D98C000BFFA18 /* FormDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB0186D232D98C000BFFA18 /* FormDataSource.swift */; };
 		BDB01870232D99D200BFFA18 /* FormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB0186F232D99D200BFFA18 /* FormField.swift */; };
-		BDB01872232D9E7900BFFA18 /* FormCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01871232D9E7900BFFA18 /* FormCollectionViewCell.swift */; };
 		BDB01876232E125C00BFFA18 /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01875232E125C00BFFA18 /* ReusableView.swift */; };
 		BDB0187A232E144C00BFFA18 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01879232E144C00BFFA18 /* Array+Extension.swift */; };
 		BDB0187C232E1B5900BFFA18 /* PaymentCardCreateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB0187B232E1B5900BFFA18 /* PaymentCardCreateModel.swift */; };
@@ -919,7 +918,6 @@
 		BD9FB6B52338120700E5559A /* TransactionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsViewModel.swift; sourceTree = "<group>"; };
 		BDB0186D232D98C000BFFA18 /* FormDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDataSource.swift; sourceTree = "<group>"; };
 		BDB0186F232D99D200BFFA18 /* FormField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormField.swift; sourceTree = "<group>"; };
-		BDB01871232D9E7900BFFA18 /* FormCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormCollectionViewCell.swift; sourceTree = "<group>"; };
 		BDB01875232E125C00BFFA18 /* ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
 		BDB01879232E144C00BFFA18 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		BDB0187B232E1B5900BFFA18 /* PaymentCardCreateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCreateModel.swift; sourceTree = "<group>"; };
@@ -2352,7 +2350,6 @@
 			children = (
 				BDB0186D232D98C000BFFA18 /* FormDataSource.swift */,
 				BDB0186F232D99D200BFFA18 /* FormField.swift */,
-				BDB01871232D9E7900BFFA18 /* FormCollectionViewCell.swift */,
 				BDB01881232E93A100BFFA18 /* FormMultipleChoiceInput.swift */,
 			);
 			path = Form;
@@ -3714,7 +3711,6 @@
 				B7136629232690F7008A0ED7 /* PLLScreenViewModel.swift in Sources */,
 				DB088545234FD8A30041A67A /* PLLScreenRepository.swift in Sources */,
 				BD553CCF2332615900DA7D2A /* PaymentCardCreateRequest.swift in Sources */,
-				BDB01872232D9E7900BFFA18 /* FormCollectionViewCell.swift in Sources */,
 				EFA5F7132379A7C70027AB80 /* CD_MembershipCardImage.swift in Sources */,
 				EF51CCD7243B56150035BF02 /* LoyaltyScannerWidgetView.swift in Sources */,
 				CEC0ACBC2636AD0000845813 /* Assets.swift in Sources */,
