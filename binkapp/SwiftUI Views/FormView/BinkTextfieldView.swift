@@ -51,6 +51,13 @@ struct BinkTextfieldView: View {
                                             field.updateValue(pickerData.value)
                                         }
                                 }
+                                .onReceive(formViewModel.$newResponderIsActive) { newResponderIsActive in
+                                    guard let newResponderIsActive = newResponderIsActive else { return }
+                                    if formViewModel.showTextFieldToolbar {
+                                        isEditing = !newResponderIsActive
+                                    }
+                                }
+                                
                                 .onReceive(formViewModel.$pickerType) { pickerType in
                                     if case .none = pickerType {
                                         isEditing = false
@@ -142,10 +149,10 @@ struct BinkTextfieldView: View {
                                 field.updateValue(value)
                                 formViewModel.datasource.checkFormValidity()
                                 canShowErrorState = !field.isValid() && !value.isEmpty
+                                formViewModel.newResponderIsActive = isEditing
 
                                 if isEditing {
                                     formViewModel.showTextFieldToolbar = true
-                                    formViewModel.newResponderIsActive = isEditing
                                 } else {
                                     field.fieldWasExited()
                                 }
