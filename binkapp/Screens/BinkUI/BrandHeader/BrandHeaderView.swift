@@ -30,8 +30,9 @@ class BrandHeaderView: CustomView {
         logoImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
         
         if let planName = membershipPlan.account?.planName {
-            loyaltyPlanButton.setTitle("\(planName) info", for: .normal)
-            loyaltyPlanButton.setImage(Asset.iconsChevronRight.image.withRenderingMode(.alwaysTemplate), for: .normal)
+            let attributes: [NSAttributedString.Key: Any] = [.underlineStyle: NSUnderlineStyle.single.rawValue]
+            let titleAttributedString = NSMutableAttributedString(string: "About \(planName)", attributes: attributes)
+            loyaltyPlanButton.setAttributedTitle(titleAttributedString, for: .normal)
         } else {
             loyaltyPlanButton.isHidden = true
         }

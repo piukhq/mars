@@ -290,6 +290,26 @@ internal enum L10n {
   internal static let loyaltyScannerWidgetTitleEnterManuallyText = L10n.tr("Localizable", "loyalty_scanner_widget_title_enter_manually_text")
   /// Unrecognised barcode
   internal static let loyaltyScannerWidgetTitleUnrecognizedBarcodeText = L10n.tr("Localizable", "loyalty_scanner_widget_title_unrecognized_barcode_text")
+  /// Your %@ account balance was last updated %@. Bink will try to update this account every %@.
+  internal static func lpcPointsModuleBalanceExplainerBody(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+    return L10n.tr("Localizable", "lpc_points_module_balance_explainer_body", String(describing: p1), String(describing: p2), String(describing: p3))
+  }
+  /// Your %@ account balance was last updated %@. Bink will try to update this account every %@.\n\nA balance refresh for this card is currently in progress and will update shortly.
+  internal static func lpcPointsModuleBalanceExplainerBodyRefreshRequested(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+    return L10n.tr("Localizable", "lpc_points_module_balance_explainer_body_refresh_requested", String(describing: p1), String(describing: p2), String(describing: p3))
+  }
+  /// Your %@ account balance was last updated %@. Bink will try to update this account every %@.\n\nYou can manually refresh your balance using the button below.
+  internal static func lpcPointsModuleBalanceExplainerBodyRefreshable(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+    return L10n.tr("Localizable", "lpc_points_module_balance_explainer_body_refreshable", String(describing: p1), String(describing: p2), String(describing: p3))
+  }
+  /// %@ ago
+  internal static func lpcPointsModuleBalanceExplainerBodyTimeAgo(_ p1: Any) -> String {
+    return L10n.tr("Localizable", "lpc_points_module_balance_explainer_body_time_ago", String(describing: p1))
+  }
+  /// Refresh
+  internal static let lpcPointsModuleBalanceExplainerButtonTitle = L10n.tr("Localizable", "lpc_points_module_balance_explainer_button_title")
+  /// Balance
+  internal static let lpcPointsModuleBalanceExplainerTitle = L10n.tr("Localizable", "lpc_points_module_balance_explainer_title")
   /// Would you like to log in to %@?
   internal static func magicLinkAlreadyLoggedInDescription(_ p1: Any) -> String {
     return L10n.tr("Localizable", "magic_link_already_logged_in_description", String(describing: p1))

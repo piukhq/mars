@@ -9,27 +9,26 @@
 import UIKit
 import Firebase
 
-class ReusableTemplateViewController: BinkViewController {
+class ReusableTemplateViewController: BinkViewController, LoyaltyButtonDelegate {
     @IBOutlet private weak var textView: UITextView!
     
     lazy var stackScrollView: StackScrollView = {
-        let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [brandImageView, textView], adjustForKeyboard: true)
+        let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [brandHeaderView, textView], adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .clear
         stackView.margin = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
         stackView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 140, right: 0)
         stackView.distribution = .fill
         stackView.alignment = .fill
-        stackView.customPadding(20, after: brandImageView)
+        stackView.customPadding(20, after: brandHeaderView)
         view.addSubview(stackView)
         return stackView
     }()
     
-    lazy var brandImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        return imageView
+    lazy var brandHeaderView: BrandHeaderView = {
+        let headerView = BrandHeaderView()
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        return headerView
     }()
     
     private let viewModel: ReusableModalViewModel
@@ -76,14 +75,18 @@ class ReusableTemplateViewController: BinkViewController {
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
             stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            brandImageView.heightAnchor.constraint(equalToConstant: 100)
+            brandHeaderView.heightAnchor.constraint(equalToConstant: 100)
         ])
         
         guard let membershipPlan = viewModel.membershipPlan else {
-            brandImageView.isHidden = true
+            brandHeaderView.isHidden = true
             return
         }
-        brandImageView.setImage(forPathType: .membershipPlanAlternativeHero(plan: membershipPlan))
+        brandHeaderView.configure(plan: membershipPlan, delegate: self)
+    }
+    
+    func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
+        viewModel.toAboutMembershipPlan()
     }
 
     private func configureButtons() {

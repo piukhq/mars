@@ -2,6 +2,7 @@ ${PODS_ROOT}/Target Support Files/Pods-binkappTests/Pods-binkappTests-frameworks
 ${BUILT_PRODUCTS_DIR}/CardScan/CardScan.framework
 ${BUILT_PRODUCTS_DIR}/DTTJailbreakDetection/DTTJailbreakDetection.framework
 ${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework
+${BUILT_PRODUCTS_DIR}/ZXingObjC/ZXingObjC.framework
 ${PODS_XCFRAMEWORKS_BUILD_DIR}/CommonUISDK/CommonUISDK.framework/CommonUISDK
 ${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCoreSDK/ZendeskCoreSDK.framework/ZendeskCoreSDK
 ${PODS_XCFRAMEWORKS_BUILD_DIR}/MessagingAPI/MessagingAPI.framework/MessagingAPI

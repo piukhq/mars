@@ -203,6 +203,10 @@ class LoyaltyCardFullDetailsViewModel {
             let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan, membershipCard: membershipCard)
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
+        case .lpcBalance(_, let lastCheckedDate):
+            let viewController = ViewControllerFactory.makeLocalPointsCollectionBalanceRefreshViewController(membershipCard: membershipCard, lastCheckedDate: lastCheckedDate)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         }
     }
     
