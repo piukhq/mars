@@ -66,7 +66,11 @@ struct BinkFormView: View {
             .edgesIgnoringSafeArea(.bottom)
             .padding(.bottom, viewModel.keyboardHeight)
             .onReceive(Publishers.keyboardHeight, perform: {
-                self.viewModel.keyboardHeight = $0
+                if $0 == 0.0 {
+                    self.viewModel.keyboardHeight = $0
+                } else {
+                    self.viewModel.keyboardHeight = $0 - 292
+                }
             })
 //            .onReceive(Publishers.keyboardWillShow) { keyboardWillShow in
 //                if keyboardWillShow {
@@ -82,7 +86,7 @@ struct BinkFormView: View {
                         InputToolbarView {
                             viewModel.showTextFieldToolbar = false
 
-                            viewModel.pickerType = .none
+                            viewModel.formInputType = .none
                             viewModel.datasource.checkFormValidity()
                             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         }
@@ -92,96 +96,86 @@ struct BinkFormView: View {
                 }
             }
             
-//            if !(viewModel.newResponderIsActive ?? false) {
-                switch viewModel.pickerType {
-                case .date:
-                    if #available(iOS 14.0, *) {
-                        VStack(spacing: 0) {
-                            InputToolbarView(buttonAction: { viewModel.pickerType = .none })
-                            
-                            DatePicker("", selection: $viewModel.date ?? Date(), displayedComponents: .date)
-                                .datePickerStyle(GraphicalDatePickerStyle())
-                                .frame(maxHeight: 400)
-                                .background(Color(Current.themeManager.color(for: .viewBackground)))
-                                .accentColor(Color(.blueAccent))
-                        }
-                    } else {
-                        VStack(spacing: 0) {
-                            InputToolbarView(buttonAction: { viewModel.pickerType = .none })
-
-                            DatePicker("", selection: $viewModel.date ?? Date(), displayedComponents: .date)
-                                .frame(width: UIScreen.main.bounds.width, height: 230, alignment: .center)
-                                .background(Color(Current.themeManager.color(for: .viewBackground)))
-                                .accentColor(Color(.blueAccent))
-                                .labelsHidden()
-                                .edgesIgnoringSafeArea(.bottom)
-                        }
-                        .offset(y: UIApplication.bottomSafeArea)
-                    }
-                case .choice(let data):
+            if case .date = viewModel.formInputType {
+                if #available(iOS 14.0, *) {
                     VStack(spacing: 0) {
-                        InputToolbarView(buttonAction: { viewModel.pickerType = .none })
-
-                        let formData = data.map { $0.title }
-                        Picker("", selection: $pickerOneSelection.onChange({ _ in
-                            viewModel.formatPickerData(pickerOne: pickerOneSelection, pickerTwo: pickerTwoSelection)
-                        })) {
-                            ForEach(formData, id: \.self) {
-                                Text($0)
-                            }
-                        }
-                        .frame(width: UIScreen.main.bounds.width, height: 200, alignment: .center)
-                        .background(Color(Current.themeManager.color(for: .viewBackground)))
-                        .labelsHidden()
-    //                    .offset(y: UIApplication.bottomSafeArea)
+                        InputToolbarView(buttonAction: { viewModel.formInputType = .none })
                         
-    //                    Spacer()
-    //                        .frame(height: UIApplication.bottomSafeArea)
+                        DatePicker("", selection: $viewModel.date ?? Date(), displayedComponents: .date)
+                            .datePickerStyle(GraphicalDatePickerStyle())
+                            .frame(maxHeight: 400)
+                            .background(Color(Current.themeManager.color(for: .viewBackground)))
+                            .accentColor(Color(.blueAccent))
                     }
-    //                .offset(y: UIApplication.bottomSafeArea)
-                    .background(Color(Current.themeManager.color(for: .viewBackground))).offset(y: UIApplication.bottomSafeArea)
-
-                case .expiry(let months, let years):
-                    GeometryReader { geometry in
-                        VStack(spacing: 0) {
-                            Spacer()
-                            InputToolbarView(buttonAction: { viewModel.pickerType = .none })
-                            
-                            HStack(spacing: 0) {
-                                let monthsMapped = months.map { $0.title }
-                                Picker("Expiry date", selection: $pickerOneSelection.onChange({ _ in
-                                    viewModel.formatPickerData(pickerOne: pickerOneSelection, pickerTwo: pickerTwoSelection)
-                                })) {
-                                    ForEach(monthsMapped, id: \.self) {
-                                        Text($0)
-                                    }
-                                }
-                                .background(Color(Current.themeManager.color(for: .viewBackground)))
-                                .frame(width: geometry.size.width / 2)
-                                .clipped()
-                                
-                                let yearsMapped = years.map { $0.title }
-                                Picker("Expiry date", selection: $pickerTwoSelection.onChange({ _ in
-                                    viewModel.formatPickerData(pickerOne: pickerOneSelection, pickerTwo: pickerTwoSelection)
-                                })) {
-                                    ForEach(yearsMapped, id: \.self) {
-                                        Text($0)
-                                    }
-                                }
-                                .background(Color(Current.themeManager.color(for: .viewBackground)))
-                                .frame(width: geometry.size.width / 2)
-                                .clipped()
-                            }
+                } else {
+                    VStack(spacing: 0) {
+                        InputToolbarView(buttonAction: { viewModel.formInputType = .none })
+                        
+                        DatePicker("", selection: $viewModel.date ?? Date(), displayedComponents: .date)
+                            .frame(width: UIScreen.main.bounds.width, height: 230, alignment: .center)
+                            .background(Color(Current.themeManager.color(for: .viewBackground)))
+                            .accentColor(Color(.blueAccent))
+                            .labelsHidden()
+                            .edgesIgnoringSafeArea(.bottom)
+                    }
+                    .offset(y: UIApplication.bottomSafeArea)
+                }
+            } else if case .choice(let data) = viewModel.formInputType {
+                VStack(spacing: 0) {
+                    InputToolbarView(buttonAction: { viewModel.formInputType = .none })
+                    
+                    let formData = data.map { $0.title }
+                    Picker("", selection: $pickerOneSelection.onChange({ _ in
+                        viewModel.formatPickerData(pickerOne: pickerOneSelection, pickerTwo: pickerTwoSelection)
+                    })) {
+                        ForEach(formData, id: \.self) {
+                            Text($0)
                         }
                     }
-                case .none:
-                    Text("None")
-                case .keyboard:
-                    Text("Keyboard")
-                case .secureEntry:
-                    Text("Secure")
+                    .frame(width: UIScreen.main.bounds.width, height: 200, alignment: .center)
+                    .background(Color(Current.themeManager.color(for: .viewBackground)))
+                    .labelsHidden()
+                    //                    .offset(y: UIApplication.bottomSafeArea)
+                    
+                    //                    Spacer()
+                    //                        .frame(height: UIApplication.bottomSafeArea)
                 }
-//            }
+                //                .offset(y: UIApplication.bottomSafeArea)
+                .background(Color(Current.themeManager.color(for: .viewBackground))).offset(y: UIApplication.bottomSafeArea)
+            } else if case .expiry(let months, let years) = viewModel.formInputType {
+                GeometryReader { geometry in
+                    VStack(spacing: 0) {
+                        Spacer()
+                        InputToolbarView(buttonAction: { viewModel.formInputType = .none })
+                        
+                        HStack(spacing: 0) {
+                            let monthsMapped = months.map { $0.title }
+                            Picker("Expiry date", selection: $pickerOneSelection.onChange({ _ in
+                                viewModel.formatPickerData(pickerOne: pickerOneSelection, pickerTwo: pickerTwoSelection)
+                            })) {
+                                ForEach(monthsMapped, id: \.self) {
+                                    Text($0)
+                                }
+                            }
+                            .background(Color(Current.themeManager.color(for: .viewBackground)))
+                            .frame(width: geometry.size.width / 2)
+                            .clipped()
+                            
+                            let yearsMapped = years.map { $0.title }
+                            Picker("Expiry date", selection: $pickerTwoSelection.onChange({ _ in
+                                viewModel.formatPickerData(pickerOne: pickerOneSelection, pickerTwo: pickerTwoSelection)
+                            })) {
+                                ForEach(yearsMapped, id: \.self) {
+                                    Text($0)
+                                }
+                            }
+                            .background(Color(Current.themeManager.color(for: .viewBackground)))
+                            .frame(width: geometry.size.width / 2)
+                            .clipped()
+                        }
+                    }
+                }
+            }
         })
     }
 }

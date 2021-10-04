@@ -27,7 +27,7 @@ struct ForgotPasswordView: View {
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
             BinkFormView(viewModel: formViewModel)
-            if case .none = formViewModel.pickerType {
+            if case .none = formViewModel.formInputType {
                 BinkButtonsStackView(buttons: [continueButton])
             }
         })

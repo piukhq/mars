@@ -39,7 +39,7 @@ struct BinkTextfieldView: View {
                             HStack {
                                 Button {
                                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                                    formViewModel.pickerType = .choice(data: data)
+                                    formViewModel.formInputType = .choice(data: data)
                                     isEditing = true
                                 } label: {
                                     TextField(data.first?.title ?? "", text: $value)
@@ -51,8 +51,8 @@ struct BinkTextfieldView: View {
                                             field.updateValue(pickerData.value)
                                         }
                                 }
-                                .onReceive(formViewModel.$pickerType) { pickerType in
-                                    if case .choice = pickerType {
+                                .onReceive(formViewModel.$formInputType) { inputType in
+                                    if case .choice = inputType {
                                         isEditing = true
                                     } else {
                                         isEditing = false
@@ -64,7 +64,7 @@ struct BinkTextfieldView: View {
                             HStack {
                                 Button {
                                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                                    formViewModel.pickerType = .date
+                                    formViewModel.formInputType = .date
                                     isEditing = true
                                 } label: {
                                     TextField(field.placeholder, text: $value)
@@ -79,8 +79,8 @@ struct BinkTextfieldView: View {
                                             formViewModel.datasource.checkFormValidity()
                                         }
                                 }
-                                .onReceive(formViewModel.$pickerType) { pickerType in
-                                    if case .date = pickerType {
+                                .onReceive(formViewModel.$formInputType) { inputType in
+                                    if case .date = inputType {
                                         isEditing = true
                                     } else {
                                         isEditing = false
@@ -92,7 +92,7 @@ struct BinkTextfieldView: View {
                             HStack {
                                 Button {
                                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                                    formViewModel.pickerType = .expiry(months: months, years: years)
+                                    formViewModel.formInputType = .expiry(months: months, years: years)
                                     isEditing = true
                                 } label: {
                                     TextField(field.placeholder, text: $value)
@@ -110,8 +110,8 @@ struct BinkTextfieldView: View {
                                             formViewModel.addPaymentCardViewModel?.setPaymentCardExpiry(month: Int(splitData.first ?? ""), year: Int(splitData.last ?? ""))
                                         }
                                 }
-                                .onReceive(formViewModel.$pickerType) { pickerType in
-                                    if case .expiry = pickerType {
+                                .onReceive(formViewModel.$formInputType) { inputType in
+                                    if case .expiry = inputType {
                                         isEditing = true
                                     } else {
                                         isEditing = false
@@ -134,13 +134,13 @@ struct BinkTextfieldView: View {
                             .onTapGesture {
                                 // Begin editing
                                 isEditing = true
-                                formViewModel.pickerType = .secureEntry
+                                formViewModel.formInputType = .secureEntry
                                 formViewModel.showTextFieldToolbar = true
                                 canShowErrorState = !field.isValid() && !value.isEmpty
                             }
                             .modifier(ClearButton(text: $value, isEditing: $isEditing))
-                            .onReceive(formViewModel.$pickerType) { pickerType in
-                                if case .secureEntry = pickerType {
+                            .onReceive(formViewModel.$formInputType) { inputType in
+                                if case .secureEntry = inputType {
                                     isEditing = true
                                 } else {
                                     isEditing = false
@@ -155,7 +155,7 @@ struct BinkTextfieldView: View {
                                 canShowErrorState = !field.isValid() && !value.isEmpty
                                 if isEditing {
                                     formViewModel.showTextFieldToolbar = true
-                                    formViewModel.pickerType = .keyboard(title: field.title)
+                                    formViewModel.formInputType = .keyboard(title: field.title)
                                 } else {
                                     field.fieldWasExited()
                                 }
@@ -169,7 +169,7 @@ struct BinkTextfieldView: View {
                             .accentColor(Color(Current.themeManager.color(for: .text)))
                             .foregroundColor(Color(Current.themeManager.color(for: .text)))
                             .colorSchemeOverride()
-                            .onReceive(formViewModel.$pickerType) { pickerType in
+                            .onReceive(formViewModel.$formInputType) { pickerType in
                                 if case .keyboard(let title) = pickerType {
                                     guard title == field.title else { return }
                                     isEditing = true

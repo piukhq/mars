@@ -23,7 +23,7 @@ struct LoginView: View {
                 .onReceive(viewModel.$datasourcePublisher, perform: { datasource in
                     formViewModel = FormViewModel(datasource: datasource, title: viewModel.title, description: viewModel.description)
                 })
-            if case .none = formViewModel.pickerType {
+            if case .none = formViewModel.formInputType {
                 BinkButtonsStackView(buttons: [viewModel.continueButton, viewModel.switchLoginTypeButton])
             }
         })

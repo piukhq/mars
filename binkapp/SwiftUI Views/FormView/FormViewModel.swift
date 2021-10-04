@@ -11,12 +11,12 @@ import SwiftUI
 final class FormViewModel: ObservableObject {
     @Published var datasource: FormDataSource
     @Published var showTextFieldToolbar = false
-    @Published var pickerType: PickerType = .none
+    @Published var formInputType: FormInputType = .none
     @Published var date: Date?
     @Published var pickerData = (value: "", fieldCount: 0)
     @Published var addPaymentCardViewModel: AddPaymentCardViewModel?
     @Published var paymentCard: PaymentCardCreateModel?
-    @State var keyboardHeight: CGFloat = 0
+    @Published var keyboardHeight: CGFloat = 0
 
     var titleText: String?
     var descriptionText: String?
@@ -68,7 +68,7 @@ final class FormViewModel: ObservableObject {
     }
     
     func formatPickerData(pickerOne: String, pickerTwo: String ) {
-        switch pickerType {
+        switch formInputType {
         case .expiry:
             if pickerTwo.isEmpty {
                 pickerData = (pickerOne, 1)
@@ -132,7 +132,7 @@ enum BarcodeScannerType {
     case payment
 }
 
-enum PickerType {
+enum FormInputType {
     case date
     case choice(data: [FormPickerData])
     case expiry(months: [FormPickerData], years: [FormPickerData])
