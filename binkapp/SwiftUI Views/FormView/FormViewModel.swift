@@ -53,6 +53,8 @@ final class FormViewModel: ObservableObject {
             }
         case .choice:
             keyboardHeight = FormViewConstants.multipleChoicePickerHeight
+        case .expiry:
+            keyboardHeight = FormViewConstants.expiryDatePickerHeight
         case .none:
             keyboardHeight = 0
         default:

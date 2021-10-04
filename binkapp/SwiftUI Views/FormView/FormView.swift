@@ -11,10 +11,12 @@ import SwiftUI
 
 enum FormViewConstants {
     static let vStackInsets = EdgeInsets(top: 20, leading: 25, bottom: 150, trailing: 25)
+    static let vStackSpacing: CGFloat = 20
     static let inputToolbarHeight: CGFloat = 44
     static let multipleChoicePickerHeight: CGFloat = 200
     static let graphicalDatePickerHeight: CGFloat = 400
     static let datePickerHeight: CGFloat = 230
+    static let expiryDatePickerHeight: CGFloat = 180
 }
 
 struct FormView: View {
@@ -32,7 +34,7 @@ struct FormView: View {
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
             ScrollView {
-                VStack(alignment: .center, spacing: 20.0) {
+                VStack(alignment: .center, spacing: FormViewConstants.vStackSpacing) {
                     FormHeaderView(formType: viewModel.datasource.formtype, membershipPlan: viewModel.membershipPlan, paymentCard: $viewModel.paymentCard)
                     
                     VStack(alignment: .leading, spacing: 5, content: {
@@ -164,7 +166,7 @@ struct FormView: View {
                                 }
                             }
                             .background(Color(Current.themeManager.color(for: .viewBackground)))
-                            .frame(width: geometry.size.width / 2)
+                            .frame(width: geometry.size.width / 2, height: FormViewConstants.expiryDatePickerHeight)
                             .clipped()
                             
                             let yearsMapped = years.map { $0.title }
@@ -176,7 +178,7 @@ struct FormView: View {
                                 }
                             }
                             .background(Color(Current.themeManager.color(for: .viewBackground)))
-                            .frame(width: geometry.size.width / 2)
+                            .frame(width: geometry.size.width / 2, height: FormViewConstants.expiryDatePickerHeight)
                             .clipped()
                         }
                     }
