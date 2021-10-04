@@ -65,7 +65,14 @@ struct BinkFormView: View {
             .background(Color(Current.themeManager.color(for: .viewBackground)))
             .edgesIgnoringSafeArea(.bottom)
             .padding(.bottom, viewModel.keyboardHeight)
-            .onReceive(Publishers.keyboardHeight, perform: { self.viewModel.keyboardHeight = $0 })
+            .onReceive(Publishers.keyboardHeight, perform: {
+                self.viewModel.keyboardHeight = $0
+            })
+//            .onReceive(Publishers.keyboardWillShow) { keyboardWillShow in
+//                if keyboardWillShow {
+//                    viewModel.pickerType = .keyboard
+//                }
+//            }
             
             // Keyboard Toolbar
             VStack {
@@ -84,7 +91,7 @@ struct BinkFormView: View {
                 }
             }
             
-            if !(viewModel.newResponderIsActive ?? false) {
+//            if !(viewModel.newResponderIsActive ?? false) {
                 switch viewModel.pickerType {
                 case .date:
                     if #available(iOS 14.0, *) {
@@ -167,9 +174,13 @@ struct BinkFormView: View {
                         }
                     }
                 case .none:
-                    Text("Hey")
+                    Text("None")
+                case .keyboard:
+                    Text("Keyboard")
+                case .secureEntry:
+                    Text("Secure")
                 }
-            }
+//            }
         })
     }
 }
@@ -208,6 +219,22 @@ extension Publishers {
         return MergeMany(willShow, willHide)
             .eraseToAnyPublisher()
     }
+    
+    static var keyboardWillShow: AnyPublisher<Bool, Never> {
+        let willShow = NotificationCenter.default.publisher(for: UIApplication.keyboardWillShowNotification)
+            .map { _ in
+                return true
+            }
+
+        let willHide = NotificationCenter.default.publisher(for: UIApplication.keyboardWillHideNotification)
+            .map { _ in
+                return false
+            }
+
+        return MergeMany(willShow, willHide)
+            .eraseToAnyPublisher()
+    }
+
 }
 
 //#if canImport(UIKit)

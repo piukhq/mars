@@ -51,15 +51,10 @@ struct BinkTextfieldView: View {
                                             field.updateValue(pickerData.value)
                                         }
                                 }
-                                .onReceive(formViewModel.$newResponderIsActive) { newResponderIsActive in
-                                    guard let newResponderIsActive = newResponderIsActive else { return }
-                                    if formViewModel.showTextFieldToolbar {
-                                        isEditing = !newResponderIsActive
-                                    }
-                                }
-                                
                                 .onReceive(formViewModel.$pickerType) { pickerType in
-                                    if case .none = pickerType {
+                                    if case .choice = pickerType {
+                                        isEditing = true
+                                    } else {
                                         isEditing = false
                                     }
                                 }
@@ -85,7 +80,9 @@ struct BinkTextfieldView: View {
                                         }
                                 }
                                 .onReceive(formViewModel.$pickerType) { pickerType in
-                                    if case .none = pickerType {
+                                    if case .date = pickerType {
+                                        isEditing = true
+                                    } else {
                                         isEditing = false
                                     }
                                 }
@@ -113,8 +110,16 @@ struct BinkTextfieldView: View {
                                             formViewModel.addPaymentCardViewModel?.setPaymentCardExpiry(month: Int(splitData.first ?? ""), year: Int(splitData.last ?? ""))
                                         }
                                 }
+                                .onReceive(formViewModel.$newResponderIsActive) { newResponderIsActive in
+                                    guard let newResponderIsActive = newResponderIsActive else { return }
+                                    if formViewModel.showTextFieldToolbar {
+                                        isEditing = !newResponderIsActive
+                                    }
+                                }
                                 .onReceive(formViewModel.$pickerType) { pickerType in
-                                    if case .none = pickerType {
+                                    if case .expiry = pickerType {
+                                        isEditing = true
+                                    } else {
                                         isEditing = false
                                     }
                                 }
@@ -135,13 +140,22 @@ struct BinkTextfieldView: View {
                             .onTapGesture {
                                 // Begin editing
                                 isEditing = true
+                                formViewModel.pickerType = .secureEntry
                                 formViewModel.showTextFieldToolbar = true
                                 canShowErrorState = !field.isValid() && !value.isEmpty
                             }
                             .modifier(ClearButton(text: $value, isEditing: $isEditing))
-                            .onReceive(formViewModel.$newResponderIsActive) { newResponderIsActive in
-                                guard let newResponderIsActive = newResponderIsActive else { return }
-                                isEditing = !newResponderIsActive
+//                            .onReceive(formViewModel.$newResponderIsActive) { newResponderIsActive in
+//                                guard let newResponderIsActive = newResponderIsActive else { return }
+//                                isEditing = !newResponderIsActive
+//                            }
+                            .onReceive(formViewModel.$pickerType) { pickerType in
+                                if case .secureEntry = pickerType {
+                                    isEditing = true
+                                } else {
+                                    isEditing = false
+                                    canShowErrorState = !field.isValid() && !value.isEmpty
+                                }
                             }
                         default:
                             TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
@@ -153,6 +167,7 @@ struct BinkTextfieldView: View {
 
                                 if isEditing {
                                     formViewModel.showTextFieldToolbar = true
+                                    formViewModel.pickerType = .keyboard(title: field.title)
                                 } else {
                                     field.fieldWasExited()
                                 }
@@ -166,6 +181,14 @@ struct BinkTextfieldView: View {
                             .accentColor(Color(Current.themeManager.color(for: .text)))
                             .foregroundColor(Color(Current.themeManager.color(for: .text)))
                             .colorSchemeOverride()
+                            .onReceive(formViewModel.$pickerType) { pickerType in
+                                if case .keyboard(let title) = pickerType {
+                                    guard title == field.title else { return }
+                                    isEditing = true
+                                } else {
+                                    isEditing = false
+                                }
+                            }
                         }
                     }
                     

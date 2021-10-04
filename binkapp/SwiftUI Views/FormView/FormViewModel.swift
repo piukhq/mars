@@ -137,5 +137,7 @@ enum PickerType {
     case date
     case choice(data: [FormPickerData])
     case expiry(months: [FormPickerData], years: [FormPickerData])
+    case keyboard(title: String)
+    case secureEntry
     case none
 }
