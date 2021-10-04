@@ -18,6 +18,8 @@ class CustomUIHostingController<Content>: UIHostingController<Content> where Con
     public init(rootView: Content, screenName: TrackedScreen? = nil) {
         super.init(rootView: rootView)
         Analytics.logEvent(AnalyticsEventScreenView, parameters: [AnalyticsParameterScreenName: screenName?.rawValue ?? ""])
+        configureForCurrentTheme()
+        Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
     }
     
     @objc required dynamic init?(coder aDecoder: NSCoder) {
@@ -26,12 +28,6 @@ class CustomUIHostingController<Content>: UIHostingController<Content> where Con
     
     deinit {
         NotificationCenter.default.removeObserver(self)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureForCurrentTheme()
-        Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
