@@ -2,7 +2,7 @@
   "object": {
     "pins": [
       {
-        "package": "abseil",
+        "package": "abseil-cpp-SwiftPM",
         "repositoryURL": "https://github.com/firebase/abseil-cpp-SwiftPM.git",
         "state": {
           "branch": null,
@@ -38,7 +38,7 @@
         }
       },
       {
-        "package": "BoringSSL-GRPC",
+        "package": "boringssl-SwiftPM",
         "repositoryURL": "https://github.com/firebase/boringssl-SwiftPM.git",
         "state": {
           "branch": null,
@@ -65,7 +65,7 @@
         }
       },
       {
-        "package": "Firebase",
+        "package": "firebase-ios-sdk",
         "repositoryURL": "https://github.com/firebase/firebase-ios-sdk.git",
         "state": {
           "branch": null,
@@ -101,7 +101,7 @@
         }
       },
       {
-        "package": "gRPC",
+        "package": "grpc-SwiftPM",
         "repositoryURL": "https://github.com/firebase/grpc-SwiftPM.git",
         "state": {
           "branch": null,
@@ -110,7 +110,7 @@
         }
       },
       {
-        "package": "GTMSessionFetcher",
+        "package": "gtm-session-fetcher",
         "repositoryURL": "https://github.com/google/gtm-session-fetcher.git",
         "state": {
           "branch": null,
@@ -119,7 +119,7 @@
         }
       },
       {
-        "package": "JWTDecode",
+        "package": "JWTDecode.swift",
         "repositoryURL": "https://github.com/auth0/JWTDecode.swift.git",
         "state": {
           "branch": null,
@@ -146,7 +146,7 @@
         }
       },
       {
-        "package": "Lottie",
+        "package": "lottie-ios",
         "repositoryURL": "https://github.com/airbnb/lottie-ios",
         "state": {
           "branch": null,
@@ -164,7 +164,7 @@
         }
       },
       {
-        "package": "Promises",
+        "package": "promises",
         "repositoryURL": "https://github.com/google/promises.git",
         "state": {
           "branch": null,
@@ -173,7 +173,7 @@
         }
       },
       {
-        "package": "Sentry",
+        "package": "sentry-cocoa",
         "repositoryURL": "https://github.com/getsentry/sentry-cocoa.git",
         "state": {
           "branch": null,
@@ -182,7 +182,7 @@
         }
       },
       {
-        "package": "SwiftProtobuf",
+        "package": "swift-protobuf",
         "repositoryURL": "https://github.com/apple/swift-protobuf.git",
         "state": {
           "branch": null,
