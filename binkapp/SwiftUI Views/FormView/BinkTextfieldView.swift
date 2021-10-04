@@ -125,7 +125,6 @@ struct BinkTextfieldView: View {
                                 isEditing = false
                                 field.updateValue(value)
                                 field.fieldWasExited()
-                                formViewModel.showTextFieldToolbar = false
                                 canShowErrorState = true
                             }
                             .accentColor(Color(Current.themeManager.color(for: .text)))
@@ -135,7 +134,6 @@ struct BinkTextfieldView: View {
                                 // Begin editing
                                 isEditing = true
                                 formViewModel.formInputType = .secureEntry
-                                formViewModel.showTextFieldToolbar = true
                                 canShowErrorState = !field.isValid() && !value.isEmpty
                             }
                             .modifier(ClearButton(text: $value, isEditing: $isEditing))
@@ -154,7 +152,6 @@ struct BinkTextfieldView: View {
                                 formViewModel.datasource.checkFormValidity()
                                 canShowErrorState = !field.isValid() && !value.isEmpty
                                 if isEditing {
-                                    formViewModel.showTextFieldToolbar = true
                                     formViewModel.formInputType = .keyboard(title: field.title)
                                 } else {
                                     field.fieldWasExited()

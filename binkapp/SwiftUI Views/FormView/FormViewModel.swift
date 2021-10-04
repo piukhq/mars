@@ -10,13 +10,16 @@ import SwiftUI
 
 final class FormViewModel: ObservableObject {
     @Published var datasource: FormDataSource
-    @Published var showTextFieldToolbar = false
-    @Published var formInputType: FormInputType = .none
     @Published var date: Date?
     @Published var pickerData = (value: "", fieldCount: 0)
     @Published var addPaymentCardViewModel: AddPaymentCardViewModel?
     @Published var paymentCard: PaymentCardCreateModel?
     @Published var keyboardHeight: CGFloat = 0
+    @Published var formInputType: FormInputType = .none {
+        didSet {
+            setKeyboardHeight()
+        }
+    }
 
     var titleText: String?
     var descriptionText: String?
@@ -33,6 +36,29 @@ final class FormViewModel: ObservableObject {
         self.paymentCard = addPaymentCardViewModel?.paymentCard
     }
 
+    var shouldShowTextfieldToolbar: Bool {
+        if case .none = formInputType {
+            return false
+        }
+        return true
+    }
+    
+    func setKeyboardHeight() {
+        switch formInputType {
+        case .date:
+            if #available(iOS 14.0, *) {
+                keyboardHeight = 400
+            } else {
+                keyboardHeight = 230
+            }
+        case .choice:
+            keyboardHeight = 200
+        case .none:
+            keyboardHeight = 0
+        default:
+            break
+        }
+    }
     
     func toLoyaltyScanner() {
         let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(forPlan: membershipPlan, delegate: self)

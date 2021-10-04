@@ -69,7 +69,7 @@ struct BinkFormView: View {
                 if $0 == 0.0 {
                     self.viewModel.keyboardHeight = $0
                 } else {
-                    self.viewModel.keyboardHeight = $0 - 292
+                    self.viewModel.keyboardHeight = $0 - 272
                 }
             })
 //            .onReceive(Publishers.keyboardWillShow) { keyboardWillShow in
@@ -79,20 +79,19 @@ struct BinkFormView: View {
 //            }
             
             // Keyboard Toolbar
-            VStack {
-                Spacer()
-                if viewModel.showTextFieldToolbar {
-//                    VStack {
-                        InputToolbarView {
-                            viewModel.showTextFieldToolbar = false
-
-                            viewModel.formInputType = .none
-                            viewModel.datasource.checkFormValidity()
-                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                        }
-//                        .offset(y: viewModel.keyboardHeight).animation(.easeInOut)
-//                        .onReceive(Publishers.keyboardHeight, perform: { self.viewModel.keyboardHeight = $0 })
-//                    }
+            if viewModel.shouldShowTextfieldToolbar {
+                VStack {
+                    Spacer()
+                    //                    VStack {
+                    InputToolbarView {
+//                        viewModel.showTextFieldToolbar = false
+                        viewModel.formInputType = .none
+                        viewModel.datasource.checkFormValidity()
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    }
+                    //                        .offset(y: viewModel.keyboardHeight).animation(.easeInOut)
+                    //                        .onReceive(Publishers.keyboardHeight, perform: { self.viewModel.keyboardHeight = $0 })
+                    //                    }
                 }
             }
             
@@ -107,6 +106,7 @@ struct BinkFormView: View {
                             .background(Color(Current.themeManager.color(for: .viewBackground)))
                             .accentColor(Color(.blueAccent))
                     }
+                    .offset(y: UIApplication.bottomSafeArea)
                 } else {
                     VStack(spacing: 0) {
                         InputToolbarView(buttonAction: { viewModel.formInputType = .none })
@@ -140,8 +140,8 @@ struct BinkFormView: View {
                     //                    Spacer()
                     //                        .frame(height: UIApplication.bottomSafeArea)
                 }
-                //                .offset(y: UIApplication.bottomSafeArea)
-                .background(Color(Current.themeManager.color(for: .viewBackground))).offset(y: UIApplication.bottomSafeArea)
+                .offset(y: UIApplication.bottomSafeArea)
+                .background(Color.clear)
             } else if case .expiry(let months, let years) = viewModel.formInputType {
                 GeometryReader { geometry in
                     VStack(spacing: 0) {
