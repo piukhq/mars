@@ -47,12 +47,12 @@ final class FormViewModel: ObservableObject {
         switch formInputType {
         case .date:
             if #available(iOS 14.0, *) {
-                keyboardHeight = 400
+                keyboardHeight = FormViewConstants.graphicalDatePickerHeight - FormViewConstants.vStackInsets.bottom
             } else {
-                keyboardHeight = 230
+                keyboardHeight = FormViewConstants.datePickerHeight
             }
         case .choice:
-            keyboardHeight = 200
+            keyboardHeight = FormViewConstants.multipleChoicePickerHeight
         case .none:
             keyboardHeight = 0
         default:

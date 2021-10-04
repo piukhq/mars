@@ -9,11 +9,15 @@
 import Combine
 import SwiftUI
 
+enum FormViewConstants {
+    static let vStackInsets = EdgeInsets(top: 20, leading: 25, bottom: 150, trailing: 25)
+    static let inputToolbarHeight: CGFloat = 44
+    static let multipleChoicePickerHeight: CGFloat = 200
+    static let graphicalDatePickerHeight: CGFloat = 400
+    static let datePickerHeight: CGFloat = 230
+}
+
 struct BinkFormView: View {
-    enum Constants {
-        static let vStackInsets = EdgeInsets(top: 20, leading: 25, bottom: 150, trailing: 25)
-    }
-    
     @ObservedObject var viewModel: FormViewModel
     @State var pickerOneSelection = ""
     @State var pickerTwoSelection = ""
@@ -60,16 +64,17 @@ struct BinkFormView: View {
                     
                     FormFooterView(datasource: viewModel.datasource)
                 }
-                .padding(Constants.vStackInsets)
+                .padding(FormViewConstants.vStackInsets)
             }
-            .background(Color(Current.themeManager.color(for: .viewBackground)))
+//            .background(Color(Current.themeManager.color(for: .viewBackground)))
             .edgesIgnoringSafeArea(.bottom)
-            .padding(.bottom, viewModel.keyboardHeight)
+//            .padding(.bottom, viewModel.keyboardHeight)
+            .offset(y: -viewModel.keyboardHeight).animation(.linear(duration: 0.35))
             .onReceive(Publishers.keyboardHeight, perform: {
                 if $0 == 0.0 {
                     self.viewModel.keyboardHeight = $0
                 } else {
-                    self.viewModel.keyboardHeight = $0 - 272
+                    self.viewModel.keyboardHeight = $0 - ($0 - FormViewConstants.inputToolbarHeight)
                 }
             })
 //            .onReceive(Publishers.keyboardWillShow) { keyboardWillShow in
@@ -89,6 +94,7 @@ struct BinkFormView: View {
                         viewModel.datasource.checkFormValidity()
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     }
+                    .animation(.easeInOut(duration: 0.35))
                     //                        .offset(y: viewModel.keyboardHeight).animation(.easeInOut)
                     //                        .onReceive(Publishers.keyboardHeight, perform: { self.viewModel.keyboardHeight = $0 })
                     //                    }
@@ -102,7 +108,7 @@ struct BinkFormView: View {
                         
                         DatePicker("", selection: $viewModel.date ?? Date(), displayedComponents: .date)
                             .datePickerStyle(GraphicalDatePickerStyle())
-                            .frame(maxHeight: 400)
+                            .frame(maxHeight: FormViewConstants.graphicalDatePickerHeight)
                             .background(Color(Current.themeManager.color(for: .viewBackground)))
                             .accentColor(Color(.blueAccent))
                     }
@@ -112,7 +118,7 @@ struct BinkFormView: View {
                         InputToolbarView(buttonAction: { viewModel.formInputType = .none })
                         
                         DatePicker("", selection: $viewModel.date ?? Date(), displayedComponents: .date)
-                            .frame(width: UIScreen.main.bounds.width, height: 230, alignment: .center)
+                            .frame(width: UIScreen.main.bounds.width, height: FormViewConstants.datePickerHeight, alignment: .center)
                             .background(Color(Current.themeManager.color(for: .viewBackground)))
                             .accentColor(Color(.blueAccent))
                             .labelsHidden()
@@ -132,7 +138,7 @@ struct BinkFormView: View {
                             Text($0)
                         }
                     }
-                    .frame(width: UIScreen.main.bounds.width, height: 200, alignment: .center)
+                    .frame(width: UIScreen.main.bounds.width, height: FormViewConstants.multipleChoicePickerHeight, alignment: .center)
                     .background(Color(Current.themeManager.color(for: .viewBackground)))
                     .labelsHidden()
                     //                    .offset(y: UIApplication.bottomSafeArea)
