@@ -197,6 +197,7 @@ struct TextfieldView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 25.0)
+                                .foregroundColor(Color(Current.themeManager.color(for: .divider)))
                         }
                         .offset(x: -5, y: 11)
                     }
