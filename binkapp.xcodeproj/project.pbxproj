@@ -326,7 +326,7 @@
 		CE54AF6225FA0BA00061838C /* BinkLoggerErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */; };
 		CE6054A426E8932800FD0866 /* FormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6054A326E8932800FD0866 /* FormViewModel.swift */; };
 		CE6054A626E8D54500FD0866 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6054A526E8D54500FD0866 /* ImageLoader.swift */; };
-		CE6054A826EB552B00FD0866 /* BinkTextfieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6054A726EB552A00FD0866 /* BinkTextfieldView.swift */; };
+		CE6054A826EB552B00FD0866 /* TextfieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6054A726EB552A00FD0866 /* TextfieldView.swift */; };
 		CE67DC0D269F2407008D930D /* AutomatedTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE67DC0C269F2407008D930D /* AutomatedTesting.swift */; };
 		CE6DE55F267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6DE55E267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift */; };
 		CE6DE5662681E8280063A3A9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6DE5652681E8280063A3A9 /* WidgetKit.framework */; };
@@ -337,7 +337,7 @@
 		CE6DE57D268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6DE57C268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift */; };
 		CE73F9AD2600B64E00D53BCF /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE73F9AB2600B64E00D53BCF /* HeaderTableViewCell.swift */; };
 		CE73F9AE2600B64E00D53BCF /* HeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE73F9AC2600B64E00D53BCF /* HeaderTableViewCell.xib */; };
-		CE81AAB126CC0A4600102283 /* BinkFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81AAB026CC0A4600102283 /* BinkFormView.swift */; };
+		CE81AAB126CC0A4600102283 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81AAB026CC0A4600102283 /* FormView.swift */; };
 		CE81AAB326D5696600102283 /* AuthAndAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81AAB226D5696600102283 /* AuthAndAddView.swift */; };
 		CE81AAB826E7619E00102283 /* BinkButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81AAB726E7619E00102283 /* BinkButtonView.swift */; };
 		CE85A1D226A5DB43003B74CD /* EmailClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D126A5DB43003B74CD /* EmailClient.swift */; };
@@ -970,7 +970,7 @@
 		CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLoggerErrors.swift; sourceTree = "<group>"; };
 		CE6054A326E8932800FD0866 /* FormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewModel.swift; sourceTree = "<group>"; };
 		CE6054A526E8D54500FD0866 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
-		CE6054A726EB552A00FD0866 /* BinkTextfieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkTextfieldView.swift; sourceTree = "<group>"; };
+		CE6054A726EB552A00FD0866 /* TextfieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextfieldView.swift; sourceTree = "<group>"; };
 		CE67DC0C269F2407008D930D /* AutomatedTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting.swift; sourceTree = "<group>"; };
 		CE6DE55E267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsSwiftUIView.swift; sourceTree = "<group>"; };
 		CE6DE5642681E8280063A3A9 /* BinkWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BinkWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -982,7 +982,7 @@
 		CE6DE57C268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnauthenticatedSwiftUIView.swift; sourceTree = "<group>"; };
 		CE73F9AB2600B64E00D53BCF /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
 		CE73F9AC2600B64E00D53BCF /* HeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderTableViewCell.xib; sourceTree = "<group>"; };
-		CE81AAB026CC0A4600102283 /* BinkFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkFormView.swift; sourceTree = "<group>"; };
+		CE81AAB026CC0A4600102283 /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
 		CE81AAB226D5696600102283 /* AuthAndAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAndAddView.swift; sourceTree = "<group>"; };
 		CE81AAB726E7619E00102283 /* BinkButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkButtonView.swift; sourceTree = "<group>"; };
 		CE85A1D126A5DB43003B74CD /* EmailClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailClient.swift; sourceTree = "<group>"; };
@@ -2473,8 +2473,8 @@
 		CE81AAB426D687F100102283 /* FormView */ = {
 			isa = PBXGroup;
 			children = (
-				CE81AAB026CC0A4600102283 /* BinkFormView.swift */,
-				CE6054A726EB552A00FD0866 /* BinkTextfieldView.swift */,
+				CE81AAB026CC0A4600102283 /* FormView.swift */,
+				CE6054A726EB552A00FD0866 /* TextfieldView.swift */,
 				CE6054A326E8932800FD0866 /* FormViewModel.swift */,
 				CE52E13526EFB1F600CAFBBF /* InputToolbarView.swift */,
 				CEB7ADF126F22DC400BD138C /* FormHeaderView.swift */,
@@ -3939,7 +3939,7 @@
 				EFA5F72C2379A7C70027AB80 /* CD_MembershipTransaction.swift in Sources */,
 				EFA5F7102379A7C70027AB80 /* _CD_MembershipCard.swift in Sources */,
 				3C466B9E22FAE6190044478D /* CardModel.swift in Sources */,
-				CE6054A826EB552B00FD0866 /* BinkTextfieldView.swift in Sources */,
+				CE6054A826EB552B00FD0866 /* TextfieldView.swift in Sources */,
 				706D203924D851BA004BCCF3 /* _CD_CardAccount.swift in Sources */,
 				709748A024D32A52008D0E29 /* RemoteConfigUtil.swift in Sources */,
 				EFA5F70D2379A7C70027AB80 /* _CD_PaymentCardAccount.swift in Sources */,
@@ -4009,7 +4009,7 @@
 				EFA5F71E2379A7C70027AB80 /* _CD_MembershipCardAccount.swift in Sources */,
 				BD9BAAD9232AF4AB00D2E1C4 /* DiffAware+Extension.swift in Sources */,
 				EFA5F7172379A7C70027AB80 /* CD_MembershipCard.swift in Sources */,
-				CE81AAB126CC0A4600102283 /* BinkFormView.swift in Sources */,
+				CE81AAB126CC0A4600102283 /* FormView.swift in Sources */,
 				3C873FF722F073CF00FA3031 /* LoyaltyWalletViewController.swift in Sources */,
 				70D747FD2552A75D00E9D2C1 /* InAppReviewUtility.swift in Sources */,
 				3C93975D2386A2E00063C0B3 /* PreferencesModel.swift in Sources */,

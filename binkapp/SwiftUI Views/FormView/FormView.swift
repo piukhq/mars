@@ -17,7 +17,7 @@ enum FormViewConstants {
     static let datePickerHeight: CGFloat = 230
 }
 
-struct BinkFormView: View {
+struct FormView: View {
     @ObservedObject var viewModel: FormViewModel
     @State var pickerOneSelection = ""
     @State var pickerTwoSelection = ""
@@ -54,11 +54,11 @@ struct BinkFormView: View {
                     // Textfields
                     ForEach(viewModel.datasource.fields) { field in
                         if #available(iOS 14.0, *) {
-                            BinkTextfieldView(field: field, viewModel: viewModel)
+                            TextfieldView(field: field, viewModel: viewModel)
                                 .accessibilityIdentifier(field.title)
                                 .keyboardType(field.fieldType.keyboardType())
                         } else {
-                            BinkTextfieldView(field: field, viewModel: viewModel)
+                            TextfieldView(field: field, viewModel: viewModel)
                         }
                     }
                     
@@ -69,7 +69,7 @@ struct BinkFormView: View {
 //            .background(Color(Current.themeManager.color(for: .viewBackground)))
             .edgesIgnoringSafeArea(.bottom)
 //            .padding(.bottom, viewModel.keyboardHeight)
-            .offset(y: -viewModel.keyboardHeight).animation(.linear(duration: 0.35))
+            .offset(y: -viewModel.keyboardHeight)
             .onReceive(Publishers.keyboardHeight, perform: {
                 if $0 == 0.0 {
                     self.viewModel.keyboardHeight = $0

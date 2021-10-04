@@ -9,7 +9,7 @@
 import Combine
 import SwiftUI
 
-struct BinkTextfieldView: View {
+struct TextfieldView: View {
     private let formViewModel: FormViewModel
     @State var field: FormField
     @State private var isEditing = false
@@ -298,6 +298,6 @@ struct BinkTextfieldView: View {
 
 struct BinkTextfieldView_Previews: PreviewProvider {
     static var previews: some View {
-        BinkTextfieldView(field: FormField(title: "email", placeholder: "Eneter email", validation: "", fieldType: .email, updated: {_,_ in }, shouldChange: {_,_,_,_ in return true }, fieldExited: {_ in }), viewModel: FormViewModel(datasource: FormDataSource(accessForm: .emailPassword), title: "Eneter", description: "kjhdskjhsjkhsjkhdsf"))
+        TextfieldView(field: FormField(title: "email", placeholder: "Eneter email", validation: "", fieldType: .email, updated: {_,_ in }, shouldChange: {_,_,_,_ in return true }, fieldExited: {_ in }), viewModel: FormViewModel(datasource: FormDataSource(accessForm: .emailPassword), title: "Eneter", description: "kjhdskjhsjkhsjkhdsf"))
     }
 }
