@@ -126,6 +126,7 @@ struct TextfieldView: View {
                                 field.updateValue(value)
                                 field.fieldWasExited()
                                 canShowErrorState = true
+                                formViewModel.formInputType = .none
                             }
                             .accentColor(Color(Current.themeManager.color(for: .text)))
                             .font(.nunitoLight(18))
@@ -158,6 +159,7 @@ struct TextfieldView: View {
                                 }
                             }, onCommit: {
                                 canShowErrorState = true
+                                formViewModel.formInputType = .none
                             })
                             .onReceive(Just(value)) { _ in valueChangedHandler() }
                             .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
