@@ -110,12 +110,6 @@ struct BinkTextfieldView: View {
                                             formViewModel.addPaymentCardViewModel?.setPaymentCardExpiry(month: Int(splitData.first ?? ""), year: Int(splitData.last ?? ""))
                                         }
                                 }
-                                .onReceive(formViewModel.$newResponderIsActive) { newResponderIsActive in
-                                    guard let newResponderIsActive = newResponderIsActive else { return }
-                                    if formViewModel.showTextFieldToolbar {
-                                        isEditing = !newResponderIsActive
-                                    }
-                                }
                                 .onReceive(formViewModel.$pickerType) { pickerType in
                                     if case .expiry = pickerType {
                                         isEditing = true
@@ -145,10 +139,6 @@ struct BinkTextfieldView: View {
                                 canShowErrorState = !field.isValid() && !value.isEmpty
                             }
                             .modifier(ClearButton(text: $value, isEditing: $isEditing))
-//                            .onReceive(formViewModel.$newResponderIsActive) { newResponderIsActive in
-//                                guard let newResponderIsActive = newResponderIsActive else { return }
-//                                isEditing = !newResponderIsActive
-//                            }
                             .onReceive(formViewModel.$pickerType) { pickerType in
                                 if case .secureEntry = pickerType {
                                     isEditing = true
@@ -163,8 +153,6 @@ struct BinkTextfieldView: View {
                                 field.updateValue(value)
                                 formViewModel.datasource.checkFormValidity()
                                 canShowErrorState = !field.isValid() && !value.isEmpty
-                                formViewModel.newResponderIsActive = isEditing
-
                                 if isEditing {
                                     formViewModel.showTextFieldToolbar = true
                                     formViewModel.pickerType = .keyboard(title: field.title)

@@ -81,8 +81,9 @@ struct BinkFormView: View {
 //                    VStack {
                         InputToolbarView {
                             viewModel.showTextFieldToolbar = false
-                            viewModel.newResponderIsActive = true
+
                             viewModel.pickerType = .none
+                            viewModel.datasource.checkFormValidity()
                             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         }
 //                        .offset(y: viewModel.keyboardHeight).animation(.easeInOut)
