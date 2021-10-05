@@ -68,20 +68,20 @@ struct FormView: View {
                 .padding(FormViewConstants.vStackInsets)
             }
             .background(Color(Current.themeManager.color(for: .viewBackground)))
-            .edgesIgnoringSafeArea(.bottom)
+//            .edgesIgnoringSafeArea(.bottom)
 //            .padding(.bottom, viewModel.keyboardHeight)
             .offset(y: -viewModel.keyboardHeight)
-            .onReceive(Publishers.keyboardHeight, perform: {
-                if #available(iOS 14.0, *) {
-                    if $0 == 0.0 {
-                        self.viewModel.keyboardHeight = $0
-                    } else {
-                        self.viewModel.keyboardHeight = $0 - ($0 - FormViewConstants.inputToolbarHeight)
-                    }
-                } else {
-                    self.viewModel.setKeyboardHeight(height: $0)
-                }
-            })
+//            .onReceive(Publishers.keyboardHeight, perform: {
+//                if #available(iOS 14.0, *) {
+//                    if $0 == 0.0 {
+//                        self.viewModel.keyboardHeight = $0
+//                    } else {
+//                        self.viewModel.keyboardHeight = $0 - ($0)
+//                    }
+//                } else {
+//                    self.viewModel.setKeyboardHeight(height: $0)
+//                }
+//            })
 //            .onReceive(Publishers.keyboardWillShow) { keyboardWillShow in
 //                if keyboardWillShow {
 //                    viewModel.pickerType = .keyboard
@@ -89,26 +89,26 @@ struct FormView: View {
 //            }
             
             // Keyboard Toolbar
-            if viewModel.shouldShowTextfieldToolbar {
-                VStack {
-                    Spacer()
-                    VStack {
-                        InputToolbarView {
-                            viewModel.formInputType = .none
-                            viewModel.datasource.checkFormValidity()
-                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                        }
-                        .animation(.easeInOut(duration: 0.35))
-                    }
-                    if #available(iOS 14.0, *) {} else {
-                        /// Required for iOS 13 to move toolbar with keyboard
-                        if viewModel.shouldShowInputToolbarSpacer {
-                            Spacer()
-                                .frame(height: viewModel.keyboardHeight)
-                        }
-                    }
-                }
-            }
+//            if viewModel.shouldShowTextfieldToolbar {
+//                VStack {
+//                    Spacer()
+//                    VStack {
+//                        InputToolbarView {
+//                            viewModel.formInputType = .none
+//                            viewModel.datasource.checkFormValidity()
+//                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+//                        }
+//                        .animation(.easeInOut(duration: 0.35))
+//                    }
+//                    if #available(iOS 14.0, *) {} else {
+//                        /// Required for iOS 13 to move toolbar with keyboard
+//                        if viewModel.shouldShowInputToolbarSpacer {
+//                            Spacer()
+//                                .frame(height: viewModel.keyboardHeight)
+//                        }
+//                    }
+//                }
+//            }
             
             if case .date = viewModel.formInputType {
                 if #available(iOS 14.0, *) {

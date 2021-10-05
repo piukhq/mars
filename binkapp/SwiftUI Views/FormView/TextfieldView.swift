@@ -150,7 +150,7 @@ struct TextfieldView: View {
                             }
                         default:
                             TextfieldUIK(field, text: $value)
-                                .frame(height: 30)
+                                .frame(height: 24)
                             
 //                            TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
 //                                self.isEditing = isEditing
