@@ -21,7 +21,7 @@
 
     "content_scripts": [{
         "js": [ "content.js" ],
-        "matches": [ "*://vowzahq.com/*" ]
+        "matches": [ "*://www.fatface.com/*" ]
     }],
 
     "browser_action": {
