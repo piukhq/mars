@@ -152,6 +152,7 @@ struct TextfieldView: View {
                                 field.updateValue(value)
                                 formViewModel.datasource.checkFormValidity()
                                 canShowErrorState = !field.isValid() && !value.isEmpty
+                                
                                 if isEditing {
                                     formViewModel.formInputType = .keyboard(title: field.title)
                                 } else {

@@ -18,6 +18,7 @@ final class FormViewModel: ObservableObject {
     @Published var formInputType: FormInputType = .none {
         didSet {
             setKeyboardHeight()
+            print(keyboardHeight)
         }
     }
 
@@ -43,8 +44,19 @@ final class FormViewModel: ObservableObject {
         return true
     }
     
-    func setKeyboardHeight() {
+    var shouldShowInputToolbarSpacer: Bool {
         switch formInputType {
+        case .keyboard, .secureEntry:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    func setKeyboardHeight(height: CGFloat? = nil) {
+        switch formInputType {
+        case .keyboard, .secureEntry:
+            keyboardHeight = (height ?? 0) - UIApplication.bottomSafeArea
         case .date:
             if #available(iOS 14.0, *) {
                 keyboardHeight = FormViewConstants.graphicalDatePickerHeight - FormViewConstants.vStackInsets.bottom
@@ -57,8 +69,6 @@ final class FormViewModel: ObservableObject {
             keyboardHeight = FormViewConstants.expiryDatePickerHeight
         case .none:
             keyboardHeight = 0
-        default:
-            break
         }
     }
     

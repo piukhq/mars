@@ -73,11 +73,14 @@ struct FormView: View {
 //            .padding(.bottom, viewModel.keyboardHeight)
             .offset(y: -viewModel.keyboardHeight)
             .onReceive(Publishers.keyboardHeight, perform: {
-                if $0 == 0.0 {
-                    self.viewModel.keyboardHeight = $0
-                } else {
-                    self.viewModel.keyboardHeight = $0 - ($0 - FormViewConstants.inputToolbarHeight)
-                }
+//                self.viewModel.formInputType = .keyboard
+                self.viewModel.setKeyboardHeight(height: $0)
+                
+//                if $0 == 0.0 {
+//                    self.viewModel.keyboardHeight = $0
+//                } else {
+//                    self.viewModel.keyboardHeight = $0 - ($0 - FormViewConstants.inputToolbarHeight)
+//                }
             })
 //            .onReceive(Publishers.keyboardWillShow) { keyboardWillShow in
 //                if keyboardWillShow {
@@ -89,17 +92,21 @@ struct FormView: View {
             if viewModel.shouldShowTextfieldToolbar {
                 VStack {
                     Spacer()
-                    //                    VStack {
-                    InputToolbarView {
-//                        viewModel.showTextFieldToolbar = false
-                        viewModel.formInputType = .none
-                        viewModel.datasource.checkFormValidity()
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    VStack {
+                        InputToolbarView {
+                            viewModel.formInputType = .none
+                            viewModel.datasource.checkFormValidity()
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        }
+                        .animation(.easeInOut(duration: 0.35))
                     }
-                    .animation(.easeInOut(duration: 0.35))
-                    //                        .offset(y: viewModel.keyboardHeight).animation(.easeInOut)
-                    //                        .onReceive(Publishers.keyboardHeight, perform: { self.viewModel.keyboardHeight = $0 })
-                    //                    }
+                    if #available(iOS 14.0, *) {} else {
+                        /// Required for iOS 13 to move toolbar with keyboard
+                        if viewModel.shouldShowInputToolbarSpacer {
+                            Spacer()
+                                .frame(height: viewModel.keyboardHeight)
+                        }
+                    }
                 }
             }
             
@@ -143,10 +150,6 @@ struct FormView: View {
                     .frame(width: UIScreen.main.bounds.width, height: FormViewConstants.multipleChoicePickerHeight, alignment: .center)
                     .background(Color(Current.themeManager.color(for: .viewBackground)))
                     .labelsHidden()
-                    //                    .offset(y: UIApplication.bottomSafeArea)
-                    
-                    //                    Spacer()
-                    //                        .frame(height: UIApplication.bottomSafeArea)
                 }
                 .offset(y: UIApplication.bottomSafeArea)
                 .background(Color.clear)
