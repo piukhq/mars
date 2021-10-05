@@ -10,11 +10,11 @@ import UIKit
 import SwiftUI
 
 struct TextfieldUIK: UIViewRepresentable {
-    private var placeholder : String
-    private var text : Binding<String>
+    private var field: FormField
+    private var text: Binding<String>
 
-    init(_ placeholder:String, text:Binding<String>) {
-        self.placeholder = placeholder
+    init(_ field: FormField, text: Binding<String>) {
+        self.field = field
         self.text = text
     }
 
@@ -23,10 +23,20 @@ struct TextfieldUIK: UIViewRepresentable {
     }
 
     func makeUIView(context: UIViewRepresentableContext<TextfieldUIK>) -> UITextField {
+        let isEnabled = !field.isReadOnly
 
         let textfield = UITextField(frame: .zero)
-        textfield.placeholder = placeholder
-        textfield.text = text.wrappedValue
+        textfield.textColor = isEnabled ? Current.themeManager.color(for: .text) : .binkDynamicGray
+        textfield.placeholder = field.placeholder
+        textfield.text = field.forcedValue ?? text.wrappedValue
+        textfield.font = .textFieldInput
+        textfield.isSecureTextEntry = field.fieldType.isSecureTextEntry
+        textfield.keyboardType = field.fieldType.keyboardType()
+        textfield.autocorrectionType = field.fieldType.autoCorrection()
+        textfield.autocapitalizationType = field.fieldType.capitalization()
+        textfield.clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
+        textfield.accessibilityIdentifier = field.title
+        
         textfield.delegate = context.coordinator
 
         context.coordinator.setup(textfield)

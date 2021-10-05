@@ -130,7 +130,7 @@ struct TextfieldView: View {
                             }
                             .accentColor(Color(Current.themeManager.color(for: .text)))
                             .font(.nunitoLight(18))
-                            .disableAutocorrection(field.fieldType.autoCorrection())
+//                            .disableAutocorrection(field.fieldType.autoCorrection())
                             .keyboardType(field.fieldType.keyboardType())
                             .colorSchemeOverride()
                             .onTapGesture {
@@ -149,38 +149,41 @@ struct TextfieldView: View {
                                 }
                             }
                         default:
-                            TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
-                                self.isEditing = isEditing
-                                field.updateValue(value)
-                                formViewModel.datasource.checkFormValidity()
-                                canShowErrorState = !field.isValid() && !value.isEmpty
-                                
-                                if isEditing {
-                                    formViewModel.formInputType = .keyboard(title: field.title)
-                                } else {
-                                    field.fieldWasExited()
-                                }
-                            }, onCommit: {
-                                canShowErrorState = true
-                                formViewModel.formInputType = .none
-                            })
-                            .onReceive(Just(value)) { _ in valueChangedHandler() }
-                            .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
-                            .autocapitalization(field.fieldType.capitalization())
-                            .modifier(ClearButton(text: $value, isEditing: $isEditing))
-                            .accentColor(Color(Current.themeManager.color(for: .text)))
-                            .foregroundColor(Color(Current.themeManager.color(for: .text)))
-                            .disableAutocorrection(field.fieldType.autoCorrection())
-                            .keyboardType(field.fieldType.keyboardType())
-                            .colorSchemeOverride()
-                            .onReceive(formViewModel.$formInputType) { pickerType in
-                                if case .keyboard(let title) = pickerType {
-                                    guard title == field.title else { return }
-                                    isEditing = true
-                                } else {
-                                    isEditing = false
-                                }
-                            }
+                            TextfieldUIK(field, text: $value)
+                                .frame(height: 30)
+                            
+//                            TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
+//                                self.isEditing = isEditing
+//                                field.updateValue(value)
+//                                formViewModel.datasource.checkFormValidity()
+//                                canShowErrorState = !field.isValid() && !value.isEmpty
+//                                
+//                                if isEditing {
+//                                    formViewModel.formInputType = .keyboard(title: field.title)
+//                                } else {
+//                                    field.fieldWasExited()
+//                                }
+//                            }, onCommit: {
+//                                canShowErrorState = true
+//                                formViewModel.formInputType = .none
+//                            })
+//                            .onReceive(Just(value)) { _ in valueChangedHandler() }
+//                            .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
+//                            .autocapitalization(field.fieldType.capitalization())
+//                            .modifier(ClearButton(text: $value, isEditing: $isEditing))
+//                            .accentColor(Color(Current.themeManager.color(for: .text)))
+//                            .foregroundColor(Color(Current.themeManager.color(for: .text)))
+//                            .disableAutocorrection(field.fieldType.autoCorrection())
+//                            .keyboardType(field.fieldType.keyboardType())
+//                            .colorSchemeOverride()
+//                            .onReceive(formViewModel.$formInputType) { pickerType in
+//                                if case .keyboard(let title) = pickerType {
+//                                    guard title == field.title else { return }
+//                                    isEditing = true
+//                                } else {
+//                                    isEditing = false
+//                                }
+//                            }
                         }
                     }
                     
@@ -306,6 +309,6 @@ struct TextfieldView: View {
 
 struct BinkTextfieldView_Previews: PreviewProvider {
     static var previews: some View {
-        TextfieldView(field: FormField(title: "email", placeholder: "Eneter email", validation: "", fieldType: .email, updated: {_,_ in }, shouldChange: {_,_,_,_ in return true }, fieldExited: {_ in }), viewModel: FormViewModel(datasource: FormDataSource(accessForm: .emailPassword), title: "Eneter", description: "kjhdskjhsjkhsjkhdsf"))
+        TextfieldView(field: FormField(title: "Email", placeholder: "Enter email", validation: "", fieldType: .email, updated: {_,_ in }, shouldChange: {_,_,_,_ in return true }, fieldExited: {_ in }), viewModel: FormViewModel(datasource: FormDataSource(accessForm: .emailPassword), title: "Eneter", description: "kjhdskjhsjkhsjkhdsf"))
     }
 }

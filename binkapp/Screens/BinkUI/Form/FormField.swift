@@ -81,8 +81,8 @@ class FormField: Identifiable {
             }
         }
         
-        func autoCorrection() -> Bool {
-            return false
+        func autoCorrection() -> UITextAutocorrectionType {
+            return .no
         }
         
         var isSecureTextEntry: Bool {
