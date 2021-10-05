@@ -72,13 +72,15 @@ struct FormView: View {
 //            .padding(.bottom, viewModel.keyboardHeight)
             .offset(y: -viewModel.keyboardHeight)
             .onReceive(Publishers.keyboardHeight, perform: {
-                self.viewModel.setKeyboardHeight(height: $0)
-                
-//                if $0 == 0.0 {
-//                    self.viewModel.keyboardHeight = $0
-//                } else {
-//                    self.viewModel.keyboardHeight = $0 - ($0 - FormViewConstants.inputToolbarHeight)
-//                }
+                if #available(iOS 14.0, *) {
+                    if $0 == 0.0 {
+                        self.viewModel.keyboardHeight = $0
+                    } else {
+                        self.viewModel.keyboardHeight = $0 - ($0 - FormViewConstants.inputToolbarHeight)
+                    }
+                } else {
+                    self.viewModel.setKeyboardHeight(height: $0)
+                }
             })
 //            .onReceive(Publishers.keyboardWillShow) { keyboardWillShow in
 //                if keyboardWillShow {
