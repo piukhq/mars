@@ -58,7 +58,6 @@ struct FormView: View {
                         if #available(iOS 14.0, *) {
                             TextfieldView(field: field, viewModel: viewModel)
                                 .accessibilityIdentifier(field.title)
-                                .keyboardType(field.fieldType.keyboardType())
                         } else {
                             TextfieldView(field: field, viewModel: viewModel)
                         }
@@ -73,7 +72,6 @@ struct FormView: View {
 //            .padding(.bottom, viewModel.keyboardHeight)
             .offset(y: -viewModel.keyboardHeight)
             .onReceive(Publishers.keyboardHeight, perform: {
-//                self.viewModel.formInputType = .keyboard
                 self.viewModel.setKeyboardHeight(height: $0)
                 
 //                if $0 == 0.0 {

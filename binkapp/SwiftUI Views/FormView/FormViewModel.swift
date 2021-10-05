@@ -41,7 +41,7 @@ final class FormViewModel: ObservableObject {
         if case .none = formInputType {
             return false
         }
-        return true
+        return keyboardHeight <= 0.0 ? false : true
     }
     
     var shouldShowInputToolbarSpacer: Bool {
