@@ -348,6 +348,7 @@
 		CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */; };
 		CE949EAA26FC9BDB00F578DC /* TermsAndConditionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE949EA926FC9BDB00F578DC /* TermsAndConditionsView.swift */; };
 		CE990E13261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */; };
+		CE9EF24F270C694400DE9659 /* TextfieldViewUIK.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9EF24E270C694400DE9659 /* TextfieldViewUIK.swift */; };
 		CEA16EC526249C6300D449E1 /* BarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA16EC426249C6300D449E1 /* BarcodeView.swift */; };
 		CEA16ED62624B0EE00D449E1 /* BarcodeViewWide.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA16ED52624B0EE00D449E1 /* BarcodeViewWide.swift */; };
 		CEA16EE02625879B00D449E1 /* BarcodeViewCompact.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA16EDF2625879B00D449E1 /* BarcodeViewCompact.xib */; };
@@ -992,6 +993,7 @@
 		CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkCopyableLabel.swift; sourceTree = "<group>"; };
 		CE949EA926FC9BDB00F578DC /* TermsAndConditionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsAndConditionsView.swift; sourceTree = "<group>"; };
 		CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_1_LoyaltyCards.swift; sourceTree = "<group>"; };
+		CE9EF24E270C694400DE9659 /* TextfieldViewUIK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextfieldViewUIK.swift; sourceTree = "<group>"; };
 		CEA16EC426249C6300D449E1 /* BarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeView.swift; sourceTree = "<group>"; };
 		CEA16ED52624B0EE00D449E1 /* BarcodeViewWide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewWide.swift; sourceTree = "<group>"; };
 		CEA16EDF2625879B00D449E1 /* BarcodeViewCompact.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BarcodeViewCompact.xib; sourceTree = "<group>"; };
@@ -2482,6 +2484,7 @@
 				CE44B498270321E100124714 /* CheckboxView */,
 				CEB7ADFB26FB135900BD138C /* AttributedTextView.swift */,
 				CE44B49627022B1800124714 /* TextWithAttributedString.swift */,
+				CE9EF24E270C694400DE9659 /* TextfieldViewUIK.swift */,
 			);
 			path = FormView;
 			sourceTree = "<group>";
@@ -3838,6 +3841,7 @@
 				3CEABFD02316AB88009B1122 /* MembershipCardBalanceModel.swift in Sources */,
 				EFA5F7392379A7C70027AB80 /* _CD_MembershipCardImage.swift in Sources */,
 				CE2CFE9025E3D48E00B1CB93 /* FeatureFlagsTableViewCell.swift in Sources */,
+				CE9EF24F270C694400DE9659 /* TextfieldViewUIK.swift in Sources */,
 				701418CA26FB306100BE4DF0 /* SubwayPointsScrapingAgent.swift in Sources */,
 				CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */,
 				3C61FCDE230AF0BB004721A3 /* AppsModel.swift in Sources */,
