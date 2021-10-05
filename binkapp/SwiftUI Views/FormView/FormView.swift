@@ -68,7 +68,7 @@ struct FormView: View {
                 }
                 .padding(FormViewConstants.vStackInsets)
             }
-//            .background(Color(Current.themeManager.color(for: .viewBackground)))
+            .background(Color(Current.themeManager.color(for: .viewBackground)))
             .edgesIgnoringSafeArea(.bottom)
 //            .padding(.bottom, viewModel.keyboardHeight)
             .offset(y: -viewModel.keyboardHeight)
