@@ -111,6 +111,12 @@ struct BinkButtonsStackView: View {
                 }
             }
             .frame(width: UIScreen.main.bounds.width, height: BinkButtonsView.bottomSafePadding + (Constants.height * CGFloat(buttons.count)), alignment: .center)
+            
+            if #available(iOS 14.0, *) {} else {
+                /// Required for iOS 13
+                Spacer()
+                    .frame(height: UIApplication.bottomSafeArea)
+            }
         }
         .background(Color.clear)
         .edgesIgnoringSafeArea(.bottom)
