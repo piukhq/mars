@@ -149,14 +149,29 @@ struct TextfieldView: View {
                                 }
                             }
                         default:
-                            TextfieldUIK(field, text: $value)
-                                .frame(height: 24)
+                            TextfieldUIK(field, text: $value, didBeginEditing: { _ in
+                                isEditing = true
+                                formViewModel.datasource.checkFormValidity()
+                                canShowErrorState = !field.isValid() && !value.isEmpty
+                                formViewModel.formInputType = .keyboard(title: field.title)
+                            }, didEndEditing: { _ in
+                                isEditing = false
+                                formViewModel.datasource.checkFormValidity()
+                                canShowErrorState = !field.isValid() && !value.isEmpty
+                                field.fieldWasExited()
+                                formViewModel.formInputType = .none
+                            }, onCommit: { _ in
+                                canShowErrorState = true
+                                formViewModel.formInputType = .none
+                            })
+                            .frame(height: 24)
+                            .onReceive(Just(value)) { _ in valueChangedHandler() }
                             
 //                            TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
-//                                self.isEditing = isEditing
-//                                field.updateValue(value)
-//                                formViewModel.datasource.checkFormValidity()
-//                                canShowErrorState = !field.isValid() && !value.isEmpty
+////                                self.isEditing = isEditing
+////                                field.updateValue(value)
+////                                formViewModel.datasource.checkFormValidity()
+////                                canShowErrorState = !field.isValid() && !value.isEmpty
 //                                
 //                                if isEditing {
 //                                    formViewModel.formInputType = .keyboard(title: field.title)
@@ -173,7 +188,7 @@ struct TextfieldView: View {
 //                            .modifier(ClearButton(text: $value, isEditing: $isEditing))
 //                            .accentColor(Color(Current.themeManager.color(for: .text)))
 //                            .foregroundColor(Color(Current.themeManager.color(for: .text)))
-//                            .disableAutocorrection(field.fieldType.autoCorrection())
+////                            .disableAutocorrection(field.fieldType.autoCorrection())
 //                            .keyboardType(field.fieldType.keyboardType())
 //                            .colorSchemeOverride()
 //                            .onReceive(formViewModel.$formInputType) { pickerType in
@@ -232,6 +247,14 @@ struct TextfieldView: View {
     }
     
     // MARK: - Helper Methods
+    
+    private func textFieldEditingHandler(_ isEditing: Bool) {
+        if isEditing {
+            
+        } else {
+            
+        }
+    }
     
     private func valueChangedHandler() {
         if case .addPaymentCard = formViewModel.datasource.formtype {
