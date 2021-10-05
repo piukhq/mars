@@ -54,12 +54,12 @@ struct FormView: View {
                     AttributedTextView(viewModel: viewModel)
                     
                     // Textfields
-                    ForEach(viewModel.datasource.fields) { field in
+                    ForEach(Array(viewModel.datasource.fields.enumerated()), id: \.offset) { index, field in
                         if #available(iOS 14.0, *) {
-                            TextfieldView(field: field, viewModel: viewModel)
+                            TextfieldView(field: field, viewModel: viewModel, id: index)
                                 .accessibilityIdentifier(field.title)
                         } else {
-                            TextfieldView(field: field, viewModel: viewModel)
+//                            TextfieldView(field: field, viewModel: viewModel)
                         }
                     }
                     

@@ -12,18 +12,20 @@ import SwiftUI
 struct TextfieldUIK: UIViewRepresentable {
     private var field: FormField
     private var text: Binding<String>
+    private var onAppear: (UITextField) -> Void
     private var didBeginEditing: (UITextField) -> Void
     private var didEndEditing: (UITextField) -> Void
     private var onCommit: (UITextField) -> Void
     
-    let textField = UITextField(frame: .zero)
+    var textField = UITextField(frame: .zero)
     
-    init(_ field: FormField, text: Binding<String>, didBeginEditing: @escaping (UITextField) -> Void, didEndEditing: @escaping (UITextField) -> Void, onCommit: @escaping (UITextField) -> Void) {
+    init(_ field: FormField, text: Binding<String>, onAppear: @escaping (UITextField) -> Void, didBeginEditing: @escaping (UITextField) -> Void, didEndEditing: @escaping (UITextField) -> Void, onCommit: @escaping (UITextField) -> Void) {
         self.field = field
         self.text = text
         self.didBeginEditing = didBeginEditing
         self.didEndEditing = didEndEditing
         self.onCommit = onCommit
+        self.onAppear = onAppear
     }
 
     func makeCoordinator() -> TextfieldUIK.Coordinator {
@@ -47,7 +49,8 @@ struct TextfieldUIK: UIViewRepresentable {
         textField.delegate = context.coordinator
 
         context.coordinator.setup(textField)
-
+        onAppear(textField)
+        
         return textField
     }
 
@@ -149,20 +152,12 @@ struct TextfieldUIK: UIViewRepresentable {
 //            if textField.inputView?.isKind(of: FormMultipleChoiceInput.self) ?? false || textField.inputView?.isKind(of: UIDatePicker.self) ?? false {
 //                textField.text = pickerSelectedChoice
 //            }
-            
-//            self.delegate?.formCollectionViewCell(self, didSelectField: textField)
         }
         
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             parent.onCommit(textField)
             textField.resignFirstResponder()
-//            self.delegate?.formCollectionViewCell(self, shouldResignTextField: textField)
             return true
         }
     }
-}
-
-fileprivate extension Selector {
-    static let textFieldUpdated = #selector(FormCollectionViewCell.textFieldUpdated(_:text:backingData:))
-    static let accessoryDoneTouchUpInside = #selector(FormCollectionViewCell.accessoryDoneTouchUpInside)
 }

@@ -68,7 +68,6 @@ class FormDataSource: NSObject, ObservableObject {
         return fields.filter { !$0.hidden }
     }
     private(set) var checkboxes: [CheckboxSwiftUIView] = []
-    private var cellTextFields: [Int: UITextField] = [:]
     private var selectedCheckboxIndex = 0
     weak var delegate: MultiDelegate?
     

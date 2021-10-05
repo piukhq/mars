@@ -11,15 +11,17 @@ import SwiftUI
 
 struct TextfieldView: View {
     private let formViewModel: FormViewModel
+    private let id: Int
     @State var field: FormField
     @State private var isEditing = false
     @State var value: String
     @State var canShowErrorState = false
     
-    init(field: FormField, viewModel: FormViewModel) {
+    init(field: FormField, viewModel: FormViewModel, id: Int) {
         _field = State(initialValue: field)
         _value = State(initialValue: field.forcedValue ?? "")
         self.formViewModel = viewModel
+        self.id = id
     }
     
     var body: some View {
@@ -60,6 +62,9 @@ struct TextfieldView: View {
                                 }
                                 Spacer()
                             }
+                            .onAppear {
+                                formViewModel.textFields[id] = UITextField()
+                            }
                         case .date:
                             HStack {
                                 Button {
@@ -87,6 +92,9 @@ struct TextfieldView: View {
                                     }
                                 }
                                 Spacer()
+                            }
+                            .onAppear {
+                                formViewModel.textFields[id] = UITextField()
                             }
                         case .expiry(let months, let years):
                             HStack {
@@ -119,6 +127,9 @@ struct TextfieldView: View {
                                 }
                                 Spacer()
                             }
+                            .onAppear {
+                                formViewModel.textFields[id] = UITextField()
+                            }
                         case .sensitive, .confirmPassword:
                             SecureField(field.placeholder, text: $value) {
                                 // On Commit
@@ -148,21 +159,40 @@ struct TextfieldView: View {
                                     canShowErrorState = !field.isValid() && !value.isEmpty
                                 }
                             }
+                            .onAppear {
+                                formViewModel.textFields[id] = UITextField()
+                            }
                         default:
-                            TextfieldUIK(field, text: $value, didBeginEditing: { _ in
+                            TextfieldUIK(field, text: $value, onAppear: { textField in
+                                formViewModel.textFields[id] = textField
+                            }, didBeginEditing: { textField in
                                 isEditing = true
                                 formViewModel.datasource.checkFormValidity()
                                 canShowErrorState = !field.isValid() && !value.isEmpty
                                 formViewModel.formInputType = .keyboard(title: field.title)
+                                
+                                if formViewModel.textFields.first(where: { $0.value == textField })?.key == formViewModel.textFields.count - 1 {
+                                    textField.returnKeyType = .done
+                                } else {
+                                    textField.returnKeyType = .next
+                                }
                             }, didEndEditing: { _ in
                                 isEditing = false
                                 formViewModel.datasource.checkFormValidity()
                                 canShowErrorState = !field.isValid() && !value.isEmpty
                                 field.fieldWasExited()
                                 formViewModel.formInputType = .none
-                            }, onCommit: { _ in
+                            }, onCommit: { textField in
                                 canShowErrorState = true
                                 formViewModel.formInputType = .none
+                                
+                                guard let key = formViewModel.textFields.first(where: { $0.value == textField })?.key else { return }
+                                
+                                if let nextTextField = formViewModel.textFields[key + 1] {
+                                    nextTextField.becomeFirstResponder()
+                                } else {
+                                    textField.resignFirstResponder()
+                                }
                             })
                             .frame(height: 24)
                             .onReceive(Just(value)) { _ in valueChangedHandler() }
@@ -332,6 +362,6 @@ struct TextfieldView: View {
 
 struct BinkTextfieldView_Previews: PreviewProvider {
     static var previews: some View {
-        TextfieldView(field: FormField(title: "Email", placeholder: "Enter email", validation: "", fieldType: .email, updated: {_,_ in }, shouldChange: {_,_,_,_ in return true }, fieldExited: {_ in }), viewModel: FormViewModel(datasource: FormDataSource(accessForm: .emailPassword), title: "Eneter", description: "kjhdskjhsjkhsjkhdsf"))
+        TextfieldView(field: FormField(title: "Email", placeholder: "Enter email", validation: "", fieldType: .email, updated: {_,_ in }, shouldChange: {_,_,_,_ in return true }, fieldExited: {_ in }), viewModel: FormViewModel(datasource: FormDataSource(accessForm: .emailPassword), title: "Eneter", description: "kjhdskjhsjkhsjkhdsf"), id: 0)
     }
 }

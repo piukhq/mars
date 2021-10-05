@@ -24,10 +24,11 @@ final class FormViewModel: ObservableObject {
 
     var titleText: String?
     var descriptionText: String?
+    var previousTextfieldValue = ""
+    var textFields: [Int: UITextField] = [:]
     let membershipPlan: CD_MembershipPlan?
     private let strings = PaymentCardScannerStrings()
-    var previousTextfieldValue = ""
-    
+
     init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan? = nil, addPaymentCardViewModel: AddPaymentCardViewModel? = nil) {
         self.datasource = datasource
         self.titleText = title
