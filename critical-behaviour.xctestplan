@@ -22,12 +22,6 @@
       "selectedTests" : [
         "AutomatedTesting_0_Login\/test0_loginScreenOnAppLaunch_exists()",
         "AutomatedTesting_0_Login\/test2_loginWithEmailAndPassword()",
-        "AutomatedTesting_1_LoyaltyCards\/test_0_addIcelandCard_isSuccessful()",
-        "AutomatedTesting_1_LoyaltyCards\/test_1_addBAndQCard_isSuccessful()",
-        "AutomatedTesting_1_LoyaltyCards\/test_2_viewIcelandBarcode_isSuccessful()",
-        "AutomatedTesting_1_LoyaltyCards\/test_3_viewBAndQBarcode_isSuccessful()",
-        "AutomatedTesting_1_LoyaltyCards\/test_4_cardsAreVisibleAfterPullToRefresh_isTrue()",
-        "AutomatedTesting_1_LoyaltyCards\/test_5_deleteLoyaltyCards_isSuccessful()",
         "AutomatedTesting_2_PaymentCards\/test_0_addMastercard_isSuccessful()",
         "AutomatedTesting_2_PaymentCards\/test_1_PLL_link_isSuccessful()",
         "AutomatedTesting_2_PaymentCards\/test_2_cardIsVisibleAfterPullToRefresh_isTrue()",
