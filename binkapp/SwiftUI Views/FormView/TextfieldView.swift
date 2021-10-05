@@ -130,6 +130,7 @@ struct TextfieldView: View {
                             }
                             .accentColor(Color(Current.themeManager.color(for: .text)))
                             .font(.nunitoLight(18))
+                            .disableAutocorrection(field.fieldType.autoCorrection())
                             .colorSchemeOverride()
                             .onTapGesture {
                                 // Begin editing
@@ -168,6 +169,7 @@ struct TextfieldView: View {
                             .modifier(ClearButton(text: $value, isEditing: $isEditing))
                             .accentColor(Color(Current.themeManager.color(for: .text)))
                             .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                            .disableAutocorrection(field.fieldType.autoCorrection())
                             .colorSchemeOverride()
                             .onReceive(formViewModel.$formInputType) { pickerType in
                                 if case .keyboard(let title) = pickerType {
