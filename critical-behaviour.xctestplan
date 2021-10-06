@@ -18,6 +18,7 @@
   },
   "testTargets" : [
     {
+      "enabled" : false,
       "selectedTests" : [
         "AutomatedTesting_0_Login\/test0_loginScreenOnAppLaunch_exists()",
         "AutomatedTesting_0_Login\/test2_loginWithEmailAndPassword()",
