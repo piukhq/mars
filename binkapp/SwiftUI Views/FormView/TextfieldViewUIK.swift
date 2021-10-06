@@ -35,6 +35,7 @@ struct TextfieldUIK: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<TextfieldUIK>) -> UITextField {
         let isEnabled = !field.isReadOnly
 
+        textField.tintColor = Current.themeManager.color(for: .text)
         textField.textColor = isEnabled ? Current.themeManager.color(for: .text) : .binkDynamicGray
         textField.placeholder = field.placeholder
         textField.text = field.forcedValue ?? text.wrappedValue

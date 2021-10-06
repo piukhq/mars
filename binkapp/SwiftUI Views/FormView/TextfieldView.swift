@@ -285,7 +285,7 @@ struct TextfieldView: View {
     }
     
     private func saveTextFieldToDictionary(textField: UITextField? = nil) {
-        for (i, datasourceField) in formViewModel.datasource.fields.enumerated() {
+        for (i, datasourceField) in formViewModel.datasource.visibleFields.enumerated() {
             if field.title == datasourceField.title {
                 formViewModel.textFields[i] = textField ?? UITextField()
             }

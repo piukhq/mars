@@ -54,7 +54,7 @@ struct FormView: View {
                     AttributedTextView(viewModel: viewModel)
                     
                     // Textfields   
-                    ForEach(viewModel.datasource.fields) { field in
+                    ForEach(viewModel.datasource.visibleFields) { field in
                         TextfieldView(field: field, viewModel: viewModel)
                     }
                     
