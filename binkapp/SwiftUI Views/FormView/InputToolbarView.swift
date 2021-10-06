@@ -14,7 +14,8 @@ struct InputToolbarView: View {
     var body: some View {
         VStack(spacing: 0) {
             Rectangle()
-                .frame(height: 0.5)
+                .frame(height: 0.3)
+                .foregroundColor(Color(Current.themeManager.color(for: .divider)))
             HStack {
                 Spacer()
                 Button(L10n.done) {

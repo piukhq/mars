@@ -16,7 +16,7 @@ protocol FormDataSourceDelegate: NSObjectProtocol {
 //    func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView)
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool
     func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource)
-    func formDataSourceShouldRefresh(_ dataSource: FormDataSource)
+//    func formDataSourceShouldRefresh(_ dataSource: FormDataSource)
 }
 
 extension FormDataSourceDelegate {
@@ -26,7 +26,7 @@ extension FormDataSourceDelegate {
 //    func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView) {}
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool { return false }
     func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource) {}
-    func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {}
+//    func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {}
 }
 
 enum AccessForm {

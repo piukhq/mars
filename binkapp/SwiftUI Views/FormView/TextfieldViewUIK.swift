@@ -70,6 +70,7 @@ struct TextfieldUIK: UIViewRepresentable {
             let bar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
             let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
             let done = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(accessoryDoneTouchUpInside))
+            done.tintColor = .blueAccent
             bar.items = [flexSpace, done]
             bar.sizeToFit()
             return bar
@@ -120,9 +121,6 @@ struct TextfieldUIK: UIViewRepresentable {
             guard let textFieldText = textField.text else { return }
             parent.field.updateValue(textFieldText)
             parent.text.wrappedValue = textField.text ?? ""
-//
-//            let newPosition = textField.endOfDocument
-//            textField.selectedTextRange = textField.textRange(from: newPosition, to: newPosition)
         }
         
         @objc private func datePickerValueChanged(_ sender: UIDatePicker) {
@@ -139,15 +137,24 @@ struct TextfieldUIK: UIViewRepresentable {
 ////            return formField?.textField(textField, shouldChangeInRange: range, newValue: string) ?? false
 //        }
         
+        func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+            // In order to allow a field to appear disabled, but allow the clear button to still be functional, we cannot make the textfield disabled
+            // So we must block the editing instead, which allows the clear button to still work
+            return parent.field.isReadOnly == false
+        }
+        func textFieldShouldClear(_ textField: UITextField) -> Bool {
+            if parent.field.fieldCommonName == .barcode {
+                return false
+            }
+            return true
+        }
+        
         func textFieldDidEndEditing(_ textField: UITextField) {
             parent.didEndEditing(textField)
         }
         
         func textFieldDidBeginEditing(_ textField: UITextField) {
             parent.didBeginEditing(textField)
-//            if textField.inputView?.isKind(of: FormMultipleChoiceInput.self) ?? false || textField.inputView?.isKind(of: UIDatePicker.self) ?? false {
-//                textField.text = pickerSelectedChoice
-//            }
         }
         
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {

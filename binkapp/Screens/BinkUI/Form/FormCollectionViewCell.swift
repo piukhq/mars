@@ -50,7 +50,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         cameraButton.imageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         cameraButton.setImage(Asset.scanIcon.image, for: .normal)
         cameraButton.imageView?.contentMode = .scaleAspectFill
-        cameraButton.addTarget(self, action: .handleScanButtonTap, for: .touchUpInside)
+//        cameraButton.addTarget(self, action: .handleScanButtonTap, for: .touchUpInside)
         cameraButton.translatesAutoresizingMaskIntoConstraints = false
         cameraButton.setContentHuggingPriority(.required, for: .horizontal)
         return cameraButton
@@ -62,7 +62,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         field.font = UIFont.textFieldInput
         field.delegate = self
         field.heightAnchor.constraint(equalToConstant: Constants.textFieldHeight).isActive = true
-        field.addTarget(self, action: .textFieldUpdated, for: .editingChanged)
+//        field.addTarget(self, action: .textFieldUpdated, for: .editingChanged)
         field.setContentCompressionResistancePriority(.required, for: .vertical)
         field.inputAccessoryView = inputAccessory
         field.smartQuotesType = .no // This stops the "smart" apostrophe setting. The default breaks field regex validation
@@ -81,8 +81,8 @@ class FormCollectionViewCell: UICollectionViewCell {
     private lazy var inputAccessory: UIToolbar = {
         let bar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let done = UIBarButtonItem(title: "Done", style: .plain, target: self, action: .accessoryDoneTouchUpInside)
-        bar.items = [flexSpace, done]
+//        let done = UIBarButtonItem(title: "Done", style: .plain, target: self, action: .accessoryDoneTouchUpInside)
+//        bar.items = [flexSpace, done]
         bar.sizeToFit()
         return bar
     }()
@@ -195,7 +195,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         textField.clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
         textField.accessibilityIdentifier = field.title
         formField = field
-        configureTextFieldRightView(shouldDisplay: formField?.value == nil)
+//        configureTextFieldRightView(shouldDisplay: formField?.value == nil)
         validationLabel.isHidden = textField.text?.isEmpty == true ? true : field.isValid()
         separator.backgroundColor = Current.themeManager.color(for: .divider)
         
@@ -208,7 +208,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         } else if case .date = field.fieldType {
             let datePicker = UIDatePicker()
             datePicker.datePickerMode = .date
-            datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+//            datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
 
             if #available(iOS 14.0, *) {
                 datePicker.preferredDatePickerStyle = .inline
@@ -232,60 +232,60 @@ class FormCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Actions
     
-    @objc func textFieldUpdated(_ textField: UITextField, text: String?, backingData: [Int]?) {
-        guard let textFieldText = textField.text else { return }
-        formField?.updateValue(textFieldText)
-        configureTextFieldRightView(shouldDisplay: textFieldText.isEmpty)
-    }
+//    @objc func textFieldUpdated(_ textField: UITextField, text: String?, backingData: [Int]?) {
+//        guard let textFieldText = textField.text else { return }
+//        formField?.updateValue(textFieldText)
+//        configureTextFieldRightView(shouldDisplay: textFieldText.isEmpty)
+//    }
     
-    private func configureTextFieldRightView(shouldDisplay: Bool) {
-        if formField?.fieldCommonName == .cardNumber && formField?.alternatives?.contains(.barcode) == true && shouldDisplay {
-            textFieldRightView.isHidden = false
-        } else if formField?.fieldCommonName == .cardNumber && shouldDisplay {
-            textFieldRightView.isHidden = false
-        } else {
-            textFieldRightView.isHidden = true
-        }
-    }
+//    private func configureTextFieldRightView(shouldDisplay: Bool) {
+//        if formField?.fieldCommonName == .cardNumber && formField?.alternatives?.contains(.barcode) == true && shouldDisplay {
+//            textFieldRightView.isHidden = false
+//        } else if formField?.fieldCommonName == .cardNumber && shouldDisplay {
+//            textFieldRightView.isHidden = false
+//        } else {
+//            textFieldRightView.isHidden = true
+//        }
+//    }
     
-    @objc func accessoryDoneTouchUpInside() {
-        if let multipleChoiceInput = textField.inputView as? FormMultipleChoiceInput {
-            multipleChoiceInputDidUpdate(newValue: multipleChoiceInput.fullContentString, backingData: multipleChoiceInput.backingData)
-        }
-        
-        textField.resignFirstResponder()
-        textFieldDidEndEditing(textField)
-    }
+//    @objc func accessoryDoneTouchUpInside() {
+//        if let multipleChoiceInput = textField.inputView as? FormMultipleChoiceInput {
+//            multipleChoiceInputDidUpdate(newValue: multipleChoiceInput.fullContentString, backingData: multipleChoiceInput.backingData)
+//        }
+//
+//        textField.resignFirstResponder()
+//        textFieldDidEndEditing(textField)
+//    }
     
-    @objc private func datePickerValueChanged(_ sender: UIDatePicker) {
-        let selectedDate = sender.date.getFormattedString(format: .dayShortMonthYearWithSlash)
-        pickerSelectedChoice = selectedDate
-        formField?.updateValue(pickerSelectedChoice)
-        textField.text = selectedDate
-    }
+//    @objc private func datePickerValueChanged(_ sender: UIDatePicker) {
+//        let selectedDate = sender.date.getFormattedString(format: .dayShortMonthYearWithSlash)
+//        pickerSelectedChoice = selectedDate
+//        formField?.updateValue(pickerSelectedChoice)
+//        textField.text = selectedDate
+//    }
+//
+//    @objc func handleScanButtonTap() {
+//        if formField?.fieldType == .paymentCardNumber {
+//            delegate?.formCollectionViewCellDidReceivePaymentScannerButtonTap(self)
+//        } else {
+//            delegate?.formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(self)
+//        }
+//    }
     
-    @objc func handleScanButtonTap() {
-        if formField?.fieldType == .paymentCardNumber {
-            delegate?.formCollectionViewCellDidReceivePaymentScannerButtonTap(self)
-        } else {
-            delegate?.formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(self)
-        }
-    }
+//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+//        // In order to allow a field to appear disabled, but allow the clear button to still be functional, we cannot make the textfield disabled
+//        // So we must block the editing instead, which allows the clear button to still work
+//        return formField?.isReadOnly == false
+//    }
     
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        // In order to allow a field to appear disabled, but allow the clear button to still be functional, we cannot make the textfield disabled
-        // So we must block the editing instead, which allows the clear button to still work
-        return formField?.isReadOnly == false
-    }
-    
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        if formField?.fieldCommonName == .barcode {
-//            formField?.dataSourceRefreshBlock?()
-            return false
-        }
-        configureTextFieldRightView(shouldDisplay: true)
-        return true
-    }
+//    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+//        if formField?.fieldCommonName == .barcode {
+////            formField?.dataSourceRefreshBlock?()
+//            return false
+//        }
+//        configureTextFieldRightView(shouldDisplay: true)
+//        return true
+//    }
 }
 
 extension FormCollectionViewCell: UITextFieldDelegate {
@@ -328,8 +328,8 @@ extension FormCollectionViewCell: FormMultipleChoiceInputDelegate {
     }
 }
 
-fileprivate extension Selector {
-    static let textFieldUpdated = #selector(FormCollectionViewCell.textFieldUpdated(_:text:backingData:))
-    static let accessoryDoneTouchUpInside = #selector(FormCollectionViewCell.accessoryDoneTouchUpInside)
-    static let handleScanButtonTap = #selector(FormCollectionViewCell.handleScanButtonTap)
-}
+//fileprivate extension Selector {
+//    static let textFieldUpdated = #selector(FormCollectionViewCell.textFieldUpdated(_:text:backingData:))
+//    static let accessoryDoneTouchUpInside = #selector(FormCollectionViewCell.accessoryDoneTouchUpInside)
+//    static let handleScanButtonTap = #selector(FormCollectionViewCell.handleScanButtonTap)
+//}
