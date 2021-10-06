@@ -11,17 +11,15 @@ import SwiftUI
 
 struct TextfieldView: View {
     private let formViewModel: FormViewModel
-    private let id: Int
     @State var field: FormField
     @State private var isEditing = false
     @State var value: String
     @State var canShowErrorState = false
     
-    init(field: FormField, viewModel: FormViewModel, id: Int) {
+    init(field: FormField, viewModel: FormViewModel) {
         _field = State(initialValue: field)
         _value = State(initialValue: field.forcedValue ?? "")
         self.formViewModel = viewModel
-        self.id = id
     }
     
     var body: some View {
@@ -63,7 +61,7 @@ struct TextfieldView: View {
                                 Spacer()
                             }
                             .onAppear {
-                                formViewModel.textFields[id] = UITextField()
+                                saveTextFieldToDictionary()
                             }
                         case .date:
                             HStack {
@@ -94,7 +92,7 @@ struct TextfieldView: View {
                                 Spacer()
                             }
                             .onAppear {
-                                formViewModel.textFields[id] = UITextField()
+                                saveTextFieldToDictionary()
                             }
                         case .expiry(let months, let years):
                             HStack {
@@ -128,43 +126,43 @@ struct TextfieldView: View {
                                 Spacer()
                             }
                             .onAppear {
-                                formViewModel.textFields[id] = UITextField()
+                                saveTextFieldToDictionary()
                             }
-                        case .sensitive, .confirmPassword:
-                            SecureField(field.placeholder, text: $value) {
-                                // On Commit
-                                isEditing = false
-                                field.updateValue(value)
-                                field.fieldWasExited()
-                                canShowErrorState = true
-                                formViewModel.formInputType = .none
-                            }
-                            .accentColor(Color(Current.themeManager.color(for: .text)))
-                            .font(.nunitoLight(18))
-//                            .disableAutocorrection(field.fieldType.autoCorrection())
-                            .keyboardType(field.fieldType.keyboardType())
-                            .colorSchemeOverride()
-                            .onTapGesture {
-                                // Begin editing
-                                isEditing = true
-                                formViewModel.formInputType = .secureEntry
-                                canShowErrorState = !field.isValid() && !value.isEmpty
-                            }
-                            .modifier(ClearButton(text: $value, isEditing: $isEditing))
-                            .onReceive(formViewModel.$formInputType) { inputType in
-                                if case .secureEntry = inputType {
-                                    isEditing = true
-                                } else {
-                                    isEditing = false
-                                    canShowErrorState = !field.isValid() && !value.isEmpty
-                                }
-                            }
-                            .onAppear {
-                                formViewModel.textFields[id] = UITextField()
-                            }
+//                        case .sensitive, .confirmPassword:
+//                            SecureField(field.placeholder, text: $value) {
+//                                // On Commit
+//                                isEditing = false
+//                                field.updateValue(value)
+//                                field.fieldWasExited()
+//                                canShowErrorState = true
+//                                formViewModel.formInputType = .none
+//                            }
+//                            .accentColor(Color(Current.themeManager.color(for: .text)))
+//                            .font(.nunitoLight(18))
+////                            .disableAutocorrection(field.fieldType.autoCorrection())
+//                            .keyboardType(field.fieldType.keyboardType())
+//                            .colorSchemeOverride()
+//                            .onTapGesture {
+//                                // Begin editing
+//                                isEditing = true
+//                                formViewModel.formInputType = .secureEntry
+//                                canShowErrorState = !field.isValid() && !value.isEmpty
+//                            }
+//                            .modifier(ClearButton(text: $value, isEditing: $isEditing))
+//                            .onReceive(formViewModel.$formInputType) { inputType in
+//                                if case .secureEntry = inputType {
+//                                    isEditing = true
+//                                } else {
+//                                    isEditing = false
+//                                    canShowErrorState = !field.isValid() && !value.isEmpty
+//                                }
+//                            }
+//                            .onAppear {
+//                                formViewModel.textFields[id] = UITextField()
+//                            }
                         default:
                             TextfieldUIK(field, text: $value, onAppear: { textField in
-                                formViewModel.textFields[id] = textField
+                                saveTextFieldToDictionary(textField: textField)
                             }, didBeginEditing: { textField in
                                 isEditing = true
                                 formViewModel.datasource.checkFormValidity()
@@ -198,11 +196,11 @@ struct TextfieldView: View {
                             .onReceive(Just(value)) { _ in valueChangedHandler() }
                             
 //                            TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
-////                                self.isEditing = isEditing
-////                                field.updateValue(value)
-////                                formViewModel.datasource.checkFormValidity()
-////                                canShowErrorState = !field.isValid() && !value.isEmpty
-//                                
+//                                self.isEditing = isEditing
+//                                field.updateValue(value)
+//                                formViewModel.datasource.checkFormValidity()
+//                                canShowErrorState = !field.isValid() && !value.isEmpty
+//
 //                                if isEditing {
 //                                    formViewModel.formInputType = .keyboard(title: field.title)
 //                                } else {
@@ -286,6 +284,14 @@ struct TextfieldView: View {
         }
     }
     
+    private func saveTextFieldToDictionary(textField: UITextField? = nil) {
+        for (i, datasourceField) in formViewModel.datasource.fields.enumerated() {
+            if field.title == datasourceField.title {
+                formViewModel.textFields[i] = textField ?? UITextField()
+            }
+        }
+    }
+    
     private func valueChangedHandler() {
         if case .addPaymentCard = formViewModel.datasource.formtype {
             formViewModel.configurePaymentCard(field: field, value: value)
@@ -362,6 +368,6 @@ struct TextfieldView: View {
 
 struct BinkTextfieldView_Previews: PreviewProvider {
     static var previews: some View {
-        TextfieldView(field: FormField(title: "Email", placeholder: "Enter email", validation: "", fieldType: .email, updated: {_,_ in }, shouldChange: {_,_,_,_ in return true }, fieldExited: {_ in }), viewModel: FormViewModel(datasource: FormDataSource(accessForm: .emailPassword), title: "Eneter", description: "kjhdskjhsjkhsjkhdsf"), id: 0)
+        TextfieldView(field: FormField(title: "Email", placeholder: "Enter email", validation: "", fieldType: .email, updated: {_,_ in }, shouldChange: {_,_,_,_ in return true }, fieldExited: {_ in }), viewModel: FormViewModel(datasource: FormDataSource(accessForm: .emailPassword), title: "Eneter", description: "kjhdskjhsjkhsjkhdsf"))
     }
 }

@@ -140,11 +140,6 @@ struct TextfieldUIK: UIViewRepresentable {
         
         func textFieldDidEndEditing(_ textField: UITextField) {
             parent.didEndEditing(textField)
-//            guard let field = parent.field else { return }
-//            validationLabel.text = field.validationErrorMessage != nil ? field.validationErrorMessage : L10n.formFieldValidationError
-//            validationLabel.isHidden = field.isValid()
-//            isValidationLabelHidden = field.isValid()
-//            field.fieldWasExited()
         }
         
         func textFieldDidBeginEditing(_ textField: UITextField) {

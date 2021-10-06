@@ -15,6 +15,7 @@ final class FormViewModel: ObservableObject {
     @Published var addPaymentCardViewModel: AddPaymentCardViewModel?
     @Published var paymentCard: PaymentCardCreateModel?
     @Published var keyboardHeight: CGFloat = 0
+    @Published var textFields: [Int: UITextField] = [:]
     @Published var formInputType: FormInputType = .none {
         didSet {
             setKeyboardHeight()
@@ -25,7 +26,6 @@ final class FormViewModel: ObservableObject {
     var titleText: String?
     var descriptionText: String?
     var previousTextfieldValue = ""
-    var textFields: [Int: UITextField] = [:]
     let membershipPlan: CD_MembershipPlan?
     private let strings = PaymentCardScannerStrings()
 
