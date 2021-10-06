@@ -76,6 +76,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         InAppReviewUtility.recordAppLaunch()
         Current.userManager.clearKeychainIfNecessary()
         
+        let voucherCodes = [IssuedVoucher(voucherCode: "ABC123")]
+        if let archiveUrl = FileManager.sharedContainerURL()?.appendingPathComponent("voucher_codes.json") {
+            let encoder = JSONEncoder()
+            if let data = try? encoder.encode(voucherCodes) {
+                try? data.write(to: archiveUrl)
+            }
+        }
+        
         return true
     }
     

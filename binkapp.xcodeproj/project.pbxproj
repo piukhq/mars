@@ -186,6 +186,11 @@
 		7091A763270B195F000B656D /* popup.css in Resources */ = {isa = PBXBuildFile; fileRef = 7091A762270B195F000B656D /* popup.css */; };
 		7091A765270B195F000B656D /* popup.js in Resources */ = {isa = PBXBuildFile; fileRef = 7091A764270B195F000B656D /* popup.js */; };
 		7091A767270B195F000B656D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7091A748270B195F000B656D /* Assets.xcassets */; };
+		7091A774270C98CF000B656D /* IssuedVoucher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7091A773270C98CF000B656D /* IssuedVoucher.swift */; };
+		7091A775270C98CF000B656D /* IssuedVoucher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7091A773270C98CF000B656D /* IssuedVoucher.swift */; };
+		7091A776270C98D0000B656D /* IssuedVoucher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7091A773270C98CF000B656D /* IssuedVoucher.swift */; };
+		7091A777270C9922000B656D /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209192689E1B7004D3759 /* FileManager+Extension.swift */; };
+		7091A778270C9923000B656D /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209192689E1B7004D3759 /* FileManager+Extension.swift */; };
 		709748A024D32A52008D0E29 /* RemoteConfigUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */; };
 		7098E6BA25EFC41300A086C3 /* LocalPointsCollection_Navigate_Template.js in Resources */ = {isa = PBXBuildFile; fileRef = 7098E6B925EFC41300A086C3 /* LocalPointsCollection_Navigate_Template.js */; };
 		70A2EDA1261DED3200889914 /* SafeDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A2EDA0261DED3200889914 /* SafeDecoding.swift */; };
@@ -845,6 +850,7 @@
 		7091A762270B195F000B656D /* popup.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = popup.css; sourceTree = "<group>"; };
 		7091A764270B195F000B656D /* popup.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = popup.js; sourceTree = "<group>"; };
 		7091A766270B195F000B656D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7091A773270C98CF000B656D /* IssuedVoucher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssuedVoucher.swift; sourceTree = "<group>"; };
 		7097489D24D088FE008D0E29 /* ExceptionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExceptionHandler.h; sourceTree = "<group>"; };
 		7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigUtil.swift; sourceTree = "<group>"; };
 		7098E6B925EFC41300A086C3 /* LocalPointsCollection_Navigate_Template.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Template.js; sourceTree = "<group>"; };
@@ -1788,6 +1794,7 @@
 				70A499DB267916D100F648F0 /* SwiftUI Views */,
 				3CF029F422F45B48009A0E61 /* Utils */,
 				EF3BC90B234750ED00FE52ED /* Wallet */,
+				7091A773270C98CF000B656D /* IssuedVoucher.swift */,
 			);
 			path = binkapp;
 			sourceTree = "<group>";
@@ -4041,6 +4048,7 @@
 				EFEB5BFF2382984B00E18743 /* HyperlinkButton.swift in Sources */,
 				B7D577B623180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift in Sources */,
 				BD99D2DF2350E4BD00823FC4 /* SettingsSection.swift in Sources */,
+				7091A774270C98CF000B656D /* IssuedVoucher.swift in Sources */,
 				BD475E6B23A255570071302A /* PlanDocumentDisplayModel.swift in Sources */,
 				EFA5F7262379A7C70027AB80 /* CD_PaymentCardAccountConsents.swift in Sources */,
 				EF51CCD424363A140035BF02 /* BarcodeScannerViewController.swift in Sources */,
@@ -4214,8 +4222,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7091A741270B1958000B656D /* ViewController.swift in Sources */,
+				7091A777270C9922000B656D /* FileManager+Extension.swift in Sources */,
 				7091A735270B1958000B656D /* AppDelegate.swift in Sources */,
 				7091A73F270B1958000B656D /* SceneDelegate.swift in Sources */,
+				7091A775270C98CF000B656D /* IssuedVoucher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4224,6 +4234,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7091A754270B195F000B656D /* SafariWebExtensionHandler.swift in Sources */,
+				7091A776270C98D0000B656D /* IssuedVoucher.swift in Sources */,
+				7091A778270C9923000B656D /* FileManager+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
