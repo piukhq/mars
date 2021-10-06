@@ -81,7 +81,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-        pageControl.currentPageIndicatorTintColor = .black
+        pageControl.currentPageIndicatorTintColor = .binkGradientBlueRight
         pageControl.pageIndicatorTintColor = .lightGray
         pageControl.numberOfPages = onboardingViews.count
         pageControl.currentPage = 0
@@ -139,7 +139,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
 
             pageControl.topAnchor.constraint(equalTo: learningContainer.bottomAnchor),
             pageControl.heightAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.pageControlSize.height),
-            pageControl.widthAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.pageControlSize.width),
+            pageControl.widthAnchor.constraint(equalTo: learningContainer.widthAnchor),
             pageControl.centerXAnchor.constraint(equalTo: learningContainer.centerXAnchor)
         ])
 
