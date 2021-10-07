@@ -18,10 +18,13 @@ struct InputToolbarView: View {
                 .foregroundColor(Color(Current.themeManager.color(for: .divider)))
             HStack {
                 Spacer()
-                Button(L10n.done) {
+                Button {
                     buttonAction()
+                } label: {
+                    Text(L10n.done)
+                        .foregroundColor(Color(.blueAccent))
+                        .font(.system(size: 17))
                 }
-                .foregroundColor(Color(.blueAccent))
                 .padding(.trailing, 12)
             }
             .frame(idealWidth: .infinity, maxWidth: .infinity, idealHeight: 44, maxHeight: 44, alignment: .center)

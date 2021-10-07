@@ -58,7 +58,7 @@ final class FormViewModel: ObservableObject {
     func setKeyboardHeight(height: CGFloat? = nil) {
         switch formInputType {
         case .keyboard, .secureEntry:
-            keyboardHeight = (height ?? 0) - UIApplication.bottomSafeArea
+            keyboardHeight = (height ?? 0)
         case .date:
             if #available(iOS 14.0, *) {
                 keyboardHeight = FormViewConstants.graphicalDatePickerHeight - FormViewConstants.vStackInsets.bottom
