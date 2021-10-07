@@ -42,7 +42,7 @@ enum FormPurpose: Equatable {
     }
 }
 
-class AuthAndAddViewModel: NSObject, ObservableObject {
+final class AuthAndAddViewModel: NSObject, ObservableObject {
     private let repository = AuthAndAddRepository()
     private let membershipPlan: CD_MembershipPlan
     let prefilledFormValues: [FormDataSource.PrefilledValue]?
@@ -52,6 +52,7 @@ class AuthAndAddViewModel: NSObject, ObservableObject {
     private var existingMembershipCard: CD_MembershipCard?
     
     var formPurpose: FormPurpose
+    @Published var dataSource: FormDataSource
     
     var title: String {
         switch formPurpose {
@@ -81,6 +82,9 @@ class AuthAndAddViewModel: NSObject, ObservableObject {
         self.existingMembershipCard = existingMembershipCard
         self.formPurpose = formPurpose
         self.prefilledFormValues = prefilledFormValues
+        self.dataSource = FormDataSource(authAdd: membershipPlan, formPurpose: formPurpose, prefilledValues: prefilledFormValues)
+        super.init()
+        dataSource.delegate = self
     }
     
     func getDescription() -> String? {
@@ -357,18 +361,20 @@ class AuthAndAddViewModel: NSObject, ObservableObject {
 }
 
 
-extension AuthAndAddViewModel: FormDataSourceDelegate {
+extension AuthAndAddViewModel: FormDataSourceDelegate, CheckboxViewDelegate {
+    func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {}
+    func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {}
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
         return false
     }
     
     func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {
-//        let prefilledValues = self.dataSource.fields.filter { $0.fieldCommonName != .barcode && $0.fieldCommonName != .cardNumber }.map {
-//            FormDataSource.PrefilledValue(commonName: $0.fieldCommonName, value: $0.value)
-//        }
-//
-//        self.dataSource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: .add, delegate: self, prefilledValues: prefilledValues)
-//        viewModel.formPurpose = .add
-//        formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
+        let prefilledValues = self.dataSource.fields.filter { $0.fieldCommonName != .barcode && $0.fieldCommonName != .cardNumber }.map {
+            FormDataSource.PrefilledValue(commonName: $0.fieldCommonName, value: $0.value)
+        }
+
+        self.dataSource = FormDataSource(authAdd: getMembershipPlan(), formPurpose: .add, delegate: self, prefilledValues: prefilledValues)
+        formPurpose = .add
+        dataSource.checkFormValidity()
     }
 }

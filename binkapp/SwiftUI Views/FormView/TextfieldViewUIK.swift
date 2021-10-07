@@ -144,6 +144,7 @@ struct TextfieldUIK: UIViewRepresentable {
         }
         func textFieldShouldClear(_ textField: UITextField) -> Bool {
             if parent.field.fieldCommonName == .barcode {
+                parent.field.dataSourceRefreshBlock?()
                 return false
             }
             return true

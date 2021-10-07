@@ -13,7 +13,7 @@ protocol FormDataSourceDelegate: NSObjectProtocol {
     func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField)
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField)
-//    func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView)
+    func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView)
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool
     func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource)
     func formDataSourceShouldRefresh(_ dataSource: FormDataSource)
@@ -23,7 +23,7 @@ extension FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, changed value: String?, for field: FormField) {}
     func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField) {}
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField) {}
-//    func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView) {}
+    func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView) {}
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool { return false }
     func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource) {}
     func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {}
@@ -223,7 +223,7 @@ extension FormDataSource {
             model.account?.formattedAddFields(omitting: [.cardNumber])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    let checkbox = CheckboxSwiftUIView(attributedText: attributedString,  columnName: field.column ?? "", columnKind: .add, checkValidity: checkFormValidity)
+                    let checkbox = CheckboxSwiftUIView(attributedText: attributedString, columnName: field.column ?? "", columnKind: .add, checkValidity: checkFormValidity)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -252,7 +252,7 @@ extension FormDataSource {
             model.account?.formattedAddFields(omitting: [.barcode])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    let checkbox = CheckboxSwiftUIView(attributedText: attributedString,  columnName: field.column ?? "", columnKind: .add, checkValidity: checkFormValidity)
+                    let checkbox = CheckboxSwiftUIView(attributedText: attributedString, columnName: field.column ?? "", columnKind: .add, checkValidity: checkFormValidity)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -269,6 +269,7 @@ extension FormDataSource {
                             forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
                             fieldCommonName: field.fieldCommonName,
                             alternatives: field.alternativeCommonNames(),
+                            dataSourceRefreshBlock: dataSourceRefreshBlock,
                             hidden: (formPurpose == .addFailed && !(membershipPlan?.isPLL ?? false)) ? true : false
                         )
                     )
@@ -280,7 +281,7 @@ extension FormDataSource {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    let checkbox = CheckboxSwiftUIView(attributedText: attributedString,  columnName: field.column ?? "", columnKind: .auth, checkValidity: checkFormValidity)
+                    let checkbox = CheckboxSwiftUIView(attributedText: attributedString, columnName: field.column ?? "", columnKind: .auth, checkValidity: checkFormValidity)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
