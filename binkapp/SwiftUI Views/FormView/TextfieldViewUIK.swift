@@ -48,7 +48,7 @@ struct TextfieldUIK: UIViewRepresentable {
         textField.accessibilityIdentifier = field.title
         textField.smartQuotesType = .no
         textField.delegate = context.coordinator
-
+        textField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         context.coordinator.setup(textField)
         onAppear(textField)
         
