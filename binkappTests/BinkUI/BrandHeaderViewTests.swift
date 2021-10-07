@@ -30,7 +30,7 @@ class BrandHeaderViewTests: XCTestCase, CoreDataTestable, LoyaltyButtonDelegate 
     
     func test_loyaltyPlanButtonTitle_is_correct() {
         self.sut.configure(plan: membershipPlan, delegate: self)
-        XCTAssertEqual(sut.loyaltyPlanButton.titleLabel?.text, "Tesco Clubcard info")
+        XCTAssertEqual(sut.loyaltyPlanButton.titleLabel?.text, "About Tesco Clubcard")
     }
     
     func test_loyaltyPlanButton_hiddenState() {

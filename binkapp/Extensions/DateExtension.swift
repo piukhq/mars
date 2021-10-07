@@ -27,7 +27,11 @@ extension Date {
                 return "\(days)d"
             }
             
-            return "\(days) \(days > 1 ? L10n.days : L10n.day)"
+            switch days {
+            case 1:
+                return "\(days) \(L10n.day)"
+            default: return "\(days) \(L10n.days)"
+            }
         }
         
         if hours > 0 {
@@ -35,7 +39,11 @@ extension Date {
                 return "\(hours)h"
             }
             
-            return "\(hours) \(hours > 1 ? L10n.hours : L10n.hour)"
+            switch hours {
+            case 1:
+                return "\(hours) \(L10n.hour)"
+            default: return "\(hours) \(L10n.hours)"
+            }
         }
         
         if minutes >= 0 {
@@ -43,9 +51,12 @@ extension Date {
                 return "\(minutes)m"
             }
             
-            return "\(minutes) \(minutes > 1 ? L10n.minutes : L10n.minute)"
+            switch minutes {
+            case 1:
+                return "\(minutes) \(L10n.minute)"
+            default: return "\(minutes) \(L10n.minutes)"
+            }
         }
-    
         
         return nil
     }

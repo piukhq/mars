@@ -56,6 +56,7 @@ struct MembershipCardWidget: Hashable, Codable {
     let id: String
     let imageData: Data?
     let backgroundColor: String?
+    let planName: String?
     var url: URL {
         URL(string: WidgetType.quickLaunch.rawValue + "://" + id) ?? URL(string: WidgetType.quickLaunch.rawValue + "://")!
     }
