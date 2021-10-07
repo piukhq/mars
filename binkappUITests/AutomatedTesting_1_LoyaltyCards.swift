@@ -52,7 +52,7 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
         
         app.collectionViews.cells["Iceland"].tap()
 
-        XCTAssertTrue(app.staticTexts["£1 "].waitForExistence(timeout: 30))
+        XCTAssertTrue(app.staticTexts["£0 "].waitForExistence(timeout: 30))
     }
     
     func test_1_addBAndQCard_isSuccessful() {
