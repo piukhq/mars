@@ -45,14 +45,27 @@ enum FormPurpose: Equatable {
 final class AuthAndAddViewModel: NSObject, ObservableObject {
     private let repository = AuthAndAddRepository()
     private let membershipPlan: CD_MembershipPlan
-    let prefilledFormValues: [FormDataSource.PrefilledValue]?
-    
     private var fieldsViews: [InputValidation] = []
     private var membershipCardPostModel: MembershipCardPostModel?
     private var existingMembershipCard: CD_MembershipCard?
-    
     var formPurpose: FormPurpose
-    @Published var dataSource: FormDataSource
+    let prefilledFormValues: [FormDataSource.PrefilledValue]?
+
+    @Published var dataSourcePublisher: FormDataSource?
+    var dataSource: FormDataSource {
+        didSet {
+            dataSourcePublisher = dataSource
+        }
+    }
+    
+    init(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) {
+        self.membershipPlan = membershipPlan
+        self.membershipCardPostModel = MembershipCardPostModel(account: AccountPostModel(), membershipPlan: Int(membershipPlan.id))
+        self.existingMembershipCard = existingMembershipCard
+        self.formPurpose = formPurpose
+        self.prefilledFormValues = prefilledFormValues
+        self.dataSource = FormDataSource(authAdd: membershipPlan, formPurpose: formPurpose, prefilledValues: prefilledFormValues)
+    }
     
     var title: String {
         switch formPurpose {
@@ -74,17 +87,6 @@ final class AuthAndAddViewModel: NSObject, ObservableObject {
     
     var accountButtonShouldHide: Bool {
         return formPurpose != .add || formPurpose == .ghostCard
-    }
-    
-    init(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) {
-        self.membershipPlan = membershipPlan
-        self.membershipCardPostModel = MembershipCardPostModel(account: AccountPostModel(), membershipPlan: Int(membershipPlan.id))
-        self.existingMembershipCard = existingMembershipCard
-        self.formPurpose = formPurpose
-        self.prefilledFormValues = prefilledFormValues
-        self.dataSource = FormDataSource(authAdd: membershipPlan, formPurpose: formPurpose, prefilledValues: prefilledFormValues)
-        super.init()
-        dataSource.delegate = self
     }
     
     func getDescription() -> String? {
@@ -358,22 +360,13 @@ final class AuthAndAddViewModel: NSObject, ObservableObject {
         let alert = ViewControllerFactory.makeOkAlertViewController(title: title, message: message)
         Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
-}
-
-
-extension AuthAndAddViewModel: FormDataSourceDelegate, CheckboxViewDelegate {
-    func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {}
-    func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {}
-    func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
-        return false
-    }
     
-    func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {
+    func refreshFormDataSource() {
         let prefilledValues = self.dataSource.fields.filter { $0.fieldCommonName != .barcode && $0.fieldCommonName != .cardNumber }.map {
             FormDataSource.PrefilledValue(commonName: $0.fieldCommonName, value: $0.value)
         }
 
-        self.dataSource = FormDataSource(authAdd: getMembershipPlan(), formPurpose: .add, delegate: self, prefilledValues: prefilledValues)
+        self.dataSource = FormDataSource(authAdd: getMembershipPlan(), formPurpose: .add, prefilledValues: prefilledValues)
         formPurpose = .add
         dataSource.checkFormValidity()
     }

@@ -36,6 +36,14 @@ struct AuthAndAddView: View {
                 viewModel.formPurpose = formPurpose
             }
         }
+        .onReceive(formViewModel.$textFieldClearButtonTapped) { output in
+            guard output != nil else { return }
+            viewModel.refreshFormDataSource()
+        }
+        .onReceive(viewModel.$dataSourcePublisher) { refreshedDataSource in
+            guard let refreshedDataSource = refreshedDataSource else { return }
+            formViewModel.datasource = refreshedDataSource
+        }
     }
     
     private func handlePrimaryButtonTap() {

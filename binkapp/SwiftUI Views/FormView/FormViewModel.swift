@@ -16,6 +16,7 @@ final class FormViewModel: ObservableObject {
     @Published var paymentCard: PaymentCardCreateModel?
     @Published var keyboardHeight: CGFloat = 0
     @Published var textFields: [Int: UITextField] = [:]
+    @Published var textFieldClearButtonTapped: Bool?
     @Published var formInputType: FormInputType = .none {
         didSet {
             setKeyboardHeight()

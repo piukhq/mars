@@ -16,16 +16,18 @@ struct TextfieldUIK: UIViewRepresentable {
     private var didBeginEditing: (UITextField) -> Void
     private var didEndEditing: (UITextField) -> Void
     private var onCommit: (UITextField) -> Void
+    private var clearButtonTapped: () -> Void
     
     var textField = UITextField(frame: .zero)
     
-    init(_ field: FormField, text: Binding<String>, onAppear: @escaping (UITextField) -> Void, didBeginEditing: @escaping (UITextField) -> Void, didEndEditing: @escaping (UITextField) -> Void, onCommit: @escaping (UITextField) -> Void) {
+    init(_ field: FormField, text: Binding<String>, onAppear: @escaping (UITextField) -> Void, didBeginEditing: @escaping (UITextField) -> Void, didEndEditing: @escaping (UITextField) -> Void, onCommit: @escaping (UITextField) -> Void, clearButtonTapped: @escaping () -> Void) {
         self.field = field
         self.text = text
         self.didBeginEditing = didBeginEditing
         self.didEndEditing = didEndEditing
         self.onCommit = onCommit
         self.onAppear = onAppear
+        self.clearButtonTapped = clearButtonTapped
     }
 
     func makeCoordinator() -> TextfieldUIK.Coordinator {
@@ -144,7 +146,7 @@ struct TextfieldUIK: UIViewRepresentable {
         }
         func textFieldShouldClear(_ textField: UITextField) -> Bool {
             if parent.field.fieldCommonName == .barcode {
-                parent.field.dataSourceRefreshBlock?()
+                parent.clearButtonTapped()
                 return false
             }
             return true

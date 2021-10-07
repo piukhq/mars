@@ -31,7 +31,7 @@ struct TextfieldView: View {
                 HStack {
                     VStack(alignment: .leading, spacing: 3) {
                         Text(field.title)
-                            .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
+                            .font(.nunitoSans(15))
                             .foregroundColor(Color(Current.themeManager.color(for: .text)))
                         
                         switch field.fieldType {
@@ -194,6 +194,8 @@ struct TextfieldView: View {
                                 } else {
                                     textField.resignFirstResponder()
                                 }
+                            }, clearButtonTapped: {
+                                formViewModel.textFieldClearButtonTapped = true
                             })
                             .frame(height: 24)
                             .onReceive(Just(value)) { _ in valueChangedHandler() }
