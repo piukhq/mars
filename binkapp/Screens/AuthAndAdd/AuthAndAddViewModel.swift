@@ -42,7 +42,7 @@ enum FormPurpose: Equatable {
     }
 }
 
-class AuthAndAddViewModel: ObservableObject {
+class AuthAndAddViewModel: NSObject, ObservableObject {
     private let repository = AuthAndAddRepository()
     private let membershipPlan: CD_MembershipPlan
     let prefilledFormValues: [FormDataSource.PrefilledValue]?
@@ -354,12 +354,21 @@ class AuthAndAddViewModel: ObservableObject {
         let alert = ViewControllerFactory.makeOkAlertViewController(title: title, message: message)
         Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
+}
+
+
+extension AuthAndAddViewModel: FormDataSourceDelegate {
+    func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
+        return false
+    }
     
-//    func toLoyaltyScanner(forPlan plan: CD_MembershipPlan, delegate: BarcodeScannerViewControllerDelegate?) {
-//        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(forPlan: plan, delegate: delegate)
-//        PermissionsUtility.launchLoyaltyScanner(viewController) {
-//            let navigationRequest = ModalNavigationRequest(viewController: viewController)
-//            Current.navigate.to(navigationRequest)
+    func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {
+//        let prefilledValues = self.dataSource.fields.filter { $0.fieldCommonName != .barcode && $0.fieldCommonName != .cardNumber }.map {
+//            FormDataSource.PrefilledValue(commonName: $0.fieldCommonName, value: $0.value)
 //        }
-//    }
+//
+//        self.dataSource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: .add, delegate: self, prefilledValues: prefilledValues)
+//        viewModel.formPurpose = .add
+//        formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
+    }
 }
