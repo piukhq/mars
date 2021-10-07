@@ -14,7 +14,7 @@ enum FormViewConstants {
     static let vStackSpacing: CGFloat = 20
     static let inputToolbarHeight: CGFloat = 44
     static let multipleChoicePickerHeight: CGFloat = 200
-    static let graphicalDatePickerHeight: CGFloat = 400
+    static let graphicalDatePickerHeight: CGFloat = 450
     static let datePickerHeight: CGFloat = 230
     static let expiryDatePickerHeight: CGFloat = 180
 }
@@ -145,6 +145,7 @@ struct FormView: View {
                     .frame(width: UIScreen.main.bounds.width, height: FormViewConstants.multipleChoicePickerHeight, alignment: .center)
                     .background(Color(Current.themeManager.color(for: .viewBackground)))
                     .labelsHidden()
+                    .pickerStyle(.wheel)
                 }
                 .offset(y: UIApplication.bottomSafeArea)
                 .background(Color.clear)
@@ -166,6 +167,7 @@ struct FormView: View {
                             .background(Color(Current.themeManager.color(for: .viewBackground)))
                             .frame(width: geometry.size.width / 2, height: FormViewConstants.expiryDatePickerHeight)
                             .clipped()
+                            .pickerStyle(.wheel)
                             
                             let yearsMapped = years.map { $0.title }
                             Picker("Expiry date", selection: $pickerTwoSelection.onChange({ _ in
@@ -178,6 +180,7 @@ struct FormView: View {
                             .background(Color(Current.themeManager.color(for: .viewBackground)))
                             .frame(width: geometry.size.width / 2, height: FormViewConstants.expiryDatePickerHeight)
                             .clipped()
+                            .pickerStyle(.wheel)
                         }
                     }
                 }

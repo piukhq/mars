@@ -44,6 +44,7 @@ struct TextfieldView: View {
                                 } label: {
                                     TextField(data.first?.title ?? "", text: $value)
                                         .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                                        .multilineTextAlignment(.leading)
                                         .disabled(true)
                                         .onReceive(formViewModel.$pickerData) { pickerData in
                                             guard isEditing else { return }
@@ -72,6 +73,7 @@ struct TextfieldView: View {
                                 } label: {
                                     TextField(field.placeholder, text: $value)
                                         .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                                        .multilineTextAlignment(.leading)
                                         .disabled(true)
                                         .onReceive(formViewModel.$date) { date in
                                             guard let date = date else { return }
@@ -103,6 +105,7 @@ struct TextfieldView: View {
                                 } label: {
                                     TextField(field.placeholder, text: $value)
                                         .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                                        .multilineTextAlignment(.leading)
                                         .disabled(true)
                                         .onReceive(formViewModel.$pickerData) { pickerData in
                                             guard isEditing else { return }
@@ -227,9 +230,9 @@ struct TextfieldView: View {
 //                                    isEditing = false
 //                                }
 //                            }
-                        }
-                    }
-                    
+                        } /// << fieldType Switch case
+                    } /// << VStack
+
                     if field.isValid() && !isEditing {
                         Image(Asset.iconCheck.name)
                             .offset(x: -5, y: 11)
@@ -252,7 +255,7 @@ struct TextfieldView: View {
                         }
                         .offset(x: -5, y: 11)
                     }
-                }
+                } /// << HStack
                 .padding([.leading, .trailing], 15)
                 .background(Color.clear)
                 
@@ -275,14 +278,6 @@ struct TextfieldView: View {
     }
     
     // MARK: - Helper Methods
-    
-    private func textFieldEditingHandler(_ isEditing: Bool) {
-        if isEditing {
-            
-        } else {
-            
-        }
-    }
     
     private func saveTextFieldToDictionary(textField: UITextField? = nil) {
         for (i, datasourceField) in formViewModel.datasource.visibleFields.enumerated() {
@@ -368,6 +363,6 @@ struct TextfieldView: View {
 
 struct BinkTextfieldView_Previews: PreviewProvider {
     static var previews: some View {
-        TextfieldView(field: FormField(title: "Email", placeholder: "Enter email", validation: "", fieldType: .email, updated: {_,_ in }, shouldChange: {_,_,_,_ in return true }, fieldExited: {_ in }), viewModel: FormViewModel(datasource: FormDataSource(accessForm: .emailPassword), title: "Eneter", description: "kjhdskjhsjkhsjkhdsf"))
+        TextfieldView(field: FormField(title: "Email", placeholder: "Enter email Enter emailEnter emailEnter emailEnter emailEnter emailEnter emailEnter emailEnter emailEnter emailEnter emailEnter emailEnter emailEnter emailEnter emailEnter emailEnter email", validation: "", fieldType: .paymentCardNumber, updated: {_,_ in }, shouldChange: {_,_,_,_ in return true }, fieldExited: {_ in }), viewModel: FormViewModel(datasource: FormDataSource(accessForm: .emailPassword), title: "Enter", description: "kjhdskjhsjkhsjkhdsf"))
     }
 }
