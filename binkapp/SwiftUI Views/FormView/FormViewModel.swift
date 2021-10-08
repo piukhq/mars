@@ -132,6 +132,7 @@ extension FormViewModel: BarcodeScannerViewControllerDelegate {
             }
             prefilledValues.append(FormDataSource.PrefilledValue(commonName: .barcode, value: barcode))
             self.datasource = FormDataSource(authAdd: membershipPlan, formPurpose: .addFromScanner, prefilledValues: prefilledValues)
+            self.datasource.checkFormValidity()
         }
     }
     
@@ -155,10 +156,9 @@ extension FormViewModel: ScanDelegate {
         let year = creditCard.expiryYearInteger() ?? viewModel.paymentCard.year
         Current.navigate.close(animated: true) {
             let paymentCardCreateModel = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: viewModel.paymentCard.nameOnCard, month: month, year: year)
-//            self.card.configureWithAddViewModel(paymentCardCreateModel)
             viewModel.paymentCard = paymentCardCreateModel
             self.datasource = FormDataSource(paymentCardCreateModel)
-//            self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
+            self.datasource.checkFormValidity()
         }
     }
     

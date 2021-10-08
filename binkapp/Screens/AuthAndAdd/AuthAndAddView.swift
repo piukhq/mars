@@ -11,7 +11,6 @@ import SwiftUI
 struct AuthAndAddView: View {
     @ObservedObject var formViewModel: FormViewModel
     @ObservedObject private var viewModel: AuthAndAddViewModel
-    @State var isLoading = false
 
     private let buttonViewModel: ButtonViewModel
     private var primaryButton: BinkButtonView {
@@ -20,8 +19,8 @@ struct AuthAndAddView: View {
 
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
-        self.buttonViewModel = ButtonViewModel(datasource: viewModel.dataSource)
         self.formViewModel = FormViewModel(datasource: viewModel.dataSource, title: viewModel.title, description: viewModel.getDescription(), membershipPlan: viewModel.getMembershipPlan())
+        buttonViewModel = ButtonViewModel(datasource: viewModel.dataSource)
     }
     
     var body: some View {
@@ -43,6 +42,9 @@ struct AuthAndAddView: View {
         .onReceive(viewModel.$dataSourcePublisher) { refreshedDataSource in
             guard let refreshedDataSource = refreshedDataSource else { return }
             formViewModel.datasource = refreshedDataSource
+        }
+        .onReceive(formViewModel.$datasource) { refreshedDataSource in
+            buttonViewModel.datasource = refreshedDataSource
         }
     }
     
