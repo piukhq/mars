@@ -23,6 +23,7 @@ struct FormView: View {
     @ObservedObject var viewModel: FormViewModel
     @State var pickerOneSelection = ""
     @State var pickerTwoSelection = ""
+    @State private var scrollOffset: CGFloat = 0
     
     var hyperlinkAttrString: NSAttributedString {
         return NSAttributedString(
@@ -63,20 +64,27 @@ struct FormView: View {
                 .padding(FormViewConstants.vStackInsets)
             }
             .background(Color(Current.themeManager.color(for: .viewBackground)))
-//            .edgesIgnoringSafeArea(.bottom)
+            .edgesIgnoringSafeArea(.bottom)
 //            .padding(.bottom, viewModel.keyboardHeight)
-            .offset(y: -viewModel.keyboardHeight)
-//            .onReceive(Publishers.keyboardHeight, perform: {
-//                if #available(iOS 14.0, *) {
-//                    if $0 == 0.0 {
+            .offset(y: -scrollOffset)
+            .onReceive(viewModel.$formInputType) { inputType in
+                withAnimation {
+                    self.scrollOffset = viewModel.keyboardHeight
+                }
+            }
+            .onReceive(Publishers.keyboardHeight, perform: {
+                if #available(iOS 14.0, *) {
+                    if $0 == 0.0 {
+                        self.viewModel.keyboardHeight = $0
+                    } else {
 //                        self.viewModel.keyboardHeight = $0
-//                    } else {
-//                        self.viewModel.keyboardHeight = $0 - ($0)
-//                    }
-//                } else {
-//                    self.viewModel.setKeyboardHeight(height: $0)
-//                }
-//            })
+                        self.viewModel.setKeyboardHeight(height: $0)
+
+                    }
+                } else {
+                    self.viewModel.setKeyboardHeight(height: $0)
+                }
+            })
 //            .onReceive(Publishers.keyboardWillShow) { keyboardWillShow in
 //                if keyboardWillShow {
 //                    viewModel.pickerType = .keyboard
