@@ -78,7 +78,7 @@ struct FormView: View {
                         self.viewModel.keyboardHeight = $0
                     } else {
 //                        self.viewModel.keyboardHeight = $0
-                        self.viewModel.setKeyboardHeight(height: $0)
+//                        self.viewModel.setKeyboardHeight(height: $0)
 
                     }
                 } else {
