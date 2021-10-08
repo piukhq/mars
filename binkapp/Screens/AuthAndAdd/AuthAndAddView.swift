@@ -19,8 +19,8 @@ struct AuthAndAddView: View {
 
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
-        self.formViewModel = FormViewModel(datasource: viewModel.dataSource, title: viewModel.title, description: viewModel.getDescription(), membershipPlan: viewModel.getMembershipPlan())
         buttonViewModel = ButtonViewModel(datasource: viewModel.dataSource)
+        self.formViewModel = FormViewModel(datasource: viewModel.dataSource, title: viewModel.title, description: viewModel.getDescription(), membershipPlan: viewModel.getMembershipPlan())
     }
     
     var body: some View {

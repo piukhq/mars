@@ -14,6 +14,7 @@ class ButtonViewModel: ObservableObject {
     
     init(datasource: FormDataSource) {
         self.datasource = datasource
+        datasource.checkFormValidity()
     }
 }
 
