@@ -64,7 +64,7 @@ struct FormView: View {
                 .padding(FormViewConstants.vStackInsets)
             }
             .background(Color(Current.themeManager.color(for: .viewBackground)))
-            .edgesIgnoringSafeArea(.bottom)
+//            .edgesIgnoringSafeArea(.bottom)
 //            .padding(.bottom, viewModel.keyboardHeight)
             .offset(y: -scrollOffset)
             .onReceive(viewModel.$formInputType) { inputType in

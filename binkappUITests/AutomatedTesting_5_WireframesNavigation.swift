@@ -43,12 +43,12 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         app.buttons["Back"].tap()
 
         sleep(60)
-        
+
         AutomatedTesting.pullToRefresh(from: .iceland)
-        
+
         // >> Loyalty wallet
         XCTAssertTrue(app.buttons["Browse brands"].exists)
-        
+
         let icelandCell = app.collectionViews.cells["Iceland"]
         icelandCell.tap()
         
@@ -71,15 +71,14 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         app.staticTexts["Enter Manually"].tap()
         
         // >> Add payment card
-        XCTAssertTrue(app.navigationBars["binkapp.AddPaymentCardView"].waitForExistence(timeout: 10))
-        XCTAssertTrue(app.navigationBars["binkapp.AddPaymentCardView"].buttons["close"].exists)
-
+        XCTAssertTrue(app.navigationBars["_TtGC7binkapp25CustomUIHosting"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.navigationBars["_TtGC7binkapp25CustomUIHosting"].buttons["close"].exists)
 
         let cardNumberTextField = app.textFields["Card number"]
         cardNumberTextField.tap()
         cardNumberTextField.typeText("5555555555554444")
 
-        let expiryTextField = app.textFields["Expiry"]
+        let expiryTextField = app.buttons["Expiry"]
         expiryTextField.tap()
         app.pickerWheels["01"].swipeUp()
         app.pickerWheels["2021"].swipeUp()

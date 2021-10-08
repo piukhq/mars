@@ -52,6 +52,7 @@ struct TextfieldView: View {
                                             field.updateValue(pickerData.value)
                                         }
                                 }
+                                .accessibility(identifier: field.title)
                                 .onReceive(formViewModel.$formInputType) { inputType in
                                     if case .choice = inputType {
                                         isEditing = true
@@ -84,6 +85,7 @@ struct TextfieldView: View {
                                             formViewModel.datasource.checkFormValidity()
                                         }
                                 }
+                                .accessibility(identifier: field.title)
                                 .onReceive(formViewModel.$formInputType) { inputType in
                                     if case .date = inputType {
                                         isEditing = true
@@ -119,6 +121,7 @@ struct TextfieldView: View {
                                             formViewModel.addPaymentCardViewModel?.setPaymentCardExpiry(month: Int(splitData.first ?? ""), year: Int(splitData.last ?? ""))
                                         }
                                 }
+                                .accessibility(identifier: field.title)
                                 .onReceive(formViewModel.$formInputType) { inputType in
                                     if case .expiry = inputType {
                                         isEditing = true

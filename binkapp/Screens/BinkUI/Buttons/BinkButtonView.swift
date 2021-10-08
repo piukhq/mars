@@ -67,6 +67,7 @@ struct BinkButtonView: View, Identifiable {
         .onReceive(viewModel.$isLoading) { isLoading in
             self.loading = isLoading
         }
+        .accessibility(identifier: title)
     }
 }
 

@@ -349,7 +349,6 @@
 		CE949EAA26FC9BDB00F578DC /* TermsAndConditionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE949EA926FC9BDB00F578DC /* TermsAndConditionsView.swift */; };
 		CE990E13261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */; };
 		CE9EF24F270C694400DE9659 /* TextfieldViewUIK.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9EF24E270C694400DE9659 /* TextfieldViewUIK.swift */; };
-		CE9EF251270C6CBB00DE9659 /* FormCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9EF250270C6CBB00DE9659 /* FormCollectionViewCell.swift */; };
 		CEA16EC526249C6300D449E1 /* BarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA16EC426249C6300D449E1 /* BarcodeView.swift */; };
 		CEA16ED62624B0EE00D449E1 /* BarcodeViewWide.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA16ED52624B0EE00D449E1 /* BarcodeViewWide.swift */; };
 		CEA16EE02625879B00D449E1 /* BarcodeViewCompact.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA16EDF2625879B00D449E1 /* BarcodeViewCompact.xib */; };
@@ -995,7 +994,6 @@
 		CE949EA926FC9BDB00F578DC /* TermsAndConditionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsAndConditionsView.swift; sourceTree = "<group>"; };
 		CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_1_LoyaltyCards.swift; sourceTree = "<group>"; };
 		CE9EF24E270C694400DE9659 /* TextfieldViewUIK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextfieldViewUIK.swift; sourceTree = "<group>"; };
-		CE9EF250270C6CBB00DE9659 /* FormCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormCollectionViewCell.swift; sourceTree = "<group>"; };
 		CEA16EC426249C6300D449E1 /* BarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeView.swift; sourceTree = "<group>"; };
 		CEA16ED52624B0EE00D449E1 /* BarcodeViewWide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewWide.swift; sourceTree = "<group>"; };
 		CEA16EDF2625879B00D449E1 /* BarcodeViewCompact.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BarcodeViewCompact.xib; sourceTree = "<group>"; };
@@ -2364,7 +2362,6 @@
 		BDB0186A232D95EC00BFFA18 /* Form */ = {
 			isa = PBXGroup;
 			children = (
-				CE9EF250270C6CBB00DE9659 /* FormCollectionViewCell.swift */,
 				BDB0186D232D98C000BFFA18 /* FormDataSource.swift */,
 				BDB0186F232D99D200BFFA18 /* FormField.swift */,
 				BDB01881232E93A100BFFA18 /* FormMultipleChoiceInput.swift */,
@@ -3773,7 +3770,6 @@
 				EF59A1312448B769001B60B8 /* APIErrorResponses.swift in Sources */,
 				EFEB5BF7237DCA5A00E18743 /* PLRAccumulatorCell.swift in Sources */,
 				7061054125B8555600A16DA5 /* Styling.swift in Sources */,
-				CE9EF251270C6CBB00DE9659 /* FormCollectionViewCell.swift in Sources */,
 				EFA5F7272379A7C70027AB80 /* _CD_ReasonCode.swift in Sources */,
 				CE54AF6225FA0BA00061838C /* BinkLoggerErrors.swift in Sources */,
 				EFA5F72E2379A7C70027AB80 /* _CD_AddField.swift in Sources */,

@@ -40,7 +40,7 @@ class AutomatedTesting_2_PaymentCards: XCTestCase {
         cardNumberTextField.tap()
         cardNumberTextField.typeText("5555555555554444")
 
-        let expiryTextField = app.textFields["Expiry"]
+        let expiryTextField = app.buttons["Expiry"]
         expiryTextField.tap()
         app.pickerWheels["01"].swipeUp()
         app.pickerWheels["2021"].swipeUp()

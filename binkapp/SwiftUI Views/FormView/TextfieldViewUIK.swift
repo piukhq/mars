@@ -132,12 +132,8 @@ struct TextfieldUIK: UIViewRepresentable {
             parent.text.wrappedValue = selectedDate
         }
         
-        // MARK: - Delegate methods
         
-//        func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//            return true
-////            return formField?.textField(textField, shouldChangeInRange: range, newValue: string) ?? false
-//        }
+        // MARK: - Delegate methods
         
         func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
             // In order to allow a field to appear disabled, but allow the clear button to still be functional, we cannot make the textfield disabled
