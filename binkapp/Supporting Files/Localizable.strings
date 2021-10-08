@@ -346,7 +346,8 @@
 "tandcs_title" = "I agree to Bink's Terms and Conditions";
 "tandcs_description" = "Please read the Bink Privacy Policy for further details of how your data will be processed";
 "ppolicy_title" = "I accept Bink's Privacy Policy";
-"marketing_title" = "Opt in to receive marketing messages";
+"ppolicy_link" = "Privacy Policy";
+"marketing_title" = "Opt in to receive marketing messages.";
 
 "tandcs_1" = "I agree to Bink's ";
 "tandcs_link" = "Terms and Conditions";
