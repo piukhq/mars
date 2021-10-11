@@ -63,22 +63,13 @@ struct FormView: View {
                     
                     // Textfields
                     ForEach(viewModel.datasource.visibleFields) { field in
-//                        GeometryReader { masterProxy in
-                            TextfieldView(field: field, viewModel: viewModel)
-                                .background(GeometryReader { proxy in
-                                    Color.clear.preference(key: ViewOffsetKey.self, value: -proxy.frame(in: .named("scroll")).origin.y)
-                                })
-                                .onPreferenceChange(ViewOffsetKey.self) {
-//                                    print("offset >> \($0)")
-                                    viewModel.scrollViewOffset = $0
-                                }
-                                .onTapGesture {
-//                                    let pos = masterProxy.frame(in: .global).maxY
-//                                    print("Textfield position: \(pos)")
-//                                    viewModel.selectedCellYOrigin = pos
-                                }
-//                        }
-//                        .frame(height: 70)
+                        TextfieldView(field: field, viewModel: viewModel)
+                            .background(GeometryReader { proxy in
+                                Color.clear.preference(key: ViewOffsetKey.self, value: -proxy.frame(in: .named("scroll")).origin.y)
+                            })
+                            .onPreferenceChange(ViewOffsetKey.self) {
+                                viewModel.scrollViewOffset = $0
+                            }
                     }
                     
                     FormFooterView(datasource: viewModel.datasource)
@@ -107,37 +98,16 @@ struct FormView: View {
                         if case .keyboard = inputType {
                             self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedCellToTopOfKeyboard + 20
                         } else {
-                            self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedCellToTopOfKeyboard + FormViewConstants.inputToolbarHeight + 20
+                            self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedCellToTopOfKeyboard + FormViewConstants.inputToolbarHeight
                         }
                     }
                 }
             }
-//            .onReceive(Publishers.keyboardHeight, perform: {
-//                self.viewModel.keyboardHeight = $0
-
-//                if #available(iOS 14.0, *) {
-//                    if $0 == 0.0 {
-//                        self.viewModel.keyboardHeight = $0
-//                    } else {
-////                        self.viewModel.keyboardHeight = $0
-////                        self.viewModel.setKeyboardHeight(height: $0)
-//
-//                    }
-//                } else {
-//                    self.viewModel.setKeyboardHeight(height: $0)
-//                }
-//            })
-//            .onReceive(Publishers.keyboardWillShow) { keyboardWillShow in
-//                if keyboardWillShow {
-//                    viewModel.pickerType = .keyboard
-//                }
-//            }
             
             if case .date = viewModel.formInputType {
                 if #available(iOS 14.0, *) {
                     VStack(spacing: 0) {
                         InputToolbarView(buttonAction: { viewModel.formInputType = .none })
-                        
                         DatePicker("", selection: $viewModel.date ?? Date(), displayedComponents: .date)
                             .datePickerStyle(GraphicalDatePickerStyle())
                             .frame(maxHeight: FormViewConstants.graphicalDatePickerHeight)
@@ -149,7 +119,6 @@ struct FormView: View {
                 } else {
                     VStack(spacing: 0) {
                         InputToolbarView(buttonAction: { viewModel.formInputType = .none })
-                        
                         DatePicker("", selection: $viewModel.date ?? Date(), displayedComponents: .date)
                             .frame(width: UIScreen.main.bounds.width, height: FormViewConstants.datePickerHeight, alignment: .center)
                             .background(Color(Current.themeManager.color(for: .viewBackground)))
@@ -232,10 +201,10 @@ struct BinkFormView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             ZStack {
-//                Rectangle()
-//                    .foregroundColor(Color(UIColor.grey10))
-//                BinkFormView(viewModel: FormViewModel(datasource: datasourceMock, title: "Title text", description: "Im a description", membershipPlan: nil, colorScheme: ColorScheme.light))
-//                    .preferredColorScheme(.light)
+                Rectangle()
+                    .foregroundColor(Color(UIColor.grey10))
+                BinkFormView(viewModel: FormViewModel(datasource: datasourceMock, title: "Title text", description: "Im a description", membershipPlan: nil, colorScheme: ColorScheme.light))
+                    .preferredColorScheme(.light)
             }
         }
     }

@@ -23,8 +23,6 @@ struct TextfieldView: View {
     }
     
     var body: some View {
-//        GeometryReader { proxy in
-
         VStack(alignment: .leading) {
             ZStack(alignment: .center) {
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
@@ -38,139 +36,116 @@ struct TextfieldView: View {
                         
                         switch field.fieldType {
                         case .choice(let data):
-                            HStack {
-                                Button {
-                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                                    formViewModel.formInputType = .choice(data: data)
-                                    isEditing = true
-//                                    formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
-                                } label: {
-                                    TextField(data.first?.title ?? "", text: $value)
-                                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
-                                        .multilineTextAlignment(.leading)
-                                        .disabled(true)
-                                        .onReceive(formViewModel.$pickerData) { pickerData in
-                                            guard isEditing else { return }
-                                            value = pickerData.value
-                                            field.updateValue(pickerData.value)
-                                        }
-                                }
-                                .accessibility(identifier: field.title)
-                                .onReceive(formViewModel.$formInputType) { inputType in
-                                    if case .choice = inputType {
+                            GeometryReader { proxy in
+                                HStack {
+                                    Button {
+                                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                        formViewModel.formInputType = .choice(data: data)
                                         isEditing = true
-                                    } else {
-                                        isEditing = false
+                                        formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
+                                    } label: {
+                                        TextField(data.first?.title ?? "", text: $value)
+                                            .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                                            .multilineTextAlignment(.leading)
+                                            .disabled(true)
+                                            .onReceive(formViewModel.$pickerData) { pickerData in
+                                                guard isEditing else { return }
+                                                value = pickerData.value
+                                                field.updateValue(pickerData.value)
+                                            }
                                     }
-                                }
-                                Spacer()
-                            }
-                            .onAppear {
-                                saveTextFieldToDictionary()
-                            }
-                        case .date:
-                            HStack {
-                                Button {
-                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                                    formViewModel.formInputType = .date
-                                    isEditing = true
-//                                    formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
-                                } label: {
-                                    TextField(field.placeholder, text: $value)
-                                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
-                                        .multilineTextAlignment(.leading)
-                                        .disabled(true)
-                                        .onReceive(formViewModel.$date) { date in
-                                            guard let date = date else { return }
-                                            let dateString = date.getFormattedString(format: .dayShortMonthYearWithSlash)
-                                            value = dateString
-                                            field.updateValue(dateString)
+                                    .accessibility(identifier: field.title)
+                                    .onReceive(formViewModel.$formInputType) { inputType in
+                                        if case .choice = inputType {
+                                            isEditing = true
+                                        } else {
                                             isEditing = false
-                                            formViewModel.datasource.checkFormValidity()
                                         }
-                                }
-                                .accessibility(identifier: field.title)
-                                .onReceive(formViewModel.$formInputType) { inputType in
-                                    if case .date = inputType {
-                                        isEditing = true
-                                    } else {
-                                        isEditing = false
                                     }
+                                    Spacer()
                                 }
-                                Spacer()
+                                .onAppear {
+                                    saveTextFieldToDictionary()
+                                }
                             }
-                            .onAppear {
-                                saveTextFieldToDictionary()
+                            .frame(height: 24)
+                        case .date:
+                            GeometryReader { proxy in
+                                HStack {
+                                    Button {
+                                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                        formViewModel.formInputType = .date
+                                        isEditing = true
+                                        formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
+                                    } label: {
+                                        TextField(field.placeholder, text: $value)
+                                            .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                                            .multilineTextAlignment(.leading)
+                                            .disabled(true)
+                                            .onReceive(formViewModel.$date) { date in
+                                                guard let date = date else { return }
+                                                let dateString = date.getFormattedString(format: .dayShortMonthYearWithSlash)
+                                                value = dateString
+                                                field.updateValue(dateString)
+                                                isEditing = false
+                                                formViewModel.datasource.checkFormValidity()
+                                            }
+                                    }
+                                    .accessibility(identifier: field.title)
+                                    .onReceive(formViewModel.$formInputType) { inputType in
+                                        if case .date = inputType {
+                                            isEditing = true
+                                        } else {
+                                            isEditing = false
+                                        }
+                                    }
+                                    Spacer()
+                                }
+                                .onAppear {
+                                    saveTextFieldToDictionary()
+                                }
                             }
+                            .frame(height: 24)
                         case .expiry(let months, let years):
-                            HStack {
-                                Button {
-                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                                    formViewModel.formInputType = .expiry(months: months, years: years)
-                                    isEditing = true
-//                                    formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
-                                } label: {
-                                    TextField(field.placeholder, text: $value)
-                                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
-                                        .multilineTextAlignment(.leading)
-                                        .disabled(true)
-                                        .onReceive(formViewModel.$pickerData) { pickerData in
-                                            guard isEditing else { return }
-                                            value = pickerData.value
-                                            field.updateValue(pickerData.value)
-                                            canShowErrorState = true
-
-                                            // For mapping to the payment card expiry fields, we only care if we have BOTH
-                                            guard pickerData.fieldCount > 1 else { return }
-                                            let splitData = pickerData.value.components(separatedBy: "/")
-                                            formViewModel.addPaymentCardViewModel?.setPaymentCardExpiry(month: Int(splitData.first ?? ""), year: Int(splitData.last ?? ""))
-                                        }
-                                }
-                                .accessibility(identifier: field.title)
-                                .onReceive(formViewModel.$formInputType) { inputType in
-                                    if case .expiry = inputType {
+                            GeometryReader { proxy in
+                                HStack {
+                                    Button {
+                                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                        formViewModel.formInputType = .expiry(months: months, years: years)
                                         isEditing = true
-                                    } else {
-                                        isEditing = false
+                                        formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
+                                    } label: {
+                                        TextField(field.placeholder, text: $value)
+                                            .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                                            .multilineTextAlignment(.leading)
+                                            .disabled(true)
+                                            .onReceive(formViewModel.$pickerData) { pickerData in
+                                                guard isEditing else { return }
+                                                value = pickerData.value
+                                                field.updateValue(pickerData.value)
+                                                canShowErrorState = true
+
+                                                // For mapping to the payment card expiry fields, we only care if we have BOTH
+                                                guard pickerData.fieldCount > 1 else { return }
+                                                let splitData = pickerData.value.components(separatedBy: "/")
+                                                formViewModel.addPaymentCardViewModel?.setPaymentCardExpiry(month: Int(splitData.first ?? ""), year: Int(splitData.last ?? ""))
+                                            }
                                     }
+                                    .accessibility(identifier: field.title)
+                                    .onReceive(formViewModel.$formInputType) { inputType in
+                                        if case .expiry = inputType {
+                                            isEditing = true
+                                        } else {
+                                            isEditing = false
+                                        }
+                                    }
+                                    Spacer()
                                 }
-                                Spacer()
+                                .onAppear {
+                                    saveTextFieldToDictionary()
+                                }
                             }
-                            .onAppear {
-                                saveTextFieldToDictionary()
-                            }
-//                        case .sensitive, .confirmPassword:
-//                            SecureField(field.placeholder, text: $value) {
-//                                // On Commit
-//                                isEditing = false
-//                                field.updateValue(value)
-//                                field.fieldWasExited()
-//                                canShowErrorState = true
-//                                formViewModel.formInputType = .none
-//                            }
-//                            .accentColor(Color(Current.themeManager.color(for: .text)))
-//                            .font(.nunitoLight(18))
-////                            .disableAutocorrection(field.fieldType.autoCorrection())
-//                            .keyboardType(field.fieldType.keyboardType())
-//                            .colorSchemeOverride()
-//                            .onTapGesture {
-//                                // Begin editing
-//                                isEditing = true
-//                                formViewModel.formInputType = .secureEntry
-//                                canShowErrorState = !field.isValid() && !value.isEmpty
-//                            }
-//                            .modifier(ClearButton(text: $value, isEditing: $isEditing))
-//                            .onReceive(formViewModel.$formInputType) { inputType in
-//                                if case .secureEntry = inputType {
-//                                    isEditing = true
-//                                } else {
-//                                    isEditing = false
-//                                    canShowErrorState = !field.isValid() && !value.isEmpty
-//                                }
-//                            }
-//                            .onAppear {
-//                                formViewModel.textFields[id] = UITextField()
-//                            }
+                            .frame(height: 24)
                         default:
                             GeometryReader { proxy in
                                 TextfieldUIK(field, text: $value, onAppear: { textField in
@@ -211,39 +186,6 @@ struct TextfieldView: View {
                                 .onReceive(Just(value)) { _ in valueChangedHandler() }
                             }
                             .frame(height: 24)
-                            
-//                            TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
-//                                self.isEditing = isEditing
-//                                field.updateValue(value)
-//                                formViewModel.datasource.checkFormValidity()
-//                                canShowErrorState = !field.isValid() && !value.isEmpty
-//
-//                                if isEditing {
-//                                    formViewModel.formInputType = .keyboard(title: field.title)
-//                                } else {
-//                                    field.fieldWasExited()
-//                                }
-//                            }, onCommit: {
-//                                canShowErrorState = true
-//                                formViewModel.formInputType = .none
-//                            })
-//                            .onReceive(Just(value)) { _ in valueChangedHandler() }
-//                            .font(.custom(UIFont.textFieldInput.fontName, size: UIFont.textFieldInput.pointSize))
-//                            .autocapitalization(field.fieldType.capitalization())
-//                            .modifier(ClearButton(text: $value, isEditing: $isEditing))
-//                            .accentColor(Color(Current.themeManager.color(for: .text)))
-//                            .foregroundColor(Color(Current.themeManager.color(for: .text)))
-////                            .disableAutocorrection(field.fieldType.autoCorrection())
-//                            .keyboardType(field.fieldType.keyboardType())
-//                            .colorSchemeOverride()
-//                            .onReceive(formViewModel.$formInputType) { pickerType in
-//                                if case .keyboard(let title) = pickerType {
-//                                    guard title == field.title else { return }
-//                                    isEditing = true
-//                                } else {
-//                                    isEditing = false
-//                                }
-//                            }
                         } /// << fieldType Switch case
                     } /// << VStack
 
@@ -289,7 +231,6 @@ struct TextfieldView: View {
                     .padding(.leading)
             } /// << ZStack
         } /// << VStack
-//        }.frame(height: 70)
     } /// << Body
     
     // MARK: - Helper Methods
