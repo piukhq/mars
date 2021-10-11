@@ -23,7 +23,7 @@ struct TextfieldView: View {
     }
     
     var body: some View {
-        GeometryReader { proxy in
+//        GeometryReader { proxy in
 
         VStack(alignment: .leading) {
             ZStack(alignment: .center) {
@@ -43,7 +43,7 @@ struct TextfieldView: View {
                                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                     formViewModel.formInputType = .choice(data: data)
                                     isEditing = true
-                                    formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
+//                                    formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
                                 } label: {
                                     TextField(data.first?.title ?? "", text: $value)
                                         .foregroundColor(Color(Current.themeManager.color(for: .text)))
@@ -74,8 +74,7 @@ struct TextfieldView: View {
                                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                     formViewModel.formInputType = .date
                                     isEditing = true
-                                    formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
-                                    print("selectedCellYOrigin position: \(formViewModel.selectedCellYOrigin)")
+//                                    formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
                                 } label: {
                                     TextField(field.placeholder, text: $value)
                                         .foregroundColor(Color(Current.themeManager.color(for: .text)))
@@ -109,7 +108,7 @@ struct TextfieldView: View {
                                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                     formViewModel.formInputType = .expiry(months: months, years: years)
                                     isEditing = true
-                                    formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
+//                                    formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
                                 } label: {
                                     TextField(field.placeholder, text: $value)
                                         .foregroundColor(Color(Current.themeManager.color(for: .text)))
@@ -173,41 +172,45 @@ struct TextfieldView: View {
 //                                formViewModel.textFields[id] = UITextField()
 //                            }
                         default:
-                            TextfieldUIK(field, text: $value, onAppear: { textField in
-                                saveTextFieldToDictionary(textField: textField)
-                            }, didBeginEditing: { textField in
-                                isEditing = true
-                                formViewModel.datasource.checkFormValidity()
-                                canShowErrorState = !field.isValid() && !value.isEmpty
-                                formViewModel.formInputType = .keyboard(title: field.title)
-                                
-                                if formViewModel.textFields.first(where: { $0.value == textField })?.key == formViewModel.textFields.count - 1 {
-                                    textField.returnKeyType = .done
-                                } else {
-                                    textField.returnKeyType = .next
-                                }
-                            }, didEndEditing: { _ in
-                                isEditing = false
-                                formViewModel.datasource.checkFormValidity()
-                                canShowErrorState = !field.isValid() && !value.isEmpty
-                                field.fieldWasExited()
-                                formViewModel.formInputType = .none
-                            }, onCommit: { textField in
-                                canShowErrorState = true
-                                formViewModel.formInputType = .none
-                                
-                                guard let key = formViewModel.textFields.first(where: { $0.value == textField })?.key else { return }
-                                
-                                if let nextTextField = formViewModel.textFields[key + 1] {
-                                    nextTextField.becomeFirstResponder()
-                                } else {
-                                    textField.resignFirstResponder()
-                                }
-                            }, clearButtonTapped: {
-                                formViewModel.textFieldClearButtonTapped = true
-                            })
+                            GeometryReader { proxy in
+                                TextfieldUIK(field, text: $value, onAppear: { textField in
+                                    saveTextFieldToDictionary(textField: textField)
+                                }, didBeginEditing: { textField in
+                                    isEditing = true
+                                    formViewModel.datasource.checkFormValidity()
+                                    canShowErrorState = !field.isValid() && !value.isEmpty
+                                    formViewModel.formInputType = .keyboard(title: field.title)
+                                    formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
+
+                                    if formViewModel.textFields.first(where: { $0.value == textField })?.key == formViewModel.textFields.count - 1 {
+                                        textField.returnKeyType = .done
+                                    } else {
+                                        textField.returnKeyType = .next
+                                    }
+                                }, didEndEditing: { _ in
+                                    isEditing = false
+                                    formViewModel.datasource.checkFormValidity()
+                                    canShowErrorState = !field.isValid() && !value.isEmpty
+                                    field.fieldWasExited()
+                                    formViewModel.formInputType = .none
+                                }, onCommit: { textField in
+                                    canShowErrorState = true
+                                    formViewModel.formInputType = .none
+                                    
+                                    guard let key = formViewModel.textFields.first(where: { $0.value == textField })?.key else { return }
+                                    
+                                    if let nextTextField = formViewModel.textFields[key + 1] {
+                                        nextTextField.becomeFirstResponder()
+                                    } else {
+                                        textField.resignFirstResponder()
+                                    }
+                                }, clearButtonTapped: {
+                                    formViewModel.textFieldClearButtonTapped = true
+                                })
+                                .frame(height: 24)
+                                .onReceive(Just(value)) { _ in valueChangedHandler() }
+                            }
                             .frame(height: 24)
-                            .onReceive(Just(value)) { _ in valueChangedHandler() }
                             
 //                            TextField(field.placeholder, text: $value, onEditingChanged: { isEditing in
 //                                self.isEditing = isEditing
@@ -286,7 +289,7 @@ struct TextfieldView: View {
                     .padding(.leading)
             } /// << ZStack
         } /// << VStack
-        }.frame(height: 70)
+//        }.frame(height: 70)
     } /// << Body
     
     // MARK: - Helper Methods

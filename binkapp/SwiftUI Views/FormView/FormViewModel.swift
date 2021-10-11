@@ -25,7 +25,7 @@ final class FormViewModel: ObservableObject {
     @Published var formInputType: FormInputType = .none {
         didSet {
             setKeyboardHeight()
-//            print(keyboardHeight)
+            print(keyboardHeight)
         }
     }
 
@@ -77,6 +77,7 @@ final class FormViewModel: ObservableObject {
                 let cellVisibleOffset = self.selectedCellYOrigin
                 
                 self.keyboardHeight = keyboardRectangle.height
+                self.formInputType = .keyboard(title: "")
 
                 if cellVisibleOffset > visibleOffset {
 //                    let actualOffset = self.scrollViewOffset
@@ -98,7 +99,8 @@ final class FormViewModel: ObservableObject {
     func setKeyboardHeight(height: CGFloat? = nil) {
         switch formInputType {
         case .keyboard, .secureEntry:
-            keyboardHeight = (height ?? 0)
+//            keyboardHeight = (height ?? 0)
+            break
         case .date:
             if #available(iOS 14.0, *) {
                 keyboardHeight = FormViewConstants.graphicalDatePickerHeight

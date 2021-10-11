@@ -63,7 +63,7 @@ struct FormView: View {
                     
                     // Textfields
                     ForEach(viewModel.datasource.visibleFields) { field in
-                        GeometryReader { masterProxy in
+//                        GeometryReader { masterProxy in
                             TextfieldView(field: field, viewModel: viewModel)
                                 .background(GeometryReader { proxy in
                                     Color.clear.preference(key: ViewOffsetKey.self, value: -proxy.frame(in: .named("scroll")).origin.y)
@@ -73,12 +73,12 @@ struct FormView: View {
                                     viewModel.scrollViewOffset = $0
                                 }
                                 .onTapGesture {
-                                    let pos = masterProxy.frame(in: .global).maxY
-                                    print("Textfield position: \(pos)")
-                                    viewModel.selectedCellYOrigin = pos
+//                                    let pos = masterProxy.frame(in: .global).maxY
+//                                    print("Textfield position: \(pos)")
+//                                    viewModel.selectedCellYOrigin = pos
                                 }
-                        }
-                        .frame(height: 70)
+//                        }
+//                        .frame(height: 70)
                     }
                     
                     FormFooterView(datasource: viewModel.datasource)
@@ -103,12 +103,18 @@ struct FormView: View {
                     withAnimation {
                         let distanceFromSelectedCellToBottomOfScreen = screenHeight - viewModel.selectedCellYOrigin
                         let distanceFromSelectedCellToTopOfKeyboard = viewModel.keyboardHeight - distanceFromSelectedCellToBottomOfScreen
-                        self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedCellToTopOfKeyboard + FormViewConstants.inputToolbarHeight + 20
-//                        self.viewModel.scrollViewOffsetForKeyboard = abs(viewModel.selectedCellYOrigin - viewModel.keyboardHeight + FormViewConstants.inputToolbarHeight)
+                        
+                        if case .keyboard = inputType {
+                            self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedCellToTopOfKeyboard + 20
+                        } else {
+                            self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedCellToTopOfKeyboard + FormViewConstants.inputToolbarHeight + 20
+                        }
                     }
                 }
             }
 //            .onReceive(Publishers.keyboardHeight, perform: {
+//                self.viewModel.keyboardHeight = $0
+
 //                if #available(iOS 14.0, *) {
 //                    if $0 == 0.0 {
 //                        self.viewModel.keyboardHeight = $0
@@ -137,6 +143,7 @@ struct FormView: View {
                             .frame(maxHeight: FormViewConstants.graphicalDatePickerHeight)
                             .background(Color(Current.themeManager.color(for: .viewBackground)))
                             .accentColor(Color(.blueAccent))
+                            .transition(.move(edge: .bottom))
                     }
                     .offset(y: UIApplication.bottomSafeArea)
                 } else {
