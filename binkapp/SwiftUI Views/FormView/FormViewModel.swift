@@ -17,10 +17,15 @@ final class FormViewModel: ObservableObject {
     @Published var keyboardHeight: CGFloat = 0
     @Published var textFields: [Int: UITextField] = [:]
     @Published var textFieldClearButtonTapped: Bool?
+    @Published var scrollViewOffsetForKeyboard: CGFloat = 0 {
+        didSet {
+            print("scrollViewOffsetForKeyboard: \(scrollViewOffsetForKeyboard)")
+        }
+    }
     @Published var formInputType: FormInputType = .none {
         didSet {
             setKeyboardHeight()
-            print(keyboardHeight)
+//            print(keyboardHeight)
         }
     }
 
@@ -28,6 +33,7 @@ final class FormViewModel: ObservableObject {
     var descriptionText: String?
     var previousTextfieldValue = ""
     var scrollViewOffset: CGFloat = 0
+    var selectedCellYOrigin: CGFloat = 0
     let membershipPlan: CD_MembershipPlan?
     private let strings = PaymentCardScannerStrings()
 
@@ -59,8 +65,8 @@ final class FormViewModel: ObservableObject {
     }
     
     @objc func handleKeyboardWillShow(_ notification: Notification) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//            guard let self = self else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            guard let self = self else { return }
 
             if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
                 let keyboardRectangle = keyboardFrame.cgRectValue
@@ -68,20 +74,23 @@ final class FormViewModel: ObservableObject {
                 let visibleOffset = UIScreen.main.bounds.height - keyboardHeight1
                 print("keyboard height: \(keyboardHeight1)")
                 print("visible offset: \(visibleOffset)")
-//                let cellVisibleOffset = self.selectedCellYOrigin + self.selectedCellHeight
+                let cellVisibleOffset = self.selectedCellYOrigin
+                
+                self.keyboardHeight = keyboardRectangle.height
 
-
-//                if cellVisibleOffset > visibleOffset {
-//                    let actualOffset = scrollViewOffset
+                if cellVisibleOffset > visibleOffset {
+//                    let actualOffset = self.scrollViewOffset
 //                    let neededOffset = CGPoint(x: 0, y: Constants.offsetPadding + actualOffset + cellVisibleOffset - visibleOffset)
 //                    self.stackScrollView.setContentOffset(neededOffset, animated: true)
-//
-//                    /// From iOS 14, we are seeing this method being called more often than we would like due to a notification trigger not only when the cell's text field is selected, but when typed into.
-//                    /// We are resetting these values so that the existing behaviour will still work, whereby these values are updated from delegate methods when they should be, but when the notification is
-//                    /// called from text input, these won't be updated and therefore will remain as 0.0, and won't fall into this if statement and won't update the content offset of the stack scroll view.
-//                    self.selectedCellYOrigin = 0.0
+                    
+//                    self.scrollViewOffsetForKeyboard = 150 + actualOffset + cellVisibleOffset - visibleOffset
+
+                    /// From iOS 14, we are seeing this method being called more often than we would like due to a notification trigger not only when the cell's text field is selected, but when typed into.
+                    /// We are resetting these values so that the existing behaviour will still work, whereby these values are updated from delegate methods when they should be, but when the notification is
+                    /// called from text input, these won't be updated and therefore will remain as 0.0, and won't fall into this if statement and won't update the content offset of the stack scroll view.
+                    self.selectedCellYOrigin = 0.0
 //                    self.selectedCellHeight = 0.0
-//                }
+                }
             }
         }
     }
@@ -92,7 +101,7 @@ final class FormViewModel: ObservableObject {
             keyboardHeight = (height ?? 0)
         case .date:
             if #available(iOS 14.0, *) {
-                keyboardHeight = FormViewConstants.graphicalDatePickerHeight - FormViewConstants.vStackInsets.bottom
+                keyboardHeight = FormViewConstants.graphicalDatePickerHeight
             } else {
                 keyboardHeight = FormViewConstants.datePickerHeight
             }

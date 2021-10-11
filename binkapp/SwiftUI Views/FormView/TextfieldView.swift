@@ -23,6 +23,8 @@ struct TextfieldView: View {
     }
     
     var body: some View {
+        GeometryReader { proxy in
+
         VStack(alignment: .leading) {
             ZStack(alignment: .center) {
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
@@ -41,6 +43,7 @@ struct TextfieldView: View {
                                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                     formViewModel.formInputType = .choice(data: data)
                                     isEditing = true
+                                    formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
                                 } label: {
                                     TextField(data.first?.title ?? "", text: $value)
                                         .foregroundColor(Color(Current.themeManager.color(for: .text)))
@@ -71,6 +74,8 @@ struct TextfieldView: View {
                                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                     formViewModel.formInputType = .date
                                     isEditing = true
+                                    formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
+                                    print("selectedCellYOrigin position: \(formViewModel.selectedCellYOrigin)")
                                 } label: {
                                     TextField(field.placeholder, text: $value)
                                         .foregroundColor(Color(Current.themeManager.color(for: .text)))
@@ -104,6 +109,7 @@ struct TextfieldView: View {
                                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                     formViewModel.formInputType = .expiry(months: months, years: years)
                                     isEditing = true
+                                    formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
                                 } label: {
                                     TextField(field.placeholder, text: $value)
                                         .foregroundColor(Color(Current.themeManager.color(for: .text)))
@@ -278,9 +284,10 @@ struct TextfieldView: View {
                     .font(.custom(UIFont.textFieldExplainer.fontName, size: UIFont.textFieldExplainer.pointSize))
                     .foregroundColor(Color(.binkDynamicRed))
                     .padding(.leading)
-            }
-        }
-    }
+            } /// << ZStack
+        } /// << VStack
+        }.frame(height: 70)
+    } /// << Body
     
     // MARK: - Helper Methods
     

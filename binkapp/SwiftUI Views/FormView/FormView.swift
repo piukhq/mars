@@ -17,7 +17,6 @@ struct ViewOffsetKey: PreferenceKey {
     }
 }
 
-
 enum FormViewConstants {
     static let vStackInsets = EdgeInsets(top: 20, leading: 25, bottom: 150, trailing: 25)
     static let vStackSpacing: CGFloat = 20
@@ -32,7 +31,6 @@ struct FormView: View {
     @ObservedObject var viewModel: FormViewModel
     @State var pickerOneSelection = ""
     @State var pickerTwoSelection = ""
-    @State private var scrollOffset: CGFloat = 0
     
     var hyperlinkAttrString: NSAttributedString {
         return NSAttributedString(
@@ -65,14 +63,22 @@ struct FormView: View {
                     
                     // Textfields
                     ForEach(viewModel.datasource.visibleFields) { field in
-                        TextfieldView(field: field, viewModel: viewModel)
-                        .background(GeometryReader {
-                            Color.clear.preference(key: ViewOffsetKey.self, value: -$0.frame(in: .named("scroll")).origin.y)
-                        })
-                        .onPreferenceChange(ViewOffsetKey.self) {
-                            print("offset >> \($0)")
-                            viewModel.scrollViewOffset = $0
+                        GeometryReader { masterProxy in
+                            TextfieldView(field: field, viewModel: viewModel)
+                                .background(GeometryReader { proxy in
+                                    Color.clear.preference(key: ViewOffsetKey.self, value: -proxy.frame(in: .named("scroll")).origin.y)
+                                })
+                                .onPreferenceChange(ViewOffsetKey.self) {
+//                                    print("offset >> \($0)")
+                                    viewModel.scrollViewOffset = $0
+                                }
+                                .onTapGesture {
+                                    let pos = masterProxy.frame(in: .global).maxY
+                                    print("Textfield position: \(pos)")
+                                    viewModel.selectedCellYOrigin = pos
+                                }
                         }
+                        .frame(height: 70)
                     }
                     
                     FormFooterView(datasource: viewModel.datasource)
@@ -81,52 +87,43 @@ struct FormView: View {
             }
             .background(Color(Current.themeManager.color(for: .viewBackground)))
             .coordinateSpace(name: "scroll")
-//            .edgesIgnoringSafeArea(.bottom)
-//            .padding(.bottom, viewModel.keyboardHeight)
-            .offset(y: -scrollOffset)
+            .edgesIgnoringSafeArea(.bottom)
+            .offset(y: -viewModel.scrollViewOffsetForKeyboard)
             .onReceive(viewModel.$formInputType) { inputType in
-                withAnimation {
-                    self.scrollOffset = viewModel.keyboardHeight
+                if case .none = inputType {
+                    withAnimation {
+                        viewModel.scrollViewOffsetForKeyboard = 0
+                        return
+                    }
+                }
+                
+                let screenHeight = UIScreen.main.bounds.height
+                let visibleOffset = screenHeight - (viewModel.keyboardHeight + FormViewConstants.inputToolbarHeight)
+                if viewModel.selectedCellYOrigin > visibleOffset {
+                    withAnimation {
+                        let distanceFromSelectedCellToBottomOfScreen = screenHeight - viewModel.selectedCellYOrigin
+                        let distanceFromSelectedCellToTopOfKeyboard = viewModel.keyboardHeight - distanceFromSelectedCellToBottomOfScreen
+                        self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedCellToTopOfKeyboard + FormViewConstants.inputToolbarHeight + 20
+//                        self.viewModel.scrollViewOffsetForKeyboard = abs(viewModel.selectedCellYOrigin - viewModel.keyboardHeight + FormViewConstants.inputToolbarHeight)
+                    }
                 }
             }
-            .onReceive(Publishers.keyboardHeight, perform: {
-                if #available(iOS 14.0, *) {
-                    if $0 == 0.0 {
-                        self.viewModel.keyboardHeight = $0
-                    } else {
+//            .onReceive(Publishers.keyboardHeight, perform: {
+//                if #available(iOS 14.0, *) {
+//                    if $0 == 0.0 {
 //                        self.viewModel.keyboardHeight = $0
-//                        self.viewModel.setKeyboardHeight(height: $0)
-
-                    }
-                } else {
-                    self.viewModel.setKeyboardHeight(height: $0)
-                }
-            })
+//                    } else {
+////                        self.viewModel.keyboardHeight = $0
+////                        self.viewModel.setKeyboardHeight(height: $0)
+//
+//                    }
+//                } else {
+//                    self.viewModel.setKeyboardHeight(height: $0)
+//                }
+//            })
 //            .onReceive(Publishers.keyboardWillShow) { keyboardWillShow in
 //                if keyboardWillShow {
 //                    viewModel.pickerType = .keyboard
-//                }
-//            }
-            
-            // Keyboard Toolbar
-//            if viewModel.shouldShowTextfieldToolbar {
-//                VStack {
-//                    Spacer()
-//                    VStack {
-//                        InputToolbarView {
-//                            viewModel.formInputType = .none
-//                            viewModel.datasource.checkFormValidity()
-//                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-//                        }
-//                        .animation(.easeInOut(duration: 0.35))
-//                    }
-//                    if #available(iOS 14.0, *) {} else {
-//                        /// Required for iOS 13 to move toolbar with keyboard
-//                        if viewModel.shouldShowInputToolbarSpacer {
-//                            Spacer()
-//                                .frame(height: viewModel.keyboardHeight)
-//                        }
-//                    }
 //                }
 //            }
             
@@ -263,13 +260,4 @@ extension Publishers {
         return MergeMany(willShow, willHide)
             .eraseToAnyPublisher()
     }
-
 }
-
-//#if canImport(UIKit)
-//extension View {
-//    func hideKeyboard() {
-//        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-//    }
-//}
-//#endif
