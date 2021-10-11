@@ -27,6 +27,7 @@ final class FormViewModel: ObservableObject {
     var titleText: String?
     var descriptionText: String?
     var previousTextfieldValue = ""
+    var scrollViewOffset: CGFloat = 0
     let membershipPlan: CD_MembershipPlan?
     private let strings = PaymentCardScannerStrings()
 
@@ -37,6 +38,8 @@ final class FormViewModel: ObservableObject {
         self.membershipPlan = membershipPlan
         self.addPaymentCardViewModel = addPaymentCardViewModel
         self.paymentCard = addPaymentCardViewModel?.paymentCard
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
 
     var shouldShowTextfieldToolbar: Bool {
@@ -52,6 +55,34 @@ final class FormViewModel: ObservableObject {
             return true
         default:
             return false
+        }
+    }
+    
+    @objc func handleKeyboardWillShow(_ notification: Notification) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//            guard let self = self else { return }
+
+            if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                let keyboardRectangle = keyboardFrame.cgRectValue
+                let keyboardHeight1 = keyboardRectangle.height
+                let visibleOffset = UIScreen.main.bounds.height - keyboardHeight1
+                print("keyboard height: \(keyboardHeight1)")
+                print("visible offset: \(visibleOffset)")
+//                let cellVisibleOffset = self.selectedCellYOrigin + self.selectedCellHeight
+
+
+//                if cellVisibleOffset > visibleOffset {
+//                    let actualOffset = scrollViewOffset
+//                    let neededOffset = CGPoint(x: 0, y: Constants.offsetPadding + actualOffset + cellVisibleOffset - visibleOffset)
+//                    self.stackScrollView.setContentOffset(neededOffset, animated: true)
+//
+//                    /// From iOS 14, we are seeing this method being called more often than we would like due to a notification trigger not only when the cell's text field is selected, but when typed into.
+//                    /// We are resetting these values so that the existing behaviour will still work, whereby these values are updated from delegate methods when they should be, but when the notification is
+//                    /// called from text input, these won't be updated and therefore will remain as 0.0, and won't fall into this if statement and won't update the content offset of the stack scroll view.
+//                    self.selectedCellYOrigin = 0.0
+//                    self.selectedCellHeight = 0.0
+//                }
+            }
         }
     }
     

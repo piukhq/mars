@@ -9,6 +9,15 @@
 import Combine
 import SwiftUI
 
+struct ViewOffsetKey: PreferenceKey {
+    typealias Value = CGFloat
+    static var defaultValue = CGFloat.zero
+    static func reduce(value: inout Value, nextValue: () -> Value) {
+        value += nextValue()
+    }
+}
+
+
 enum FormViewConstants {
     static let vStackInsets = EdgeInsets(top: 20, leading: 25, bottom: 150, trailing: 25)
     static let vStackSpacing: CGFloat = 20
@@ -54,9 +63,16 @@ struct FormView: View {
                     
                     AttributedTextView(viewModel: viewModel)
                     
-                    // Textfields   
+                    // Textfields
                     ForEach(viewModel.datasource.visibleFields) { field in
                         TextfieldView(field: field, viewModel: viewModel)
+                        .background(GeometryReader {
+                            Color.clear.preference(key: ViewOffsetKey.self, value: -$0.frame(in: .named("scroll")).origin.y)
+                        })
+                        .onPreferenceChange(ViewOffsetKey.self) {
+                            print("offset >> \($0)")
+                            viewModel.scrollViewOffset = $0
+                        }
                     }
                     
                     FormFooterView(datasource: viewModel.datasource)
@@ -64,6 +80,7 @@ struct FormView: View {
                 .padding(FormViewConstants.vStackInsets)
             }
             .background(Color(Current.themeManager.color(for: .viewBackground)))
+            .coordinateSpace(name: "scroll")
 //            .edgesIgnoringSafeArea(.bottom)
 //            .padding(.bottom, viewModel.keyboardHeight)
             .offset(y: -scrollOffset)
