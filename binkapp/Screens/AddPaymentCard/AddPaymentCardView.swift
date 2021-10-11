@@ -24,5 +24,8 @@ struct AddPaymentCardView: View {
                 BinkButtonsStackView(buttons: [viewModel.primaryButton])
             }
         })
+        .onReceive(formViewModel.$datasource) { refreshedDataSource in
+            viewModel.buttonViewModel.datasource = refreshedDataSource
+        }
     }
 }

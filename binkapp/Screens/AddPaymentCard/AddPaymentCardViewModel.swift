@@ -22,7 +22,7 @@ final class AddPaymentCardViewModel: NSObject, ObservableObject {
     private let repository = PaymentWalletRepository()
     private let strings = PaymentCardScannerStrings()
     private let journey: AddPaymentCardJourney
-    private var buttonViewModel: ButtonViewModel
+    var buttonViewModel: ButtonViewModel
 
     var paymentCard: PaymentCardCreateModel // Exposed to allow realtime updating
     var datasource: FormDataSource
