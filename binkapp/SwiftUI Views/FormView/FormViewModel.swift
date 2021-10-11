@@ -157,7 +157,7 @@ extension FormViewModel: ScanDelegate {
         Current.navigate.close(animated: true) {
             let paymentCardCreateModel = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: viewModel.paymentCard.nameOnCard, month: month, year: year)
             viewModel.paymentCard = paymentCardCreateModel
-            self.datasource = FormDataSource(paymentCardCreateModel)
+            self.datasource = FormDataSource(paymentCardCreateModel, delegate: viewModel)
             self.datasource.checkFormValidity()
         }
     }
