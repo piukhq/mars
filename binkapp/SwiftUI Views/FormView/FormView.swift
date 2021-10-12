@@ -84,32 +84,29 @@ struct FormView: View {
                         withAnimation {
                             let distanceFromSelectedTextfieldToBottomOfScreen = screenHeight - viewModel.selectedTextfieldYOrigin
                             let distanceFromSelectedTextfieldToTopOfKeyboard = viewModel.keyboardHeight - distanceFromSelectedTextfieldToBottomOfScreen
+                            let neededOffset = distanceFromSelectedTextfieldToTopOfKeyboard + FormViewConstants.scrollViewOffsetBuffer
+                            var iOS13Buffer: CGFloat = 0.0
+                            if #available(iOS 14.0, *) {} else {
+                                iOS13Buffer += 65
+                            }
                             
                             if case .keyboard = inputType {
                                 if self.viewModel.scrollViewOffsetForKeyboard != 0.0 {
-                                    // Next button on keyboard tapped
-                                    let neededOffset = distanceFromSelectedTextfieldToTopOfKeyboard + self.viewModel.scrollViewOffsetForKeyboard + FormViewConstants.scrollViewOffsetBuffer
-                                    if neededOffset > viewModel.keyboardHeight {
+                                    // Next button on keyboard tapped, add new offset to previous offset
+                                    let combinedOffsets = neededOffset + self.viewModel.scrollViewOffsetForKeyboard
+                                    if combinedOffsets > viewModel.keyboardHeight {
                                         self.viewModel.scrollViewOffsetForKeyboard = viewModel.keyboardHeight - FormViewConstants.scrollViewOffsetBuffer
                                     } else {
-                                        self.viewModel.scrollViewOffsetForKeyboard = neededOffset
+                                        self.viewModel.scrollViewOffsetForKeyboard = combinedOffsets
                                     }
                                 } else {
                                     // Textfield has been selected by user
-                                    if #available(iOS 14.0, *) {
-                                        self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedTextfieldToTopOfKeyboard + FormViewConstants.scrollViewOffsetBuffer
-                                    } else {
-                                        self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedTextfieldToTopOfKeyboard + FormViewConstants.scrollViewOffsetBuffer + 65
-                                    }
+                                    self.viewModel.scrollViewOffsetForKeyboard = neededOffset + iOS13Buffer
                                     self.viewModel.vStackInsets = FormViewConstants.vStackInsetsForKeyboard
                                 }
                             } else {
                                 // Pickers
-                                if #available(iOS 14.0, *) {
-                                    self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedTextfieldToTopOfKeyboard + FormViewConstants.inputToolbarHeight + FormViewConstants.scrollViewOffsetBuffer
-                                } else {
-                                    self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedTextfieldToTopOfKeyboard + FormViewConstants.inputToolbarHeight + FormViewConstants.scrollViewOffsetBuffer + 65
-                                }
+                                self.viewModel.scrollViewOffsetForKeyboard = neededOffset + FormViewConstants.inputToolbarHeight + iOS13Buffer
                             }
                         }
                     } else {
