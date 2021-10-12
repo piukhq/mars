@@ -320,7 +320,7 @@ internal enum L10n {
   internal static let magicLinkErrorMessage = L10n.tr("Localizable", "magic_link_error_message")
   /// Continue with email
   internal static let magicLinkTitle = L10n.tr("Localizable", "magic_link_title")
-  /// Opt in to receive marketing messages
+  /// Opt in to receive marketing messages.
   internal static let marketingTitle = L10n.tr("Localizable", "marketing_title")
   /// minute
   internal static let minute = L10n.tr("Localizable", "minute")
