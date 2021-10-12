@@ -66,57 +66,6 @@ struct FormView: View {
             .background(Color(Current.themeManager.color(for: .viewBackground)))
             .edgesIgnoringSafeArea(.bottom)
             .offset(y: -viewModel.scrollViewOffsetForKeyboard)
-            .onReceive(viewModel.$formInputType) { inputType in
-                guard viewModel.didLayoutViews else {
-                    viewModel.didLayoutViews = true /// Prevents view animating on first load on iOS 13
-                    return
-                }
-                if case .none = inputType {
-                    withAnimation {
-                        viewModel.vStackInsets = FormViewConstants.vStackInsets
-                        viewModel.scrollViewOffsetForKeyboard = 0
-                        return
-                    }
-                } else {
-                    let screenHeight = UIScreen.main.bounds.height
-                    let visibleOffset = screenHeight - (viewModel.keyboardHeight + FormViewConstants.inputToolbarHeight)
-                    if viewModel.selectedTextfieldYOrigin > visibleOffset {
-                        withAnimation {
-                            let distanceFromSelectedTextfieldToBottomOfScreen = screenHeight - viewModel.selectedTextfieldYOrigin
-                            let distanceFromSelectedTextfieldToTopOfKeyboard = viewModel.keyboardHeight - distanceFromSelectedTextfieldToBottomOfScreen
-                            let neededOffset = distanceFromSelectedTextfieldToTopOfKeyboard + FormViewConstants.scrollViewOffsetBuffer
-                            var iOS13Buffer: CGFloat = 0.0
-                            if #available(iOS 14.0, *) {} else {
-                                iOS13Buffer += 65
-                            }
-                            
-                            if case .keyboard = inputType {
-                                if self.viewModel.scrollViewOffsetForKeyboard != 0.0 {
-                                    // Next button on keyboard tapped, add new offset to previous offset
-                                    let combinedOffsets = neededOffset + self.viewModel.scrollViewOffsetForKeyboard
-                                    if combinedOffsets > viewModel.keyboardHeight {
-                                        self.viewModel.scrollViewOffsetForKeyboard = viewModel.keyboardHeight - FormViewConstants.scrollViewOffsetBuffer
-                                    } else {
-                                        self.viewModel.scrollViewOffsetForKeyboard = combinedOffsets
-                                    }
-                                } else {
-                                    // Textfield has been selected by user
-                                    self.viewModel.scrollViewOffsetForKeyboard = neededOffset + iOS13Buffer
-                                    self.viewModel.vStackInsets = FormViewConstants.vStackInsetsForKeyboard
-                                }
-                            } else {
-                                // Pickers
-                                self.viewModel.scrollViewOffsetForKeyboard = neededOffset + FormViewConstants.inputToolbarHeight + iOS13Buffer
-                            }
-                        }
-                    } else {
-                        // Selected textfield is visible, but still add padding to vStack so user can scroll to see content below, hidden by keyboard
-                        withAnimation {
-                            self.viewModel.vStackInsets = FormViewConstants.vStackInsetsForKeyboard
-                        }
-                    }
-                }
-            }
             
             if case .date = viewModel.formInputType {
                 if #available(iOS 14.0, *) {

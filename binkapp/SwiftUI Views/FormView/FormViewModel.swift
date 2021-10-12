@@ -26,6 +26,7 @@ final class FormViewModel: ObservableObject {
     @Published var formInputType: FormInputType = .none {
         didSet {
             setKeyboardHeight()
+            handleKeyboardOffset()
             print(keyboardHeight)
         }
     }
@@ -87,7 +88,7 @@ final class FormViewModel: ObservableObject {
         formInputType = .none
     }
     
-    func setKeyboardHeight(height: CGFloat? = nil) {
+    private func setKeyboardHeight(height: CGFloat? = nil) {
         switch formInputType {
         case .keyboard, .secureEntry:
             break
@@ -103,6 +104,50 @@ final class FormViewModel: ObservableObject {
             keyboardHeight = FormViewConstants.expiryDatePickerHeight
         case .none:
             keyboardHeight = 0
+        }
+    }
+    
+    private func handleKeyboardOffset() {
+        withAnimation {
+            if case .none = formInputType {
+                vStackInsets = FormViewConstants.vStackInsets
+                scrollViewOffsetForKeyboard = 0
+                return
+            } else {
+                let screenHeight = UIScreen.main.bounds.height
+                let visibleOffset = screenHeight - (keyboardHeight + FormViewConstants.inputToolbarHeight)
+                if selectedTextfieldYOrigin > visibleOffset {
+                    let distanceFromSelectedTextfieldToBottomOfScreen = screenHeight - selectedTextfieldYOrigin
+                    let distanceFromSelectedTextfieldToTopOfKeyboard = keyboardHeight - distanceFromSelectedTextfieldToBottomOfScreen
+                    let neededOffset = distanceFromSelectedTextfieldToTopOfKeyboard + FormViewConstants.scrollViewOffsetBuffer
+                    var iOS13Buffer: CGFloat = 0.0
+                    if #available(iOS 14.0, *) {} else {
+                        iOS13Buffer += 65
+                    }
+                    
+                    if case .keyboard = formInputType {
+                        if scrollViewOffsetForKeyboard != 0.0 {
+                            // Next button on keyboard tapped, add new offset to previous offset
+                            let combinedOffsets = neededOffset + scrollViewOffsetForKeyboard
+                            if combinedOffsets > keyboardHeight {
+                                scrollViewOffsetForKeyboard = keyboardHeight - FormViewConstants.scrollViewOffsetBuffer
+                            } else {
+                                scrollViewOffsetForKeyboard = combinedOffsets
+                            }
+                        } else {
+                            // Textfield has been selected by user
+                            scrollViewOffsetForKeyboard = neededOffset + iOS13Buffer
+                            vStackInsets = FormViewConstants.vStackInsetsForKeyboard
+                        }
+                    } else {
+                        // Pickers
+                        scrollViewOffsetForKeyboard = neededOffset + FormViewConstants.inputToolbarHeight + iOS13Buffer
+                    }
+                } else {
+                    // Selected textfield is visible, but still add padding to vStack so user can scroll to see content below, hidden by keyboard
+                    vStackInsets = FormViewConstants.vStackInsetsForKeyboard
+                }
+            }
         }
     }
     
