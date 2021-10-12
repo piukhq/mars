@@ -34,7 +34,7 @@ enum ViewControllerFactory {
     
     static func makeAddPaymentCardViewController(model: PaymentCardCreateModel? = nil, journey: AddPaymentCardJourney) -> UIViewController {
         let viewModel = AddPaymentCardViewModel(paymentCard: model, journey: journey)
-        return CustomUIHostingController(rootView: AddPaymentCardView(viewModel: viewModel), screenName: .addPaymentCard)
+        return BinkUIHostingController(rootView: AddPaymentCardView(viewModel: viewModel), screenName: .addPaymentCard)
     }
     
     static func makeAddOrJoinViewController(membershipPlan: CD_MembershipPlan, membershipCard: CD_MembershipCard? = nil) -> AddOrJoinViewController {
@@ -44,7 +44,7 @@ enum ViewControllerFactory {
     
     static func makeAuthAndAddViewController(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) -> UIViewController {
         let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, prefilledFormValues: prefilledFormValues)
-        return CustomUIHostingController(rootView: AuthAndAddView(viewModel: viewModel), screenName: setScreenName(for: formPurpose))
+        return BinkUIHostingController(rootView: AuthAndAddView(viewModel: viewModel), screenName: setScreenName(for: formPurpose))
     }
     
     static func makePaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration) -> ReusableTemplateViewController {
@@ -62,12 +62,12 @@ enum ViewControllerFactory {
     
     static func makePatchGhostCardViewController(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) -> UIViewController {
         let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: .patchGhostCard, existingMembershipCard: existingMembershipCard)
-        return CustomUIHostingController(rootView: AuthAndAddView(viewModel: viewModel), screenName: setScreenName(for: .patchGhostCard))
+        return BinkUIHostingController(rootView: AuthAndAddView(viewModel: viewModel), screenName: setScreenName(for: .patchGhostCard))
     }
     
     static func makeSignUpViewController(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) -> UIViewController {
         let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: .signUp, existingMembershipCard: existingMembershipCard)
-        return CustomUIHostingController(rootView: AuthAndAddView(viewModel: viewModel), screenName: setScreenName(for: .signUp))
+        return BinkUIHostingController(rootView: AuthAndAddView(viewModel: viewModel), screenName: setScreenName(for: .signUp))
     }
     
     // MARK: - Loyalty Card Detail
@@ -160,7 +160,7 @@ enum ViewControllerFactory {
     }
 
     static func makeSocialTermsAndConditionsViewController(requestType: LoginRequestType) -> UIViewController {
-        return CustomUIHostingController(rootView: TermsAndConditionsView(requestType: requestType))
+        return BinkUIHostingController(rootView: TermsAndConditionsView(requestType: requestType))
     }
     
     static func makeLoginSuccessViewController() -> LoginSuccessViewController {
@@ -168,11 +168,11 @@ enum ViewControllerFactory {
     }
 
     static func makeLoginViewController() -> UIViewController {
-        return CustomUIHostingController(rootView: LoginView(), screenName: .login)
+        return BinkUIHostingController(rootView: LoginView(), screenName: .login)
     }
 
     static func makeForgottenPasswordViewController() -> UIViewController {
-        return CustomUIHostingController(rootView: ForgotPasswordView())
+        return BinkUIHostingController(rootView: ForgotPasswordView())
     }
     
     // MARK: - Local Points Collection
@@ -287,7 +287,7 @@ enum ViewControllerFactory {
 
     static func makeDebugViewController() -> UIViewController {
         if #available(iOS 14.0, *) {
-            return CustomUIHostingController(rootView: DebugMenuView())
+            return BinkUIHostingController(rootView: DebugMenuView())
         } else {
             let debugMenuFactory = DebugMenuFactory()
             let debugMenuViewModel = DebugMenuViewModel(debugMenuFactory: debugMenuFactory)

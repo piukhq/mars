@@ -10,7 +10,7 @@ import SwiftUI
 import FirebaseAnalytics
 
 
-class CustomUIHostingController<Content>: UIHostingController<Content> where Content: View {
+class BinkUIHostingController<Content>: UIHostingController<Content> where Content: View {
     override init(rootView: Content) {
         super.init(rootView: rootView)
     }

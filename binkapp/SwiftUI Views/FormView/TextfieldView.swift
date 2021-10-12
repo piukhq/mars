@@ -42,7 +42,7 @@ struct TextfieldView: View {
                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                         formViewModel.formInputType = .choice(data: data)
                                         isEditing = true
-                                        formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
+                                        formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY
                                     } label: {
                                         TextField(data.first?.title ?? "", text: $value)
                                             .foregroundColor(Color(Current.themeManager.color(for: .text)))
@@ -76,7 +76,7 @@ struct TextfieldView: View {
                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                         formViewModel.formInputType = .date
                                         isEditing = true
-                                        formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
+                                        formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY
                                     } label: {
                                         TextField(field.placeholder, text: $value)
                                             .foregroundColor(Color(Current.themeManager.color(for: .text)))
@@ -113,7 +113,7 @@ struct TextfieldView: View {
                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                         formViewModel.formInputType = .expiry(months: months, years: years)
                                         isEditing = true
-                                        formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
+                                        formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY
                                     } label: {
                                         TextField(field.placeholder, text: $value)
                                             .foregroundColor(Color(Current.themeManager.color(for: .text)))
@@ -154,8 +154,7 @@ struct TextfieldView: View {
                                     isEditing = true
                                     formViewModel.datasource.checkFormValidity()
                                     canShowErrorState = !field.isValid() && !value.isEmpty
-//                                    formViewModel.formInputType = .keyboard
-                                    formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
+                                    formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY
 
                                     if formViewModel.textFields.first(where: { $0.value == textField })?.key == formViewModel.textFields.count - 1 {
                                         textField.returnKeyType = .done
@@ -167,16 +166,12 @@ struct TextfieldView: View {
                                     formViewModel.datasource.checkFormValidity()
                                     canShowErrorState = !field.isValid() && !value.isEmpty
                                     field.fieldWasExited()
-//                                    formViewModel.formInputType = .none
                                 }, onCommit: { textField in
                                     canShowErrorState = true
-                                    
                                     guard let key = formViewModel.textFields.first(where: { $0.value == textField })?.key else { return }
                                     
                                     if let nextTextField = formViewModel.textFields[key + 1] {
                                         nextTextField.becomeFirstResponder()
-                                        
-                                        // If next button tapped, add new offset onto existing one?
                                     } else {
                                         textField.resignFirstResponder()
                                         formViewModel.formInputType = .none

@@ -12,9 +12,10 @@ import SwiftUI
 enum FormViewConstants {
     static let vStackInsets = EdgeInsets(top: 20, leading: 25, bottom: 150, trailing: 25)
     static let vStackSpacing: CGFloat = 20
+    static let scrollViewOffsetBuffer: CGFloat = 20
     static let inputToolbarHeight: CGFloat = 44
     static let multipleChoicePickerHeight: CGFloat = 200
-    static let graphicalDatePickerHeight: CGFloat = 450
+    static let graphicalDatePickerHeight: CGFloat = UIDevice.current.isSmallSize ? 370 : 450
     static let datePickerHeight: CGFloat = 230
     static let expiryDatePickerHeight: CGFloat = 180
 }
@@ -70,28 +71,33 @@ struct FormView: View {
                         viewModel.scrollViewOffsetForKeyboard = 0
                         return
                     }
-                } else if case .keyboard = inputType {
+                } else {
                     let screenHeight = UIScreen.main.bounds.height
                     let visibleOffset = screenHeight - (viewModel.keyboardHeight + FormViewConstants.inputToolbarHeight)
-                    if viewModel.selectedCellYOrigin > visibleOffset {
+                    if viewModel.selectedTextfieldYOrigin > visibleOffset {
                         withAnimation {
-                            let distanceFromSelectedCellToBottomOfScreen = screenHeight - viewModel.selectedCellYOrigin
-                            let distanceFromSelectedCellToTopOfKeyboard = viewModel.keyboardHeight - distanceFromSelectedCellToBottomOfScreen
+                            let distanceFromSelectedTextfieldToBottomOfScreen = screenHeight - viewModel.selectedTextfieldYOrigin
+                            let distanceFromSelectedTextfieldToTopOfKeyboard = viewModel.keyboardHeight - distanceFromSelectedTextfieldToBottomOfScreen
                             
                             if case .keyboard = inputType {
                                 if self.viewModel.scrollViewOffsetForKeyboard != 0.0 {
-                                    self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedCellToTopOfKeyboard + self.viewModel.scrollViewOffsetForKeyboard
+                                    // Next button on keyboard tapped
+                                    let neededOffset = distanceFromSelectedTextfieldToTopOfKeyboard + self.viewModel.scrollViewOffsetForKeyboard + FormViewConstants.scrollViewOffsetBuffer
+                                    if neededOffset > viewModel.keyboardHeight {
+                                        self.viewModel.scrollViewOffsetForKeyboard = viewModel.keyboardHeight - FormViewConstants.scrollViewOffsetBuffer
+                                    } else {
+                                        self.viewModel.scrollViewOffsetForKeyboard = neededOffset
+                                    }
                                 } else {
-                                    self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedCellToTopOfKeyboard + 20
+                                    self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedTextfieldToTopOfKeyboard + FormViewConstants.scrollViewOffsetBuffer
                                 }
                             } else {
-                                self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedCellToTopOfKeyboard + FormViewConstants.inputToolbarHeight
+                                // Pickers
+                                self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedTextfieldToTopOfKeyboard + FormViewConstants.inputToolbarHeight + FormViewConstants.scrollViewOffsetBuffer
                             }
                         }
                     }
                 }
-                
-
             }
             
             if case .date = viewModel.formInputType {
