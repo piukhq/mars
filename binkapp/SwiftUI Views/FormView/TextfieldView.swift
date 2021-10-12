@@ -154,7 +154,7 @@ struct TextfieldView: View {
                                     isEditing = true
                                     formViewModel.datasource.checkFormValidity()
                                     canShowErrorState = !field.isValid() && !value.isEmpty
-                                    formViewModel.formInputType = .keyboard(title: field.title)
+//                                    formViewModel.formInputType = .keyboard
                                     formViewModel.selectedCellYOrigin = proxy.frame(in: .global).maxY
 
                                     if formViewModel.textFields.first(where: { $0.value == textField })?.key == formViewModel.textFields.count - 1 {
@@ -167,17 +167,19 @@ struct TextfieldView: View {
                                     formViewModel.datasource.checkFormValidity()
                                     canShowErrorState = !field.isValid() && !value.isEmpty
                                     field.fieldWasExited()
-                                    formViewModel.formInputType = .none
+//                                    formViewModel.formInputType = .none
                                 }, onCommit: { textField in
                                     canShowErrorState = true
-                                    formViewModel.formInputType = .none
                                     
                                     guard let key = formViewModel.textFields.first(where: { $0.value == textField })?.key else { return }
                                     
                                     if let nextTextField = formViewModel.textFields[key + 1] {
                                         nextTextField.becomeFirstResponder()
+                                        
+                                        // If next button tapped, add new offset onto existing one?
                                     } else {
                                         textField.resignFirstResponder()
+                                        formViewModel.formInputType = .none
                                     }
                                 }, clearButtonTapped: {
                                     formViewModel.textFieldClearButtonTapped = true

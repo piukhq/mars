@@ -85,30 +85,6 @@ struct TextfieldUIK: UIViewRepresentable {
         func setup(_ textField: UITextField) {
             textField.addTarget(self, action: #selector(textFieldUpdated), for: .editingChanged)
             textField.inputAccessoryView = inputAccessory
-            
-//            if case .expiry(_, _) = parent.field.fieldType {
-//    //            textField.inputView = FormMultipleChoiceInput(with: [months, years], delegate: self)
-//            } else if case let .choice(data) = parent.field.fieldType {
-//                textField.inputView = FormMultipleChoiceInput(with: [data], delegate: self)
-////                pickerSelectedChoice = data.first?.title
-////                formField?.updateValue(pickerSelectedChoice)
-//            } else if case .date = parent.field.fieldType {
-//                let datePicker = UIDatePicker()
-//                datePicker.datePickerMode = .date
-//                datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
-//
-//                if #available(iOS 14.0, *) {
-//                    datePicker.preferredDatePickerStyle = .inline
-//                    datePicker.backgroundColor = Current.themeManager.color(for: .viewBackground)
-//                    datePicker.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 400)
-//                }
-//
-//                textField.inputView = datePicker
-//                pickerSelectedChoice = datePicker.date.getFormattedString(format: .dayShortMonthYearWithSlash)
-//                parent.field.updateValue(pickerSelectedChoice)
-//            } else {
-//                textField.inputView = nil
-//            }
         }
         
         

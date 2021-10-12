@@ -9,14 +9,6 @@
 import Combine
 import SwiftUI
 
-struct ViewOffsetKey: PreferenceKey {
-    typealias Value = CGFloat
-    static var defaultValue = CGFloat.zero
-    static func reduce(value: inout Value, nextValue: () -> Value) {
-        value += nextValue()
-    }
-}
-
 enum FormViewConstants {
     static let vStackInsets = EdgeInsets(top: 20, leading: 25, bottom: 150, trailing: 25)
     static let vStackSpacing: CGFloat = 20
@@ -61,15 +53,8 @@ struct FormView: View {
                     
                     AttributedTextView(viewModel: viewModel)
                     
-                    // Textfields
                     ForEach(viewModel.datasource.visibleFields) { field in
                         TextfieldView(field: field, viewModel: viewModel)
-                            .background(GeometryReader { proxy in
-                                Color.clear.preference(key: ViewOffsetKey.self, value: -proxy.frame(in: .named("scroll")).origin.y)
-                            })
-                            .onPreferenceChange(ViewOffsetKey.self) {
-                                viewModel.scrollViewOffset = $0
-                            }
                     }
                     
                     FormFooterView(datasource: viewModel.datasource)
@@ -77,7 +62,6 @@ struct FormView: View {
                 .padding(FormViewConstants.vStackInsets)
             }
             .background(Color(Current.themeManager.color(for: .viewBackground)))
-            .coordinateSpace(name: "scroll")
             .edgesIgnoringSafeArea(.bottom)
             .offset(y: -viewModel.scrollViewOffsetForKeyboard)
             .onReceive(viewModel.$formInputType) { inputType in
@@ -86,22 +70,28 @@ struct FormView: View {
                         viewModel.scrollViewOffsetForKeyboard = 0
                         return
                     }
-                }
-                
-                let screenHeight = UIScreen.main.bounds.height
-                let visibleOffset = screenHeight - (viewModel.keyboardHeight + FormViewConstants.inputToolbarHeight)
-                if viewModel.selectedCellYOrigin > visibleOffset {
-                    withAnimation {
-                        let distanceFromSelectedCellToBottomOfScreen = screenHeight - viewModel.selectedCellYOrigin
-                        let distanceFromSelectedCellToTopOfKeyboard = viewModel.keyboardHeight - distanceFromSelectedCellToBottomOfScreen
-                        
-                        if case .keyboard = inputType {
-                            self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedCellToTopOfKeyboard + 20
-                        } else {
-                            self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedCellToTopOfKeyboard + FormViewConstants.inputToolbarHeight
+                } else if case .keyboard = inputType {
+                    let screenHeight = UIScreen.main.bounds.height
+                    let visibleOffset = screenHeight - (viewModel.keyboardHeight + FormViewConstants.inputToolbarHeight)
+                    if viewModel.selectedCellYOrigin > visibleOffset {
+                        withAnimation {
+                            let distanceFromSelectedCellToBottomOfScreen = screenHeight - viewModel.selectedCellYOrigin
+                            let distanceFromSelectedCellToTopOfKeyboard = viewModel.keyboardHeight - distanceFromSelectedCellToBottomOfScreen
+                            
+                            if case .keyboard = inputType {
+                                if self.viewModel.scrollViewOffsetForKeyboard != 0.0 {
+                                    self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedCellToTopOfKeyboard + self.viewModel.scrollViewOffsetForKeyboard
+                                } else {
+                                    self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedCellToTopOfKeyboard + 20
+                                }
+                            } else {
+                                self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedCellToTopOfKeyboard + FormViewConstants.inputToolbarHeight
+                            }
                         }
                     }
                 }
+                
+
             }
             
             if case .date = viewModel.formInputType {
@@ -193,7 +183,6 @@ struct FormView: View {
 let shouldChangeBlock: FormField.TextFieldShouldChange = { (_, _, _, _) in
     return false
 }
-
 let field1 = FormField(title: "Email", placeholder: "Enter your email bitch", validation: "", fieldType: .email, updated: { _, _ in }, shouldChange: shouldChangeBlock, fieldExited: { _ in })
 let datasourceMock = FormDataSource(PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil))
 
@@ -203,37 +192,9 @@ struct BinkFormView_Previews: PreviewProvider {
             ZStack {
                 Rectangle()
                     .foregroundColor(Color(UIColor.grey10))
-                BinkFormView(viewModel: FormViewModel(datasource: datasourceMock, title: "Title text", description: "Im a description", membershipPlan: nil, colorScheme: ColorScheme.light))
+                FormView(viewModel: FormViewModel(datasource: datasourceMock, title: "Title text", description: "Im a description", membershipPlan: nil))
                     .preferredColorScheme(.light)
             }
         }
-    }
-}
-
-extension Publishers {
-    static var keyboardHeight: AnyPublisher<CGFloat, Never> {
-        let willShow = NotificationCenter.default.publisher(for: UIApplication.keyboardWillShowNotification)
-            .map { $0.keyboardHeight }
-
-        let willHide = NotificationCenter.default.publisher(for: UIApplication.keyboardWillHideNotification)
-            .map { _ in CGFloat(0) }
-
-        return MergeMany(willShow, willHide)
-            .eraseToAnyPublisher()
-    }
-    
-    static var keyboardWillShow: AnyPublisher<Bool, Never> {
-        let willShow = NotificationCenter.default.publisher(for: UIApplication.keyboardWillShowNotification)
-            .map { _ in
-                return true
-            }
-
-        let willHide = NotificationCenter.default.publisher(for: UIApplication.keyboardWillHideNotification)
-            .map { _ in
-                return false
-            }
-
-        return MergeMany(willShow, willHide)
-            .eraseToAnyPublisher()
     }
 }
