@@ -95,16 +95,28 @@ struct FormView: View {
                                         self.viewModel.scrollViewOffsetForKeyboard = neededOffset
                                     }
                                 } else {
-                                    self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedTextfieldToTopOfKeyboard + FormViewConstants.scrollViewOffsetBuffer
+                                    // Textfield has been selected by user
+                                    if #available(iOS 14.0, *) {
+                                        self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedTextfieldToTopOfKeyboard + FormViewConstants.scrollViewOffsetBuffer
+                                    } else {
+                                        self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedTextfieldToTopOfKeyboard + FormViewConstants.scrollViewOffsetBuffer + 65
+                                    }
+                                    self.viewModel.vStackInsets = FormViewConstants.vStackInsetsForKeyboard
                                 }
                             } else {
                                 // Pickers
-                                self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedTextfieldToTopOfKeyboard + FormViewConstants.inputToolbarHeight + FormViewConstants.scrollViewOffsetBuffer
+                                if #available(iOS 14.0, *) {
+                                    self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedTextfieldToTopOfKeyboard + FormViewConstants.inputToolbarHeight + FormViewConstants.scrollViewOffsetBuffer
+                                } else {
+                                    self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedTextfieldToTopOfKeyboard + FormViewConstants.inputToolbarHeight + FormViewConstants.scrollViewOffsetBuffer + 65
+                                }
                             }
                         }
                     } else {
                         // Selected textfield is visible, but still add padding to vStack so user can scroll to see content below, hidden by keyboard
-                        self.viewModel.vStackInsets = FormViewConstants.vStackInsetsForKeyboard
+                        withAnimation {
+                            self.viewModel.vStackInsets = FormViewConstants.vStackInsetsForKeyboard
+                        }
                     }
                 }
             }
