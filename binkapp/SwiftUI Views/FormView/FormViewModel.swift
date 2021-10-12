@@ -17,6 +17,7 @@ final class FormViewModel: ObservableObject {
     @Published var keyboardHeight: CGFloat = 0
     @Published var textFields: [Int: UITextField] = [:]
     @Published var textFieldClearButtonTapped: Bool?
+    @Published var vStackInsets = FormViewConstants.vStackInsets
     @Published var scrollViewOffsetForKeyboard: CGFloat = 0 {
         didSet {
             print("scrollViewOffsetForKeyboard: \(scrollViewOffsetForKeyboard)")
@@ -32,6 +33,7 @@ final class FormViewModel: ObservableObject {
     var titleText: String?
     var descriptionText: String?
     var previousTextfieldValue = ""
+    var didLayoutViews = false
     var scrollViewOffset: CGFloat = 0
     var selectedTextfieldYOrigin: CGFloat = 0 {
         didSet {

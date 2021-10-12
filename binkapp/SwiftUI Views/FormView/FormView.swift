@@ -11,6 +11,7 @@ import SwiftUI
 
 enum FormViewConstants {
     static let vStackInsets = EdgeInsets(top: 20, leading: 25, bottom: 150, trailing: 25)
+    static let vStackInsetsForKeyboard = EdgeInsets(top: 20, leading: 25, bottom: 350, trailing: 25)
     static let vStackSpacing: CGFloat = 20
     static let scrollViewOffsetBuffer: CGFloat = 20
     static let inputToolbarHeight: CGFloat = 44
@@ -60,14 +61,19 @@ struct FormView: View {
                     
                     FormFooterView(datasource: viewModel.datasource)
                 }
-                .padding(FormViewConstants.vStackInsets)
+                .padding(viewModel.vStackInsets)
             }
             .background(Color(Current.themeManager.color(for: .viewBackground)))
             .edgesIgnoringSafeArea(.bottom)
             .offset(y: -viewModel.scrollViewOffsetForKeyboard)
             .onReceive(viewModel.$formInputType) { inputType in
+                guard viewModel.didLayoutViews else {
+                    viewModel.didLayoutViews = true /// Prevents view animating on first load on iOS 13
+                    return
+                }
                 if case .none = inputType {
                     withAnimation {
+                        viewModel.vStackInsets = FormViewConstants.vStackInsets
                         viewModel.scrollViewOffsetForKeyboard = 0
                         return
                     }
@@ -96,6 +102,9 @@ struct FormView: View {
                                 self.viewModel.scrollViewOffsetForKeyboard = distanceFromSelectedTextfieldToTopOfKeyboard + FormViewConstants.inputToolbarHeight + FormViewConstants.scrollViewOffsetBuffer
                             }
                         }
+                    } else {
+                        // Selected textfield is visible, but still add padding to vStack so user can scroll to see content below, hidden by keyboard
+                        self.viewModel.vStackInsets = FormViewConstants.vStackInsetsForKeyboard
                     }
                 }
             }
