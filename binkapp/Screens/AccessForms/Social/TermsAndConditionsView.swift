@@ -14,18 +14,15 @@ enum LoginRequestType {
 
 struct TermsAndConditionsView: View {
     private var continueButton: BinkButtonView {
-        return BinkButtonView(viewModel: buttonViewModel, buttonTapped: continueButtonTapped, type: .gradient)
+        return BinkButtonView(viewModel: viewModel.buttonViewModel, buttonTapped: viewModel.continueButtonTapped, type: .gradient)
     }
     
     @State private var formViewModel: FormViewModel
-    private let datasource = FormDataSource(accessForm: .termsAndConditions)
-    private let buttonViewModel: ButtonViewModel
-    private let requestType: LoginRequestType
+    private let viewModel: TermsAndConditionsViewModel
     
     init(requestType: LoginRequestType) {
-        self.requestType = requestType
-        formViewModel = FormViewModel(datasource: datasource, title: L10n.socialTandcsTitle, description: L10n.socialTandcsSubtitle)
-        buttonViewModel = ButtonViewModel(datasource: datasource, title: L10n.continueButtonTitle)
+        viewModel = TermsAndConditionsViewModel(requestType: requestType)
+        formViewModel = FormViewModel(datasource: viewModel.datasource, title: L10n.socialTandcsTitle, description: L10n.socialTandcsSubtitle)
     }
     
     var body: some View {
@@ -35,45 +32,6 @@ struct TermsAndConditionsView: View {
                 BinkButtonsStackView(buttons: [continueButton])
             }
         })
-    }
-    
-    private func continueButtonTapped() {
-        buttonViewModel.isLoading = true
-        switch requestType {
-        case .apple(let request):
-            Current.loginController.loginWithApple(request: request, withPreferences: preferenceValues) { error in
-                guard error == nil else {
-                    self.handleAuthError()
-                    return
-                }
-            }
-        }
-    }
-    
-    private var preferenceValues: [String: String] {
-        var params: [String: String] = [:]
-
-        let preferences = datasource.checkboxes.filter { $0.columnKind == .userPreference }
-        preferences.forEach {
-            if let columnName = $0.columnName {
-                params[columnName] = $0.value
-            }
-        }
-
-        return params
-    }
-    
-    private func handleAuthError() {
-        Current.userManager.removeUser()
-        buttonViewModel.isLoading = false
-        showError()
-    }
-    
-    private func showError() {
-        let alert = BinkAlertController(title: L10n.errorTitle, message: L10n.socialTandcsSiwaError, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: L10n.ok, style: .default))
-        let navigationRequest = AlertNavigationRequest(alertController: alert)
-        Current.navigate.to(navigationRequest)
     }
 }
 
