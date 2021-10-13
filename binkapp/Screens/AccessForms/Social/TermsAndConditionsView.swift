@@ -14,7 +14,7 @@ enum LoginRequestType {
 
 struct TermsAndConditionsView: View {
     private var continueButton: BinkButtonView {
-        return BinkButtonView(viewModel: buttonViewModel, title: L10n.continueButtonTitle, buttonTapped: continueButtonTapped, type: .gradient)
+        return BinkButtonView(viewModel: buttonViewModel, buttonTapped: continueButtonTapped, type: .gradient)
     }
     
     @State private var formViewModel: FormViewModel
@@ -25,7 +25,7 @@ struct TermsAndConditionsView: View {
     init(requestType: LoginRequestType) {
         self.requestType = requestType
         formViewModel = FormViewModel(datasource: datasource, title: L10n.socialTandcsTitle, description: L10n.socialTandcsSubtitle)
-        buttonViewModel = ButtonViewModel(datasource: datasource)
+        buttonViewModel = ButtonViewModel(datasource: datasource, title: L10n.continueButtonTitle)
     }
     
     var body: some View {

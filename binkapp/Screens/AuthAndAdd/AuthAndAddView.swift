@@ -14,12 +14,12 @@ struct AuthAndAddView: View {
 
     private let buttonViewModel: ButtonViewModel
     private var primaryButton: BinkButtonView {
-        return BinkButtonView(viewModel: buttonViewModel, title: viewModel.buttonTitle, buttonTapped: handlePrimaryButtonTap, type: .gradient)
+        return BinkButtonView(viewModel: buttonViewModel, buttonTapped: handlePrimaryButtonTap, type: .gradient)
     }
 
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
-        buttonViewModel = ButtonViewModel(datasource: viewModel.dataSource)
+        buttonViewModel = ButtonViewModel(datasource: viewModel.dataSource, title: viewModel.buttonTitle)
         self.formViewModel = FormViewModel(datasource: viewModel.dataSource, title: viewModel.title, description: viewModel.getDescription(), membershipPlan: viewModel.getMembershipPlan())
     }
     

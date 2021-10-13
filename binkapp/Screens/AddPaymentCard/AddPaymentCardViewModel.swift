@@ -16,7 +16,7 @@ enum AddPaymentCardJourney {
 
 final class AddPaymentCardViewModel: NSObject, ObservableObject {
     lazy var primaryButton: BinkButtonView = {
-        return BinkButtonView(viewModel: buttonViewModel, title: L10n.addButtonTitle, buttonTapped: handlePrimaryButtonTap, type: .gradient)
+        return BinkButtonView(viewModel: buttonViewModel, buttonTapped: handlePrimaryButtonTap, type: .gradient)
     }()
     
     private let repository = PaymentWalletRepository()
@@ -31,7 +31,7 @@ final class AddPaymentCardViewModel: NSObject, ObservableObject {
         self.journey = journey
         self.paymentCard = paymentCard ?? PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil)
         self.datasource = FormDataSource(self.paymentCard)
-        self.buttonViewModel = ButtonViewModel(datasource: datasource)
+        self.buttonViewModel = ButtonViewModel(datasource: datasource, title: L10n.addButtonTitle)
         super.init()
         datasource.delegate = self
     }

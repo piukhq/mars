@@ -18,7 +18,7 @@ class ForgotPasswordViewModel: NSObject {
     init(repository: ForgotPasswordRepository, datasource: FormDataSource) {
         self.repository = repository
         self.datasource = datasource
-        buttonViewModel = ButtonViewModel(datasource: datasource)
+        buttonViewModel = ButtonViewModel(datasource: datasource, title: L10n.continueButtonTitle)
         super.init()
         datasource.delegate = self
     }

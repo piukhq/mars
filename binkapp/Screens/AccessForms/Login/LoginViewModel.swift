@@ -9,30 +9,25 @@
 import UIKit
 import SwiftUI
 
-final class LoginViewViewModel: UserServiceProtocol, ObservableObject {
-    lazy var continueButton: BinkButtonView = {
-        return BinkButtonView(viewModel: buttonViewModel, title: L10n.continueButtonTitle, buttonTapped: continueButtonTapped, type: .gradient)
-    }()
-    
-    lazy var switchLoginTypeButton: BinkButtonView = {
-        return BinkButtonView(viewModel: buttonViewModel, title: L10n.loginWithPassword, buttonTapped: switchLoginTypeButtonHandler, type: .plain, alwaysEnabled: true)
-    }()
-    
+final class LoginViewModel: UserServiceProtocol, ObservableObject {
     @Published var datasourcePublisher: FormDataSource
+
+    private var loginType: AccessForm = .magicLink
+    var continueButtonViewModel: ButtonViewModel
+    var switchLoginTypeButtonViewModel: ButtonViewModel
+    var title = L10n.magicLinkTitle
+    var description = L10n.magicLinkDescription
     var datasource: FormDataSource {
         didSet {
             datasourcePublisher = datasource
         }
     }
-    private var buttonViewModel: ButtonViewModel
-    private var loginType: AccessForm = .magicLink
-    var title = L10n.magicLinkTitle
-    var description = L10n.magicLinkDescription
     
     init() {
         self.datasource = FormDataSource(accessForm: .magicLink)
         self.datasourcePublisher = datasource
-        self.buttonViewModel = ButtonViewModel(datasource: datasource)
+        self.continueButtonViewModel = ButtonViewModel(datasource: datasource, title: L10n.continueButtonTitle)
+        self.switchLoginTypeButtonViewModel = ButtonViewModel(datasource: datasource, title: L10n.loginWithPassword)
     }
 
     func continueButtonTapped() {
@@ -60,7 +55,7 @@ final class LoginViewViewModel: UserServiceProtocol, ObservableObject {
             }
             
             Current.loginController.handleMagicLinkCheckInbox(formDataSource: self.datasource)
-            self.buttonViewModel.isLoading = false
+            self.continueButtonViewModel.isLoading = false
         }
     }
     
@@ -91,15 +86,16 @@ final class LoginViewViewModel: UserServiceProtocol, ObservableObject {
         }
     }
     
-    private func switchLoginTypeButtonHandler() {
+    func switchLoginTypeButtonHandler() {
         loginType = loginType == .magicLink ? .emailPassword : .magicLink
         let emailAddress = datasource.fields.first(where: { $0.fieldCommonName == .email })?.value
         let prefilledValues = FormDataSource.PrefilledValue(commonName: .email, value: emailAddress)
         datasource = FormDataSource(accessForm: loginType, prefilledValues: [prefilledValues])
-        buttonViewModel.datasource = datasource
+        continueButtonViewModel.datasource = datasource
+        switchLoginTypeButtonViewModel.datasource = datasource
         datasource.checkFormValidity()
         
-        switchLoginTypeButton.title = loginType == .magicLink ? L10n.loginWithPassword : L10n.emailMagicLink
+        switchLoginTypeButtonViewModel.title = loginType == .magicLink ? L10n.loginWithPassword : L10n.emailMagicLink
         
         if loginType == .magicLink {
             title = L10n.magicLinkTitle
@@ -119,7 +115,7 @@ final class LoginViewViewModel: UserServiceProtocol, ObservableObject {
     
     private func handleLoginError() {
         Current.userManager.removeUser()
-        buttonViewModel.isLoading = false
+        continueButtonViewModel.isLoading = false
         showError()
     }
 }

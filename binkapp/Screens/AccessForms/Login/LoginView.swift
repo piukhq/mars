@@ -9,11 +9,18 @@
 import SwiftUI
 
 struct LoginView: View {
+    var continueButton: BinkButtonView {
+        return BinkButtonView(viewModel: viewModel.continueButtonViewModel, buttonTapped: viewModel.continueButtonTapped, type: .gradient)
+    }
+    
+    var switchLoginTypeButton: BinkButtonView {
+        return BinkButtonView(viewModel: viewModel.switchLoginTypeButtonViewModel, buttonTapped: viewModel.switchLoginTypeButtonHandler, type: .plain, alwaysEnabled: true)
+    }
+    
     @State private var formViewModel: FormViewModel
-    private let viewModel: LoginViewViewModel
+    private let viewModel = LoginViewModel()
 
     init() {
-        viewModel = LoginViewViewModel()
         formViewModel = FormViewModel(datasource: viewModel.datasource, title: viewModel.title, description: viewModel.description)
     }
     
@@ -24,7 +31,7 @@ struct LoginView: View {
                     formViewModel = FormViewModel(datasource: datasource, title: viewModel.title, description: viewModel.description)
                 })
             if case .none = formViewModel.formInputType {
-                BinkButtonsStackView(buttons: [viewModel.continueButton, viewModel.switchLoginTypeButton])
+                BinkButtonsStackView(buttons: [continueButton, switchLoginTypeButton])
             }
         })
     }

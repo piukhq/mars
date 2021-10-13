@@ -12,8 +12,11 @@ class ButtonViewModel: ObservableObject {
     @Published var datasource: FormDataSource
     @Published var isLoading = false
     
-    init(datasource: FormDataSource) {
+    var title: String
+
+    init(datasource: FormDataSource, title: String) {
         self.datasource = datasource
+        self.title = title
         datasource.checkFormValidity()
     }
 }
@@ -29,7 +32,6 @@ struct BinkButtonView: View, Identifiable {
     }
 
     var id = UUID()
-    var title: String
     var buttonTapped: () -> Void
     var type: ButtonType
     var alwaysEnabled = false
@@ -43,7 +45,7 @@ struct BinkButtonView: View, Identifiable {
             loading = type == .gradient ? true : false
             buttonTapped()
         } label: {
-            Text(loading ? "" : title)
+            Text(loading ? "" : viewModel.title)
                 .frame(width: UIScreen.main.bounds.width * 0.75, height: 52.0)
                 .background(
                     ZStack {
@@ -68,7 +70,7 @@ struct BinkButtonView: View, Identifiable {
         .onReceive(viewModel.$isLoading) { isLoading in
             self.loading = isLoading
         }
-        .accessibility(identifier: title)
+        .accessibility(identifier: viewModel.title)
     }
 }
 

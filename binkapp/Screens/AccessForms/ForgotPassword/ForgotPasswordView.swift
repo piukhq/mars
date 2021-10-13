@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ForgotPasswordView: View {
     private var continueButton: BinkButtonView {
-        return BinkButtonView(viewModel: viewModel.buttonViewModel, title: L10n.continueButtonTitle, buttonTapped: viewModel.continueButtonTapped, type: .gradient)
+        return BinkButtonView(viewModel: viewModel.buttonViewModel, buttonTapped: viewModel.continueButtonTapped, type: .gradient)
     }
 
     @State private var formViewModel: FormViewModel

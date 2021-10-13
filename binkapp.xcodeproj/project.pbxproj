@@ -372,7 +372,7 @@
 		CEB7ADF426F3474600BD138C /* PaymentCardCellSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADF326F3474600BD138C /* PaymentCardCellSwiftUIView.swift */; };
 		CEB7ADF626F880EB00BD138C /* FormFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADF526F880EB00BD138C /* FormFooterView.swift */; };
 		CEB7ADF826F9BF9000BD138C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADF726F9BF9000BD138C /* LoginView.swift */; };
-		CEB7ADFA26F9EC7B00BD138C /* LoginViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADF926F9EC7B00BD138C /* LoginViewViewModel.swift */; };
+		CEB7ADFA26F9EC7B00BD138C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADF926F9EC7B00BD138C /* LoginViewModel.swift */; };
 		CEB7ADFC26FB135900BD138C /* AttributedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADFB26FB135900BD138C /* AttributedTextView.swift */; };
 		CEB7ADFE26FB1E3D00BD138C /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADFD26FB1E3D00BD138C /* ForgotPasswordView.swift */; };
 		CEC0ACBC2636AD0000845813 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBA2636AD0000845813 /* Assets.swift */; };
@@ -1014,7 +1014,7 @@
 		CEB7ADF326F3474600BD138C /* PaymentCardCellSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCellSwiftUIView.swift; sourceTree = "<group>"; };
 		CEB7ADF526F880EB00BD138C /* FormFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormFooterView.swift; sourceTree = "<group>"; };
 		CEB7ADF726F9BF9000BD138C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		CEB7ADF926F9EC7B00BD138C /* LoginViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewViewModel.swift; sourceTree = "<group>"; };
+		CEB7ADF926F9EC7B00BD138C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		CEB7ADFB26FB135900BD138C /* AttributedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextView.swift; sourceTree = "<group>"; };
 		CEB7ADFD26FB1E3D00BD138C /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		CEC0AC3B2636AAA400845813 /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
@@ -1816,7 +1816,7 @@
 			isa = PBXGroup;
 			children = (
 				CEB7ADF726F9BF9000BD138C /* LoginView.swift */,
-				CEB7ADF926F9EC7B00BD138C /* LoginViewViewModel.swift */,
+				CEB7ADF926F9EC7B00BD138C /* LoginViewModel.swift */,
 				70EB83872644410A00DD8935 /* LoginController.swift */,
 				CE85A1D126A5DB43003B74CD /* EmailClient.swift */,
 				CE85A1D526A6CD97003B74CD /* LoginSuccessViewController.swift */,
@@ -3813,7 +3813,7 @@
 				BD99D2D8234FDF2C00823FC4 /* SettingsViewController.swift in Sources */,
 				CE85A1D226A5DB43003B74CD /* EmailClient.swift in Sources */,
 				EF59A12F24474572001B60B8 /* NetworkingError.swift in Sources */,
-				CEB7ADFA26F9EC7B00BD138C /* LoginViewViewModel.swift in Sources */,
+				CEB7ADFA26F9EC7B00BD138C /* LoginViewModel.swift in Sources */,
 				CE6054A626E8D54500FD0866 /* ImageLoader.swift in Sources */,
 				EFA5F71D2379A7C70027AB80 /* CD_Tier.swift in Sources */,
 				3C2C90FF23193F6700D112E3 /* AccountPostModel.swift in Sources */,
