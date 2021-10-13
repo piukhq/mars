@@ -29,7 +29,7 @@ struct TextfieldUIK: UIViewRepresentable {
         self.onAppear = onAppear
         self.clearButtonTapped = clearButtonTapped
     }
-
+    
     func makeCoordinator() -> TextfieldUIK.Coordinator {
         Coordinator(self)
     }
@@ -85,6 +85,15 @@ struct TextfieldUIK: UIViewRepresentable {
         func setup(_ textField: UITextField) {
             textField.addTarget(self, action: #selector(textFieldUpdated), for: .editingChanged)
             textField.inputAccessoryView = inputAccessory
+            
+            switch Current.themeManager.currentTheme.type {
+            case .light:
+                textField.overrideUserInterfaceStyle = .light
+            case .dark:
+                textField.overrideUserInterfaceStyle = .dark
+            case .system:
+                textField.overrideUserInterfaceStyle = .unspecified
+            }
         }
         
         
