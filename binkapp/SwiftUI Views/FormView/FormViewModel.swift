@@ -14,21 +14,14 @@ final class FormViewModel: ObservableObject {
     @Published var pickerData = (value: "", fieldCount: 0)
     @Published var addPaymentCardViewModel: AddPaymentCardViewModel?
     @Published var paymentCard: PaymentCardCreateModel?
-    @Published var keyboardHeight: CGFloat = 0
     @Published var textFields: [Int: UITextField] = [:]
     @Published var textFieldClearButtonTapped: Bool?
     @Published var vStackInsets = FormViewConstants.vStackInsets
-    @Published var scrollViewOffsetForKeyboard: CGFloat = 0 {
-        didSet {
-            print("scrollViewOffsetForKeyboard: \(scrollViewOffsetForKeyboard)")
-        }
-    }
+    @Published var scrollViewOffsetForKeyboard: CGFloat = 0
     @Published var formInputType: FormInputType = .none {
         didSet {
             setKeyboardHeight()
             handleKeyboardOffset()
-            print(formInputType)
-            print(keyboardHeight)
         }
     }
 
@@ -37,13 +30,10 @@ final class FormViewModel: ObservableObject {
     var previousTextfieldValue = ""
     var didLayoutViews = false
     var scrollViewOffset: CGFloat = 0
-    var selectedTextfieldYOrigin: CGFloat = 0 {
-        didSet {
-            print("selectedCellYOrigin: \(selectedTextfieldYOrigin)")
-        }
-    }
+    var selectedTextfieldYOrigin: CGFloat = 0
     let membershipPlan: CD_MembershipPlan?
     private let strings = PaymentCardScannerStrings()
+    private var keyboardHeight: CGFloat = 0
 
     init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan? = nil, addPaymentCardViewModel: AddPaymentCardViewModel? = nil) {
         self.datasource = datasource
