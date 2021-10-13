@@ -27,6 +27,7 @@ final class FormViewModel: ObservableObject {
         didSet {
             setKeyboardHeight()
             handleKeyboardOffset()
+            print(formInputType)
             print(keyboardHeight)
         }
     }
@@ -73,22 +74,18 @@ final class FormViewModel: ObservableObject {
     }
     
     @objc func handleKeyboardWillShow(_ notification: Notification) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-            guard let self = self else { return }
-
-            if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-                let keyboardRectangle = keyboardFrame.cgRectValue
-                self.keyboardHeight = keyboardRectangle.height
-                self.formInputType = .keyboard
-            }
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            self.keyboardHeight = keyboardRectangle.height
+            self.formInputType = .keyboard
         }
     }
     
     @objc func handleKeyboardWillHide(_ notification: Notification) {
         formInputType = .none
     }
-    
-    private func setKeyboardHeight(height: CGFloat? = nil) {
+
+    private func setKeyboardHeight() {
         switch formInputType {
         case .keyboard, .secureEntry:
             break
@@ -144,7 +141,7 @@ final class FormViewModel: ObservableObject {
                         scrollViewOffsetForKeyboard = neededOffset + FormViewConstants.inputToolbarHeight + iOS13Buffer
                     }
                 } else {
-                    // Selected textfield is visible, but still add padding to vStack so user can scroll to see content below, hidden by keyboard
+                    // Selected textfield is visible, but still add padding to vStack so user can scroll to see content hidden by keyboard
                     vStackInsets = FormViewConstants.vStackInsetsForKeyboard
                 }
             }

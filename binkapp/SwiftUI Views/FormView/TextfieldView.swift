@@ -40,9 +40,9 @@ struct TextfieldView: View {
                                 HStack {
                                     Button {
                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                        formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY
                                         formViewModel.formInputType = .choice(data: data)
                                         isEditing = true
-                                        formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY
                                     } label: {
                                         TextField(data.first?.title ?? "", text: $value)
                                             .foregroundColor(Color(Current.themeManager.color(for: .text)))
@@ -74,9 +74,9 @@ struct TextfieldView: View {
                                 HStack {
                                     Button {
                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                        formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY
                                         formViewModel.formInputType = .date
                                         isEditing = true
-                                        formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY
                                     } label: {
                                         TextField(field.placeholder, text: $value)
                                             .foregroundColor(Color(Current.themeManager.color(for: .text)))
@@ -111,9 +111,9 @@ struct TextfieldView: View {
                                 HStack {
                                     Button {
                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                        formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY
                                         formViewModel.formInputType = .expiry(months: months, years: years)
                                         isEditing = true
-                                        formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY
                                     } label: {
                                         TextField(field.placeholder, text: $value)
                                             .foregroundColor(Color(Current.themeManager.color(for: .text)))
