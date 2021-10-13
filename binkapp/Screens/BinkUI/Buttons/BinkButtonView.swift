@@ -42,26 +42,30 @@ struct BinkButtonView: View, Identifiable {
     
     var body: some View {
         Button {
-            loading = type == .gradient ? true : false
             buttonTapped()
+            loading = type == .gradient ? true : false
         } label: {
+            HStack {
+                Spacer()
             Text(loading ? "" : viewModel.title)
-                .frame(width: UIScreen.main.bounds.width * 0.75, height: 52.0)
-                .background(
-                    ZStack {
-                        Color(Current.themeManager.color(for: .viewBackground))
-                        if type == .gradient {
-                            LinearGradient(gradient: Gradient(colors: [Color(.binkGradientBlueRight), Color(.binkGradientBlueLeft)]), startPoint: .leading, endPoint: .trailing)
-                                .opacity(enabled ? 1.0 : 0.5)
-                        }
-                    })
-                .cornerRadius(52 / 2)
                 .foregroundColor(enabled ? textColor : .white.opacity(0.5))
                 .font(.custom(UIFont.buttonText.fontName, size: UIFont.buttonText.pointSize))
-                .shadow(color: .black.opacity(type == .gradient ? 0.2 : 0.0), radius: 10, x: 3.0, y: 8.0)
-                .overlay(ActivityIndicator(animate: $loading, style: .medium), alignment: .center)
+                Spacer()
+            }
         }
+        .frame(width: UIScreen.main.bounds.width * 0.75, height: 52.0)
         .disabled(!enabled)
+        .background(
+            ZStack {
+                Color(Current.themeManager.color(for: .viewBackground))
+                if type == .gradient {
+                    LinearGradient(gradient: Gradient(colors: [Color(.binkGradientBlueRight), Color(.binkGradientBlueLeft)]), startPoint: .leading, endPoint: .trailing)
+                        .opacity(enabled ? 1.0 : 0.5)
+                }
+            })
+        .cornerRadius(52 / 2)
+        .shadow(color: .black.opacity(type == .gradient ? 0.2 : 0.0), radius: 10, x: 3.0, y: 8.0)
+        .overlay(ActivityIndicator(animate: $loading, style: .medium), alignment: .center)
         .onReceive(viewModel.datasource.$fullFormIsValid) { isValid in
             enabled = alwaysEnabled
             guard !alwaysEnabled else { return }
@@ -146,17 +150,17 @@ struct BinkButtonsStackView: View {
     }
 }
 
-//struct BinkButtonStackView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        Group {
-//            ZStack {
-//                Rectangle()
-//                    .foregroundColor(Color(UIColor.grey10))
-//                BinkButtonsStackView(buttons: [
-//                    BinkButtonView(datasource: FormDataSource(accessForm: .success), isLoading: false, title: "Bello", buttonTapped: {}, type: .gradient),
-//                    BinkButtonView(datasource: FormDataSource(accessForm: .addEmail), enabled: true, title: "Continue", buttonTapped: {}, type: .plain)
-//                ])
-//            }
-//        }
-//    }
-//}
+struct BinkButtonStackView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            ZStack {
+                Rectangle()
+                    .foregroundColor(Color(UIColor.grey10))
+                BinkButtonsStackView(buttons: [
+                    BinkButtonView(viewModel: ButtonViewModel(datasource: FormDataSource(accessForm: .magicLink), title: "Continue"), loading: false, buttonTapped: {}, type: .gradient, alwaysEnabled: true),
+                    BinkButtonView(viewModel: ButtonViewModel(datasource: FormDataSource(accessForm: .addEmail), title: "Continue"), buttonTapped: {}, type: .plain)
+                ])
+            }
+        }
+    }
+}
