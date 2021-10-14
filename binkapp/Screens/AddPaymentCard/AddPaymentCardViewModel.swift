@@ -71,6 +71,7 @@ final class AddPaymentCardViewModel: NSObject, ObservableObject {
                 }
             }, declineAction: {
                 Current.navigate.close()
+                self.buttonViewModel.isLoading = false
             })
         } else {
             addPaymentCard {
