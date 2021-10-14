@@ -11,7 +11,7 @@ import SwiftUI
 final class FormViewModel: ObservableObject {
     @Published var datasource: FormDataSource
     @Published var date: Date?
-    @Published var pickerData = (value: "", fieldCount: 0)
+    @Published var pickerData = FormPickerData("", backingData: 0)
     @Published var addPaymentCardViewModel: AddPaymentCardViewModel?
     @Published var paymentCard: PaymentCardCreateModel?
     @Published var textFields: [Int: UITextField] = [:]
@@ -179,14 +179,14 @@ final class FormViewModel: ObservableObject {
         switch formInputType {
         case .expiry:
             if pickerTwo.isEmpty {
-                pickerData = (pickerOne, 1)
+                pickerData = FormPickerData(pickerOne, backingData: 1)
             } else if pickerOne.isEmpty {
-                pickerData = (pickerTwo, 1)
+                pickerData = FormPickerData(pickerTwo, backingData: 1)
             } else {
-                pickerData = (pickerOne + "/" + pickerTwo, 2)
+                pickerData = FormPickerData(pickerOne + "/" + pickerTwo, backingData: 2)
             }
         default:
-            pickerData = (pickerOne, 1)
+            pickerData = FormPickerData(pickerOne, backingData: 1)
         }
         datasource.checkFormValidity()
     }

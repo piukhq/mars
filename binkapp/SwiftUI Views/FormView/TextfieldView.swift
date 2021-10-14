@@ -50,16 +50,16 @@ struct TextfieldView: View {
                                             .disabled(true)
                                             .onReceive(formViewModel.$pickerData) { pickerData in
                                                 guard isEditing else { return }
-                                                value = pickerData.value
-                                                field.updateValue(pickerData.value)
+                                                value = pickerData?.title ?? ""
+                                                field.updateValue(pickerData?.title)
                                             }
                                     }
                                     .accessibility(identifier: field.title)
                                     .onReceive(formViewModel.$formInputType) { inputType in
                                         if case .choice = inputType {
                                             isEditing = true
-                                            if formViewModel.pickerData.value.isEmpty {
-                                                formViewModel.pickerData = (data.first?.title ?? "", 1)
+                                            if formViewModel.pickerData?.title.isEmpty ?? false {
+                                                formViewModel.pickerData = FormPickerData(data.first?.title, backingData: 1)
                                             }
                                         } else {
                                             isEditing = false
@@ -124,14 +124,14 @@ struct TextfieldView: View {
                                             .disabled(true)
                                             .onReceive(formViewModel.$pickerData) { pickerData in
                                                 guard isEditing else { return }
-                                                value = pickerData.value
-                                                field.updateValue(pickerData.value)
+                                                value = pickerData?.title ?? ""
+                                                field.updateValue(pickerData?.title)
                                                 canShowErrorState = true
 
                                                 // For mapping to the payment card expiry fields, we only care if we have BOTH
-                                                guard pickerData.fieldCount > 1 else { return }
-                                                let splitData = pickerData.value.components(separatedBy: "/")
-                                                formViewModel.addPaymentCardViewModel?.setPaymentCardExpiry(month: Int(splitData.first ?? ""), year: Int(splitData.last ?? ""))
+                                                guard pickerData?.backingData ?? 0 > 1 else { return }
+                                                let splitData = pickerData?.title.components(separatedBy: "/")
+                                                formViewModel.addPaymentCardViewModel?.setPaymentCardExpiry(month: Int(splitData?.first ?? ""), year: Int(splitData?.last ?? ""))
                                             }
                                     }
                                     .accessibility(identifier: field.title)
