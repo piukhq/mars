@@ -18,9 +18,10 @@ struct LoginView: View {
     }
     
     @State private var formViewModel: FormViewModel
-    private let viewModel = LoginViewModel()
+    private var viewModel: LoginViewModel
 
     init() {
+        self.viewModel = LoginViewModel()
         formViewModel = FormViewModel(datasource: viewModel.datasource, title: viewModel.title, description: viewModel.description)
     }
     

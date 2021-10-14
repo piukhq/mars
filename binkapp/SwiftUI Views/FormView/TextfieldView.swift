@@ -58,6 +58,9 @@ struct TextfieldView: View {
                                     .onReceive(formViewModel.$formInputType) { inputType in
                                         if case .choice = inputType {
                                             isEditing = true
+                                            if formViewModel.pickerData.value.isEmpty {
+                                                formViewModel.pickerData = (data.first?.title ?? "", 1)
+                                            }
                                         } else {
                                             isEditing = false
                                         }
