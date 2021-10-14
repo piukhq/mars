@@ -173,10 +173,14 @@ class AuthAndAddViewModel {
                     completion()
                     Current.wallet.refreshLocal()
                     NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
+                    
+                    MixpanelUtility.shared.track(event: "Add loyalty card", properties: ["Brand name": card.membershipPlan?.account?.companyName ?? "Unknown"])
                 }
                 Current.navigate.to(tabNavigationRequest)
             }
             }, onError: { [weak self] error in
+                MixpanelUtility.shared.track(event: "Add loyalty card failed", properties: ["Brand name": self?.membershipPlan.account?.companyName ?? "Unknown", "Reason": error?.localizedDescription ?? "Unavailable"])
+                
                 self?.displaySimplePopup(title: L10n.errorTitle, message: error?.localizedDescription)
                 completion()
         })
