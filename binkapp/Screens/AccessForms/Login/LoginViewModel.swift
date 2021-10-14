@@ -43,14 +43,14 @@ final class LoginViewModel: UserServiceProtocol, ObservableObject {
     private func performMagicLinkRequest() {
         let fields = datasource.currentFieldValues()
         guard let email = fields["email"] else {
-            Current.loginController.displayMagicLinkErrorAlert()
+            self.displayMagicLinkErrorAlert()
             return
         }
         
         requestMagicLink(email: email) { [weak self] (success, _) in
             guard let self = self else { return }
             guard success else {
-                Current.loginController.displayMagicLinkErrorAlert()
+                self.displayMagicLinkErrorAlert()
                 return
             }
             
@@ -109,6 +109,14 @@ final class LoginViewModel: UserServiceProtocol, ObservableObject {
     private func showError() {
         let alert = BinkAlertController(title: L10n.errorTitle, message: L10n.loginError, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: L10n.ok, style: .default))
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
+    }
+    
+    private func displayMagicLinkErrorAlert() {
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: L10n.magicLinkErrorMessage) {
+            self.continueButtonViewModel.isLoading = false
+        }
         let navigationRequest = AlertNavigationRequest(alertController: alert)
         Current.navigate.to(navigationRequest)
     }
