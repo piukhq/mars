@@ -99,12 +99,8 @@ class PLLScreenViewModel {
             switch error {
             case .userFacingNetworkingError(let networkingError):
                 if case .userFacingError(let userFacingError) = networkingError {
-                    let messagePrefix = self?.changedLinkCards.count == 1 ? L10n.cardAlreadyLinkedMessagePrefix : L10n.cardsAlreadyLinkedMessagePrefix
-                    let planName = self?.membershipCard.membershipPlan?.account?.planName ?? ""
-                    let planNameCard = self?.membershipCard.membershipPlan?.account?.planNameCard ?? ""
-                    let planDetails = "\(planName) \(planNameCard)"
-                    let formattedString = String(format: userFacingError.message, messagePrefix, planDetails, planDetails)
-                    self?.displaySimplePopup(title: userFacingError.title, message: formattedString, completion: {
+                    let message = userFacingError.message(membershipPlan: self?.membershipCard.membershipPlan, changedLinkCardsCount: self?.changedLinkCards.count)
+                    self?.displaySimplePopup(title: userFacingError.title, message: message, completion: {
                         completion(false)
                     })
                 }
