@@ -85,6 +85,12 @@ class BarcodeScannerViewController: BinkViewController {
         button.addTarget(self, action: #selector(close), for: .touchUpInside)
         return button
     }()
+    
+    private lazy var photoLibraryButton: BinkButton = {
+        let button = BinkButton(type: .plain, title: L10n.loyaltyScannerAddPhotoFromLibraryButtonTitle, enabled: true, action: handleAddPhotoFromLibraryTapped())
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
 
     private var viewModel: BarcodeScannerViewModel
 
@@ -278,6 +284,10 @@ class BarcodeScannerViewController: BinkViewController {
             guard let self = self else { return }
             self.navigationController?.removeViewController(self)
         })
+    }
+    
+    private func handleAddPhotoFromLibraryTapped() {
+        
     }
     
     @objc private func close() {
