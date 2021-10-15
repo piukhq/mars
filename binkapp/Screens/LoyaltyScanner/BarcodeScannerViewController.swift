@@ -23,7 +23,7 @@ protocol BarcodeScannerViewControllerDelegate: AnyObject {
     func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?)
 }
 
-class BarcodeScannerViewController: BinkViewController {
+class BarcodeScannerViewController: BinkViewController, UINavigationControllerDelegate {
     enum Constants {
         static let rectOfInterestInset: CGFloat = 25
         static let viewFrameRatio: CGFloat = 12 / 18
@@ -52,6 +52,7 @@ class BarcodeScannerViewController: BinkViewController {
     private var canPresentScanError = true
     private var hideNavigationBar = true
     private var shouldAllowScanning = true
+    private var libraryImage: UIImage?
 
     private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .regular))
@@ -87,9 +88,9 @@ class BarcodeScannerViewController: BinkViewController {
     }()
     
     private lazy var photoLibraryButton: BinkButton = {
-        let button = BinkButton(type: .plain, title: L10n.loyaltyScannerAddPhotoFromLibraryButtonTitle, enabled: true, action: handleAddPhotoFromLibraryTapped())
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+        return BinkButton(type: .plain, title: L10n.loyaltyScannerAddPhotoFromLibraryButtonTitle, enabled: true, action: { [weak self] in
+            self?.addPhotoFromLibraryButtonTapped()
+        })
     }()
 
     private var viewModel: BarcodeScannerViewModel
@@ -129,9 +130,11 @@ class BarcodeScannerViewController: BinkViewController {
 
         guideImageView.frame = rectOfInterest.inset(by: Constants.guideImageInset)
         view.addSubview(guideImageView)
-
         view.addSubview(explainerLabel)
         view.addSubview(widgetView)
+        
+        footerButtons = [photoLibraryButton]
+        
         NSLayoutConstraint.activate([
             explainerLabel.topAnchor.constraint(equalTo: guideImageView.bottomAnchor, constant: Constants.explainerLabelPadding),
             explainerLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.explainerLabelPadding),
@@ -279,15 +282,18 @@ class BarcodeScannerViewController: BinkViewController {
         device.unlockForConfiguration()
     }
 
+    private func addPhotoFromLibraryButtonTapped() {
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        picker.delegate = self
+        present(picker, animated: true)
+    }
+    
     @objc private func enterManually() {
         delegate?.barcodeScannerViewControllerShouldEnterManually(self, completion: { [weak self] in
             guard let self = self else { return }
             self.navigationController?.removeViewController(self)
         })
-    }
-    
-    private func handleAddPhotoFromLibraryTapped() {
-        
     }
     
     @objc private func close() {
@@ -368,5 +374,13 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                 }
             }
         }
+    }
+}
+
+extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.editedImage] as? UIImage else { return }
+        dismiss(animated: true)
+        libraryImage = image
     }
 }
