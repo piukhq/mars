@@ -1567,6 +1567,7 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				70A4FDA7271590DD00DA7FAA /* MixpanelUtility.swift */,
 				70C8029D2642B231005700A2 /* Deep Linking */,
 				CEAB2D71266670F6006A0F43 /* HTML Parsing */,
 				706157BD26499CB30002701E /* App Version */,
@@ -1698,7 +1699,6 @@
 		5ECE046A22CE5798001BA964 /* binkapp */ = {
 			isa = PBXGroup;
 			children = (
-				70A4FDA7271590DD00DA7FAA /* MixpanelUtility.swift */,
 				5ECE046B22CE5798001BA964 /* AppDelegate.swift */,
 				707DF15926970E5600EB5674 /* BinkWidgetExtension.entitlements */,
 				70872F812475393900195679 /* Binkapp.entitlements */,
