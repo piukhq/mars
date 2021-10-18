@@ -15,7 +15,6 @@ struct TextfieldView: View {
     @State private var isEditing = false
     @State var value: String
     @State var canShowErrorState = false
-    private var id = 0
     
     init(field: FormField, viewModel: FormViewModel) {
         _field = State(initialValue: field)
@@ -26,7 +25,6 @@ struct TextfieldView: View {
     var body: some View {
         VStack(alignment: .leading) {
             ZStack(alignment: .center) {
-
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
                     .foregroundColor(Color(Current.themeManager.color(for: .walletCardBackground)))
                 
@@ -43,7 +41,6 @@ struct TextfieldView: View {
                                     Button {
                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                         formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY
-                                        formViewModel.scrollToTextfieldID = getIdForTextfield()
                                         formViewModel.formInputType = .choice(data: data)
                                         isEditing = true
                                     } label: {
@@ -81,7 +78,6 @@ struct TextfieldView: View {
                                     Button {
                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                         formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY
-                                        formViewModel.scrollToTextfieldID = getIdForTextfield()
                                         formViewModel.formInputType = .date
                                         isEditing = true
                                     } label: {
@@ -119,7 +115,6 @@ struct TextfieldView: View {
                                     Button {
                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                         formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY
-                                        formViewModel.scrollToTextfieldID = getIdForTextfield()
                                         formViewModel.formInputType = .expiry(months: months, years: years)
                                         isEditing = true
                                     } label: {
@@ -163,14 +158,13 @@ struct TextfieldView: View {
                                     formViewModel.datasource.checkFormValidity()
                                     canShowErrorState = !field.isValid() && !value.isEmpty
                                     formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY
-                                    formViewModel.selectedTextfieldID = getIdForTextfield()
 //                                    formViewModel.formInputType = .keyboard
 
-                                    if formViewModel.textFields.first(where: { $0.value == textField })?.key == formViewModel.textFields.count - 1 {
-                                        textField.returnKeyType = .done
-                                    } else {
-                                        textField.returnKeyType = .next
-                                    }
+//                                    if formViewModel.textFields.first(where: { $0.value == textField })?.key == formViewModel.textFields.count - 1 {
+//                                        textField.returnKeyType = .done
+//                                    } else {
+//                                        textField.returnKeyType = .next
+//                                    }
                                 }, didEndEditing: { _ in
                                     isEditing = false
                                     formViewModel.datasource.checkFormValidity()
@@ -179,14 +173,14 @@ struct TextfieldView: View {
 //                                    formViewModel.formInputType = .none
                                 }, onCommit: { textField in
                                     canShowErrorState = true
-                                    guard let key = formViewModel.textFields.first(where: { $0.value == textField })?.key else { return }
-                                    
-                                    if let nextTextField = formViewModel.textFields[key + 1] {
-                                        nextTextField.becomeFirstResponder()
-                                    } else {
-                                        textField.resignFirstResponder()
-//                                        formViewModel.formInputType = .none
-                                    }
+//                                    guard let key = formViewModel.textFields.first(where: { $0.value == textField })?.key else { return }
+//
+//                                    if let nextTextField = formViewModel.textFields[key + 1] {
+//                                        nextTextField.becomeFirstResponder()
+//                                    } else {
+//                                        textField.resignFirstResponder()
+////                                        formViewModel.formInputType = .none
+//                                    }
                                 }, clearButtonTapped: {
                                     formViewModel.textFieldClearButtonTapped = true
                                 })
@@ -228,11 +222,6 @@ struct TextfieldView: View {
                     .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 6, alignment: .top)
                     .clipped()
                     .offset(y: 34)
-//                
-//                Rectangle()
-//                    .foregroundColor(.pink)
-//                    .offset(y: -50)
-
             }
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .frame(width: nil, height: 70, alignment: .center)
@@ -244,8 +233,6 @@ struct TextfieldView: View {
                     .padding(.leading)
             } /// << ZStack
         } /// << VStack
-        .id(getIdForTextfield())
-
     } /// << Body
     
     // MARK: - Helper Methods
@@ -256,15 +243,6 @@ struct TextfieldView: View {
                 formViewModel.textFields[i] = textField ?? UITextField()
             }
         }
-    }
-    
-    private func getIdForTextfield() -> Int {
-        for (i, datasourceField) in formViewModel.datasource.visibleFields.enumerated() {
-            if field.title == datasourceField.title {
-                return i
-            }
-        }
-        return 0
     }
     
     private func valueChangedHandler() {
