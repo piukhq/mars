@@ -173,7 +173,7 @@
 		70A4EE7524BC651700FA33B1 /* PointsScrapingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4EE7424BC651700FA33B1 /* PointsScrapingManager.swift */; };
 		70A4EE7824BDBA5900FA33B1 /* PermissionsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */; };
 		70A4FDA6271588AC00DA7FAA /* Mixpanel in Frameworks */ = {isa = PBXBuildFile; productRef = 70A4FDA5271588AC00DA7FAA /* Mixpanel */; };
-		70A4FDA8271590DD00DA7FAA /* Mixpanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4FDA7271590DD00DA7FAA /* Mixpanel.swift */; };
+		70A4FDA8271590DD00DA7FAA /* MixpanelUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4FDA7271590DD00DA7FAA /* MixpanelUtility.swift */; };
 		70A61D16263095060073A08A /* BinkModuleViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A61D15263095060073A08A /* BinkModuleViewModelTests.swift */; };
 		70A61D532630A23C0073A08A /* BinkModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A61D512630A23B0073A08A /* BinkModuleView.swift */; };
 		70A61D542630A23C0073A08A /* BinkModuleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70A61D522630A23B0073A08A /* BinkModuleView.xib */; };
@@ -794,7 +794,7 @@
 		70A2EDA0261DED3200889914 /* SafeDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeDecoding.swift; sourceTree = "<group>"; };
 		70A4EE7424BC651700FA33B1 /* PointsScrapingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsScrapingManager.swift; sourceTree = "<group>"; };
 		70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsUtility.swift; sourceTree = "<group>"; };
-		70A4FDA7271590DD00DA7FAA /* Mixpanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Mixpanel.swift; path = /Users/nickfarrant/Developer/Bink/iOS/binkapp/Mixpanel.swift; sourceTree = "<absolute>"; };
+		70A4FDA7271590DD00DA7FAA /* MixpanelUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MixpanelUtility.swift; path = /Users/nickfarrant/Developer/Bink/iOS/binkapp/MixpanelUtility.swift; sourceTree = "<absolute>"; };
 		70A61D15263095060073A08A /* BinkModuleViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkModuleViewModelTests.swift; sourceTree = "<group>"; };
 		70A61D512630A23B0073A08A /* BinkModuleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinkModuleView.swift; sourceTree = "<group>"; };
 		70A61D522630A23B0073A08A /* BinkModuleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BinkModuleView.xib; sourceTree = "<group>"; };
@@ -1698,7 +1698,7 @@
 		5ECE046A22CE5798001BA964 /* binkapp */ = {
 			isa = PBXGroup;
 			children = (
-				70A4FDA7271590DD00DA7FAA /* Mixpanel.swift */,
+				70A4FDA7271590DD00DA7FAA /* MixpanelUtility.swift */,
 				5ECE046B22CE5798001BA964 /* AppDelegate.swift */,
 				707DF15926970E5600EB5674 /* BinkWidgetExtension.entitlements */,
 				70872F812475393900195679 /* Binkapp.entitlements */,
@@ -3897,7 +3897,7 @@
 				EFA5F6CF2379A52E0027AB80 /* VoucherEarnModel.swift in Sources */,
 				EFA5F7282379A7C70027AB80 /* _CD_Card.swift in Sources */,
 				EFA5F70C2379A7C70027AB80 /* _CD_Voucher.swift in Sources */,
-				70A4FDA8271590DD00DA7FAA /* Mixpanel.swift in Sources */,
+				70A4FDA8271590DD00DA7FAA /* MixpanelUtility.swift in Sources */,
 				B7263345230589C300951037 /* AuthoriseFieldModel.swift in Sources */,
 				EFA5F70E2379A7C70027AB80 /* CD_ReasonCode.swift in Sources */,
 				EF335C892350D2C600D49223 /* WalletCard.swift in Sources */,

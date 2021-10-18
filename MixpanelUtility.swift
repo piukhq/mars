@@ -1,5 +1,5 @@
 //
-//  Mixpanel.swift
+//  MixpanelUtility.swift
 //  
 //
 //  Created by Nick Farrant on 12/10/2021.
