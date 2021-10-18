@@ -150,7 +150,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         configureUI()
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidUpdate, object: nil)
         
-        MixpanelUtility.shared.track(event: "Loyalty card detail viewed", properties: ["Brand name": viewModel.brandName])
+        MixpanelUtility.track(.lcdViewed(brandName: viewModel.brandName))
     }
     
     @objc private func handlePointsScrapingUpdate() {

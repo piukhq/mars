@@ -82,7 +82,7 @@ class LoginController: UserServiceProtocol {
                 BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
                 BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
                 
-                MixpanelUtility.shared.track(event: "Login", properties: ["Method": loginType.rawValue])
+                MixpanelUtility.track(.login(method: loginType))
                 
                 completion(nil)
             })

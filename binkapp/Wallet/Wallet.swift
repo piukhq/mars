@@ -361,7 +361,7 @@ extension Wallet {
         localCardsOrder?.remove(at: sourceIndex)
         localCardsOrder?.insert(card.id, at: destinationIndex)
         
-        MixpanelUtility.shared.track(event: "Wallet cards manually reordered")
+        MixpanelUtility.track(.cardsManuallyReordered)
     }
 
     private func applyLocalWalletOrder<C: WalletCard>(_ localOrder: inout [String]?, to cards: [C]?, updating walletDataSource: inout [C]?) {

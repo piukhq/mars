@@ -130,7 +130,7 @@ extension UserServiceProtocol {
                     return
                 }
                 
-                MixpanelUtility.shared.track(event: "Logout")
+                MixpanelUtility.track(.logout)
                 
                 completion?(.success(safeResponse))
             case .failure:

@@ -116,28 +116,14 @@ class UserManager {
             SentrySDK.setUser(sentryUser)
             Analytics.setUserID(userId)
             
-            MixpanelUtility.shared.identify(distinctId: userId)
+            MixpanelUtility.setUserIdentity(userId: userId)
         }
         
         if updateZendeskIdentity {
             ZendeskService.setIdentity(firstName: currentFirstName, lastName: currentLastName)
         }
         
-        MixpanelUtility.shared.people.set(properties: [
-            "Total loyalty cards": 0,
-            "Total PLL cards": 0,
-            "Active PLL cards": 0,
-            "Local Points Collection cards": [
-                "Tesco": 1,
-                "Subway": 2
-            ],
-            "Widget": true,
-            "Loyalty cards": [
-                "Harvey Nichols": 2,
-                "Iceland": 1
-            ],
-            "Last engaged": 1234567890
-        ])
+        MixpanelUtility.setUserProperties()
     }
     
     private func setToken(with response: LoginResponse) throws {
