@@ -171,7 +171,7 @@
                 <outlet property="logInAlert" destination="UEC-Ml-S8b" id="SBl-aw-HWf"/>
                 <outlet property="rectangleView" destination="3wQ-yx-2v3" id="IcS-qw-Nhj"/>
             </connections>
-            <point key="canvasLocation" x="135.50724637681159" y="151.33928571428569"/>
+            <point key="canvasLocation" x="27" y="80"/>
         </collectionViewCell>
     </objects>
     <resources>
