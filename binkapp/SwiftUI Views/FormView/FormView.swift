@@ -16,7 +16,7 @@ enum FormViewConstants {
     static let scrollViewOffsetBuffer: CGFloat = 20
     static let inputToolbarHeight: CGFloat = 44
     static let multipleChoicePickerHeight: CGFloat = 200
-    static let graphicalDatePickerHeight: CGFloat = UIDevice.current.isSmallSize ? 370 : 450
+    static let graphicalDatePickerHeight: CGFloat = UIDevice.current.isSmallSize ? 370 : 410
     static let datePickerHeight: CGFloat = 230
     static let expiryDatePickerHeight: CGFloat = 180
 }
@@ -34,6 +34,69 @@ struct FormView: View {
     }
 
     var body: some View {
+        if #available(iOS 14.0, *) {
+            ScrollViewReader { scrollView in
+                bodyBuilder()
+                    .onReceive(viewModel.$scrollToTextfieldID) { ID in
+                        guard let ID = ID else { return }
+                        let screenHeight = UIScreen.main.bounds.height
+                        let visibleOffset = screenHeight - (viewModel.keyboardHeight + FormViewConstants.inputToolbarHeight)
+                        if viewModel.selectedTextfieldYOrigin > visibleOffset {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                withAnimation {
+                                    if viewModel.datasource.visibleFields.count == 1 {
+                                        scrollView.scrollTo(ID, anchor: .topTrailing)
+                                        switch viewModel.datasource.formtype {
+                                        case .authAndAdd, .addPaymentCard:
+                                            viewModel.vStackInsets = FormViewConstants.vStackInsetsForKeyboard
+                                        default:
+                                            break
+                                        }
+                                        return
+                                    }
+                                    
+                                    if ID == 0 {
+                                        scrollView.scrollTo(ID + 1, anchor: .trailing)
+                                    } else {
+                                        scrollView.scrollTo(ID - 1, anchor: .topTrailing)
+                                    }
+                                    
+                                    switch viewModel.datasource.formtype {
+                                    case .authAndAdd, .addPaymentCard:
+                                        viewModel.vStackInsets = FormViewConstants.vStackInsetsForKeyboard
+                                    default:
+                                        break
+                                    }
+        //                            var idToScrollTo: Int = ID
+        //                            if case .date = viewModel.formInputType {
+        //                                idToScrollTo += 1
+        //                            }
+        //
+        //                            /// For small screens, scroll to the slected textfield + 1
+        //                            if UIDevice.current.isSmallSize && ID != (viewModel.datasource.visibleFields.count - 1) {
+        //                                idToScrollTo += 1
+        //                                if case .date = viewModel.formInputType {
+        //                                    idToScrollTo -= 1
+        //                                }
+        //                            }
+        //
+        //                            if UIDevice.current.isSmallSize && ID == viewModel.datasource.visibleFields.count - 1 {
+        //                                /// Small device - bottom textfield still hidden, so scroll it to top of screen
+        //                                scrollView.scrollTo(idToScrollTo, anchor: .topTrailing)
+        //                            } else {
+        //                                scrollView.scrollTo(idToScrollTo, anchor: .trailing)
+        //                            }
+                                }
+                            }
+                        }
+                    }
+            }
+        } else {
+            bodyBuilder()
+        }
+    }
+    
+    @ViewBuilder func bodyBuilder() -> some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom), content: {
             ScrollView {
                 VStack(alignment: .center, spacing: FormViewConstants.vStackSpacing) {
@@ -64,7 +127,7 @@ struct FormView: View {
                 .padding(viewModel.vStackInsets)
             }
             .background(Color(Current.themeManager.color(for: .viewBackground)))
-            .edgesIgnoringSafeArea(.bottom)
+//            .edgesIgnoringSafeArea(.bottom)
             .offset(y: -viewModel.scrollViewOffsetForKeyboard)
             
             if case .date = viewModel.formInputType {
@@ -147,6 +210,8 @@ struct FormView: View {
                 }
             }
         })
+            .foregroundColor(.pink)
+            .background(Color.clear)
     }
 }
 

@@ -18,10 +18,22 @@ final class FormViewModel: ObservableObject {
     @Published var textFieldClearButtonTapped: Bool?
     @Published var vStackInsets = FormViewConstants.vStackInsets
     @Published var scrollViewOffsetForKeyboard: CGFloat = 0
+    @Published var scrollToTextfieldID: Int?
     @Published var formInputType: FormInputType = .none {
         didSet {
             setKeyboardHeight()
-            handleKeyboardOffset()
+
+            if #available(iOS 14.0, *) {
+                if case .none = formInputType {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+                        withAnimation {
+                            self?.vStackInsets = FormViewConstants.vStackInsets
+                        }
+                    }
+                }
+            } else {
+                handleKeyboardOffset()
+            }
         }
     }
 
@@ -31,9 +43,10 @@ final class FormViewModel: ObservableObject {
     var didLayoutViews = false
     var scrollViewOffset: CGFloat = 0
     var selectedTextfieldYOrigin: CGFloat = 0
+    var selectedTextfieldID = 0
     let membershipPlan: CD_MembershipPlan?
     private let strings = PaymentCardScannerStrings()
-    private var keyboardHeight: CGFloat = 0
+    var keyboardHeight: CGFloat = 0
 
     init(datasource: FormDataSource, title: String?, description: String?, membershipPlan: CD_MembershipPlan? = nil, addPaymentCardViewModel: AddPaymentCardViewModel? = nil) {
         self.datasource = datasource
@@ -68,11 +81,14 @@ final class FormViewModel: ObservableObject {
     }
     
     @objc func handleKeyboardWillShow(_ notification: Notification) {
-        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            self.keyboardHeight = keyboardRectangle.height
-            self.formInputType = .keyboard
-        }
+//        if #available(iOS 14.0, *) {} else {
+            if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                let keyboardRectangle = keyboardFrame.cgRectValue
+                self.keyboardHeight = keyboardRectangle.height
+                self.formInputType = .keyboard
+                self.scrollToTextfieldID = selectedTextfieldID
+            }
+//        }
     }
     
     @objc func handleKeyboardWillHide(_ notification: Notification) {
@@ -98,7 +114,7 @@ final class FormViewModel: ObservableObject {
         }
     }
     
-    private func handleKeyboardOffset() {
+    func handleKeyboardOffset() {
         withAnimation {
             if case .none = formInputType {
                 vStackInsets = FormViewConstants.vStackInsets
@@ -115,7 +131,7 @@ final class FormViewModel: ObservableObject {
                     if #available(iOS 14.0, *) {} else {
                         iOS13Buffer += 65
                     }
-                    
+
                     if case .keyboard = formInputType {
                         if scrollViewOffsetForKeyboard != 0.0 {
                             // Next button on keyboard tapped, add new offset to previous offset
