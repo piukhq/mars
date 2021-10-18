@@ -32,10 +32,14 @@ class AutomatedTesting_5_WireframesNavigation: XCTestCase {
         let cardNumberTextfield = app.textFields["Bonus card number"]
         cardNumberTextfield.tap()
         cardNumberTextfield.typeText("6332040000200000002")
-        app.buttons["next"].tap()
-        app.typeText("one")
-        app.buttons["next"].tap()
-        app.typeText("rg1 1aa")
+
+        let lastNameTextfield = app.textFields["Last name"]
+        lastNameTextfield.tap()
+        lastNameTextfield.typeText("one")
+        
+        let postcodeTextfield = app.textFields["Postcode"]
+        postcodeTextfield.tap()
+        postcodeTextfield.typeText("rg1 1aa")
 
         app.toolbars["Toolbar"].buttons["Done"].tap()
         app.buttons["Add card"].tap()
