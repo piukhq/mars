@@ -40,6 +40,11 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         static let timerInterval: TimeInterval = 5.0
         static let scanErrorThreshold: TimeInterval = 1.0
     }
+    
+    enum BarcodeCaptureSource {
+        case camera
+        case photoLibrary
+    }
 
     private weak var delegate: BarcodeScannerViewControllerDelegate?
 
@@ -53,6 +58,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private var canPresentScanError = true
     private var hideNavigationBar = true
     private var shouldAllowScanning = true
+    private var captureSource: BarcodeCaptureSource = .camera
 
     private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .regular))
@@ -321,35 +327,23 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
                 BinkLogger.infoPrivateHash(event: AppLoggerEvent.barcodeScanned, value: "ID: \(plan.id ?? "") - \(barcode)")
             }
             
-            // We recognised the plan, but is this the plan we injected if any?
-            if let planFromForm = self.viewModel.plan {
-                // We injected a plan from a form
-                if plan != planFromForm {
-                    if self.canPresentScanError {
-                        self.canPresentScanError = false
-                        DispatchQueue.main.async {
-                            if #available(iOS 14.0, *) {
-                                BinkLogger.error(AppLoggerError.barcodeScanningFailure, value: planFromForm.account?.companyName)
-                            }
-                            HapticFeedbackUtil.giveFeedback(forType: .notification(type: .error))
-                            let alert = BinkAlertController(title: "Error", message: "The card you scanned was not correct, please scan your \(planFromForm.account?.companyName ?? "") card", preferredStyle: .alert) // <<<<<<<< add error message for scanned image
-                            let action = UIAlertAction(title: "OK", style: .cancel) { _ in
-                                DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: {
-                                    self.canPresentScanError = true
-                                    self.shouldAllowScanning = true
-                                })
-                            }
-                            alert.addAction(action)
-                            self.present(alert, animated: true, completion: nil)
+            self.passDataToBarcodeScannerDelegate(barcode: barcode, membershipPlan: plan)
+        }
+    }
+    
+    private func passDataToBarcodeScannerDelegate(barcode: String, membershipPlan: CD_MembershipPlan) {
+        // We recognised the plan, but is this the plan we injected if any?
+        if let planFromForm = self.viewModel.plan {
+            // We injected a plan from a form
+            if membershipPlan != planFromForm {
+                if self.canPresentScanError {
+                    self.canPresentScanError = false
+                    DispatchQueue.main.async {
+                        if #available(iOS 14.0, *) {
+                            BinkLogger.error(AppLoggerError.barcodeScanningFailure, value: planFromForm.account?.companyName)
                         }
-                    }
-                } else {
-                    self.stopScanning()
-                    HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
-                    
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self = self else { return }
-                        self.delegate?.barcodeScannerViewController(self, didScanBarcode: barcode, forMembershipPlan: plan, completion: nil)
+                        HapticFeedbackUtil.giveFeedback(forType: .notification(type: .error))
+                        self.showError(planFromForm)
                     }
                 }
             } else {
@@ -358,10 +352,39 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
                 
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
-                    self.delegate?.barcodeScannerViewController(self, didScanBarcode: barcode, forMembershipPlan: plan, completion: nil)
+                    self.delegate?.barcodeScannerViewController(self, didScanBarcode: barcode, forMembershipPlan: membershipPlan, completion: nil)
                 }
             }
+        } else {
+            self.stopScanning()
+            HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
+            
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.delegate?.barcodeScannerViewController(self, didScanBarcode: barcode, forMembershipPlan: membershipPlan, completion: nil)
+            }
         }
+    }
+    
+    private func showError(_ membershipPlan: CD_MembershipPlan) {
+        var errorMessage: String
+        
+        switch captureSource {
+        case .camera:
+            errorMessage = "The card you scanned was not correct, please scan your \(membershipPlan.account?.companyName ?? "") card"
+        case .photoLibrary:
+            errorMessage = "Unrecognized barcode, please import an image of your \(membershipPlan.account?.companyName ?? "") barcode"
+        }
+        
+        let alert = BinkAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .cancel) { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: {
+                self.canPresentScanError = true
+                self.shouldAllowScanning = true
+            })
+        }
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
@@ -374,6 +397,7 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
         if let object = metadataObjects.first {
             guard let readableObject = object as? AVMetadataMachineReadableCodeObject else { return }
             guard let stringValue = readableObject.stringValue else { return }
+            captureSource = .camera
             identifyMembershipPlanForBarcode(stringValue)
         }
     }
@@ -391,6 +415,7 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
             
             guard let observations = request.results as? [VNBarcodeObservation] else { return }
             guard let stringValue = observations.first?.payloadStringValue else { return }
+            self.captureSource = .photoLibrary
             self.identifyMembershipPlanForBarcode(stringValue)
         }
         return request
