@@ -84,14 +84,14 @@ final class FormViewModel: ObservableObject {
             break
         case .date:
             if #available(iOS 14.0, *) {
-                keyboardHeight = FormViewConstants.graphicalDatePickerHeight
+                keyboardHeight = FormViewConstants.graphicalDatePickerHeight + FormViewConstants.inputToolbarHeight
             } else {
-                keyboardHeight = FormViewConstants.datePickerHeight
+                keyboardHeight = FormViewConstants.datePickerHeight + FormViewConstants.inputToolbarHeight
             }
         case .choice:
-            keyboardHeight = FormViewConstants.multipleChoicePickerHeight
+            keyboardHeight = FormViewConstants.multipleChoicePickerHeight + FormViewConstants.inputToolbarHeight
         case .expiry:
-            keyboardHeight = FormViewConstants.expiryDatePickerHeight
+            keyboardHeight = FormViewConstants.expiryDatePickerHeight + FormViewConstants.inputToolbarHeight
         case .none:
             keyboardHeight = 0
         }
@@ -105,7 +105,7 @@ final class FormViewModel: ObservableObject {
                 return
             } else {
                 let screenHeight = UIScreen.main.bounds.height
-                let visibleOffset = screenHeight - (keyboardHeight + FormViewConstants.inputToolbarHeight)
+                let visibleOffset = screenHeight - keyboardHeight
                 if selectedTextfieldYOrigin > visibleOffset {
                     let distanceFromSelectedTextfieldToBottomOfScreen = screenHeight - selectedTextfieldYOrigin
                     let distanceFromSelectedTextfieldToTopOfKeyboard = keyboardHeight - distanceFromSelectedTextfieldToBottomOfScreen
