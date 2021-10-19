@@ -77,8 +77,12 @@ struct TextfieldView: View {
                                 HStack {
                                     Button {
                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                                        formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY
-                                        formViewModel.formInputType = .date
+
+                                        /// Set textfield Y origin once scrollview offset has been reset to zero
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                            formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY
+                                            formViewModel.formInputType = .date
+                                        }
                                         isEditing = true
                                     } label: {
                                         TextField(field.placeholder, text: $value)
@@ -167,7 +171,7 @@ struct TextfieldView: View {
                                     formViewModel.datasource.checkFormValidity()
                                     canShowErrorState = !field.isValid() && !value.isEmpty
                                     field.fieldWasExited()
-                                }, onCommit: { textField in
+                                }, onCommit: { _ in
                                     canShowErrorState = true
 //                                    guard let key = formViewModel.textFields.first(where: { $0.value == textField })?.key else { return }
 //
