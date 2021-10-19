@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import Vision
 
 struct BarcodeScannerViewModel {
     let plan: CD_MembershipPlan?
@@ -378,9 +379,37 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
 }
 
 extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    var vnBarcodeDetectionRequest: VNDetectBarcodesRequest {
+        let request = VNDetectBarcodesRequest { request, error in
+            guard error == nil else {
+                print("Error in detecting barcode from image: \(error as NSError?)")
+                return
+            }
+            
+            guard let observations = request.results as? [VNBarcodeObservation] else { return }
+        }
+        return request
+    }
+    
+    func createVisionRequest(image: UIImage) {
+        guard let cgImage = image.cgImage else { return }
+        
+        let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+        let vnRequests = [vnBarcodeDetectionRequest]
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                try requestHandler.perform(vnRequests)
+            } catch let error as NSError {
+                print("Error in performing image request: \(error)")
+            }
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
         dismiss(animated: true)
         libraryImage = image
+        createVisionRequest(image: image)
     }
 }
