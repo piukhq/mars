@@ -51,6 +51,14 @@ enum SentryService {
             scope.setTag(value: exception.userJourneyTagValue, key: "user_journey")
         }
     }
+    
+    static func recordBreadcrumb(_ breadcrumb: SentryBreadcrumb) {
+        let crumb = Breadcrumb()
+        crumb.level = breadcrumb.level
+        crumb.category = breadcrumb.category.rawValue
+        crumb.message = breadcrumb.message
+        SentrySDK.addBreadcrumb(crumb: crumb)
+    }
 }
 
 enum SentryException {
@@ -178,4 +186,22 @@ enum SentryException {
             return "Local points collection failed"
         }
     }
+}
+
+// MARK: - Custom Breadcrumbs
+
+enum SentryBreadcrumbCategory: String {
+    case localPointsCollection = "Local points collection"
+}
+
+protocol SentryBreadcrumb {
+    var level: SentryLevel { get }
+    var category: SentryBreadcrumbCategory { get }
+    var message: String { get }
+}
+
+struct LocalPointsCollectionSentryBreadcrumb: SentryBreadcrumb {
+    var level: SentryLevel { return .info }
+    var category: SentryBreadcrumbCategory { return .localPointsCollection }
+    let message: String
 }
