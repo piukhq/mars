@@ -10,6 +10,10 @@ import Combine
 import SwiftUI
 
 struct TextfieldView: View {
+    enum Constants {
+        static let scrollviewOffsetBuffer: CGFloat = 10
+    }
+    
     private let formViewModel: FormViewModel
     @State var field: FormField
     @State private var isEditing = false
@@ -40,7 +44,7 @@ struct TextfieldView: View {
                                 HStack {
                                     Button {
                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                                        formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY
+                                        formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY + Constants.scrollviewOffsetBuffer
                                         formViewModel.formInputType = .choice(data: data)
                                         isEditing = true
                                     } label: {
@@ -80,7 +84,7 @@ struct TextfieldView: View {
 
                                         /// Set textfield Y origin once scrollview offset has been reset to zero
                                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                                            formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY
+                                            formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY + Constants.scrollviewOffsetBuffer
                                             formViewModel.formInputType = .date
                                         }
                                         isEditing = true
@@ -118,7 +122,7 @@ struct TextfieldView: View {
                                 HStack {
                                     Button {
                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                                        formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY
+                                        formViewModel.selectedTextfieldYOrigin = proxy.frame(in: .global).maxY + Constants.scrollviewOffsetBuffer
                                         formViewModel.formInputType = .expiry(months: months, years: years)
                                         isEditing = true
                                     } label: {
