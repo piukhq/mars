@@ -53,7 +53,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private var canPresentScanError = true
     private var hideNavigationBar = true
     private var shouldAllowScanning = true
-    private var libraryImage: UIImage?
 
     private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .regular))
@@ -300,22 +299,8 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     @objc private func close() {
         Current.navigate.close()
     }
-}
-
-extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
-    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        timer?.invalidate()
-        guard shouldAllowScanning else { return }
-        shouldAllowScanning = false
-
-        if let object = metadataObjects.first {
-            guard let readableObject = object as? AVMetadataMachineReadableCodeObject else { return }
-            guard let stringValue = readableObject.stringValue else { return }
-            identifyMembershipPlanForBarcode(stringValue)
-        }
-    }
     
-    func identifyMembershipPlanForBarcode(_ barcode: String) {
+    private func identifyMembershipPlanForBarcode(_ barcode: String) {
         Current.wallet.identifyMembershipPlanForBarcode(barcode) { [weak self] plan in
             guard let self = self else { return }
             guard let plan = plan else {
@@ -376,10 +361,25 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                     self.delegate?.barcodeScannerViewController(self, didScanBarcode: barcode, forMembershipPlan: plan, completion: nil)
                 }
             }
-            
         }
     }
 }
+
+extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
+    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+        timer?.invalidate()
+        guard shouldAllowScanning else { return }
+        shouldAllowScanning = false
+
+        if let object = metadataObjects.first {
+            guard let readableObject = object as? AVMetadataMachineReadableCodeObject else { return }
+            guard let stringValue = readableObject.stringValue else { return }
+            identifyMembershipPlanForBarcode(stringValue)
+        }
+    }
+}
+
+// MARK: - Detect barcode from image
 
 extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
     var vnBarcodeDetectionRequest: VNDetectBarcodesRequest {
@@ -396,7 +396,7 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
         return request
     }
     
-    func createVisionRequest(image: UIImage) {
+    private func createVisionRequest(image: UIImage) {
         guard let cgImage = image.cgImage else { return }
         
         let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
@@ -414,7 +414,8 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
         dismiss(animated: true)
-        libraryImage = image
-        createVisionRequest(image: image)
+        Current.navigate.close(animated: true) {
+            self.createVisionRequest(image: image)
+        }
     }
 }
