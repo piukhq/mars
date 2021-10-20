@@ -13,6 +13,7 @@ import Vision
 struct BarcodeScannerViewModel {
     let plan: CD_MembershipPlan?
     var isScanning = false
+    var scanningIsPermitted = false
     
     var hasPlan: Bool {
         return plan != nil
@@ -95,7 +96,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     
     private lazy var photoLibraryButton: BinkButton = {
         return BinkButton(type: .plain, title: L10n.loyaltyScannerAddPhotoFromLibraryButtonTitle, enabled: true, action: { [weak self] in
-            self?.addPhotoFromLibraryButtonTapped()
+            self?.addPhotoFromLibrary()
         })
     }()
 
@@ -170,8 +171,10 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         }
 
 
-        if !viewModel.isScanning {
+        if !viewModel.isScanning && viewModel.scanningIsPermitted {
             startScanning()
+        } else {
+            addPhotoFromLibrary()
         }
     }
     
@@ -288,7 +291,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         device.unlockForConfiguration()
     }
 
-    private func addPhotoFromLibraryButtonTapped() {
+    private func addPhotoFromLibrary() {
         let picker = UIImagePickerController()
         picker.allowsEditing = true
         picker.delegate = self
@@ -442,5 +445,13 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
         Current.navigate.close(animated: true) {
             self.createVisionRequest(image: image)
         }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: {
+            if !self.viewModel.scanningIsPermitted {
+                Current.navigate.close()
+            }
+        })
     }
 }
