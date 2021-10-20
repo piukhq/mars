@@ -300,6 +300,9 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         let picker = UIImagePickerController()
         picker.allowsEditing = true
         picker.delegate = self
+        if !viewModel.scanningIsPermitted {
+            picker.modalPresentationStyle = .overCurrentContext
+        }
         present(picker, animated: true)
     }
     
