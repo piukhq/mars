@@ -453,7 +453,13 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: {
             if !self.viewModel.scanningIsPermitted {
-                Current.navigate.back()
+                if self.viewModel.hasPlan {
+                    /// Auth and Add
+                    Current.navigate.close()
+                } else {
+                    /// Browse brands
+                    Current.navigate.back()
+                }
             }
         })
     }

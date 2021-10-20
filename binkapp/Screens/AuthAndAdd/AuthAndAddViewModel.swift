@@ -395,6 +395,10 @@ class AuthAndAddViewModel {
         PermissionsUtility.launchLoyaltyScanner(viewController) {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
+        } addFromPhotoLibraryAction: {
+            let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(forPlan: plan, scanningIsPermitted: false, delegate: delegate)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         }
     }
 }
