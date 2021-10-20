@@ -372,14 +372,18 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         }
     }
     
-    private func showError(_ membershipPlan: CD_MembershipPlan) {
+    private func showError(_ membershipPlan: CD_MembershipPlan? = nil) {
         var errorMessage: String
         
-        switch captureSource {
-        case .camera:
-            errorMessage = "The card you scanned was not correct, please scan your \(membershipPlan.account?.companyName ?? "") card"
-        case .photoLibrary:
-            errorMessage = "Unrecognized barcode, please import an image of your \(membershipPlan.account?.companyName ?? "") barcode"
+        if let membershipPlan = membershipPlan {
+            switch captureSource {
+            case .camera:
+                errorMessage = "The card you scanned was not correct, please scan your \(membershipPlan.account?.companyName ?? "") card"
+            case .photoLibrary:
+                errorMessage = "Unrecognized barcode, please import an image of your \(membershipPlan.account?.companyName ?? "") barcode"
+            }
+        } else {
+            errorMessage = "Failed to detect barcode in the image, please try again"
         }
         
         let alert = BinkAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
@@ -387,6 +391,10 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
             DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: {
                 self.canPresentScanError = true
                 self.shouldAllowScanning = true
+                
+                if !self.viewModel.scanningIsPermitted {
+                    self.addPhotoFromLibrary()
+                }
             })
         }
         alert.addAction(action)
@@ -420,7 +428,12 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
             }
             
             guard let observations = request.results as? [VNBarcodeObservation] else { return }
-            guard let stringValue = observations.first?.payloadStringValue else { return }
+            guard let stringValue = observations.first?.payloadStringValue else {
+                DispatchQueue.main.async {
+                    self.showError()
+                }
+                return
+            }
             self.captureSource = .photoLibrary
             self.identifyMembershipPlanForBarcode(stringValue)
         }
