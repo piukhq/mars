@@ -41,6 +41,11 @@ class ScanLoyaltyCardButton: UIView {
         PermissionsUtility.launchLoyaltyScanner(viewController) {
             let navigationRequest = PushNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
+        } addFromPhotoLibraryAction: {
+//            let picker = UIImagePickerController()
+//            picker.allowsEditing = true
+//            picker.delegate = self
+//            present(picker, animated: true)
         }
     }
 }
@@ -55,5 +60,15 @@ extension ScanLoyaltyCardButton: BarcodeScannerViewControllerDelegate {
     
     func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
         Current.navigate.back()
+    }
+}
+
+extension ScanLoyaltyCardButton: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//        guard let image = info[.editedImage] as? UIImage else { return }
+//        dismiss(animated: true)
+//        Current.navigate.close(animated: true) {
+//            self.createVisionRequest(image: image)
+//        }
     }
 }
