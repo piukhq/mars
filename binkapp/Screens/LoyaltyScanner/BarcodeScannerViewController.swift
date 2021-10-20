@@ -76,6 +76,8 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         label.font = .bodyTextLarge
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         return label
     }()
 
@@ -174,6 +176,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         if !viewModel.isScanning && viewModel.scanningIsPermitted {
             startScanning()
         } else {
+            explainerLabel.text = L10n.loyaltyScannerExplainerTextPermissionDenied
             addPhotoFromLibrary()
         }
     }
@@ -450,7 +453,7 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: {
             if !self.viewModel.scanningIsPermitted {
-                Current.navigate.close()
+                Current.navigate.back()
             }
         })
     }
