@@ -386,8 +386,8 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
             errorMessage = "Failed to detect barcode in the image, please try again"
         }
         
-        let alert = BinkAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .cancel) { _ in
+        let alert = BinkAlertController(title: L10n.errorTitle, message: errorMessage, preferredStyle: .alert)
+        let action = UIAlertAction(title: L10n.ok, style: .cancel) { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: {
                 self.canPresentScanError = true
                 self.shouldAllowScanning = true
@@ -423,12 +423,11 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
     var vnBarcodeDetectionRequest: VNDetectBarcodesRequest {
         let request = VNDetectBarcodesRequest { request, error in
             guard error == nil else {
-                print("Error in detecting barcode from image: \(error as NSError?)")
+                self.showError()
                 return
             }
             
-            guard let observations = request.results as? [VNBarcodeObservation] else { return }
-            guard let stringValue = observations.first?.payloadStringValue else {
+            guard let observations = request.results as? [VNBarcodeObservation], let stringValue = observations.first?.payloadStringValue else {
                 DispatchQueue.main.async {
                     self.showError()
                 }
@@ -449,8 +448,8 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
         DispatchQueue.global(qos: .userInitiated).async {
             do {
                 try requestHandler.perform(vnRequests)
-            } catch let error as NSError {
-                print("Error in performing image request: \(error)")
+            } catch {
+                self.showError()
             }
         }
     }
