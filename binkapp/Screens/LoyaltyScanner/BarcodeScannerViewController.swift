@@ -98,7 +98,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     
     private lazy var photoLibraryButton: BinkButton = {
         return BinkButton(type: .plain, title: L10n.loyaltyScannerAddPhotoFromLibraryButtonTitle, enabled: true, action: { [weak self] in
-            self?.addPhotoFromLibrary()
+            self?.toPhotoLibrary()
         })
     }()
 
@@ -156,6 +156,11 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         ])
         
         navigationController?.setNavigationBarVisibility(false)
+        
+        if !viewModel.scanningIsPermitted {
+            explainerLabel.text = L10n.loyaltyScannerExplainerTextPermissionDenied
+            toPhotoLibrary()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -175,9 +180,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
 
         if !viewModel.isScanning && viewModel.scanningIsPermitted {
             startScanning()
-        } else {
-            explainerLabel.text = L10n.loyaltyScannerExplainerTextPermissionDenied
-            addPhotoFromLibrary()
         }
     }
     
@@ -294,7 +296,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         device.unlockForConfiguration()
     }
 
-    private func addPhotoFromLibrary() {
+    private func toPhotoLibrary() {
         let picker = UIImagePickerController()
         picker.allowsEditing = true
         picker.delegate = self
@@ -393,7 +395,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
                 self.shouldAllowScanning = true
                 
                 if !self.viewModel.scanningIsPermitted {
-                    self.addPhotoFromLibrary()
+                    self.toPhotoLibrary()
                 }
             })
         }
