@@ -87,7 +87,10 @@ class WebScrapingUtility: NSObject {
     
     func start(agent: LocalPointsCollectable, item: PointsScrapingManager.QueuedItem) throws {
         /// If we have a membership card or agent, then we are currently in the process of scraping and should not be interrupted
-        guard !isRunning else { return }
+        guard !isRunning else {
+            SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Web scraping utility is already running and will not continue"))
+            return
+        }
         
         self.agent = agent
         
@@ -126,6 +129,14 @@ class WebScrapingUtility: NSObject {
         guard let card = item?.card, let plan = card.membershipPlan, let agent = agent else {
             completion(.failure(.failedToAssignWebView))
             return
+        }
+        
+        defer {
+            if activeWebview == priorityWebview {
+                SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Active webview set to priority webview"))
+            } else {
+                SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Active webview set to ephemeral webview"))
+            }
         }
         
         DispatchQueue.main.async {
@@ -170,6 +181,8 @@ class WebScrapingUtility: NSObject {
     }
     
     func stop() {
+        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Web scraping utility stopped"))
+        
         agent = nil
         item = nil
         idleTimer?.invalidate()
@@ -184,6 +197,8 @@ class WebScrapingUtility: NSObject {
     }
     
     private func resetIdlingTimer() {
+        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Resetting idle timer"))
+        
         idleTimer?.invalidate()
         idleTimer = Timer.scheduledTimer(withTimeInterval: idleThreshold, repeats: false, block: { [weak self] timer in
             guard let self = self else { return }
@@ -203,6 +218,8 @@ class WebScrapingUtility: NSObject {
     }
     
     private func beginUserAction() {
+        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Beginning user action"))
+        
         isPerformingUserAction = true
         presentWebView()
         userActionTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] _ in
@@ -212,6 +229,8 @@ class WebScrapingUtility: NSObject {
     }
     
     private func endUserAction() {
+        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Ending user action"))
+        
         isPerformingUserAction = false
         userActionTimer?.invalidate()
         closeWebView()
@@ -219,6 +238,8 @@ class WebScrapingUtility: NSObject {
     }
     
     private func presentWebView() {
+        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Presenting web view"))
+        
         guard !isPresentingWebView else { return }
         guard let activeWebview = activeWebview else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -229,6 +250,8 @@ class WebScrapingUtility: NSObject {
     }
     
     private func closeWebView(force: Bool = false) {
+        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Closing web view"))
+        
         if !force, isInDebugMode { return }
         if isPresentingWebView {
             Current.navigate.close()
@@ -258,6 +281,8 @@ class WebScrapingUtility: NSObject {
     private func runScript(_ script: String, completion: @escaping (Result<WebScrapingResponse, WebScrapingUtilityError>) -> Void) {
         if isExecutingScript { return }
         isExecutingScript = true
+        
+        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Executing script"))
         
         activeWebview?.evaluateJavaScript(script) { [weak self] (response, error) in
             self?.isExecutingScript = false
@@ -297,6 +322,8 @@ class WebScrapingUtility: NSObject {
                 DebugInfoAlertView.show("\(merchant) LPC - Retreived points balance", type: .success)
             }
             delegate?.webScrapingUtility(self, didCompleteWithValue: value, item: item, withAgent: agent)
+            
+            SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Finishing with value"))
         }
         
         if let error = error {
@@ -310,6 +337,8 @@ class WebScrapingUtility: NSObject {
                 }
             }
             delegate?.webScrapingUtility(self, didCompleteWithError: error, item: item, withAgent: agent)
+            
+            SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Finishing with error: \(error.localizedDescription)"))
             
             priorityScrapableCards.removeAll(where: { $0.cardId == item.card.id })
         }
@@ -351,13 +380,19 @@ extension WebScrapingUtility: WKNavigationDelegate {
                 configString = WebScrapingStateConfigurator.skipLogin.rawValue
             }
             
+            SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Handling webview navigation"))
+            SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Script config: \(configString)"))
+            
             let formattedScript = String(format: script, credentials.username, credentials.password, configString, credentials.cardNumber ?? "")
             self.runScript(formattedScript) { [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case .success(let response):
                     if let error = response.errorMessage {
+                        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Site error detected"))
+                        
                         if response.didAttemptLogin == true {
+                            SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Site did detect login attempt before error: \(error)"))
                             self.finish(withError: .incorrectCredentials(errorMessage: error))
                         } else {
                             self.finish(withError: .genericFailure(errorMessage: error))
@@ -369,11 +404,13 @@ extension WebScrapingUtility: WKNavigationDelegate {
                     // User action
                     
                     if response.userActionComplete == true {
+                        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Site detected completed user action"))
                         self.endUserAction()
                         return
                     }
                     
                     if response.userActionRequired == true {
+                        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Site detected user action required"))
                         self.beginUserAction()
                         return
                     }
@@ -382,6 +419,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
                     // Login attempt
                     
                     if response.didAttemptLogin == true {
+                        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Site detected login attempt"))
                         self.sessionHasAttemptedLogin = true
                         if let card = self.item?.card, self.activeWebview == self.priorityWebview {
                             /// At this point, we know we've attempted a login so there was no valid session
@@ -401,6 +439,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
                     // Points retrieval
                     
                     if let points = response.pointsValue {
+                        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Site detected points value"))
                         self.finish(withValue: points)
                         return
                     }
