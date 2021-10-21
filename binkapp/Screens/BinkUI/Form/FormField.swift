@@ -44,7 +44,7 @@ struct FormPickerData: Equatable {
     }
 }
 
-class FormField {
+class FormField: Identifiable {
     enum FieldInputType: Equatable {
         case text
         case email
@@ -159,7 +159,6 @@ class FormField {
     typealias TextFieldShouldChange = (FormField, UITextField, NSRange, String?) -> (Bool)
     typealias FieldExitedBlock = (FormField) -> Void
     typealias ManualValidateBlock = (FormField) -> (Bool)
-    
     typealias DataSourceRefreshBlock = () -> Void
         
     init(title: String, placeholder: String, validation: String?, validationErrorMessage: String? = nil, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock, pickerSelected: PickerUpdatedBlock? = nil, columnKind: ColumnKind? = nil, manualValidate: ManualValidateBlock? = nil, forcedValue: String? = nil, isReadOnly: Bool = false, fieldCommonName: FieldCommonName? = nil, alternatives: [FieldCommonName]? = nil, dataSourceRefreshBlock: DataSourceRefreshBlock? = nil, hidden: Bool = false) {

@@ -15,6 +15,12 @@ enum LoginType {
     case password
 }
 
+enum MagicLinkStatus {
+    case checkInbox
+    case expired
+    case failed
+}
+
 class LoginController: UserServiceProtocol {
     func login(with request: LoginRequest, completion: @escaping (UserServiceError?) -> Void) {
         login(request: request) { [weak self] result in

@@ -42,16 +42,30 @@ enum FormPurpose: Equatable {
     }
 }
 
-class AuthAndAddViewModel {
+final class AuthAndAddViewModel: NSObject, ObservableObject {
     private let repository = AuthAndAddRepository()
     private let membershipPlan: CD_MembershipPlan
-    let prefilledFormValues: [FormDataSource.PrefilledValue]?
-    
     private var fieldsViews: [InputValidation] = []
     private var membershipCardPostModel: MembershipCardPostModel?
     private var existingMembershipCard: CD_MembershipCard?
-    
     var formPurpose: FormPurpose
+    let prefilledFormValues: [FormDataSource.PrefilledValue]?
+
+    @Published var dataSourcePublisher: FormDataSource?
+    var dataSource: FormDataSource {
+        didSet {
+            dataSourcePublisher = dataSource
+        }
+    }
+    
+    init(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) {
+        self.membershipPlan = membershipPlan
+        self.membershipCardPostModel = MembershipCardPostModel(account: AccountPostModel(), membershipPlan: Int(membershipPlan.id))
+        self.existingMembershipCard = existingMembershipCard
+        self.formPurpose = formPurpose
+        self.prefilledFormValues = prefilledFormValues
+        self.dataSource = FormDataSource(authAdd: membershipPlan, formPurpose: formPurpose, prefilledValues: prefilledFormValues)
+    }
     
     var title: String {
         switch formPurpose {
@@ -73,17 +87,6 @@ class AuthAndAddViewModel {
     
     var accountButtonShouldHide: Bool {
         return formPurpose != .add || formPurpose == .ghostCard
-    }
-    
-    private var privacyPolicy: NSMutableAttributedString?
-    private var termsAndConditions: NSMutableAttributedString?
-    
-    init(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) {
-        self.membershipPlan = membershipPlan
-        self.membershipCardPostModel = MembershipCardPostModel(account: AccountPostModel(), membershipPlan: Int(membershipPlan.id))
-        self.existingMembershipCard = existingMembershipCard
-        self.formPurpose = formPurpose
-        self.prefilledFormValues = prefilledFormValues
     }
     
     func getDescription() -> String? {
@@ -135,7 +138,7 @@ class AuthAndAddViewModel {
         return membershipPlan
     }
 
-    func addMembershipCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, completion: @escaping () -> Void) throws {
+    func addMembershipCard(with formFields: [FormField], checkboxes: [CheckboxSwiftUIView]? = nil, completion: @escaping () -> Void) throws {
         guard formPurpose != .ghostCard, formPurpose != .patchGhostCard else {
             try addGhostCard(with: formFields, checkboxes: checkboxes, existingMembershipCard: existingMembershipCard)
             return
@@ -182,7 +185,7 @@ class AuthAndAddViewModel {
         })
     }
     
-    private func addGhostCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, existingMembershipCard: CD_MembershipCard?) throws {
+    private func addGhostCard(with formFields: [FormField], checkboxes: [CheckboxSwiftUIView]? = nil, existingMembershipCard: CD_MembershipCard?) throws {
         // Setup with both
         populateCard(with: formFields, checkboxes: checkboxes, columnKind: .add)
         populateCard(with: formFields, checkboxes: checkboxes, columnKind: .register)
@@ -222,7 +225,7 @@ class AuthAndAddViewModel {
         }
     }
     
-    private func populateCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, columnKind: FormField.ColumnKind) {
+    private func populateCard(with formFields: [FormField], checkboxes: [CheckboxSwiftUIView]? = nil, columnKind: FormField.ColumnKind) {
         formFields.forEach {
             if $0.columnKind == columnKind {
                 addFieldToCard(formField: $0)
@@ -294,7 +297,7 @@ class AuthAndAddViewModel {
         }
     }
     
-    func addCheckboxToCard(checkbox: CheckboxView) {
+    func addCheckboxToCard(checkbox: CheckboxSwiftUIView) {
         switch checkbox.columnKind {
         case .add:
             let addFieldsArray = membershipCardPostModel?.account?.addFields
@@ -340,32 +343,6 @@ class AuthAndAddViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func configureAttributedStrings() {
-        for document in (membershipPlan.account?.planDocuments) ?? [] {
-            let planDocument = document as? CD_PlanDocument
-            if planDocument?.name?.contains("policy") == true {
-                if let urlString = planDocument?.url, let url = URL(string: urlString) {
-                    privacyPolicy = HTMLParsingUtil.makeAttributedStringFromHTML(url: url)
-                }
-            }
-            
-            if planDocument?.name?.contains("conditions") == true {
-                if let urlString = planDocument?.url, let url = URL(string: urlString) {
-                    termsAndConditions = HTMLParsingUtil.makeAttributedStringFromHTML(url: url)
-                }
-            }
-        }
-    }
-    
-    func presentPlanDocumentsModal(withUrl url: URL) {
-        if let text = url.absoluteString.contains("pp") ? privacyPolicy : termsAndConditions {
-            let modalConfig = ReusableModalConfiguration(text: text, membershipPlan: membershipPlan)
-            let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: modalConfig)
-            let navigationRequest = ModalNavigationRequest(viewController: viewController)
-            Current.navigate.to(navigationRequest)
-        }
-    }
-    
     func toReusableTemplate(title: String, description: String) {
         let attributedString = NSMutableAttributedString()
         let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font: UIFont.headline])
@@ -379,22 +356,18 @@ class AuthAndAddViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func brandHeaderWasTapped() {
-        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: membershipPlan)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
-        Current.navigate.to(navigationRequest)
-    }
-    
     func displaySimplePopup(title: String?, message: String?) {
         let alert = ViewControllerFactory.makeOkAlertViewController(title: title, message: message)
         Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     
-    func toLoyaltyScanner(forPlan plan: CD_MembershipPlan, delegate: BarcodeScannerViewControllerDelegate?) {
-        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(forPlan: plan, delegate: delegate)
-        PermissionsUtility.launchLoyaltyScanner(viewController) {
-            let navigationRequest = ModalNavigationRequest(viewController: viewController)
-            Current.navigate.to(navigationRequest)
+    func refreshFormDataSource() {
+        let prefilledValues = self.dataSource.fields.filter { $0.fieldCommonName != .barcode && $0.fieldCommonName != .cardNumber }.map {
+            FormDataSource.PrefilledValue(commonName: $0.fieldCommonName, value: $0.value)
         }
+
+        self.dataSource = FormDataSource(authAdd: getMembershipPlan(), formPurpose: .add, prefilledValues: prefilledValues)
+        formPurpose = .add
+        dataSource.checkFormValidity()
     }
 }

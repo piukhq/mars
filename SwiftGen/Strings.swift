@@ -40,6 +40,8 @@ internal enum L10n {
   internal static let accessFormPasswordTitle = L10n.tr("Localizable", "access_form_password_title")
   /// Password should be 8 or more characters, with at least 1 uppercase, 1 lowercase and a number
   internal static let accessFormPasswordValidation = L10n.tr("Localizable", "access_form_password_validation")
+  /// Add
+  internal static let addButtonTitle = L10n.tr("Localizable", "add_button_title")
   /// Please add your email address below.
   internal static let addEmailSubtitle = L10n.tr("Localizable", "add_email_subtitle")
   /// Add email
@@ -66,6 +68,8 @@ internal enum L10n {
   internal static let addLoyaltyCardTitle = L10n.tr("Localizable", "add_loyalty_card_title")
   /// Add my card
   internal static let addMyCardButton = L10n.tr("Localizable", "add_my_card_button")
+  /// Enter your details below to add your payment card into Bink.
+  internal static let addPaymentCardDescription = L10n.tr("Localizable", "add_payment_card_description")
   /// Add payment card
   internal static let addPaymentCardTitle = L10n.tr("Localizable", "add_payment_card_title")
   /// There was a problem adding your payment card. Please try again.
@@ -190,7 +194,7 @@ internal enum L10n {
   internal static let findAndJoinDescription = L10n.tr("Localizable", "find_and_join_description")
   /// If the email address you entered is associated with a Bink account, then a password reset email will be sent.
   internal static let fogrotPasswordPopupText = L10n.tr("Localizable", "fogrot_password_popup_text")
-  /// Please enter your email address and if it is associated with a Bink account, then a password reset email will be sent
+  /// Please enter your email address and if it is associated with a Bink account, then a password reset email will be sent.
   internal static let forgotPasswordDescription = L10n.tr("Localizable", "forgot_password_description")
   /// Incorrect Format
   internal static let formFieldValidationError = L10n.tr("Localizable", "form_field_validation_error")
@@ -312,8 +316,10 @@ internal enum L10n {
   }
   /// Already Logged In
   internal static let magicLinkAlreadyLoggedInTitle = L10n.tr("Localizable", "magic_link_already_logged_in_title")
-  /// Get a link sent to your inbox so you can register or access your account instantly!\n\nNote: We will send you a Magic Link
+  /// Get a link sent to your inbox so you can register or access your account instantly!
   internal static let magicLinkDescription = L10n.tr("Localizable", "magic_link_description")
+  /// We will send you a
+  internal static let magicLinkDescriptionHyperlinkBody = L10n.tr("Localizable", "magic_link_description_hyperlink_body")
   /// Note:
   internal static let magicLinkDescriptionNoteHighlight = L10n.tr("Localizable", "magic_link_description_note_highlight")
   /// Magic Link is temporarily unavailable, please try again later.
@@ -750,6 +756,12 @@ internal enum L10n {
   }
   /// Bink App Support
   internal static let supportMailSubject = L10n.tr("Localizable", "support_mail_subject")
+  /// I agree to Bink's 
+  internal static let tandcs1 = L10n.tr("Localizable", "tandcs_1")
+  /// Please read the Bink 
+  internal static let tandcs2 = L10n.tr("Localizable", "tandcs_2")
+  ///  for further details of how your data will be processed
+  internal static let tandcs3 = L10n.tr("Localizable", "tandcs_3")
   /// Please read the Bink Privacy Policy for further details of how your data will be processed
   internal static let tandcsDescription = L10n.tr("Localizable", "tandcs_description")
   /// Terms and Conditions

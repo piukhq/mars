@@ -17,10 +17,6 @@ protocol FormDataSourceDelegate: NSObjectProtocol {
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool
     func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource)
     func formDataSourceShouldRefresh(_ dataSource: FormDataSource)
-    
-    // I don't particular like this being a data source delegate method, but do we have any other route from collection view cell to the view controller?
-    func formDataSource(_ dataSource: FormDataSource, shouldPresentLoyaltyScannerForPlan plan: CD_MembershipPlan)
-    func formDataSourceShouldPresentPaymentScanner(_ dataSource: FormDataSource)
 }
 
 extension FormDataSourceDelegate {
@@ -28,14 +24,9 @@ extension FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField) {}
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField) {}
     func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView) {}
-    func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool {
-        return false
-    }
+    func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool { return false }
     func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource) {}
     func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {}
-    
-    func formDataSource(_ dataSource: FormDataSource, shouldPresentLoyaltyScannerForPlan plan: CD_MembershipPlan) {}
-    func formDataSourceShouldPresentPaymentScanner(_ dataSource: FormDataSource) {}
 }
 
 enum AccessForm {
@@ -47,13 +38,19 @@ enum AccessForm {
     case success
 }
 
-class FormDataSource: NSObject {
+enum FormType {
+    case authAndAdd
+    case addPaymentCard
+    case login(accessForm: AccessForm)
+}
+
+class FormDataSource: NSObject, ObservableObject {
     struct PrefilledValue: Equatable {
         var commonName: FieldCommonName?
         var value: String?
     }
     
-    typealias MultiDelegate = FormDataSourceDelegate & CheckboxViewDelegate & FormCollectionViewCellDelegate
+    typealias MultiDelegate = FormDataSourceDelegate & CheckboxViewDelegate
     
     private enum Constants {
         static let expiryYearsInTheFuture = 50
@@ -62,16 +59,19 @@ class FormDataSource: NSObject {
     /// We need the data source to hold a reference to the plan for some forms so that we can pass it through delegates to other objects
     private(set) var membershipPlan: CD_MembershipPlan?
     
-    private(set) var fields: [FormField] = []
-    private var visibleFields: [FormField] {
+    @Published var fields: [FormField] = []
+    @Published var formPurpose: FormPurpose?
+    @Published var fullFormIsValid = false
+
+    var formtype: FormType = .login(accessForm: .magicLink)
+    var visibleFields: [FormField] {
         return fields.filter { !$0.hidden }
     }
-    private(set) var checkboxes: [CheckboxView] = []
-    private var cellTextFields: [Int: UITextField] = [:]
+    private(set) var checkboxes: [CheckboxSwiftUIView] = []
     private var selectedCheckboxIndex = 0
     weak var delegate: MultiDelegate?
     
-    var fullFormIsValid: Bool {
+    func checkFormValidity() {
         let formFieldsValid = fields.allSatisfy({ $0.isValid() })
         var checkboxesValid = true
         checkboxes.forEach { checkbox in
@@ -82,7 +82,7 @@ class FormDataSource: NSObject {
             }
         }
         
-        return formFieldsValid && checkboxesValid
+        fullFormIsValid = formFieldsValid && checkboxesValid
     }
     
     func currentFieldValues() -> [String: String] {
@@ -98,6 +98,7 @@ extension FormDataSource {
     convenience init(_ paymentCardModel: PaymentCardCreateModel, delegate: MultiDelegate? = nil) {
         self.init()
         self.delegate = delegate
+        formtype = .addPaymentCard
         setupFields(with: paymentCardModel)
     }
     
@@ -106,19 +107,20 @@ extension FormDataSource {
             guard let self = self else { return }
             self.delegate?.formDataSource(self, changed: newValue, for: field)
         }
-        
+
         let shouldChangeBlock: FormField.TextFieldShouldChange = { [weak self] (field, textField, range, newValue) in
             guard let self = self, let delegate = self.delegate else { return true }
             return delegate.formDataSource(self, textField: textField, shouldChangeTo: newValue, in: range, for: field)
         }
-        
+
         let pickerUpdatedBlock: FormField.PickerUpdatedBlock = { [weak self] field, options in
             guard let self = self else { return }
             self.delegate?.formDataSource(self, selected: options, for: field)
         }
-        
+
         let fieldExitedBlock: FormField.FieldExitedBlock = { [weak self] field in
             guard let self = self else { return }
+            self.checkFormValidity()
             self.delegate?.formDataSource(self, fieldDidExit: field)
         }
 
@@ -184,7 +186,9 @@ extension FormDataSource {
     convenience init(authAdd membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, delegate: MultiDelegate? = nil, prefilledValues: [PrefilledValue]? = nil) {
         self.init()
         self.delegate = delegate
+        self.formPurpose = formPurpose
         self.membershipPlan = membershipPlan
+        formtype = .authAndAdd
         setupFields(with: membershipPlan, formPurpose: formPurpose, prefilledValues: prefilledValues)
     }
     
@@ -206,7 +210,8 @@ extension FormDataSource {
         
         let fieldExitedBlock: FormField.FieldExitedBlock = { [weak self] field in
             guard let self = self else { return }
-            self.delegate?.formDataSource(self, fieldDidExit: field)
+            self.checkFormValidity()
+//            self.delegate?.formDataSource(self, fieldDidExit: field)
         }
         
         let dataSourceRefreshBlock: FormField.DataSourceRefreshBlock = { [weak self] in
@@ -217,9 +222,8 @@ extension FormDataSource {
         if case .addFromScanner = formPurpose {
             model.account?.formattedAddFields(omitting: [.cardNumber])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
                     let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .add, delegate: self)
+                    let checkbox = CheckboxSwiftUIView(attributedText: attributedString, columnName: field.column ?? "", columnKind: .add, checkValidity: checkFormValidity)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -247,9 +251,8 @@ extension FormDataSource {
         if formPurpose == .add || formPurpose == .addFailed || formPurpose == .ghostCard {
             model.account?.formattedAddFields(omitting: [.barcode])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
                     let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .add, delegate: self)
+                    let checkbox = CheckboxSwiftUIView(attributedText: attributedString, columnName: field.column ?? "", columnKind: .add, checkValidity: checkFormValidity)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -277,9 +280,8 @@ extension FormDataSource {
         if case .addFromScanner = formPurpose {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
                     let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .auth, delegate: self)
+                    let checkbox = CheckboxSwiftUIView(attributedText: attributedString, columnName: field.column ?? "", columnKind: .auth, checkValidity: checkFormValidity)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -329,9 +331,8 @@ extension FormDataSource {
         } else if formPurpose != .signUp && formPurpose != .signUpFailed && formPurpose != .ghostCard && formPurpose != .patchGhostCard {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
                     let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .auth, delegate: self)
+                    let checkbox = CheckboxSwiftUIView(attributedText: attributedString, columnName: field.column ?? "", columnKind: .auth, checkValidity: checkFormValidity)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -382,9 +383,8 @@ extension FormDataSource {
         if formPurpose == .signUp || formPurpose == .signUpFailed {
             model.account?.formattedEnrolFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
                     let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .enrol, delegate: self)
+                    let checkbox = CheckboxSwiftUIView(attributedText: attributedString, columnName: field.column ?? "", columnKind: .enrol, checkValidity: checkFormValidity)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -408,9 +408,8 @@ extension FormDataSource {
         if formPurpose == .ghostCard || formPurpose == .patchGhostCard {
             model.account?.formattedRegistrationFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
                     let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .register, delegate: self)
+                    let checkbox = CheckboxSwiftUIView(attributedText: attributedString, columnName: field.column ?? "", columnKind: .register, checkValidity: checkFormValidity)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -434,29 +433,24 @@ extension FormDataSource {
         checkboxes.append(contentsOf: getPlanDocumentsCheckboxes(journey: formPurpose.planDocumentDisplayMatching, membershipPlan: model))
     }
     
-    private func getPlanDocumentsCheckboxes(journey: PlanDocumentDisplayModel, membershipPlan: CD_MembershipPlan) -> [CheckboxView] {
-        var checkboxes: [CheckboxView] = []
-        
+    private func getPlanDocumentsCheckboxes(journey: PlanDocumentDisplayModel, membershipPlan: CD_MembershipPlan) -> [CheckboxSwiftUIView] {
+        var checkboxes: [CheckboxSwiftUIView] = []
+
         membershipPlan.account?.formattedPlanDocuments?.forEach { field in
-            let displayFields = field.formattedDisplay
-            
-            guard displayFields.contains(where: { $0.value == journey.rawValue }) else { return }
-        
-            let checkbox = CheckboxView(checked: false)
-            
+            guard field.formattedDisplay.contains(where: { $0.value == journey.rawValue }) else { return }
             let url = URL(string: field.url ?? "")
             let fieldText = (field.documentDescription ?? "") + " " + (field.name ?? "")
             let attributedString = NSMutableAttributedString(string: fieldText, attributes: [.font: UIFont.bodyTextSmall])
-            
+
             if field.checkbox?.boolValue == true {
-                checkbox.configure(title: attributedString, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: self)
+                let checkbox = CheckboxSwiftUIView(text: "", attributedText: attributedString, columnName: field.name, columnKind: .planDocument, url: url, membershipPlan: membershipPlan, checkValidity: checkFormValidity)
+                checkboxes.append(checkbox)
             } else {
-                // If we don't want a checkbox, we don't need a delegate for it, so we will hide the checkbox by checking if we have a delegate or not
-                checkbox.configure(title: attributedString, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: self, hideCheckbox: true)
+                let checkbox = CheckboxSwiftUIView(text: "", attributedText: attributedString, columnName: field.name ?? "", columnKind: .planDocument, url: url, hideCheckbox: true, membershipPlan: membershipPlan, checkValidity: checkFormValidity)
+                checkboxes.append(checkbox)
             }
-            checkboxes.append(checkbox)
         }
-        
+
         return checkboxes
     }
 }
@@ -467,6 +461,7 @@ extension FormDataSource {
     convenience init(accessForm: AccessForm, prefilledValues: [PrefilledValue]? = nil) {
         self.init()
         self.delegate = delegate
+        formtype = .login(accessForm: accessForm)
         setupFields(accessForm: accessForm, prefilledValues: prefilledValues)
     }
     
@@ -483,7 +478,8 @@ extension FormDataSource {
         
         let fieldExitedBlock: FormField.FieldExitedBlock = { [weak self] field in
             guard let self = self else { return }
-            self.delegate?.formDataSource(self, fieldDidExit: field)
+            self.checkFormValidity()
+//            self.delegate?.formDataSource(self, fieldDidExit: field)
         }
         
         // Email
@@ -556,9 +552,7 @@ extension FormDataSource {
         attributedTCs.addAttributes([.link: "https://bink.com/terms-and-conditions/"], range: tcsRange)
         attributedTCs.addAttributes([.link: "https://bink.com/privacy-policy/"], range: privacyPolicyRange)
         
-        let termsAndConditions = CheckboxView(checked: false)
-        termsAndConditions.accessibilityIdentifier = "Terms and conditions"
-        termsAndConditions.configure(title: attributedTCs, columnName: L10n.tandcsLink, columnKind: .none, delegate: self)
+        let termsAndConditions = CheckboxSwiftUIView(text: "", attributedText: attributedTCs, columnName: L10n.tandcsLink, columnKind: .none, checkValidity: checkFormValidity)
         
         let attributedMarketing = NSMutableAttributedString(string: L10n.marketingTitle + "\n" + L10n.preferencesPrompt, attributes: [.font: UIFont.bodyTextSmall])
         let baseMarketing = NSString(string: attributedMarketing.string)
@@ -572,21 +566,20 @@ extension FormDataSource {
         attributedMarketing.addAttributes(attributes, range: offersRange)
         attributedMarketing.addAttributes(attributes, range: updatesRange)
         
-        let marketingCheckbox = CheckboxView(checked: false)
-        marketingCheckbox.configure(title: attributedMarketing, columnName: "marketing-bink", columnKind: .userPreference, delegate: self, optional: true)
+        let marketing = CheckboxSwiftUIView(attributedText: attributedMarketing, columnName: "marketing-bink", columnKind: .userPreference, optional: true, checkValidity: checkFormValidity)
         
         if accessForm == .termsAndConditions {
             checkboxes.append(termsAndConditions)
-            checkboxes.append(marketingCheckbox)
+            checkboxes.append(marketing)
         }
         
         if accessForm == .magicLink {
             checkboxes.append(termsAndConditions)
         }
-        
-        if accessForm == .success {
-            checkboxes.append(marketingCheckbox)
-        }
+//        
+//        if accessForm == .success {
+//            checkboxes.append(marketingCheckbox)
+//        }
     }
     
     private func hyperlinkString(_ text: String, hyperlink: String) -> NSAttributedString {
@@ -595,68 +588,5 @@ extension FormDataSource {
         attributed.addAttributes([.underlineStyle: NSUnderlineStyle.single.rawValue, .foregroundColor: UIColor.blueAccent, .font: UIFont.checkboxText], range: NSMakeRange(countMinusHyperlinkString, hyperlink.count))
                 
         return attributed
-    }
-}
-
-extension FormDataSource: CheckboxViewDelegate {
-    func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {
-        delegate?.checkboxView(checkboxView, didCompleteWithColumn: column, value: value, fieldType: fieldType)
-        delegate?.formDataSource(self, checkboxUpdated: checkboxView)
-    }
-    
-    func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
-        delegate?.checkboxView(checkboxView, didTapOn: URL)
-    }
-}
-
-extension FormDataSource: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return visibleFields.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: FormCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-        
-        if let field = visibleFields[safe: indexPath.item] {
-            cell.configure(with: field, delegate: self)
-            cellTextFields[indexPath.row] = cell.textField
-        }
-        
-        return cell
-    }
-}
-
-extension FormDataSource: FormCollectionViewCellDelegate {
-    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {
-        delegate?.formCollectionViewCell(cell, didSelectField: didSelectField)
-        
-        if cellTextFields.first(where: { $0.value == didSelectField })?.key == cellTextFields.count - 1 {
-            didSelectField.returnKeyType = .done
-        } else {
-            didSelectField.returnKeyType = .next
-            selectedCheckboxIndex = 0
-        }
-    }
-    
-    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField) {
-        guard let key = cellTextFields.first(where: { $0.value == textField })?.key else { return }
-        
-        if let nextTextField = cellTextFields[key + 1] {
-            nextTextField.becomeFirstResponder()
-        } else {
-            textField.resignFirstResponder()
-            if !checkboxes.isEmpty {
-                delegate?.formDataSourceShouldScrollToBottom(self)
-            }
-        }
-    }
-    
-    func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell) {
-        guard let plan = membershipPlan else { return }
-        delegate?.formDataSource(self, shouldPresentLoyaltyScannerForPlan: plan)
-    }
-    
-    func formCollectionViewCellDidReceivePaymentScannerButtonTap(_ cell: FormCollectionViewCell) {
-        delegate?.formDataSourceShouldPresentPaymentScanner(self)
     }
 }

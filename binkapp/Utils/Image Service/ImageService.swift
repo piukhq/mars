@@ -9,6 +9,7 @@
 import UIKit
 import Disk
 import DeepDiff
+import SwiftUI
 
 final class ImageService {
     typealias ImageCompletionHandler = (UIImage?) -> Void
@@ -22,15 +23,15 @@ final class ImageService {
     }
     
     /// Retrieve an image returned in a completion handler
-    static func getImage(forPathType pathType: PathType, policy: StorageUtility.ExpiryPolicy = .week, traitCollection: UITraitCollection?, completion: @escaping (UIImage?) -> Void) {
+    static func getImage(forPathType pathType: PathType, policy: StorageUtility.ExpiryPolicy = .week, traitCollection: UITraitCollection?, colorScheme: ColorScheme? = nil, completion: @escaping (UIImage?) -> Void) {
         let imageService = ImageService()
-        imageService.retrieveImage(forPathType: pathType, policy: policy, traitCollection: traitCollection) { retrievedImage in
+        imageService.retrieveImage(forPathType: pathType, policy: policy, traitCollection: traitCollection, colorScheme: colorScheme) { retrievedImage in
             completion(retrievedImage)
         }
     }
     
-    fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy, traitCollection: UITraitCollection? = nil, completion: @escaping ImageCompletionHandler) {
-        guard let imagePath = path(forType: pathType, traitCollection: traitCollection) else { return }
+    fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy, traitCollection: UITraitCollection? = nil, colorScheme: ColorScheme? = nil, completion: @escaping ImageCompletionHandler) {
+        guard let imagePath = path(forType: pathType, traitCollection: traitCollection, colorScheme: colorScheme) else { return }
 
         // Are we forcing a refresh?
         if !forceRefresh {
@@ -55,7 +56,7 @@ final class ImageService {
         downloadImage(forPath: imagePath, withPolicy: policy, completion: completion)
     }
 
-    private func path(forType type: PathType, traitCollection: UITraitCollection?) -> String? {
+    private func path(forType type: PathType, traitCollection: UITraitCollection?, colorScheme: ColorScheme?) -> String? {
         var image: CD_BaseImage? = CD_BaseImage()
         
         switch type {
@@ -80,13 +81,24 @@ final class ImageService {
         case .dark:
             url = image?.darkModeImageUrl ?? image?.imageUrl
         case .system:
-            switch traitCollection?.userInterfaceStyle {
-            case .light:
-                url = image?.imageUrl
-            case .dark:
-                url = image?.darkModeImageUrl ?? image?.imageUrl
-            default:
-                url = image?.imageUrl
+            if let userInterfaceStyle = traitCollection?.userInterfaceStyle {
+                switch userInterfaceStyle {
+                case .light:
+                    url = image?.imageUrl
+                case .dark:
+                    url = image?.darkModeImageUrl ?? image?.imageUrl
+                default:
+                    url = image?.imageUrl
+                }
+            } else {
+                switch colorScheme {
+                case .light:
+                    url = image?.imageUrl
+                case .dark:
+                    url = image?.darkModeImageUrl ?? image?.imageUrl
+                default:
+                    url = image?.imageUrl
+                }
             }
         }
         

@@ -32,9 +32,9 @@ enum ViewControllerFactory {
         return viewController
     }
     
-    static func makeAddPaymentCardViewController(model: PaymentCardCreateModel? = nil, journey: AddPaymentCardJourney) -> AddPaymentCardViewController {
+    static func makeAddPaymentCardViewController(model: PaymentCardCreateModel? = nil, journey: AddPaymentCardJourney) -> UIViewController {
         let viewModel = AddPaymentCardViewModel(paymentCard: model, journey: journey)
-        return AddPaymentCardViewController(viewModel: viewModel)
+        return BinkUIHostingController(rootView: AddPaymentCardView(viewModel: viewModel), screenName: .addPaymentCard)
     }
     
     static func makeAddOrJoinViewController(membershipPlan: CD_MembershipPlan, membershipCard: CD_MembershipCard? = nil) -> AddOrJoinViewController {
@@ -42,9 +42,9 @@ enum ViewControllerFactory {
         return AddOrJoinViewController(viewModel: viewModel)
     }
     
-    static func makeAuthAndAddViewController(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) -> AuthAndAddViewController {
+    static func makeAuthAndAddViewController(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) -> UIViewController {
         let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, prefilledFormValues: prefilledFormValues)
-        return AuthAndAddViewController(viewModel: viewModel)
+        return BinkUIHostingController(rootView: AuthAndAddView(viewModel: viewModel), screenName: setScreenName(for: formPurpose))
     }
     
     static func makePaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration) -> ReusableTemplateViewController {
@@ -60,14 +60,14 @@ enum ViewControllerFactory {
         return PLLScreenViewController(viewModel: viewModel, journey: journey)
     }
     
-    static func makePatchGhostCardViewController(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) -> AuthAndAddViewController {
+    static func makePatchGhostCardViewController(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) -> UIViewController {
         let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: .patchGhostCard, existingMembershipCard: existingMembershipCard)
-        return AuthAndAddViewController(viewModel: viewModel)
+        return BinkUIHostingController(rootView: AuthAndAddView(viewModel: viewModel), screenName: setScreenName(for: .patchGhostCard))
     }
     
-    static func makeSignUpViewController(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) -> AuthAndAddViewController {
+    static func makeSignUpViewController(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) -> UIViewController {
         let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: .signUp, existingMembershipCard: existingMembershipCard)
-        return AuthAndAddViewController(viewModel: viewModel)
+        return BinkUIHostingController(rootView: AuthAndAddView(viewModel: viewModel), screenName: setScreenName(for: .signUp))
     }
     
     // MARK: - Loyalty Card Detail
@@ -159,21 +159,20 @@ enum ViewControllerFactory {
         return PortraitNavigationController(rootViewController: OnboardingViewController())
     }
 
-    static func makeSocialTermsAndConditionsViewController(requestType: LoginRequestType) -> TermsAndConditionsViewController {
-        return TermsAndConditionsViewController(requestType: requestType)
+    static func makeSocialTermsAndConditionsViewController(requestType: LoginRequestType) -> UIViewController {
+        return BinkUIHostingController(rootView: TermsAndConditionsView(requestType: requestType))
     }
     
     static func makeLoginSuccessViewController() -> LoginSuccessViewController {
         return LoginSuccessViewController()
     }
 
-    static func makeLoginViewController() -> LoginViewController {
-        return LoginViewController()
+    static func makeLoginViewController() -> UIViewController {
+        return BinkUIHostingController(rootView: LoginView(), screenName: .login)
     }
 
-    static func makeForgottenPasswordViewController() -> ForgotPasswordViewController {
-        let viewModel = ForgotPasswordViewModel(repository: ForgotPasswordRepository())
-        return ForgotPasswordViewController(viewModel: viewModel)
+    static func makeForgottenPasswordViewController() -> UIViewController {
+        return BinkUIHostingController(rootView: ForgotPasswordView())
     }
     
     // MARK: - Local Points Collection
@@ -288,7 +287,7 @@ enum ViewControllerFactory {
 
     static func makeDebugViewController() -> UIViewController {
         if #available(iOS 14.0, *) {
-            return UIHostingController(rootView: DebugMenuView())
+            return BinkUIHostingController(rootView: DebugMenuView())
         } else {
             let debugMenuFactory = DebugMenuFactory()
             let debugMenuViewModel = DebugMenuViewModel(debugMenuFactory: debugMenuFactory)
@@ -316,5 +315,16 @@ enum ViewControllerFactory {
         alert.addAction(cancelAction)
         
         return alert
+    }
+    
+    static func setScreenName(for formPurpose: FormPurpose) -> TrackedScreen {
+        switch formPurpose {
+        case .add, .addFailed, .addFromScanner:
+            return .addAuthForm
+        case .signUp, .signUpFailed:
+            return .enrolForm
+        case .ghostCard, .patchGhostCard:
+            return .registrationForm
+        }
     }
 }

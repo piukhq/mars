@@ -62,3 +62,15 @@ extension PLRStampsCell: UICollectionViewDataSource, UICollectionViewDelegateFlo
         return CGSize(width: Constants.stampViewWidth, height: Constants.stampViewWidth)
     }
 }
+
+class NestedCollectionView: UICollectionView {
+    override var contentSize: CGSize {
+        didSet {
+            invalidateIntrinsicContentSize()
+        }
+    }
+
+    override var intrinsicContentSize: CGSize {
+        return collectionViewLayout.collectionViewContentSize
+    }
+}

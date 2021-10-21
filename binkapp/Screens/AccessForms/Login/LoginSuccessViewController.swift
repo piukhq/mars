@@ -9,15 +9,51 @@
 import Lottie
 import UIKit
 
-class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
+class LoginSuccessViewController: BinkViewController, UserServiceProtocol, CheckboxViewDelegate {
     enum Constants {
         static let animationDimension: CGFloat = 300
+        static let horizontalInset: CGFloat = 25.0
+        static let bottomInset: CGFloat = 150.0
+        static let postTextViewPadding: CGFloat = 15.0
     }
     
     private lazy var continueButton: BinkButton = {
         return BinkButton(type: .gradient, title: L10n.continueButtonTitle) { [weak self] in
             self?.continueButtonTapped()
         }
+    }()
+    
+    private lazy var stackScrollView: StackScrollView = {
+        let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [animationView, titleLabel, textView], adjustForKeyboard: true)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.backgroundColor = .clear
+        stackView.margin = UIEdgeInsets(top: 0, left: Constants.horizontalInset, bottom: 0, right: Constants.horizontalInset)
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Constants.bottomInset, right: 0)
+        stackView.customPadding(Constants.postTextViewPadding, after: textView)
+        view.addSubview(stackView)
+        return stackView
+    }()
+    
+    private lazy var titleLabel: UILabel = {
+        let title = UILabel()
+        title.translatesAutoresizingMaskIntoConstraints = false
+        title.font = UIFont.headline
+        title.numberOfLines = 0
+        return title
+    }()
+    
+    private lazy var textView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.isScrollEnabled = false
+        textView.isUserInteractionEnabled = true
+        textView.isEditable = false
+        textView.backgroundColor = .clear
+        textView.textContainerInset = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: -5)
+        textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
+        return textView
     }()
  
     private lazy var animationView: AnimationView = {
@@ -30,6 +66,8 @@ class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
         return animationView
     }()
     
+    private var checkboxes: [CheckboxView] = []
+    
     init() {
         let emailAddress = Current.userManager.currentEmailAddress
         let attributedBody = NSMutableAttributedString(string: L10n.loginSuccesSubtitle(emailAddress ?? L10n.nilEmailAddress), attributes: [.font: UIFont.bodyTextLarge])
@@ -37,9 +75,9 @@ class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
         let emailRange = baseBody.range(of: emailAddress ?? "")
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 18.0) ?? UIFont()]
         attributedBody.addAttributes(attributes, range: emailRange)
-        
-        super.init(title: L10n.loginSuccessTitle, description: "", attributedDescription: attributedBody, dataSource: FormDataSource(accessForm: .success))
-        dataSource.delegate = self
+        super.init(nibName: nil, bundle: nil)
+        titleLabel.text = L10n.loginSuccessTitle
+        textView.attributedText = attributedBody
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -48,10 +86,11 @@ class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        footerButtons = [continueButton]
-        stackScrollView.insert(arrangedSubview: animationView, atIndex: 0)
+        configureLayout()
+        configureCheckboxes()
         stackScrollView.alignment = .center
         textView.textAlignment = .center
+        footerButtons = [continueButton]
         animationView.play()
     }
     
@@ -60,10 +99,38 @@ class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
         titleLabel.textColor = .binkBlueTitleText
     }
     
+    private func configureLayout() {
+        NSLayoutConstraint.activate([
+            stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
+    }
+    
+    private func configureCheckboxes() {
+        let attributedMarketing = NSMutableAttributedString(string: L10n.marketingTitle + "\n" + L10n.preferencesPrompt, attributes: [.font: UIFont.bodyTextSmall])
+        let baseMarketing = NSString(string: attributedMarketing.string)
+        let rewardsRange = baseMarketing.range(of: L10n.preferencesPromptHighlightRewards)
+        let offersRange = baseMarketing.range(of: L10n.preferencesPromptHighlightOffers)
+        let updatesRange = baseMarketing.range(of: L10n.preferencesPromptHighlightUpdates)
+        
+        let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 14.0) ?? UIFont()]
+        
+        attributedMarketing.addAttributes(attributes, range: rewardsRange)
+        attributedMarketing.addAttributes(attributes, range: offersRange)
+        attributedMarketing.addAttributes(attributes, range: updatesRange)
+        
+        let marketingCheckbox = CheckboxView(checked: false)
+        marketingCheckbox.configure(title: attributedMarketing, columnName: "marketing-bink", columnKind: .userPreference, delegate: self, optional: true)
+        checkboxes.append(marketingCheckbox)
+        stackScrollView.add(arrangedSubview: marketingCheckbox)
+    }
+    
     @objc func continueButtonTapped() {
         continueButton.toggleLoading(isLoading: true)
         
-        let preferenceCheckbox = dataSource.checkboxes.filter { $0.columnKind == .userPreference }
+        let preferenceCheckbox = checkboxes.filter { $0.columnKind == .userPreference }
         var params: [String: String] = [:]
         
         preferenceCheckbox.forEach {
@@ -79,16 +146,4 @@ class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
         setPreferences(params: params)
         Current.navigate.close()
     }
-}
-
-
-extension LoginSuccessViewController: FormDataSourceDelegate {
-    func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
-        return true
-    }
-}
-
-extension LoginSuccessViewController: FormCollectionViewCellDelegate {
-    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {}
-    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField) {}
 }

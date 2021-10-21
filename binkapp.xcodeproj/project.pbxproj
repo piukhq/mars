@@ -72,7 +72,6 @@
 		3C9CCD2F231695AE00FAF589 /* CheckboxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9CCD2E231695AE00FAF589 /* CheckboxView.xib */; };
 		3CADDEAF231566C9006C3D9C /* LoginTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CADDEAE231566C9006C3D9C /* LoginTextFieldView.swift */; };
 		3CADDEB1231566E5006C3D9C /* LoginTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CADDEB0231566E5006C3D9C /* LoginTextFieldView.xib */; };
-		3CB6BF7223141CF400B74882 /* AuthAndAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB6BF7023141CF400B74882 /* AuthAndAddViewController.swift */; };
 		3CB6BF7723141D1F00B74882 /* AuthAndAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB6BF7623141D1F00B74882 /* AuthAndAddViewModel.swift */; };
 		3CB6BF7923141D3000B74882 /* AuthAndAddRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB6BF7823141D3000B74882 /* AuthAndAddRepository.swift */; };
 		3CB81C13231E74220075D3AC /* ImageTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB81C12231E74220075D3AC /* ImageTypeEnum.swift */; };
@@ -101,7 +100,6 @@
 		3CD3494022F99E1D000C1F4D /* NunitoSans-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3493122F99E1D000C1F4D /* NunitoSans-ExtraLightItalic.ttf */; };
 		3CD39616231E8E7100CD5C31 /* LayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD39615231E8E7100CD5C31 /* LayoutHelper.swift */; };
 		3CD4F14E230D35AE0075F63C /* BinkInfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD4F14D230D35AE0075F63C /* BinkInfoButton.swift */; };
-		3CD8027E239130EE00D26888 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD8027D239130EE00D26888 /* ForgotPasswordViewController.swift */; };
 		3CD802802391313D00D26888 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD8027F2391313D00D26888 /* ForgotPasswordViewModel.swift */; };
 		3CD802822391314900D26888 /* ForgotPasswordRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD802812391314900D26888 /* ForgotPasswordRepository.swift */; };
 		3CE24B2B2304014600B258C8 /* AddOrJoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE24B282304014500B258C8 /* AddOrJoinViewController.swift */; };
@@ -253,7 +251,6 @@
 		BD25E6972388610B0027FF3E /* LoadingScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD25E6962388610B0027FF3E /* LoadingScreen.xib */; };
 		BD25E6992388677E0027FF3E /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD25E6982388677E0027FF3E /* LoadingScreen.swift */; };
 		BD3CB946232857BD005C37AE /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CB945232857BD005C37AE /* APIConstants.swift */; };
-		BD458B38236B417D0029A538 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B37236B417D0029A538 /* LoginViewController.swift */; };
 		BD458B3C236B5B710029A538 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B3B236B5B710029A538 /* LoginResponse.swift */; };
 		BD458B3E236B5C0E0029A538 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B3D236B5C0E0029A538 /* LoginRequest.swift */; };
 		BD458B40236C987F0029A538 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B3F236C987F0029A538 /* UserManager.swift */; };
@@ -268,7 +265,6 @@
 		BD99D2DF2350E4BD00823FC4 /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99D2DE2350E4BC00823FC4 /* SettingsSection.swift */; };
 		BD99D2E22354945100823FC4 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99D2E12354945000823FC4 /* SettingsTableViewCell.swift */; };
 		BD9BAAD9232AF4AB00D2E1C4 /* DiffAware+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9BAAD8232AF4AB00D2E1C4 /* DiffAware+Extension.swift */; };
-		BD9E4CC7236EE67900C6F098 /* TermsAndConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CC6236EE67900C6F098 /* TermsAndConditionsViewController.swift */; };
 		BD9E4CC9236EF44900C6F098 /* SocialLoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CC8236EF44900C6F098 /* SocialLoginRequest.swift */; };
 		BD9E4CD1237014D300C6F098 /* RootStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CD0237014D300C6F098 /* RootStateMachine.swift */; };
 		BD9E4CD623738B4900C6F098 /* PreferenceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CD523738B4700C6F098 /* PreferenceResponse.swift */; };
@@ -278,11 +274,8 @@
 		BD9FB6B62338120700E5559A /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB6B32338120700E5559A /* TransactionsViewController.swift */; };
 		BD9FB6B72338120700E5559A /* TransactionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD9FB6B42338120700E5559A /* TransactionsViewController.xib */; };
 		BD9FB6B82338120700E5559A /* TransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB6B52338120700E5559A /* TransactionsViewModel.swift */; };
-		BDB01869232D949A00BFFA18 /* AddPaymentCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01868232D949A00BFFA18 /* AddPaymentCardViewController.swift */; };
-		BDB0186C232D96EB00BFFA18 /* BaseFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB0186B232D96EB00BFFA18 /* BaseFormViewController.swift */; };
 		BDB0186E232D98C000BFFA18 /* FormDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB0186D232D98C000BFFA18 /* FormDataSource.swift */; };
 		BDB01870232D99D200BFFA18 /* FormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB0186F232D99D200BFFA18 /* FormField.swift */; };
-		BDB01872232D9E7900BFFA18 /* FormCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01871232D9E7900BFFA18 /* FormCollectionViewCell.swift */; };
 		BDB01876232E125C00BFFA18 /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01875232E125C00BFFA18 /* ReusableView.swift */; };
 		BDB0187A232E144C00BFFA18 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01879232E144C00BFFA18 /* Array+Extension.swift */; };
 		BDB0187C232E1B5900BFFA18 /* PaymentCardCreateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB0187B232E1B5900BFFA18 /* PaymentCardCreateModel.swift */; };
@@ -299,6 +292,7 @@
 		CE07917A25ADB4A4009FE8BA /* LoyaltyWalletAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07917925ADB4A3009FE8BA /* LoyaltyWalletAnimator.swift */; };
 		CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */; };
 		CE0C24792678EDE500CB7150 /* WhoWeAreSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */; };
+		CE26CAC027171B5900E3BCC1 /* TermsAndConditionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE26CABF27171B5900E3BCC1 /* TermsAndConditionsViewModel.swift */; };
 		CE27A0DA25DA990E00C58412 /* OnboardingCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */; };
 		CE27A0DB25DA990E00C58412 /* OnboardingCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */; };
 		CE2C7A7825DEC635007624FE /* DebugMenuPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C7A7625DEC635007624FE /* DebugMenuPickerTableViewCell.swift */; };
@@ -313,7 +307,14 @@
 		CE3A5518253EE89A007989FE /* DebugInfoAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A5517253EE89A007989FE /* DebugInfoAlertView.swift */; };
 		CE3D31DC2649660C0072BD97 /* ScanLoyaltyCardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D31DA2649660C0072BD97 /* ScanLoyaltyCardButton.swift */; };
 		CE3D31DD2649660C0072BD97 /* ScanLoyaltyCardButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */; };
+		CE44B49727022B1800124714 /* TextWithAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44B49627022B1800124714 /* TextWithAttributedString.swift */; };
+		CE44B49A2703220400124714 /* CheckboxSwiftUIViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44B4992703220400124714 /* CheckboxSwiftUIViewViewModel.swift */; };
+		CE44B49D270480B400124714 /* AdaptiveColorSchemeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44B49C270480B400124714 /* AdaptiveColorSchemeModifier.swift */; };
+		CE44B49F27048B5B00124714 /* BinkUIHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44B49E27048B5B00124714 /* BinkUIHostingController.swift */; };
 		CE4A624925714EAE003271F6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* Sentry */; };
+		CE52E13426EFB18C00CAFBBF /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E13326EFB18C00CAFBBF /* UIApplication+Extension.swift */; };
+		CE52E13626EFB1F600CAFBBF /* InputToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E13526EFB1F600CAFBBF /* InputToolbarView.swift */; };
+		CE52E13826EFB38800CAFBBF /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E13726EFB38800CAFBBF /* Binding+Extension.swift */; };
 		CE52E15B26F0ABE400CAFBBF /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492922F99E1D000C1F4D /* NunitoSans-Regular.ttf */; };
 		CE52E15C26F0AE0400CAFBBF /* NunitoSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492E22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf */; };
 		CE52E16026F0BBBF00CAFBBF /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E15E26F0BBBF00CAFBBF /* UIColor+Extension.swift */; };
@@ -324,6 +325,9 @@
 		CE539DFD25F0EBAB00BDA5EF /* BinkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE539DFC25F0EBAB00BDA5EF /* BinkLogger.swift */; };
 		CE54AF5D25F938720061838C /* BinkLoggerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54AF5C25F938720061838C /* BinkLoggerEvents.swift */; };
 		CE54AF6225FA0BA00061838C /* BinkLoggerErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */; };
+		CE6054A426E8932800FD0866 /* FormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6054A326E8932800FD0866 /* FormViewModel.swift */; };
+		CE6054A626E8D54500FD0866 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6054A526E8D54500FD0866 /* ImageLoader.swift */; };
+		CE6054A826EB552B00FD0866 /* TextfieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6054A726EB552A00FD0866 /* TextfieldView.swift */; };
 		CE67DC0D269F2407008D930D /* AutomatedTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE67DC0C269F2407008D930D /* AutomatedTesting.swift */; };
 		CE6DE55F267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6DE55E267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift */; };
 		CE6DE5662681E8280063A3A9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6DE5652681E8280063A3A9 /* WidgetKit.framework */; };
@@ -334,13 +338,18 @@
 		CE6DE57D268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6DE57C268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift */; };
 		CE73F9AD2600B64E00D53BCF /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE73F9AB2600B64E00D53BCF /* HeaderTableViewCell.swift */; };
 		CE73F9AE2600B64E00D53BCF /* HeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE73F9AC2600B64E00D53BCF /* HeaderTableViewCell.xib */; };
+		CE81AAB126CC0A4600102283 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81AAB026CC0A4600102283 /* FormView.swift */; };
+		CE81AAB326D5696600102283 /* AuthAndAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81AAB226D5696600102283 /* AuthAndAddView.swift */; };
+		CE81AAB826E7619E00102283 /* BinkButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81AAB726E7619E00102283 /* BinkButtonView.swift */; };
 		CE85A1D226A5DB43003B74CD /* EmailClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D126A5DB43003B74CD /* EmailClient.swift */; };
 		CE85A1D626A6CD97003B74CD /* LoginSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D526A6CD97003B74CD /* LoginSuccessViewController.swift */; };
 		CE85A1D826B0096B003B74CD /* UniversalLinkUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D726B0096A003B74CD /* UniversalLinkUtility.swift */; };
 		CE85A1DB26B05D95003B74CD /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CE85A1DA26B05D95003B74CD /* Lottie */; };
 		CE85A20126B15436003B74CD /* success.json in Resources */ = {isa = PBXBuildFile; fileRef = CE85A20026B15436003B74CD /* success.json */; };
 		CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */; };
+		CE949EAA26FC9BDB00F578DC /* TermsAndConditionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE949EA926FC9BDB00F578DC /* TermsAndConditionsView.swift */; };
 		CE990E13261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */; };
+		CE9EF24F270C694400DE9659 /* TextfieldViewUIK.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9EF24E270C694400DE9659 /* TextfieldViewUIK.swift */; };
 		CEA16EC526249C6300D449E1 /* BarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA16EC426249C6300D449E1 /* BarcodeView.swift */; };
 		CEA16ED62624B0EE00D449E1 /* BarcodeViewWide.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA16ED52624B0EE00D449E1 /* BarcodeViewWide.swift */; };
 		CEA16EE02625879B00D449E1 /* BarcodeViewCompact.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA16EDF2625879B00D449E1 /* BarcodeViewCompact.xib */; };
@@ -358,10 +367,21 @@
 		CEAF2A002695EA09006B6EB5 /* AutomatedTesting_3_ZendeskFAQs.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF29FF2695EA09006B6EB5 /* AutomatedTesting_3_ZendeskFAQs.swift */; };
 		CEAF2A0226974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF2A0126974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift */; };
 		CEAF2A04269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF2A03269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift */; };
+		CEB7ADEF26F1EE2700BD138C /* AddPaymentCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADEE26F1EE2700BD138C /* AddPaymentCardView.swift */; };
 		CEB7ADF026F1FF7C00BD138C /* NunitoSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492D22F99E1D000C1F4D /* NunitoSans-Bold.ttf */; };
+		CEB7ADF226F22DC400BD138C /* FormHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADF126F22DC400BD138C /* FormHeaderView.swift */; };
+		CEB7ADF426F3474600BD138C /* PaymentCardCellSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADF326F3474600BD138C /* PaymentCardCellSwiftUIView.swift */; };
+		CEB7ADF626F880EB00BD138C /* FormFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADF526F880EB00BD138C /* FormFooterView.swift */; };
+		CEB7ADF826F9BF9000BD138C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADF726F9BF9000BD138C /* LoginView.swift */; };
+		CEB7ADFA26F9EC7B00BD138C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADF926F9EC7B00BD138C /* LoginViewModel.swift */; };
+		CEB7ADFC26FB135900BD138C /* AttributedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADFB26FB135900BD138C /* AttributedTextView.swift */; };
+		CEB7ADFE26FB1E3D00BD138C /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7ADFD26FB1E3D00BD138C /* ForgotPasswordView.swift */; };
 		CEC0ACBC2636AD0000845813 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBA2636AD0000845813 /* Assets.swift */; };
 		CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBB2636AD0000845813 /* Strings.swift */; };
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
+		CECF0D2B26FCCBFA00163E9B /* ClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECF0D2A26FCCBFA00163E9B /* ClearButton.swift */; };
+		CECF0D2E26FDC5BA00163E9B /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E13726EFB38800CAFBBF /* Binding+Extension.swift */; };
+		CECF0D3026FE229B00163E9B /* CheckboxSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECF0D2F26FE229B00163E9B /* CheckboxSwiftUIView.swift */; };
 		CED69E6B253D7A5700A4CA21 /* HyperlinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */; };
 		CEE209142684653A004D3759 /* WidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209132684653A004D3759 /* WidgetContent.swift */; };
 		CEE209152684653A004D3759 /* WidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209132684653A004D3759 /* WidgetContent.swift */; };
@@ -684,7 +704,6 @@
 		3C9CCD2E231695AE00FAF589 /* CheckboxView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CheckboxView.xib; sourceTree = "<group>"; };
 		3CADDEAE231566C9006C3D9C /* LoginTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextFieldView.swift; sourceTree = "<group>"; };
 		3CADDEB0231566E5006C3D9C /* LoginTextFieldView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginTextFieldView.xib; sourceTree = "<group>"; };
-		3CB6BF7023141CF400B74882 /* AuthAndAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAndAddViewController.swift; sourceTree = "<group>"; };
 		3CB6BF7123141CF400B74882 /* AuthAndAddViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthAndAddViewController.xib; sourceTree = "<group>"; };
 		3CB6BF7623141D1F00B74882 /* AuthAndAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAndAddViewModel.swift; sourceTree = "<group>"; };
 		3CB6BF7823141D3000B74882 /* AuthAndAddRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAndAddRepository.swift; sourceTree = "<group>"; };
@@ -714,7 +733,6 @@
 		3CD3493122F99E1D000C1F4D /* NunitoSans-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NunitoSans-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
 		3CD39615231E8E7100CD5C31 /* LayoutHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutHelper.swift; sourceTree = "<group>"; };
 		3CD4F14D230D35AE0075F63C /* BinkInfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BinkInfoButton.swift; path = binkapp/Screens/LoyaltyWallet/Models/BinkInfoButton.swift; sourceTree = SOURCE_ROOT; };
-		3CD8027D239130EE00D26888 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		3CD8027F2391313D00D26888 /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
 		3CD802812391314900D26888 /* ForgotPasswordRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordRepository.swift; sourceTree = "<group>"; };
 		3CE24B282304014500B258C8 /* AddOrJoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrJoinViewController.swift; sourceTree = "<group>"; };
@@ -878,7 +896,6 @@
 		BD3CB9432328573C005C37AE /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
 		BD3CB9442328574A005C37AE /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		BD3CB945232857BD005C37AE /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
-		BD458B37236B417D0029A538 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		BD458B3B236B5B710029A538 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		BD458B3D236B5C0E0029A538 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 		BD458B3F236C987F0029A538 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
@@ -894,7 +911,6 @@
 		BD99D2DE2350E4BC00823FC4 /* SettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
 		BD99D2E12354945000823FC4 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		BD9BAAD8232AF4AB00D2E1C4 /* DiffAware+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiffAware+Extension.swift"; sourceTree = "<group>"; };
-		BD9E4CC6236EE67900C6F098 /* TermsAndConditionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndConditionsViewController.swift; sourceTree = "<group>"; };
 		BD9E4CC8236EF44900C6F098 /* SocialLoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginRequest.swift; sourceTree = "<group>"; };
 		BD9E4CCC236F095800C6F098 /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		BD9E4CD0237014D300C6F098 /* RootStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStateMachine.swift; sourceTree = "<group>"; };
@@ -905,11 +921,8 @@
 		BD9FB6B32338120700E5559A /* TransactionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
 		BD9FB6B42338120700E5559A /* TransactionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionsViewController.xib; sourceTree = "<group>"; };
 		BD9FB6B52338120700E5559A /* TransactionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsViewModel.swift; sourceTree = "<group>"; };
-		BDB01868232D949A00BFFA18 /* AddPaymentCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentCardViewController.swift; sourceTree = "<group>"; };
-		BDB0186B232D96EB00BFFA18 /* BaseFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFormViewController.swift; sourceTree = "<group>"; };
 		BDB0186D232D98C000BFFA18 /* FormDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDataSource.swift; sourceTree = "<group>"; };
 		BDB0186F232D99D200BFFA18 /* FormField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormField.swift; sourceTree = "<group>"; };
-		BDB01871232D9E7900BFFA18 /* FormCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormCollectionViewCell.swift; sourceTree = "<group>"; };
 		BDB01875232E125C00BFFA18 /* ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
 		BDB01879232E144C00BFFA18 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		BDB0187B232E1B5900BFFA18 /* PaymentCardCreateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCreateModel.swift; sourceTree = "<group>"; };
@@ -926,6 +939,7 @@
 		CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardDetailViewModelTests.swift; sourceTree = "<group>"; };
 		CE0AE2DD2542DB81000CDB86 /* binkapp - 23-10-20 - Card secondary colour.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 23-10-20 - Card secondary colour.xcdatamodel"; sourceTree = "<group>"; };
 		CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoWeAreSwiftUIView.swift; sourceTree = "<group>"; };
+		CE26CABF27171B5900E3BCC1 /* TermsAndConditionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndConditionsViewModel.swift; sourceTree = "<group>"; };
 		CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingCardCollectionViewCell.xib; sourceTree = "<group>"; };
 		CE2C7A7625DEC635007624FE /* DebugMenuPickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuPickerTableViewCell.swift; sourceTree = "<group>"; };
@@ -941,8 +955,15 @@
 		CE3A5517253EE89A007989FE /* DebugInfoAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugInfoAlertView.swift; sourceTree = "<group>"; };
 		CE3D31DA2649660C0072BD97 /* ScanLoyaltyCardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanLoyaltyCardButton.swift; sourceTree = "<group>"; };
 		CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanLoyaltyCardButton.xib; sourceTree = "<group>"; };
+		CE44B49627022B1800124714 /* TextWithAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithAttributedString.swift; sourceTree = "<group>"; };
+		CE44B4992703220400124714 /* CheckboxSwiftUIViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxSwiftUIViewViewModel.swift; sourceTree = "<group>"; };
+		CE44B49C270480B400124714 /* AdaptiveColorSchemeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveColorSchemeModifier.swift; sourceTree = "<group>"; };
+		CE44B49E27048B5B00124714 /* BinkUIHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkUIHostingController.swift; sourceTree = "<group>"; };
 		CE4A628025715519003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A6285257155AE003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE52E13326EFB18C00CAFBBF /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
+		CE52E13526EFB1F600CAFBBF /* InputToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputToolbarView.swift; sourceTree = "<group>"; };
+		CE52E13726EFB38800CAFBBF /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		CE52E15E26F0BBBF00CAFBBF /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		CE52E16226F0FE0E00CAFBBF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 		CE539DAD25E80C1100BDA5EF /* BinkTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkTableViewController.swift; sourceTree = "<group>"; };
@@ -950,6 +971,9 @@
 		CE539DFC25F0EBAB00BDA5EF /* BinkLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLogger.swift; sourceTree = "<group>"; };
 		CE54AF5C25F938720061838C /* BinkLoggerEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLoggerEvents.swift; sourceTree = "<group>"; };
 		CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLoggerErrors.swift; sourceTree = "<group>"; };
+		CE6054A326E8932800FD0866 /* FormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewModel.swift; sourceTree = "<group>"; };
+		CE6054A526E8D54500FD0866 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		CE6054A726EB552A00FD0866 /* TextfieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextfieldView.swift; sourceTree = "<group>"; };
 		CE67DC0C269F2407008D930D /* AutomatedTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting.swift; sourceTree = "<group>"; };
 		CE6DE55E267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsSwiftUIView.swift; sourceTree = "<group>"; };
 		CE6DE5642681E8280063A3A9 /* BinkWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BinkWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -961,12 +985,17 @@
 		CE6DE57C268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnauthenticatedSwiftUIView.swift; sourceTree = "<group>"; };
 		CE73F9AB2600B64E00D53BCF /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
 		CE73F9AC2600B64E00D53BCF /* HeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderTableViewCell.xib; sourceTree = "<group>"; };
+		CE81AAB026CC0A4600102283 /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
+		CE81AAB226D5696600102283 /* AuthAndAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAndAddView.swift; sourceTree = "<group>"; };
+		CE81AAB726E7619E00102283 /* BinkButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkButtonView.swift; sourceTree = "<group>"; };
 		CE85A1D126A5DB43003B74CD /* EmailClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailClient.swift; sourceTree = "<group>"; };
 		CE85A1D526A6CD97003B74CD /* LoginSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSuccessViewController.swift; sourceTree = "<group>"; };
 		CE85A1D726B0096A003B74CD /* UniversalLinkUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalLinkUtility.swift; sourceTree = "<group>"; };
 		CE85A20026B15436003B74CD /* success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = success.json; sourceTree = "<group>"; };
 		CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkCopyableLabel.swift; sourceTree = "<group>"; };
+		CE949EA926FC9BDB00F578DC /* TermsAndConditionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsAndConditionsView.swift; sourceTree = "<group>"; };
 		CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_1_LoyaltyCards.swift; sourceTree = "<group>"; };
+		CE9EF24E270C694400DE9659 /* TextfieldViewUIK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextfieldViewUIK.swift; sourceTree = "<group>"; };
 		CEA16EC426249C6300D449E1 /* BarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeView.swift; sourceTree = "<group>"; };
 		CEA16ED52624B0EE00D449E1 /* BarcodeViewWide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewWide.swift; sourceTree = "<group>"; };
 		CEA16EDF2625879B00D449E1 /* BarcodeViewCompact.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BarcodeViewCompact.xib; sourceTree = "<group>"; };
@@ -982,10 +1011,20 @@
 		CEAF29FF2695EA09006B6EB5 /* AutomatedTesting_3_ZendeskFAQs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_3_ZendeskFAQs.swift; sourceTree = "<group>"; };
 		CEAF2A0126974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_4_GoToSite.swift; sourceTree = "<group>"; };
 		CEAF2A03269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_5_WireframesNavigation.swift; sourceTree = "<group>"; };
+		CEB7ADEE26F1EE2700BD138C /* AddPaymentCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentCardView.swift; sourceTree = "<group>"; };
+		CEB7ADF126F22DC400BD138C /* FormHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormHeaderView.swift; sourceTree = "<group>"; };
+		CEB7ADF326F3474600BD138C /* PaymentCardCellSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCellSwiftUIView.swift; sourceTree = "<group>"; };
+		CEB7ADF526F880EB00BD138C /* FormFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormFooterView.swift; sourceTree = "<group>"; };
+		CEB7ADF726F9BF9000BD138C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		CEB7ADF926F9EC7B00BD138C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		CEB7ADFB26FB135900BD138C /* AttributedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextView.swift; sourceTree = "<group>"; };
+		CEB7ADFD26FB1E3D00BD138C /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		CEC0AC3B2636AAA400845813 /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		CEC0ACBA2636AD0000845813 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		CEC0ACBB2636AD0000845813 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardScannerStrings.swift; sourceTree = "<group>"; };
+		CECF0D2A26FCCBFA00163E9B /* ClearButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearButton.swift; sourceTree = "<group>"; };
+		CECF0D2F26FE229B00163E9B /* CheckboxSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxSwiftUIView.swift; sourceTree = "<group>"; };
 		CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkLabel.swift; sourceTree = "<group>"; };
 		CEE209132684653A004D3759 /* WidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetContent.swift; sourceTree = "<group>"; };
 		CEE209192689E1B7004D3759 /* FileManager+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extension.swift"; sourceTree = "<group>"; };
@@ -1477,8 +1516,8 @@
 				3CADDEAD23155B96006C3D9C /* Views */,
 				3CB6BF7823141D3000B74882 /* AuthAndAddRepository.swift */,
 				3CB6BF7623141D1F00B74882 /* AuthAndAddViewModel.swift */,
-				3CB6BF7023141CF400B74882 /* AuthAndAddViewController.swift */,
 				3CB6BF7123141CF400B74882 /* AuthAndAddViewController.xib */,
+				CE81AAB226D5696600102283 /* AuthAndAddView.swift */,
 			);
 			path = AuthAndAdd;
 			sourceTree = "<group>";
@@ -1527,7 +1566,7 @@
 		3CD8027C239130C700D26888 /* ForgotPassword */ = {
 			isa = PBXGroup;
 			children = (
-				3CD8027D239130EE00D26888 /* ForgotPasswordViewController.swift */,
+				CEB7ADFD26FB1E3D00BD138C /* ForgotPasswordView.swift */,
 				3CD8027F2391313D00D26888 /* ForgotPasswordViewModel.swift */,
 				3CD802812391314900D26888 /* ForgotPasswordRepository.swift */,
 			);
@@ -1778,7 +1817,8 @@
 		5ECE04B822CE583B001BA964 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				BD458B37236B417D0029A538 /* LoginViewController.swift */,
+				CEB7ADF726F9BF9000BD138C /* LoginView.swift */,
+				CEB7ADF926F9EC7B00BD138C /* LoginViewModel.swift */,
 				70EB83872644410A00DD8935 /* LoginController.swift */,
 				CE85A1D126A5DB43003B74CD /* EmailClient.swift */,
 				CE85A1D526A6CD97003B74CD /* LoginSuccessViewController.swift */,
@@ -1800,6 +1840,7 @@
 			children = (
 				70285D832588B674007B4298 /* BinkButtonsView.swift */,
 				70CE8966258A807E00078ADA /* BinkButton.swift */,
+				CE81AAB726E7619E00102283 /* BinkButtonView.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -1937,7 +1978,10 @@
 		70A499DB267916D100F648F0 /* SwiftUI Views */ = {
 			isa = PBXGroup;
 			children = (
+				CE44B49B2704809100124714 /* ViewModifiers */,
 				701E2C492677567E003F903B /* DebugMenuView.swift */,
+				CE81AAB426D687F100102283 /* FormView */,
+				CE44B49E27048B5B00124714 /* BinkUIHostingController.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -2203,6 +2247,7 @@
 				EFD602F0243E11B2003AC746 /* UINavigationControllerExtension.swift */,
 				70E8E5A62567FB690027A244 /* OptionalExtension.swift */,
 				CEE209192689E1B7004D3759 /* FileManager+Extension.swift */,
+				CE52E13326EFB18C00CAFBBF /* UIApplication+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2256,7 +2301,8 @@
 		BD458B49236ED5A30029A538 /* Social */ = {
 			isa = PBXGroup;
 			children = (
-				BD9E4CC6236EE67900C6F098 /* TermsAndConditionsViewController.swift */,
+				CE949EA926FC9BDB00F578DC /* TermsAndConditionsView.swift */,
+				CE26CABF27171B5900E3BCC1 /* TermsAndConditionsViewModel.swift */,
 			);
 			path = Social;
 			sourceTree = "<group>";
@@ -2307,7 +2353,7 @@
 			isa = PBXGroup;
 			children = (
 				EF8BF1F0233E06ED00D2E5F3 /* AddPaymentCardViewModel.swift */,
-				BDB01868232D949A00BFFA18 /* AddPaymentCardViewController.swift */,
+				CEB7ADEE26F1EE2700BD138C /* AddPaymentCardView.swift */,
 				BDB0187B232E1B5900BFFA18 /* PaymentCardCreateModel.swift */,
 				BDB0187D232E1FC800BFFA18 /* PaymentCardType.swift */,
 				BD553CCE2332615900DA7D2A /* PaymentCardCreateRequest.swift */,
@@ -2319,10 +2365,8 @@
 		BDB0186A232D95EC00BFFA18 /* Form */ = {
 			isa = PBXGroup;
 			children = (
-				BDB0186B232D96EB00BFFA18 /* BaseFormViewController.swift */,
 				BDB0186D232D98C000BFFA18 /* FormDataSource.swift */,
 				BDB0186F232D99D200BFFA18 /* FormField.swift */,
-				BDB01871232D9E7900BFFA18 /* FormCollectionViewCell.swift */,
 				BDB01881232E93A100BFFA18 /* FormMultipleChoiceInput.swift */,
 			);
 			path = Form;
@@ -2381,10 +2425,29 @@
 			path = BinkUI;
 			sourceTree = "<group>";
 		};
+		CE44B498270321E100124714 /* CheckboxView */ = {
+			isa = PBXGroup;
+			children = (
+				CECF0D2F26FE229B00163E9B /* CheckboxSwiftUIView.swift */,
+				CE44B4992703220400124714 /* CheckboxSwiftUIViewViewModel.swift */,
+			);
+			path = CheckboxView;
+			sourceTree = "<group>";
+		};
+		CE44B49B2704809100124714 /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				CE44B49C270480B400124714 /* AdaptiveColorSchemeModifier.swift */,
+				CECF0D2A26FCCBFA00163E9B /* ClearButton.swift */,
+			);
+			path = ViewModifiers;
+			sourceTree = "<group>";
+		};
 		CE52E16126F0FDD700CAFBBF /* SwiftUIExtensions */ = {
 			isa = PBXGroup;
 			children = (
 				CE52E16226F0FE0E00CAFBBF /* Font+Extension.swift */,
+				CE52E13726EFB38800CAFBBF /* Binding+Extension.swift */,
 			);
 			path = SwiftUIExtensions;
 			sourceTree = "<group>";
@@ -2410,6 +2473,23 @@
 				CEE20926268E1E76004D3759 /* QuickLaunch */,
 			);
 			path = BinkWidget;
+			sourceTree = "<group>";
+		};
+		CE81AAB426D687F100102283 /* FormView */ = {
+			isa = PBXGroup;
+			children = (
+				CE81AAB026CC0A4600102283 /* FormView.swift */,
+				CE6054A726EB552A00FD0866 /* TextfieldView.swift */,
+				CE6054A326E8932800FD0866 /* FormViewModel.swift */,
+				CE52E13526EFB1F600CAFBBF /* InputToolbarView.swift */,
+				CEB7ADF126F22DC400BD138C /* FormHeaderView.swift */,
+				CEB7ADF526F880EB00BD138C /* FormFooterView.swift */,
+				CE44B498270321E100124714 /* CheckboxView */,
+				CEB7ADFB26FB135900BD138C /* AttributedTextView.swift */,
+				CE44B49627022B1800124714 /* TextWithAttributedString.swift */,
+				CE9EF24E270C694400DE9659 /* TextfieldViewUIK.swift */,
+			);
+			path = FormView;
 			sourceTree = "<group>";
 		};
 		CE85A1FF26B1535B003B74CD /* Animations */ = {
@@ -2483,6 +2563,7 @@
 				EF2E881C233A354500F678F3 /* PaymentCardCollectionViewCell.swift */,
 				EF2E881D233A354500F678F3 /* PaymentCardCollectionViewCell.xib */,
 				EF8BF1EC233BA8AF00D2E5F3 /* PaymentCardCellViewModel.swift */,
+				CEB7ADF326F3474600BD138C /* PaymentCardCellSwiftUIView.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -2854,6 +2935,7 @@
 			isa = PBXGroup;
 			children = (
 				EF94AF1323E05B5D00AAA039 /* ImageService.swift */,
+				CE6054A526E8D54500FD0866 /* ImageLoader.swift */,
 			);
 			path = "Image Service";
 			sourceTree = "<group>";
@@ -3576,8 +3658,9 @@
 				EF3BC913234779AE00FE52ED /* LoyaltyWalletRepository.swift in Sources */,
 				EF3BC90D234750F900FE52ED /* Wallet.swift in Sources */,
 				70BD4BD224B77500006E4E3D /* TescoPointsScrapingAgent.swift in Sources */,
+				CE52E13626EFB1F600CAFBBF /* InputToolbarView.swift in Sources */,
+				CE52E13426EFB18C00CAFBBF /* UIApplication+Extension.swift in Sources */,
 				B766599E23214A4600B327BE /* WalletLoyaltyCardCollectionViewCell.swift in Sources */,
-				BD9E4CC7236EE67900C6F098 /* TermsAndConditionsViewController.swift in Sources */,
 				EF4B46622344A73D009A3651 /* HapticFeedbackUtil.swift in Sources */,
 				EF6921722469A8A90049875B /* DebugSecondaryPlanColorViewController.swift in Sources */,
 				70B316E724E6AF2800D86DE5 /* Navigate.swift in Sources */,
@@ -3606,7 +3689,6 @@
 				70E8DFED2563E8220027A244 /* PerfumeShopPointsScrapingAgent.swift in Sources */,
 				3CD4F14E230D35AE0075F63C /* BinkInfoButton.swift in Sources */,
 				EFEB5BFD237E96F500E18743 /* CGFloatExtension.swift in Sources */,
-				3CD8027E239130EE00D26888 /* ForgotPasswordViewController.swift in Sources */,
 				BD458B40236C987F0029A538 /* UserManager.swift in Sources */,
 				706D204224D97104004BCCF3 /* AnalyticsEvent.swift in Sources */,
 				BD9FB6B0233761C400E5559A /* UILayoutPriority+Extension.swift in Sources */,
@@ -3615,10 +3697,11 @@
 				EFA5F72A2379A7C70027AB80 /* CD_Voucher.swift in Sources */,
 				EFA5F71A2379A7C70027AB80 /* CD_BaseObject.swift in Sources */,
 				CE85A1D626A6CD97003B74CD /* LoginSuccessViewController.swift in Sources */,
-				BD458B38236B417D0029A538 /* LoginViewController.swift in Sources */,
 				EF4B46692346491E009A3651 /* PaymentCardDetailViewModel.swift in Sources */,
+				CE44B49D270480B400124714 /* AdaptiveColorSchemeModifier.swift in Sources */,
 				702D0E3526306F8E0067E370 /* BinkModuleViewModel.swift in Sources */,
 				EF758E0823225F35000D26A9 /* Database.swift in Sources */,
+				CEB7ADFE26FB1E3D00BD138C /* ForgotPasswordView.swift in Sources */,
 				BD9FB6B62338120700E5559A /* TransactionsViewController.swift in Sources */,
 				BD458B3C236B5B710029A538 /* LoginResponse.swift in Sources */,
 				3C119BA12315332B0015CE91 /* LoyaltyPlanView.swift in Sources */,
@@ -3635,6 +3718,7 @@
 				EFF59F23234DEE7500CF3992 /* DetailNavigationTitleView.swift in Sources */,
 				EFEB5BF1237C7BA300E18743 /* PLRRewardDetailViewModel.swift in Sources */,
 				EF48556E231D6E4000FC9E5F /* DebugMenuFactory.swift in Sources */,
+				CE81AAB326D5696600102283 /* AuthAndAddView.swift in Sources */,
 				BD9FB6B82338120700E5559A /* TransactionsViewModel.swift in Sources */,
 				70E39806256E8F4F009AD8CB /* BinkViewController.swift in Sources */,
 				EF4C4781246017C80056CE17 /* ZendeskService.swift in Sources */,
@@ -3644,7 +3728,6 @@
 				B7136629232690F7008A0ED7 /* PLLScreenViewModel.swift in Sources */,
 				DB088545234FD8A30041A67A /* PLLScreenRepository.swift in Sources */,
 				BD553CCF2332615900DA7D2A /* PaymentCardCreateRequest.swift in Sources */,
-				BDB01872232D9E7900BFFA18 /* FormCollectionViewCell.swift in Sources */,
 				EFA5F7132379A7C70027AB80 /* CD_MembershipCardImage.swift in Sources */,
 				EF51CCD7243B56150035BF02 /* LoyaltyScannerWidgetView.swift in Sources */,
 				CEC0ACBC2636AD0000845813 /* Assets.swift in Sources */,
@@ -3678,6 +3761,7 @@
 				EF9E9BD023C72930002FF18E /* RefreshControlExtension.swift in Sources */,
 				70703424268CC15F0072F3BF /* StarbucksPointsScrapingAgent.swift in Sources */,
 				3CB6BF7723141D1F00B74882 /* AuthAndAddViewModel.swift in Sources */,
+				CE26CAC027171B5900E3BCC1 /* TermsAndConditionsViewModel.swift in Sources */,
 				CE539DBF25E943DD00BDA5EF /* Feature.swift in Sources */,
 				BD458B42236CA3910029A538 /* LogoutResponse.swift in Sources */,
 				3CE24B2B2304014600B258C8 /* AddOrJoinViewController.swift in Sources */,
@@ -3711,6 +3795,7 @@
 				CE27A0DA25DA990E00C58412 /* OnboardingCardCollectionViewCell.swift in Sources */,
 				B726334923058A1E00951037 /* EnrolFieldModel.swift in Sources */,
 				EF46E288235E01DD00BA2CAF /* BinkPillButton.swift in Sources */,
+				CE81AAB826E7619E00102283 /* BinkButtonView.swift in Sources */,
 				BDB01882232E93A100BFFA18 /* FormMultipleChoiceInput.swift in Sources */,
 				CEAB2D73266671C5006A0F43 /* HTMLParsingUtil.swift in Sources */,
 				CE52E16326F0FE0E00CAFBBF /* Font+Extension.swift in Sources */,
@@ -3718,6 +3803,7 @@
 				CE539DFD25F0EBAB00BDA5EF /* BinkLogger.swift in Sources */,
 				3CEABFCA2316AB42009B1122 /* MembershipTransaction.swift in Sources */,
 				B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */,
+				CEB7ADF226F22DC400BD138C /* FormHeaderView.swift in Sources */,
 				BD9E4CD823740A7500C6F098 /* PreferenceChangeResponse.swift in Sources */,
 				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
 				EF758E0F23225F45000D26A9 /* NSManagedObjectContext.swift in Sources */,
@@ -3731,6 +3817,8 @@
 				BD99D2D8234FDF2C00823FC4 /* SettingsViewController.swift in Sources */,
 				CE85A1D226A5DB43003B74CD /* EmailClient.swift in Sources */,
 				EF59A12F24474572001B60B8 /* NetworkingError.swift in Sources */,
+				CEB7ADFA26F9EC7B00BD138C /* LoginViewModel.swift in Sources */,
+				CE6054A626E8D54500FD0866 /* ImageLoader.swift in Sources */,
 				EFA5F71D2379A7C70027AB80 /* CD_Tier.swift in Sources */,
 				3C2C90FF23193F6700D112E3 /* AccountPostModel.swift in Sources */,
 				70E39801256E8CDA009AD8CB /* DynamicActionsUtility.swift in Sources */,
@@ -3745,6 +3833,8 @@
 				3C873FF522F073CF00FA3031 /* MainTabBarViewModel.swift in Sources */,
 				EFA5F7542379AAB20027AB80 /* CD_VoucherEarn.swift in Sources */,
 				70A4EE7524BC651700FA33B1 /* PointsScrapingManager.swift in Sources */,
+				CECF0D2B26FCCBFA00163E9B /* ClearButton.swift in Sources */,
+				CEB7ADFC26FB135900BD138C /* AttributedTextView.swift in Sources */,
 				96F22E022508B6060009951B /* SentryService.swift in Sources */,
 				EFA5F7202379A7C70027AB80 /* CD_MembershipCardStatus.swift in Sources */,
 				EFEB5BF3237C7BC000E18743 /* PLRRewardsHistoryViewModel.swift in Sources */,
@@ -3755,6 +3845,7 @@
 				3CEABFD02316AB88009B1122 /* MembershipCardBalanceModel.swift in Sources */,
 				EFA5F7392379A7C70027AB80 /* _CD_MembershipCardImage.swift in Sources */,
 				CE2CFE9025E3D48E00B1CB93 /* FeatureFlagsTableViewCell.swift in Sources */,
+				CE9EF24F270C694400DE9659 /* TextfieldViewUIK.swift in Sources */,
 				701418CA26FB306100BE4DF0 /* SubwayPointsScrapingAgent.swift in Sources */,
 				CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */,
 				3C61FCDE230AF0BB004721A3 /* AppsModel.swift in Sources */,
@@ -3763,6 +3854,7 @@
 				EFA5F7362379A7C70027AB80 /* CD_EnrolField.swift in Sources */,
 				EF8BF1F1233E06ED00D2E5F3 /* AddPaymentCardViewModel.swift in Sources */,
 				EF54911E2371D93400FE17BE /* PaymentCardDetailLoyaltyCardStatusCellViewModel.swift in Sources */,
+				CE44B49A2703220400124714 /* CheckboxSwiftUIViewViewModel.swift in Sources */,
 				EFEB5BF5237D9F6900E18743 /* PLRCellViewModel.swift in Sources */,
 				EFDEBDF72408279900CB755E /* SecureUtility.swift in Sources */,
 				B713662B2329374D008A0ED7 /* OfferTileView.swift in Sources */,
@@ -3773,7 +3865,6 @@
 				CE3A5518253EE89A007989FE /* DebugInfoAlertView.swift in Sources */,
 				3C794D8F23018DBA000A31FD /* BrowseBrandsViewModel.swift in Sources */,
 				EFD602EC243B9454003AC746 /* Animations.swift in Sources */,
-				BDB01869232D949A00BFFA18 /* AddPaymentCardViewController.swift in Sources */,
 				EFA5F7372379A7C70027AB80 /* CD_FieldChoice.swift in Sources */,
 				3C873FFA22F073CF00FA3031 /* LoyaltyWalletViewModel.swift in Sources */,
 				3CD802822391314900D26888 /* ForgotPasswordRepository.swift in Sources */,
@@ -3785,6 +3876,7 @@
 				CEA9057E25C81994000F69E1 /* BinkAlertController.swift in Sources */,
 				EF8F0481238D582300BD708B /* _CD_PlanDocument.swift in Sources */,
 				EF2E8811233385A400F678F3 /* World.swift in Sources */,
+				CE52E13826EFB38800CAFBBF /* Binding+Extension.swift in Sources */,
 				CE2C7A7825DEC635007624FE /* DebugMenuPickerTableViewCell.swift in Sources */,
 				EF94AF0D23D9F04700AAA039 /* DictionaryExtension.swift in Sources */,
 				EF3BC90F234770E000FE52ED /* WalletViewModel.swift in Sources */,
@@ -3794,6 +3886,7 @@
 				3C9CCD2D2316958300FAF589 /* CheckboxView.swift in Sources */,
 				3CF054CE22FD7DC80069E98A /* UIView+Extension.swift in Sources */,
 				EF7B65D6232FDB8A0025D167 /* FieldChoice.swift in Sources */,
+				CE44B49727022B1800124714 /* TextWithAttributedString.swift in Sources */,
 				EFA5F7552379AAB20027AB80 /* _CD_VoucherBurn.swift in Sources */,
 				70EB83882644410A00DD8935 /* LoginController.swift in Sources */,
 				EFBDB103237B1468002D7898 /* CALayerExtension.swift in Sources */,
@@ -3802,6 +3895,7 @@
 				EF94AF0F23DF55EE00AAA039 /* BinkTrackableButton.swift in Sources */,
 				CEE2091A2689E1B7004D3759 /* FileManager+Extension.swift in Sources */,
 				EFA5F7242379A7C70027AB80 /* _CD_RegistrationField.swift in Sources */,
+				CEB7ADEF26F1EE2700BD138C /* AddPaymentCardView.swift in Sources */,
 				EFA5F73C2379A7C70027AB80 /* CD_PaymentCardCard.swift in Sources */,
 				70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */,
 				EFA5F71F2379A7C70027AB80 /* _CD_MembershipCardBalance.swift in Sources */,
@@ -3819,8 +3913,10 @@
 				70A4EE7824BDBA5900FA33B1 /* PermissionsUtility.swift in Sources */,
 				EF1110542354D4BE009A4438 /* WalletCardCollectionViewCell.swift in Sources */,
 				BDFAA07B23E243EF00949271 /* LCDPlaceholderGenerator.swift in Sources */,
+				CE6054A426E8932800FD0866 /* FormViewModel.swift in Sources */,
 				EFA5F7232379A7C70027AB80 /* CD_MembershipCardAccount.swift in Sources */,
 				EFEF54A8246EB52900A630F3 /* PLRStampViewCell.swift in Sources */,
+				CEB7ADF826F9BF9000BD138C /* LoginView.swift in Sources */,
 				B72633412305883D00951037 /* MembershipPlanAccountModel.swift in Sources */,
 				EF2E881E233A354500F678F3 /* PaymentCardCollectionViewCell.swift in Sources */,
 				3C794D8C23018C25000A31FD /* BrowseBrandsViewController.swift in Sources */,
@@ -3851,6 +3947,7 @@
 				EFA5F72C2379A7C70027AB80 /* CD_MembershipTransaction.swift in Sources */,
 				EFA5F7102379A7C70027AB80 /* _CD_MembershipCard.swift in Sources */,
 				3C466B9E22FAE6190044478D /* CardModel.swift in Sources */,
+				CE6054A826EB552B00FD0866 /* TextfieldView.swift in Sources */,
 				706D203924D851BA004BCCF3 /* _CD_CardAccount.swift in Sources */,
 				709748A024D32A52008D0E29 /* RemoteConfigUtil.swift in Sources */,
 				EFA5F70D2379A7C70027AB80 /* _CD_PaymentCardAccount.swift in Sources */,
@@ -3875,8 +3972,8 @@
 				70D748022552CC7800E9D2C1 /* InAppReviewable.swift in Sources */,
 				3C453CB42338E84500287B56 /* PaymentWalletViewController.swift in Sources */,
 				3C3C604F2302E65600D9EA25 /* BrandModel.swift in Sources */,
+				CEB7ADF426F3474600BD138C /* PaymentCardCellSwiftUIView.swift in Sources */,
 				B726334D23058D2700951037 /* PlanDocumentModel.swift in Sources */,
-				BDB0186C232D96EB00BFFA18 /* BaseFormViewController.swift in Sources */,
 				EFA5F71C2379A7C70027AB80 /* _CD_MembershipPlanAccount.swift in Sources */,
 				EF46E286235E007300BA2CAF /* OnboardingViewModel.swift in Sources */,
 				B726335123058E2300951037 /* TierModel.swift in Sources */,
@@ -3900,6 +3997,7 @@
 				CEE2091D268CC5C4004D3759 /* WidgetController.swift in Sources */,
 				EF8BF1FB234147F500D2E5F3 /* PaymentCardAccountResponse.swift in Sources */,
 				EF485572231D728A00FC9E5F /* DebugMenuSection.swift in Sources */,
+				CE44B49F27048B5B00124714 /* BinkUIHostingController.swift in Sources */,
 				7061053925B8552C00A16DA5 /* Theme.swift in Sources */,
 				BDB01884232EB14A00BFFA18 /* StackScrollView.swift in Sources */,
 				EFA5F7182379A7C70027AB80 /* CD_MembershipPlan.swift in Sources */,
@@ -3919,6 +4017,7 @@
 				EFA5F71E2379A7C70027AB80 /* _CD_MembershipCardAccount.swift in Sources */,
 				BD9BAAD9232AF4AB00D2E1C4 /* DiffAware+Extension.swift in Sources */,
 				EFA5F7172379A7C70027AB80 /* CD_MembershipCard.swift in Sources */,
+				CE81AAB126CC0A4600102283 /* FormView.swift in Sources */,
 				3C873FF722F073CF00FA3031 /* LoyaltyWalletViewController.swift in Sources */,
 				70D747FD2552A75D00E9D2C1 /* InAppReviewUtility.swift in Sources */,
 				3C93975D2386A2E00063C0B3 /* PreferencesModel.swift in Sources */,
@@ -3929,7 +4028,6 @@
 				CEA905BE25C986E6000F69E1 /* CD_BaseImage.swift in Sources */,
 				BDB0187E232E1FC800BFFA18 /* PaymentCardType.swift in Sources */,
 				B774E9AA233123BD006D4131 /* ReusableTemplateViewController.swift in Sources */,
-				3CB6BF7223141CF400B74882 /* AuthAndAddViewController.swift in Sources */,
 				EFA5F7112379A7C70027AB80 /* CD_MembershipPlanAccount.swift in Sources */,
 				EFB055A623F453C400D64F86 /* PLRStampView.swift in Sources */,
 				CE85A1D826B0096B003B74CD /* UniversalLinkUtility.swift in Sources */,
@@ -3937,6 +4035,7 @@
 				DBA6CB4F237C94CD000313D4 /* UIViewController+binkapp.swift in Sources */,
 				BD475E7123A2AED80071302A /* CD_PlanDocumentDisplay.swift in Sources */,
 				EF480C21235754C20060B7C1 /* WalletPromptFactory.swift in Sources */,
+				CECF0D3026FE229B00163E9B /* CheckboxSwiftUIView.swift in Sources */,
 				BDB01870232D99D200BFFA18 /* FormField.swift in Sources */,
 				B76659992320F68D00B327BE /* HyperlinkAlertController.swift in Sources */,
 				EFA5F7322379A7C70027AB80 /* _CD_MembershipCardStatus.swift in Sources */,
@@ -3953,10 +4052,12 @@
 				3C05F27A240FC23A00060818 /* StringExtension.swift in Sources */,
 				EFA5F7622379BD520027AB80 /* PLRAccumulatorInactiveCell.swift in Sources */,
 				3C63ABCA22F9D52F00BE143B /* UIFont+binkapp.swift in Sources */,
+				CE949EAA26FC9BDB00F578DC /* TermsAndConditionsView.swift in Sources */,
 				EFA5F7332379A7C70027AB80 /* CD_AuthoriseField.swift in Sources */,
 				70FD1DB2262D8E59003C0DA0 /* BinkModuleType.swift in Sources */,
 				CE6DE55F267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift in Sources */,
 				EFA5F7252379A7C70027AB80 /* CD_Card.swift in Sources */,
+				CEB7ADF626F880EB00BD138C /* FormFooterView.swift in Sources */,
 				3CCC46C422FC652C008476E3 /* BarcodeViewController.swift in Sources */,
 				EFA5F7402379A7C70027AB80 /* _CD_PaymentCardCard.swift in Sources */,
 				70CA2F05256E79D1008E0A81 /* DynamicActionModel.swift in Sources */,
@@ -4023,6 +4124,7 @@
 				CEAF29FD2695A051006B6EB5 /* BinkLoggerErrors.swift in Sources */,
 				CEAF29FC26959FA7006B6EB5 /* BinkLoggerEvents.swift in Sources */,
 				CE6DE57D268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift in Sources */,
+				CECF0D2E26FDC5BA00163E9B /* Binding+Extension.swift in Sources */,
 				CE6DE56B2681E8280063A3A9 /* BinkWidget.swift in Sources */,
 				CEE20921268E1DAA004D3759 /* WalletCardView.swift in Sources */,
 				CEAF29FB26959E98006B6EB5 /* BinkLogger.swift in Sources */,
