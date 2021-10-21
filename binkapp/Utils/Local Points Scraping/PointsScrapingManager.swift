@@ -69,10 +69,6 @@ class PointsScrapingManager {
         return Current.remoteConfig.configFile?.localPointsCollection
     }
     
-    private var isEnabled: Bool {
-        return config?.enabled ?? false
-    }
-    
     var isDebugMode: Bool {
         return Current.userDefaults.bool(forDefaultsKey: .lpcDebugMode)
     }
@@ -233,7 +229,6 @@ class PointsScrapingManager {
     }
     
     func refreshBalancesIfNecessary() {
-        guard self.isEnabled else { return }
         self.getRefreshableMembershipCards { [weak self] refreshableCards in
             refreshableCards.forEach { self?.addQueuedItem(QueuedItem(card: $0, isBalanceRefresh: true)) }
             self?.processQueuedItems()
@@ -263,7 +258,6 @@ class PointsScrapingManager {
     // MARK: - Helpers
     
     func planIdIsWebScrapable(_ planId: Int?) -> Bool {
-        guard isEnabled else { return false }
         guard let id = planId else { return false }
         guard let agent = agent(forPlanId: id) else { return false }
         return agentEnabled(agent)

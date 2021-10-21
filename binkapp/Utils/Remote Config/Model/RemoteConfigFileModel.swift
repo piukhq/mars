@@ -22,13 +22,11 @@ struct RemoteConfigFile: Codable {
     }
     
     struct LocalPointsCollection: Codable {
-        let enabled: Bool?
         let idleThreshold: Int?
         let idleRetryLimit: Int?
         let agents: [Agent]?
         
         enum CodingKeys: String, CodingKey {
-            case enabled
             case idleThreshold = "idle_threshold"
             case idleRetryLimit = "idle_retry_limit"
             case agents
