@@ -37,6 +37,7 @@ struct InternalTextView: UIViewRepresentable {
         textView.showsVerticalScrollIndicator = false
         textView.showsHorizontalScrollIndicator = false
         textView.allowsEditingTextAttributes = false
+        textView.isEditable = false
         textView.backgroundColor = .clear
         textView.tintColor = .clear
         textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -70,9 +71,3 @@ extension InternalTextView {
         }
     }
 }
-
-//struct TextWithAttributedString_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TextWithAttributedString()
-//    }
-//}
