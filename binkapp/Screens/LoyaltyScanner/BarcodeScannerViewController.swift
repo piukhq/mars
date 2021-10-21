@@ -13,10 +13,23 @@ import Vision
 struct BarcodeScannerViewModel {
     let plan: CD_MembershipPlan?
     var isScanning = false
-    var scanningIsPermitted = false
     
     var hasPlan: Bool {
         return plan != nil
+    }
+}
+
+enum BarcodeCaptureSource {
+    case camera(CD_MembershipPlan?)
+    case photoLibrary(CD_MembershipPlan?)
+    
+    var errorMessage: String {
+        switch self {
+        case .camera(let membershipPlan):
+            return "The card you scanned was not correct, please scan your \(membershipPlan?.account?.companyName ?? "") card"
+        case .photoLibrary(let membershipPlan):
+            return "Unrecognized barcode, please import an image of your \(membershipPlan?.account?.companyName ?? "") barcode"
+        }
     }
 }
 
@@ -41,11 +54,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         static let timerInterval: TimeInterval = 5.0
         static let scanErrorThreshold: TimeInterval = 1.0
     }
-    
-    enum BarcodeCaptureSource {
-        case camera
-        case photoLibrary
-    }
 
     private weak var delegate: BarcodeScannerViewControllerDelegate?
 
@@ -59,7 +67,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private var canPresentScanError = true
     private var hideNavigationBar = true
     private var shouldAllowScanning = true
-    private var captureSource: BarcodeCaptureSource = .camera
+    private var captureSource: BarcodeCaptureSource
     private let visionUtility = VisionImageDetectionUtility()
 
     private lazy var blurredView: UIVisualEffectView = {
@@ -109,6 +117,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         self.viewModel = viewModel
         self.delegate = delegate
         self.hideNavigationBar = hideNavigationBar
+        self.captureSource = .camera(viewModel.plan)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -157,11 +166,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         ])
         
         navigationController?.setNavigationBarVisibility(false)
-        
-        if !viewModel.scanningIsPermitted {
-            explainerLabel.text = L10n.loyaltyScannerExplainerTextPermissionDenied
-            toPhotoLibrary()
-        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -179,7 +183,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         }
 
 
-        if !viewModel.isScanning && viewModel.scanningIsPermitted {
+        if !viewModel.isScanning {
             startScanning()
         }
     }
@@ -301,9 +305,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         let picker = UIImagePickerController()
         picker.allowsEditing = true
         picker.delegate = self
-        if !viewModel.scanningIsPermitted {
-            picker.modalPresentationStyle = .overCurrentContext
-        }
+        captureSource = .photoLibrary(viewModel.plan)
         present(picker, animated: true)
     }
     
@@ -355,7 +357,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
                             BinkLogger.error(AppLoggerError.barcodeScanningFailure, value: planFromForm.account?.companyName)
                         }
                         HapticFeedbackUtil.giveFeedback(forType: .notification(type: .error))
-                        self.showError(planFromForm)
+                        self.showError(barcodeDetected: true)
                     }
                 }
             } else {
@@ -378,29 +380,12 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         }
     }
     
-    private func showError(_ membershipPlan: CD_MembershipPlan? = nil) {
-        var errorMessage: String
-        
-        if let membershipPlan = membershipPlan {
-            switch captureSource {
-            case .camera:
-                errorMessage = "The card you scanned was not correct, please scan your \(membershipPlan.account?.companyName ?? "") card"
-            case .photoLibrary:
-                errorMessage = "Unrecognized barcode, please import an image of your \(membershipPlan.account?.companyName ?? "") barcode"
-            }
-        } else {
-            errorMessage = "Failed to detect barcode in the image, please try again"
-        }
-        
-        let alert = BinkAlertController(title: L10n.errorTitle, message: errorMessage, preferredStyle: .alert)
+    private func showError(barcodeDetected: Bool) {
+        let alert = BinkAlertController(title: L10n.errorTitle, message: barcodeDetected ? captureSource.errorMessage : L10n.loyaltyScannerFailedToDetectBarcode, preferredStyle: .alert)
         let action = UIAlertAction(title: L10n.ok, style: .cancel) { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: {
                 self.canPresentScanError = true
                 self.shouldAllowScanning = true
-                
-                if !self.viewModel.scanningIsPermitted {
-                    self.toPhotoLibrary()
-                }
             })
         }
         alert.addAction(action)
@@ -417,7 +402,7 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
         if let object = metadataObjects.first {
             guard let readableObject = object as? AVMetadataMachineReadableCodeObject else { return }
             guard let stringValue = readableObject.stringValue else { return }
-            captureSource = .camera
+            captureSource = .camera(viewModel.plan)
             identifyMembershipPlanForBarcode(stringValue)
         }
     }
@@ -430,13 +415,13 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
         guard let image = info[.editedImage] as? UIImage else { return }
         dismiss(animated: true) { [weak self] in
             self?.visionUtility.createVisionRequest(image: image) { barcode in
+                guard let barcode = barcode else {
+                    self?.showError(barcodeDetected: false)
+                    return
+                }
                 self?.identifyMembershipPlanForBarcode(barcode)
             }
         }
-
-//        Current.navigate.close(animated: true) {
-////            self.createVisionRequest(image: image)
-//        }
     }
     
 //    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -455,24 +440,23 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
 }
 
 class VisionImageDetectionUtility {
-    func createVisionRequest(image: UIImage, completion: @escaping (String) -> Void ) {
+    func createVisionRequest(image: UIImage, completion: @escaping (String?) -> Void ) {
         guard let cgImage = image.cgImage else { return }
         
         var vnBarcodeDetectionRequest: VNDetectBarcodesRequest {
             let request = VNDetectBarcodesRequest { request, error in
                 guard error == nil else {
-    //                self.showError()
+                    completion(nil)
                     return
                 }
                 
                 guard let observations = request.results as? [VNBarcodeObservation], let stringValue = observations.first?.payloadStringValue else {
                     DispatchQueue.main.async {
-    //                    self.showError()
+                        completion(nil)
                     }
                     return
                 }
-    //            self.captureSource = .photoLibrary
-//                self.identifyMembershipPlanForBarcode(stringValue)
+    
                 DispatchQueue.main.async {
                     completion(stringValue)
                 }
@@ -487,7 +471,7 @@ class VisionImageDetectionUtility {
             do {
                 try requestHandler.perform(vnRequests)
             } catch {
-//                self.showError()
+                completion(nil)
             }
         }
     }

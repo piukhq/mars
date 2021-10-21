@@ -119,6 +119,12 @@ class AuthAndAddViewController: BaseFormViewController {
         self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
     }
     
+    private func showError(barcodeDetected: Bool) {
+        let captureSource = BarcodeCaptureSource.photoLibrary(viewModel.getMembershipPlan())
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: barcodeDetected ? captureSource.errorMessage : L10n.loyaltyScannerFailedToDetectBarcode)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     override func formValidityUpdated(fullFormIsValid: Bool) {
         primaryButton.enabled = fullFormIsValid
     }
@@ -211,7 +217,18 @@ extension AuthAndAddViewController: UIImagePickerControllerDelegate, UINavigatio
         guard let image = info[.editedImage] as? UIImage else { return }
         visionUtility.createVisionRequest(image: image) { barcode in
             self.dismiss(animated: true) { [weak self] in
-                self?.refreshForm(for: barcode)
+                guard let barcode = barcode else {
+                    self?.showError(barcodeDetected: false)
+                    return
+                }
+                
+                Current.wallet.identifyMembershipPlanForBarcode(barcode) { plan in
+                    if plan != self?.viewModel.getMembershipPlan() {
+                        self?.showError(barcodeDetected: true)
+                    } else {
+                        self?.refreshForm(for: barcode)
+                    }
+                }
             }
         }
     }

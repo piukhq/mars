@@ -280,6 +280,11 @@ class BrowseBrandsViewController: BinkViewController {
         tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         sectionToScrollTo = nil
     }
+    
+    private func showError() {
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: L10n.loyaltyScannerFailedToDetectBarcode)
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
 extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -419,7 +424,14 @@ extension BrowseBrandsViewController: ScanLoyaltyCardButtonDelegate {
 extension BrowseBrandsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
-        visionUtility.createVisionRequest(image: image) { barcode in
+        visionUtility.createVisionRequest(image: image) { [weak self] barcode in
+            guard let barcode = barcode else {
+                picker.dismiss(animated: true) {
+                    self?.showError()
+                }
+                return
+            }
+
             Current.wallet.identifyMembershipPlanForBarcode(barcode) { membershipPlan in
                 guard let membershipPlan = membershipPlan else { return }
                 picker.dismiss(animated: true) {

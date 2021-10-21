@@ -282,6 +282,8 @@ internal enum L10n {
   internal static let loyaltyScannerExplainerText = L10n.tr("Localizable", "loyalty_scanner_explainer_text")
   /// Scanning disabled - please allow camera access
   internal static let loyaltyScannerExplainerTextPermissionDenied = L10n.tr("Localizable", "loyalty_scanner_explainer_text_permission_denied")
+  /// Failed to detect barcode in the image, please try again
+  internal static let loyaltyScannerFailedToDetectBarcode = L10n.tr("Localizable", "loyalty_scanner_failed_to_detect_barcode")
   /// You can also type in the card details yourself.
   internal static let loyaltyScannerWidgetExplainerEnterManuallyText = L10n.tr("Localizable", "loyalty_scanner_widget_explainer_enter_manually_text")
   /// Please try adding the card manually.

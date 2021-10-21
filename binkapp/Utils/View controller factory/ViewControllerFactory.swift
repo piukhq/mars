@@ -13,8 +13,8 @@ import SwiftUI
 enum ViewControllerFactory {
     // MARK: - Adding Cards
     
-    static func makeLoyaltyScannerViewController(forPlan plan: CD_MembershipPlan? = nil, hideNavigationBar: Bool = true, scanningIsPermitted: Bool = true, delegate: BarcodeScannerViewControllerDelegate?) -> BarcodeScannerViewController {
-        let viewModel = BarcodeScannerViewModel(plan: plan, scanningIsPermitted: scanningIsPermitted)
+    static func makeLoyaltyScannerViewController(forPlan plan: CD_MembershipPlan? = nil, hideNavigationBar: Bool = true, delegate: BarcodeScannerViewControllerDelegate?) -> BarcodeScannerViewController {
+        let viewModel = BarcodeScannerViewModel(plan: plan)
         return BarcodeScannerViewController(viewModel: viewModel, hideNavigationBar: hideNavigationBar, delegate: delegate)
     }
     
