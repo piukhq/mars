@@ -158,7 +158,7 @@ enum SentryException {
         case .localPointsCollectionFailed(let error, let merchant, let isBalanceRefresh):
             return [
                 "error_message": error.localizedDescription,
-                "merchant": merchant.rawValue,
+                "merchant": merchant,
                 "balance_refresh": isBalanceRefresh
             ]
         }

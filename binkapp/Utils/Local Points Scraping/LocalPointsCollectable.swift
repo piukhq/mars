@@ -8,16 +8,5 @@
 
 import Foundation
 
-enum LocalPointsCollectableMerchant: String, Codable {
-    case tesco
-    case boots
-    case morrisons
-    case superdrug
-    case waterstones
-    case heathrow
-    case perfumeshop
-    case starbucks
-    case subway
-}
-
+typealias LocalPointsCollectableMerchant = String
 typealias LocalPointsCollectable = RemoteConfigFile.LocalPointsCollection.Agent

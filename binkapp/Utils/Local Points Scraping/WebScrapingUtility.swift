@@ -156,7 +156,7 @@ class WebScrapingUtility: NSObject {
                     /// If not, use priority web view
                     /// Clear all merchant data from datastore first to ensure no conflicts
                     defaultDataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), for: records.filter {
-                        if let merchant = agent.merchant?.rawValue {
+                        if let merchant = agent.merchant {
                             return $0.displayName.contains(merchant)
                         }
                         return false
@@ -237,7 +237,7 @@ class WebScrapingUtility: NSObject {
     
     private func fetchScriptFile(merchant: LocalPointsCollectableMerchant, completion: @escaping (String?) -> Void) {
         let storage = Storage.storage()
-        let pathReference = storage.reference(withPath: "local-points-collection/\(merchant.rawValue.lowercased()).js")
+        let pathReference = storage.reference(withPath: "local-points-collection/\(merchant.lowercased()).js")
         
         pathReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
             guard let data = data else {
@@ -293,14 +293,14 @@ class WebScrapingUtility: NSObject {
         item.isProcessing = false
         
         if let value = value {
-            if Current.pointsScrapingManager.isDebugMode, let merchant = agent.merchant?.rawValue.capitalized {
+            if Current.pointsScrapingManager.isDebugMode, let merchant = agent.merchant?.capitalized {
                 DebugInfoAlertView.show("\(merchant) LPC - Retreived points balance", type: .success)
             }
             delegate?.webScrapingUtility(self, didCompleteWithValue: value, item: item, withAgent: agent)
         }
         
         if let error = error {
-            if Current.pointsScrapingManager.isDebugMode, let merchant = agent.merchant?.rawValue.capitalized {
+            if Current.pointsScrapingManager.isDebugMode, let merchant = agent.merchant?.capitalized {
                 DispatchQueue.main.async {
                     DebugInfoAlertView.show("\(merchant) LPC - \(error.localizedDescription)", type: .failure)
                 }
@@ -392,7 +392,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
                             }
                         }
                         
-                        if Current.pointsScrapingManager.isDebugMode, let merchant = agent.merchant?.rawValue.capitalized {
+                        if Current.pointsScrapingManager.isDebugMode, let merchant = agent.merchant?.capitalized {
                             DebugInfoAlertView.show("\(merchant) LPC - Attempted to log in", type: .success)
                         }
                     }
