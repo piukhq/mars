@@ -65,6 +65,7 @@ class BrowseBrandsViewController: BinkViewController {
     private var selectedFilters: [String]
     private var didLayoutSubviews = false
     private var sectionToScrollTo: Int?
+    private let visionUtility = VisionImageDetectionUtility()
     
     init(viewModel: BrowseBrandsViewModel, section: Int?) {
         self.viewModel = viewModel
@@ -308,6 +309,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderTableViewCell") as? HeaderTableViewCell else { return nil }
         headerCell.configure(section: section, viewModel: viewModel)
+        headerCell.scanLoyaltyCardButton.delegate = self
         return headerCell
     }
 
@@ -402,5 +404,31 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
         }
         viewModel.selectedFilters = selectedFilters
         switchTableWithNoMatchesLabel()
+    }
+}
+
+extension BrowseBrandsViewController: ScanLoyaltyCardButtonDelegate {
+    func toImagePicker() {
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        picker.delegate = self
+        present(picker, animated: true)
+    }
+}
+
+extension BrowseBrandsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        guard let image = info[.editedImage] as? UIImage else { return }
+        visionUtility.createVisionRequest(image: image) { barcode in
+            Current.wallet.identifyMembershipPlanForBarcode(barcode) { membershipPlan in
+                guard let membershipPlan = membershipPlan else { return }
+                picker.dismiss(animated: true) {
+                    let prefilledValues = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
+                    let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, existingMembershipCard: nil, prefilledFormValues: [prefilledValues])
+                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
+                }
+            }
+        }
     }
 }

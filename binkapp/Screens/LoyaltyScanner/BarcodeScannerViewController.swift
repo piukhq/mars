@@ -60,6 +60,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private var hideNavigationBar = true
     private var shouldAllowScanning = true
     private var captureSource: BarcodeCaptureSource = .camera
+    private let visionUtility = VisionImageDetectionUtility()
 
     private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .regular))
@@ -425,27 +426,59 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
 // MARK: - Detect barcode from image
 
 extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
-    var vnBarcodeDetectionRequest: VNDetectBarcodesRequest {
-        let request = VNDetectBarcodesRequest { request, error in
-            guard error == nil else {
-                self.showError()
-                return
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        guard let image = info[.editedImage] as? UIImage else { return }
+        dismiss(animated: true) { [weak self] in
+            self?.visionUtility.createVisionRequest(image: image) { barcode in
+                self?.identifyMembershipPlanForBarcode(barcode)
             }
-            
-            guard let observations = request.results as? [VNBarcodeObservation], let stringValue = observations.first?.payloadStringValue else {
-                DispatchQueue.main.async {
-                    self.showError()
-                }
-                return
-            }
-            self.captureSource = .photoLibrary
-            self.identifyMembershipPlanForBarcode(stringValue)
         }
-        return request
+
+//        Current.navigate.close(animated: true) {
+////            self.createVisionRequest(image: image)
+//        }
     }
     
-    private func createVisionRequest(image: UIImage) {
+//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+//        dismiss(animated: true, completion: {
+//            if !self.viewModel.scanningIsPermitted {
+//                if self.viewModel.hasPlan {
+//                    /// Auth and Add
+//                    Current.navigate.close()
+//                } else {
+//                    /// Browse brands
+//                    Current.navigate.back()
+//                }
+//            }
+//        })
+//    }
+}
+
+class VisionImageDetectionUtility {
+    func createVisionRequest(image: UIImage, completion: @escaping (String) -> Void ) {
         guard let cgImage = image.cgImage else { return }
+        
+        var vnBarcodeDetectionRequest: VNDetectBarcodesRequest {
+            let request = VNDetectBarcodesRequest { request, error in
+                guard error == nil else {
+    //                self.showError()
+                    return
+                }
+                
+                guard let observations = request.results as? [VNBarcodeObservation], let stringValue = observations.first?.payloadStringValue else {
+                    DispatchQueue.main.async {
+    //                    self.showError()
+                    }
+                    return
+                }
+    //            self.captureSource = .photoLibrary
+//                self.identifyMembershipPlanForBarcode(stringValue)
+                DispatchQueue.main.async {
+                    completion(stringValue)
+                }
+            }
+            return request
+        }
         
         let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
         let vnRequests = [vnBarcodeDetectionRequest]
@@ -454,30 +487,8 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
             do {
                 try requestHandler.perform(vnRequests)
             } catch {
-                self.showError()
+//                self.showError()
             }
         }
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        guard let image = info[.editedImage] as? UIImage else { return }
-        dismiss(animated: true)
-        Current.navigate.close(animated: true) {
-            self.createVisionRequest(image: image)
-        }
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: {
-            if !self.viewModel.scanningIsPermitted {
-                if self.viewModel.hasPlan {
-                    /// Auth and Add
-                    Current.navigate.close()
-                } else {
-                    /// Browse brands
-                    Current.navigate.back()
-                }
-            }
-        })
     }
 }

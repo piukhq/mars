@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ScanLoyaltyCardButtonDelegate: AnyObject {
+    func toImagePicker()
+}
+
 class ScanLoyaltyCardButton: UIView {
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
@@ -16,6 +20,7 @@ class ScanLoyaltyCardButton: UIView {
     @IBOutlet private weak var gradientView: UIView!
     
     private let cornerRadius: CGFloat = 10.0
+    weak var delegate: ScanLoyaltyCardButtonDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,10 +46,8 @@ class ScanLoyaltyCardButton: UIView {
         PermissionsUtility.launchLoyaltyScanner(viewController) {
             let navigationRequest = PushNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
-        } addFromPhotoLibraryAction: {
-            let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(hideNavigationBar: false, scanningIsPermitted: false, delegate: self)
-            let navigationRequest = PushNavigationRequest(viewController: viewController)
-            Current.navigate.to(navigationRequest)
+        } addFromPhotoLibraryAction: { [weak self] in
+            self?.delegate?.toImagePicker()
         }
     }
 }

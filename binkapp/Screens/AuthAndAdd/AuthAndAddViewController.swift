@@ -27,6 +27,7 @@ class AuthAndAddViewController: BaseFormViewController {
         }
     }()
     
+    private let visionUtility = VisionImageDetectionUtility()
     private let viewModel: AuthAndAddViewModel
     
     init(viewModel: AuthAndAddViewModel) {
@@ -34,6 +35,7 @@ class AuthAndAddViewController: BaseFormViewController {
         let dataSource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose, prefilledValues: viewModel.prefilledFormValues)
         super.init(title: L10n.login, description: "", dataSource: dataSource)
         dataSource.delegate = self
+        self.viewModel.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -107,6 +109,16 @@ class AuthAndAddViewController: BaseFormViewController {
         })
     }
     
+    private func refreshForm(for barcode: String) {
+        var prefilledValues = self.dataSource.fields.filter { $0.fieldCommonName != .barcode && $0.fieldCommonName != .cardNumber }.map {
+            FormDataSource.PrefilledValue(commonName: $0.fieldCommonName, value: $0.value)
+        }
+        prefilledValues.append(FormDataSource.PrefilledValue(commonName: .barcode, value: barcode))
+        self.dataSource = FormDataSource(authAdd: self.viewModel.getMembershipPlan(), formPurpose: .addFromScanner, delegate: self, prefilledValues: prefilledValues)
+        self.viewModel.formPurpose = .addFromScanner
+        self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
+    }
+    
     override func formValidityUpdated(fullFormIsValid: Bool) {
         primaryButton.enabled = fullFormIsValid
     }
@@ -118,14 +130,8 @@ class AuthAndAddViewController: BaseFormViewController {
 
 extension AuthAndAddViewController: BarcodeScannerViewControllerDelegate {
     func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
-        viewController.dismiss(animated: true) {
-            var prefilledValues = self.dataSource.fields.filter { $0.fieldCommonName != .barcode && $0.fieldCommonName != .cardNumber }.map {
-                FormDataSource.PrefilledValue(commonName: $0.fieldCommonName, value: $0.value)
-            }
-            prefilledValues.append(FormDataSource.PrefilledValue(commonName: .barcode, value: barcode))
-            self.dataSource = FormDataSource(authAdd: self.viewModel.getMembershipPlan(), formPurpose: .addFromScanner, delegate: self, prefilledValues: prefilledValues)
-            self.viewModel.formPurpose = .addFromScanner
-            self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
+        viewController.dismiss(animated: true) { [weak self] in
+            self?.refreshForm(for: barcode)
         }
     }
     
@@ -189,4 +195,24 @@ extension AuthAndAddViewController: FormCollectionViewCellDelegate {
     }
     
     func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField) {}
+}
+
+extension AuthAndAddViewController: AuthAndAddViewModelDelegate {
+    func showImagePicker() {
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        picker.delegate = self
+        present(picker, animated: true)
+    }
+}
+
+extension AuthAndAddViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        guard let image = info[.editedImage] as? UIImage else { return }
+        visionUtility.createVisionRequest(image: image) { barcode in
+            self.dismiss(animated: true) { [weak self] in
+                self?.refreshForm(for: barcode)
+            }
+        }
+    }
 }
