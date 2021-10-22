@@ -201,7 +201,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         cancelButton.tintColor = Current.themeManager.color(for: .text)
         widgetView.configure()
     }
-
+    
     private func startScanning() {
         viewModel.isScanning = true
         session.sessionPreset = .high
@@ -247,9 +247,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
 
         captureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
 
-        timer = Timer.scheduledTimer(withTimeInterval: Constants.timerInterval, repeats: false, block: { [weak self] _ in
-            self?.widgetView.timeout()
-        })
+        scheduleTimer()
     }
 
     private func stopScanning() {
@@ -262,6 +260,12 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
             }
             self?.timer?.invalidate()
         }
+    }
+    
+    private func scheduleTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: Constants.timerInterval, repeats: false, block: { [weak self] _ in
+            self?.widgetView.timeout()
+        })
     }
 
     private func performCaptureChecksForDevice(_ device: AVCaptureDevice) {
@@ -305,8 +309,11 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         let picker = UIImagePickerController()
         picker.allowsEditing = true
         picker.delegate = self
+        picker.modalPresentationStyle = .overCurrentContext
         captureSource = .photoLibrary(viewModel.plan)
-        present(picker, animated: true)
+        timer?.invalidate()
+        let navigationRequest = ModalNavigationRequest(viewController: picker, embedInNavigationController: false)
+        Current.navigate.to(navigationRequest)
     }
     
     @objc private func enterManually() {
@@ -382,10 +389,13 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     
     private func showError(barcodeDetected: Bool) {
         let alert = BinkAlertController(title: L10n.errorTitle, message: barcodeDetected ? captureSource.errorMessage : L10n.loyaltyScannerFailedToDetectBarcode, preferredStyle: .alert)
-        let action = UIAlertAction(title: L10n.ok, style: .cancel) { _ in
+        let action = UIAlertAction(title: L10n.ok, style: .cancel) { [weak self] _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: {
-                self.canPresentScanError = true
-                self.shouldAllowScanning = true
+                self?.canPresentScanError = true
+                self?.shouldAllowScanning = true
+                if !barcodeDetected {
+                    self?.scheduleTimer()
+                }
             })
         }
         alert.addAction(action)
@@ -421,6 +431,12 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
                 }
                 self?.identifyMembershipPlanForBarcode(barcode)
             }
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        Current.navigate.close(animated: true) {
+            self.scheduleTimer()
         }
     }
 }
