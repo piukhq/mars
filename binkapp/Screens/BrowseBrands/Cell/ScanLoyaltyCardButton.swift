@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ScanLoyaltyCardButtonDelegate: AnyObject {
-    func toImagePicker()
+    func addPhotoFromLibraryButtonWasTapped(_ scanLoyaltyCardButton: ScanLoyaltyCardButton)
 }
 
 class ScanLoyaltyCardButton: UIView {
@@ -47,7 +47,8 @@ class ScanLoyaltyCardButton: UIView {
             let navigationRequest = PushNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         } addFromPhotoLibraryAction: { [weak self] in
-            self?.delegate?.toImagePicker()
+            guard let self = self else { return }
+            self.delegate?.addPhotoFromLibraryButtonWasTapped(self)
         }
     }
 }

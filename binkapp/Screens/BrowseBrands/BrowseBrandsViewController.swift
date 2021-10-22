@@ -413,11 +413,12 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
 }
 
 extension BrowseBrandsViewController: ScanLoyaltyCardButtonDelegate {
-    func toImagePicker() {
+    func addPhotoFromLibraryButtonWasTapped(_ scanLoyaltyCardButton: ScanLoyaltyCardButton) {
         let picker = UIImagePickerController()
         picker.allowsEditing = true
         picker.delegate = self
-        present(picker, animated: true)
+        let navigationRequest = ModalNavigationRequest(viewController: picker, embedInNavigationController: false)
+        Current.navigate.to(navigationRequest)
     }
 }
 
@@ -426,7 +427,7 @@ extension BrowseBrandsViewController: UIImagePickerControllerDelegate, UINavigat
         guard let image = info[.editedImage] as? UIImage else { return }
         visionUtility.createVisionRequest(image: image) { [weak self] barcode in
             guard let barcode = barcode else {
-                picker.dismiss(animated: true) {
+                Current.navigate.close(animated: true) { [weak self] in
                     self?.showError()
                 }
                 return
@@ -434,7 +435,7 @@ extension BrowseBrandsViewController: UIImagePickerControllerDelegate, UINavigat
 
             Current.wallet.identifyMembershipPlanForBarcode(barcode) { membershipPlan in
                 guard let membershipPlan = membershipPlan else { return }
-                picker.dismiss(animated: true) {
+                Current.navigate.close(animated: true) {
                     let prefilledValues = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
                     let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, existingMembershipCard: nil, prefilledFormValues: [prefilledValues])
                     let navigationRequest = PushNavigationRequest(viewController: viewController)

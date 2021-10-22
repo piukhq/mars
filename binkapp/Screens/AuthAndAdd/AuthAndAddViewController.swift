@@ -136,7 +136,7 @@ class AuthAndAddViewController: BaseFormViewController {
 
 extension AuthAndAddViewController: BarcodeScannerViewControllerDelegate {
     func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
-        viewController.dismiss(animated: true) { [weak self] in
+        Current.navigate.close(animated: true) { [weak self] in
             self?.refreshForm(for: barcode)
         }
     }
@@ -208,7 +208,8 @@ extension AuthAndAddViewController: AuthAndAddViewModelDelegate {
         let picker = UIImagePickerController()
         picker.allowsEditing = true
         picker.delegate = self
-        present(picker, animated: true)
+        let navigationRequest = ModalNavigationRequest(viewController: picker, embedInNavigationController: false)
+        Current.navigate.to(navigationRequest)
     }
 }
 
@@ -216,7 +217,7 @@ extension AuthAndAddViewController: UIImagePickerControllerDelegate, UINavigatio
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
         visionUtility.createVisionRequest(image: image) { barcode in
-            self.dismiss(animated: true) { [weak self] in
+            Current.navigate.close(animated: true) { [weak self] in
                 guard let barcode = barcode else {
                     self?.showError(barcodeDetected: false)
                     return

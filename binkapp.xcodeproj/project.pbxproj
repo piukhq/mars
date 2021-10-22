@@ -299,6 +299,7 @@
 		CE07917A25ADB4A4009FE8BA /* LoyaltyWalletAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07917925ADB4A3009FE8BA /* LoyaltyWalletAnimator.swift */; };
 		CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */; };
 		CE0C24792678EDE500CB7150 /* WhoWeAreSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */; };
+		CE1015252722A63F0000A838 /* VisionImageDetectionUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1015242722A63F0000A838 /* VisionImageDetectionUtility.swift */; };
 		CE27A0DA25DA990E00C58412 /* OnboardingCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */; };
 		CE27A0DB25DA990E00C58412 /* OnboardingCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */; };
 		CE2C7A7825DEC635007624FE /* DebugMenuPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C7A7625DEC635007624FE /* DebugMenuPickerTableViewCell.swift */; };
@@ -926,6 +927,7 @@
 		CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardDetailViewModelTests.swift; sourceTree = "<group>"; };
 		CE0AE2DD2542DB81000CDB86 /* binkapp - 23-10-20 - Card secondary colour.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 23-10-20 - Card secondary colour.xcdatamodel"; sourceTree = "<group>"; };
 		CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoWeAreSwiftUIView.swift; sourceTree = "<group>"; };
+		CE1015242722A63F0000A838 /* VisionImageDetectionUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionImageDetectionUtility.swift; sourceTree = "<group>"; };
 		CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingCardCollectionViewCell.xib; sourceTree = "<group>"; };
 		CE2C7A7625DEC635007624FE /* DebugMenuPickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuPickerTableViewCell.swift; sourceTree = "<group>"; };
@@ -1563,6 +1565,7 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				CE1015232722A60E0000A838 /* Vision */,
 				70C8029D2642B231005700A2 /* Deep Linking */,
 				CEAB2D71266670F6006A0F43 /* HTML Parsing */,
 				706157BD26499CB30002701E /* App Version */,
@@ -2334,6 +2337,14 @@
 				CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */,
 			);
 			path = PLR;
+			sourceTree = "<group>";
+		};
+		CE1015232722A60E0000A838 /* Vision */ = {
+			isa = PBXGroup;
+			children = (
+				CE1015242722A63F0000A838 /* VisionImageDetectionUtility.swift */,
+			);
+			path = Vision;
 			sourceTree = "<group>";
 		};
 		CE2CFE9625E3D4FA00B1CB93 /* FeatureFlags */ = {
@@ -3937,6 +3948,7 @@
 				DBA6CB4F237C94CD000313D4 /* UIViewController+binkapp.swift in Sources */,
 				BD475E7123A2AED80071302A /* CD_PlanDocumentDisplay.swift in Sources */,
 				EF480C21235754C20060B7C1 /* WalletPromptFactory.swift in Sources */,
+				CE1015252722A63F0000A838 /* VisionImageDetectionUtility.swift in Sources */,
 				BDB01870232D99D200BFFA18 /* FormField.swift in Sources */,
 				B76659992320F68D00B327BE /* HyperlinkAlertController.swift in Sources */,
 				EFA5F7322379A7C70027AB80 /* _CD_MembershipCardStatus.swift in Sources */,

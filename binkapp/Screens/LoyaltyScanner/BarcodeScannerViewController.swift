@@ -413,65 +413,13 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
 extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
-        dismiss(animated: true) { [weak self] in
+        Current.navigate.close(animated: true) { [weak self] in
             self?.visionUtility.createVisionRequest(image: image) { barcode in
                 guard let barcode = barcode else {
                     self?.showError(barcodeDetected: false)
                     return
                 }
                 self?.identifyMembershipPlanForBarcode(barcode)
-            }
-        }
-    }
-    
-//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-//        dismiss(animated: true, completion: {
-//            if !self.viewModel.scanningIsPermitted {
-//                if self.viewModel.hasPlan {
-//                    /// Auth and Add
-//                    Current.navigate.close()
-//                } else {
-//                    /// Browse brands
-//                    Current.navigate.back()
-//                }
-//            }
-//        })
-//    }
-}
-
-class VisionImageDetectionUtility {
-    func createVisionRequest(image: UIImage, completion: @escaping (String?) -> Void ) {
-        guard let cgImage = image.cgImage else { return }
-        
-        var vnBarcodeDetectionRequest: VNDetectBarcodesRequest {
-            let request = VNDetectBarcodesRequest { request, error in
-                guard error == nil else {
-                    completion(nil)
-                    return
-                }
-                
-                guard let observations = request.results as? [VNBarcodeObservation], let stringValue = observations.first?.payloadStringValue else {
-                    DispatchQueue.main.async {
-                        completion(nil)
-                    }
-                    return
-                }
-    
-                DispatchQueue.main.async {
-                    completion(stringValue)
-                }
-            }
-            return request
-        }
-        
-        let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
-        let vnRequests = [vnBarcodeDetectionRequest]
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            do {
-                try requestHandler.perform(vnRequests)
-            } catch {
-                completion(nil)
             }
         }
     }
