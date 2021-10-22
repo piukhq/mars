@@ -9,7 +9,7 @@
 import UIKit
 
 protocol FeatureFlagCellDelegate: AnyObject {
-    func featureWasToggled(_ feature: Feature?)
+    func featureWasToggled(_ feature: BetaFeature?)
 }
 
 class FeatureFlagsTableViewCell: UITableViewCell {
@@ -17,10 +17,10 @@ class FeatureFlagsTableViewCell: UITableViewCell {
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var toggleSwitch: BinkSwitch!
     
-    private var feature: Feature?
+    private var feature: BetaFeature?
     private weak var delegate: FeatureFlagCellDelegate?
     
-    func configure(_ feature: Feature, delegate: FeatureFlagCellDelegate) {
+    func configure(_ feature: BetaFeature, delegate: FeatureFlagCellDelegate) {
         self.feature = feature
         self.delegate = delegate
         

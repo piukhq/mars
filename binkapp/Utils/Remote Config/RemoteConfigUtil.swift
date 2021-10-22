@@ -11,45 +11,23 @@ import FirebaseRemoteConfig
 
 class RemoteConfigUtil {
     enum RemoteConfigKey {
-        case localPointsCollectionMasterEnabled
-        case localPointsCollectionAgentEnabled(WebScrapable)
-        case localPointsCollectionAuthFields(WebScrapable)
-        case inAppReviewEnabled
-        case dynamicActions
-        case betaFeatures
-        case betaUsers
-        case appConfiguration
+        case configFile
         
         var formattedKey: String {
-            let isDebug = !APIConstants.isProduction
-
             switch self {
-            case .localPointsCollectionMasterEnabled:
-                return "LPC_master_enabled\(isDebug ? "_debug" : "")"
-            case .localPointsCollectionAgentEnabled(let agent):
-                return "LPC_\(agent.merchant)_enabled\(isDebug ? "_debug" : "")"
-            case .localPointsCollectionAuthFields(let agent):
-                return "LPC_\(agent.merchant)_auth_fields\(isDebug ? "_debug" : "")"
-            case .inAppReviewEnabled:
-                return "in_app_review_enabled"
-            case .dynamicActions:
-                return "dynamic_actions"
-            case .betaFeatures:
-                return "beta_features"
-            case .betaUsers:
-                return "beta_users"
-            case .appConfiguration:
-                return "app_configuration"
+            case .configFile:
+                return "config_file"
             }
         }
     }
     
     private let remoteConfig = RemoteConfig.remoteConfig()
-    
     private(set) var hasPerformedFetch = false
+    var recommendedVersionUtil = RecommendedVersionUtil()
     
-    /// A tool based on the app_configuration object in remote config
-    var appConfiguration = RemoteAppConfigurationUtil()
+    var configFile: RemoteConfigFile? {
+        return objectForConfigKey(.configFile, forObjectType: RemoteConfigFile.self)
+    }
     
     func configure() {
         setupRemoteConfig()
@@ -59,17 +37,12 @@ class RemoteConfigUtil {
         let settings = RemoteConfigSettings()
         settings.minimumFetchInterval = 0
         remoteConfig.configSettings = settings
-        remoteConfig.setDefaults([RemoteConfigKey.localPointsCollectionMasterEnabled.formattedKey: NSNumber(value: false)])
-        
-        Current.pointsScrapingManager.agents.forEach {
-            remoteConfig.setDefaults([RemoteConfigKey.localPointsCollectionAgentEnabled($0).formattedKey: NSNumber(value: false)])
-        }
     }
     
     func handleRemoteConfigFetch() {
         hasPerformedFetch = true
         Current.featureManager.getFeaturesFromRemoteConfig()
-        appConfiguration.promptRecommendedUpdateIfNecessary()
+        recommendedVersionUtil.promptRecommendedUpdateIfNecessary()
     }
     
     func fetch(completion: ((Bool) -> Void)? = nil) {
@@ -89,10 +62,6 @@ class RemoteConfigUtil {
                 completion?(false)
             }
         }
-    }
-    
-    func boolValueForConfigKey(_ configKey: RemoteConfigKey) -> Bool {
-        return remoteConfig.configValue(forKey: configKey.formattedKey).boolValue
     }
 
     func objectForConfigKey<T: Codable>(_ configKey: RemoteConfigKey, forObjectType objectType: T.Type) -> T? {
