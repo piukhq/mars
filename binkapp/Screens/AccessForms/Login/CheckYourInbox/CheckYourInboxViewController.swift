@@ -23,13 +23,12 @@ class CheckYourInboxViewController: BinkViewController {
     
     private lazy var textView: UITextView = {
         let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.isScrollEnabled = false
+        textView.isUserInteractionEnabled = false 
+        textView.isEditable = false
+        textView.backgroundColor = .clear
         return textView
-    }()
-    
-    private lazy var primaryButton: BinkButton = {
-        return BinkButton(type: .gradient, title: "", enabled: true, action: {
-            
-        })
     }()
     
     private var viewModel: CheckYourInboxViewModel
@@ -46,8 +45,9 @@ class CheckYourInboxViewController: BinkViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        footerButtons.append(primaryButton)
+        textView.delegate = self
         configureUI()
+        configureButton()
     }
 
     override func configureForCurrentTheme() {
@@ -67,4 +67,14 @@ class CheckYourInboxViewController: BinkViewController {
             stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
     }
+    
+    private func configureButton() {
+        if let primaryTitle = viewModel.primaryButtonTitle, let primaryAction = viewModel.primaryButtonAction {
+            footerButtons.append(BinkButton(type: .gradient, title: primaryTitle, action: primaryAction))
+        }
+    }
+}
+
+extension CheckYourInboxViewController: UITextViewDelegate {
+    
 }

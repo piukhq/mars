@@ -124,9 +124,12 @@ extension LoginController {
     private func navigateToStatusScreen(for status: MagicLinkStatus, with dataSource: FormDataSource? = nil, token: String? = nil) {
         var configurationModel: ReusableModalConfiguration
         let decodedEmail = decodedEmailAddress(from: token ?? "")
+        var viewController: UIViewController
         
         switch status {
         case .checkInbox:
+            var checkInboxViewModelConfiguration: CheckYourInboxViewModelConfig
+            
             let emailAddress = dataSource?.fields.first(where: { $0.fieldCommonName == .email })?.value ?? decodedEmail
             let attributedString = NSMutableAttributedString()
             let attributedTitle = NSAttributedString(string: L10n.checkInboxTitle + "\n", attributes: [NSAttributedString.Key.font: UIFont.headline])
@@ -142,20 +145,22 @@ extension LoginController {
             
             let availableEmailClients = EmailClient.availableEmailClientsForDevice()
             if availableEmailClients.isEmpty {
-                configurationModel = ReusableModalConfiguration(title: "", text: attributedString)
+                checkInboxViewModelConfiguration = CheckYourInboxViewModelConfig(text: attributedString)
             } else if availableEmailClients.count == 1 {
                 let buttonTitle = L10n.openMailButtonTitle(availableEmailClients.first?.rawValue.capitalized ?? "")
-                configurationModel = ReusableModalConfiguration(title: "", text: attributedString, primaryButtonTitle: buttonTitle, primaryButtonAction: {
+                checkInboxViewModelConfiguration = CheckYourInboxViewModelConfig(text: attributedString, primaryButtonTitle: buttonTitle, primaryButtonAction: {
                     availableEmailClients.first?.open()
                 })
             } else {
                 let buttonTitle = L10n.openMailButtonTitleMultipleClients
-                configurationModel = ReusableModalConfiguration(title: "", text: attributedString, primaryButtonTitle: buttonTitle, primaryButtonAction: {
+                checkInboxViewModelConfiguration = CheckYourInboxViewModelConfig(text: attributedString, primaryButtonTitle: buttonTitle, primaryButtonAction: {
                     let alert = ViewControllerFactory.makeEmailClientsAlertController(availableEmailClients)
                     let navigationRequest = AlertNavigationRequest(alertController: alert)
                     Current.navigate.to(navigationRequest)
                 })
             }
+            
+            viewController = ViewControllerFactory.makeCheckYourInboxViewController(configuration: checkInboxViewModelConfiguration)
         case .expired:
             configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: L10n.linkExpiredTitle, description: L10n.linkExpiredDescription), primaryButtonTitle: L10n.retryTitle, primaryButtonAction: {
                 // Resend magic link email
@@ -175,6 +180,8 @@ extension LoginController {
             }, secondaryButtonTitle: L10n.cancel) {
                 Current.navigate.back(toRoot: true, animated: true)
             }
+            
+            viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configurationModel)
         case .failed:
             configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: L10n.somethingWentWrongTitle, description: L10n.somethingWentWrongDescription), primaryButtonTitle: L10n.retryTitle, primaryButtonAction: {
                 // Re-attempt token exchange
@@ -196,9 +203,10 @@ extension LoginController {
             }, secondaryButtonTitle: L10n.cancel) {
                 Current.navigate.back(toRoot: true, animated: true)
             }
+            
+            viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configurationModel)
         }
         
-        let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configurationModel)
         let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }

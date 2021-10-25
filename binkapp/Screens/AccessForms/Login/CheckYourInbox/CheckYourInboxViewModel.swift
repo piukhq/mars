@@ -18,26 +18,24 @@ struct CheckYourInboxViewModelConfig {
         self.primaryButtonTitle = primaryButtonTitle
         self.primaryButtonAction = primaryButtonAction
     }
-
-    static func makeAttributedString(title: String, description: String) -> NSMutableAttributedString {
-        let attributedString = NSMutableAttributedString()
-        let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font: UIFont.headline])
-        let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font: UIFont.bodyTextLarge])
-        attributedString.append(attributedTitle)
-        attributedString.append(attributedBody)
-
-        return attributedString
-    }
 }
 
 class CheckYourInboxViewModel {
-    let configuration: CheckYourInboxViewModelConfig
+    let configurationModel: CheckYourInboxViewModelConfig
     
     init(config: CheckYourInboxViewModelConfig) {
-        self.configuration = config
+        self.configurationModel = config
     }
     
     var text: NSMutableAttributedString {
-        return configuration.text
+        return configurationModel.text
+    }
+    
+    var primaryButtonTitle: String? {
+        return configurationModel.primaryButtonTitle
+    }
+    
+    var primaryButtonAction: BinkButtonAction? {
+        return configurationModel.primaryButtonAction
     }
 }
