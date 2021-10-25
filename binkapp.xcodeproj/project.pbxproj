@@ -265,6 +265,8 @@
 		BDFAA07D23E24DC600949271 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFAA07C23E24DC600949271 /* UIImage+Extension.swift */; };
 		C6812158579C0CBB400A495C /* Pods_binkapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF7651BEBD7E19F9F7391DE /* Pods_binkapp.framework */; };
 		CB92D023BF75D98DF0B2550E /* Pods_binkappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0578BBF342AD2E4F349D1822 /* Pods_binkappUITests.framework */; };
+		CE02D5132726BEA0008B9BFA /* CheckYourInboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D5122726BEA0008B9BFA /* CheckYourInboxViewController.swift */; };
+		CE02D5162726BF76008B9BFA /* CheckYourInboxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D5152726BF76008B9BFA /* CheckYourInboxViewModel.swift */; };
 		CE07917A25ADB4A4009FE8BA /* LoyaltyWalletAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07917925ADB4A3009FE8BA /* LoyaltyWalletAnimator.swift */; };
 		CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */; };
 		CE0C24792678EDE500CB7150 /* WhoWeAreSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */; };
@@ -860,6 +862,8 @@
 		BDD9C8A6233D07D1003CD616 /* UICollectionViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtension.swift; sourceTree = "<group>"; };
 		BDFAA07A23E243EF00949271 /* LCDPlaceholderGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCDPlaceholderGenerator.swift; sourceTree = "<group>"; };
 		BDFAA07C23E24DC600949271 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		CE02D5122726BEA0008B9BFA /* CheckYourInboxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckYourInboxViewController.swift; sourceTree = "<group>"; };
+		CE02D5152726BF76008B9BFA /* CheckYourInboxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckYourInboxViewModel.swift; sourceTree = "<group>"; };
 		CE07917925ADB4A3009FE8BA /* LoyaltyWalletAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletAnimator.swift; sourceTree = "<group>"; };
 		CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardDetailViewModelTests.swift; sourceTree = "<group>"; };
 		CE0AE2DD2542DB81000CDB86 /* binkapp - 23-10-20 - Card secondary colour.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 23-10-20 - Card secondary colour.xcdatamodel"; sourceTree = "<group>"; };
@@ -1721,6 +1725,7 @@
 			children = (
 				BD458B37236B417D0029A538 /* LoginViewController.swift */,
 				70EB83872644410A00DD8935 /* LoginController.swift */,
+				CE02D5142726BF58008B9BFA /* CheckYourInbox */,
 				CE85A1D126A5DB43003B74CD /* EmailClient.swift */,
 				CE85A1D526A6CD97003B74CD /* LoginSuccessViewController.swift */,
 			);
@@ -2147,6 +2152,15 @@
 				BDB01881232E93A100BFFA18 /* FormMultipleChoiceInput.swift */,
 			);
 			path = Form;
+			sourceTree = "<group>";
+		};
+		CE02D5142726BF58008B9BFA /* CheckYourInbox */ = {
+			isa = PBXGroup;
+			children = (
+				CE02D5122726BEA0008B9BFA /* CheckYourInboxViewController.swift */,
+				CE02D5152726BF76008B9BFA /* CheckYourInboxViewModel.swift */,
+			);
+			path = CheckYourInbox;
 			sourceTree = "<group>";
 		};
 		CE085D5D255EA17D003966ED /* PLR */ = {
@@ -3539,6 +3553,7 @@
 				3C9B1A2723854BF60078A1EC /* PreferencesViewModel.swift in Sources */,
 				3C7AF52B23757FB0005964E0 /* FloatExtension.swift in Sources */,
 				EF9E9BCC23C3AC19002FF18E /* NSNumberExtension.swift in Sources */,
+				CE02D5132726BEA0008B9BFA /* CheckYourInboxViewController.swift in Sources */,
 				CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */,
 				7061053125B7349600A16DA5 /* ThemeManager.swift in Sources */,
 				3C36071F230FF03000AC76A3 /* BrandHeaderView.swift in Sources */,
@@ -3701,6 +3716,7 @@
 				CEE2091D268CC5C4004D3759 /* WidgetController.swift in Sources */,
 				EF8BF1FB234147F500D2E5F3 /* PaymentCardAccountResponse.swift in Sources */,
 				EF485572231D728A00FC9E5F /* DebugMenuSection.swift in Sources */,
+				CE02D5162726BF76008B9BFA /* CheckYourInboxViewModel.swift in Sources */,
 				7061053925B8552C00A16DA5 /* Theme.swift in Sources */,
 				BDB01884232EB14A00BFFA18 /* StackScrollView.swift in Sources */,
 				EFA5F7182379A7C70027AB80 /* CD_MembershipPlan.swift in Sources */,
