@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 protocol FormCollectionViewCellDelegate: AnyObject {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField)
@@ -100,25 +101,46 @@ class FormCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var fieldStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, textFieldStack, separator, validationLabel])
+    private lazy var containerStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [fieldContainerStack, validationLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .fill
-        stackView.spacing = Constants.stackViewSpacing
-        stackView.setCustomSpacing(Constants.postTextFieldSpacing, after: textFieldStack)
-        stackView.setCustomSpacing(Constants.postSeparatorSpacing, after: separator)
         contentView.addSubview(stackView)
         return stackView
     }()
     
-    private lazy var separator: UIView = {
-        let separator = UIView()
-        separator.translatesAutoresizingMaskIntoConstraints = false
-        separator.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
-        contentView.addSubview(separator)
-        return separator
+    private lazy var fieldContainerStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [fieldStack, validationView])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.backgroundColor = .white
+        stackView.layer.cornerCurve = .continuous
+        stackView.layer.cornerRadius = 12
+        stackView.clipsToBounds = true
+        return stackView
+    }()
+    
+    private lazy var fieldStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, textFieldStack])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        stackView.isLayoutMarginsRelativeArrangement = true
+        return stackView
+    }()
+    
+    private lazy var validationView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.heightAnchor.constraint(equalToConstant: 3).isActive = true
+        return view
     }()
     
     private var preferredWidth: CGFloat = 300 // This has to be a non zero value, chose 300 because of the movie 300.
@@ -154,18 +176,16 @@ class FormCollectionViewCell: UICollectionViewCell {
     // MARK: - Layout
     
     private func configureLayout() {
-        let topConstraint = fieldStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 17.0)
+        let topConstraint = containerStack.topAnchor.constraint(equalTo: contentView.topAnchor)
         topConstraint.priority = .required
-        let bottomConstraint = contentView.bottomAnchor.constraint(equalTo: fieldStack.bottomAnchor)
+        let bottomConstraint = contentView.bottomAnchor.constraint(equalTo: containerStack.bottomAnchor)
         bottomConstraint.priority = .required
         
         NSLayoutConstraint.activate([
-            fieldStack.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            fieldStack.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            containerStack.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            containerStack.rightAnchor.constraint(equalTo: contentView.rightAnchor),
             topConstraint,
-            bottomConstraint,
-            separator.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            separator.rightAnchor.constraint(equalTo: contentView.rightAnchor)
+            bottomConstraint
         ])
     }
     
@@ -197,7 +217,6 @@ class FormCollectionViewCell: UICollectionViewCell {
         formField = field
         configureTextFieldRightView(shouldDisplay: formField?.value == nil)
         validationLabel.isHidden = textField.text?.isEmpty == true ? true : field.isValid()
-        separator.backgroundColor = Current.themeManager.color(for: .divider)
         
         if case let .expiry(months, years) = field.fieldType {
             textField.inputView = FormMultipleChoiceInput(with: [months, years], delegate: self)
@@ -286,6 +305,23 @@ class FormCollectionViewCell: UICollectionViewCell {
         configureTextFieldRightView(shouldDisplay: true)
         return true
     }
+    
+    enum ControlState {
+        case inactive, active, valid, invalid
+    }
+    
+    func setState(_ state: ControlState) {
+        switch state {
+        case .inactive:
+            validationView.backgroundColor = .clear
+        case .active:
+            validationView.backgroundColor = .systemBlue
+        case .valid:
+            validationView.backgroundColor = .systemGreen
+        case .invalid:
+            validationView.backgroundColor = .binkDynamicRed
+        }
+    }
 }
 
 extension FormCollectionViewCell: UITextFieldDelegate {
@@ -295,6 +331,14 @@ extension FormCollectionViewCell: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let field = formField else { return }
+        
+        switch field.isValid() {
+        case true:
+            setState(.valid)
+        case false:
+            setState(.invalid)
+        }
+        
         validationLabel.text = field.validationErrorMessage != nil ? field.validationErrorMessage : L10n.formFieldValidationError
         validationLabel.isHidden = field.isValid()
         isValidationLabelHidden = field.isValid()
@@ -305,6 +349,8 @@ extension FormCollectionViewCell: UITextFieldDelegate {
         if textField.inputView?.isKind(of: FormMultipleChoiceInput.self) ?? false || textField.inputView?.isKind(of: UIDatePicker.self) ?? false {
             textField.text = pickerSelectedChoice
         }
+        
+        setState(.active)
         
         self.delegate?.formCollectionViewCell(self, didSelectField: textField)
     }
