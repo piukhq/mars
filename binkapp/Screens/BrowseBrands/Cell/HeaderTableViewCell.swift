@@ -13,7 +13,7 @@ class HeaderTableViewCell: UITableViewCell {
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet weak var stackView: UIStackView!
     
-    private lazy var scanLoyaltyCardButton: ScanLoyaltyCardButton = {
+    lazy var scanLoyaltyCardButton: ScanLoyaltyCardButton = {
         let cell: ScanLoyaltyCardButton = .fromNib()
         cell.frame = CGRect(x: 0, y: 0, width: frame.width, height: 88)
         return cell

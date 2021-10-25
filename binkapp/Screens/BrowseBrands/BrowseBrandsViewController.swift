@@ -65,6 +65,7 @@ class BrowseBrandsViewController: BinkViewController {
     private var selectedFilters: [String]
     private var didLayoutSubviews = false
     private var sectionToScrollTo: Int?
+    private let visionUtility = VisionImageDetectionUtility()
     
     init(viewModel: BrowseBrandsViewModel, section: Int?) {
         self.viewModel = viewModel
@@ -279,6 +280,11 @@ class BrowseBrandsViewController: BinkViewController {
         tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         sectionToScrollTo = nil
     }
+    
+    private func showError() {
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: L10n.loyaltyScannerFailedToDetectBarcode)
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
 extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -308,6 +314,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderTableViewCell") as? HeaderTableViewCell else { return nil }
         headerCell.configure(section: section, viewModel: viewModel)
+        headerCell.scanLoyaltyCardButton.delegate = self
         return headerCell
     }
 
@@ -402,5 +409,39 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
         }
         viewModel.selectedFilters = selectedFilters
         switchTableWithNoMatchesLabel()
+    }
+}
+
+extension BrowseBrandsViewController: ScanLoyaltyCardButtonDelegate {
+    func addPhotoFromLibraryButtonWasTapped(_ scanLoyaltyCardButton: ScanLoyaltyCardButton) {
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        picker.delegate = self
+        let navigationRequest = ModalNavigationRequest(viewController: picker, embedInNavigationController: false)
+        Current.navigate.to(navigationRequest)
+    }
+}
+
+extension BrowseBrandsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        guard let image = info[.editedImage] as? UIImage else { return }
+        visionUtility.createVisionRequest(image: image) { [weak self] barcode in
+            guard let barcode = barcode else {
+                Current.navigate.close(animated: true) { [weak self] in
+                    self?.showError()
+                }
+                return
+            }
+
+            Current.wallet.identifyMembershipPlanForBarcode(barcode) { membershipPlan in
+                guard let membershipPlan = membershipPlan else { return }
+                Current.navigate.close(animated: true) {
+                    let prefilledValues = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
+                    let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, existingMembershipCard: nil, prefilledFormValues: [prefilledValues])
+                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
+                }
+            }
+        }
     }
 }

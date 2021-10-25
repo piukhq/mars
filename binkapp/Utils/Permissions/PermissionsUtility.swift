@@ -33,18 +33,21 @@ enum PermissionsUtility {
 }
 
 extension PermissionsUtility {
-    static func launchLoyaltyScanner(_ viewController: BarcodeScannerViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil) {
-        launchScanner(viewController: viewController, grantedAction: grantedAction, enterManuallyAction: enterManuallyAction)
+    static func launchLoyaltyScanner(_ viewController: BarcodeScannerViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil, addFromPhotoLibraryAction: @escaping EmptyCompletionBlock) {
+        launchScanner(viewController: viewController, grantedAction: grantedAction, enterManuallyAction: enterManuallyAction, addFromPhotoLibraryAction: addFromPhotoLibraryAction)
     }
 
     static func launchPaymentScanner(_ viewController: ScanViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil) {
         launchScanner(viewController: viewController, grantedAction: grantedAction, enterManuallyAction: enterManuallyAction)
     }
 
-    private static func launchScanner(viewController: UIViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil) {
+    private static func launchScanner(viewController: UIViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil, addFromPhotoLibraryAction: EmptyCompletionBlock? = nil) {
         let enterManuallyAlert = BinkAlertController.cardScannerEnterManuallyAlertController {
             enterManuallyAction?()
+        } addFromPhotoLibraryAction: {
+            addFromPhotoLibraryAction?()
         }
+
 
         if PermissionsUtility.videoCaptureIsAuthorized {
             grantedAction()
