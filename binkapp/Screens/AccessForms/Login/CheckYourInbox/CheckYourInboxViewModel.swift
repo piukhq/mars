@@ -6,21 +6,17 @@
 //  Copyright © 2021 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct CheckYourInboxViewModelConfig {
-    var title: String
     var text: NSMutableAttributedString
     var primaryButtonTitle: String?
     var primaryButtonAction: BinkButtonAction?
-    var membershipPlan: CD_MembershipPlan?
     
-    init(title: String = "", text: NSMutableAttributedString, primaryButtonTitle: String? = nil, primaryButtonAction: BinkButtonAction? = nil, membershipPlan: CD_MembershipPlan? = nil) {
-        self.title = title
+    init(text: NSMutableAttributedString, primaryButtonTitle: String? = nil, primaryButtonAction: BinkButtonAction? = nil) {
         self.text = text
         self.primaryButtonTitle = primaryButtonTitle
         self.primaryButtonAction = primaryButtonAction
-        self.membershipPlan = membershipPlan
     }
 
     static func makeAttributedString(title: String, description: String) -> NSMutableAttributedString {
@@ -35,5 +31,13 @@ struct CheckYourInboxViewModelConfig {
 }
 
 class CheckYourInboxViewModel {
+    let configuration: CheckYourInboxViewModelConfig
     
+    init(config: CheckYourInboxViewModelConfig) {
+        self.configuration = config
+    }
+    
+    var text: NSMutableAttributedString {
+        return configuration.text
+    }
 }
