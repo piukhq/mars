@@ -347,7 +347,7 @@
 "tandcs_link" = "Terms and Conditions";
 "ppolicy_title" = "I accept Bink's Privacy Policy";
 "ppolicy_link" = "Privacy Policy";
-"marketing_title" = "Opt in to receive marketing messages";
+"marketing_title" = "Opt in to receive marketing messages.";
 
 "access_form_email_title" = "Email";
 "access_form_email_placeholder" = "Enter email address";
