@@ -42,6 +42,10 @@ enum FormPurpose: Equatable {
     }
 }
 
+protocol AuthAndAddViewModelDelegate: AnyObject {
+    func showImagePicker()
+}
+
 class AuthAndAddViewModel {
     private let repository = AuthAndAddRepository()
     private let membershipPlan: CD_MembershipPlan
@@ -77,6 +81,7 @@ class AuthAndAddViewModel {
     
     private var privacyPolicy: NSMutableAttributedString?
     private var termsAndConditions: NSMutableAttributedString?
+    weak var delegate: AuthAndAddViewModelDelegate?
     
     init(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) {
         self.membershipPlan = membershipPlan
@@ -395,6 +400,8 @@ class AuthAndAddViewModel {
         PermissionsUtility.launchLoyaltyScanner(viewController) {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
+        } addFromPhotoLibraryAction: { [weak self] in
+            self?.delegate?.showImagePicker()
         }
     }
 }
