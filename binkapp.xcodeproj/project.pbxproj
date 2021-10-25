@@ -267,6 +267,7 @@
 		CB92D023BF75D98DF0B2550E /* Pods_binkappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0578BBF342AD2E4F349D1822 /* Pods_binkappUITests.framework */; };
 		CE02D5132726BEA0008B9BFA /* CheckYourInboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D5122726BEA0008B9BFA /* CheckYourInboxViewController.swift */; };
 		CE02D5162726BF76008B9BFA /* CheckYourInboxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D5152726BF76008B9BFA /* CheckYourInboxViewModel.swift */; };
+		CE02D5182726EE3F008B9BFA /* Paperplane.json in Resources */ = {isa = PBXBuildFile; fileRef = CE02D5172726EE3F008B9BFA /* Paperplane.json */; };
 		CE07917A25ADB4A4009FE8BA /* LoyaltyWalletAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07917925ADB4A3009FE8BA /* LoyaltyWalletAnimator.swift */; };
 		CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */; };
 		CE0C24792678EDE500CB7150 /* WhoWeAreSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */; };
@@ -864,6 +865,7 @@
 		BDFAA07C23E24DC600949271 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		CE02D5122726BEA0008B9BFA /* CheckYourInboxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckYourInboxViewController.swift; sourceTree = "<group>"; };
 		CE02D5152726BF76008B9BFA /* CheckYourInboxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckYourInboxViewModel.swift; sourceTree = "<group>"; };
+		CE02D5172726EE3F008B9BFA /* Paperplane.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Paperplane.json; sourceTree = "<group>"; };
 		CE07917925ADB4A3009FE8BA /* LoyaltyWalletAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletAnimator.swift; sourceTree = "<group>"; };
 		CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardDetailViewModelTests.swift; sourceTree = "<group>"; };
 		CE0AE2DD2542DB81000CDB86 /* binkapp - 23-10-20 - Card secondary colour.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 23-10-20 - Card secondary colour.xcdatamodel"; sourceTree = "<group>"; };
@@ -2259,6 +2261,7 @@
 			isa = PBXGroup;
 			children = (
 				CE85A20026B15436003B74CD /* success.json */,
+				CE02D5172726EE3F008B9BFA /* Paperplane.json */,
 			);
 			path = Animations;
 			sourceTree = "<group>";
@@ -3131,6 +3134,7 @@
 				EFA5F76B2379BD790027AB80 /* PLRStampsInactiveCell.xib in Resources */,
 				3CD3493E22F99E1D000C1F4D /* NunitoSans-Black.ttf in Resources */,
 				EFA5F7672379BD690027AB80 /* PLRStampsActiveCell.xib in Resources */,
+				CE02D5182726EE3F008B9BFA /* Paperplane.json in Resources */,
 				EF7F6E6523E47BFA00352DCF /* GoogleService-Info.plist in Resources */,
 				3CD3493422F99E1D000C1F4D /* NunitoSans-ExtraLight.ttf in Resources */,
 				5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */,
