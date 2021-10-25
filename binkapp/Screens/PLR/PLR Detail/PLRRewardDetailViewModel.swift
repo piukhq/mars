@@ -106,8 +106,11 @@ class PLRRewardDetailViewModel {
     }
 
     func openTermsAndConditionsWebView() {
-        guard let url = termsAndConditionsButtonUrlString else { return }
-        let viewController = ViewControllerFactory.makeWebViewController(urlString: url)
+        guard let urlString = termsAndConditionsButtonUrlString else { return }
+        guard let url = URL(string: urlString) else { return }
+        guard let termsAndConditions = HTMLParsingUtil.makeAttributedStringFromHTML(url: url) else { return }
+        let modalConfig = ReusableModalConfiguration(text: termsAndConditions, membershipPlan: membershipPlan)
+        let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: modalConfig)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
