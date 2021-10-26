@@ -31,7 +31,7 @@ class ReusableTemplateViewController: BinkViewController, LoyaltyButtonDelegate 
         return headerView
     }()
     
-    private let viewModel: ReusableModalViewModel
+    let viewModel: ReusableModalViewModel
     
     init(viewModel: ReusableModalViewModel) {
         self.viewModel = viewModel
@@ -69,6 +69,7 @@ class ReusableTemplateViewController: BinkViewController, LoyaltyButtonDelegate 
         textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 140, right: 0)
         textView.attributedText = viewModel.text
         textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
+        textView.textColor = Current.themeManager.color(for: .text)
         
         NSLayoutConstraint.activate([
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),

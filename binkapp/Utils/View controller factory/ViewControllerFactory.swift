@@ -176,8 +176,8 @@ enum ViewControllerFactory {
         return ForgotPasswordViewController(viewModel: viewModel)
     }
     
-    static func makeCheckYourInboxViewController(configuration: CheckYourInboxViewModelConfig) -> CheckYourInboxViewController {
-        let viewModel = CheckYourInboxViewModel(config: configuration)
+    static func makeCheckYourInboxViewController(configuration: ReusableModalConfiguration) -> CheckYourInboxViewController {
+        let viewModel = ReusableModalViewModel(configurationModel: configuration)
         return CheckYourInboxViewController(viewModel: viewModel)
     }
     
