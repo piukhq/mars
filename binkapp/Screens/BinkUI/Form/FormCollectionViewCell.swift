@@ -36,7 +36,54 @@ class FormCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Properties
     
-    private lazy var textFieldStack: UIStackView = {
+    /// The parent stack view that is pinned to the content view of the cell. Contains all other views.
+    private lazy var containerStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [fieldContainerVStack, validationLabel])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        contentView.addSubview(stackView)
+        return stackView
+    }()
+    
+    /// The white view that contains the field title, text field and validation view
+    private lazy var fieldContainerVStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [fieldContentHStack, validationView])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.backgroundColor = .white
+        stackView.layer.cornerCurve = .continuous
+        stackView.layer.cornerRadius = 12
+        stackView.clipsToBounds = true
+        return stackView
+    }()
+    
+    private lazy var fieldContentHStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [fieldLabelsVStack, validationIconImageView])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 7, right: 10)
+        stackView.isLayoutMarginsRelativeArrangement = true
+        return stackView
+    }()
+    
+    /// The view that contains the title label and text field
+    private lazy var fieldLabelsVStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, textFieldHStack])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        return stackView
+    }()
+    
+    /// The view that contains the text field and the camera icon
+    private lazy var textFieldHStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [textField, textFieldRightView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
@@ -46,15 +93,13 @@ class FormCollectionViewCell: UICollectionViewCell {
         return stackView
     }()
     
-    lazy var textFieldRightView: UIView = {
-        let cameraButton = UIButton(type: .custom)
-        cameraButton.imageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-        cameraButton.setImage(Asset.scanIcon.image, for: .normal)
-        cameraButton.imageView?.contentMode = .scaleAspectFill
-        cameraButton.addTarget(self, action: .handleScanButtonTap, for: .touchUpInside)
-        cameraButton.translatesAutoresizingMaskIntoConstraints = false
-        cameraButton.setContentHuggingPriority(.required, for: .horizontal)
-        return cameraButton
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.navbarHeaderLine2
+        label.heightAnchor.constraint(equalToConstant: Constants.titleLabelHeight).isActive = true
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
+        return label
     }()
     
     lazy var textField: UITextField = {
@@ -70,24 +115,37 @@ class FormCollectionViewCell: UICollectionViewCell {
         return field
     }()
     
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.textFieldLabel
-        label.heightAnchor.constraint(equalToConstant: Constants.titleLabelHeight).isActive = true
-        label.setContentCompressionResistancePriority(.required, for: .vertical)
-        return label
+    lazy var validationIconImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "icon-check"))
+        imageView.contentMode = .scaleAspectFit
+        NSLayoutConstraint.activate([
+            imageView.widthAnchor.constraint(equalToConstant: 20)
+        ])
+        imageView.isHidden = true
+        return imageView
     }()
     
-    private lazy var inputAccessory: UIToolbar = {
-        let bar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let done = UIBarButtonItem(title: "Done", style: .plain, target: self, action: .accessoryDoneTouchUpInside)
-        bar.items = [flexSpace, done]
-        bar.sizeToFit()
-        return bar
+    /// Camera icon
+    lazy var textFieldRightView: UIView = {
+        let cameraButton = UIButton(type: .custom)
+        cameraButton.setImage(Asset.scanIcon.image, for: .normal)
+        cameraButton.imageView?.contentMode = .scaleAspectFill
+        cameraButton.addTarget(self, action: .handleScanButtonTap, for: .touchUpInside)
+        cameraButton.translatesAutoresizingMaskIntoConstraints = false
+        cameraButton.setContentHuggingPriority(.required, for: .horizontal)
+        return cameraButton
     }()
     
+    /// The bar that represents the field's state using colour
+    private lazy var validationView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.heightAnchor.constraint(equalToConstant: 3).isActive = true
+        return view
+    }()
+    
+    /// The label that describes a validation error
     private lazy var validationLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -101,46 +159,13 @@ class FormCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var containerStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [fieldContainerStack, validationLabel])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.alignment = .fill
-        contentView.addSubview(stackView)
-        return stackView
-    }()
-    
-    private lazy var fieldContainerStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [fieldStack, validationView])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.alignment = .fill
-        stackView.backgroundColor = .white
-        stackView.layer.cornerCurve = .continuous
-        stackView.layer.cornerRadius = 12
-        stackView.clipsToBounds = true
-        return stackView
-    }()
-    
-    private lazy var fieldStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, textFieldStack])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.alignment = .fill
-        stackView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        stackView.isLayoutMarginsRelativeArrangement = true
-        return stackView
-    }()
-    
-    private lazy var validationView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .clear
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.heightAnchor.constraint(equalToConstant: 3).isActive = true
-        return view
+    private lazy var inputAccessory: UIToolbar = {
+        let bar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let done = UIBarButtonItem(title: "Done", style: .plain, target: self, action: .accessoryDoneTouchUpInside)
+        bar.items = [flexSpace, done]
+        bar.sizeToFit()
+        return bar
     }()
     
     private var preferredWidth: CGFloat = 300 // This has to be a non zero value, chose 300 because of the movie 300.
