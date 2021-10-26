@@ -1,5 +1,5 @@
 //
-//  Feature.swift
+//  BetaFeature.swift
 //  binkapp
 //
 //  Created by Sean Williams on 26/02/2021.
@@ -12,7 +12,7 @@ enum FeatureType: String, Codable {
     case themes
 }
 
-struct Feature: Codable, Identifiable {
+struct BetaFeature: Codable, Identifiable {
     let id = UUID()
     let slug: String?
     let type: FeatureType?
