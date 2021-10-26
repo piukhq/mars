@@ -30,37 +30,21 @@ class CheckYourInboxViewController: ReusableTemplateViewController {
         super.viewDidLoad()
         stackScrollView.add(arrangedSubview: animationView)
         configureButton()
-        animationView.play()
+        playAnimation()
         NotificationCenter.default.addObserver(self, selector: #selector(playAnimation), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+ 
     private func configureButton() {
-        let availableEmailClients = EmailClient.availableEmailClientsForDevice()
-        var button: BinkButton
-        
-        if availableEmailClients.count == 1 {
-            let buttonTitle = L10n.openMailButtonTitle(availableEmailClients.first?.rawValue.capitalized ?? "")
-            button = BinkButton(type: .gradient, title: buttonTitle, action: {
-                availableEmailClients.first?.open()
-            })
-        } else if availableEmailClients.count > 1 {
-            button = BinkButton(type: .gradient, title: L10n.openMailButtonTitleMultipleClients, action: {
-                let alert = ViewControllerFactory.makeEmailClientsAlertController(availableEmailClients)
-                let navigationRequest = AlertNavigationRequest(alertController: alert)
-                Current.navigate.to(navigationRequest)
-            })
-        } else {
-            return
-        }
-        
-        button.setAlpha(0)
+        footerButtons.first?.setAlpha(0)
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.buttonFadeInDelay) {
             UIView.animate(withDuration: Constants.buttonFadeInAnimationDuration, delay: 0, options: .curveEaseInOut) {
-                button.setAlpha(1)
+                self.footerButtons.first?.setAlpha(1)
             }
         }
-        
-        footerButtons.append(button)
     }
     
     @objc func playAnimation() {

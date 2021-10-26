@@ -141,7 +141,23 @@ extension LoginController {
             attributedString.append(attributedTitle)
             attributedString.append(attributedBody)
             
-            configurationModel = ReusableModalConfiguration(text: attributedString)
+            let availableEmailClients = EmailClient.availableEmailClientsForDevice()
+            if availableEmailClients.isEmpty {
+                configurationModel = ReusableModalConfiguration(title: "", text: attributedString)
+            } else if availableEmailClients.count == 1 {
+                let buttonTitle = L10n.openMailButtonTitle(availableEmailClients.first?.rawValue.capitalized ?? "")
+                configurationModel = ReusableModalConfiguration(title: "", text: attributedString, primaryButtonTitle: buttonTitle, primaryButtonAction: {
+                    availableEmailClients.first?.open()
+                })
+            } else {
+                let buttonTitle = L10n.openMailButtonTitleMultipleClients
+                configurationModel = ReusableModalConfiguration(title: "", text: attributedString, primaryButtonTitle: buttonTitle, primaryButtonAction: {
+                    let alert = ViewControllerFactory.makeEmailClientsAlertController(availableEmailClients)
+                    let navigationRequest = AlertNavigationRequest(alertController: alert)
+                    Current.navigate.to(navigationRequest)
+                })
+            }
+
             viewController = ViewControllerFactory.makeCheckYourInboxViewController(configuration: configurationModel)
         case .expired:
             configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: L10n.linkExpiredTitle, description: L10n.linkExpiredDescription), primaryButtonTitle: L10n.retryTitle, primaryButtonAction: {
