@@ -198,4 +198,10 @@ extension UIColor {
             return UIColor(hexString: "ff453a")
         }
     }
+    
+    // MARK: - Forms
+    
+    static let activeField = UIColor(hexString: "147EFB")
+    static let validField = UIColor(hexString: "1EA9AC")
+    static let invalidField = UIColor(hexString: "FF0000")
 }

@@ -28,9 +28,6 @@ class FormCollectionViewCell: UICollectionViewCell {
     private enum Constants {
         static let titleLabelHeight: CGFloat = 20.0
         static let textFieldHeight: CGFloat = 24.0
-        static let stackViewSpacing: CGFloat = 2.0
-        static let postTextFieldSpacing: CGFloat = 16.0
-        static let postSeparatorSpacing: CGFloat = 8.0
         static let validationLabelHeight: CGFloat = 20.0
     }
 
@@ -38,22 +35,18 @@ class FormCollectionViewCell: UICollectionViewCell {
     
     /// The parent stack view that is pinned to the content view of the cell. Contains all other views.
     private lazy var containerStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [fieldContainerVStack, validationLabel])
+        let stackView = UIStackView(arrangedSubviews: [fieldContainerVStack, validationMessagesVStack])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.alignment = .fill
         contentView.addSubview(stackView)
         return stackView
     }()
     
-    /// The white view that contains the field title, text field and validation view
+    /// The white background visual field view that contains all user interacion elements
     private lazy var fieldContainerVStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [fieldContentHStack, validationView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.alignment = .fill
         stackView.backgroundColor = .white
         stackView.layer.cornerCurve = .continuous
         stackView.layer.cornerRadius = 12
@@ -61,12 +54,11 @@ class FormCollectionViewCell: UICollectionViewCell {
         return stackView
     }()
     
+    /// Contains title label, text field, camera icon and validation icon
     private lazy var fieldContentHStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [fieldLabelsVStack, validationIconImageView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-        stackView.distribution = .fill
-        stackView.alignment = .fill
         stackView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 7, right: 10)
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
@@ -77,8 +69,6 @@ class FormCollectionViewCell: UICollectionViewCell {
         let stackView = UIStackView(arrangedSubviews: [titleLabel, textFieldHStack])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.alignment = .fill
         return stackView
     }()
     
@@ -88,7 +78,6 @@ class FormCollectionViewCell: UICollectionViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally
-        stackView.alignment = .fill
         contentView.addSubview(stackView)
         return stackView
     }()
@@ -143,6 +132,18 @@ class FormCollectionViewCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.heightAnchor.constraint(equalToConstant: 3).isActive = true
         return view
+    }()
+    
+    private lazy var validationMessagesVStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [validationLabel])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.distribution = .fillProportionally
+        stackView.alignment = .fill
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        stackView.isLayoutMarginsRelativeArrangement = true
+        contentView.addSubview(stackView)
+        return stackView
     }()
     
     /// The label that describes a validation error
@@ -336,16 +337,25 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     func setState(_ state: ControlState) {
+        var validationLabelSpacing: CGFloat = validationLabel.isHidden ? 0 : 4
+        var validationIconHidden = true
+        
         switch state {
         case .inactive:
             validationView.backgroundColor = .clear
         case .active:
-            validationView.backgroundColor = .systemBlue
+            validationView.backgroundColor = .activeField
         case .valid:
-            validationView.backgroundColor = .systemGreen
+            validationView.backgroundColor = .validField
+            validationIconHidden = false
+            validationLabelSpacing = 0
         case .invalid:
-            validationView.backgroundColor = .binkDynamicRed
+            validationView.backgroundColor = .invalidField
+            validationLabelSpacing = 4
         }
+        
+        validationIconImageView.isHidden = validationIconHidden
+        containerStack.setCustomSpacing(validationLabelSpacing, after: fieldContainerVStack)
     }
 }
 
