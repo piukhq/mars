@@ -33,10 +33,6 @@ class CheckYourInboxViewController: ReusableTemplateViewController {
         playAnimation()
         NotificationCenter.default.addObserver(self, selector: #selector(playAnimation), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
  
     private func configureButton() {
         footerButtons.first?.setAlpha(0)
