@@ -63,6 +63,10 @@ class BinkButton {
     @objc private func performAction() {
         action()
     }
+    
+    func setAlpha(_ value: CGFloat) {
+        button.alpha = value
+    }
 
     private func makeButton() -> UIButton {
         switch type {
