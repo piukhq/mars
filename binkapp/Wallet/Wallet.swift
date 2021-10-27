@@ -23,6 +23,7 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
     private(set) var membershipCards: [CD_MembershipCard]? {
         didSet {
             WidgetController().writeContentsToDisk(membershipCards: membershipCards)
+            WatchController().sendWalletCardsToWatch(membershipCards: membershipCards)
         }
     }
     private(set) var paymentCards: [CD_PaymentCard]?
@@ -226,41 +227,8 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
             }
         }
     }
-    
-    func sendWalletCardsToWatch() {
-        if WCSession.default.isReachable {
-            guard let membershipCards = membershipCards else { return }
-            var cardsDictArray: [[String: Any]] = []
-            
-            for card in membershipCards {
-                print(card.membershipPlan?.account?.companyName as Any)
-                let barcodeViewModel = BarcodeViewModel(membershipCard: card)
-                guard let barcodeImageData = barcodeViewModel.barcodeImage(withSize: CGSize(width: 200, height: 200))?.pngData() else { return }
-                
-                guard let membershipPlan = card.membershipPlan else { return }
-                let iconImageData = ImageService.getImageFromDevice(forPathType: .membershipPlanIcon(plan: membershipPlan))?.pngData()
-                
-                let walletCardViewModel = WalletLoyaltyCardCellViewModel(membershipCard: card)
-                let balanceString = "\(walletCardViewModel.pointsValueText ?? "") \(walletCardViewModel.pointsValueSuffixText ?? "")"
-                print("Balance: \(balanceString)")
-                
-                if let object = WatchLoyaltyCard(id: card.card?.barcode ?? "", companyName: membershipPlan.account?.companyName ?? "", iconImageData: iconImageData, barcodeImageData: barcodeImageData, balanceString: balanceString).dictionary {
-                    print("Appending to dict")
-                    cardsDictArray.append(object)
-                }
-            }
-            
-            print(cardsDictArray.count)
-            print(cardsDictArray)
-            WCSession.default.sendMessage(["message": cardsDictArray], replyHandler: nil)
-        }
-    }
 
     private func loadMembershipCards(forceRefresh: Bool = false, isUserDriven: Bool, completion: @escaping ServiceCompletionSuccessHandler<WalletServiceError>) {
-        defer {
-            self.sendWalletCardsToWatch()
-        }
-        
         guard forceRefresh else {
             fetchCoreDataObjects(forObjectType: CD_MembershipCard.self) { [weak self] cards in
                 guard let self = self else { return }

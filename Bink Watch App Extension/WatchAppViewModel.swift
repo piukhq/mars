@@ -19,7 +19,7 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
         session.activate()
     }
     
-    @Published var messageText: String = "Welcome to Bink"
+//    @Published var messageText: String = "Welcome to Bink"
     @Published var cards: [WatchLoyaltyCard] = []
     
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
