@@ -20,7 +20,7 @@ class BaseFormViewController: BinkViewController, Form {
         static let horizontalInset: CGFloat = 25.0
         static let bottomInset: CGFloat = 150.0
         static let postCollectionViewPadding: CGFloat = 15.0
-        static let postCollectionViewPadding: CGFloat = 10.0
+        static let preCollectionViewPadding: CGFloat = 10.0
         static let offsetPadding: CGFloat = 30.0
     }
     
