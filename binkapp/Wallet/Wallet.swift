@@ -227,13 +227,13 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
         }
     }
     
-//    struct WatchSendableLoyaltyCard: Codable {
-//        let id: String
-//        let companyName: String
-//        let iconImageData: Data?
-//        let barcodeImageData: Data
-//        let balanceString: String?
-//    }
+    struct WatchSendableLoyaltyCard: Codable {
+        let id: String
+        let companyName: String
+        let iconImageData: Data?
+        let barcodeImageData: Data
+        let balanceString: String?
+    }
     
     func sendWalletCardsToWatch() {
         if WCSession.default.isReachable {
@@ -241,6 +241,7 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
             var cardsDictArray: [[String: Any]] = []
             
             for card in membershipCards {
+                print(card.membershipPlan?.account?.companyName as Any)
                 let barcodeViewModel = BarcodeViewModel(membershipCard: card)
                 guard let barcodeImageData = barcodeViewModel.barcodeImage(withSize: CGSize(width: 200, height: 200))?.pngData() else { return }
                 
@@ -249,19 +250,23 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
                 
                 let walletCardViewModel = WalletLoyaltyCardCellViewModel(membershipCard: card)
                 let balanceString = "\(walletCardViewModel.pointsValueText ?? "") \(walletCardViewModel.pointsValueSuffixText ?? "")"
+                print("Balance: \(balanceString)")
                 
-                if let object = WatchLoyaltyCard(id: card.id, companyName: membershipPlan.account?.companyName ?? "", iconImageData: iconImageData, barcodeImageData: barcodeImageData, balanceString: balanceString).dictionary {
+                if let object = WatchSendableLoyaltyCard(id: card.card?.barcode ?? "", companyName: membershipPlan.account?.companyName ?? "", iconImageData: iconImageData, barcodeImageData: barcodeImageData, balanceString: balanceString).dictionary {
+                    print("Appending to dict")
                     cardsDictArray.append(object)
                 }
             }
             
+            print(cardsDictArray.count)
+            print(cardsDictArray)
             WCSession.default.sendMessage(["message": cardsDictArray], replyHandler: nil)
         }
     }
 
     private func loadMembershipCards(forceRefresh: Bool = false, isUserDriven: Bool, completion: @escaping ServiceCompletionSuccessHandler<WalletServiceError>) {
         defer {
-            sendWalletCardsToWatch()
+            self.sendWalletCardsToWatch()
         }
         
         guard forceRefresh else {
@@ -444,14 +449,26 @@ extension Wallet {
 // MARK: - Watch Connectivity
 
 extension Wallet: WCSessionDelegate {
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
-    func sessionDidBecomeInactive(_ session: WCSession) {}
-    func sessionDidDeactivate(_ session: WCSession) {}
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        print("Session did activate")
+
+    }
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        print("Session did become inactive")
+
+    }
+    func sessionDidDeactivate(_ session: WCSession) {
+        print("Session did deactivate")
+    }
 }
 
 extension Encodable {
     var dictionary: [String: Any]? {
-        guard let data = try? JSONEncoder().encode(self) else { return nil }
-        return (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)).flatMap { $0 as? [String: Any] }
+        guard let data = try? JSONEncoder().encode(self) else {
+            return nil
+        }
+        return (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)).flatMap {
+            $0 as? [String: Any]
+        }
     }
 }

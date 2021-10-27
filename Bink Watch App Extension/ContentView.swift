@@ -29,7 +29,7 @@ struct ContentView: View {
                         Image(uiImage: card.barcodeImage!)
                         .resizable()
                     } label: {
-                        HStack {
+                        HStack(spacing: 10) {
                             if let icon = card.iconImage {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: Constants.imageBorderCornerRadius, style: .continuous)
@@ -47,6 +47,7 @@ struct ContentView: View {
                                     .foregroundColor(Color(UIColor(hexString: "#FFFFFF", alpha: Constants.placeholderForegroundColorAlpha)))
                             }
                             Text(card.companyName)
+                                .font(.nunitoSemiBold(14))
                             Spacer()
                         }
                     }
@@ -55,6 +56,7 @@ struct ContentView: View {
             }
         }
         .padding()
+        .edgesIgnoringSafeArea(.bottom)
     }
 }
 
