@@ -227,37 +227,41 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
         }
     }
     
-    struct WatchSendableLoyaltyCard: Codable {
-        let id: String
-        let companyName: String
-        let iconImageData: Data
-        let barcodeImageData: Data
-        let balanceString: String?
+//    struct WatchSendableLoyaltyCard: Codable {
+//        let id: String
+//        let companyName: String
+//        let iconImageData: Data?
+//        let barcodeImageData: Data
+//        let balanceString: String?
+//    }
+    
+    func sendWalletCardsToWatch() {
+        if WCSession.default.isReachable {
+            guard let membershipCards = membershipCards else { return }
+            var cardsDictArray: [[String: Any]] = []
+            
+            for card in membershipCards {
+                let barcodeViewModel = BarcodeViewModel(membershipCard: card)
+                guard let barcodeImageData = barcodeViewModel.barcodeImage(withSize: CGSize(width: 200, height: 200))?.pngData() else { return }
+                
+                guard let membershipPlan = card.membershipPlan else { return }
+                let iconImageData = ImageService.getImageFromDevice(forPathType: .membershipPlanIcon(plan: membershipPlan))?.pngData()
+                
+                let walletCardViewModel = WalletLoyaltyCardCellViewModel(membershipCard: card)
+                let balanceString = "\(walletCardViewModel.pointsValueText ?? "") \(walletCardViewModel.pointsValueSuffixText ?? "")"
+                
+                if let object = WatchLoyaltyCard(id: card.id, companyName: membershipPlan.account?.companyName ?? "", iconImageData: iconImageData, barcodeImageData: barcodeImageData, balanceString: balanceString).dictionary {
+                    cardsDictArray.append(object)
+                }
+            }
+            
+            WCSession.default.sendMessage(["message": cardsDictArray], replyHandler: nil)
+        }
     }
 
     private func loadMembershipCards(forceRefresh: Bool = false, isUserDriven: Bool, completion: @escaping ServiceCompletionSuccessHandler<WalletServiceError>) {
         defer {
-            if WCSession.default.isReachable {
-                if let membershipCards = membershipCards {
-                    var cardsDictArray: [[String: Any]] = []
-                    
-                    for card in membershipCards {
-                        let iconImageData = ImageService.getImageFromDevice(forPathType: .membershipPlanIcon(plan: card.membershipPlan!))?.pngData()
-                        
-                        let barcodeViewModel = BarcodeViewModel(membershipCard: card)
-                        let barcodeImageData = barcodeViewModel.barcodeImage(withSize: CGSize(width: 100, height: 100))!.pngData()!
-                        
-                        let walletCardViewModel = WalletLoyaltyCardCellViewModel(membershipCard: card)
-                        let balanceString = "\(walletCardViewModel.pointsValueText ?? "") \(walletCardViewModel.pointsValueSuffixText ?? "")"
-                        
-                        if let object = WatchSendableLoyaltyCard(id: card.id, companyName: card.membershipPlan?.account?.companyName ?? "", iconImageData: iconImageData!, barcodeImageData: barcodeImageData, balanceString: balanceString).dictionary {
-                            cardsDictArray.append(object)
-                        }
-                    }
-                    
-                    WCSession.default.sendMessage(["message": cardsDictArray], replyHandler: nil)
-                }
-            }
+            sendWalletCardsToWatch()
         }
         
         guard forceRefresh else {

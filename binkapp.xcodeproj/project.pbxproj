@@ -296,6 +296,11 @@
 		BDFAA07D23E24DC600949271 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFAA07C23E24DC600949271 /* UIImage+Extension.swift */; };
 		C6812158579C0CBB400A495C /* Pods_binkapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF7651BEBD7E19F9F7391DE /* Pods_binkapp.framework */; };
 		CB92D023BF75D98DF0B2550E /* Pods_binkappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0578BBF342AD2E4F349D1822 /* Pods_binkappUITests.framework */; };
+		CE02D51B27285F14008B9BFA /* WatchLoyaltyCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D51A27285F13008B9BFA /* WatchLoyaltyCard.swift */; };
+		CE02D51C27285F14008B9BFA /* WatchLoyaltyCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D51A27285F13008B9BFA /* WatchLoyaltyCard.swift */; };
+		CE02D51E27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D51D27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift */; };
+		CE02D51F27293F14008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D51D27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift */; };
+		CE02D52027293F14008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D51D27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift */; };
 		CE07917A25ADB4A4009FE8BA /* LoyaltyWalletAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07917925ADB4A3009FE8BA /* LoyaltyWalletAnimator.swift */; };
 		CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */; };
 		CE0C24792678EDE500CB7150 /* WhoWeAreSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */; };
@@ -964,6 +969,9 @@
 		BDD9C8A6233D07D1003CD616 /* UICollectionViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtension.swift; sourceTree = "<group>"; };
 		BDFAA07A23E243EF00949271 /* LCDPlaceholderGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCDPlaceholderGenerator.swift; sourceTree = "<group>"; };
 		BDFAA07C23E24DC600949271 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		CE02D51927285F12008B9BFA /* Bink Watch App-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bink Watch App-Bridging-Header.h"; sourceTree = "<group>"; };
+		CE02D51A27285F13008B9BFA /* WatchLoyaltyCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchLoyaltyCard.swift; sourceTree = "<group>"; };
+		CE02D51D27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+BinkApp+WidgetApp+WatchApp.swift"; sourceTree = "<group>"; };
 		CE07917925ADB4A3009FE8BA /* LoyaltyWalletAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletAnimator.swift; sourceTree = "<group>"; };
 		CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardDetailViewModelTests.swift; sourceTree = "<group>"; };
 		CE0AE2DD2542DB81000CDB86 /* binkapp - 23-10-20 - Card secondary colour.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 23-10-20 - Card secondary colour.xcdatamodel"; sourceTree = "<group>"; };
@@ -2071,6 +2079,8 @@
 				70D8784926E26DD0006778EA /* PushNotificationPayload.apns */,
 				70D8784526E26DD0006778EA /* Preview Content */,
 				70D8785926E629F4006778EA /* WatchAppViewModel.swift */,
+				CE02D51A27285F13008B9BFA /* WatchLoyaltyCard.swift */,
+				CE02D51927285F12008B9BFA /* Bink Watch App-Bridging-Header.h */,
 			);
 			path = "Bink Watch App Extension";
 			sourceTree = "<group>";
@@ -2255,6 +2265,7 @@
 				BD1E7289232AB91C002CC85E /* UIAlertController+Extension.swift */,
 				BDD9C8A6233D07D1003CD616 /* UICollectionViewExtension.swift */,
 				3CCC46C822FC6EB7008476E3 /* UIColor+binkapp.swift */,
+				CE02D51D27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift */,
 				EF9E9BD123C73BA1002FF18E /* UIDeviceExtension.swift */,
 				3C63ABC922F9D52F00BE143B /* UIFont+binkapp.swift */,
 				3CE892672338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift */,
@@ -3286,6 +3297,7 @@
 					};
 					70D8782A26E26DCD006778EA = {
 						CreatedOnToolsVersion = 12.5;
+						LastSwiftMigration = 1300;
 					};
 					70D8783326E26DCF006778EA = {
 						CreatedOnToolsVersion = 12.5;
@@ -3697,12 +3709,14 @@
 				DBE54851240D514B00EDEE90 /* FilterBrandsCollectionViewCell.swift in Sources */,
 				3C2C90FB23191CF700D112E3 /* AuthoriseFieldPostModel.swift in Sources */,
 				B7263347230589EE00951037 /* BalanceModel.swift in Sources */,
+				CE02D51E27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */,
 				EF586FE023578735000917B6 /* WalletPromptCollectionViewCell.swift in Sources */,
 				3C17FC3222F2CCAD00E423A2 /* MembershipCardImageModel.swift in Sources */,
 				70E8DFED2563E8220027A244 /* PerfumeShopPointsScrapingAgent.swift in Sources */,
 				3CD4F14E230D35AE0075F63C /* BinkInfoButton.swift in Sources */,
 				EFEB5BFD237E96F500E18743 /* CGFloatExtension.swift in Sources */,
 				3CD8027E239130EE00D26888 /* ForgotPasswordViewController.swift in Sources */,
+				CE02D51B27285F14008B9BFA /* WatchLoyaltyCard.swift in Sources */,
 				BD458B40236C987F0029A538 /* UserManager.swift in Sources */,
 				706D204224D97104004BCCF3 /* AnalyticsEvent.swift in Sources */,
 				BD9FB6B0233761C400E5559A /* UILayoutPriority+Extension.swift in Sources */,
@@ -4110,9 +4124,11 @@
 			files = (
 				70D8783E26E26DCF006778EA /* NotificationController.swift in Sources */,
 				70D8783C26E26DCF006778EA /* ContentView.swift in Sources */,
+				CE02D51C27285F14008B9BFA /* WatchLoyaltyCard.swift in Sources */,
 				70D8784226E26DCF006778EA /* ComplicationController.swift in Sources */,
 				70D8783A26E26DCF006778EA /* binkappApp.swift in Sources */,
 				70D8785A26E629F4006778EA /* WatchAppViewModel.swift in Sources */,
+				CE02D52027293F14008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */,
 				70D8784026E26DCF006778EA /* NotificationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4126,6 +4142,7 @@
 				CEE209152684653A004D3759 /* WidgetContent.swift in Sources */,
 				CEE20923268E1E0E004D3759 /* AddCardView.swift in Sources */,
 				CEAF29FD2695A051006B6EB5 /* BinkLoggerErrors.swift in Sources */,
+				CE02D51F27293F14008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */,
 				CEAF29FC26959FA7006B6EB5 /* BinkLoggerEvents.swift in Sources */,
 				CE6DE57D268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift in Sources */,
 				CE6DE56B2681E8280063A3A9 /* BinkWidget.swift in Sources */,
@@ -4854,6 +4871,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IBSC_MODULE = Bink_Watch_App_Extension;
 				INFOPLIST_FILE = "Bink Watch App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -4862,6 +4884,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "Bink Watch App Extension/Bink Watch App-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -4922,6 +4945,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IBSC_MODULE = Bink_Watch_App_Extension;
 				INFOPLIST_FILE = "Bink Watch App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watchkitapp;
@@ -4929,6 +4957,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "Bink Watch App Extension/Bink Watch App-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -4991,6 +5020,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IBSC_MODULE = Bink_Watch_App_Extension;
 				INFOPLIST_FILE = "Bink Watch App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watchkitapp;
@@ -4998,7 +5032,8 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bink Watch App Extension/Bink Watch App-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
@@ -5059,6 +5094,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IBSC_MODULE = Bink_Watch_App_Extension;
 				INFOPLIST_FILE = "Bink Watch App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watchkitapp;
@@ -5066,6 +5106,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "Bink Watch App Extension/Bink Watch App-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
