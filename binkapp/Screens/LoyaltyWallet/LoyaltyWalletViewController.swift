@@ -11,7 +11,7 @@ import DeepDiff
 import CardScan
 import WatchConnectivity
 
-class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel>, WCSessionDelegate {
+class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> {
     var selectedIndexPath: IndexPath?
     
     override func configureCollectionView() {
@@ -115,18 +115,18 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel>,
     //        }
     //    }
     
-    
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        
-    }
-    
-    func sessionDidBecomeInactive(_ session: WCSession) {
-        
-    }
-    
-    func sessionDidDeactivate(_ session: WCSession) {
-        
-    }
+//    
+//    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+//        
+//    }
+//    
+//    func sessionDidBecomeInactive(_ session: WCSession) {
+//        
+//    }
+//    
+//    func sessionDidDeactivate(_ session: WCSession) {
+//        
+//    }
 }
 
 extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelegate {
