@@ -63,10 +63,3 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-
-
-//var previewCards: [WatchReceivableLoyaltyCard] = [
-//    WatchReceivableLoyaltyCard(id: "0", companyName: "Iceland", iconImageData: (UIImage(named: "iceland")?.pngData())!, barcodeImageData: (UIImage(named: "iceland")?.pngData())!, balanceString: "£2.00"),
-//    WatchReceivableLoyaltyCard(id: "1", companyName: "Harvey Nichols", iconImageData: (UIImage(named: "iceland")?.pngData())!, barcodeImageData: (UIImage(named: "iceland")?.pngData())!, balanceString: "£2.00"),
-//    WatchReceivableLoyaltyCard(id: "2", companyName: "ICeland", iconImageData: (UIImage(named: "iceland")?.pngData())!, barcodeImageData: (UIImage(named: "iceland")?.pngData())!, balanceString: "£2.00")
-//]
