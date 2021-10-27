@@ -47,7 +47,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         let stackView = UIStackView(arrangedSubviews: [fieldContentHStack, validationView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.backgroundColor = .white
+        stackView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         stackView.layer.cornerCurve = .continuous
         stackView.layer.cornerRadius = 12
         stackView.clipsToBounds = true
@@ -86,6 +86,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.navbarHeaderLine2
+        label.textColor = Current.themeManager.color(for: .text)
         label.heightAnchor.constraint(equalToConstant: Constants.titleLabelHeight).isActive = true
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         return label
@@ -95,6 +96,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         let field = UITextField()
         field.translatesAutoresizingMaskIntoConstraints = false
         field.font = UIFont.textFieldInput
+        field.textColor = Current.themeManager.color(for: .text)
         field.delegate = self
         field.heightAnchor.constraint(equalToConstant: Constants.textFieldHeight).isActive = true
         field.addTarget(self, action: .textFieldUpdated, for: .editingChanged)
@@ -221,9 +223,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         configureForCurrentTheme()
     }
 
-    @objc private func configureForCurrentTheme() {
-        validationLabel.textColor = .binkDynamicRed
-    }
+    @objc private func configureForCurrentTheme() {}
 
     func configure(with field: FormField, delegate: FormCollectionViewCellDelegate?) {
         let isEnabled = !field.isReadOnly

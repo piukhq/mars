@@ -51,7 +51,7 @@ enum Styling {
                 return .binkBlueViewBackground
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                    return traitcollection.userInterfaceStyle == .light ? .white : .binkBlueViewBackground
+                    return traitcollection.userInterfaceStyle == .light ? .primaryViewBackground : .binkBlueViewBackground
                 }
             }
         }
@@ -103,7 +103,7 @@ enum Styling {
                 return UIColor.binkBlueBarBackground.withAlphaComponent(0.7)
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                    return traitcollection.userInterfaceStyle == .light ? UIColor.white.withAlphaComponent(0.6) : UIColor.binkBlueBarBackground.withAlphaComponent(0.7)
+                    return traitcollection.userInterfaceStyle == .light ? UIColor.primaryViewBackground.withAlphaComponent(0.6) : UIColor.binkBlueBarBackground.withAlphaComponent(0.7)
                 }
             }
         }
