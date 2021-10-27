@@ -20,6 +20,7 @@ class BaseFormViewController: BinkViewController, Form {
         static let horizontalInset: CGFloat = 25.0
         static let bottomInset: CGFloat = 150.0
         static let postCollectionViewPadding: CGFloat = 15.0
+        static let postCollectionViewPadding: CGFloat = 10.0
         static let offsetPadding: CGFloat = 30.0
     }
     
@@ -45,6 +46,7 @@ class BaseFormViewController: BinkViewController, Form {
         stackView.alignment = .fill
         stackView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Constants.bottomInset, right: 0)
         stackView.customPadding(Constants.postCollectionViewPadding, after: collectionView)
+        stackView.customPadding(Constants.preCollectionViewPadding, before: collectionView)
         view.addSubview(stackView)
         return stackView
     }()
