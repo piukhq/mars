@@ -227,14 +227,6 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
         }
     }
     
-    struct WatchSendableLoyaltyCard: Codable {
-        let id: String
-        let companyName: String
-        let iconImageData: Data?
-        let barcodeImageData: Data
-        let balanceString: String?
-    }
-    
     func sendWalletCardsToWatch() {
         if WCSession.default.isReachable {
             guard let membershipCards = membershipCards else { return }
@@ -252,7 +244,7 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
                 let balanceString = "\(walletCardViewModel.pointsValueText ?? "") \(walletCardViewModel.pointsValueSuffixText ?? "")"
                 print("Balance: \(balanceString)")
                 
-                if let object = WatchSendableLoyaltyCard(id: card.card?.barcode ?? "", companyName: membershipPlan.account?.companyName ?? "", iconImageData: iconImageData, barcodeImageData: barcodeImageData, balanceString: balanceString).dictionary {
+                if let object = WatchLoyaltyCard(id: card.card?.barcode ?? "", companyName: membershipPlan.account?.companyName ?? "", iconImageData: iconImageData, barcodeImageData: barcodeImageData, balanceString: balanceString).dictionary {
                     print("Appending to dict")
                     cardsDictArray.append(object)
                 }
@@ -464,11 +456,7 @@ extension Wallet: WCSessionDelegate {
 
 extension Encodable {
     var dictionary: [String: Any]? {
-        guard let data = try? JSONEncoder().encode(self) else {
-            return nil
-        }
-        return (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)).flatMap {
-            $0 as? [String: Any]
-        }
+        guard let data = try? JSONEncoder().encode(self) else { return nil }
+        return (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)).flatMap { $0 as? [String: Any] }
     }
 }
