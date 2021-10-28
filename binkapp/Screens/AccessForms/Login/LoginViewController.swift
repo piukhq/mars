@@ -123,6 +123,8 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
             descriptionLabel.text = L10n.loginSubtitle
             hyperlinkButton.isHidden = false
         }
+        
+        configureForCurrentTheme()
     }
     
     @objc func forgotPasswordTapped() {
