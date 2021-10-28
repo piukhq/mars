@@ -23,7 +23,6 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
     private(set) var membershipCards: [CD_MembershipCard]? {
         didSet {
             WidgetController().writeContentsToDisk(membershipCards: membershipCards)
-            WatchController().sendWalletCardsToWatch(membershipCards: membershipCards)
         }
     }
     private(set) var paymentCards: [CD_PaymentCard]?
@@ -229,6 +228,10 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
     }
 
     private func loadMembershipCards(forceRefresh: Bool = false, isUserDriven: Bool, completion: @escaping ServiceCompletionSuccessHandler<WalletServiceError>) {
+        defer {
+            WatchController().sendWalletCardsToWatch(membershipCards: membershipCards)
+        }
+        
         guard forceRefresh else {
             fetchCoreDataObjects(forObjectType: CD_MembershipCard.self) { [weak self] cards in
                 guard let self = self else { return }
@@ -354,6 +357,7 @@ extension Wallet {
     
     func reorderMembershipCard(_ card: CD_MembershipCard, from sourceIndex: Int, to destinationIndex: Int) {
         reorderWalletCard(card, in: &localMembershipCardsOrder, from: sourceIndex, to: destinationIndex, updating: &membershipCards)
+        WatchController().sendWalletCardsToWatch(membershipCards: membershipCards)
     }
 
     func reorderPaymentCard(_ card: CD_PaymentCard, from sourceIndex: Int, to destinationIndex: Int) {
@@ -422,6 +426,7 @@ extension Wallet: WCSessionDelegate {
     }
 }
 
+// MOVE >>>>>>>>>
 extension Encodable {
     var dictionary: [String: Any]? {
         guard let data = try? JSONEncoder().encode(self) else { return nil }

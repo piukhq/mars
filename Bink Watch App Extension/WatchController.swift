@@ -13,29 +13,33 @@ class WatchController {
     func sendWalletCardsToWatch(membershipCards: [CD_MembershipCard]?) {
         if WCSession.default.isReachable {
             guard let membershipCards = membershipCards else { return }
-            var cardsDictArray: [[String: Any]] = []
             
-            for card in membershipCards {
+            for (i, card) in membershipCards.enumerated() {
                 print(card.membershipPlan?.account?.companyName as Any)
                 let barcodeViewModel = BarcodeViewModel(membershipCard: card)
-                guard let barcodeImageData = barcodeViewModel.barcodeImage(withSize: CGSize(width: 200, height: 200))?.pngData() else { return }
+                if let barcodeImageData = barcodeViewModel.barcodeImage(withSize: CGSize(width: 200, height: 200))?.pngData() {
+                    /// If we have a barcode, send loyalty card to watch
+                    guard let membershipPlan = card.membershipPlan else { return }
+                    let iconImageData = ImageService.getImageFromDevice(forPathType: .membershipPlanIcon(plan: membershipPlan))?.pngData()
+                    
+                    let walletCardViewModel = WalletLoyaltyCardCellViewModel(membershipCard: card)
+                    let balanceString = "\(walletCardViewModel.pointsValueText ?? "") \(walletCardViewModel.pointsValueSuffixText ?? "")"
+                    
+                    if let object = WatchLoyaltyCard(id: card.card?.barcode ?? "", companyName: membershipPlan.account?.companyName ?? "", iconImageData: iconImageData, barcodeImageData: barcodeImageData, balanceString: balanceString).dictionary {
+                        print("Appending to dict")
+
+                        WCSession.default.sendMessage(["message": object], replyHandler: nil)
+                        
+
+                    }
+                }
                 
-                guard let membershipPlan = card.membershipPlan else { return }
-                let iconImageData = ImageService.getImageFromDevice(forPathType: .membershipPlanIcon(plan: membershipPlan))?.pngData()
-                
-                let walletCardViewModel = WalletLoyaltyCardCellViewModel(membershipCard: card)
-                let balanceString = "\(walletCardViewModel.pointsValueText ?? "") \(walletCardViewModel.pointsValueSuffixText ?? "")"
-                print("Balance: \(balanceString)")
-                
-                if let object = WatchLoyaltyCard(id: card.card?.barcode ?? "", companyName: membershipPlan.account?.companyName ?? "", iconImageData: iconImageData, barcodeImageData: barcodeImageData, balanceString: balanceString).dictionary {
-                    print("Appending to dict")
-                    cardsDictArray.append(object)
+                if i == membershipCards.count - 1 {
+                    WCSession.default.sendMessage(["transfer_complete": true], replyHandler: nil) { error in
+                        print(error.localizedDescription)
+                    }
                 }
             }
-            
-            print(cardsDictArray.count)
-            print(cardsDictArray)
-            WCSession.default.sendMessage(["message": cardsDictArray], replyHandler: nil)
         }
     }
 }

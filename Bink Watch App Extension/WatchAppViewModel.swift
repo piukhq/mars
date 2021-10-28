@@ -19,13 +19,35 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
         session.activate()
     }
     
-//    @Published var messageText: String = "Welcome to Bink"
     @Published var cards: [WatchLoyaltyCard] = []
+    var loyaltyCards: [WatchLoyaltyCard] = [] {
+        didSet {
+            print("Cards count: \(loyaltyCards.count)")
+        }
+    }
     
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
-        DispatchQueue.main.async {
-            guard let cardDictsFromMessage = message["message"] as? [[String: Any]] else { return }
-            self.cards = cardDictsFromMessage.map { try? WatchLoyaltyCard(dictionary: $0) }.compactMap { $0 }
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            if let transferComplete = message["transfer_complete"] as? Bool, transferComplete {
+                self.cards = self.loyaltyCards
+                print(self.cards)
+                self.loyaltyCards = []
+                return
+            }
+//        print(message)
+            guard let cardDictsFromMessage = message["message"] as? [String: Any] else {
+                print("ERRRRRRRRRRROR")
+                print(message["message"] as Any)
+                return
+            }
+//            print(cardDictsFromMessage)
+            
+            if let card = try? WatchLoyaltyCard(dictionary: cardDictsFromMessage) {
+                self.loyaltyCards.append(card)
+            }
+
+//            self.cards = cardDictsFromMessage.map { try? WatchLoyaltyCard(dictionary: $0) }.compactMap { $0 }
         }
     }
     
