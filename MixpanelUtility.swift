@@ -35,7 +35,7 @@ struct MixpanelUtility {
     }
     
     static func setUserProperties(_ properties: [MixpanelUserProperty]) {
-        //
+//        mixpanelInstance.people.set(properties: properties)
     }
 }
 
