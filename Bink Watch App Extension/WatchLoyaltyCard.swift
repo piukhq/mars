@@ -11,7 +11,7 @@ import UIKit
 struct WatchLoyaltyCard: Codable {
     let id: String
     let companyName: String
-    let iconImageData: Data?
+    var iconImageData: Data?
     let barcodeImageData: Data
     let balanceString: String?
     
@@ -25,4 +25,9 @@ struct WatchLoyaltyCard: Codable {
     var barcodeImage: UIImage? {
         return UIImage(data: barcodeImageData)
     }
+}
+
+struct WatchLoyaltyCardIcon: Codable {
+    let id: String
+    let imageData: Data?
 }
