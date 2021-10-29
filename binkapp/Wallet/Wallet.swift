@@ -180,6 +180,8 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
             }
             NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
             completion?(true, nil)
+            WatchController().sendWalletCardsToWatch(membershipCards: self.membershipCards)
+
         }
     }
 
@@ -228,10 +230,6 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
     }
 
     private func loadMembershipCards(forceRefresh: Bool = false, isUserDriven: Bool, completion: @escaping ServiceCompletionSuccessHandler<WalletServiceError>) {
-        defer {
-            WatchController().sendWalletCardsToWatch(membershipCards: membershipCards)
-        }
-        
         guard forceRefresh else {
             fetchCoreDataObjects(forObjectType: CD_MembershipCard.self) { [weak self] cards in
                 guard let self = self else { return }

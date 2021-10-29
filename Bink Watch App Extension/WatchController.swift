@@ -29,8 +29,6 @@ class WatchController {
                         print("Appending to dict")
 
                         WCSession.default.sendMessage(["message": object], replyHandler: nil)
-                        
-
                     }
                 }
                 
@@ -38,6 +36,23 @@ class WatchController {
                     WCSession.default.sendMessage(["transfer_complete": true], replyHandler: nil) { error in
                         print(error.localizedDescription)
                     }
+                }
+            }
+        }
+    }
+    
+    func addWalletCardToWatch(membershipCard: CD_MembershipCard) {
+        if WCSession.default.isReachable {
+            let barcodeViewModel = BarcodeViewModel(membershipCard: membershipCard)
+            if let barcodeImageData = barcodeViewModel.barcodeImage(withSize: CGSize(width: 200, height: 200))?.pngData() {
+                guard let membershipPlan = membershipCard.membershipPlan else { return }
+                let iconImageData = ImageService.getImageFromDevice(forPathType: .membershipPlanIcon(plan: membershipPlan))?.pngData()
+                
+                let walletCardViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
+                let balanceString = "\(walletCardViewModel.pointsValueText ?? "") \(walletCardViewModel.pointsValueSuffixText ?? "")"
+                
+                if let object = WatchLoyaltyCard(id: membershipCard.card?.barcode ?? "", companyName: membershipPlan.account?.companyName ?? "", iconImageData: iconImageData, barcodeImageData: barcodeImageData, balanceString: balanceString).dictionary {
+                    WCSession.default.sendMessage(["add_card": object], replyHandler: nil)
                 }
             }
         }

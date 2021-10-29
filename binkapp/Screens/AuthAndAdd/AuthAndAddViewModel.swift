@@ -157,6 +157,7 @@ class AuthAndAddViewModel {
         
         repository.addMembershipCard(request: model, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, scrapingCredentials: scrapingCredentials, onSuccess: { card in
             if let card = card {
+                WatchController().addWalletCardToWatch(membershipCard: card)
                 // Navigate to LCD for the new card behind the modal
                 let lcdViewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card)
                 let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController)
