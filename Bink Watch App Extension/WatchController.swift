@@ -41,7 +41,7 @@ class WatchController {
         }
     }
     
-    func addWalletCardToWatch(membershipCard: CD_MembershipCard) {
+    func addLoyaltyCardToWatch(_ membershipCard: CD_MembershipCard) {
         if WCSession.default.isReachable {
             let barcodeViewModel = BarcodeViewModel(membershipCard: membershipCard)
             if let barcodeImageData = barcodeViewModel.barcodeImage(withSize: CGSize(width: 200, height: 200))?.pngData() {
@@ -55,6 +55,12 @@ class WatchController {
                     WCSession.default.sendMessage(["add_card": object], replyHandler: nil)
                 }
             }
+        }
+    }
+    
+    func deleteLoyaltyCardFromWatch(barcode: String) {
+        if WCSession.default.isReachable {
+            WCSession.default.sendMessage(["delete_card": barcode], replyHandler: nil)
         }
     }
 }

@@ -29,14 +29,17 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            // Add card
             if let cardToAddDict = message["add_card"] as? [String: Any] {
                 if let newCard = try? WatchLoyaltyCard(dictionary: cardToAddDict) {
                     self.cards.insert(newCard, at: 0)
-                    return                    
+                    return
                 }
             }
             
+            if let barcode = message["delete_card"] as? String, let indexToDelete = self.cards.firstIndex(where: { $0.id == barcode }) {
+                self.cards.remove(at: indexToDelete)
+                return
+            }
             
             if let transferComplete = message["transfer_complete"] as? Bool, transferComplete {
                 self.cards = self.loyaltyCards
@@ -44,19 +47,16 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
                 self.loyaltyCards = []
                 return
             }
-//        print(message)
+
             guard let cardDictsFromMessage = message["message"] as? [String: Any] else {
                 print("ERRRRRRRRRRROR")
                 print(message["message"] as Any)
                 return
             }
-//            print(cardDictsFromMessage)
             
             if let card = try? WatchLoyaltyCard(dictionary: cardDictsFromMessage) {
                 self.loyaltyCards.append(card)
             }
-
-//            self.cards = cardDictsFromMessage.map { try? WatchLoyaltyCard(dictionary: $0) }.compactMap { $0 }
         }
     }
     
