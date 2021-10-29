@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct WatchContentView: View {
     enum Constants {
         static let insets = EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12)
         static let cornerRadius: CGFloat = 12
@@ -17,13 +17,14 @@ struct ContentView: View {
         static let imageSize: CGFloat = 25
         static let imageCornerRadius: CGFloat = 2
         static let placeholderForegroundColorAlpha: CGFloat = 0.5
+        static let vStackSpacing: CGFloat = 15
     }
     
     @ObservedObject var viewModel = WatchAppViewModel()
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 10) {
+            VStack(spacing: Constants.vStackSpacing) {
                 ForEach(viewModel.cards, id: \.id) { card in
                     NavigationLink {
                         Image(uiImage: card.barcodeImage!)
@@ -54,14 +55,15 @@ struct ContentView: View {
                 }
                 .frame(height: 40)
             }
+            .padding(.top, 10)
+            .padding(.bottom, 20)
         }
-        .padding()
         .edgesIgnoringSafeArea(.bottom)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        WatchContentView()
     }
 }

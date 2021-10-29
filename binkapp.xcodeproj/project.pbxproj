@@ -186,7 +186,7 @@
 		70D8782E26E26DCF006778EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70D8782D26E26DCF006778EA /* Assets.xcassets */; };
 		70D8783526E26DCF006778EA /* Bink Watch App Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 70D8783426E26DCF006778EA /* Bink Watch App Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		70D8783A26E26DCF006778EA /* binkappApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D8783926E26DCF006778EA /* binkappApp.swift */; };
-		70D8783C26E26DCF006778EA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D8783B26E26DCF006778EA /* ContentView.swift */; };
+		70D8783C26E26DCF006778EA /* WatchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D8783B26E26DCF006778EA /* WatchContentView.swift */; };
 		70D8783E26E26DCF006778EA /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D8783D26E26DCF006778EA /* NotificationController.swift */; };
 		70D8784026E26DCF006778EA /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D8783F26E26DCF006778EA /* NotificationView.swift */; };
 		70D8784226E26DCF006778EA /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D8784126E26DCF006778EA /* ComplicationController.swift */; };
@@ -857,7 +857,7 @@
 		70D8782F26E26DCF006778EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		70D8783426E26DCF006778EA /* Bink Watch App Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Bink Watch App Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		70D8783926E26DCF006778EA /* binkappApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = binkappApp.swift; sourceTree = "<group>"; };
-		70D8783B26E26DCF006778EA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		70D8783B26E26DCF006778EA /* WatchContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchContentView.swift; sourceTree = "<group>"; };
 		70D8783D26E26DCF006778EA /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		70D8783F26E26DCF006778EA /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		70D8784126E26DCF006778EA /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
@@ -2077,7 +2077,7 @@
 			isa = PBXGroup;
 			children = (
 				70D8783926E26DCF006778EA /* binkappApp.swift */,
-				70D8783B26E26DCF006778EA /* ContentView.swift */,
+				70D8783B26E26DCF006778EA /* WatchContentView.swift */,
 				70D8783D26E26DCF006778EA /* NotificationController.swift */,
 				70D8783F26E26DCF006778EA /* NotificationView.swift */,
 				70D8784126E26DCF006778EA /* ComplicationController.swift */,
@@ -4141,7 +4141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70D8783E26E26DCF006778EA /* NotificationController.swift in Sources */,
-				70D8783C26E26DCF006778EA /* ContentView.swift in Sources */,
+				70D8783C26E26DCF006778EA /* WatchContentView.swift in Sources */,
 				CE02D51C27285F14008B9BFA /* WatchLoyaltyCard.swift in Sources */,
 				70D8784226E26DCF006778EA /* ComplicationController.swift in Sources */,
 				70D8783A26E26DCF006778EA /* binkappApp.swift in Sources */,
