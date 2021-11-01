@@ -17,7 +17,6 @@ class WatchController {
             guard let membershipCards = membershipCards else { return }
             
             for card in membershipCards {
-                print(card.membershipPlan?.account?.companyName as Any)
                 let barcodeViewModel = BarcodeViewModel(membershipCard: card)
                 if let barcodeImageData = barcodeViewModel.barcodeImage(withSize: CGSize(width: 200, height: 200))?.pngData() {
                     /// If we have a barcode, send loyalty card to watch
@@ -41,9 +40,7 @@ class WatchController {
                 
                 ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil) { retrievedImage in
                     if let imageDict = WatchLoyaltyCardIcon(id: card.card?.barcode ?? "", imageData: retrievedImage?.pngData()).dictionary {
-                        WCSession.default.sendMessage(["icon_image": imageDict], replyHandler: nil) { error in
-                            print("Error sending message: \(error.localizedDescription)")
-                        }
+                        WCSession.default.sendMessage(["icon_image": imageDict], replyHandler: nil)
                     }
                 }
             }
