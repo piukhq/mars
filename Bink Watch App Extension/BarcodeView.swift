@@ -17,15 +17,13 @@ struct BarcodeView: View {
         VStack {
             Image(uiImage: barcodeImage)
                 .resizable()
-//                .aspectRatio(contentMode: .fit)
-                
             if let balance = balance {
                 Text(balance)
                     .foregroundColor(.black)
                     .font(.nunitoSemiBold(16))
             }
         }
-        .padding(EdgeInsets(top: 30, leading: 0, bottom: balance != nil ? 5 : 20, trailing: 0))
+        .padding(EdgeInsets(top: 30, leading: 10, bottom: balance != nil ? 10 : 30, trailing: 10))
         .background(Color.white)
         .edgesIgnoringSafeArea(.top)
         .edgesIgnoringSafeArea(.bottom)

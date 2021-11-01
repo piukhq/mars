@@ -27,8 +27,8 @@ struct WatchContentView: View {
             VStack(spacing: Constants.vStackSpacing) {
                 ForEach(viewModel.cards, id: \.id) { card in
                     NavigationLink {
-                        if let barcodeImage = card.barcodeImage, let balance = card.balanceString {
-                            BarcodeView(barcodeImage: barcodeImage, balance: balance)
+                        if let barcodeImage = card.barcodeImage {
+                            BarcodeView(barcodeImage: barcodeImage, balance: card.balanceString)
                                 .navigationBarHidden(true)
                         }
                     } label: {
