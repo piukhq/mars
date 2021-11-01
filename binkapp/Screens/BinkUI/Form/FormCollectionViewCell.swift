@@ -269,6 +269,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         }
         
         self.delegate = delegate
+        configureStateForFieldValidity(field)
     }
     
     func setWidth(_ width: CGFloat) {
@@ -336,6 +337,18 @@ class FormCollectionViewCell: UICollectionViewCell {
         case inactive, active, valid, invalid
     }
     
+    private func configureStateForFieldValidity(_ field: FormField) {
+        let textfieldIsEmpty = textField.text?.isEmpty ?? false
+
+        if field.isValid() && !textfieldIsEmpty {
+            setState(.valid)
+        } else if !field.isValid() && !textfieldIsEmpty {
+            setState(.invalid)
+        } else {
+            setState(.inactive)
+        }
+    }
+    
     func setState(_ state: ControlState) {
         var validationLabelSpacing: CGFloat = validationLabel.isHidden ? 0 : 4
         var validationIconHidden = true
@@ -343,17 +356,23 @@ class FormCollectionViewCell: UICollectionViewCell {
         switch state {
         case .inactive:
             validationView.backgroundColor = .clear
+            validationLabel.isHidden = true
         case .active:
             validationView.backgroundColor = .activeField
         case .valid:
             validationView.backgroundColor = .validField
             validationIconHidden = false
             validationLabelSpacing = 0
+            validationLabel.isHidden = true
         case .invalid:
             validationView.backgroundColor = .invalidField
             validationLabelSpacing = 4
+            validationLabel.isHidden = false
         }
         
+        guard let field = formField else { return }
+        validationLabel.text = field.validationErrorMessage != nil ? field.validationErrorMessage : L10n.formFieldValidationError
+        isValidationLabelHidden = validationLabel.isHidden
         validationIconImageView.isHidden = validationIconHidden
         containerStack.setCustomSpacing(validationLabelSpacing, after: fieldContainerVStack)
     }
@@ -366,17 +385,7 @@ extension FormCollectionViewCell: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let field = formField else { return }
-        
-        switch field.isValid() {
-        case true:
-            setState(.valid)
-        case false:
-            setState(.invalid)
-        }
-        
-        validationLabel.text = field.validationErrorMessage != nil ? field.validationErrorMessage : L10n.formFieldValidationError
-        validationLabel.isHidden = field.isValid()
-        isValidationLabelHidden = field.isValid()
+        configureStateForFieldValidity(field)
         field.fieldWasExited()
     }
     
