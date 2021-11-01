@@ -11,30 +11,47 @@ import WatchConnectivity
 
 class WatchController {
     func sendWalletCardsToWatch(membershipCards: [CD_MembershipCard]?) {
+        var watchLoyaltyCardsDictArray: [[String: Any]] = []
+        
         if WCSession.default.isReachable {
             guard let membershipCards = membershipCards else { return }
             
-            for (i, card) in membershipCards.enumerated() {
+            for card in membershipCards {
                 print(card.membershipPlan?.account?.companyName as Any)
                 let barcodeViewModel = BarcodeViewModel(membershipCard: card)
                 if let barcodeImageData = barcodeViewModel.barcodeImage(withSize: CGSize(width: 200, height: 200))?.pngData() {
                     /// If we have a barcode, send loyalty card to watch
                     guard let membershipPlan = card.membershipPlan else { return }
-                    let iconImageData = ImageService.getImageFromDevice(forPathType: .membershipPlanIcon(plan: membershipPlan))?.pngData()
+//                    let iconImageData = ImageService.getImageFromDevice(forPathType: .membershipPlanIcon(plan: membershipPlan))?.pngData()
                     
                     let walletCardViewModel = WalletLoyaltyCardCellViewModel(membershipCard: card)
-                    let balanceString = "\(walletCardViewModel.pointsValueText ?? "") \(walletCardViewModel.pointsValueSuffixText ?? "")"
+                    var balanceString: String?
+                    if walletCardViewModel.balance != nil {
+                        balanceString = "\(walletCardViewModel.pointsValueText ?? "") \(walletCardViewModel.pointsValueSuffixText ?? "")"
+                    }
                     
-                    if let object = WatchLoyaltyCard(id: card.card?.barcode ?? "", companyName: membershipPlan.account?.companyName ?? "", iconImageData: iconImageData, barcodeImageData: barcodeImageData, balanceString: balanceString).dictionary {
-                        print("Appending to dict")
-
-                        WCSession.default.sendMessage(["message": object], replyHandler: nil)
+                    if let watchLoyaltyCardsDict = WatchLoyaltyCard(id: card.card?.barcode ?? "", companyName: membershipPlan.account?.companyName ?? "", iconImageData: nil, barcodeImageData: barcodeImageData, balanceString: balanceString).dictionary {
+                        watchLoyaltyCardsDictArray.append(watchLoyaltyCardsDict)
                     }
                 }
                 
-                if i == membershipCards.count - 1 {
-                    WCSession.default.sendMessage(["transfer_complete": true], replyHandler: nil) { error in
-                        print(error.localizedDescription)
+//                if i == membershipCards.count - 1 {
+//                    WCSession.default.sendMessage(["transfer_complete": true], replyHandler: nil) { error in
+//                        print(error.localizedDescription)
+//                    }
+//                }
+            }
+            
+            WCSession.default.sendMessage(["refresh_wallet": watchLoyaltyCardsDictArray], replyHandler: nil)
+            
+            for card in membershipCards {
+                guard let plan = card.membershipPlan else { return }
+                
+                ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil) { retrievedImage in
+                    if let imageDict = WatchLoyaltyCardIcon(id: card.card?.barcode ?? "", imageData: retrievedImage?.pngData()).dictionary {
+                        WCSession.default.sendMessage(["icon_image": imageDict], replyHandler: nil) { error in
+                            print("Error sending message: \(error.localizedDescription)")
+                        }
                     }
                 }
             }
@@ -62,5 +79,13 @@ class WatchController {
         if WCSession.default.isReachable {
             WCSession.default.sendMessage(["delete_card": barcode], replyHandler: nil)
         }
+    }
+}
+
+// MOVE >>>>>>>>>
+extension Encodable {
+    var dictionary: [String: Any]? {
+        guard let data = try? JSONEncoder().encode(self) else { return nil }
+        return (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)).flatMap { $0 as? [String: Any] }
     }
 }

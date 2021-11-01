@@ -26,9 +26,12 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
     
+//    var loyaltyCardIcons: [WatchLoyaltyCardIcon] = []
+    
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
+            
             if let cardToAddDict = message["add_card"] as? [String: Any] {
                 if let newCard = try? WatchLoyaltyCard(dictionary: cardToAddDict) {
                     self.cards.insert(newCard, at: 0)
@@ -41,22 +44,45 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
                 return
             }
             
-            if let transferComplete = message["transfer_complete"] as? Bool, transferComplete {
-                self.cards = self.loyaltyCards
-                print(self.cards)
-                self.loyaltyCards = []
-                return
+//            if let transferComplete = message["transfer_complete"] as? Bool, transferComplete {
+//                self.cards = self.loyaltyCards
+//                print(self.cards)
+//                self.loyaltyCards = []
+//                return
+//            }
+            
+            if let imageDict = message["icon_image"] as? [String: Any] {
+                if let watchLoyaltyCardIcon = try? WatchLoyaltyCardIcon(dictionary: imageDict) {
+                    print("Got icon: \(watchLoyaltyCardIcon.id)")
+//                    self.loyaltyCardIcons.append(watchLoyaltyCardIcon)
+                    
+                    for (i, var card) in self.cards.enumerated() {
+                        if card.id == watchLoyaltyCardIcon.id {
+                            card.iconImageData = watchLoyaltyCardIcon.imageData
+                            self.cards[i] = card
+                        }
+                    }
+                    return
+                }
             }
 
-            guard let cardDictsFromMessage = message["message"] as? [String: Any] else {
+            guard let cardDictsFromMessage = message["refresh_wallet"] as? [[String: Any]] else {
                 print("ERRRRRRRRRRROR")
                 print(message["message"] as Any)
                 return
             }
             
-            if let card = try? WatchLoyaltyCard(dictionary: cardDictsFromMessage) {
-                self.loyaltyCards.append(card)
-            }
+//            self.cards = cardDictsFromMessage.map({ try? WatchLoyaltyCard(dictionary: $0) }).compactMap({ $0 })
+            
+            self.cards = cardDictsFromMessage.map({ loyaltyCardDict in
+                if var loyaltyCard = try? WatchLoyaltyCard(dictionary: loyaltyCardDict) {
+                    let icon = self.cards.first(where: { $0.id == loyaltyCard.id })
+                    loyaltyCard.iconImageData = icon?.iconImageData
+                    return loyaltyCard
+                }
+                return nil
+            })
+                .compactMap({ $0 })
         }
     }
     
