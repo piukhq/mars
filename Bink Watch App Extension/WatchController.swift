@@ -22,8 +22,6 @@ class WatchController {
                 if let barcodeImageData = barcodeViewModel.barcodeImage(withSize: CGSize(width: 200, height: 200))?.pngData() {
                     /// If we have a barcode, send loyalty card to watch
                     guard let membershipPlan = card.membershipPlan else { return }
-//                    let iconImageData = ImageService.getImageFromDevice(forPathType: .membershipPlanIcon(plan: membershipPlan))?.pngData()
-                    
                     let walletCardViewModel = WalletLoyaltyCardCellViewModel(membershipCard: card)
                     var balanceString: String?
                     if walletCardViewModel.balance != nil {
@@ -34,12 +32,6 @@ class WatchController {
                         watchLoyaltyCardsDictArray.append(watchLoyaltyCardsDict)
                     }
                 }
-                
-//                if i == membershipCards.count - 1 {
-//                    WCSession.default.sendMessage(["transfer_complete": true], replyHandler: nil) { error in
-//                        print(error.localizedDescription)
-//                    }
-//                }
             }
             
             WCSession.default.sendMessage(["refresh_wallet": watchLoyaltyCardsDictArray], replyHandler: nil)
