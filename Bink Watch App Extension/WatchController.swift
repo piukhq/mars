@@ -69,6 +69,14 @@ class WatchController {
             WCSession.default.sendMessage(["delete_card": barcode], replyHandler: nil)
         }
     }
+    
+    func hasCurrentUser(_ hasUser: Bool) {
+        if WCSession.default.isReachable {
+            WCSession.default.sendMessage(["has_current_user": hasUser], replyHandler: nil) { error in
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
 
 // MOVE >>>>>>>>>

@@ -20,10 +20,16 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
     }
     
     @Published var cards: [WatchLoyaltyCard] = []
+    @Published var hasCurrentUser = false
 
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
+            
+            if let hasCurrentUser = message["has_current_user"] as? Bool {
+                self.hasCurrentUser = hasCurrentUser
+                return
+            }
             
             if let cardToAddDict = message["add_card"] as? [String: Any] {
                 if let newCard = try? WatchLoyaltyCard(dictionary: cardToAddDict) {

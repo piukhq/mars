@@ -23,7 +23,16 @@ struct WatchContentView: View {
     @ObservedObject var viewModel = WatchAppViewModel()
     
     var body: some View {
-        if viewModel.cards.isEmpty {
+        if !viewModel.hasCurrentUser {
+            VStack {
+                Text("You are not logged in")
+                    .font(.nunitoExtraBold(20))
+                    .multilineTextAlignment(.center)
+                Text("Please open the Bink app on your phone to login to your wallet")
+                    .font(.nunitoSans(19))
+                    .multilineTextAlignment(.center)
+            }
+        } else if viewModel.cards.isEmpty {
             VStack {
                 Text(L10n.brandsListNoSupportedCardsTitle)
                     .font(.nunitoExtraBold(20))

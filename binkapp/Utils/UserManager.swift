@@ -61,11 +61,13 @@ class UserManager {
         // We can safely assume that if we have no token, we have no user
         guard let token = currentToken, !token.isEmpty else {
             UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(false, forDefaultsKey: .hasCurrentUser)
+            WatchController().hasCurrentUser(false)
             return false
         }
         
         // Store in shared container
         UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(true, forDefaultsKey: .hasCurrentUser)
+        WatchController().hasCurrentUser(true)
         return true
     }
     
@@ -88,6 +90,7 @@ class UserManager {
             try setToken(with: response)
             try setEmail(with: response)
             UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(true, forDefaultsKey: .hasCurrentUser)
+            WatchController().hasCurrentUser(true)
         } catch {
             if #available(iOS 14.0, *) {
                 BinkLogger.error(UserLoggerError.setNewUser, value: error.localizedDescription)
@@ -149,6 +152,7 @@ class UserManager {
         
         UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(false, forDefaultsKey: .hasCurrentUser)
         WidgetController().reloadWidget(type: .quickLaunch)
+        WatchController().hasCurrentUser(false)
     }
     
     func clearKeychainIfNecessary() {
