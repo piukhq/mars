@@ -228,7 +228,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     func configure(with field: FormField, delegate: FormCollectionViewCellDelegate?) {
         let isEnabled = !field.isReadOnly
         
-        tintColor = Current.themeManager.color(for: .text)
+        tintColor = .activeField
         titleLabel.text = field.title
         titleLabel.textColor = isEnabled ? Current.themeManager.color(for: .text) : .binkDynamicGray
         textField.textColor = isEnabled ? Current.themeManager.color(for: .text) : .binkDynamicGray
