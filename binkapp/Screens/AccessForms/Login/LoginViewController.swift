@@ -122,7 +122,13 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
             textView.text = nil
             descriptionLabel.text = L10n.loginSubtitle
             hyperlinkButton.isHidden = false
+            
+            if let passwordCell = dataSource.collectionView(collectionView, cellForItemAt: IndexPath(item: 1, section: 0)) as? FormCollectionViewCell {
+                passwordCell.setState(.inactive)
+            }
         }
+        
+        configureForCurrentTheme()
     }
     
     @objc func forgotPasswordTapped() {
