@@ -357,6 +357,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         case .inactive:
             validationView.backgroundColor = .clear
             validationLabel.isHidden = true
+            validationLabelSpacing = 0
         case .active:
             validationView.backgroundColor = .activeField
         case .valid:
