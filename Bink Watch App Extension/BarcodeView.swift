@@ -25,8 +25,7 @@ struct BarcodeView: View {
         }
         .padding(EdgeInsets(top: 30, leading: 10, bottom: balance != nil ? 10 : 30, trailing: 10))
         .background(Color.white)
-        .edgesIgnoringSafeArea(.top)
-        .edgesIgnoringSafeArea(.bottom)
+        .edgesIgnoringSafeArea([.top, .bottom])
         .onTapGesture {
             self.presentationMode.wrappedValue.dismiss()
         }

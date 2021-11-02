@@ -9,7 +9,7 @@
 import SwiftUI
 
 @main
-struct binkappApp: App {
+struct BinkWatchApp: App {
     @SceneBuilder var body: some Scene {
         WindowGroup {
             NavigationView {

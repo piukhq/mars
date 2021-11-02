@@ -94,6 +94,10 @@ internal enum L10n {
   internal static let barcodeTitle = L10n.tr("Localizable", "barcode_title")
   /// Card number:
   internal static let barcodeViewTitle = L10n.tr("Localizable", "barcode_view_title")
+  /// We can only show you cards with barcodes or vouchers
+  internal static let brandsListNoSupportedCardsDescription = L10n.tr("Localizable", "brands_list_no_supported_cards_description")
+  /// No supported cards
+  internal static let brandsListNoSupportedCardsTitle = L10n.tr("Localizable", "brands_list_no_supported_cards_title")
   /// Browse brands
   internal static let browseBrandsTitle = L10n.tr("Localizable", "browse_brands_title")
   /// Allow Access

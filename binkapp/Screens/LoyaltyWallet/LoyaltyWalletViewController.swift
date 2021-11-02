@@ -114,19 +114,6 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     //            return cell
     //        }
     //    }
-    
-//    
-//    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-//        
-//    }
-//    
-//    func sessionDidBecomeInactive(_ session: WCSession) {
-//        
-//    }
-//    
-//    func sessionDidDeactivate(_ session: WCSession) {
-//        
-//    }
 }
 
 extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelegate {

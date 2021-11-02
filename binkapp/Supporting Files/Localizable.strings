@@ -467,3 +467,6 @@
 "scan_button_title" = "Scan loyalty card";
 "scan_utton_subtitle" = "Quickly add a card you already have";
 
+// MARK: - Watch App
+"brands_list_no_supported_cards_title" = "No supported cards";
+"brands_list_no_supported_cards_description" = "We can only show you cards with barcodes or vouchers";

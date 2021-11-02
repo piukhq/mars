@@ -185,7 +185,7 @@
 		70D748022552CC7800E9D2C1 /* InAppReviewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D748012552CC7800E9D2C1 /* InAppReviewable.swift */; };
 		70D8782E26E26DCF006778EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70D8782D26E26DCF006778EA /* Assets.xcassets */; };
 		70D8783526E26DCF006778EA /* Bink Watch App Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 70D8783426E26DCF006778EA /* Bink Watch App Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		70D8783A26E26DCF006778EA /* binkappApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D8783926E26DCF006778EA /* binkappApp.swift */; };
+		70D8783A26E26DCF006778EA /* BinkWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D8783926E26DCF006778EA /* BinkWatchApp.swift */; };
 		70D8783C26E26DCF006778EA /* WatchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D8783B26E26DCF006778EA /* WatchContentView.swift */; };
 		70D8783E26E26DCF006778EA /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D8783D26E26DCF006778EA /* NotificationController.swift */; };
 		70D8784026E26DCF006778EA /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D8783F26E26DCF006778EA /* NotificationView.swift */; };
@@ -367,6 +367,14 @@
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
 		CED69E6B253D7A5700A4CA21 /* HyperlinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */; };
 		CEE208AD272C446F00766BD6 /* BarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE208AC272C446F00766BD6 /* BarcodeView.swift */; };
+		CEE208AE27315A2600766BD6 /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492922F99E1D000C1F4D /* NunitoSans-Regular.ttf */; };
+		CEE208AF27315A2700766BD6 /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492922F99E1D000C1F4D /* NunitoSans-Regular.ttf */; };
+		CEE208B027315A3E00766BD6 /* NunitoSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492822F99E1D000C1F4D /* NunitoSans-ExtraBold.ttf */; };
+		CEE208B127315A3E00766BD6 /* NunitoSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492822F99E1D000C1F4D /* NunitoSans-ExtraBold.ttf */; };
+		CEE208B2273162EA00766BD6 /* NunitoSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492E22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf */; };
+		CEE208B3273162EB00766BD6 /* NunitoSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492E22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf */; };
+		CEE208B42731672C00766BD6 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBB2636AD0000845813 /* Strings.swift */; };
+		CEE208B52731678500766BD6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CC267EF22F4276E00F0F9E3 /* Localizable.strings */; };
 		CEE209142684653A004D3759 /* WidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209132684653A004D3759 /* WidgetContent.swift */; };
 		CEE209152684653A004D3759 /* WidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209132684653A004D3759 /* WidgetContent.swift */; };
 		CEE2091A2689E1B7004D3759 /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209192689E1B7004D3759 /* FileManager+Extension.swift */; };
@@ -857,7 +865,7 @@
 		70D8782D26E26DCF006778EA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		70D8782F26E26DCF006778EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		70D8783426E26DCF006778EA /* Bink Watch App Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Bink Watch App Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		70D8783926E26DCF006778EA /* binkappApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = binkappApp.swift; sourceTree = "<group>"; };
+		70D8783926E26DCF006778EA /* BinkWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkWatchApp.swift; sourceTree = "<group>"; };
 		70D8783B26E26DCF006778EA /* WatchContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchContentView.swift; sourceTree = "<group>"; };
 		70D8783D26E26DCF006778EA /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		70D8783F26E26DCF006778EA /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
@@ -2078,7 +2086,7 @@
 		70D8783826E26DCF006778EA /* Bink Watch App Extension */ = {
 			isa = PBXGroup;
 			children = (
-				70D8783926E26DCF006778EA /* binkappApp.swift */,
+				70D8783926E26DCF006778EA /* BinkWatchApp.swift */,
 				70D8783B26E26DCF006778EA /* WatchContentView.swift */,
 				CEE208AC272C446F00766BD6 /* BarcodeView.swift */,
 				70D8783D26E26DCF006778EA /* NotificationController.swift */,
@@ -3480,6 +3488,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				70D8782E26E26DCF006778EA /* Assets.xcassets in Resources */,
+				CEE208B3273162EB00766BD6 /* NunitoSans-SemiBold.ttf in Resources */,
+				CEE208B127315A3E00766BD6 /* NunitoSans-ExtraBold.ttf in Resources */,
+				CEE208AE27315A2600766BD6 /* NunitoSans-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3487,7 +3498,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEE208B2273162EA00766BD6 /* NunitoSans-SemiBold.ttf in Resources */,
+				CEE208B52731678500766BD6 /* Localizable.strings in Resources */,
+				CEE208B027315A3E00766BD6 /* NunitoSans-ExtraBold.ttf in Resources */,
 				70D8784726E26DD0006778EA /* Preview Assets.xcassets in Resources */,
+				CEE208AF27315A2700766BD6 /* NunitoSans-Regular.ttf in Resources */,
 				70D8784426E26DD0006778EA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4144,11 +4159,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				70D8783E26E26DCF006778EA /* NotificationController.swift in Sources */,
+				CEE208B42731672C00766BD6 /* Strings.swift in Sources */,
 				CEE208AD272C446F00766BD6 /* BarcodeView.swift in Sources */,
 				70D8783C26E26DCF006778EA /* WatchContentView.swift in Sources */,
 				CE02D51C27285F14008B9BFA /* WatchLoyaltyCard.swift in Sources */,
 				70D8784226E26DCF006778EA /* ComplicationController.swift in Sources */,
-				70D8783A26E26DCF006778EA /* binkappApp.swift in Sources */,
+				70D8783A26E26DCF006778EA /* BinkWatchApp.swift in Sources */,
 				CE02D52527294A95008B9BFA /* Font+Extension.swift in Sources */,
 				70D8785A26E629F4006778EA /* WatchAppViewModel.swift in Sources */,
 				CE02D52027293F14008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */,
