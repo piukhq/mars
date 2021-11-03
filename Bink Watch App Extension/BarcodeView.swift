@@ -17,13 +17,14 @@ struct BarcodeView: View {
         VStack {
             Image(uiImage: barcodeImage)
                 .resizable()
+                .aspectRatio(contentMode: .fill)
             if let balance = balance {
                 Text(balance)
                     .foregroundColor(.black)
                     .font(.nunitoSemiBold(16))
             }
         }
-        .padding(EdgeInsets(top: 30, leading: 10, bottom: balance != nil ? 10 : 30, trailing: 10))
+        .padding(EdgeInsets(top: 40, leading: 10, bottom: balance != nil ? 10 : 40, trailing: 10))
         .background(Color.white)
         .edgesIgnoringSafeArea([.top, .bottom])
         .onTapGesture {
