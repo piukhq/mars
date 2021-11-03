@@ -470,3 +470,5 @@
 // MARK: - Watch App
 "brands_list_no_supported_cards_title" = "No supported cards";
 "brands_list_no_supported_cards_description" = "We can only show you cards with barcodes or vouchers";
+"unauthenticated_state_title" = "You are not logged in";
+"unauthenticated_state_description" = "Please open the Bink app on your phone to login to your wallet";

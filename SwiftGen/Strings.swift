@@ -758,6 +758,10 @@ internal enum L10n {
   internal static let transactionHistoryUnavailableDescription = L10n.tr("Localizable", "transaction_history_unavailable_description")
   /// Points history
   internal static let transactionHistoryUnavailableTitle = L10n.tr("Localizable", "transaction_history_unavailable_title")
+  /// Please open the Bink app on your phone to login to your wallet
+  internal static let unauthenticatedStateDescription = L10n.tr("Localizable", "unauthenticated_state_description")
+  /// You are not logged in
+  internal static let unauthenticatedStateTitle = L10n.tr("Localizable", "unauthenticated_state_title")
   /// Payment Linked Loyalty (PLL) allows customers’ payment cards to be securely linked to loyalty programmes, enabling every customer to be identified and rewarded every time they shop.\nThis is currently not available for this merchant.
   internal static let unlinkablePllDescription = L10n.tr("Localizable", "unlinkable_pll_description")
   /// Payment Linked Loyalty unavailable

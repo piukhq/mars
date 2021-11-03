@@ -25,10 +25,10 @@ struct WatchContentView: View {
     var body: some View {
         if !viewModel.hasCurrentUser {
             VStack {
-                Text("You are not logged in")
+                Text(L10n.unauthenticatedStateTitle)
                     .font(.nunitoExtraBold(20))
                     .multilineTextAlignment(.center)
-                Text("Please open the Bink app on your phone to login to your wallet")
+                Text(L10n.unauthenticatedStateDescription)
                     .font(.nunitoSans(19))
                     .multilineTextAlignment(.center)
             }
