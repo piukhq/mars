@@ -66,6 +66,9 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
                 return nil
             })
             .compactMap({ $0 })
+            
+            /// If we receive cards, we know we are on the wallet, we know we are logged in
+            self.hasCurrentUser = true
         }
     }
     

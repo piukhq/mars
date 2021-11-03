@@ -67,7 +67,6 @@ class UserManager {
         
         // Store in shared container
         UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(true, forDefaultsKey: .hasCurrentUser)
-        WatchController().hasCurrentUser(true)
         return true
     }
     
@@ -90,7 +89,6 @@ class UserManager {
             try setToken(with: response)
             try setEmail(with: response)
             UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(true, forDefaultsKey: .hasCurrentUser)
-            WatchController().hasCurrentUser(true)
         } catch {
             if #available(iOS 14.0, *) {
                 BinkLogger.error(UserLoggerError.setNewUser, value: error.localizedDescription)

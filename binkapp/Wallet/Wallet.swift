@@ -180,7 +180,9 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
             }
             NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
             completion?(true, nil)
-            WatchController().sendWalletCardsToWatch(membershipCards: self.membershipCards)
+            if self.hasLaunched {
+                WatchController().sendWalletCardsToWatch(membershipCards: self.membershipCards)
+            }
         }
     }
 
