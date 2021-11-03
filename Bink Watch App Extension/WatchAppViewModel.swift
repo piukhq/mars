@@ -19,12 +19,27 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
         session.activate()
     }
     
-    @Published var cards: [WatchLoyaltyCard] = []
+    @Published var cards: [WatchLoyaltyCard] = [] {
+        didSet {
+            print(cards.count)
+        }
+    }
     @Published var hasCurrentUser = false
+    @Published var hasLaunched = false {
+        didSet {
+            print("HAS LANUCHED")
+        }
+    }
 
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
+            
+            if let _ = message["watch_app_launch_complete"] as? Bool {
+                print("WATCH APP FINISHED LAUNCHING")
+                self.hasLaunched = true
+                return
+            }
             
             if let hasCurrentUser = message["has_current_user"] as? Bool {
                 self.hasCurrentUser = hasCurrentUser
@@ -72,7 +87,20 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
     
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        guard activationState == .activated else { return }
+        print("Session active")
+        WCSession.default.sendMessage(["watch_app_launch": true], replyHandler: nil) { error in
+            print(error.localizedDescription)
+        }
+        
+//        WCSession.default.sendMessage(["watch_app_launch": true]) { replyMessage in
+//            print("Received data:")
+//            print(replyMessage)
+//        } errorHandler: { error in
+//            print(error.localizedDescription)
+//        }
+    }
 }
 
 extension Decodable {

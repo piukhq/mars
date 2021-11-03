@@ -10,7 +10,7 @@ import UIKit
 import WatchConnectivity
 
 class WatchController {
-    func sendWalletCardsToWatch(membershipCards: [CD_MembershipCard]?) {
+    func sendWalletCardsToWatch(membershipCards: [CD_MembershipCard]?, completion: EmptyCompletionBlock? = nil) {
         var watchLoyaltyCardsDictArray: [[String: Any]] = []
         
         if WCSession.default.isReachable {
@@ -34,7 +34,8 @@ class WatchController {
             }
             
             WCSession.default.sendMessage(["refresh_wallet": watchLoyaltyCardsDictArray], replyHandler: nil)
-            
+            completion?()
+
             for card in membershipCards {
                 guard let plan = card.membershipPlan else { return }
                 

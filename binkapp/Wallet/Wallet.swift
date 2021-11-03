@@ -414,13 +414,24 @@ extension Wallet {
 extension Wallet: WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         print("Session did activate")
-
     }
     func sessionDidBecomeInactive(_ session: WCSession) {
         print("Session did become inactive")
-
     }
     func sessionDidDeactivate(_ session: WCSession) {
         print("Session did deactivate")
+    }
+    
+    func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
+        DispatchQueue.main.async { [weak self] in
+            if let _ = message["watch_app_launch"] as? Bool {
+                WatchController().sendWalletCardsToWatch(membershipCards: self?.membershipCards) {
+                    print("Wallet completion handler called")
+                    WCSession.default.sendMessage(["watch_app_launch_complete": true], replyHandler: nil) { error in
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        }
     }
 }

@@ -23,65 +23,69 @@ struct WatchContentView: View {
     @ObservedObject var viewModel = WatchAppViewModel()
     
     var body: some View {
-        if !viewModel.hasCurrentUser {
-            VStack {
-                Text(L10n.unauthenticatedStateTitle)
-                    .font(.nunitoExtraBold(20))
-                    .multilineTextAlignment(.center)
-                Text(L10n.unauthenticatedStateDescription)
-                    .font(.nunitoSans(19))
-                    .multilineTextAlignment(.center)
-            }
-        } else if viewModel.cards.isEmpty {
-            VStack {
-                Text(L10n.brandsListNoSupportedCardsTitle)
-                    .font(.nunitoExtraBold(20))
-                    .multilineTextAlignment(.center)
-                Text(L10n.brandsListNoSupportedCardsDescription)
-                    .font(.nunitoSans(19))
-                    .multilineTextAlignment(.center)
-            }
-            .padding([.leading, .trailing])
-            .edgesIgnoringSafeArea([.top, .bottom])
-        } else {
-            ScrollView {
-                VStack(spacing: Constants.vStackSpacing) {
-                    ForEach(viewModel.cards, id: \.id) { card in
-                        NavigationLink {
-                            if let barcodeImage = card.barcodeImage {
-                                BarcodeView(barcodeImage: barcodeImage, balance: card.balanceString)
-                                    .navigationBarHidden(true)
-                            }
-                        } label: {
-                            HStack(spacing: 10) {
-                                if let icon = card.iconImage {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: Constants.imageBorderCornerRadius, style: .continuous)
-                                            .frame(width: Constants.imageBorderSize, height: Constants.imageBorderSize, alignment: .center)
-                                            .foregroundColor(.white)
-                                        
-                                        Image(uiImage: icon)
-                                            .resizable()
-                                            .frame(width: Constants.imageSize, height: Constants.imageSize)
-                                            .cornerRadius(Constants.imageCornerRadius)
-                                    }
-                                } else {
-                                    RoundedRectangle(cornerRadius: Constants.imageCornerRadius)
-                                        .frame(width: Constants.imageSize, height: Constants.imageSize, alignment: .center)
-                                        .foregroundColor(Color(UIColor(hexString: "#FFFFFF", alpha: Constants.placeholderForegroundColorAlpha)))
+        if viewModel.hasLaunched {
+            if !viewModel.hasCurrentUser {
+                VStack {
+                    Text(L10n.unauthenticatedStateTitle)
+                        .font(.nunitoExtraBold(20))
+                        .multilineTextAlignment(.center)
+                    Text(L10n.unauthenticatedStateDescription)
+                        .font(.nunitoSans(19))
+                        .multilineTextAlignment(.center)
+                }
+            } else if viewModel.cards.isEmpty {
+                VStack {
+                    Text(L10n.brandsListNoSupportedCardsTitle)
+                        .font(.nunitoExtraBold(20))
+                        .multilineTextAlignment(.center)
+                    Text(L10n.brandsListNoSupportedCardsDescription)
+                        .font(.nunitoSans(19))
+                        .multilineTextAlignment(.center)
+                }
+                .padding([.leading, .trailing])
+                .edgesIgnoringSafeArea([.top, .bottom])
+            } else {
+                ScrollView {
+                    VStack(spacing: Constants.vStackSpacing) {
+                        ForEach(viewModel.cards, id: \.id) { card in
+                            NavigationLink {
+                                if let barcodeImage = card.barcodeImage {
+                                    BarcodeView(barcodeImage: barcodeImage, balance: card.balanceString)
+                                        .navigationBarHidden(true)
                                 }
-                                Text(card.companyName)
-                                    .font(.nunitoSemiBold(16))
-                                Spacer()
+                            } label: {
+                                HStack(spacing: 10) {
+                                    if let icon = card.iconImage {
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: Constants.imageBorderCornerRadius, style: .continuous)
+                                                .frame(width: Constants.imageBorderSize, height: Constants.imageBorderSize, alignment: .center)
+                                                .foregroundColor(.white)
+                                            
+                                            Image(uiImage: icon)
+                                                .resizable()
+                                                .frame(width: Constants.imageSize, height: Constants.imageSize)
+                                                .cornerRadius(Constants.imageCornerRadius)
+                                        }
+                                    } else {
+                                        RoundedRectangle(cornerRadius: Constants.imageCornerRadius)
+                                            .frame(width: Constants.imageSize, height: Constants.imageSize, alignment: .center)
+                                            .foregroundColor(Color(UIColor(hexString: "#FFFFFF", alpha: Constants.placeholderForegroundColorAlpha)))
+                                    }
+                                    Text(card.companyName)
+                                        .font(.nunitoSemiBold(16))
+                                    Spacer()
+                                }
                             }
                         }
+                        .frame(height: 40)
                     }
-                    .frame(height: 40)
+                    .padding(.top, 10)
+                    .padding(.bottom, 20)
                 }
-                .padding(.top, 10)
-                .padding(.bottom, 20)
+                .edgesIgnoringSafeArea(.bottom)
             }
-            .edgesIgnoringSafeArea(.bottom)
+        } else {
+            ProgressView()
         }
     }
 }
