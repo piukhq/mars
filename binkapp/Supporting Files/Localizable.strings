@@ -472,3 +472,5 @@
 "brands_list_no_supported_cards_description" = "We can only show you cards with barcodes or vouchers";
 "unauthenticated_state_title" = "You are not logged in";
 "unauthenticated_state_description" = "Please open the Bink app on your phone to login to your wallet";
+"no_response_title" = "No response from phone";
+"no_response_desciption" = "Please open the Bink app on your phone to sync with your watch";

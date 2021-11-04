@@ -19,21 +19,19 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
         session.activate()
     }
     
-    @Published var cards: [WatchLoyaltyCard] = [] {
-        didSet {
-            print(cards.count)
-        }
-    }
+    @Published var cards: [WatchLoyaltyCard] = []
     @Published var hasCurrentUser = false
-    @Published var hasLaunched = false
-
+    @Published var didSyncWithPhoneOnLaunch = false
+    @Published var noResponseFromPhone = false
+    
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
+        noResponseFromPhone = false
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
 
             if let hasCurrentUser = message["has_current_user"] as? Bool {
                 self.hasCurrentUser = hasCurrentUser
-                self.hasLaunched = true
+                self.didSyncWithPhoneOnLaunch = true
                 return
             }
             
@@ -75,13 +73,15 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
             
             /// If we receive cards, we know we are on the wallet, we know we are logged in
             self.hasCurrentUser = true
-            self.hasLaunched = true
+            self.didSyncWithPhoneOnLaunch = true
         }
     }
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         guard activationState == .activated else { return }
-        WCSession.default.sendMessage(["watch_app_launch": true], replyHandler: nil)
+        WCSession.default.sendMessage(["watch_app_launch": true], replyHandler: nil) { error in
+            print(error.localizedDescription)
+        }
     }
 }
 

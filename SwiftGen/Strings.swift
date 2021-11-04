@@ -326,6 +326,10 @@ internal enum L10n {
   internal static let noInternetConnectionMessage = L10n.tr("Localizable", "no_internet_connection_message")
   /// No matches
   internal static let noMatches = L10n.tr("Localizable", "no_matches")
+  /// Please open the Bink app on your phone to sync with your watch
+  internal static let noResponseDesciption = L10n.tr("Localizable", "no_response_desciption")
+  /// No response from phone
+  internal static let noResponseTitle = L10n.tr("Localizable", "no_response_title")
   /// Not available
   internal static let notAvailableTitle = L10n.tr("Localizable", "not_available_title")
   /// OK

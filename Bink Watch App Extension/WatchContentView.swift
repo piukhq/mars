@@ -17,77 +17,74 @@ struct WatchContentView: View {
         static let imageSize: CGFloat = 25
         static let imageCornerRadius: CGFloat = 2
         static let placeholderForegroundColorAlpha: CGFloat = 0.5
-        static let vStackSpacing: CGFloat = 15
+        static let vStackSpacingSmall: CGFloat = 10
+        static let vStackSpacingLarge: CGFloat = 15
     }
     
     @ObservedObject var viewModel = WatchAppViewModel()
     
     var body: some View {
-        if viewModel.hasLaunched {
+        if viewModel.didSyncWithPhoneOnLaunch {
             if !viewModel.hasCurrentUser {
-                VStack {
-                    Text(L10n.unauthenticatedStateTitle)
-                        .font(.nunitoExtraBold(18))
-                        .multilineTextAlignment(.center)
-                    Text(L10n.unauthenticatedStateDescription)
-                        .font(.nunitoSans(17))
-                        .multilineTextAlignment(.center)
-                        .minimumScaleFactor(0.5)
-                }
-                .padding([.leading, .trailing])
+                WatchTextStack(title: L10n.unauthenticatedStateTitle, description: L10n.unauthenticatedStateDescription)
             } else if viewModel.cards.isEmpty {
-                VStack {
-                    Text(L10n.brandsListNoSupportedCardsTitle)
-                        .font(.nunitoExtraBold(18))
-                        .multilineTextAlignment(.center)
-                    Text(L10n.brandsListNoSupportedCardsDescription)
-                        .font(.nunitoSans(17))
-                        .multilineTextAlignment(.center)
-                        .minimumScaleFactor(0.5)
-                }
-                .padding([.leading, .trailing])
+                WatchTextStack(title: L10n.brandsListNoSupportedCardsTitle, description: L10n.brandsListNoSupportedCardsDescription)
             } else {
-                ScrollView {
-                    VStack(spacing: Constants.vStackSpacing) {
-                        ForEach(viewModel.cards, id: \.id) { card in
-                            NavigationLink {
-                                if let barcodeImage = card.barcodeImage {
-                                    BarcodeView(barcodeImage: barcodeImage, balance: card.balanceString)
-                                        .navigationBarHidden(true)
-                                }
-                            } label: {
-                                HStack(spacing: 10) {
-                                    if let icon = card.iconImage {
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: Constants.imageBorderCornerRadius, style: .continuous)
-                                                .frame(width: Constants.imageBorderSize, height: Constants.imageBorderSize, alignment: .center)
-                                                .foregroundColor(.white)
-                                            
-                                            Image(uiImage: icon)
-                                                .resizable()
-                                                .frame(width: Constants.imageSize, height: Constants.imageSize)
-                                                .cornerRadius(Constants.imageCornerRadius)
-                                        }
-                                    } else {
-                                        RoundedRectangle(cornerRadius: Constants.imageCornerRadius)
-                                            .frame(width: Constants.imageSize, height: Constants.imageSize, alignment: .center)
-                                            .foregroundColor(Color(UIColor(hexString: "#FFFFFF", alpha: Constants.placeholderForegroundColorAlpha)))
+                GeometryReader { geo in
+                    ScrollView {
+                        VStack(spacing: geo.size.width > 190 ? Constants.vStackSpacingLarge : Constants.vStackSpacingSmall) {
+                            ForEach(viewModel.cards, id: \.id) { card in
+                                NavigationLink {
+                                    if let barcodeImage = card.barcodeImage {
+                                        BarcodeView(barcodeImage: barcodeImage, balance: card.balanceString)
+                                            .navigationBarHidden(true)
                                     }
-                                    Text(card.companyName)
-                                        .font(.nunitoSemiBold(16))
-                                    Spacer()
+                                } label: {
+                                    HStack(spacing: 10) {
+                                        if let icon = card.iconImage {
+                                            ZStack {
+                                                RoundedRectangle(cornerRadius: Constants.imageBorderCornerRadius, style: .continuous)
+                                                    .frame(width: Constants.imageBorderSize, height: Constants.imageBorderSize, alignment: .center)
+                                                    .foregroundColor(.white)
+                                                
+                                                Image(uiImage: icon)
+                                                    .resizable()
+                                                    .frame(width: Constants.imageSize, height: Constants.imageSize)
+                                                    .cornerRadius(Constants.imageCornerRadius)
+                                            }
+                                        } else {
+                                            RoundedRectangle(cornerRadius: Constants.imageCornerRadius)
+                                                .frame(width: Constants.imageSize, height: Constants.imageSize, alignment: .center)
+                                                .foregroundColor(Color(UIColor(hexString: "#FFFFFF", alpha: Constants.placeholderForegroundColorAlpha)))
+                                        }
+                                        Text(card.companyName)
+                                            .font(.nunitoSemiBold(16))
+                                        Spacer()
+                                    }
                                 }
                             }
+                            .frame(height: 40)
                         }
-                        .frame(height: 40)
+                        .padding(.top, 10)
+                        .padding(.bottom, 20)
                     }
-                    .padding(.top, 10)
-                    .padding(.bottom, 20)
+                    .edgesIgnoringSafeArea(.bottom)
+                    .onAppear {
+                        print(geo.size.width)
+                    }
                 }
-                .edgesIgnoringSafeArea(.bottom)
             }
         } else {
-            ProgressView()
+            if viewModel.noResponseFromPhone {
+                WatchTextStack(title: L10n.noResponseTitle, description: L10n.noResponseDesciption)
+            } else {
+                ProgressView()
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                            viewModel.noResponseFromPhone = true
+                        }
+                    }
+            }
         }
     }
 }
@@ -95,5 +92,23 @@ struct WatchContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         WatchContentView()
+    }
+}
+
+struct WatchTextStack: View {
+    var title: String
+    var description: String
+    
+    var body: some View {
+        VStack {
+            Text(title)
+                .font(.nunitoExtraBold(18))
+                .multilineTextAlignment(.center)
+            Text(description)
+                .font(.nunitoSans(17))
+                .multilineTextAlignment(.center)
+                .minimumScaleFactor(0.5)
+        }
+        .padding([.leading, .trailing])
     }
 }
