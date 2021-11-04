@@ -32,7 +32,9 @@ struct WatchContentView: View {
                     Text(L10n.unauthenticatedStateDescription)
                         .font(.nunitoSans(17))
                         .multilineTextAlignment(.center)
+                        .minimumScaleFactor(0.5)
                 }
+                .padding([.leading, .trailing])
             } else if viewModel.cards.isEmpty {
                 VStack {
                     Text(L10n.brandsListNoSupportedCardsTitle)
@@ -41,9 +43,9 @@ struct WatchContentView: View {
                     Text(L10n.brandsListNoSupportedCardsDescription)
                         .font(.nunitoSans(17))
                         .multilineTextAlignment(.center)
+                        .minimumScaleFactor(0.5)
                 }
                 .padding([.leading, .trailing])
-                .edgesIgnoringSafeArea([.top, .bottom])
             } else {
                 ScrollView {
                     VStack(spacing: Constants.vStackSpacing) {

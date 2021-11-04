@@ -10,10 +10,12 @@ import UIKit
 import WatchConnectivity
 
 class WatchController {
+    let session = WCSession.default
+
     func sendWalletCardsToWatch(membershipCards: [CD_MembershipCard]?, completion: EmptyCompletionBlock? = nil) {
         var watchLoyaltyCardsDictArray: [[String: Any]] = []
         
-        if WCSession.default.isReachable {
+        if session.isReachable {
             guard let membershipCards = membershipCards else { return }
             
             for card in membershipCards {
@@ -33,15 +35,15 @@ class WatchController {
                 }
             }
             
-            WCSession.default.sendMessage(["refresh_wallet": watchLoyaltyCardsDictArray], replyHandler: nil)
+            session.sendMessage(["refresh_wallet": watchLoyaltyCardsDictArray], replyHandler: nil)
             completion?()
 
             for card in membershipCards {
                 guard let plan = card.membershipPlan else { return }
                 
-                ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil) { retrievedImage in
+                ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil) { [weak self] retrievedImage in
                     if let imageDict = WatchLoyaltyCardIcon(id: card.card?.barcode ?? "", imageData: retrievedImage?.pngData()).dictionary {
-                        WCSession.default.sendMessage(["icon_image": imageDict], replyHandler: nil)
+                        self?.session.sendMessage(["icon_image": imageDict], replyHandler: nil)
                     }
                 }
             }
@@ -49,7 +51,7 @@ class WatchController {
     }
     
     func addLoyaltyCardToWatch(_ membershipCard: CD_MembershipCard) {
-        if WCSession.default.isReachable {
+        if session.isReachable {
             let barcodeViewModel = BarcodeViewModel(membershipCard: membershipCard)
             if let barcodeImageData = barcodeViewModel.barcodeImage(withSize: CGSize(width: 200, height: 200))?.pngData() {
                 guard let membershipPlan = membershipCard.membershipPlan else { return }
@@ -59,23 +61,22 @@ class WatchController {
                 let balanceString = "\(walletCardViewModel.pointsValueText ?? "") \(walletCardViewModel.pointsValueSuffixText ?? "")"
                 
                 if let object = WatchLoyaltyCard(id: membershipCard.card?.barcode ?? "", companyName: membershipPlan.account?.companyName ?? "", iconImageData: iconImageData, barcodeImageData: barcodeImageData, balanceString: balanceString).dictionary {
-                    WCSession.default.sendMessage(["add_card": object], replyHandler: nil)
+                    session.sendMessage(["add_card": object], replyHandler: nil)
                 }
             }
         }
     }
     
     func deleteLoyaltyCardFromWatch(barcode: String) {
-        if WCSession.default.isReachable {
-            WCSession.default.sendMessage(["delete_card": barcode], replyHandler: nil)
+        if session.isReachable {
+            session.sendMessage(["delete_card": barcode], replyHandler: nil)
         }
     }
     
-    func hasCurrentUser(_ hasUser: Bool) {
-        if WCSession.default.isReachable {
-            WCSession.default.sendMessage(["has_current_user": hasUser], replyHandler: nil) { error in
-                print(error.localizedDescription)
-            }
+    func hasCurrentUser(_ hasUser: Bool, completion: EmptyCompletionBlock? = nil) {
+        if session.isReachable {
+            session.sendMessage(["has_current_user": hasUser], replyHandler: nil)
+            completion?()
         }
     }
 }
