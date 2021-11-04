@@ -20,6 +20,7 @@ class BaseFormViewController: BinkViewController, Form {
         static let horizontalInset: CGFloat = 25.0
         static let bottomInset: CGFloat = 150.0
         static let postCollectionViewPadding: CGFloat = 15.0
+        static let preCollectionViewPadding: CGFloat = 10.0
         static let offsetPadding: CGFloat = 30.0
     }
     
@@ -45,6 +46,7 @@ class BaseFormViewController: BinkViewController, Form {
         stackView.alignment = .fill
         stackView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Constants.bottomInset, right: 0)
         stackView.customPadding(Constants.postCollectionViewPadding, after: collectionView)
+        stackView.customPadding(Constants.preCollectionViewPadding, before: collectionView)
         view.addSubview(stackView)
         return stackView
     }()
@@ -78,9 +80,10 @@ class BaseFormViewController: BinkViewController, Form {
     }()
     
     private lazy var layout: UICollectionViewFlowLayout = {
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.estimatedItemSize = CGSize(width: 1, height: 1) // To invoke automatic self sizing
-        return flowLayout
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 20
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        return layout
     }()
     
     var initialContentOffset: CGPoint = .zero
@@ -192,16 +195,6 @@ extension BaseFormViewController: UICollectionViewDelegate {
         guard let cell = cell as? FormCollectionViewCell else { return }
         
         cell.setWidth(collectionView.frame.size.width)
-    }
-}
-
-extension BaseFormViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.0
     }
 }
 
