@@ -79,9 +79,7 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         guard activationState == .activated else { return }
-        WCSession.default.sendMessage(["watch_app_launch": true], replyHandler: nil) { error in
-            print(error.localizedDescription)
-        }
+        WCSession.default.sendMessage(["watch_app_launch": true], replyHandler: nil)
     }
 }
 

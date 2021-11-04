@@ -94,21 +94,3 @@ struct ContentView_Previews: PreviewProvider {
         WatchContentView()
     }
 }
-
-struct WatchTextStack: View {
-    var title: String
-    var description: String
-    
-    var body: some View {
-        VStack {
-            Text(title)
-                .font(.nunitoExtraBold(18))
-                .multilineTextAlignment(.center)
-            Text(description)
-                .font(.nunitoSans(17))
-                .multilineTextAlignment(.center)
-                .minimumScaleFactor(0.5)
-        }
-        .padding([.leading, .trailing])
-    }
-}

@@ -375,6 +375,7 @@
 		CEE208B3273162EB00766BD6 /* NunitoSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492E22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf */; };
 		CEE208B42731672C00766BD6 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBB2636AD0000845813 /* Strings.swift */; };
 		CEE208B52731678500766BD6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CC267EF22F4276E00F0F9E3 /* Localizable.strings */; };
+		CEE208BC2734458400766BD6 /* WatchTextStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE208BB2734458400766BD6 /* WatchTextStack.swift */; };
 		CEE209142684653A004D3759 /* WidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209132684653A004D3759 /* WidgetContent.swift */; };
 		CEE209152684653A004D3759 /* WidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209132684653A004D3759 /* WidgetContent.swift */; };
 		CEE2091A2689E1B7004D3759 /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209192689E1B7004D3759 /* FileManager+Extension.swift */; };
@@ -1052,6 +1053,7 @@
 		CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkLabel.swift; sourceTree = "<group>"; };
 		CEE208AC272C446F00766BD6 /* BarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeView.swift; sourceTree = "<group>"; };
 		CEE208B627317F5600766BD6 /* Bink Watch App Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bink Watch App Extension.entitlements"; sourceTree = "<group>"; };
+		CEE208BB2734458400766BD6 /* WatchTextStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchTextStack.swift; sourceTree = "<group>"; };
 		CEE209132684653A004D3759 /* WidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetContent.swift; sourceTree = "<group>"; };
 		CEE209192689E1B7004D3759 /* FileManager+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extension.swift"; sourceTree = "<group>"; };
 		CEE2091C268CC5C4004D3759 /* WidgetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetController.swift; sourceTree = "<group>"; };
@@ -2090,6 +2092,7 @@
 				CEE208B627317F5600766BD6 /* Bink Watch App Extension.entitlements */,
 				70D8783926E26DCF006778EA /* BinkWatchApp.swift */,
 				70D8783B26E26DCF006778EA /* WatchContentView.swift */,
+				CEE208BB2734458400766BD6 /* WatchTextStack.swift */,
 				CEE208AC272C446F00766BD6 /* BarcodeView.swift */,
 				70D8783D26E26DCF006778EA /* NotificationController.swift */,
 				70D8783F26E26DCF006778EA /* NotificationView.swift */,
@@ -4165,6 +4168,7 @@
 				CEE208AD272C446F00766BD6 /* BarcodeView.swift in Sources */,
 				70D8783C26E26DCF006778EA /* WatchContentView.swift in Sources */,
 				CE02D51C27285F14008B9BFA /* WatchLoyaltyCard.swift in Sources */,
+				CEE208BC2734458400766BD6 /* WatchTextStack.swift in Sources */,
 				70D8784226E26DCF006778EA /* ComplicationController.swift in Sources */,
 				70D8783A26E26DCF006778EA /* BinkWatchApp.swift in Sources */,
 				CE02D52527294A95008B9BFA /* Font+Extension.swift in Sources */,
