@@ -25,9 +25,9 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
     @Published var noResponseFromPhone = false
     
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
-        noResponseFromPhone = false
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
+            self.noResponseFromPhone = false
 
             if let hasCurrentUser = message["has_current_user"] as? Bool {
                 self.hasCurrentUser = hasCurrentUser

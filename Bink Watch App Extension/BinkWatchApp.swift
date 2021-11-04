@@ -16,7 +16,5 @@ struct BinkWatchApp: App {
                 WatchContentView()
             }
         }
-
-        WKNotificationScene(controller: NotificationController.self, category: "myCategory")
     }
 }
