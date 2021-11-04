@@ -27,19 +27,19 @@ struct WatchContentView: View {
             if !viewModel.hasCurrentUser {
                 VStack {
                     Text(L10n.unauthenticatedStateTitle)
-                        .font(.nunitoExtraBold(20))
+                        .font(.nunitoExtraBold(18))
                         .multilineTextAlignment(.center)
                     Text(L10n.unauthenticatedStateDescription)
-                        .font(.nunitoSans(19))
+                        .font(.nunitoSans(17))
                         .multilineTextAlignment(.center)
                 }
             } else if viewModel.cards.isEmpty {
                 VStack {
                     Text(L10n.brandsListNoSupportedCardsTitle)
-                        .font(.nunitoExtraBold(20))
+                        .font(.nunitoExtraBold(18))
                         .multilineTextAlignment(.center)
                     Text(L10n.brandsListNoSupportedCardsDescription)
-                        .font(.nunitoSans(19))
+                        .font(.nunitoSans(17))
                         .multilineTextAlignment(.center)
                 }
                 .padding([.leading, .trailing])

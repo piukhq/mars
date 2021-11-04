@@ -25,24 +25,15 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
     @Published var hasCurrentUser = false
-    @Published var hasLaunched = false {
-        didSet {
-            print("HAS LANUCHED")
-        }
-    }
+    @Published var hasLaunched = false
 
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            
-            if let _ = message["watch_app_launch_complete"] as? Bool {
-                print("WATCH APP FINISHED LAUNCHING")
-                self.hasLaunched = true
-                return
-            }
-            
+
             if let hasCurrentUser = message["has_current_user"] as? Bool {
                 self.hasCurrentUser = hasCurrentUser
+                self.hasLaunched = true
                 return
             }
             
@@ -84,22 +75,13 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
             
             /// If we receive cards, we know we are on the wallet, we know we are logged in
             self.hasCurrentUser = true
+            self.hasLaunched = true
         }
     }
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         guard activationState == .activated else { return }
-        print("Session active")
-        WCSession.default.sendMessage(["watch_app_launch": true], replyHandler: nil) { error in
-            print(error.localizedDescription)
-        }
-        
-//        WCSession.default.sendMessage(["watch_app_launch": true]) { replyMessage in
-//            print("Received data:")
-//            print(replyMessage)
-//        } errorHandler: { error in
-//            print(error.localizedDescription)
-//        }
+        WCSession.default.sendMessage(["watch_app_launch": true], replyHandler: nil)
     }
 }
 

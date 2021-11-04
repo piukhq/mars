@@ -45,12 +45,6 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
     /// On launch, we want to return our locally persisted wallet before we go and get a refreshed copy.
     /// Should only be called once, when the tab bar is loaded and our wallet view controllers can listen for notifications.
     func launch() {
-        if WCSession.isSupported() {
-            let session = WCSession.default
-            session.delegate = self
-            session.activate()
-        }
-        
         loadWallets(forType: .localLaunch, reloadPlans: false, isUserDriven: false) { [weak self] (_, _) in
             self?.loadWallets(forType: .reload, reloadPlans: true, isUserDriven: false) { (_, _) in
                 self?.refreshManager.start()
@@ -181,7 +175,7 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
             NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
             completion?(true, nil)
             if self.hasLaunched {
-                WatchController().sendWalletCardsToWatch(membershipCards: self.membershipCards)
+                Current.watchController.sendWalletCardsToWatch(membershipCards: self.membershipCards)
             }
         }
     }
@@ -405,33 +399,6 @@ extension Wallet {
             /// Sync the datasource and set the local card order
             localOrder = cards.compactMap { $0.id }
             walletDataSource = cards
-        }
-    }
-}
-
-// MARK: - Watch Connectivity
-
-extension Wallet: WCSessionDelegate {
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        print("Session did activate")
-    }
-    func sessionDidBecomeInactive(_ session: WCSession) {
-        print("Session did become inactive")
-    }
-    func sessionDidDeactivate(_ session: WCSession) {
-        print("Session did deactivate")
-    }
-    
-    func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
-        DispatchQueue.main.async { [weak self] in
-            if let _ = message["watch_app_launch"] as? Bool {
-                WatchController().sendWalletCardsToWatch(membershipCards: self?.membershipCards) {
-                    print("Wallet completion handler called")
-                    WCSession.default.sendMessage(["watch_app_launch_complete": true], replyHandler: nil) { error in
-                        print(error.localizedDescription)
-                    }
-                }
-            }
         }
     }
 }
