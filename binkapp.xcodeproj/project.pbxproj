@@ -1158,7 +1158,6 @@
 				7075381E26DFA26C00690965 /* Alamofire in Frameworks */,
 				7063B1EB270473EE00C5C633 /* FirebaseStorage in Frameworks */,
 				7075382A26DFA72800690965 /* KeychainAccess in Frameworks */,
-				7063B1E9270473EE00C5C633 /* FirebaseAnalytics in Frameworks */,
 				CE85A1DB26B05D95003B74CD /* Lottie in Frameworks */,
 				7075382426DFA38100690965 /* AlamofireNetworkActivityLogger in Frameworks */,
 				7063B1ED270473EE00C5C633 /* FirebaseRemoteConfig in Frameworks */,
@@ -1725,6 +1724,15 @@
 				CE85A1D526A6CD97003B74CD /* LoginSuccessViewController.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		701418C826FB304300BE4DF0 /* Subway */ = {
+			isa = PBXGroup;
+			children = (
+				701418CC26FB312100BE4DF0 /* LocalPointsCollection_Navigate_Subway.js */,
+				701418C926FB306100BE4DF0 /* SubwayPointsScrapingAgent.swift */,
+			);
+			path = Subway;
 			sourceTree = "<group>";
 		};
 		70285D822588B657007B4298 /* Buttons */ = {

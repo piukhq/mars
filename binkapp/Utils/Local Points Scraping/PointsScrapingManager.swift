@@ -365,7 +365,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 }
                 
                 self.pointsScrapingDidComplete(for: item)
-                
+
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionSuccess(membershipCard: membershipCard))
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
             }
