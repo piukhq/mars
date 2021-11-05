@@ -4291,6 +4291,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -4353,6 +4354,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.beta;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -4384,6 +4386,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = binkapp/Info.plist;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.alpha;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4428,6 +4431,7 @@
 					"PB_ENABLE_MALLOC=1",
 				);
 				INFOPLIST_FILE = binkapp/Info.plist;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.beta;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4598,6 +4602,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -4629,6 +4634,7 @@
 				);
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = binkapp/Info.plist;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4748,6 +4754,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -4778,6 +4785,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = binkapp/Info.plist;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.beta;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4883,7 +4891,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -4905,6 +4913,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IBSC_MODULE = Bink_Watch_App_Extension;
 				INFOPLIST_FILE = "Bink Watch App/Info.plist";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.alpha;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -4913,8 +4922,9 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha.watch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.bink.wallet.alpha.watch";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -4963,7 +4973,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -4979,6 +4989,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IBSC_MODULE = Bink_Watch_App_Extension;
 				INFOPLIST_FILE = "Bink Watch App/Info.plist";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.beta;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -4986,8 +4997,9 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.beta.watch";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -5037,7 +5049,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -5054,6 +5066,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IBSC_MODULE = Bink_Watch_App_Extension;
 				INFOPLIST_FILE = "Bink Watch App/Info.plist";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -5061,8 +5074,9 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.watch";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -5112,7 +5126,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -5128,6 +5142,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IBSC_MODULE = Bink_Watch_App_Extension;
 				INFOPLIST_FILE = "Bink Watch App/Info.plist";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.beta;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -5135,8 +5150,9 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.beta.watch";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -5184,7 +5200,8 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = "Bink Watch App Extension/Bink Watch App Extension.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
@@ -5207,6 +5224,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Bink Watch App Extension/Info.plist";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.alpha;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5215,8 +5233,9 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha.watch.extension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.bink.wallet.alpha.watch.ext";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -5262,10 +5281,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = "Bink Watch App Extension/Bink Watch App Extension.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -5278,6 +5298,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Bink Watch App Extension/Info.plist";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.beta;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5285,8 +5306,9 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch.extension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.beta.watch.extension";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -5333,10 +5355,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = "Bink Watch App Extension/Bink Watch App Extension.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -5350,6 +5373,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Bink Watch App Extension/Info.plist";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5357,8 +5381,9 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watch.extension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.watch.extension";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -5405,10 +5430,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = "Bink Watch App Extension/Bink Watch App Extension.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -5421,6 +5447,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Bink Watch App Extension/Info.plist";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.beta;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5428,8 +5455,9 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch.extension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.beta.watch.extension";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;

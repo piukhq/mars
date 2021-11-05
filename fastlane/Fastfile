@@ -45,10 +45,18 @@ platform :ios do
     match(type: "development", app_identifier: "com.bink.wallet.alpha.widget", readonly: true)
     match(type: "adhoc", app_identifier: "com.bink.wallet.beta.widget", readonly: true)
     match(type: "appstore", app_identifier: "com.bink.wallet.widget", readonly: true)
+    match(type: "development", app_identifier: "com.bink.wallet.alpha.watch", readonly: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.beta.watch", readonly: true)
+    match(type: "appstore", app_identifier: "com.bink.wallet.watch", readonly: true)
+    match(type: "development", app_identifier: "com.bink.wallet.alpha.watch.extension", readonly: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.beta.watch.extension", readonly: true)
+    match(type: "appstore", app_identifier: "com.bink.wallet.watch.extension", readonly: true)
 
     # For MR builds to Testflight
     match(type: "appstore", app_identifier: "com.bink.wallet.beta", readonly: true)
     match(type: "appstore", app_identifier: "com.bink.wallet.beta.widget", readonly: true)
+    match(type: "appstore", app_identifier: "com.bink.wallet.beta.watch", readonly: true)
+    match(type: "appstore", app_identifier: "com.bink.wallet.beta.watch.extension", readonly: true)
 
   end
 
@@ -86,10 +94,18 @@ platform :ios do
     match(type: "development", app_identifier: "com.bink.wallet.alpha.widget", readonly: false, force_for_new_devices: true)
     match(type: "adhoc", app_identifier: "com.bink.wallet.beta.widget", readonly: false, force_for_new_devices: true)
     match(type: "appstore", app_identifier: "com.bink.wallet.widget", readonly: false, force_for_new_devices: true)
-    
+    match(type: "development", app_identifier: "com.bink.wallet.alpha.watch", readonly: false, force_for_new_devices: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.beta.watch", readonly: false, force_for_new_devices: true)
+    match(type: "appstore", app_identifier: "com.bink.wallet.watch", readonly: false, force_for_new_devices: true)
+    match(type: "development", app_identifier: "com.bink.wallet.alpha.watch.extension", readonly: false, force_for_new_devices: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.beta.watch.extension", readonly: false, force_for_new_devices: true)
+    match(type: "appstore", app_identifier: "com.bink.wallet.watch.extension", readonly: false, force_for_new_devices: true)
+
     # For MR builds to Testflight
     match(type: "appstore", app_identifier: "com.bink.wallet.beta", readonly: false, force_for_new_devices: true)
     match(type: "appstore", app_identifier: "com.bink.wallet.beta.widget", readonly: false, force_for_new_devices: true)
+    match(type: "appstore", app_identifier: "com.bink.wallet.beta.watch", readonly: false, force_for_new_devices: true)
+    match(type: "appstore", app_identifier: "com.bink.wallet.beta.watch.extension", readonly: false, force_for_new_devices: true)
 
   end
 
