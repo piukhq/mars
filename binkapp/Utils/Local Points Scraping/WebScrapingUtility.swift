@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import FirebaseStorage
 
 struct WebScrapingCredentials {
     let username: String
@@ -33,8 +34,8 @@ struct PriorityScrapableCard: Equatable {
 }
 
 protocol WebScrapingUtilityDelegate: AnyObject {
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, item: PointsScrapingManager.QueuedItem, withAgent agent: WebScrapable)
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, item: PointsScrapingManager.QueuedItem, withAgent agent: WebScrapable)
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, item: PointsScrapingManager.QueuedItem, withAgent agent: LocalPointsCollectable)
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, item: PointsScrapingManager.QueuedItem, withAgent agent: LocalPointsCollectable)
 }
 
 class WebScrapingUtility: NSObject {
@@ -47,7 +48,7 @@ class WebScrapingUtility: NSObject {
     private var activeWebview: WKWebView?
     private var priorityScrapableCards: [PriorityScrapableCard] = []
     
-    private var agent: WebScrapable?
+    private var agent: LocalPointsCollectable?
     private var item: PointsScrapingManager.QueuedItem?
     
     private weak var delegate: WebScrapingUtilityDelegate?
@@ -84,13 +85,16 @@ class WebScrapingUtility: NSObject {
         super.init()
     }
     
-    func start(agent: WebScrapable, item: PointsScrapingManager.QueuedItem) throws {
+    func start(agent: LocalPointsCollectable, item: PointsScrapingManager.QueuedItem) throws {
         /// If we have a membership card or agent, then we are currently in the process of scraping and should not be interrupted
-        guard !isRunning else { return }
+        guard !isRunning else {
+            SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Web scraping utility is already running and will not continue"))
+            return
+        }
         
         self.agent = agent
         
-        guard let url = URL(string: agent.scrapableUrlString) else {
+        guard let urlString = agent.pointsCollectionUrlString, let url = URL(string: urlString) else {
             throw WebScrapingUtilityError.agentProvidedInvalidUrl
         }
         
@@ -127,6 +131,14 @@ class WebScrapingUtility: NSObject {
             return
         }
         
+        defer {
+            if activeWebview == priorityWebview {
+                SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Active webview set to priority webview"))
+            } else {
+                SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Active webview set to ephemeral webview"))
+            }
+        }
+        
         DispatchQueue.main.async {
             let priorityCardIds = self.priorityScrapableCards.map { $0.cardId }
             
@@ -155,7 +167,10 @@ class WebScrapingUtility: NSObject {
                     /// If not, use priority web view
                     /// Clear all merchant data from datastore first to ensure no conflicts
                     defaultDataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), for: records.filter {
-                        $0.displayName.contains(agent.merchant.rawValue)
+                        if let merchant = agent.merchant {
+                            return $0.displayName.contains(merchant)
+                        }
+                        return false
                     }) {
                         completion(.success(self.priorityWebview))
                         return
@@ -166,6 +181,8 @@ class WebScrapingUtility: NSObject {
     }
     
     func stop() {
+        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Web scraping utility stopped"))
+        
         agent = nil
         item = nil
         idleTimer?.invalidate()
@@ -180,6 +197,8 @@ class WebScrapingUtility: NSObject {
     }
     
     private func resetIdlingTimer() {
+        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Resetting idle timer"))
+        
         idleTimer?.invalidate()
         idleTimer = Timer.scheduledTimer(withTimeInterval: idleThreshold, repeats: false, block: { [weak self] timer in
             guard let self = self else { return }
@@ -199,6 +218,8 @@ class WebScrapingUtility: NSObject {
     }
     
     private func beginUserAction() {
+        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Beginning user action"))
+        
         isPerformingUserAction = true
         presentWebView()
         userActionTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] _ in
@@ -208,6 +229,8 @@ class WebScrapingUtility: NSObject {
     }
     
     private func endUserAction() {
+        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Ending user action"))
+        
         isPerformingUserAction = false
         userActionTimer?.invalidate()
         closeWebView()
@@ -215,6 +238,8 @@ class WebScrapingUtility: NSObject {
     }
     
     private func presentWebView() {
+        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Presenting web view"))
+        
         guard !isPresentingWebView else { return }
         guard let activeWebview = activeWebview else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -225,9 +250,24 @@ class WebScrapingUtility: NSObject {
     }
     
     private func closeWebView(force: Bool = false) {
+        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Closing web view"))
+        
         if !force, isInDebugMode { return }
         if isPresentingWebView {
             Current.navigate.close()
+        }
+    }
+    
+    private func fetchScriptFile(merchant: LocalPointsCollectableMerchant, completion: @escaping (String?) -> Void) {
+        let storage = Storage.storage()
+        let pathReference = storage.reference(withPath: "local-points-collection/\(merchant.lowercased()).js")
+        
+        pathReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            guard let data = data else {
+                completion(nil)
+                return
+            }
+            completion(String(data: data, encoding: .utf8))
         }
     }
     
@@ -241,6 +281,8 @@ class WebScrapingUtility: NSObject {
     private func runScript(_ script: String, completion: @escaping (Result<WebScrapingResponse, WebScrapingUtilityError>) -> Void) {
         if isExecutingScript { return }
         isExecutingScript = true
+        
+        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Executing script"))
         
         activeWebview?.evaluateJavaScript(script) { [weak self] (response, error) in
             self?.isExecutingScript = false
@@ -276,16 +318,18 @@ class WebScrapingUtility: NSObject {
         item.isProcessing = false
         
         if let value = value {
-            if Current.pointsScrapingManager.isDebugMode {
-                DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - Retreived points balance", type: .success)
+            if Current.pointsScrapingManager.isDebugMode, let merchant = agent.merchant?.capitalized {
+                DebugInfoAlertView.show("\(merchant) LPC - Retreived points balance", type: .success)
             }
             delegate?.webScrapingUtility(self, didCompleteWithValue: value, item: item, withAgent: agent)
+            
+            SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Finishing with value"))
         }
         
         if let error = error {
-            if Current.pointsScrapingManager.isDebugMode {
+            if Current.pointsScrapingManager.isDebugMode, let merchant = agent.merchant?.capitalized {
                 DispatchQueue.main.async {
-                    DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - \(error.localizedDescription)", type: .failure)
+                    DebugInfoAlertView.show("\(merchant) LPC - \(error.localizedDescription)", type: .failure)
                 }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -293,6 +337,8 @@ class WebScrapingUtility: NSObject {
                 }
             }
             delegate?.webScrapingUtility(self, didCompleteWithError: error, item: item, withAgent: agent)
+            
+            SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Finishing with error: \(error.localizedDescription)"))
             
             priorityScrapableCards.removeAll(where: { $0.cardId == item.card.id })
         }
@@ -317,76 +363,89 @@ extension WebScrapingUtility: WKNavigationDelegate {
     private func handleWebViewNavigation(stateConfigurator: WebScrapingStateConfigurator? = nil) {
         resetIdlingTimer()
         guard let agent = agent else { return }
-        guard let script = script(scriptName: agent.navigateScriptFileName) else {
-            finish(withError: .scriptFileNotFound)
-            return
-        }
-        guard let card = item?.card, let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: card.id) else {
-            return
-        }
+        guard let merchant = agent.merchant else { return }
         
-        var configString = ""
-        if let stateConfig = stateConfigurator {
-            configString = stateConfig.rawValue
-        } else if self.sessionHasAttemptedLogin {
-            configString = WebScrapingStateConfigurator.skipLogin.rawValue
-        }
-        
-        let formattedScript = String(format: script, credentials.username, credentials.password, configString, credentials.cardNumber ?? "")
-        runScript(formattedScript) { [weak self] result in
+        fetchScriptFile(merchant: merchant) { [weak self] script in
             guard let self = self else { return }
-            switch result {
-            case .success(let response):
-                if let error = response.errorMessage {
-                    if response.didAttemptLogin == true {
-                        self.finish(withError: .incorrectCredentials(errorMessage: error))
-                    } else {
-                        self.finish(withError: .genericFailure(errorMessage: error))
+            guard let script = script else { return }
+            
+            guard let card = self.item?.card, let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: card.id) else {
+                return
+            }
+            
+            var configString = ""
+            if let stateConfig = stateConfigurator {
+                configString = stateConfig.rawValue
+            } else if self.sessionHasAttemptedLogin {
+                configString = WebScrapingStateConfigurator.skipLogin.rawValue
+            }
+            
+            SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Handling webview navigation"))
+            SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Script config: \(configString)"))
+            
+            let formattedScript = String(format: script, credentials.username, credentials.password, configString, credentials.cardNumber ?? "")
+            self.runScript(formattedScript) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let response):
+                    if let error = response.errorMessage {
+                        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Site error detected"))
+                        
+                        if response.didAttemptLogin == true {
+                            SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Site did detect login attempt before error: \(error)"))
+                            self.finish(withError: .incorrectCredentials(errorMessage: error))
+                        } else {
+                            self.finish(withError: .genericFailure(errorMessage: error))
+                        }
+                        return
                     }
-                    return
-                }
-                
-                
-                // User action
-                
-                if response.userActionComplete == true {
-                    self.endUserAction()
-                    return
-                }
-                
-                if response.userActionRequired == true {
-                    self.beginUserAction()
-                    return
-                }
-                
-                
-                // Login attempt
-                
-                if response.didAttemptLogin == true {
-                    self.sessionHasAttemptedLogin = true
-                    if let card = self.item?.card, self.activeWebview == self.priorityWebview {
-                        /// At this point, we know we've attempted a login so there was no valid session
-                        /// As we are using the priority web view, we know the membership card is the only one of it's plan type
-                        /// We can safely assume the membership card can be move to the priority list and have it's session reused
-                        if let priorityCard = PriorityScrapableCard(membershipCard: card), !self.priorityScrapableCards.contains(priorityCard) {
-                            self.priorityScrapableCards.append(priorityCard)
+                    
+                    
+                    // User action
+                    
+                    if response.userActionComplete == true {
+                        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Site detected completed user action"))
+                        self.endUserAction()
+                        return
+                    }
+                    
+                    if response.userActionRequired == true {
+                        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Site detected user action required"))
+                        self.beginUserAction()
+                        return
+                    }
+                    
+                    
+                    // Login attempt
+                    
+                    if response.didAttemptLogin == true {
+                        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Site detected login attempt"))
+                        self.sessionHasAttemptedLogin = true
+                        if let card = self.item?.card, self.activeWebview == self.priorityWebview {
+                            /// At this point, we know we've attempted a login so there was no valid session
+                            /// As we are using the priority web view, we know the membership card is the only one of it's plan type
+                            /// We can safely assume the membership card can be move to the priority list and have it's session reused
+                            if let priorityCard = PriorityScrapableCard(membershipCard: card), !self.priorityScrapableCards.contains(priorityCard) {
+                                self.priorityScrapableCards.append(priorityCard)
+                            }
+                        }
+                        
+                        if Current.pointsScrapingManager.isDebugMode, let merchant = agent.merchant?.capitalized {
+                            DebugInfoAlertView.show("\(merchant) LPC - Attempted to log in", type: .success)
                         }
                     }
                     
-                    if Current.pointsScrapingManager.isDebugMode, let agent = self.agent {
-                        DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - Attempted to log in", type: .success)
+                    
+                    // Points retrieval
+                    
+                    if let points = response.pointsValue {
+                        SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Site detected points value"))
+                        self.finish(withValue: points)
+                        return
                     }
+                case .failure(let error):
+                    self.finish(withError: error)
                 }
-                
-                
-                // Points retrieval
-                
-                if let points = response.pointsValue {
-                    self.finish(withValue: points)
-                    return
-                }
-            case .failure(let error):
-                self.finish(withError: error)
             }
         }
     }

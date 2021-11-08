@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import Vision
 
 struct BarcodeScannerViewModel {
     let plan: CD_MembershipPlan?
@@ -18,12 +19,26 @@ struct BarcodeScannerViewModel {
     }
 }
 
+enum BarcodeCaptureSource {
+    case camera(CD_MembershipPlan?)
+    case photoLibrary(CD_MembershipPlan?)
+    
+    var errorMessage: String {
+        switch self {
+        case .camera(let membershipPlan):
+            return "The card you scanned was not correct, please scan your \(membershipPlan?.account?.companyName ?? "") card"
+        case .photoLibrary(let membershipPlan):
+            return "Unrecognized barcode, please import an image of your \(membershipPlan?.account?.companyName ?? "") barcode"
+        }
+    }
+}
+
 protocol BarcodeScannerViewControllerDelegate: AnyObject {
     func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?)
     func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?)
 }
 
-class BarcodeScannerViewController: BinkViewController {
+class BarcodeScannerViewController: BinkViewController, UINavigationControllerDelegate {
     enum Constants {
         static let rectOfInterestInset: CGFloat = 25
         static let viewFrameRatio: CGFloat = 12 / 18
@@ -52,6 +67,8 @@ class BarcodeScannerViewController: BinkViewController {
     private var canPresentScanError = true
     private var hideNavigationBar = true
     private var shouldAllowScanning = true
+    private var captureSource: BarcodeCaptureSource
+    private let visionUtility = VisionImageDetectionUtility()
 
     private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .regular))
@@ -68,6 +85,8 @@ class BarcodeScannerViewController: BinkViewController {
         label.font = .bodyTextLarge
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         return label
     }()
 
@@ -85,6 +104,12 @@ class BarcodeScannerViewController: BinkViewController {
         button.addTarget(self, action: #selector(close), for: .touchUpInside)
         return button
     }()
+    
+    private lazy var photoLibraryButton: BinkButton = {
+        return BinkButton(type: .plain, title: L10n.loyaltyScannerAddPhotoFromLibraryButtonTitle, enabled: true, action: { [weak self] in
+            self?.toPhotoLibrary()
+        })
+    }()
 
     private var viewModel: BarcodeScannerViewModel
 
@@ -92,6 +117,7 @@ class BarcodeScannerViewController: BinkViewController {
         self.viewModel = viewModel
         self.delegate = delegate
         self.hideNavigationBar = hideNavigationBar
+        self.captureSource = .camera(viewModel.plan)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -123,9 +149,11 @@ class BarcodeScannerViewController: BinkViewController {
 
         guideImageView.frame = rectOfInterest.inset(by: Constants.guideImageInset)
         view.addSubview(guideImageView)
-
         view.addSubview(explainerLabel)
         view.addSubview(widgetView)
+        
+        footerButtons = [photoLibraryButton]
+        
         NSLayoutConstraint.activate([
             explainerLabel.topAnchor.constraint(equalTo: guideImageView.bottomAnchor, constant: Constants.explainerLabelPadding),
             explainerLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.explainerLabelPadding),
@@ -173,7 +201,7 @@ class BarcodeScannerViewController: BinkViewController {
         cancelButton.tintColor = Current.themeManager.color(for: .text)
         widgetView.configure()
     }
-
+    
     private func startScanning() {
         viewModel.isScanning = true
         session.sessionPreset = .high
@@ -219,9 +247,7 @@ class BarcodeScannerViewController: BinkViewController {
 
         captureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
 
-        timer = Timer.scheduledTimer(withTimeInterval: Constants.timerInterval, repeats: false, block: { [weak self] _ in
-            self?.widgetView.timeout()
-        })
+        scheduleTimer()
     }
 
     private func stopScanning() {
@@ -234,6 +260,12 @@ class BarcodeScannerViewController: BinkViewController {
             }
             self?.timer?.invalidate()
         }
+    }
+    
+    private func scheduleTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: Constants.timerInterval, repeats: false, block: { [weak self] _ in
+            self?.widgetView.timeout()
+        })
     }
 
     private func performCaptureChecksForDevice(_ device: AVCaptureDevice) {
@@ -273,6 +305,17 @@ class BarcodeScannerViewController: BinkViewController {
         device.unlockForConfiguration()
     }
 
+    private func toPhotoLibrary() {
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        picker.delegate = self
+        picker.modalPresentationStyle = .overCurrentContext
+        captureSource = .photoLibrary(viewModel.plan)
+        timer?.invalidate()
+        let navigationRequest = ModalNavigationRequest(viewController: picker, embedInNavigationController: false)
+        Current.navigate.to(navigationRequest)
+    }
+    
     @objc private func enterManually() {
         delegate?.barcodeScannerViewControllerShouldEnterManually(self, completion: { [weak self] in
             guard let self = self else { return }
@@ -283,6 +326,81 @@ class BarcodeScannerViewController: BinkViewController {
     @objc private func close() {
         Current.navigate.close()
     }
+    
+    private func identifyMembershipPlanForBarcode(_ barcode: String) {
+        Current.wallet.identifyMembershipPlanForBarcode(barcode) { [weak self] plan in
+            guard let self = self else { return }
+            guard let plan = plan else {
+                if self.canPresentScanError {
+                    self.canPresentScanError = false
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        self.widgetView.unrecognizedBarcode()
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: { [weak self] in
+                        self?.canPresentScanError = true
+                    })
+                }
+                return
+            }
+            
+            if #available(iOS 14.0, *) {
+                BinkLogger.infoPrivateHash(event: AppLoggerEvent.barcodeScanned, value: "ID: \(plan.id ?? "") - \(barcode)")
+            }
+            
+            self.passDataToBarcodeScannerDelegate(barcode: barcode, membershipPlan: plan)
+        }
+    }
+    
+    private func passDataToBarcodeScannerDelegate(barcode: String, membershipPlan: CD_MembershipPlan) {
+        // We recognised the plan, but is this the plan we injected if any?
+        if let planFromForm = self.viewModel.plan {
+            // We injected a plan from a form
+            if membershipPlan != planFromForm {
+                if self.canPresentScanError {
+                    self.canPresentScanError = false
+                    DispatchQueue.main.async {
+                        if #available(iOS 14.0, *) {
+                            BinkLogger.error(AppLoggerError.barcodeScanningFailure, value: planFromForm.account?.companyName)
+                        }
+                        HapticFeedbackUtil.giveFeedback(forType: .notification(type: .error))
+                        self.showError(barcodeDetected: true)
+                    }
+                }
+            } else {
+                self.stopScanning()
+                HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
+                
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.delegate?.barcodeScannerViewController(self, didScanBarcode: barcode, forMembershipPlan: membershipPlan, completion: nil)
+                }
+            }
+        } else {
+            self.stopScanning()
+            HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
+            
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.delegate?.barcodeScannerViewController(self, didScanBarcode: barcode, forMembershipPlan: membershipPlan, completion: nil)
+            }
+        }
+    }
+    
+    private func showError(barcodeDetected: Bool) {
+        let alert = BinkAlertController(title: L10n.errorTitle, message: barcodeDetected ? captureSource.errorMessage : L10n.loyaltyScannerFailedToDetectBarcode, preferredStyle: .alert)
+        let action = UIAlertAction(title: L10n.ok, style: .cancel) { [weak self] _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: {
+                self?.canPresentScanError = true
+                self?.shouldAllowScanning = true
+                if !barcodeDetected {
+                    self?.scheduleTimer()
+                }
+            })
+        }
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
 extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
@@ -291,72 +409,34 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
         guard shouldAllowScanning else { return }
         shouldAllowScanning = false
 
-        //TODO: Tidy this up by splitting to other functions
-
         if let object = metadataObjects.first {
             guard let readableObject = object as? AVMetadataMachineReadableCodeObject else { return }
             guard let stringValue = readableObject.stringValue else { return }
-            Current.wallet.identifyMembershipPlanForBarcode(stringValue) { [weak self] plan in
-                guard let self = self else { return }
-                guard let plan = plan else {
-                    if self.canPresentScanError {
-                        self.canPresentScanError = false
-                        DispatchQueue.main.async { [weak self] in
-                            guard let self = self else { return }
-                            self.widgetView.unrecognizedBarcode()
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: { [weak self] in
-                            self?.canPresentScanError = true
-                        })
-                    }
+            captureSource = .camera(viewModel.plan)
+            identifyMembershipPlanForBarcode(stringValue)
+        }
+    }
+}
+
+// MARK: - Detect barcode from image
+
+extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        guard let image = info[.editedImage] as? UIImage else { return }
+        Current.navigate.close(animated: true) { [weak self] in
+            self?.visionUtility.createVisionRequest(image: image) { barcode in
+                guard let barcode = barcode else {
+                    self?.showError(barcodeDetected: false)
                     return
                 }
-                
-                if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(event: AppLoggerEvent.barcodeScanned, value: "ID: \(plan.id ?? "") - \(stringValue)")
-                }
-                
-                // We recognised the plan, but is this the plan we injected if any?
-                if let planFromForm = self.viewModel.plan {
-                    // We injected a plan from a form
-                    if plan != planFromForm {
-                        if self.canPresentScanError {
-                            self.canPresentScanError = false
-                            DispatchQueue.main.async {
-                                if #available(iOS 14.0, *) {
-                                    BinkLogger.error(AppLoggerError.barcodeScanningFailure, value: planFromForm.account?.companyName)
-                                }
-                                HapticFeedbackUtil.giveFeedback(forType: .notification(type: .error))
-                                let alert = BinkAlertController(title: "Error", message: "The card you scanned was not correct, please scan your \(planFromForm.account?.companyName ?? "") card", preferredStyle: .alert)
-                                let action = UIAlertAction(title: "OK", style: .cancel) { _ in
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: {
-                                        self.canPresentScanError = true
-                                        self.shouldAllowScanning = true
-                                    })
-                                }
-                                alert.addAction(action)
-                                self.present(alert, animated: true, completion: nil)
-                            }
-                        }
-                    } else {
-                        self.stopScanning()
-                        HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
-                        
-                        DispatchQueue.main.async { [weak self] in
-                            guard let self = self else { return }
-                            self.delegate?.barcodeScannerViewController(self, didScanBarcode: stringValue, forMembershipPlan: plan, completion: nil)
-                        }
-                    }
-                } else {
-                    self.stopScanning()
-                    HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
-                    
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self = self else { return }
-                        self.delegate?.barcodeScannerViewController(self, didScanBarcode: stringValue, forMembershipPlan: plan, completion: nil)
-                    }
-                }
+                self?.identifyMembershipPlanForBarcode(barcode)
             }
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        Current.navigate.close(animated: true) {
+            self.scheduleTimer()
         }
     }
 }

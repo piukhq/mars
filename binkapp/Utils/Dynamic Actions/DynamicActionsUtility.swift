@@ -20,10 +20,19 @@ struct DynamicActionsUtility {
     private func availableActions(for viewController: BinkViewController) -> [DynamicAction]? {
         /// From all of the actions that we received from the remote config, are there any that contain a location with a screen that matches the screen we are currently on?
         let availableActions = allActions?.filter { $0.locations?.contains(where: { $0.screen?.viewControllerType == type(of: viewController) }) == true }
-        return availableActions?.filter { $0.isActive }
+        
+        if APIConstants.isProduction {
+            return availableActions?.filter { $0.isActive && $0.enabledLive == true }
+        } else {
+            if let debugActions = availableActions?.filter({ $0.forceDebug == true }) {
+                return debugActions
+            } else {
+                return availableActions?.filter { $0.isActive }
+            }
+        }
     }
 
     private var allActions: [DynamicAction]? {
-        return Current.remoteConfig.objectForConfigKey(.dynamicActions, forObjectType: [DynamicAction].self)
+        return Current.remoteConfig.configFile?.dynamicActions
     }
 }

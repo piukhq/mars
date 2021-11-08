@@ -41,11 +41,11 @@ struct FeatureFlagsSwiftUIView: View {
 
 @available(iOS 14.0, *)
 struct FeatureFlagCell: View {
-    private var feature: Feature
+    private var feature: BetaFeature
 
     @State private var isEnabled: Bool
     
-    init(feature: Feature) {
+    init(feature: BetaFeature) {
         self.feature = feature
         _isEnabled = State(initialValue: feature.isEnabled)
     }
