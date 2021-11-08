@@ -176,6 +176,11 @@ enum ViewControllerFactory {
         return ForgotPasswordViewController(viewModel: viewModel)
     }
     
+    static func makeCheckYourInboxViewController(configuration: ReusableModalConfiguration) -> CheckYourInboxViewController {
+        let viewModel = ReusableModalViewModel(configurationModel: configuration)
+        return CheckYourInboxViewController(viewModel: viewModel)
+    }
+    
     // MARK: - Local Points Collection
     
     static func makeLocalPointsCollectionBalanceRefreshViewController(membershipCard: CD_MembershipCard, lastCheckedDate: Date?) -> ReusableTemplateViewController {
