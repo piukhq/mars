@@ -347,7 +347,7 @@
 "tandcs_link" = "Terms and Conditions";
 "ppolicy_title" = "I accept Bink's Privacy Policy";
 "ppolicy_link" = "Privacy Policy";
-"marketing_title" = "Opt in to receive marketing messages";
+"marketing_title" = "Opt in to receive marketing messages.";
 
 "access_form_email_title" = "Email";
 "access_form_email_placeholder" = "Enter email address";
@@ -436,10 +436,13 @@
 
 // MARK: - Loyalty Scanner
 "loyalty_scanner_explainer_text" = "Hold card here. It will scan automatically.";
+"loyalty_scanner_explainer_text_permission_denied" = "Scanning disabled - please allow camera access";
 "loyalty_scanner_widget_title_enter_manually_text" = "Enter manually";
 "loyalty_scanner_widget_title_unrecognized_barcode_text" = "Unrecognised barcode";
 "loyalty_scanner_widget_explainer_enter_manually_text" = "You can also type in the card details yourself.";
 "loyalty_scanner_widget_explainer_unrecognized_barcode_text" = "Please try adding the card manually.";
+"loyalty_scanner_add_photo_from_library_button_title" = "Add from Photo Library";
+"loyalty_scanner_failed_to_detect_barcode" = "Failed to detect barcode in the image, please try again";
 
 // MARK: - Payment Scanner
 "payment_scanner_explainer_text" = "Position your card in the frame so the card number is visible";
@@ -467,6 +470,13 @@
 "scan_button_title" = "Scan loyalty card";
 "scan_utton_subtitle" = "Quickly add a card you already have";
 
+// MARK: - Local Points Collection
+"lpc_points_module_balance_explainer_title" = "Balance";
+"lpc_points_module_balance_explainer_body" = "Your %@ account balance was last updated %@. Bink will try to update this account every %@.";
+"lpc_points_module_balance_explainer_body_refreshable" = "Your %@ account balance was last updated %@. Bink will try to update this account every %@.\n\nYou can manually refresh your balance using the button below.";
+"lpc_points_module_balance_explainer_body_refresh_requested" = "Your %@ account balance was last updated %@. Bink will try to update this account every %@.\n\nA balance refresh for this card is currently in progress and will update shortly.";
+"lpc_points_module_balance_explainer_body_time_ago" = "%@ ago";
+"lpc_points_module_balance_explainer_button_title" = "Refresh";
 // MARK: - Watch App
 "brands_list_no_supported_cards_title" = "No supported cards";
 "brands_list_no_supported_cards_description" = "We can only show you cards with barcodes or vouchers";

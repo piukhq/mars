@@ -10,10 +10,10 @@ import WidgetKit
 import SwiftUI
 
 let previewWalletCards: [MembershipCardWidget] = [
-    MembershipCardWidget(id: "0", imageData: UIImage(named: "hn")?.pngData(), backgroundColor: "#000000"),
-    MembershipCardWidget(id: "1", imageData: UIImage(named: "wasabi")?.pngData(), backgroundColor: "#bed633"),
-    MembershipCardWidget(id: "2", imageData: UIImage(named: "iceland")?.pngData(), backgroundColor: "#f80000"),
-    MembershipCardWidget(id: "addCard", imageData: nil, backgroundColor: nil)
+    MembershipCardWidget(id: "0", imageData: UIImage(named: "hn")?.pngData(), backgroundColor: "#000000", planName: "Harvey Nichols"),
+    MembershipCardWidget(id: "1", imageData: UIImage(named: "wasabi")?.pngData(), backgroundColor: "#bed633", planName: "Wasabi"),
+    MembershipCardWidget(id: "2", imageData: UIImage(named: "iceland")?.pngData(), backgroundColor: "#f80000", planName: "Iceland"),
+    MembershipCardWidget(id: "addCard", imageData: nil, backgroundColor: nil, planName: nil)
 ]
 
 struct QuickLaunchProvider: TimelineProvider {

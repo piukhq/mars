@@ -84,4 +84,11 @@ open class ReusableModalViewModel {
     func secondaryButtonWasTapped() {
         secondaryButtonAction?()
     }
+    
+    func toAboutMembershipPlan() {
+        guard let plan = membershipPlan else { return }
+        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: plan)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+    }
 }

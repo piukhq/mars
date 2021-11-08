@@ -280,8 +280,14 @@ internal enum L10n {
   internal static let loginWithPassword = L10n.tr("Localizable", "login_with_password")
   /// Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pellentesque, nisi ut sagittis luctus, justo orci porttitor nulla, ac ultricies sem mi quis nunc. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur placerat sagittis tortor quis vehicula. Fusce et aliquam tellus, eu semper sem. Proin eu eleifend nunc. Aliquam id lacus faucibus, euismod orci in, tempor felis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam finibus commodo dui sit amet imperdiet. Phasellus tincidunt elementum euismod. Aliquam lobortis sapien in justo varius pulvinar. Morbi ac placerat sem. Maecenas ut auctor purus.Etiam quis blandit sapien. Nam urna quam, tempus ut massa sed, blandit ultrices neque. Sed sagittis vel quam ac interdum. Nunc tempus eros eget leo volutpat, ac sodales ex scelerisque. Aenean vel nibh lacus. Sed convallis faucibus euismod. Sed diam dui, commodo blandit tempus in, faucibus quis ligula. Integer condimentum mollis bibendum. Nullam feugiat rutrum mauris a luctus. Morbi dignissim, orci ac tempor bibendum, augue diam pharetra massa, vel commodo leo sem sed nisl. Pellentesque egestas egestas quam, nec laoreet dolor. Curabitur commodo scelerisque nisl ac mollis. Morbi egestas arcu nec convallis mollis.
   internal static let loremIpsum = L10n.tr("Localizable", "lorem_ipsum")
+  /// Add from Photo Library
+  internal static let loyaltyScannerAddPhotoFromLibraryButtonTitle = L10n.tr("Localizable", "loyalty_scanner_add_photo_from_library_button_title")
   /// Hold card here. It will scan automatically.
   internal static let loyaltyScannerExplainerText = L10n.tr("Localizable", "loyalty_scanner_explainer_text")
+  /// Scanning disabled - please allow camera access
+  internal static let loyaltyScannerExplainerTextPermissionDenied = L10n.tr("Localizable", "loyalty_scanner_explainer_text_permission_denied")
+  /// Failed to detect barcode in the image, please try again
+  internal static let loyaltyScannerFailedToDetectBarcode = L10n.tr("Localizable", "loyalty_scanner_failed_to_detect_barcode")
   /// You can also type in the card details yourself.
   internal static let loyaltyScannerWidgetExplainerEnterManuallyText = L10n.tr("Localizable", "loyalty_scanner_widget_explainer_enter_manually_text")
   /// Please try adding the card manually.
@@ -290,6 +296,26 @@ internal enum L10n {
   internal static let loyaltyScannerWidgetTitleEnterManuallyText = L10n.tr("Localizable", "loyalty_scanner_widget_title_enter_manually_text")
   /// Unrecognised barcode
   internal static let loyaltyScannerWidgetTitleUnrecognizedBarcodeText = L10n.tr("Localizable", "loyalty_scanner_widget_title_unrecognized_barcode_text")
+  /// Your %@ account balance was last updated %@. Bink will try to update this account every %@.
+  internal static func lpcPointsModuleBalanceExplainerBody(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+    return L10n.tr("Localizable", "lpc_points_module_balance_explainer_body", String(describing: p1), String(describing: p2), String(describing: p3))
+  }
+  /// Your %@ account balance was last updated %@. Bink will try to update this account every %@.\n\nA balance refresh for this card is currently in progress and will update shortly.
+  internal static func lpcPointsModuleBalanceExplainerBodyRefreshRequested(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+    return L10n.tr("Localizable", "lpc_points_module_balance_explainer_body_refresh_requested", String(describing: p1), String(describing: p2), String(describing: p3))
+  }
+  /// Your %@ account balance was last updated %@. Bink will try to update this account every %@.\n\nYou can manually refresh your balance using the button below.
+  internal static func lpcPointsModuleBalanceExplainerBodyRefreshable(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+    return L10n.tr("Localizable", "lpc_points_module_balance_explainer_body_refreshable", String(describing: p1), String(describing: p2), String(describing: p3))
+  }
+  /// %@ ago
+  internal static func lpcPointsModuleBalanceExplainerBodyTimeAgo(_ p1: Any) -> String {
+    return L10n.tr("Localizable", "lpc_points_module_balance_explainer_body_time_ago", String(describing: p1))
+  }
+  /// Refresh
+  internal static let lpcPointsModuleBalanceExplainerButtonTitle = L10n.tr("Localizable", "lpc_points_module_balance_explainer_button_title")
+  /// Balance
+  internal static let lpcPointsModuleBalanceExplainerTitle = L10n.tr("Localizable", "lpc_points_module_balance_explainer_title")
   /// Would you like to log in to %@?
   internal static func magicLinkAlreadyLoggedInDescription(_ p1: Any) -> String {
     return L10n.tr("Localizable", "magic_link_already_logged_in_description", String(describing: p1))
@@ -304,7 +330,7 @@ internal enum L10n {
   internal static let magicLinkErrorMessage = L10n.tr("Localizable", "magic_link_error_message")
   /// Continue with email
   internal static let magicLinkTitle = L10n.tr("Localizable", "magic_link_title")
-  /// Opt in to receive marketing messages
+  /// Opt in to receive marketing messages.
   internal static let marketingTitle = L10n.tr("Localizable", "marketing_title")
   /// minute
   internal static let minute = L10n.tr("Localizable", "minute")

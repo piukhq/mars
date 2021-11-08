@@ -10,7 +10,7 @@ import XCTest
 @testable import binkapp
 
 class DynamicActionsTests: XCTestCase {
-    let baseDynamicActionModel = DynamicAction(name: "xmas_2020", type: .xmas, startDate: 1608537600, endDate: 1609056000, locations: [DynamicActionLocation(icon: "U+1F384", screen: .loyaltyWallet, area: .leftTopBar, action: .singleTap), DynamicActionLocation(icon: "U+1F384", screen: .paymentWallet, area: .leftTopBar, action: .singleTap)], event: DynamicActionEvent(type: .launchModal, body: DynamicActionEventBody(title: "Merry Christmas and a Happy New Year", description: "2020 has been a very interesting year to say the least. The Bink mobile squad wanted to take this opportunity to thank you for using the Bink app. Since we launched version 2.0 with an all new team, we've managed to release 12 versions that have added new features, tweaks and bugfixes.  \nWe've got many exciting new features and partnerships planned for 2021, but as always do reach out to us to share what you would want to see. We would love to hear from you!", cta: DynamicActionEventBodyCTA(title: "Contact us", action: .zendeskContactUs))))
+    let baseDynamicActionModel = DynamicAction(name: "xmas_2020", type: .xmas, startDate: 1608537600, endDate: 1609056000, locations: [DynamicActionLocation(icon: "U+1F384", screen: .loyaltyWallet, area: .leftTopBar, action: .singleTap), DynamicActionLocation(icon: "U+1F384", screen: .paymentWallet, area: .leftTopBar, action: .singleTap)], event: DynamicActionEvent(type: .launchModal, body: DynamicActionEventBody(title: "Merry Christmas and a Happy New Year", description: "2020 has been a very interesting year to say the least. The Bink mobile squad wanted to take this opportunity to thank you for using the Bink app. Since we launched version 2.0 with an all new team, we've managed to release 12 versions that have added new features, tweaks and bugfixes.  \nWe've got many exciting new features and partnerships planned for 2021, but as always do reach out to us to share what you would want to see. We would love to hear from you!", cta: DynamicActionEventBodyCTA(title: "Contact us", action: .zendeskContactUs))), enabledLive: false, forceDebug: false)
 
     // MARK: - View model tests
 
@@ -44,13 +44,13 @@ class DynamicActionsTests: XCTestCase {
     func test_isActive_returnsCorrectly() {
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())
         let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date())
-        let activeModel = DynamicAction(name: nil, type: nil, startDate: yesterday?.timeIntervalSince1970, endDate: tomorrow?.timeIntervalSince1970, locations: nil, event: nil)
+        let activeModel = DynamicAction(name: nil, type: nil, startDate: yesterday?.timeIntervalSince1970, endDate: tomorrow?.timeIntervalSince1970, locations: nil, event: nil, enabledLive: false, forceDebug: false)
         XCTAssertTrue(activeModel.isActive)
 
-        let inactiveModelTomorrow = DynamicAction(name: nil, type: nil, startDate: tomorrow?.timeIntervalSince1970, endDate: tomorrow?.timeIntervalSince1970, locations: nil, event: nil)
+        let inactiveModelTomorrow = DynamicAction(name: nil, type: nil, startDate: tomorrow?.timeIntervalSince1970, endDate: tomorrow?.timeIntervalSince1970, locations: nil, event: nil, enabledLive: false, forceDebug: false)
         XCTAssertFalse(inactiveModelTomorrow.isActive)
 
-        let inactiveModelYesterday = DynamicAction(name: nil, type: nil, startDate: yesterday?.timeIntervalSince1970, endDate: yesterday?.timeIntervalSince1970, locations: nil, event: nil)
+        let inactiveModelYesterday = DynamicAction(name: nil, type: nil, startDate: yesterday?.timeIntervalSince1970, endDate: yesterday?.timeIntervalSince1970, locations: nil, event: nil, enabledLive: false, forceDebug: false)
         XCTAssertFalse(inactiveModelYesterday.isActive)
     }
 
@@ -72,7 +72,7 @@ class DynamicActionsTests: XCTestCase {
 
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())
 
-        utility.allActions = [DynamicAction(name: nil, type: nil, startDate: yesterday?.timeIntervalSince1970, endDate: yesterday?.timeIntervalSince1970, locations: [DynamicActionLocation(icon: nil, screen: .loyaltyWallet, area: nil, action: nil), DynamicActionLocation(icon: nil, screen: .paymentWallet, area: nil, action: nil)], event: nil)]
+        utility.allActions = [DynamicAction(name: nil, type: nil, startDate: yesterday?.timeIntervalSince1970, endDate: yesterday?.timeIntervalSince1970, locations: [DynamicActionLocation(icon: nil, screen: .loyaltyWallet, area: nil, action: nil), DynamicActionLocation(icon: nil, screen: .paymentWallet, area: nil, action: nil)], event: nil, enabledLive: false, forceDebug: false)]
 
         let loyaltyWalletViewController = LoyaltyWalletViewController(viewModel: LoyaltyWalletViewModel())
         XCTAssertNil(utility.availableAction(for: loyaltyWalletViewController))
@@ -90,7 +90,7 @@ class DynamicActionsTests: XCTestCase {
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())
         let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date())
 
-        utility.allActions = [DynamicAction(name: nil, type: nil, startDate: yesterday?.timeIntervalSince1970, endDate: tomorrow?.timeIntervalSince1970, locations: [DynamicActionLocation(icon: nil, screen: .loyaltyWallet, area: nil, action: nil), DynamicActionLocation(icon: nil, screen: .paymentWallet, area: nil, action: nil)], event: nil)]
+        utility.allActions = [DynamicAction(name: nil, type: nil, startDate: yesterday?.timeIntervalSince1970, endDate: tomorrow?.timeIntervalSince1970, locations: [DynamicActionLocation(icon: nil, screen: .loyaltyWallet, area: nil, action: nil), DynamicActionLocation(icon: nil, screen: .paymentWallet, area: nil, action: nil)], event: nil, enabledLive: false, forceDebug: false)]
 
         let loyaltyWalletViewController = LoyaltyWalletViewController(viewModel: LoyaltyWalletViewModel())
         XCTAssertNotNil(utility.availableAction(for: loyaltyWalletViewController))

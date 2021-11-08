@@ -39,8 +39,15 @@ extension String {
     /// - Returns: An optional, fully typed decoded Swift object
     func asDecodedObject<T: Decodable>(ofType objectType: T.Type) -> T? {
         guard let data = data(using: .utf8) else { return nil }
-        guard let decodedObject = try? JSONDecoder().decode(objectType, from: data) else { return nil }
-        return decodedObject
+        
+        do {
+            let decodedObject = try JSONDecoder().decode(objectType, from: data)
+            return decodedObject
+        } catch {
+            print(String(describing: error))
+        }
+        
+        return nil
     }
     
     func toInt() -> Int? {

@@ -12,7 +12,7 @@ import KeychainAccess
 class PointsScrapingManager {
     // MARK: - Objects
     
-    enum CredentialStoreType: String {
+    enum CredentialStoreType: String, Codable {
         case username
         case password
         case cardNumber
@@ -20,11 +20,13 @@ class PointsScrapingManager {
     
     class QueuedItem {
         let card: CD_MembershipCard
+        var isBalanceRefresh: Bool
         var isProcessing = false
         var requiresRetry = false
         
-        init(card: CD_MembershipCard) {
+        init(card: CD_MembershipCard, isBalanceRefresh: Bool) {
             self.card = card
+            self.isBalanceRefresh = isBalanceRefresh
         }
     }
     
@@ -61,27 +63,19 @@ class PointsScrapingManager {
     
     private static let baseCredentialStoreKey = "com.bink.wallet.pointsScraping.credentials.cardId_%@.%@"
     private let keychain = Keychain(service: APIConstants.bundleID)
-
     private var webScrapingUtility: WebScrapingUtility?
     
-    private var isMasterEnabled: Bool {
-        return Current.remoteConfig.boolValueForConfigKey(.localPointsCollectionMasterEnabled)
+    private var config: RemoteConfigFile.LocalPointsCollection? {
+        return Current.remoteConfig.configFile?.localPointsCollection
     }
     
     var isDebugMode: Bool {
         return Current.userDefaults.bool(forDefaultsKey: .lpcDebugMode)
     }
     
-    let agents: [WebScrapable] = [
-        TescoScrapingAgent(),
-        BootsScrapingAgent(),
-        MorrisonsScrapingAgent(),
-        SuperdrugScrapingAgent(),
-        HeathrowScrapingAgent(),
-        PerfumeShopScrapingAgent(),
-        WaterstonesScrapingAgent(),
-        StarbucksPointsScrapingAgent()
-    ]
+    var agents: [LocalPointsCollectable] {
+        return config?.agents ?? []
+    }
     
     var processingQueue: [QueuedItem] = []
     
@@ -96,13 +90,13 @@ class PointsScrapingManager {
         guard let agent = agent(forPlanId: planId) else { return nil }
         
         let authFields = fields.filter { $0.columnKind == .lpcAuth }
-        let usernameField = authFields.first(where: { $0.fieldCommonName == agent.usernameField })
+        let usernameField = authFields.first(where: { $0.fieldCommonName == agent.fields?.usernameFieldCommonName })
         let passwordField = authFields.first(where: { $0.fieldCommonName == .password })
         
         guard let usernameValue = usernameField?.value else { return nil }
         guard let passwordValue = passwordField?.value else { return nil }
         
-        if agent.requiredCredentials.contains(.cardNumber) {
+        if let requiredCredentials = agent.fields?.requiredCredentials, requiredCredentials.contains(.cardNumber) {
             let addFields = fields.filter { $0.columnKind == .add }
             let cardNumberField = addFields.first(where: { $0.fieldCommonName == .cardNumber })
             let cardNumberValue = cardNumberField?.value
@@ -152,7 +146,7 @@ class PointsScrapingManager {
     // MARK: - Add/Auth handling
     
     func enableLocalPointsScrapingForCardIfPossible(withRequest request: MembershipCardPostModel, credentials: WebScrapingCredentials, membershipCard: CD_MembershipCard) throws {
-        let itemToProcess = QueuedItem(card: membershipCard)
+        let itemToProcess = QueuedItem(card: membershipCard, isBalanceRefresh: false)
         
         guard planIdIsWebScrapable(request.membershipPlan) else { return }
         
@@ -160,7 +154,7 @@ class PointsScrapingManager {
             transitionToFailed(item: itemToProcess)
             throw PointsScrapingManagerError.failedToEnableMembershipCardForPointsScraping
         }
-    
+        
         do {
             try storeCredentials(credentials, forMembershipCardId: membershipCard.id)
             
@@ -182,6 +176,12 @@ class PointsScrapingManager {
     
     // MARK: - Processing queue
     
+    func performBalanceRefresh(for card: CD_MembershipCard) {
+        let queuedItem = QueuedItem(card: card, isBalanceRefresh: true)
+        addQueuedItem(queuedItem)
+        processQueuedItems()
+    }
+    
     private func addQueuedItem(_ item: QueuedItem) {
         if processingQueue.contains(where: { $0.card.id == item.card.id }) { return }
         processingQueue.append(item)
@@ -199,7 +199,7 @@ class PointsScrapingManager {
             self.transitionToFailed(item: itemToProcess)
             return
         }
-
+        
         do {
             try webScrapingUtility?.start(agent: agent, item: itemToProcess)
         } catch {
@@ -219,7 +219,7 @@ class PointsScrapingManager {
             self.transitionToFailed(item: itemToProcess)
             return
         }
-
+        
         do {
             transitionToPending(item: itemToProcess)
             try webScrapingUtility?.start(agent: agent, item: itemToProcess)
@@ -229,15 +229,18 @@ class PointsScrapingManager {
     }
     
     func refreshBalancesIfNecessary() {
-        guard self.isMasterEnabled else { return }
         self.getRefreshableMembershipCards { [weak self] refreshableCards in
-            refreshableCards.forEach { self?.addQueuedItem(QueuedItem(card: $0)) }
+            refreshableCards.forEach { self?.addQueuedItem(QueuedItem(card: $0, isBalanceRefresh: true)) }
             self?.processQueuedItems()
         }
     }
     
-    func agentEnabled(_ agent: WebScrapable) -> Bool {
-        return Current.remoteConfig.boolValueForConfigKey(.localPointsCollectionAgentEnabled(agent))
+    func agentEnabled(_ agent: LocalPointsCollectable) -> Bool {
+        if APIConstants.isProduction {
+            return agent.enabled?.ios ?? false
+        } else {
+            return agent.enabled?.iosDebug ?? false
+        }
     }
     
     private func getRefreshableMembershipCards(completion: @escaping ([CD_MembershipCard]) -> Void) {
@@ -255,16 +258,15 @@ class PointsScrapingManager {
     // MARK: - Helpers
     
     func planIdIsWebScrapable(_ planId: Int?) -> Bool {
-        guard isMasterEnabled else { return false }
         guard let id = planId else { return false }
         guard let agent = agent(forPlanId: id) else { return false }
         return agentEnabled(agent)
     }
     
-    func agent(forPlanId planId: Int) -> WebScrapable? {
+    func agent(forPlanId planId: Int) -> LocalPointsCollectable? {
         return agents.first(where: { $0.membershipPlanId == planId })
     }
-
+    
     private func hasAgent(forMembershipPlanId planId: Int) -> Bool {
         return agents.contains(where: { $0.membershipPlanId == planId })
     }
@@ -278,9 +280,9 @@ class PointsScrapingManager {
         processingQueue.removeAll(where: { $0.card.id == item.card.id && $0.requiresRetry == false })
         processQueuedItems()
     }
-
+    
     func isCurrentlyScraping(forMembershipCard card: CD_MembershipCard) -> Bool {
-        return webScrapingUtility?.isCurrentlyScraping(forMembershipCard: card) == true
+        return processingQueue.contains(where: { $0.card == card })
     }
     
     func debug() {
@@ -334,7 +336,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
         }
     }
     
-    private func transitionToAuthorized(pointsValue: Int, item: QueuedItem, agent: WebScrapable) {
+    private func transitionToAuthorized(pointsValue: Int, item: QueuedItem, agent: LocalPointsCollectable) {
         fetchMembershipCard(forId: item.card.id) { membershipCard in
             guard let membershipCard = membershipCard else {
                 fatalError("We should never get here. If we passed in a correct membership card id, we should get a card back.")
@@ -345,7 +347,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 }
                 
                 // Set new balance object
-                let balance = MembershipCardBalanceModel(apiId: nil, value: Double(pointsValue), currency: agent.loyaltySchemeBalanceCurrency, prefix: agent.loyaltySchemeBalancePrefix, suffix: agent.loyaltySchemeBalanceSuffix, updatedAt: Date().timeIntervalSince1970)
+                let balance = MembershipCardBalanceModel(apiId: nil, value: Double(pointsValue), currency: agent.loyaltyScheme?.balanceCurrency, prefix: agent.loyaltyScheme?.balancePrefix, suffix: agent.loyaltyScheme?.balanceSuffix, updatedAt: Date().timeIntervalSince1970)
                 let cdBalance = balance.mapToCoreData(backgroundContext, .update, overrideID: MembershipCardBalanceModel.overrideId(forParentId: membershipCard.id))
                 membershipCard.addBalancesObject(cdBalance)
                 cdBalance.card = membershipCard
@@ -361,8 +363,9 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 } catch {
                     self.transitionToFailed(item: item)
                 }
-
+                
                 self.pointsScrapingDidComplete(for: item)
+
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionSuccess(membershipCard: membershipCard))
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
             }
@@ -410,10 +413,6 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 
                 self.pointsScrapingDidComplete(for: item)
                 
-                if self.isDebugMode {
-                    self.webScrapingUtility?.debug()
-                }
-                
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
             }
         }
@@ -449,23 +448,34 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
 // MARK: - WebScrapingUtilityDelegate
 
 extension PointsScrapingManager: WebScrapingUtilityDelegate {
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, item: QueuedItem, withAgent agent: WebScrapable) {
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, item: QueuedItem, withAgent agent: LocalPointsCollectable) {
         if #available(iOS 14.0, *) {
             BinkLogger.infoPrivateHash(event: WalletLoggerEvent.pointsScrapingSuccess, value: item.card.id)
         }
         transitionToAuthorized(pointsValue: value, item: item, agent: agent)
     }
     
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, item: QueuedItem, withAgent agent: WebScrapable) {
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, item: QueuedItem, withAgent agent: LocalPointsCollectable) {
+        if item.isBalanceRefresh, WalletRefreshManager.cardCanRetainStaleBalance(item.card) {
+            self.pointsScrapingDidComplete(for: item)
+            return
+        }
+        
+        if let merchant = agent.merchant {
+            SentryService.triggerException(.localPointsCollectionFailed(error, merchant, balanceRefresh: item.isBalanceRefresh))
+        }
+        
         switch error {
         case .incorrectCredentials:
             BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionCredentialFailure(membershipCard: item.card, error: error))
         default:
             BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionInternalFailure(membershipCard: item.card, error: error))
         }
+        
         if #available(iOS 14.0, *) {
             BinkLogger.error(WalletLoggerError.pointsScrapingFailure, value: error.message)
         }
+        
         transitionToFailed(item: item)
     }
 }

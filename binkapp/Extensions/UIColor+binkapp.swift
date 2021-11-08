@@ -175,9 +175,15 @@ extension UIColor {
         case .system:
             return .systemRed
         case .light:
-            return UIColor(hexString: "ff3b30")
+            return UIColor(hexString: "FF0000")
         case .dark:
             return UIColor(hexString: "ff453a")
         }
     }
+    
+    // MARK: - Forms
+    
+    static let activeField = UIColor(hexString: "147EFB")
+    static let validField = UIColor(hexString: "1EA9AC")
+    static let invalidField = UIColor.binkDynamicRed
 }

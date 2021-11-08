@@ -15,6 +15,8 @@ struct DynamicAction: Codable {
     let endDate: Double?
     let locations: [DynamicActionLocation]?
     let event: DynamicActionEvent?
+    let enabledLive: Bool? // This must be true to ever be seen in App Store apps
+    let forceDebug: Bool? // If true, dynamic action will be displayed regardless of start and end times
 
     enum CodingKeys: String, CodingKey {
         case name
@@ -23,6 +25,8 @@ struct DynamicAction: Codable {
         case endDate = "end_date"
         case locations
         case event
+        case enabledLive = "enabled_live"
+        case forceDebug = "force_debug"
     }
 
     var isActive: Bool {

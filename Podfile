@@ -5,23 +5,13 @@ inhibit_all_warnings!
 
 def common_pods
 
-pod 'Firebase', '~> 7.7.0'
-pod 'Firebase/Analytics', '~> 7.7.0'
-pod 'Firebase/RemoteConfig', '~> 7.7.0'
-pod 'Alamofire', '~> 5.4.1'
-pod 'AlamofireImage', '~> 4.1.0'
-pod 'AlamofireNetworkActivityLogger', '~> 3.4.0'
-pod 'DeepDiff', '~> 2.3.1'
-pod 'KeychainAccess', '~> 4.2.2'
-pod 'Disk', '~> 0.6.4'
-pod 'DTTJailbreakDetection', '~> 0.4.0'
-pod 'JWTDecode', '~> 2.6.0'
+pod 'DTTJailbreakDetection', '~> 0.4' # No SPM package available - NF 01/09/21
 pod 'SwiftyRSA', :git => 'git@git.bink.com:Pantheon/iOS/SwiftyRSA.git'
-pod 'ZendeskSupportSDK', '~> 5.2.0'
-pod 'CardScan', :git => 'git@git.bink.com:Pantheon/iOS/cardscan-ios.git'
-pod 'ZXingObjC', '~> 3.6.5'
-pod 'SwiftLint', '~> 0.43.0'
-pod 'SwiftGen', '~> 6.4'
+pod 'ZendeskSupportSDK', '5.2.0' # Cannot update due to deprecations - NF 01/09/21
+pod 'CardScan', :git => 'git@git.bink.com:Pantheon/iOS/cardscan-ios.git', :commit => 'bf8d4467'
+pod 'SwiftLint', '~> 0.43' # SPM led to compilation errors - NF 01/09/21
+pod 'SwiftGen', '~> 6.4' # SPM led to compilation errors - NF 01/09/21
+pod 'ZXingObjC', '~> 3.6'
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",
