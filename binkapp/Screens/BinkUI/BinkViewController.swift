@@ -90,6 +90,8 @@ class BinkViewController: UIViewController {
 
 private extension BinkViewController {
     func configureDynamicActionIfNecessary() {
+        // TODO: Respond to a new notification for when remote config has been fetched, and run this method
+        
         /// Is there an active dynamic action available for this screen?
         guard let availableAction = dynamicActionUtility.availableAction(for: self) else { return }
         dynamicAction = availableAction
