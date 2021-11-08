@@ -42,6 +42,8 @@ class CheckboxView: CustomView {
     }
     
     private lazy var tapGesture = UITapGestureRecognizer(target: self, action: .textSelected)
+    private lazy var gestureRecognizer = UITapGestureRecognizer(target: self, action: .handleCheckboxTapGesture)
+
     
     weak var delegate: CheckboxViewDelegate?
     
@@ -88,7 +90,12 @@ class CheckboxView: CustomView {
     override func configureUI() {
         textView.isUserInteractionEnabled = true
         textView.delegate = self
+        textView.addGestureRecognizer(gestureRecognizer)
         textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
+        
+        if let linkRecognizer = textView.gestureRecognizers?.first(where: { $0.name == "UITextInteractionNameLinkTap" }) {
+            gestureRecognizer.require(toFail: linkRecognizer)
+        }
     }
     
     @IBAction private func toggleCheckbox() {
@@ -121,6 +128,10 @@ class CheckboxView: CustomView {
         checkedState.toggle()
         configureCheckboxButton(forState: checkedState)
     }
+    
+    @objc func handleCheckboxTapGesture() {
+        toggleCheckbox()
+    }
 }
 
 extension CheckboxView: UITextViewDelegate {
@@ -145,4 +156,5 @@ extension CheckboxView: InputValidation {
 
 fileprivate extension Selector {
     static let textSelected = #selector(CheckboxView.textSelectedSelector)
+    static let handleCheckboxTapGesture = #selector(CheckboxView.handleCheckboxTapGesture)
 }
