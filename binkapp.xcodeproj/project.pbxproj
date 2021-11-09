@@ -156,7 +156,6 @@
 		70A61D16263095060073A08A /* BinkModuleViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A61D15263095060073A08A /* BinkModuleViewModelTests.swift */; };
 		70A61D532630A23C0073A08A /* BinkModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A61D512630A23B0073A08A /* BinkModuleView.swift */; };
 		70A61D542630A23C0073A08A /* BinkModuleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70A61D522630A23B0073A08A /* BinkModuleView.xib */; };
-		70AA71B02642B0560088FEC7 /* UniversalLinkUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA71AF2642B0560088FEC7 /* UniversalLinkUtility.swift */; };
 		70B316E724E6AF2800D86DE5 /* Navigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B316E624E6AF2800D86DE5 /* Navigate.swift */; };
 		70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */; };
 		70C3931D25D6E47F0065FDDE /* FeatureTogglingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C3931C25D6E47F0065FDDE /* FeatureTogglingManager.swift */; };
@@ -279,8 +278,6 @@
 		CE02D51E27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D51D27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift */; };
 		CE02D51F27293F14008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D51D27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift */; };
 		CE02D52027293F14008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D51D27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift */; };
-		CE02D52327294A95008B9BFA /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D52227294A95008B9BFA /* Font+Extension.swift */; };
-		CE02D52527294A95008B9BFA /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D52227294A95008B9BFA /* Font+Extension.swift */; };
 		CE02D52727298807008B9BFA /* WatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D52627298806008B9BFA /* WatchController.swift */; };
 		CE07917A25ADB4A4009FE8BA /* LoyaltyWalletAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07917925ADB4A3009FE8BA /* LoyaltyWalletAnimator.swift */; };
 		CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */; };
@@ -347,6 +344,7 @@
 		CEAF2A04269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF2A03269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift */; };
 		CEB7ADF026F1FF7C00BD138C /* NunitoSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492D22F99E1D000C1F4D /* NunitoSans-Bold.ttf */; };
 		CEB8242927391F0500F5954D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 7063B1E8270473EE00C5C633 /* FirebaseAnalytics */; };
+		CEB8242E2739998200F5954D /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E16226F0FE0E00CAFBBF /* Font+Extension.swift */; };
 		CEC0ACBC2636AD0000845813 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBA2636AD0000845813 /* Assets.swift */; };
 		CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBB2636AD0000845813 /* Strings.swift */; };
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
@@ -810,7 +808,6 @@
 		70A61D15263095060073A08A /* BinkModuleViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkModuleViewModelTests.swift; sourceTree = "<group>"; };
 		70A61D512630A23B0073A08A /* BinkModuleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinkModuleView.swift; sourceTree = "<group>"; };
 		70A61D522630A23B0073A08A /* BinkModuleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BinkModuleView.xib; sourceTree = "<group>"; };
-		70AA71AF2642B0560088FEC7 /* UniversalLinkUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalLinkUtility.swift; sourceTree = "<group>"; };
 		70B316E624E6AF2800D86DE5 /* Navigate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigate.swift; sourceTree = "<group>"; };
 		70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel"; sourceTree = "<group>"; };
@@ -1956,7 +1953,6 @@
 			isa = PBXGroup;
 			children = (
 				CE85A1D726B0096A003B74CD /* UniversalLinkUtility.swift */,
-				70AA71AF2642B0560088FEC7 /* UniversalLinkUtility.swift */,
 			);
 			path = "Deep Linking";
 			sourceTree = "<group>";
@@ -2136,7 +2132,6 @@
 				BD9BAAD8232AF4AB00D2E1C4 /* DiffAware+Extension.swift */,
 				BD9FB6B123380C0900E5559A /* Encodable+Extension.swift */,
 				3C7AF52A23757FB0005964E0 /* FloatExtension.swift */,
-				CE52E16226F0FE0E00CAFBBF /* Font+Extension.swift */,
 				3C8BBC282326541D00363349 /* NotificationNameExtension.swift */,
 				EF9E9BCB23C3AC19002FF18E /* NSNumberExtension.swift */,
 				EF9E9BCF23C72930002FF18E /* RefreshControlExtension.swift */,
@@ -2358,6 +2353,7 @@
 		CE52E16126F0FDD700CAFBBF /* SwiftUIExtensions */ = {
 			isa = PBXGroup;
 			children = (
+				CE52E16226F0FE0E00CAFBBF /* Font+Extension.swift */,
 			);
 			path = SwiftUIExtensions;
 			sourceTree = "<group>";
@@ -3677,7 +3673,6 @@
 				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
 				CE0C24792678EDE500CB7150 /* WhoWeAreSwiftUIView.swift in Sources */,
 				EF54911C2371CB3300FE17BE /* PaymentCardDetailTableViewCell.swift in Sources */,
-				70AA71B02642B0560088FEC7 /* UniversalLinkUtility.swift in Sources */,
 				EFA5F7352379A7C70027AB80 /* CD_MembershipCardAmount.swift in Sources */,
 				BDD9C8A7233D07D1003CD616 /* UICollectionViewExtension.swift in Sources */,
 				EFA5F72F2379A7C70027AB80 /* _CD_App.swift in Sources */,
@@ -3857,7 +3852,6 @@
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
 				EFA5F7452379A7C70027AB80 /* _CD_PaymentCardAccountConsents.swift in Sources */,
 				70FF2B6F2649543200A64DD3 /* RecommendedVersionUtil.swift in Sources */,
-				CE02D52327294A95008B9BFA /* Font+Extension.swift in Sources */,
 				EFA5F7312379A7C70027AB80 /* CD_Balance.swift in Sources */,
 				CE3A54DE253E0F27007989FE /* ZendeskTickets.swift in Sources */,
 				EFEB5BFF2382984B00E18743 /* HyperlinkButton.swift in Sources */,
@@ -4039,7 +4033,7 @@
 				CE02D51C27285F14008B9BFA /* WatchLoyaltyCard.swift in Sources */,
 				CEE208BC2734458400766BD6 /* WatchTextStack.swift in Sources */,
 				70D8783A26E26DCF006778EA /* BinkWatchApp.swift in Sources */,
-				CE02D52527294A95008B9BFA /* Font+Extension.swift in Sources */,
+				CEB8242E2739998200F5954D /* Font+Extension.swift in Sources */,
 				70D8785A26E629F4006778EA /* WatchAppViewModel.swift in Sources */,
 				CE02D52027293F14008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */,
 			);

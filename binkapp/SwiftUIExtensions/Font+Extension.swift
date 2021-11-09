@@ -16,4 +16,12 @@ extension Font {
     static func nunitoBold(_ size: CGFloat) -> Font {
         return .custom("NunitoSans-Bold", size: size)
     }
+    
+    static func nunitoExtraBold(_ size: CGFloat) -> Font {
+        return .custom("NunitoSans-ExtraBold", size: size)
+    }
+    
+    static func nunitoSans(_ size: CGFloat) -> Font {
+        return .custom("NunitoSans-Regular", size: size)
+    }
 }
