@@ -4251,6 +4251,7 @@
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -4288,6 +4289,7 @@
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -4498,6 +4500,7 @@
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG = "";
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -4650,6 +4653,7 @@
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -4767,6 +4771,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4793,6 +4799,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
+				MARKETING_VERSION = 2.3.11;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -4849,6 +4856,8 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -4869,6 +4878,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
+				MARKETING_VERSION = 2.3.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch;
@@ -4925,6 +4935,8 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -4946,6 +4958,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
+				MARKETING_VERSION = 2.3.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watch;
@@ -5002,6 +5015,8 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -5022,6 +5037,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
+				MARKETING_VERSION = 2.3.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch;
@@ -5077,6 +5093,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -5104,6 +5122,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 2.3.11;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -5157,6 +5176,8 @@
 				CODE_SIGN_ENTITLEMENTS = "Bink Watch App Extension/Bink Watch App Extension.entitlements";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -5178,6 +5199,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 2.3.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch.extension;
@@ -5231,6 +5253,8 @@
 				CODE_SIGN_ENTITLEMENTS = "Bink Watch App Extension/Bink Watch App Extension.entitlements";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -5253,6 +5277,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 2.3.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watch.extension;
@@ -5306,6 +5331,8 @@
 				CODE_SIGN_ENTITLEMENTS = "Bink Watch App Extension/Bink Watch App Extension.entitlements";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -5327,6 +5354,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 2.3.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch.extension;
