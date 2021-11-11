@@ -10,10 +10,18 @@ import SwiftUI
 
 @main
 struct BinkClipApp: App {
+    @State var token: String = ""
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .onContinueUserActivity(NSUserActivityTypeBrowsingWeb, perform: handleUserActivity)
+            if token.isEmpty {
+                // Show register email address screen
+                RegisterView()
+                    .onContinueUserActivity(NSUserActivityTypeBrowsingWeb, perform: handleUserActivity)
+            } else {
+                // Show exchange token screen
+                ExchangeTokenView(token: token)
+            }
         }
     }
     
@@ -25,5 +33,9 @@ struct BinkClipApp: App {
         else { return }
         
         print(queryItems)
+        
+        if let token = queryItems.first(where: { $0.name.starts(with: "token") }), let value = token.value {
+            self.token = value
+        }
     }
 }

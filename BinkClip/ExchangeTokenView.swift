@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  ExchangeTokenView.swift
 //  BinkClip
 //
 //  Created by Sean Williams on 11/11/2021.
@@ -8,15 +8,15 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct ExchangeTokenView: View {
+    @State var token = ""
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        Text("Exchanging Token: \(token)")
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct ExchangeTokenView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ExchangeTokenView()
     }
 }

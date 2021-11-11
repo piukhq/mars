@@ -285,10 +285,11 @@
 		CE3D31DC2649660C0072BD97 /* ScanLoyaltyCardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D31DA2649660C0072BD97 /* ScanLoyaltyCardButton.swift */; };
 		CE3D31DD2649660C0072BD97 /* ScanLoyaltyCardButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */; };
 		CE47C460273D6BB20004C63C /* BinkClipApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47C45F273D6BB20004C63C /* BinkClipApp.swift */; };
-		CE47C462273D6BB20004C63C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47C461273D6BB20004C63C /* ContentView.swift */; };
+		CE47C462273D6BB20004C63C /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47C461273D6BB20004C63C /* RegisterView.swift */; };
 		CE47C464273D6BB50004C63C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE47C463273D6BB50004C63C /* Assets.xcassets */; };
 		CE47C467273D6BB50004C63C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE47C466273D6BB50004C63C /* Preview Assets.xcassets */; };
 		CE47C46C273D6BB50004C63C /* BinkClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = CE47C45D273D6BB20004C63C /* BinkClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CE47C476273D7B290004C63C /* ExchangeTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47C475273D7B290004C63C /* ExchangeTokenView.swift */; };
 		CE4A624925714EAE003271F6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* Sentry */; };
 		CE52E15B26F0ABE400CAFBBF /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492922F99E1D000C1F4D /* NunitoSans-Regular.ttf */; };
 		CE52E15C26F0AE0400CAFBBF /* NunitoSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492E22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf */; };
@@ -909,11 +910,12 @@
 		CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanLoyaltyCardButton.xib; sourceTree = "<group>"; };
 		CE47C45D273D6BB20004C63C /* BinkClip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BinkClip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE47C45F273D6BB20004C63C /* BinkClipApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkClipApp.swift; sourceTree = "<group>"; };
-		CE47C461273D6BB20004C63C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		CE47C461273D6BB20004C63C /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		CE47C463273D6BB50004C63C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE47C466273D6BB50004C63C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CE47C468273D6BB50004C63C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE47C469273D6BB50004C63C /* BinkClip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BinkClip.entitlements; sourceTree = "<group>"; };
+		CE47C475273D7B290004C63C /* ExchangeTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeTokenView.swift; sourceTree = "<group>"; };
 		CE4A628025715519003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A6285257155AE003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE52E15E26F0BBBF00CAFBBF /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -2266,11 +2268,12 @@
 			isa = PBXGroup;
 			children = (
 				CE47C45F273D6BB20004C63C /* BinkClipApp.swift */,
-				CE47C461273D6BB20004C63C /* ContentView.swift */,
+				CE47C461273D6BB20004C63C /* RegisterView.swift */,
 				CE47C463273D6BB50004C63C /* Assets.xcassets */,
 				CE47C468273D6BB50004C63C /* Info.plist */,
 				CE47C469273D6BB50004C63C /* BinkClip.entitlements */,
 				CE47C465273D6BB50004C63C /* Preview Content */,
+				CE47C475273D7B290004C63C /* ExchangeTokenView.swift */,
 			);
 			path = BinkClip;
 			sourceTree = "<group>";
@@ -3921,8 +3924,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE47C462273D6BB20004C63C /* ContentView.swift in Sources */,
+				CE47C462273D6BB20004C63C /* RegisterView.swift in Sources */,
 				CE47C460273D6BB20004C63C /* BinkClipApp.swift in Sources */,
+				CE47C476273D7B290004C63C /* ExchangeTokenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
