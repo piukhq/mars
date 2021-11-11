@@ -69,9 +69,6 @@ struct WatchContentView: View {
                         .padding(.bottom, 20)
                     }
                     .edgesIgnoringSafeArea(.bottom)
-                    .onAppear {
-                        print(geo.size.width)
-                    }
                 }
             }
         } else {
@@ -80,7 +77,7 @@ struct WatchContentView: View {
             } else {
                 ProgressView()
                     .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 20) {
                             viewModel.noResponseFromPhone = true
                         }
                     }
