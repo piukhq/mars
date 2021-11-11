@@ -27,7 +27,7 @@ class UniversalLinkUtility {
         }
     }
     
-    private func handleMagicLink(token: String) {
+    func handleMagicLink(token: String) {
         switch Current.userManager.hasCurrentUser {
         case true:
             let currentEmail = Current.userManager.currentEmailAddress ?? ""
