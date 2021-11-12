@@ -51,7 +51,7 @@ struct QuickLaunchProvider: TimelineProvider {
     
     private func readWidgetContentsFromDisk() -> [WidgetContent] {
         var contents: [WidgetContent] = []
-        guard let archiveURL = FileManager.sharedContainerURL()?.appendingPathComponent("contents.json") else { return contents }
+    guard let archiveURL = FileManager.sharedContainerURL()?.appendingPathComponent("contents.json") else { return contents }
         
         let decoder = JSONDecoder()
         if let codeData = try? Data(contentsOf: archiveURL) {

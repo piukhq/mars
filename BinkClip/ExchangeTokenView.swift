@@ -10,10 +10,22 @@ import SwiftUI
 
 struct ExchangeTokenView: View {
     @State var token = ""
+    let client = APIClientAppClip()
     
     var body: some View {
-        Text("Exchanging Token: \(token)")
+        ProgressView()
+        Text("Setting up your Bink account...")
             .padding()
+            .onAppear {
+                client.requestMagicLinkAccesstoken(token)
+            }
+    }
+    
+    func storeTokenInContainer() {
+//        guard let archiveURL = FileManager.sharedContainerURL()?.appendingPathComponent("contents.json") else { return contents }
+//
+//        let decoder = JSONDecoder()
+//        if let data = try? decoder.decode(<#T##type: Decodable.Protocol##Decodable.Protocol#>, from: <#T##Data#>)
     }
 }
 

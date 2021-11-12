@@ -309,6 +309,9 @@
 		CE5CFE2D273E83D5007B002A /* stagingPublicKey.der in Resources */ = {isa = PBXBuildFile; fileRef = EF5229B72423FC4E004AC972 /* stagingPublicKey.der */; };
 		CE5CFE2E273E83D8007B002A /* prodPublicKey.der in Resources */ = {isa = PBXBuildFile; fileRef = EF5229B92423FC96004AC972 /* prodPublicKey.der */; };
 		CE5CFE2F273E83DF007B002A /* bink.der in Resources */ = {isa = PBXBuildFile; fileRef = 3C71683424069F370058701E /* bink.der */; };
+		CE5CFE30273E8A88007B002A /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209192689E1B7004D3759 /* FileManager+Extension.swift */; };
+		CE5CFE32273EA3FF007B002A /* APIClientAppClip.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5CFE31273EA3FF007B002A /* APIClientAppClip.swift */; };
+		CE5CFE33273EA3FF007B002A /* APIClientAppClip.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5CFE31273EA3FF007B002A /* APIClientAppClip.swift */; };
 		CE67DC0D269F2407008D930D /* AutomatedTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE67DC0C269F2407008D930D /* AutomatedTesting.swift */; };
 		CE6DE55F267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6DE55E267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift */; };
 		CE6DE5662681E8280063A3A9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6DE5652681E8280063A3A9 /* WidgetKit.framework */; };
@@ -934,6 +937,7 @@
 		CE54AF5C25F938720061838C /* BinkLoggerEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLoggerEvents.swift; sourceTree = "<group>"; };
 		CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLoggerErrors.swift; sourceTree = "<group>"; };
 		CE5CFE29273E8251007B002A /* Certificates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Certificates.swift; sourceTree = "<group>"; };
+		CE5CFE31273EA3FF007B002A /* APIClientAppClip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientAppClip.swift; sourceTree = "<group>"; };
 		CE67DC0C269F2407008D930D /* AutomatedTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting.swift; sourceTree = "<group>"; };
 		CE6DE55E267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsSwiftUIView.swift; sourceTree = "<group>"; };
 		CE6DE5642681E8280063A3A9 /* BinkWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BinkWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2280,6 +2284,7 @@
 			children = (
 				CE47C45F273D6BB20004C63C /* BinkClipApp.swift */,
 				CE47C461273D6BB20004C63C /* RegisterView.swift */,
+				CE5CFE31273EA3FF007B002A /* APIClientAppClip.swift */,
 				CE47C463273D6BB50004C63C /* Assets.xcassets */,
 				CE47C468273D6BB50004C63C /* Info.plist */,
 				CE47C469273D6BB50004C63C /* BinkClip.entitlements */,
@@ -3808,6 +3813,7 @@
 				B726334D23058D2700951037 /* PlanDocumentModel.swift in Sources */,
 				BDB0186C232D96EB00BFFA18 /* BaseFormViewController.swift in Sources */,
 				EFA5F71C2379A7C70027AB80 /* _CD_MembershipPlanAccount.swift in Sources */,
+				CE5CFE32273EA3FF007B002A /* APIClientAppClip.swift in Sources */,
 				EF46E286235E007300BA2CAF /* OnboardingViewModel.swift in Sources */,
 				B726335123058E2300951037 /* TierModel.swift in Sources */,
 				BD1E728A232AB91C002CC85E /* UIAlertController+Extension.swift in Sources */,
@@ -3944,10 +3950,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE47C462273D6BB20004C63C /* RegisterView.swift in Sources */,
+				CE5CFE33273EA3FF007B002A /* APIClientAppClip.swift in Sources */,
 				CE5CFE2B273E8252007B002A /* Certificates.swift in Sources */,
 				CE47C47B273D85B30004C63C /* Encodable+Extension.swift in Sources */,
 				CE47C460273D6BB20004C63C /* BinkClipApp.swift in Sources */,
 				CE47C476273D7B290004C63C /* ExchangeTokenView.swift in Sources */,
+				CE5CFE30273E8A88007B002A /* FileManager+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4661,7 +4669,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = BinkClip/BinkClip.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
@@ -4749,7 +4757,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = BinkClip/BinkClip.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
@@ -4832,7 +4840,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = BinkClip/BinkClip.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
@@ -4915,7 +4923,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = BinkClip/BinkClip.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
