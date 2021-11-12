@@ -14,13 +14,6 @@ private var debugBaseURL = "" {
     }
 }
 
-enum EnvironmentType: String, CaseIterable {
-    case dev = "api.dev.gb.bink.com"
-    case staging = "api.staging.gb.bink.com"
-    case preprod = "api.preprod.gb.bink.com"
-    case production = "api.gb.bink.com"
-}
-
 enum Configuration {
     enum ConfigurationError: BinkError {
         case missingKey
@@ -58,6 +51,13 @@ enum Configuration {
         }
         return false
     }
+}
+
+enum EnvironmentType: String, CaseIterable {
+    case dev = "api.dev.gb.bink.com"
+    case staging = "api.staging.gb.bink.com"
+    case preprod = "api.preprod.gb.bink.com"
+    case production = "api.gb.bink.com"
 }
 
 enum APIConstants {

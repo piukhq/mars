@@ -10,8 +10,10 @@ import SwiftUI
 
 struct ExchangeTokenView: View {
     @State var token = ""
+    
     var body: some View {
         Text("Exchanging Token: \(token)")
+            .padding()
     }
 }
 

@@ -290,6 +290,8 @@
 		CE47C467273D6BB50004C63C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE47C466273D6BB50004C63C /* Preview Assets.xcassets */; };
 		CE47C46C273D6BB50004C63C /* BinkClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = CE47C45D273D6BB20004C63C /* BinkClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CE47C476273D7B290004C63C /* ExchangeTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47C475273D7B290004C63C /* ExchangeTokenView.swift */; };
+		CE47C47A273D83920004C63C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = CE47C479273D83920004C63C /* Alamofire */; };
+		CE47C47B273D85B30004C63C /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB6B123380C0900E5559A /* Encodable+Extension.swift */; };
 		CE4A624925714EAE003271F6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* Sentry */; };
 		CE52E15B26F0ABE400CAFBBF /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492922F99E1D000C1F4D /* NunitoSans-Regular.ttf */; };
 		CE52E15C26F0AE0400CAFBBF /* NunitoSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492E22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf */; };
@@ -301,6 +303,12 @@
 		CE539DFD25F0EBAB00BDA5EF /* BinkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE539DFC25F0EBAB00BDA5EF /* BinkLogger.swift */; };
 		CE54AF5D25F938720061838C /* BinkLoggerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54AF5C25F938720061838C /* BinkLoggerEvents.swift */; };
 		CE54AF6225FA0BA00061838C /* BinkLoggerErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */; };
+		CE5CFE2A273E8252007B002A /* Certificates.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5CFE29273E8251007B002A /* Certificates.swift */; };
+		CE5CFE2B273E8252007B002A /* Certificates.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5CFE29273E8251007B002A /* Certificates.swift */; };
+		CE5CFE2C273E83D3007B002A /* devPublicKey.der in Resources */ = {isa = PBXBuildFile; fileRef = EF99B024240E74860046D41E /* devPublicKey.der */; };
+		CE5CFE2D273E83D5007B002A /* stagingPublicKey.der in Resources */ = {isa = PBXBuildFile; fileRef = EF5229B72423FC4E004AC972 /* stagingPublicKey.der */; };
+		CE5CFE2E273E83D8007B002A /* prodPublicKey.der in Resources */ = {isa = PBXBuildFile; fileRef = EF5229B92423FC96004AC972 /* prodPublicKey.der */; };
+		CE5CFE2F273E83DF007B002A /* bink.der in Resources */ = {isa = PBXBuildFile; fileRef = 3C71683424069F370058701E /* bink.der */; };
 		CE67DC0D269F2407008D930D /* AutomatedTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE67DC0C269F2407008D930D /* AutomatedTesting.swift */; };
 		CE6DE55F267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6DE55E267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift */; };
 		CE6DE5662681E8280063A3A9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6DE5652681E8280063A3A9 /* WidgetKit.framework */; };
@@ -925,6 +933,7 @@
 		CE539DFC25F0EBAB00BDA5EF /* BinkLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLogger.swift; sourceTree = "<group>"; };
 		CE54AF5C25F938720061838C /* BinkLoggerEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLoggerEvents.swift; sourceTree = "<group>"; };
 		CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLoggerErrors.swift; sourceTree = "<group>"; };
+		CE5CFE29273E8251007B002A /* Certificates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Certificates.swift; sourceTree = "<group>"; };
 		CE67DC0C269F2407008D930D /* AutomatedTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting.swift; sourceTree = "<group>"; };
 		CE6DE55E267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsSwiftUIView.swift; sourceTree = "<group>"; };
 		CE6DE5642681E8280063A3A9 /* BinkWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BinkWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1224,6 +1233,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE47C47A273D83920004C63C /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1298,6 +1308,7 @@
 				EF94AF0323D8879F00AAA039 /* Spreedly */,
 				3C3C604A2302DD0800D9EA25 /* Responses */,
 				EF59A12724473589001B60B8 /* APIClient.swift */,
+				CE5CFE29273E8251007B002A /* Certificates.swift */,
 				EF59A1292447406B001B60B8 /* APIEndpoint.swift */,
 				EF59A12E24474572001B60B8 /* NetworkingError.swift */,
 				CE3A5517253EE89A007989FE /* DebugInfoAlertView.swift */,
@@ -3084,6 +3095,9 @@
 			dependencies = (
 			);
 			name = BinkClip;
+			packageProductDependencies = (
+				CE47C479273D83920004C63C /* Alamofire */,
+			);
 			productName = BinkClip;
 			productReference = CE47C45D273D6BB20004C63C /* BinkClip.app */;
 			productType = "com.apple.product-type.application.on-demand-install-capable";
@@ -3273,8 +3287,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE5CFE2C273E83D3007B002A /* devPublicKey.der in Resources */,
 				CE47C467273D6BB50004C63C /* Preview Assets.xcassets in Resources */,
+				CE5CFE2D273E83D5007B002A /* stagingPublicKey.der in Resources */,
+				CE5CFE2F273E83DF007B002A /* bink.der in Resources */,
 				CE47C464273D6BB50004C63C /* Assets.xcassets in Resources */,
+				CE5CFE2E273E83D8007B002A /* prodPublicKey.der in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3798,6 +3816,7 @@
 				BDB0187A232E144C00BFFA18 /* Array+Extension.swift in Sources */,
 				EFCAF91A2371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.swift in Sources */,
 				EFA5F7292379A7C70027AB80 /* CD_PaymentCard.swift in Sources */,
+				CE5CFE2A273E8252007B002A /* Certificates.swift in Sources */,
 				3C05F27D240FC28300060818 /* PaymentCardDetailLinkLoyaltyCardCell.swift in Sources */,
 				EFA5F6CF2379A52E0027AB80 /* VoucherEarnModel.swift in Sources */,
 				EFA5F7282379A7C70027AB80 /* _CD_Card.swift in Sources */,
@@ -3925,6 +3944,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE47C462273D6BB20004C63C /* RegisterView.swift in Sources */,
+				CE5CFE2B273E8252007B002A /* Certificates.swift in Sources */,
+				CE47C47B273D85B30004C63C /* Encodable+Extension.swift in Sources */,
 				CE47C460273D6BB20004C63C /* BinkClipApp.swift in Sources */,
 				CE47C476273D7B290004C63C /* ExchangeTokenView.swift in Sources */,
 			);
@@ -4684,7 +4705,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG APPCLIP";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -4765,6 +4786,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG APPCLIP";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -4847,6 +4869,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = APPCLIP;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -4929,6 +4952,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = APPCLIP;
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[arch=*]" = "";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -5496,6 +5521,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 96F22DFE2507C5AC0009951B /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
 			productName = Sentry;
+		};
+		CE47C479273D83920004C63C /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7075381C26DFA26C00690965 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 		CE4A624825714EAE003271F6 /* Sentry */ = {
 			isa = XCSwiftPackageProductDependency;

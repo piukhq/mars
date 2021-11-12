@@ -15,11 +15,9 @@ struct BinkClipApp: App {
     var body: some Scene {
         WindowGroup {
             if token.isEmpty {
-                // Show register email address screen
                 RegisterView()
                     .onContinueUserActivity(NSUserActivityTypeBrowsingWeb, perform: handleUserActivity)
             } else {
-                // Show exchange token screen
                 ExchangeTokenView(token: token)
             }
         }

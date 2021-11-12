@@ -21,18 +21,6 @@ struct NetworkResponseData {
 typealias APIClientCompletionHandler<ResponseType: Any> = (Result<ResponseType, NetworkingError>, NetworkResponseData?) -> Void
 
 final class APIClient {
-    enum Certificates {
-        static let bink = Certificates.certificate(filename: "bink")
-
-        private static func certificate(filename: String) -> SecCertificate {
-            let filePath = Bundle.main.path(forResource: filename, ofType: "der")!
-            let data = try! Data(contentsOf: URL(fileURLWithPath: filePath))
-            let certificate = SecCertificateCreateWithData(nil, data as CFData)!
-
-            return certificate
-        }
-    }
-
     enum NetworkStrength: String {
         case wifi
         case cellular
