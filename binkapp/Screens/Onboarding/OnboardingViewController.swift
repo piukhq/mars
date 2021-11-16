@@ -109,7 +109,21 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
 //            UniversalLinkUtility().handleMagicLink(token: stringFromClipboard)
 //        }
         
-        
+        let provider = ASAuthorizationAppleIDProvider()
+        if let archiveURL = FileManager.sharedContainerURL() {
+            do {
+                let data = try Data(contentsOf: archiveURL)
+                if let user = String(data: data, encoding: .utf8) {
+                    provider.getCredentialState(forUserID: user) { state, _ in
+                        if state == .authorized {
+                            // Log user into Bink
+                        }
+                    }
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

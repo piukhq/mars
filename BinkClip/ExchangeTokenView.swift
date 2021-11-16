@@ -24,7 +24,7 @@ struct ExchangeTokenView: View {
             .onAppear {
                 client.requestMagicLinkAccesstoken(token)
             }
-            .onChange(of: client.magicLinkToken) { newValue in
+            .onChange(of: client.magicLinkToken) { _ in
                 showRecommended = true
             }
             .appStoreOverlay(isPresented: $showRecommended) {
