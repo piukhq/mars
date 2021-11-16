@@ -108,6 +108,8 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
 //        if let stringFromClipboard = UIPasteboard.general.string {
 //            UniversalLinkUtility().handleMagicLink(token: stringFromClipboard)
 //        }
+        
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
