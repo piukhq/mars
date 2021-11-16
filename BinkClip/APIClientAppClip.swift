@@ -7,10 +7,12 @@
 //
 
 import Alamofire
+import SwiftUI
 import Foundation
 
-class APIClientAppClip {
+class APIClientAppClip: ObservableObject {
     let session: Session
+    @Published var magicLinkToken = ""
     
     init() {
         session = Certificates.configureSession()
@@ -40,6 +42,14 @@ class APIClientAppClip {
         
         session.request("https://api.staging.gb.bink.com/users/magic_links/access_tokens", method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { response in
             print(response)
+            switch response.result {
+            case .success:
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.magicLinkToken = "dhd897d8udhddyd9dyudhddidd"
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
 
     }

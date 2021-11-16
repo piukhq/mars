@@ -30,8 +30,6 @@ struct BinkClipApp: App {
             let queryItems = components.queryItems
         else { return }
         
-        print(queryItems)
-        
         if let token = queryItems.first(where: { $0.name.starts(with: "token") }), let value = token.value {
             self.token = value
         }

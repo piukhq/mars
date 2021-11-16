@@ -6,18 +6,29 @@
 //  Copyright © 2021 Bink. All rights reserved.
 //
 
+import StoreKit
 import SwiftUI
 
 struct ExchangeTokenView: View {
     @State var token = ""
-    let client = APIClientAppClip()
+    @ObservedObject var client = APIClientAppClip()
+    @State private var showRecommended = false
     
     var body: some View {
-        ProgressView()
-        Text("Setting up your Bink account...")
+        if client.magicLinkToken.isEmpty {
+            ProgressView()
+        }
+
+        Text(showRecommended ? "Account successfully created - please install the Bink App via the link below..." : "Setting up your Bink account...")
             .padding()
             .onAppear {
                 client.requestMagicLinkAccesstoken(token)
+            }
+            .onChange(of: client.magicLinkToken) { newValue in
+                showRecommended = true
+            }
+            .appStoreOverlay(isPresented: $showRecommended) {
+                SKOverlay.AppConfiguration(appIdentifier: "HC34M8YE55.com.bink.wallet", position: .bottomRaised)
             }
     }
     
