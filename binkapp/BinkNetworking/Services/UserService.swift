@@ -131,6 +131,7 @@ extension UserServiceProtocol {
                 }
                 
                 MixpanelUtility.track(.logout)
+                MixpanelUtility.resetUserIdentity()
                 
                 completion?(.success(safeResponse))
             case .failure:

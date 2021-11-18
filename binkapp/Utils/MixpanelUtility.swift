@@ -11,9 +11,17 @@ import Keys
 
 enum MixpanelUtility {
     private static let mixpanelInstance = Mixpanel.mainInstance()
+    private static var debug = true /// Switch to true for testing
     
     static func start() {
-        Mixpanel.initialize(token: APIConstants.isProduction ? BinkappKeys().mixpanelTokenProduction : BinkappKeys().mixpanelTokenDev)
+        if debug {
+            Mixpanel.initialize(token: BinkappKeys().mixpanelTokenDev)
+            return
+        }
+        
+        #if RELEASE
+        Mixpanel.initialize(token: BinkappKeys().mixpanelTokenProduction)
+        #endif
     }
     
     static func startTimer(for event: MixpanelTrackableEvent) {
@@ -22,10 +30,16 @@ enum MixpanelUtility {
     
     static func track(_ event: MixpanelTrackableEvent) {
         mixpanelInstance.track(event: event.identifier, properties: event.data)
+        print("MP: \(event)")
     }
     
     static func setUserIdentity(userId: String) {
         mixpanelInstance.identify(distinctId: userId)
+        print("MP: Set user ID: \(userId)")
+    }
+    
+    static func resetUserIdentity() {
+        mixpanelInstance.reset()
     }
     
     static func setUserProperties() {
@@ -35,8 +49,7 @@ enum MixpanelUtility {
     }
     
     static func setUserProperties(_ properties: [MixpanelUserProperty]) {
-//        mixpanelInstance.people.set(properties: properties)
-        // hello
+        //        mixpanelInstance.people.set(properties: properties)
     }
 }
 
