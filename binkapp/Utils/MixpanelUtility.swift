@@ -9,11 +9,11 @@ import Foundation
 import Mixpanel
 import Keys
 
-struct MixpanelUtility {
+enum MixpanelUtility {
     private static let mixpanelInstance = Mixpanel.mainInstance()
     
     static func start() {
-        Mixpanel.initialize(token: BinkappKeys().mixpanelToken)
+        Mixpanel.initialize(token: APIConstants.isProduction ? BinkappKeys().mixpanelTokenProduction : BinkappKeys().mixpanelTokenDev)
     }
     
     static func startTimer(for event: MixpanelTrackableEvent) {
@@ -36,6 +36,7 @@ struct MixpanelUtility {
     
     static func setUserProperties(_ properties: [MixpanelUserProperty]) {
 //        mixpanelInstance.people.set(properties: properties)
+        // hello
     }
 }
 

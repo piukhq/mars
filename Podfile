@@ -16,19 +16,20 @@ pod 'ZXingObjC', '~> 3.6'
 plugin 'cocoapods-keys', {
   :project => "binkapp",
   :keys => [
-    "spreedlyEnvironmentKey",
-    "devPaymentCardHashingSecret1",
-    "stagingPaymentCardHashingSecret1",
-    "prodPaymentCardHashingSecret1",
-    "zendeskSandboxAppId",
-    "zendeskSandboxClientId",
-    "zendeskSandboxUrl",
-    "zendeskProductionAppId",
-    "zendeskProductionClientId",
-    "zendeskProductionUrl",
-    "bouncerPaymentCardScanningKeyDev",
-    "bouncerPaymentCardScanningKeyProduction",
-    "mixpanelToken"
+  "spreedlyEnvironmentKey",
+  "devPaymentCardHashingSecret1",
+  "stagingPaymentCardHashingSecret1",
+  "prodPaymentCardHashingSecret1",
+  "zendeskSandboxAppId",
+  "zendeskSandboxClientId",
+  "zendeskSandboxUrl",
+  "zendeskProductionAppId",
+  "zendeskProductionClientId",
+  "zendeskProductionUrl",
+  "bouncerPaymentCardScanningKeyDev",
+  "bouncerPaymentCardScanningKeyProduction",
+  "mixpanelTokenDev",
+  "mixpanelTokenProduction"
   ]
 }
 
