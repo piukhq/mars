@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum FieldCommonName: String {
+enum FieldCommonName: String, Codable {
     case email
     case username
     case password

@@ -125,6 +125,7 @@ extension LoginController {
     private func navigateToStatusScreen(for status: MagicLinkStatus, with dataSource: FormDataSource? = nil, token: String? = nil) {
         var configurationModel: ReusableModalConfiguration
         let decodedEmail = decodedEmailAddress(from: token ?? "")
+        var viewController: UIViewController
         
         switch status {
         case .checkInbox:
@@ -157,6 +158,8 @@ extension LoginController {
                     Current.navigate.to(navigationRequest)
                 })
             }
+
+            viewController = ViewControllerFactory.makeCheckYourInboxViewController(configuration: configurationModel)
         case .expired:
             configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: L10n.linkExpiredTitle, description: L10n.linkExpiredDescription), primaryButtonTitle: L10n.retryTitle, primaryButtonAction: {
                 // Resend magic link email
@@ -176,6 +179,8 @@ extension LoginController {
             }, secondaryButtonTitle: L10n.cancel) {
                 Current.navigate.back(toRoot: true, animated: true)
             }
+            
+            viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configurationModel)
         case .failed:
             configurationModel = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: L10n.somethingWentWrongTitle, description: L10n.somethingWentWrongDescription), primaryButtonTitle: L10n.retryTitle, primaryButtonAction: {
                 // Re-attempt token exchange
@@ -197,9 +202,10 @@ extension LoginController {
             }, secondaryButtonTitle: L10n.cancel) {
                 Current.navigate.back(toRoot: true, animated: true)
             }
+            
+            viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configurationModel)
         }
         
-        let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configurationModel)
         let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }

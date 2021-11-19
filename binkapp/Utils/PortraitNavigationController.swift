@@ -14,7 +14,7 @@ class PortraitNavigationController: UINavigationController {
     
     private lazy var backButton: UIBarButtonItem = {
         let back = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        back.accessibilityIdentifier = "back" 
+        back.accessibilityIdentifier = "back"
         return back
     }()
     

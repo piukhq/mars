@@ -51,6 +51,14 @@ enum SentryService {
             scope.setTag(value: exception.userJourneyTagValue, key: "user_journey")
         }
     }
+    
+    static func recordBreadcrumb(_ breadcrumb: SentryBreadcrumb) {
+        let crumb = Breadcrumb()
+        crumb.level = breadcrumb.level
+        crumb.category = breadcrumb.category.rawValue
+        crumb.message = breadcrumb.message
+        SentrySDK.addBreadcrumb(crumb: crumb)
+    }
 }
 
 enum SentryException {
@@ -100,7 +108,7 @@ enum SentryException {
     case tokenisationServiceRejectedRequest(NetworkResponseData?)
     case apiRejectedPaymentCardRequest(NetworkResponseData?)
     case apiRejectedLoyaltyCardRequest(NetworkResponseData?)
-    case localPointsCollectionFailed(WebScrapingUtilityError, WebScrapableMerchant, balanceRefresh: Bool)
+    case localPointsCollectionFailed(WebScrapingUtilityError, LocalPointsCollectableMerchant, balanceRefresh: Bool)
 
     var formattedError: NSError {
         return NSError(domain: domain.rawValue, code: errorCode, userInfo: userInfo)
@@ -158,7 +166,7 @@ enum SentryException {
         case .localPointsCollectionFailed(let error, let merchant, let isBalanceRefresh):
             return [
                 "error_message": error.localizedDescription,
-                "merchant": merchant.rawValue,
+                "merchant": merchant,
                 "balance_refresh": isBalanceRefresh
             ]
         }
@@ -178,4 +186,22 @@ enum SentryException {
             return "Local points collection failed"
         }
     }
+}
+
+// MARK: - Custom Breadcrumbs
+
+enum SentryBreadcrumbCategory: String {
+    case localPointsCollection = "Local points collection"
+}
+
+protocol SentryBreadcrumb {
+    var level: SentryLevel { get }
+    var category: SentryBreadcrumbCategory { get }
+    var message: String { get }
+}
+
+struct LocalPointsCollectionSentryBreadcrumb: SentryBreadcrumb {
+    var level: SentryLevel { return .info }
+    var category: SentryBreadcrumbCategory { return .localPointsCollection }
+    let message: String
 }

@@ -54,6 +54,9 @@ class MainTabBarViewController: UITabBarController {
 
     @objc func configureForCurrentTheme() {
         tabBar.standardAppearance = Current.themeManager.tabBarAppearance(for: traitCollection)
+        if #available(iOS 15.0, *) {
+            tabBar.scrollEdgeAppearance = Current.themeManager.tabBarAppearance(for: traitCollection)
+        }
         tabBar.tintColor = Current.themeManager.color(for: .text)
         tabBar.setNeedsLayout()
     }
