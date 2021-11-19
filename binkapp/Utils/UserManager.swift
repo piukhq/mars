@@ -122,8 +122,6 @@ class UserManager {
         if updateZendeskIdentity {
             ZendeskService.setIdentity(firstName: currentFirstName, lastName: currentLastName)
         }
-        
-        MixpanelUtility.setUserProperties()
     }
     
     private func setToken(with response: LoginResponse) throws {

@@ -10,36 +10,37 @@ import Mixpanel
 import Keys
 
 enum MixpanelUtility {
-    private static let mixpanelInstance = Mixpanel.mainInstance()
-    private static var debug = true /// Switch to true for testing
+    private static var mixpanelInstance: MixpanelInstance?
     
-    static func start() {
-        if debug {
-            Mixpanel.initialize(token: BinkappKeys().mixpanelTokenDev)
-            return
+    static func configure() {
+        if Current.userDefaults.bool(forDefaultsKey: .analyticsDebugMode) {
+            Mixpanel.removeInstance(name: "prod")
+            mixpanelInstance = Mixpanel.initialize(token: BinkappKeys().mixpanelTokenDev, flushInterval: 60, instanceName: "dev", optOutTrackingByDefault: false)
+            Mixpanel.setMainInstance(name: "dev")
+        } else {
+            Mixpanel.removeInstance(name: "dev")
+            mixpanelInstance = nil
+            #if RELEASE
+                mixpanelInstance = Mixpanel.initialize(token: BinkappKeys().mixpanelTokenProduction, flushInterval: 60, instanceName: "prod", optOutTrackingByDefault: false)
+                Mixpanel.setMainInstance(name: "prod")
+            #endif
         }
-        
-        #if RELEASE
-        Mixpanel.initialize(token: BinkappKeys().mixpanelTokenProduction)
-        #endif
     }
     
     static func startTimer(for event: MixpanelTrackableEvent) {
-        mixpanelInstance.time(event: event.identifier)
+        mixpanelInstance?.time(event: event.identifier)
     }
     
     static func track(_ event: MixpanelTrackableEvent) {
-        mixpanelInstance.track(event: event.identifier, properties: event.data)
-        print("MP: \(event)")
+        mixpanelInstance?.track(event: event.identifier, properties: event.data)
     }
     
     static func setUserIdentity(userId: String) {
-        mixpanelInstance.identify(distinctId: userId)
-        print("MP: Set user ID: \(userId)")
+        mixpanelInstance?.identify(distinctId: userId)
     }
     
     static func resetUserIdentity() {
-        mixpanelInstance.reset()
+        mixpanelInstance?.reset()
     }
     
     static func setUserProperties() {
@@ -49,7 +50,7 @@ enum MixpanelUtility {
     }
     
     static func setUserProperties(_ properties: [MixpanelUserProperty]) {
-        //        mixpanelInstance.people.set(properties: properties)
+//        mixpanelInstance.people.set(properties: properties)
     }
 }
 
