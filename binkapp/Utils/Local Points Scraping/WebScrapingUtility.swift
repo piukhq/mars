@@ -93,6 +93,7 @@ class WebScrapingUtility: NSObject {
         }
         
         self.agent = agent
+        MixpanelUtility.startTimer(for: .localPointsCollectionSuccess(brandName: agent.merchant ?? "Unknown"))
         
         guard let urlString = agent.pointsCollectionUrlString, let url = URL(string: urlString) else {
             throw WebScrapingUtilityError.agentProvidedInvalidUrl
