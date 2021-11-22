@@ -369,6 +369,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionSuccess(membershipCard: membershipCard))
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
                 MixpanelUtility.track(.localPointsCollectionSuccess(brandName: item.card.membershipPlan?.account?.companyName ?? "Unknown"))
+                MixpanelUtility.track(.localPointsCollectionStatus(membershipCard: membershipCard))
             }
         }
     }
