@@ -337,8 +337,6 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
     }
     
     private func transitionToAuthorized(pointsValue: Int, item: QueuedItem, agent: LocalPointsCollectable) {
-        MixpanelUtility.track(.localPointsCollectionSuccess(brandName: item.card.membershipPlan?.account?.companyName ?? "Unknown"))
-        
         fetchMembershipCard(forId: item.card.id) { membershipCard in
             guard let membershipCard = membershipCard else {
                 fatalError("We should never get here. If we passed in a correct membership card id, we should get a card back.")
@@ -370,6 +368,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
 
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionSuccess(membershipCard: membershipCard))
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
+                MixpanelUtility.track(.localPointsCollectionSuccess(brandName: item.card.membershipPlan?.account?.companyName ?? "Unknown"))
             }
         }
     }

@@ -262,7 +262,7 @@ class WebScrapingUtility: NSObject {
         let storage = Storage.storage()
         let pathReference = storage.reference(withPath: "local-points-collection/\(merchant.lowercased()).js")
         
-        pathReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
+        pathReference.getData(maxSize: 1 * 1024 * 1024) { data, _ in
             guard let data = data else {
                 completion(nil)
                 return
