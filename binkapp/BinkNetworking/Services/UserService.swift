@@ -129,6 +129,10 @@ extension UserServiceProtocol {
                     completion?(.failure(.customError("Failed to decode logout response")))
                     return
                 }
+                
+                MixpanelUtility.track(.logout)
+                MixpanelUtility.resetUserIdentity()
+                
                 completion?(.success(safeResponse))
             case .failure:
                 if #available(iOS 14.0, *) {

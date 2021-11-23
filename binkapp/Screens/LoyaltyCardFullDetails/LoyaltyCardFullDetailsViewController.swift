@@ -182,8 +182,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
             requestInAppReview()
         }
     }
-    
-//    2661325368336
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()

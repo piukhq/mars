@@ -115,6 +115,8 @@ class UserManager {
             let sentryUser = Sentry.User(userId: userId)
             SentrySDK.setUser(sentryUser)
             Analytics.setUserID(userId)
+            
+            MixpanelUtility.setUserIdentity(userId: userId)
         }
         
         if updateZendeskIdentity {
