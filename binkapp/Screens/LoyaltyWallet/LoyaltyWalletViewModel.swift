@@ -56,6 +56,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
                 if #available(iOS 14.0, *) {
                     BinkLogger.infoPrivateHash(event: LoyaltyCardLoggerEvent.loyaltyCardDeleted, value: card.id)
                 }
+                MixpanelUtility.track(.loyaltyCardDeleted(brandName: card.membershipPlan?.account?.companyName ?? "Unknown", route: .wallet))
                 Current.wallet.refreshLocal()
             }
         }, onCancel: onCancel)

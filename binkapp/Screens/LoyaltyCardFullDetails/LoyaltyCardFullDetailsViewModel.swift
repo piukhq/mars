@@ -295,6 +295,7 @@ extension LoyaltyCardFullDetailsViewModel {
                     BinkLogger.infoPrivateHash(event: LoyaltyCardLoggerEvent.loyaltyCardDeleted, value: self.membershipCard.id)
                 }
                 
+                MixpanelUtility.track(.loyaltyCardDeleted(brandName: self.brandName, route: .lcd))
                 Current.wallet.refreshLocal()
                 Current.navigate.back()
             }
