@@ -33,6 +33,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
         let viewController = ViewControllerFactory.makeBarcodeViewController(membershipCard: card)
         let navigationRequest = ModalNavigationRequest(viewController: viewController, completion: completion)
         Current.navigate.to(navigationRequest)
+        MixpanelUtility.track(.viewBarcode(brandName: card.membershipPlan?.account?.companyName ?? "Unknown", route: .wallet))
     }
     
     func toCardDetail(for card: CD_MembershipCard) {

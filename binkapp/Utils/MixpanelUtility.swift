@@ -64,6 +64,13 @@ enum MixpanelTrackableEvent {
     case localPointsCollectionFailure(brandName: String, reason: String?)
     case login(method: LoginType)
     case logout
+    case viewBarcode(brandName: String, route: JourneyRoute)
+    
+    enum JourneyRoute: String {
+        case wallet = "Wallet"
+        case lcd = "Loyalty Dard Detail"
+        case quickLaunchWidget = "Quick Launch Widget"
+    }
     
     var identifier: String {
         switch self {
@@ -85,6 +92,8 @@ enum MixpanelTrackableEvent {
             return "User logged in"
         case .logout:
             return "User logged out"
+        case .viewBarcode:
+            return "Barcode viewed"
         }
     }
     
@@ -112,7 +121,7 @@ enum MixpanelTrackableEvent {
             guard let id = membershipCard.id else { return nil }
             guard let status = membershipCard.status?.status?.rawValue else { return nil }
             return [
-                "Loyalty plan": planId,
+                "Loyalty plan ID": planId,
                 "Status": status,
                 "Client account id": id
             ]
@@ -123,6 +132,11 @@ enum MixpanelTrackableEvent {
             ]
         case .login(let method):
             return ["Method": method.rawValue]
+        case .viewBarcode(let brandName, let route):
+            return [
+                "Brand name": brandName,
+                "Route": route.rawValue
+            ]
         default: return nil
         }
     }
