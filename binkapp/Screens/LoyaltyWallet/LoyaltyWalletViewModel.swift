@@ -39,6 +39,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
     func toCardDetail(for card: CD_MembershipCard) {
         let navigationRequest = PushNavigationRequest(viewController: ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card))
         Current.navigate.to(navigationRequest)
+        MixpanelUtility.track(.lcdViewed(brandName: card.membershipPlan?.account?.companyName ?? "Unknown", route: .wallet))
     }
     
     func showDeleteConfirmationAlert(card: CD_MembershipCard, onCancel: @escaping () -> Void) {
