@@ -346,6 +346,7 @@ extension Wallet {
     
     func reorderMembershipCard(_ card: CD_MembershipCard, from sourceIndex: Int, to destinationIndex: Int) {
         reorderWalletCard(card, in: &localMembershipCardsOrder, from: sourceIndex, to: destinationIndex, updating: &membershipCards)
+        MixpanelUtility.track(.loyaltyCardManuallyReordered(brandName: card.membershipPlan?.account?.companyName ?? "Unknown", originalIndex: sourceIndex, destinationIndex: destinationIndex))
     }
 
     func reorderPaymentCard(_ card: CD_PaymentCard, from sourceIndex: Int, to destinationIndex: Int) {
@@ -360,8 +361,6 @@ extension Wallet {
         /// Sync the local ordering
         localCardsOrder?.remove(at: sourceIndex)
         localCardsOrder?.insert(card.id, at: destinationIndex)
-        
-        MixpanelUtility.track(.cardsManuallyReordered)
     }
 
     private func applyLocalWalletOrder<C: WalletCard>(_ localOrder: inout [String]?, to cards: [C]?, updating walletDataSource: inout [C]?) {

@@ -58,7 +58,7 @@ enum MixpanelTrackableEvent {
     case loyaltyCardAdd(brandName: String?)
     case loyaltyCardAddFailure(brandName: String, reason: String?)
     case lcdViewed(brandName: String)
-    case cardsManuallyReordered
+    case loyaltyCardManuallyReordered(brandName: String, originalIndex: Int, destinationIndex: Int)
     case localPointsCollectionSuccess(brandName: String)
     case localPointsCollectionStatus(membershipCard: CD_MembershipCard)
     case localPointsCollectionFailure(brandName: String, reason: String?)
@@ -73,8 +73,8 @@ enum MixpanelTrackableEvent {
             return "Loyalty card add failed"
         case .lcdViewed:
             return "Loyalty card detail viewed"
-        case .cardsManuallyReordered:
-            return "Cards manually reordered"
+        case .loyaltyCardManuallyReordered:
+            return "Loyalty card manually reordered"
         case .localPointsCollectionSuccess:
             return "Local points collection succeeded"
         case .localPointsCollectionStatus:
@@ -99,6 +99,12 @@ enum MixpanelTrackableEvent {
             ]
         case .lcdViewed(let brandName):
             return ["Brand name": brandName]
+        case .loyaltyCardManuallyReordered(let brandName, let originalIndex, let destinationIndex):
+            return [
+                "Brand name": brandName,
+                "Original index": originalIndex,
+                "Destination index": destinationIndex
+            ]
         case .localPointsCollectionSuccess(let brandName):
             return ["Brand name": brandName]
         case .localPointsCollectionStatus(let membershipCard):
