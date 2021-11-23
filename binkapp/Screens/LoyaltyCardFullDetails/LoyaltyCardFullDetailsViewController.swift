@@ -148,7 +148,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidUpdate, object: nil)        
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidUpdate, object: nil)
     }
     
     @objc private func handlePointsScrapingUpdate() {

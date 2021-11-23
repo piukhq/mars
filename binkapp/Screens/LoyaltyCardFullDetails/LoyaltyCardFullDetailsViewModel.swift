@@ -290,12 +290,13 @@ extension LoyaltyCardFullDetailsViewModel {
                 Current.navigate.to(navigationRequest)
                 return
             }
+            MixpanelUtility.track(.loyaltyCardDeleted(brandName: self.brandName, route: .lcd))
+
             self.repository.delete(self.membershipCard) {
                 if #available(iOS 14.0, *) {
                     BinkLogger.infoPrivateHash(event: LoyaltyCardLoggerEvent.loyaltyCardDeleted, value: self.membershipCard.id)
                 }
                 
-                MixpanelUtility.track(.loyaltyCardDeleted(brandName: self.brandName, route: .lcd))
                 Current.wallet.refreshLocal()
                 Current.navigate.back()
             }
