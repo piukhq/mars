@@ -108,6 +108,7 @@ class LoyaltyCardFullDetailsViewModel {
         let viewController = ViewControllerFactory.makeBarcodeViewController(membershipCard: membershipCard)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
+        MixpanelUtility.track(.viewBarcode(brandName: membershipCard.membershipPlan?.account?.companyName ?? "Unknown", route: .lcd))
     }
     
     func goToScreenForState(state: ModuleState, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) {

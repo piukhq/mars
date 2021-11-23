@@ -55,7 +55,7 @@ enum MixpanelUtility {
 }
 
 enum MixpanelTrackableEvent {
-    case loyaltyCardAdd(brandName: String?)
+    case loyaltyCardAdd(brandName: String)
     case loyaltyCardAddFailure(brandName: String, reason: String?)
     case lcdViewed(brandName: String)
     case loyaltyCardManuallyReordered(brandName: String, originalIndex: Int, destinationIndex: Int)
