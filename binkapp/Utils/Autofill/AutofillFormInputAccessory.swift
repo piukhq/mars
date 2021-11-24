@@ -1,5 +1,5 @@
 //
-//  FormPrefill.swift
+//  AutofillFormInputAccessory.swift
 //  binkapp
 //
 //  Created by Nick Farrant on 14/05/2021.
@@ -13,7 +13,7 @@ protocol AutofillFormInputAccessoryDelegate: AnyObject {
     func inputAccessoryDidTapDone(_ inputAccessory: AutofillFormInputAccessory)
 }
 
-class AutofillFormInputAccessory: UIToolbar, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class AutofillFormInputAccessory: UIToolbar {
     private let field: FormField
     private weak var autofillDelegate: AutofillFormInputAccessoryDelegate?
     
@@ -65,13 +65,13 @@ class AutofillFormInputAccessory: UIToolbar, UICollectionViewDataSource, UIColle
         return stackview
     }()
     
-    var prefilledValues: [String]? {
-        let allPrefilledValues = Current.userDefaults.value(forDefaultsKey: .prefilledFormValues) as? [String: [String]]
-        return allPrefilledValues?[field.title.lowercased()]?.sorted()
+    var autofillValues: [String]? {
+        let autofillValues = Current.userDefaults.value(forDefaultsKey: .autofillFormValues) as? [String: [String]]
+        return autofillValues?[field.title.lowercased()]?.sorted()
     }
     
     private func configure() {
-        collectionView.register(PrefilledFormValueInputCell.self, asNib: false)
+        collectionView.register(AutofillFormInputCell.self, asNib: false)
         stackview.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
         stackview.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
     }
@@ -79,49 +79,29 @@ class AutofillFormInputAccessory: UIToolbar, UICollectionViewDataSource, UIColle
     @objc func handleDoneButtonTap() {
         autofillDelegate?.inputAccessoryDidTapDone(self)
     }
-    
+}
+
+
+// MARK: - CollectionView delegates
+
+extension AutofillFormInputAccessory: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return prefilledValues?.count ?? 0
+        return autofillValues?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: PrefilledFormValueInputCell = collectionView.dequeue(indexPath: indexPath)
-        guard let value = prefilledValues?[indexPath.row] else { return cell }
+        let cell: AutofillFormInputCell = collectionView.dequeue(indexPath: indexPath)
+        guard let value = autofillValues?[indexPath.row] else { return cell }
         cell.configureWithValue(value)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let value = prefilledValues?[indexPath.row] {
+        if let value = autofillValues?[indexPath.row] {
             autofillDelegate?.inputAccessory(self, didSelectValue: value)
         }
     }
 }
-
-class PrefilledFormValueInputCell: UICollectionViewCell {
-    private lazy var label: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(label)
-        label.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
-        label.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
-        label.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
-        return label
-    }()
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        label.text = nil
-    }
-    
-    func configureWithValue(_ value: String) {
-        label.text = value
-        backgroundColor = .systemGray5
-        layer.cornerCurve = .continuous
-        layer.cornerRadius = 4
-    }
-}
-
 
 
 class PrefillFormValuesViewController: BaseFormViewController {
@@ -153,7 +133,7 @@ class PrefillFormValuesViewController: BaseFormViewController {
     }
     
     @objc func saveButtonTapped() {
-        let persistedPrefillValues = Current.userDefaults.value(forDefaultsKey: .prefilledFormValues) as? [String: [String]]
+        let persistedPrefillValues = Current.userDefaults.value(forDefaultsKey: .autofillFormValues) as? [String: [String]]
         var newPrefillValues: [String: [String]] = persistedPrefillValues ?? [:]
         let fieldValues = dataSource.currentFieldValues()
         
@@ -173,7 +153,7 @@ class PrefillFormValuesViewController: BaseFormViewController {
         }
         
         print("PREFILL: \(newPrefillValues)")
-        Current.userDefaults.set(newPrefillValues, forDefaultsKey: .prefilledFormValues)
+        Current.userDefaults.set(newPrefillValues, forDefaultsKey: .autofillFormValues)
         Current.navigate.close()
     }
 }
@@ -215,7 +195,7 @@ extension FormDataSource {
             return delegate.formDataSource(self, manualValidate: field)
         }
         
-        let prefilledValues = Current.userDefaults.value(forDefaultsKey: .prefilledFormValues) as? [String: [String]]
+        let prefilledValues = Current.userDefaults.value(forDefaultsKey: .autofillFormValues) as? [String: [String]]
         
         enrolFields.forEach { field in
             var forcedValue: String? = ""

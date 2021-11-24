@@ -185,7 +185,7 @@
 		70F7EC2B25CAF97A005DE935 /* WebScrapingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2A25CAF97A005DE935 /* WebScrapingViewController.swift */; };
 		70F7EC3025CAF9A2005DE935 /* WebScrapingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2F25CAF9A2005DE935 /* WebScrapingResponse.swift */; };
 		70FD1DB2262D8E59003C0DA0 /* BinkModuleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FD1DB1262D8E59003C0DA0 /* BinkModuleType.swift */; };
-		70FDBD74264E7C6D00DC8DB3 /* FormPrefill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FDBD73264E7C6D00DC8DB3 /* FormPrefill.swift */; };
+		70FDBD74264E7C6D00DC8DB3 /* AutofillFormInputAccessory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FDBD73264E7C6D00DC8DB3 /* AutofillFormInputAccessory.swift */; };
 		96F22E002507C5AC0009951B /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 96F22DFF2507C5AC0009951B /* Sentry */; };
 		96F22E022508B6060009951B /* SentryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F22E012508B6060009951B /* SentryService.swift */; };
 		9B0A103BBA0F62048017D0B8 /* Pods_binkappTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 352CBEDF33DDEB7B603C909B /* Pods_binkappTests.framework */; };
@@ -313,6 +313,7 @@
 		CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */; };
 		CE990E13261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */; };
 		CEA0E1E1274E35DE00CC2FC6 /* RecommendedVersionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E1E0274E35DE00CC2FC6 /* RecommendedVersionUtil.swift */; };
+		CEA0E1E3274E9CAD00CC2FC6 /* AutofillFormInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E1E2274E9CAD00CC2FC6 /* AutofillFormInputCell.swift */; };
 		CEA16EC526249C6300D449E1 /* BarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA16EC426249C6300D449E1 /* BarcodeView.swift */; };
 		CEA16ED62624B0EE00D449E1 /* BarcodeViewWide.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA16ED52624B0EE00D449E1 /* BarcodeViewWide.swift */; };
 		CEA16EE02625879B00D449E1 /* BarcodeViewCompact.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA16EDF2625879B00D449E1 /* BarcodeViewCompact.xib */; };
@@ -779,7 +780,7 @@
 		70F7EC2A25CAF97A005DE935 /* WebScrapingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingViewController.swift; sourceTree = "<group>"; };
 		70F7EC2F25CAF9A2005DE935 /* WebScrapingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingResponse.swift; sourceTree = "<group>"; };
 		70FD1DB1262D8E59003C0DA0 /* BinkModuleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkModuleType.swift; sourceTree = "<group>"; };
-		70FDBD73264E7C6D00DC8DB3 /* FormPrefill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormPrefill.swift; sourceTree = "<group>"; };
+		70FDBD73264E7C6D00DC8DB3 /* AutofillFormInputAccessory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillFormInputAccessory.swift; sourceTree = "<group>"; };
 		782FD7EAEC7253B4F80C33EF /* Pods-binkappTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.beta.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.beta.xcconfig"; sourceTree = "<group>"; };
 		96F22E012508B6060009951B /* SentryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentryService.swift; sourceTree = "<group>"; };
 		9AF638C55EA3C2FE09150516 /* Pods-binkappTests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.app store (internal).xcconfig"; sourceTree = "<group>"; };
@@ -912,6 +913,7 @@
 		CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkCopyableLabel.swift; sourceTree = "<group>"; };
 		CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_1_LoyaltyCards.swift; sourceTree = "<group>"; };
 		CEA0E1E0274E35DE00CC2FC6 /* RecommendedVersionUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendedVersionUtil.swift; path = "binkapp/Utils/Remote Config/RecommendedVersionUtil.swift"; sourceTree = SOURCE_ROOT; };
+		CEA0E1E2274E9CAD00CC2FC6 /* AutofillFormInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillFormInputCell.swift; sourceTree = "<group>"; };
 		CEA16EC426249C6300D449E1 /* BarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeView.swift; sourceTree = "<group>"; };
 		CEA16ED52624B0EE00D449E1 /* BarcodeViewWide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewWide.swift; sourceTree = "<group>"; };
 		CEA16EDF2625879B00D449E1 /* BarcodeViewCompact.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BarcodeViewCompact.xib; sourceTree = "<group>"; };
@@ -1509,7 +1511,7 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				70FDBD72264E7C5300DC8DB3 /* Form Prefill Utility */,
+				70FDBD72264E7C5300DC8DB3 /* Autofill */,
 				CE1015232722A60E0000A838 /* Vision */,
 				70C8029D2642B231005700A2 /* Deep Linking */,
 				CEAB2D71266670F6006A0F43 /* HTML Parsing */,
@@ -1929,12 +1931,13 @@
 			path = PLL;
 			sourceTree = "<group>";
 		};
-		70FDBD72264E7C5300DC8DB3 /* Form Prefill Utility */ = {
+		70FDBD72264E7C5300DC8DB3 /* Autofill */ = {
 			isa = PBXGroup;
 			children = (
-				70FDBD73264E7C6D00DC8DB3 /* FormPrefill.swift */,
+				70FDBD73264E7C6D00DC8DB3 /* AutofillFormInputAccessory.swift */,
+				CEA0E1E2274E9CAD00CC2FC6 /* AutofillFormInputCell.swift */,
 			);
-			path = "Form Prefill Utility";
+			path = Autofill;
 			sourceTree = "<group>";
 		};
 		AF06D86448D661A8F4142F87 /* Persistence */ = {
@@ -3510,6 +3513,7 @@
 				3CE24B2B2304014600B258C8 /* AddOrJoinViewController.swift in Sources */,
 				CEF837E925DA7AB10066C77E /* FeatureFlagsTableViewController.swift in Sources */,
 				70A61D532630A23C0073A08A /* BinkModuleView.swift in Sources */,
+				CEA0E1E3274E9CAD00CC2FC6 /* AutofillFormInputCell.swift in Sources */,
 				3C453CB72338E84F00287B56 /* PaymentWalletViewModel.swift in Sources */,
 				EF4B46662346489C009A3651 /* PaymentCardDetailViewController.swift in Sources */,
 				CEE209142684653A004D3759 /* WidgetContent.swift in Sources */,
@@ -3611,7 +3615,7 @@
 				B7E2EC0822E5ED6600BB201A /* String+Encrypting.swift in Sources */,
 				CE2CFE5E25E3C5CB00B1CB93 /* MerchantHeroCell.swift in Sources */,
 				CEA9057E25C81994000F69E1 /* BinkAlertController.swift in Sources */,
-				70FDBD74264E7C6D00DC8DB3 /* FormPrefill.swift in Sources */,
+				70FDBD74264E7C6D00DC8DB3 /* AutofillFormInputAccessory.swift in Sources */,
 				EF8F0481238D582300BD708B /* _CD_PlanDocument.swift in Sources */,
 				EF2E8811233385A400F678F3 /* World.swift in Sources */,
 				CE2C7A7825DEC635007624FE /* DebugMenuPickerTableViewCell.swift in Sources */,
