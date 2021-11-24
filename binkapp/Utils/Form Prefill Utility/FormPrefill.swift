@@ -187,6 +187,24 @@ class AutofillFormInputAccessory: UIToolbar, UICollectionViewDataSource, UIColle
         return collectionView
     }()
     
+    private lazy var doneButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.addTarget(self, action: #selector(handleDoneButtonTap), for: .touchUpInside)
+        button.setTitle("Done", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private lazy var stackview: UIStackView = {
+        let stackview = UIStackView(arrangedSubviews: [collectionView, doneButton])
+        stackview.translatesAutoresizingMaskIntoConstraints = false
+        stackview.axis = .horizontal
+        stackview.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 15)
+        stackview.isLayoutMarginsRelativeArrangement = true
+        addSubview(stackview)
+        return stackview
+    }()
+    
     var prefilledValues: [String]? {
         let allPrefilledValues = Current.userDefaults.value(forDefaultsKey: .prefilledFormValues) as? [String: [String]]
         return allPrefilledValues?[field.title.lowercased()]?.sorted()
@@ -194,9 +212,12 @@ class AutofillFormInputAccessory: UIToolbar, UICollectionViewDataSource, UIColle
     
     private func configure() {
         collectionView.register(PrefilledFormValueInputCell.self, asNib: false)
-        addSubview(collectionView)
-        collectionView.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
-        collectionView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+        stackview.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+        stackview.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+    }
+    
+    @objc func handleDoneButtonTap() {
+        print("Done tapped")
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

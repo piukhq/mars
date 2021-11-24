@@ -164,15 +164,6 @@ class FormCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var inputAccessory: UIToolbar = {
-        let bar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let done = UIBarButtonItem(title: "Done", style: .plain, target: self, action: .accessoryDoneTouchUpInside)
-        bar.items = [flexSpace, done]
-        bar.sizeToFit()
-        return bar
-    }()
-    
     private var preferredWidth: CGFloat = 300 // This has to be a non zero value, chose 300 because of the movie 300.
     
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
