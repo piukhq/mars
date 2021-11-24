@@ -117,7 +117,7 @@ class PrefillFormValuesViewController: BaseFormViewController {
     
     private lazy var saveButton: BinkButton = {
         return BinkButton(type: .gradient, title: "Save", enabled: false) { [weak self] in
-            self?.saveButtonTapped()
+//            self?.saveButtonTapped()
         }
     }()
     
@@ -132,30 +132,30 @@ class PrefillFormValuesViewController: BaseFormViewController {
         }
     }
     
-    @objc func saveButtonTapped() {
-        let persistedPrefillValues = Current.userDefaults.value(forDefaultsKey: .autofillFormValues) as? [String: [String]]
-        var newPrefillValues: [String: [String]] = persistedPrefillValues ?? [:]
-        let fieldValues = dataSource.currentFieldValues()
-        
-        for key in fieldValues.keys {
-            /// If the key already exists in the prefilled values, append the new value if unique
-            if var object = newPrefillValues[key] {
-                if let value = fieldValues[key], !object.contains(value) {
-                    object.append(value)
-                    newPrefillValues[key] = object
-                }
-            } else {
-                /// If the key doesn't exist, add it
-                if let value = fieldValues[key] {
-                    newPrefillValues[key] = [value]
-                }
-            }
-        }
-        
-        print("PREFILL: \(newPrefillValues)")
-        Current.userDefaults.set(newPrefillValues, forDefaultsKey: .autofillFormValues)
-        Current.navigate.close()
-    }
+//    @objc func saveButtonTapped() {
+//        let persistedPrefillValues = Current.userDefaults.value(forDefaultsKey: .autofillFormValues) as? [String: [String]]
+//        var newPrefillValues: [String: [String]] = persistedPrefillValues ?? [:]
+//        let fieldValues = dataSource.currentFieldValues()
+//
+//        for key in fieldValues.keys {
+//            /// If the key already exists in the prefilled values, append the new value if unique
+//            if var object = newPrefillValues[key] {
+//                if let value = fieldValues[key], !object.contains(value) {
+//                    object.append(value)
+//                    newPrefillValues[key] = object
+//                }
+//            } else {
+//                /// If the key doesn't exist, add it
+//                if let value = fieldValues[key] {
+//                    newPrefillValues[key] = [value]
+//                }
+//            }
+//        }
+//
+//        print("PREFILL: \(newPrefillValues)")
+//        Current.userDefaults.set(newPrefillValues, forDefaultsKey: .autofillFormValues)
+//        Current.navigate.close()
+//    }
 }
 
 extension PrefillFormValuesViewController: FormDataSourceDelegate {

@@ -162,6 +162,10 @@ class AuthAndAddViewModel {
         
         if let rememberMyDetailsCheckbox = checkboxes?.first(where: { $0.columnName == "remember-my-details" }) {
             setUserPreference(checkbox: rememberMyDetailsCheckbox)
+            
+            if rememberMyDetailsCheckbox.value == "1" {
+                storeAutofillValues(formfields: formFields)
+            }
         }
         
         repository.addMembershipCard(request: model, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, scrapingCredentials: scrapingCredentials, onSuccess: { card in
@@ -199,7 +203,44 @@ class AuthAndAddViewModel {
         
         preferencesRepository.putPreferences(preferences: dictionary) {
             Current.userDefaults.set(checkedState, forDefaultsKey: .rememberMyDetails)
-        } onError: { _ in }
+        } onError: { _ in
+        }
+    }
+    
+    private func storeAutofillValues(formfields: [FormField]) {
+        let persistedPrefillValues = Current.userDefaults.value(forDefaultsKey: .autofillFormValues) as? [String: [String]]
+        var newPrefillValues: [String: [String]] = persistedPrefillValues ?? [:]
+        let fieldValues = currentFieldValues(formfields: formfields)
+        
+        for key in fieldValues.keys {
+            /// If the key already exists in the prefilled values, append the new value if unique
+            if var object = newPrefillValues[key] {
+                if let value = fieldValues[key], !object.contains(value) {
+                    object.append(value)
+                    newPrefillValues[key] = object
+                }
+            } else {
+                /// If the key doesn't exist, add it
+                if let value = fieldValues[key] {
+                    newPrefillValues[key] = [value]
+                }
+            }
+        }
+        
+        print("PREFILL: \(newPrefillValues)")
+        Current.userDefaults.set(newPrefillValues, forDefaultsKey: .autofillFormValues)
+    }
+    
+    private func currentFieldValues(formfields: [FormField]) -> [String: String] {
+        var values: [String: String] = [:]
+        let autofillCategories = ["first name", "last name", "email", "phone", "date of birth"]
+        
+        for field in formfields {
+            if autofillCategories.contains(field.title.lowercased()) {
+                values[field.title.lowercased()] = field.value
+            }
+        }
+        return values
     }
     
     private func addGhostCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, existingMembershipCard: CD_MembershipCard?) throws {
