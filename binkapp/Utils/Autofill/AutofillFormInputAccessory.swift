@@ -59,6 +59,7 @@ class AutofillFormInputAccessory: UIToolbar {
         let stackview = UIStackView(arrangedSubviews: [collectionView, doneButton])
         stackview.translatesAutoresizingMaskIntoConstraints = false
         stackview.axis = .horizontal
+        stackview.spacing = 10
         stackview.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 15)
         stackview.isLayoutMarginsRelativeArrangement = true
         addSubview(stackview)
