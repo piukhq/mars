@@ -23,7 +23,7 @@ class RemoteConfigUtil {
     
     private let remoteConfig = RemoteConfig.remoteConfig()
     private(set) var hasPerformedFetch = false
-//    var recommendedVersionUtil = RecommendedVersionUtil()
+    var recommendedVersionUtil = RecommendedVersionUtil()
     
     var configFile: RemoteConfigFile? {
         return objectForConfigKey(.configFile, forObjectType: RemoteConfigFile.self)
@@ -42,7 +42,7 @@ class RemoteConfigUtil {
     func handleRemoteConfigFetch() {
         hasPerformedFetch = true
         Current.featureManager.getFeaturesFromRemoteConfig()
-//        recommendedVersionUtil.promptRecommendedUpdateIfNecessary()
+        recommendedVersionUtil.promptRecommendedUpdateIfNecessary()
     }
     
     func fetch(completion: ((Bool) -> Void)? = nil) {
