@@ -160,6 +160,10 @@ class AuthAndAddViewModel {
         BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardRequest(request: model, formPurpose: formPurpose))
         let scrapingCredentials = Current.pointsScrapingManager.makeCredentials(fromFormFields: formFields, membershipPlanId: membershipPlan.id)
         
+        if let rememberMyDetailsCheckbox = checkboxes?.first(where: { $0.columnName == "remember-my-details" }) {
+            setUserPreference(checkbox: rememberMyDetailsCheckbox)
+        }
+        
         repository.addMembershipCard(request: model, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, scrapingCredentials: scrapingCredentials, onSuccess: { card in
             if let card = card {
                 // Navigate to LCD for the new card behind the modal
@@ -185,6 +189,17 @@ class AuthAndAddViewModel {
                 self?.displaySimplePopup(title: L10n.errorTitle, message: error?.localizedDescription)
                 completion()
         })
+    }
+    
+    private func setUserPreference(checkbox: CheckboxView) {
+        guard let columnName = checkbox.columnName else { return }
+        let preferencesRepository = PreferencesRepository()
+        let checkedState: Bool = checkbox.value == "1"
+        let dictionary = [columnName: checkbox.value]
+        
+        preferencesRepository.putPreferences(preferences: dictionary) {
+            Current.userDefaults.set(checkedState, forDefaultsKey: .rememberMyDetails)
+        } onError: { _ in }
     }
     
     private func addGhostCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, existingMembershipCard: CD_MembershipCard?) throws {

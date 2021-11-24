@@ -98,6 +98,9 @@ extension PreferencesViewController: CheckboxViewDelegate {
 
         viewModel.putPreferences(preferences: dictionary, onSuccess: { [weak self] in
             self?.errorLabel.isHidden = true
+            if let _ = dictionary["remember-my-details"] {
+                Current.userDefaults.set(Bool(value), forDefaultsKey: .rememberMyDetails)
+            }
         }) { [weak self] _ in
             checkboxView.reset()
             self?.errorLabel.text = L10n.preferencesUpdateFail
