@@ -26,6 +26,7 @@ extension UIColor {
         let blue = CGFloat(b) / 255.0
         self.init(red: red, green: green, blue: blue, alpha: alpha)
     }
+    
     func toHexString() -> String {
         var r: CGFloat = 0
         var g: CGFloat = 0
@@ -131,6 +132,10 @@ extension UIColor {
     }
 
     // MARK: - Theming
+    
+    // MARK: - Bink White
+    static let primaryViewBackground = UIColor(hexString: "#F7F7F7")
+    
 
     // MARK: Bink Blue
     static let binkBlueViewBackground = UIColor(hexString: "111127")
@@ -188,9 +193,15 @@ extension UIColor {
         case .system:
             return .systemRed
         case .light:
-            return UIColor(hexString: "ff3b30")
+            return UIColor(hexString: "FF0000")
         case .dark:
             return UIColor(hexString: "ff453a")
         }
     }
+    
+    // MARK: - Forms
+    
+    static let activeField = UIColor(hexString: "147EFB")
+    static let validField = UIColor(hexString: "1EA9AC")
+    static let invalidField = UIColor.binkDynamicRed
 }

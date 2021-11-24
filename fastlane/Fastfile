@@ -42,6 +42,13 @@ platform :ios do
     match(type: "appstore", app_identifier: "com.bink.mybank.poc", readonly: true)
     match(type: "adhoc", app_identifier: "com.bink.mybank.poc", readonly: true)
     match(type: "development", app_identifier: "com.bink.mybank.poc", readonly: true)
+    match(type: "development", app_identifier: "com.bink.wallet.alpha.widget", readonly: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.beta.widget", readonly: true)
+    match(type: "appstore", app_identifier: "com.bink.wallet.widget", readonly: true)
+
+    # For MR builds to Testflight
+    match(type: "appstore", app_identifier: "com.bink.wallet.beta", readonly: true)
+    match(type: "appstore", app_identifier: "com.bink.wallet.beta.widget", readonly: true)
 
   end
 
@@ -76,10 +83,75 @@ platform :ios do
     match(type: "adhoc", app_identifier: "com.bink.mybank.poc", readonly: false, force_for_new_devices: true)
     match(type: "appstore", app_identifier: "com.bink.mybank.poc", readonly: false, force_for_new_devices: true)
     match(type: "development", app_identifier: "com.bink.mybank.poc", readonly: false, force_for_new_devices: true)
+    match(type: "development", app_identifier: "com.bink.wallet.alpha.widget", readonly: false, force_for_new_devices: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.beta.widget", readonly: false, force_for_new_devices: true)
+    match(type: "appstore", app_identifier: "com.bink.wallet.widget", readonly: false, force_for_new_devices: true)
+    
+    # For MR builds to Testflight
+    match(type: "appstore", app_identifier: "com.bink.wallet.beta", readonly: false, force_for_new_devices: true)
+    match(type: "appstore", app_identifier: "com.bink.wallet.beta.widget", readonly: false, force_for_new_devices: true)
 
   end
 
-  desc "Submit branch to TestFlight"
+  desc "Submit merge request build to TestFlight"
+  lane :mr do |options|
+    app_store_connect_api_key(
+      key_id: ENV["FASTLANE_ASC_KEY_ID"],
+      issuer_id: ENV["FASTLANE_ASC_ISSUER_ID"],
+      key_content: ENV["FASTLANE_ASC_P8"],
+      in_house: false
+    )
+
+    increment_build_number(build_number: options[:build_number])
+
+    run_tests(
+      workspace: "binkapp.xcworkspace",
+      device: "iPhone 12 Pro",
+      scheme: "binkapp tests"
+    )
+
+    build_app(
+      workspace: "binkapp.xcworkspace",
+      scheme: "binkapp app store (internal)"
+    )
+
+    upload_to_testflight(
+      changelog: "Merge request build for branch: " + options[:branch_name]
+    )
+  end
+
+  desc "Submit nightly Develop build to TestFlight"
+  lane :nightly do |options|
+    app_store_connect_api_key(
+      key_id: ENV["FASTLANE_ASC_KEY_ID"],
+      issuer_id: ENV["FASTLANE_ASC_ISSUER_ID"],
+      key_content: ENV["FASTLANE_ASC_P8"],
+      in_house: false
+    )
+
+    increment_build_number(build_number: options[:build_number])
+
+    run_tests(
+      workspace: "binkapp.xcworkspace",
+      device: "iPhone 12 Pro",
+      scheme: "binkapp tests",
+      testplan: "nightly"
+    )
+
+    build_app(
+      workspace: "binkapp.xcworkspace",
+      scheme: "binkapp app store (internal)"
+    )
+
+    upload_to_testflight(
+      changelog: "Nightly build from Develop branch",
+      distribute_external: true,
+      groups: "Bink Internal",
+      reject_build_waiting_for_review: true
+    )
+  end
+
+  desc "Submit production build to TestFlight"
   lane :beta do |options|
     app_store_connect_api_key(
       key_id: ENV["FASTLANE_ASC_KEY_ID"],
@@ -90,7 +162,7 @@ platform :ios do
 
     run_tests(
       workspace: "binkapp.xcworkspace",
-      device: "iPhone 12",
+      device: "iPhone 12 Pro",
       scheme: "binkapp tests"
     )
 
@@ -105,11 +177,11 @@ platform :ios do
       changelog: "No tests notes"
     )
 
-    push_to_git_remote(
-      remote: "origin",
-      local_branch: ENV["BITRISE_GIT_BRANCH"],
-      remote_branch: ENV["BITRISE_GIT_BRANCH"],
-    )
+    # push_to_git_remote(
+    #   remote: "origin",
+    #   local_branch: ENV["BITRISE_GIT_BRANCH"],
+    #   remote_branch: ENV["BITRISE_GIT_BRANCH"],
+    # )
 
     beta_dsym
   end
@@ -117,6 +189,7 @@ platform :ios do
   desc "Increment the build number and commit to git"
   lane :bump do |options|
     increment_build_number
+    clean_build_artifacts
     commit_version_bump
   end
 

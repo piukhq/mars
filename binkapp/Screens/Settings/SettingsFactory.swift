@@ -20,18 +20,18 @@ struct SettingsFactory {
         
         // MARK: - Debug
         
-        #if DEBUG
-        let debugSection = SettingsSection(title: L10n.settingsSectionDebugTitle, rows: [
-            SettingsRow(
-                type: .debug,
-                subtitle: L10n.settingsSectionDebugSubtitle,
-                action: .pushToViewController(viewController: DebugMenuTableViewController.self),
-                actionRequired: rowsWithActionRequired?.contains(.debug) ?? false
-            )
-        ])
-        
-        sections.append(debugSection)
-        #endif
+        if let _ = try? Configuration.value(for: .debug) {
+            let debugSection = SettingsSection(title: L10n.settingsSectionDebugTitle, rows: [
+                SettingsRow(
+                    type: .debug,
+                    subtitle: L10n.settingsSectionDebugSubtitle,
+                    action: .pushToViewController(viewController: DebugMenuTableViewController.self),
+                    actionRequired: rowsWithActionRequired?.contains(.debug) ?? false
+                )
+            ])
+            
+            sections.append(debugSection)
+        }
         
         // MARK: - Account
         
@@ -143,7 +143,7 @@ struct SettingsFactory {
             ),
             SettingsRow(
                 type: .whoWeAre,
-                action: .pushToViewController(viewController: WhoWeAreViewController.self),
+                action: .pushToSwiftUIView(swiftUIView: .whoWeAre),
                 actionRequired: rowsWithActionRequired?.contains(.whoWeAre) ?? false
             )
         ])
@@ -168,14 +168,21 @@ struct SettingsFactory {
         sections.append(legalSection)
         
         // MARK: - Beta
+        let action: SettingsRow.RowAction
+        
+        if #available(iOS 14.0, *) {
+            action = .pushToSwiftUIView(swiftUIView: .featureFlags)
+        } else {
+            action = .pushToViewController(viewController: FeatureFlagsTableViewController.self)
+        }
         
         let betaSection = SettingsSection(title: L10n.settingsSectionBetaTitle, rows: [
             SettingsRow(
                 type: .featureFlags,
-                action: .pushToViewController(viewController: FeatureFlagsTableViewController.self),
+                action: action,
                 actionRequired: rowsWithActionRequired?.contains(.featureFlags) ?? false)
         ])
-                
+        
         /// Only show beta section if user ID is contained in beta list group in remote config
         if Current.featureManager.shouldShowInSettings {
             sections.append(betaSection)

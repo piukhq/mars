@@ -71,6 +71,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         let button = UIButton()
         button.titleLabel?.font = .bodyTextLarge
         button.addTarget(self, action: #selector(showBarcodeButtonPressed), for: .touchUpInside)
+        button.accessibilityIdentifier = "Show barcode button"
         return button
     }()
     
@@ -147,7 +148,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidUpdate, object: nil)
     }
     
     @objc private func handlePointsScrapingUpdate() {
@@ -181,12 +182,14 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
             requestInAppReview()
         }
     }
+    
+//    2661325368336
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         didLayoutSubviews = true
         if didLayoutSubviews {
-            animatePadding()
+            setPadding(animated: viewModel.shouldAnimateContent)
         }
     }
     
@@ -426,10 +429,10 @@ private extension LoyaltyCardFullDetailsViewController {
         viewModel.toBarcodeModel()
     }
     
-    private func animatePadding() {
+    private func setPadding(animated: Bool = true) {
         view.layoutIfNeeded()
         self.contentAnimationSpacerHeightConstraint.constant = 0
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: animated ? 0.4 : 0) {
             self.view.layoutIfNeeded()
         }
     }
@@ -458,7 +461,11 @@ extension LoyaltyCardFullDetailsViewController: CardDetailInformationRowFactoryD
 
 extension LoyaltyCardFullDetailsViewController: BinkModuleViewDelegate {
     func binkModuleViewWasTapped(moduleView: BinkModuleView, withState state: ModuleState) {
-        viewModel.goToScreenForState(state: state, delegate: self)
+        if Current.pointsScrapingManager.canAttemptRetry(for: viewModel.membershipCard) {
+            Current.pointsScrapingManager.processRetry(for: viewModel.membershipCard)
+        } else {
+            viewModel.goToScreenForState(state: state, delegate: self)
+        }
     }
 }
 

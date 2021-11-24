@@ -46,12 +46,12 @@ enum Styling {
         static var viewBackground: UIColor {
             switch Current.themeManager.currentTheme.type {
             case .light:
-                return .white
+                return .primaryViewBackground
             case .dark:
                 return .binkBlueViewBackground
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                    return traitcollection.userInterfaceStyle == .light ? .white : .binkBlueViewBackground
+                    return traitcollection.userInterfaceStyle == .light ? .primaryViewBackground : .binkBlueViewBackground
                 }
             }
         }
@@ -98,12 +98,25 @@ enum Styling {
         static var bar: UIColor {
             switch Current.themeManager.currentTheme.type {
             case .light:
-                return UIColor.white.withAlphaComponent(0.6)
+                return UIColor.primaryViewBackground.withAlphaComponent(0.6)
             case .dark:
                 return UIColor.binkBlueBarBackground.withAlphaComponent(0.7)
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                    return traitcollection.userInterfaceStyle == .light ? UIColor.white.withAlphaComponent(0.6) : UIColor.binkBlueBarBackground.withAlphaComponent(0.7)
+                    return traitcollection.userInterfaceStyle == .light ? UIColor.primaryViewBackground.withAlphaComponent(0.6) : UIColor.binkBlueBarBackground.withAlphaComponent(0.7)
+                }
+            }
+        }
+        
+        static var insetGroupedTable: UIColor {
+            switch Current.themeManager.currentTheme.type {
+            case .light:
+                return UIColor(red: 243 / 255, green: 242 / 255, blue: 247 / 255, alpha: 1.0)
+            case .dark:
+                return .binkBlueViewBackground
+            case .system:
+                return UIColor { (traitcollection: UITraitCollection) -> UIColor in
+                    return traitcollection.userInterfaceStyle == .light ? UIColor(red: 243 / 255, green: 242 / 255, blue: 247 / 255, alpha: 1.0) : .binkBlueViewBackground
                 }
             }
         }

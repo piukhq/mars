@@ -15,7 +15,7 @@ extension Notification.Name {
     // MARK: - Wallet
     static let didLoadWallet = Notification.Name("did_download_wallets")
     static let didLoadLocalWallet = Notification.Name("did_load_local_wallets")
-    static let didDeleteMemebershipCard = Notification.Name("did_delete_membership_card")
+    static let didDeleteWalletCard = Notification.Name("did_delete_membership_card")
     static let didAddMembershipCard = Notification.Name("did_add_membership_card")
     static let shouldTrashLocalWallets = Notification.Name("should_trash_local_wallets")
 
@@ -28,7 +28,7 @@ extension Notification.Name {
     static let logoutOutage = Notification.Name("logout_outage")
     
     // MARK: - Local points scraping
-    static let webScrapingUtilityDidComplete = Notification.Name("web_scraping_utility_did_complete")
+    static let webScrapingUtilityDidUpdate = Notification.Name("web_scraping_utility_did_complete")
 
     // MARK: - Theming
     static let themeManagerDidSetTheme = Notification.Name("theme_manager_did_set_theme")

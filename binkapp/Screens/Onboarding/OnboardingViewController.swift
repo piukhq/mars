@@ -8,6 +8,7 @@
 
 import UIKit
 import AuthenticationServices
+import WidgetKit
 
 class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     private let viewModel = OnboardingViewModel()
@@ -51,14 +52,8 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
         return APIConstants.isProduction && Current.isReleaseTypeBuild
     }()
 
-    private lazy var registerButton: BinkButton = {
-        return BinkButton(type: .gradient, title: viewModel.signUpWithEmailButtonText) { [weak self] in
-            self?.viewModel.pushToRegister()
-        }
-    }()
-
-    private lazy var loginButton: BinkButton = {
-        return BinkButton(type: .plain, title: viewModel.loginWithEmailButtonText) { [weak self] in
+    private lazy var loginWithEmailButton: BinkButton = {
+        return BinkButton(type: .gradient, title: viewModel.loginWithEmailButtonText) { [weak self] in
             self?.viewModel.pushToLogin()
         }
     }()
@@ -86,7 +81,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-        pageControl.currentPageIndicatorTintColor = .black
+        pageControl.currentPageIndicatorTintColor = .binkGradientBlueRight
         pageControl.pageIndicatorTintColor = .lightGray
         pageControl.numberOfPages = onboardingViews.count
         pageControl.currentPage = 0
@@ -108,6 +103,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         startTimer()
+        WidgetController().reloadWidget(type: .quickLaunch)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -143,11 +139,11 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
 
             pageControl.topAnchor.constraint(equalTo: learningContainer.bottomAnchor),
             pageControl.heightAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.pageControlSize.height),
-            pageControl.widthAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.pageControlSize.width),
+            pageControl.widthAnchor.constraint(equalTo: learningContainer.widthAnchor),
             pageControl.centerXAnchor.constraint(equalTo: learningContainer.centerXAnchor)
         ])
 
-        footerButtons = [registerButton, loginButton]
+        footerButtons = [loginWithEmailButton]
     }
 
     @objc private func handleAppleIdRequest() {
@@ -165,7 +161,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     private func configureUI() {
         if signInWithAppleEnabled, let buttonsView = footerButtonsView {
             signInWithAppleButton.layer.applyDefaultBinkShadow()
-            buttonsView.insertAdditionalViews([signInWithAppleButton])
+            buttonsView.insertAdditionalViews([signInWithAppleButton], at: 2)
             NSLayoutConstraint.activate([
                 signInWithAppleButton.heightAnchor.constraint(equalToConstant: 55),
                 signInWithAppleButton.widthAnchor.constraint(equalTo: buttonsView.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
@@ -187,11 +183,11 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
             scrollView.addSubview(onboardingViews[i])
         }
         
-        #if DEBUG
-        let tap = UITapGestureRecognizer(target: self, action: #selector(openDebugMenu))
-        tap.numberOfTapsRequired = 3
-        learningContainer.addGestureRecognizer(tap)
-        #endif
+        if let _ = try? Configuration.value(for: .debug) {
+            let tap = UITapGestureRecognizer(target: self, action: #selector(openDebugMenu))
+            tap.numberOfTapsRequired = 3
+            learningContainer.addGestureRecognizer(tap)
+        }
     }
 
     // MARK: - Scroll view delegate & handlers

@@ -46,6 +46,16 @@ class BrowseBrandsViewController: BinkViewController {
         return layout
     }()
     
+    private lazy var textfieldShadowLayer: UIView = {
+        let shadowLayer = UIView()
+        shadowLayer.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
+        shadowLayer.layer.cornerRadius = searchTextField.bounds.height / 2
+        shadowLayer.translatesAutoresizingMaskIntoConstraints = false
+        shadowLayer.clipsToBounds = false
+        shadowLayer.layer.applyDefaultBinkShadow()
+        return shadowLayer
+    }()
+    
     private var filterViewHeight: CGFloat {
         let height = CGFloat(round(Double(self.viewModel.filters.count) / 2) * Double( Constants.filterCellHeight))
         return height + Constants.filterViewHeightPadding
@@ -55,6 +65,7 @@ class BrowseBrandsViewController: BinkViewController {
     private var selectedFilters: [String]
     private var didLayoutSubviews = false
     private var sectionToScrollTo: Int?
+    private let visionUtility = VisionImageDetectionUtility()
     
     init(viewModel: BrowseBrandsViewModel, section: Int?) {
         self.viewModel = viewModel
@@ -82,7 +93,7 @@ class BrowseBrandsViewController: BinkViewController {
         
         configureSearchTextField()
         configureCollectionView()
-        
+                
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
     }
@@ -149,7 +160,7 @@ class BrowseBrandsViewController: BinkViewController {
         searchTextField.leftViewMode = .always
         searchTextField.autocapitalizationType = .words
         searchTextField.autocorrectionType = .no
-        
+
         // Magnifying glass icon
         let searchIconView = UIView(frame: CGRect(x: 0, y: 0, width: searchTextField.frame.height, height: searchTextField.frame.height))
         let searchImageView = UIImageView(frame: CGRect(x: Constants.searchIconLeftPadding, y: Constants.searchIconTopPadding, width: Constants.searchIconSideSize, height: Constants.searchIconSideSize))
@@ -163,6 +174,18 @@ class BrowseBrandsViewController: BinkViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
+        
+        if #available(iOS 14, *) {} else {
+            /// iOS 13
+            view.addSubview(textfieldShadowLayer)
+            NSLayoutConstraint.activate([
+                textfieldShadowLayer.leadingAnchor.constraint(equalTo: searchTextField.leadingAnchor),
+                textfieldShadowLayer.topAnchor.constraint(equalTo: searchTextField.topAnchor),
+                textfieldShadowLayer.heightAnchor.constraint(equalTo: searchTextField.heightAnchor),
+                textfieldShadowLayer.widthAnchor.constraint(equalTo: searchTextField.widthAnchor)
+            ])
+            view.sendSubviewToBack(textfieldShadowLayer)
+        }
     }
     
     @objc private func dismissKeyboard() {
@@ -204,6 +227,7 @@ class BrowseBrandsViewController: BinkViewController {
         if !self.noMatchesLabel.isHidden {
             self.noMatchesLabelTopConstraint.constant = 0.0
         }
+
         let frame = self.collectionView.frame
         UIView.animate(withDuration: 0.3, animations: {
             self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: 0)
@@ -220,6 +244,7 @@ class BrowseBrandsViewController: BinkViewController {
         if !self.noMatchesLabel.isHidden {
             self.noMatchesLabelTopConstraint.constant = self.filterViewHeight
         }
+
         filtersButton?.isEnabled = false
         filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .disabled)
         let frame = self.collectionView.frame
@@ -255,6 +280,11 @@ class BrowseBrandsViewController: BinkViewController {
         tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         sectionToScrollTo = nil
     }
+    
+    private func showError() {
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: L10n.loyaltyScannerFailedToDetectBarcode)
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
 extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -272,7 +302,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
         guard let membershipPlan = viewModel.getMembershipPlan(for: indexPath) else { return cell }
         
         if let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
-            cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists)
+            cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists, indexPath: indexPath)
         }
         
         if tableView.cellAtIndexPathIsLastInSection(indexPath) {
@@ -284,6 +314,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderTableViewCell") as? HeaderTableViewCell else { return nil }
         headerCell.configure(section: section, viewModel: viewModel)
+        headerCell.scanLoyaltyCardButton.delegate = self
         return headerCell
     }
 
@@ -378,5 +409,39 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
         }
         viewModel.selectedFilters = selectedFilters
         switchTableWithNoMatchesLabel()
+    }
+}
+
+extension BrowseBrandsViewController: ScanLoyaltyCardButtonDelegate {
+    func addPhotoFromLibraryButtonWasTapped(_ scanLoyaltyCardButton: ScanLoyaltyCardButton) {
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        picker.delegate = self
+        let navigationRequest = ModalNavigationRequest(viewController: picker, embedInNavigationController: false)
+        Current.navigate.to(navigationRequest)
+    }
+}
+
+extension BrowseBrandsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        guard let image = info[.editedImage] as? UIImage else { return }
+        visionUtility.createVisionRequest(image: image) { [weak self] barcode in
+            guard let barcode = barcode else {
+                Current.navigate.close(animated: true) { [weak self] in
+                    self?.showError()
+                }
+                return
+            }
+
+            Current.wallet.identifyMembershipPlanForBarcode(barcode) { membershipPlan in
+                guard let membershipPlan = membershipPlan else { return }
+                Current.navigate.close(animated: true) {
+                    let prefilledValues = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
+                    let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, existingMembershipCard: nil, prefilledFormValues: [prefilledValues])
+                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
+                }
+            }
+        }
     }
 }

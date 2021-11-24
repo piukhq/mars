@@ -15,6 +15,7 @@ class World {
     lazy var wallet = Wallet()
     lazy var userDefaults: BinkUserDefaults = UserDefaults.standard
     lazy var userManager = UserManager()
+    lazy var loginController = LoginController()
     lazy var apiClient = APIClient()
     lazy var navigate = Navigate()
     lazy var rootStateMachine = RootStateMachine()
@@ -72,6 +73,9 @@ extension UserDefaults: BinkUserDefaults {
         case featureFlags
         case skippedRecommendedVersions
         case prefilledFormValues
+        case lpcDebugMode
+        case hasCurrentUser
+        case installedWidgetIds
         
         var keyValue: String {
             switch self {
@@ -109,6 +113,12 @@ extension UserDefaults: BinkUserDefaults {
                 return "skippedRecommendedVersions"
             case .prefilledFormValues:
                 return "prefilledFormValues"
+            case .lpcDebugMode:
+                return "lpcDebugMode"
+            case .hasCurrentUser:
+                return "hasCurrentUser"
+            case .installedWidgetIds:
+                return "installedWidgetIds"
             }
         }
     }

@@ -111,7 +111,8 @@ class SettingsTableViewCell: UITableViewCell {
     func setup(with rowData: SettingsRow, showSeparator: Bool) {
         backgroundColor = .clear
         subtitleLabel.text = rowData.title
-    
+        accessibilityIdentifier = rowData.title
+        
         if let body = rowData.subtitle {
             bodyLabel.isHidden = false
             bodyLabel.text = body

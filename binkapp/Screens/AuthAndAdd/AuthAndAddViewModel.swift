@@ -42,6 +42,10 @@ enum FormPurpose: Equatable {
     }
 }
 
+protocol AuthAndAddViewModelDelegate: AnyObject {
+    func showImagePicker()
+}
+
 class AuthAndAddViewModel {
     private let repository = AuthAndAddRepository()
     private let membershipPlan: CD_MembershipPlan
@@ -74,6 +78,10 @@ class AuthAndAddViewModel {
     var accountButtonShouldHide: Bool {
         return formPurpose != .add || formPurpose == .ghostCard
     }
+    
+    private var privacyPolicy: NSMutableAttributedString?
+    private var termsAndConditions: NSMutableAttributedString?
+    weak var delegate: AuthAndAddViewModelDelegate?
     
     init(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) {
         self.membershipPlan = membershipPlan
@@ -142,6 +150,13 @@ class AuthAndAddViewModel {
         checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
         
         guard let model = membershipCardPostModel else { return }
+        
+        guard model.account?.hasValidPayload == true else {
+            displaySimplePopup(title: L10n.errorTitle, message: L10n.addLoyaltyCardErrorMessage)
+            completion()
+            return
+        }
+        
         BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardRequest(request: model, formPurpose: formPurpose))
         let scrapingCredentials = Current.pointsScrapingManager.makeCredentials(fromFormFields: formFields, membershipPlanId: membershipPlan.id)
         
@@ -235,56 +250,48 @@ class AuthAndAddViewModel {
         self.fieldsViews = fields
     }
     
+    private func encryptSensitiveField(_ value: String?) -> String? {
+        if let encryptedValue = SecureUtility.encryptedSensitiveFieldValue(value) {
+            return encryptedValue
+        } else {
+            SentryService.triggerException(.invalidLoyaltyCardPayload(.failedToEncyptPassword))
+        }
+        return nil
+    }
+    
     func addFieldToCard(formField: FormField) {
         let isSensitive = formField.fieldType == .sensitive
         switch formField.columnKind {
         case .add:
             let addFieldsArray = membershipCardPostModel?.account?.addFields
             if let existingField = addFieldsArray?.first(where: { $0.column == formField.title }) {
-                if isSensitive {
-                    existingField.value = SecureUtility.encryptedSensitiveFieldValue(formField.value)
-                } else {
-                    existingField.value = formField.value
-                }
+                existingField.value = isSensitive ? encryptSensitiveField(formField.value) : formField.value
             } else {
-                let model = PostModel(column: formField.title, value: isSensitive ? SecureUtility.encryptedSensitiveFieldValue(formField.value) : formField.value)
+                let model = PostModel(column: formField.title, value: isSensitive ? encryptSensitiveField(formField.value) : formField.value)
                 membershipCardPostModel?.account?.addField(model, to: .add)
             }
         case .auth:
             let authoriseFieldsArray = membershipCardPostModel?.account?.authoriseFields
             if let existingField = authoriseFieldsArray?.first(where: { $0.column == formField.title }) {
-                if isSensitive {
-                    existingField.value = SecureUtility.encryptedSensitiveFieldValue(formField.value)
-                } else {
-                    existingField.value = formField.value
-                }
+                existingField.value = isSensitive ? encryptSensitiveField(formField.value) : formField.value
             } else {
-                let model = PostModel(column: formField.title, value: isSensitive ? SecureUtility.encryptedSensitiveFieldValue(formField.value) : formField.value)
+                let model = PostModel(column: formField.title, value: isSensitive ? encryptSensitiveField(formField.value) : formField.value)
                 membershipCardPostModel?.account?.addField(model, to: .auth)
             }
         case .enrol:
             let enrolFieldsArray = membershipCardPostModel?.account?.enrolFields
             if let existingField = enrolFieldsArray?.first(where: { $0.column == formField.title }) {
-                if isSensitive {
-                    existingField.value = SecureUtility.encryptedSensitiveFieldValue(formField.value)
-                } else {
-                    existingField.value = formField.value
-                }
+                existingField.value = isSensitive ? encryptSensitiveField(formField.value) : formField.value
             } else {
-                let model = PostModel(column: formField.title, value: isSensitive ? SecureUtility.encryptedSensitiveFieldValue(formField.value) : formField.value)
+                let model = PostModel(column: formField.title, value: isSensitive ? encryptSensitiveField(formField.value) : formField.value)
                 membershipCardPostModel?.account?.addField(model, to: .enrol)
             }
-            
         case .register:
             let registrationFieldsArray = membershipCardPostModel?.account?.registrationFields
             if let existingField = registrationFieldsArray?.first(where: { $0.column == formField.title }) {
-                if isSensitive {
-                    existingField.value = SecureUtility.encryptedSensitiveFieldValue(formField.value)
-                } else {
-                    existingField.value = formField.value
-                }
+                existingField.value = isSensitive ? encryptSensitiveField(formField.value) : formField.value
             } else {
-                let model = PostModel(column: formField.title, value: isSensitive ? SecureUtility.encryptedSensitiveFieldValue(formField.value) : formField.value)
+                let model = PostModel(column: formField.title, value: isSensitive ? encryptSensitiveField(formField.value) : formField.value)
                 membershipCardPostModel?.account?.addField(model, to: .registration)
             }
         default:
@@ -338,11 +345,30 @@ class AuthAndAddViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func openWebView(withUrlString url: URL) {
-        let urlString = url.absoluteString
-        let viewController = ViewControllerFactory.makeWebViewController(urlString: urlString)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
-        Current.navigate.to(navigationRequest)
+    func configureAttributedStrings() {
+        for document in (membershipPlan.account?.planDocuments) ?? [] {
+            let planDocument = document as? CD_PlanDocument
+            if planDocument?.name?.contains("policy") == true {
+                if let urlString = planDocument?.url, let url = URL(string: urlString) {
+                    privacyPolicy = HTMLParsingUtil.makeAttributedStringFromHTML(url: url)
+                }
+            }
+            
+            if planDocument?.name?.contains("conditions") == true {
+                if let urlString = planDocument?.url, let url = URL(string: urlString) {
+                    termsAndConditions = HTMLParsingUtil.makeAttributedStringFromHTML(url: url)
+                }
+            }
+        }
+    }
+    
+    func presentPlanDocumentsModal(withUrl url: URL) {
+        if let text = url.absoluteString.contains("pp") ? privacyPolicy : termsAndConditions {
+            let modalConfig = ReusableModalConfiguration(text: text, membershipPlan: membershipPlan)
+            let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: modalConfig)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }
     }
     
     func toReusableTemplate(title: String, description: String) {
@@ -374,6 +400,8 @@ class AuthAndAddViewModel {
         PermissionsUtility.launchLoyaltyScanner(viewController) {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
+        } addFromPhotoLibraryAction: { [weak self] in
+            self?.delegate?.showImagePicker()
         }
     }
 }

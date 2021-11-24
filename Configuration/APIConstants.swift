@@ -14,7 +14,7 @@ private var debugBaseURL = "" {
     }
 }
 
-enum EnvironmentType: String {
+enum EnvironmentType: String, CaseIterable {
     case dev = "api.dev.gb.bink.com"
     case staging = "api.staging.gb.bink.com"
     case preprod = "api.preprod.gb.bink.com"
@@ -40,10 +40,23 @@ enum Configuration {
         }
     }
     
-    static func value(for key: String) throws -> String {
-        guard let object = Bundle.main.object(forInfoDictionaryKey: key) else { throw ConfigurationError.missingKey }
+    enum ConfigurationKey: String {
+        case apiBaseUrl = "API_BASE_URL"
+        case secret = "SECRET"
+        case debug = "DEBUG"
+    }
+    
+    static func value(for key: ConfigurationKey) throws -> String {
+        guard let object = Bundle.main.object(forInfoDictionaryKey: key.rawValue) else { throw ConfigurationError.missingKey }
         guard let string = object as? String, !string.isEmpty else { throw ConfigurationError.invalidValue }
         return string
+    }
+    
+    static func isDebug() -> Bool {
+        if let _ = try? value(for: .debug) {
+            return true
+        }
+        return false
     }
 }
 
@@ -64,16 +77,15 @@ enum APIConstants {
     }
 
     static var baseURLString: String {
-        #if DEBUG
-        // If we have set the environment from the debug menu
-        if let debugBaseURLString = Current.userDefaults.value(forDefaultsKey: .debugBaseURL) as? String {
-            return debugBaseURLString
+        if let _ = try? Configuration.value(for: .debug) {
+            // If we have set the environment from the debug menu
+            if let debugBaseURLString = Current.userDefaults.value(forDefaultsKey: .debugBaseURL) as? String {
+                return debugBaseURLString
+            }
         }
-        #endif
-
 
         do {
-            let configBaseURL = try Configuration.value(for: "API_BASE_URL")
+            let configBaseURL = try Configuration.value(for: .apiBaseUrl)
             return configBaseURL
         } catch {
             fatalError(error.localizedDescription)
@@ -99,7 +111,7 @@ enum APIConstants {
     
     static var secretKeyType: SecretKeyType? {
         do {
-            let rawValue = try Configuration.value(for: "SECRET")
+            let rawValue = try Configuration.value(for: .secret)
             return SecretKeyType(rawValue: rawValue)
         } catch {
             fatalError(error.localizedDescription)

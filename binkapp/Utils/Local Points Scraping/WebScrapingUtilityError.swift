@@ -19,6 +19,7 @@ enum WebScrapingUtilityError: BinkError {
     case scriptFileNotFound
     case failedToExecuteScript
     case failedToCastReturnValue
+    case failedToAssignWebView
     case userDismissedWebView
     case unhandledIdling
     case javascriptError
@@ -41,6 +42,8 @@ enum WebScrapingUtilityError: BinkError {
             return "Failed to execute script"
         case .failedToCastReturnValue:
             return "Failed to cast return value"
+        case .failedToAssignWebView:
+            return "Failed to assign web view"
         case .userDismissedWebView:
             return "User dismissed web view for user action"
         case .unhandledIdling:
@@ -60,7 +63,7 @@ enum WebScrapingUtilityError: BinkError {
     
     var level: WebScrapingUtilityErrorLevel {
         switch self {
-        case .agentProvidedInvalidUrl, .scriptFileNotFound, .failedToExecuteScript, .javascriptError, .failedToDecodeJavascripResponse:
+        case .agentProvidedInvalidUrl, .scriptFileNotFound, .failedToExecuteScript, .javascriptError, .failedToDecodeJavascripResponse, .failedToAssignWebView:
             return .client
         case .failedToCastReturnValue, .genericFailure, .unhandledIdling, .noJavascriptResponse:
             return .site

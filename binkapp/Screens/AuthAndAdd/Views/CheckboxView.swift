@@ -19,14 +19,14 @@ extension CheckboxViewDelegate {
 
 class CheckboxView: CustomView {
     typealias TextAction = () -> Void
+    @IBOutlet private weak var checkboxButtonExtendedTappableAreaView: UIView!
     @IBOutlet private weak var checkboxButton: UIButton!
-    @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var textView: UITextView!
     @IBOutlet private weak var textViewLeadingConstraint: NSLayoutConstraint!
     
-    private var checkedState: Bool = false
-    private(set) var hideCheckbox: Bool = false
-    private(set) var optional: Bool = false
+    private var checkedState = false
+    private(set) var hideCheckbox = false
+    private(set) var optional = false
     private(set) var columnName: String?
     private(set) var columnKind: FormField.ColumnKind?
     private(set) var textSelected: TextAction?
@@ -41,8 +41,9 @@ class CheckboxView: CustomView {
         return checkedState ? "1" : "0"
     }
     
-    private lazy var tapGesture = UITapGestureRecognizer(target: self, action: .textSelected)
-    
+    private lazy var textViewGesture = UITapGestureRecognizer(target: self, action: .handleCheckboxTap)
+    private lazy var checkboxGesture = UITapGestureRecognizer(target: self, action: .handleCheckboxTap)
+
     weak var delegate: CheckboxViewDelegate?
     
     init(checked: Bool) {
@@ -78,7 +79,7 @@ class CheckboxView: CustomView {
             self.title = title
             return
         }
-        
+
         let attributedString = title
         attributedString.addAttribute(.link, value: safeUrl, range: NSRange(location: title.length - columnName.count, length: columnName.count))
         textView.attributedText = attributedString
@@ -88,7 +89,14 @@ class CheckboxView: CustomView {
     override func configureUI() {
         textView.isUserInteractionEnabled = true
         textView.delegate = self
+        textView.addGestureRecognizer(textViewGesture)
         textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
+        
+        if let linkRecognizer = textView.gestureRecognizers?.first(where: { $0.name == "UITextInteractionNameLinkTap" }) {
+            textViewGesture.require(toFail: linkRecognizer)
+        }
+        
+        checkboxButtonExtendedTappableAreaView.addGestureRecognizer(checkboxGesture)
     }
     
     @IBAction private func toggleCheckbox() {
@@ -103,7 +111,7 @@ class CheckboxView: CustomView {
         let animationBlock = {
             self.checkboxButton.backgroundColor = checked ? .black : .white
             self.checkboxButton.setImage(checked ? Asset.checkmark.image : nil, for: .normal)
-            self.checkboxButton.layer.borderColor = checked ? nil : UIColor.systemGray.cgColor
+            self.checkboxButton.layer.borderColor = checked ? nil : UIColor.systemGray.lighter()?.cgColor
             self.checkboxButton.layer.borderWidth = checked ? 0 : 2
         }
         
@@ -121,6 +129,10 @@ class CheckboxView: CustomView {
         checkedState.toggle()
         configureCheckboxButton(forState: checkedState)
     }
+    
+    @objc func handleCheckboxTap() {
+        toggleCheckbox()
+    }
 }
 
 extension CheckboxView: UITextViewDelegate {
@@ -129,8 +141,8 @@ extension CheckboxView: UITextViewDelegate {
         return false
     }
     
-    @objc func textSelectedSelector() {
-        textSelected?()
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        textView.selectedTextRange = nil
     }
 }
 
@@ -144,5 +156,5 @@ extension CheckboxView: InputValidation {
 }
 
 fileprivate extension Selector {
-    static let textSelected = #selector(CheckboxView.textSelectedSelector)
+    static let handleCheckboxTap = #selector(CheckboxView.handleCheckboxTap)
 }

@@ -102,6 +102,7 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         
         setLabelStyling()
         setupShadow()
+        accessibilityIdentifier = viewModel.nameOnCardText
     }
     
     func configureWithAddViewModel(_ viewModel: PaymentCardCreateModel) {
@@ -269,7 +270,7 @@ extension PaymentCardCollectionViewCell {
         case .barcode:
             deleteButton.isHidden = true
         case .unset:
-            deleteButton.isHidden = true
+            deleteButton.isHidden = false
         }
     }
     

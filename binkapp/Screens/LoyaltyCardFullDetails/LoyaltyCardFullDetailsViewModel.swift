@@ -24,10 +24,13 @@ class LoyaltyCardFullDetailsViewModel {
     
     let barcodeViewModel: BarcodeViewModel
     
-    init(membershipCard: CD_MembershipCard, informationRowFactory: WalletCardDetailInformationRowFactory) {
+    private let animated: Bool
+    
+    init(membershipCard: CD_MembershipCard, informationRowFactory: WalletCardDetailInformationRowFactory, animated: Bool = true) {
         self.membershipCard = membershipCard
         self.informationRowFactory = informationRowFactory
         self.barcodeViewModel = BarcodeViewModel(membershipCard: membershipCard)
+        self.animated = animated
     }
     
     var brandName: String {
@@ -78,6 +81,10 @@ class LoyaltyCardFullDetailsViewModel {
         return !(membershipCard.membershipPlan?.featureSet?.planCardType == .link) && barcodeViewModel.isBarcodeAvailable && barcodeViewModel.barcodeImage(withSize: .zero) != nil
     }
     
+    var shouldAnimateContent: Bool {
+        return animated
+    }
+    
     var barcodeButtonTitle: String {
         var buttonTitle = L10n.detailsHeaderShowCardNumber
         
@@ -105,9 +112,10 @@ class LoyaltyCardFullDetailsViewModel {
     
     func goToScreenForState(state: ModuleState, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) {
         switch state {
-        case .loginChanges:
+        case .loginChanges, .lpcLoginRequired:
             guard let membershipPlan = membershipCard.membershipPlan else { return }
-            let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: membershipCard)
+            let cardNumberPrefilledValue = FormDataSource.PrefilledValue(commonName: .cardNumber, value: membershipCard.card?.membershipId)
+            let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: membershipCard, prefilledFormValues: [cardNumberPrefilledValue])
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         case .plrTransactions, .pllTransactions:
@@ -193,6 +201,10 @@ class LoyaltyCardFullDetailsViewModel {
         case .noReasonCode:
             guard let membershipPlan = membershipCard.membershipPlan else { return }
             let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan, membershipCard: membershipCard)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        case .lpcBalance(_, let lastCheckedDate):
+            let viewController = ViewControllerFactory.makeLocalPointsCollectionBalanceRefreshViewController(membershipCard: membershipCard, lastCheckedDate: lastCheckedDate)
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         }

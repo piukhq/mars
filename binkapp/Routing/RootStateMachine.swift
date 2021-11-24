@@ -11,7 +11,7 @@ import DTTJailbreakDetection
 
 class RootStateMachine: NSObject, UserServiceProtocol {
     private var window: UIWindow?
-    private lazy var migrationController = UserMigrationController()
+    private var loadingCompleteViewController: UIViewController?
     
     func launch(withWindow window: UIWindow) {
         self.window = window
@@ -22,7 +22,7 @@ class RootStateMachine: NSObject, UserServiceProtocol {
         } else if Current.userManager.currentToken == nil {
             handleUnauthenticated()
         } else {
-            handleLogin()
+            handleLogin(for: .password)
         }
         
         window.tintColor = .black
@@ -30,35 +30,49 @@ class RootStateMachine: NSObject, UserServiceProtocol {
     }
     
     private func handleUnauthenticated() {
-        if migrationController.shouldMigrate {
-            // Move to splash
-            let loading = LoadingScreen()
-            moveTo(loading)
-            migrationController.renewTokenFromLegacyAppIfPossible { success in
-                DispatchQueue.main.async { [weak self] in
-                    if success {
-                        self?.handleLogin()
-                    } else {
-                        self?.moveTo(ViewControllerFactory.makeOnboardingViewController())
-                    }
-                }
-            }
-        } else {
-            moveTo(ViewControllerFactory.makeOnboardingViewController())
-        }
+        moveTo(ViewControllerFactory.makeOnboardingViewController())
+    }
+    
+    /// Presents a loading screen on the key window
+    /// - Parameter viewController: The view controller that should return to view once loading is complete.
+    func startLoading(from viewController: UIViewController? = nil) {
+        loadingCompleteViewController = viewController
+        let loading = LoadingScreen()
+        moveTo(loading)
+    }
+    
+    func stopLoading() {
+        moveTo(loadingCompleteViewController)
+        loadingCompleteViewController = nil
+    }
+    
+    func handleMagicLink() {
+        /// We know that if we don't successfully login, we should fallback to the onboarding screen with no user once loading completes.
+        handleUnauthenticated()
+        Current.userManager.removeUser()
     }
 
-    func handleLogin() {
+    func handleLogin(for loginType: LoginType) {
         let tabBarController = MainTabBarViewController(viewModel: MainTabBarViewModel())
         moveTo(tabBarController)
+        
+        switch loginType {
+        case .magicLink:
+            let successViewController = ViewControllerFactory.makeLoginSuccessViewController()
+            let navigationRequest = ModalNavigationRequest(viewController: successViewController, dragToDismiss: false, hideCloseButton: true)
+            Current.navigate.to(navigationRequest)
+        default:
+            break
+        }
     }
     
     /// User driven logout that triggers API call and clears local storage
     @objc func handleLogout() {
-        let loading = LoadingScreen()
-        moveTo(loading)
-
+        startLoading()
         defer {
+            /// We want to remove credentials for scrapable cards before we trash all local membership cards
+            Current.pointsScrapingManager.handleLogout()
+            
             clearLocalStorage { [weak self] in
                 self?.completeLogout()
             }

@@ -51,6 +51,14 @@ enum SentryService {
             scope.setTag(value: exception.userJourneyTagValue, key: "user_journey")
         }
     }
+    
+    static func recordBreadcrumb(_ breadcrumb: SentryBreadcrumb) {
+        let crumb = Breadcrumb()
+        crumb.level = breadcrumb.level
+        crumb.category = breadcrumb.category.rawValue
+        crumb.message = breadcrumb.message
+        SentrySDK.addBreadcrumb(crumb: crumb)
+    }
 }
 
 enum SentryException {
@@ -92,12 +100,15 @@ enum SentryException {
         case failedToEncryptLastFour = "Failed to encrypt last four"
         case failedToEncryptMonth = "Failed to encrypt expiry month"
         case failedToEncryptYear = "Failed to encrypt expiry year"
+        case failedToEncyptPassword = "Failed to encrypt password"
     }
 
-    case invalidPayload(InvalidPayloadReason)
+    case invalidPaymentCardPayload(InvalidPayloadReason)
+    case invalidLoyaltyCardPayload(InvalidPayloadReason)
     case tokenisationServiceRejectedRequest(NetworkResponseData?)
-    case apiRejectedRequest(NetworkResponseData?)
-    case localPointsCollectionFailed(WebScrapingUtilityError, WebScrapableMerchant, balanceRefresh: Bool)
+    case apiRejectedPaymentCardRequest(NetworkResponseData?)
+    case apiRejectedLoyaltyCardRequest(NetworkResponseData?)
+    case localPointsCollectionFailed(WebScrapingUtilityError, LocalPointsCollectableMerchant, balanceRefresh: Bool)
 
     var formattedError: NSError {
         return NSError(domain: domain.rawValue, code: errorCode, userInfo: userInfo)
@@ -109,11 +120,15 @@ enum SentryException {
 
     var errorCode: Int {
         switch self {
-        case .invalidPayload:
+        case .invalidLoyaltyCardPayload:
+            return 2000
+        case .apiRejectedLoyaltyCardRequest:
+            return 2001
+        case .invalidPaymentCardPayload:
             return 3000
         case .tokenisationServiceRejectedRequest:
             return 3001
-        case .apiRejectedRequest:
+        case .apiRejectedPaymentCardRequest:
             return 3002
         case .localPointsCollectionFailed(let error, _, _):
             switch error.level {
@@ -129,7 +144,9 @@ enum SentryException {
 
     private var domain: Domain {
         switch self {
-        case .invalidPayload, .tokenisationServiceRejectedRequest, .apiRejectedRequest:
+        case .invalidLoyaltyCardPayload, .apiRejectedLoyaltyCardRequest:
+            return .loyalty
+        case .invalidPaymentCardPayload, .tokenisationServiceRejectedRequest, .apiRejectedPaymentCardRequest:
             return .payment
         case .localPointsCollectionFailed:
             return .lpc
@@ -139,17 +156,17 @@ enum SentryException {
     private var userInfo: [String: Any] {
         var info: [String: Any] = [NSLocalizedDescriptionKey: localizedDescription]
         switch self {
-        case .invalidPayload(let reason):
+        case .invalidPaymentCardPayload(let reason), .invalidLoyaltyCardPayload(let reason):
             info["reason"] = reason.rawValue
             return info
-        case .tokenisationServiceRejectedRequest(let networkResponse), .apiRejectedRequest(let networkResponse):
+        case .tokenisationServiceRejectedRequest(let networkResponse), .apiRejectedPaymentCardRequest(let networkResponse), .apiRejectedLoyaltyCardRequest(let networkResponse):
             guard let response = networkResponse else { return info }
             info["network_response"] = response
             return info
         case .localPointsCollectionFailed(let error, let merchant, let isBalanceRefresh):
             return [
                 "error_message": error.localizedDescription,
-                "merchant": merchant.rawValue,
+                "merchant": merchant,
                 "balance_refresh": isBalanceRefresh
             ]
         }
@@ -157,14 +174,34 @@ enum SentryException {
 
     private var localizedDescription: String {
         switch self {
-        case .invalidPayload:
+        case .invalidLoyaltyCardPayload:
+            return "Sensitive fields could not be encrypted"
+        case .invalidPaymentCardPayload:
             return "Could not construct payload for tokenisation"
         case .tokenisationServiceRejectedRequest:
             return "Tokenisation service rejected request"
-        case .apiRejectedRequest:
+        case .apiRejectedPaymentCardRequest, .apiRejectedLoyaltyCardRequest:
             return "Bink API rejected request"
         case .localPointsCollectionFailed:
             return "Local points collection failed"
         }
     }
+}
+
+// MARK: - Custom Breadcrumbs
+
+enum SentryBreadcrumbCategory: String {
+    case localPointsCollection = "Local points collection"
+}
+
+protocol SentryBreadcrumb {
+    var level: SentryLevel { get }
+    var category: SentryBreadcrumbCategory { get }
+    var message: String { get }
+}
+
+struct LocalPointsCollectionSentryBreadcrumb: SentryBreadcrumb {
+    var level: SentryLevel { return .info }
+    var category: SentryBreadcrumbCategory { return .localPointsCollection }
+    let message: String
 }

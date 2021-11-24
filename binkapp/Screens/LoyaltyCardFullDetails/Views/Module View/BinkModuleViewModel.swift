@@ -59,6 +59,12 @@ private extension BinkModuleViewModel {
             if let balances = membershipCard.balances.allObjects as? [CD_MembershipCardBalance], let balance = balances.first {
                 let transactionsAvailable = plan.featureSet?.transactionsAvailable?.boolValue == true
                 let date = Date(timeIntervalSince1970: balance.updatedAt?.doubleValue ?? 0)
+                
+                if let planIdString = membershipCard.membershipPlan?.id, let planId = Int(planIdString), Current.pointsScrapingManager.planIdIsWebScrapable(planId) {
+                    // LPC
+                    return .lpcBalance(formattedTitle: balance.formattedBalance, lastCheckedDate: date)
+                }
+                
                 return .pllTransactions(transactionsAvailable: transactionsAvailable, formattedTitle: balance.formattedBalance, lastChecked: date.timeAgoString(short: true))
             } else {
                 return .pending
@@ -81,6 +87,8 @@ private extension BinkModuleViewModel {
                     
                     // Points module 1.6
                     return .loginChanges(type: .points(membershipCard: membershipCard), status: membershipCard.status?.status, reasonCode: reasonCode)
+                case .pointsScrapingLoginRequired:
+                    return .lpcLoginRequired
                 default:
                     // Points module 1.10 (need reason codes, set by default)
                     return .registerGhostCard

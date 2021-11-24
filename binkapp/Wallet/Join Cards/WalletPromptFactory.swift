@@ -17,8 +17,12 @@ enum WalletPromptFactory {
     
     static func makeWalletPrompts(forWallet walletType: WalletType) -> [WalletPrompt] {
         var walletPrompts: [WalletPrompt] = []
+        
+        if walletType == .payment {
+            walletPrompts.append(WalletPrompt(type: .addPaymentCards))
+        }
 
-        guard Current.wallet.shouldDisplayWalletPrompts == true else {
+        guard Current.wallet.membershipPlans?.isEmpty == false else {
             return walletPrompts
         }
 
@@ -33,9 +37,9 @@ enum WalletPromptFactory {
             if !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .link }) {
                 var pllPlans = plans.filter({ $0.featureSet?.planCardType == .link })
                 
-                #if DEBUG
-                pllPlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.linkPromptDebugCellCount, sortedPlans: &pllPlans)
-                #endif
+                if Configuration.isDebug() {
+                    pllPlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.linkPromptDebugCellCount, sortedPlans: &pllPlans)
+                }
                 
                 walletPrompts.append(WalletPrompt(type: .link(plans: pllPlans)))
             }
@@ -49,30 +53,24 @@ enum WalletPromptFactory {
                         return plansEnabledOnRemoteConfig.contains(where: { $0.membershipPlanId == Int(plan.id) })
                     }
                     
-                    #if DEBUG
-                    liveSeePlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.seePromptDebugCellCount, sortedPlans: &liveSeePlans)
-                    #endif
+                    if Configuration.isDebug() {
+                        liveSeePlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.seePromptDebugCellCount, sortedPlans: &liveSeePlans)
+                    }
                     
                     walletPrompts.append(WalletPrompt(type: .see(plans: liveSeePlans)))
                 }
             }
             
-            
             // Store
             if !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .store }) {
                 var storePlans = plans.filter { $0.featureSet?.planCardType == .store }
                 
-                #if DEBUG
-                storePlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.storePromptDebugCellCount, sortedPlans: &storePlans)
-                #endif
+                if Configuration.isDebug() {
+                    storePlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.storePromptDebugCellCount, sortedPlans: &storePlans)
+                }
                 
                 walletPrompts.append(WalletPrompt(type: .store(plans: storePlans)))
             }
-        }
-
-        /// Add payment card prompt to payment wallet only
-        if walletType == .payment {
-            walletPrompts.append(WalletPrompt(type: .addPaymentCards))
         }
 
         return walletPrompts

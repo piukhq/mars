@@ -63,7 +63,8 @@ enum AppLoggerError: String, BinkLoggerProtocol {
     case retrieveKeychainValueFromKey = "Problem fetching keychain value from key"
     case remoteConfigFetchFailure = "Failed to fetch remote config data"
     case barcodeScanningFailure = "Incorrect barcode scanned"
-
+    case decodeWidgetContentsFromDiskFailure = "Failed to decode widget contents from disk"
+    case encodeWidgetContentsToDiskFailure = "Failed to encode widget contents to disk"
     
     var category: BinkLoggerCategory {
         return .app
@@ -88,6 +89,8 @@ enum UserLoggerError: String, BinkLoggerProtocol {
     case fetchPreferencesFailure = "Failed to fetch preferences"
     case setPreferencesFailure = "Failed to set preferences"
     case renewTokenFailure = "Failed to renew token"
+    case failedToSendMagicLink = "Failed to send magic link"
+    case failedToReceiveMagicLinkAccessToken = "Failed to receive magic link access token"
     
     var category: BinkLoggerCategory {
         return .user

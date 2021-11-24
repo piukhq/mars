@@ -1,0 +1,47 @@
+{
+  "configurations" : [
+    {
+      "id" : "E9173B7E-B3A2-4522-B597-E2285F8A5F6C",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:binkapp.xcodeproj",
+      "identifier" : "5ECE046722CE5798001BA964",
+      "name" : "binkapp"
+    }
+  },
+  "testTargets" : [
+    {
+      "enabled" : false,
+      "selectedTests" : [
+        "AutomatedTesting_0_Login\/test0_loginScreenOnAppLaunch_exists()",
+        "AutomatedTesting_0_Login\/test2_loginWithEmailAndPassword()",
+        "AutomatedTesting_2_PaymentCards\/test_0_addMastercard_isSuccessful()",
+        "AutomatedTesting_2_PaymentCards\/test_1_PLL_link_isSuccessful()",
+        "AutomatedTesting_2_PaymentCards\/test_2_cardIsVisibleAfterPullToRefresh_isTrue()",
+        "AutomatedTesting_2_PaymentCards\/test_3_deleteIcelandAndPaymentCards_isSuccessful()",
+        "AutomatedTesting_3_ZendeskFAQs\/test_0_zendesk_aboutBink_article_exists()",
+        "AutomatedTesting_5_WireframesNavigation\/test_0_lcdModule_noPaymentCards_navigationIsCorrect()"
+      ],
+      "target" : {
+        "containerPath" : "container:binkapp.xcodeproj",
+        "identifier" : "5ECE048922CE579B001BA964",
+        "name" : "binkappUITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:binkapp.xcodeproj",
+        "identifier" : "5ECE047E22CE579B001BA964",
+        "name" : "binkappTests"
+      }
+    }
+  ],
+  "version" : 1
+}

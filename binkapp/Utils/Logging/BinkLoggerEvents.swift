@@ -98,6 +98,8 @@ enum UserLoggerEvent: String, BinkLoggerProtocol {
     case fetchedPreferences = "Fetched preferences"
     case setPreferences = "Set preferences success"
     case renewedToken = "Renewed token"
+    case sentMagicLink = "Sent magic link"
+    case receivedMagicLinkAccessToken = "Received magic link access token"
 
     var category: BinkLoggerCategory {
         return .user

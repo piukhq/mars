@@ -13,11 +13,15 @@ class PortraitNavigationController: UINavigationController {
     private var statusBarStyle: UIStatusBarStyle = .default
     
     private lazy var backButton: UIBarButtonItem = {
-        return UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        let back = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        back.accessibilityIdentifier = "back"
+        return back
     }()
     
     private lazy var closeButton: UIBarButtonItem = {
-        return UIBarButtonItem(image: Asset.close.image, style: .plain, target: self, action: #selector(close))
+        let closeButton = UIBarButtonItem(image: Asset.close.image, style: .plain, target: self, action: #selector(close))
+        closeButton.accessibilityIdentifier = "close"
+        return closeButton
     }()
     
     // TODO: When we kill off iOS 12 support, remove the init overrides and just use a custom init

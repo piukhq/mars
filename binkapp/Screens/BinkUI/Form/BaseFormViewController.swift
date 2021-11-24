@@ -20,6 +20,7 @@ class BaseFormViewController: BinkViewController, Form {
         static let horizontalInset: CGFloat = 25.0
         static let bottomInset: CGFloat = 150.0
         static let postCollectionViewPadding: CGFloat = 15.0
+        static let preCollectionViewPadding: CGFloat = 10.0
         static let offsetPadding: CGFloat = 30.0
     }
     
@@ -37,7 +38,7 @@ class BaseFormViewController: BinkViewController, Form {
     }()
     
     lazy var stackScrollView: StackScrollView = {
-        let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [titleLabel, descriptionLabel, collectionView], adjustForKeyboard: true)
+        let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [titleLabel, descriptionLabel, textView, collectionView], adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .clear
         stackView.margin = UIEdgeInsets(top: 0, left: Constants.horizontalInset, bottom: 0, right: Constants.horizontalInset)
@@ -45,6 +46,7 @@ class BaseFormViewController: BinkViewController, Form {
         stackView.alignment = .fill
         stackView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Constants.bottomInset, right: 0)
         stackView.customPadding(Constants.postCollectionViewPadding, after: collectionView)
+        stackView.customPadding(Constants.preCollectionViewPadding, before: collectionView)
         view.addSubview(stackView)
         return stackView
     }()
@@ -65,10 +67,23 @@ class BaseFormViewController: BinkViewController, Form {
         return description
     }()
     
+    lazy var textView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.isScrollEnabled = false
+        textView.isUserInteractionEnabled = true
+        textView.isEditable = false
+        textView.backgroundColor = .clear
+        textView.textContainerInset = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: -5)
+        textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
+        return textView
+    }()
+    
     private lazy var layout: UICollectionViewFlowLayout = {
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.estimatedItemSize = CGSize(width: 1, height: 1) // To invoke automatic self sizing
-        return flowLayout
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 20
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        return layout
     }()
     
     var initialContentOffset: CGPoint = .zero
@@ -79,16 +94,21 @@ class BaseFormViewController: BinkViewController, Form {
         didSet {
             collectionView.dataSource = dataSource
             collectionView.reloadData()
+            configureCheckboxes()
         }
     }
     
     // MARK: - Initialisation
     
-    init(title: String, description: String, dataSource: FormDataSource) {
+    init(title: String, description: String, attributedDescription: NSMutableAttributedString? = nil, dataSource: FormDataSource) {
         self.dataSource = dataSource
         super.init(nibName: nil, bundle: nil)
         titleLabel.text = title
         descriptionLabel.text = description
+        if let attrDescription = attributedDescription {
+            textView.attributedText = attrDescription
+            textView.delegate = self
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -117,6 +137,8 @@ class BaseFormViewController: BinkViewController, Form {
         super.configureForCurrentTheme()
         titleLabel.textColor = Current.themeManager.color(for: .text)
         descriptionLabel.textColor = Current.themeManager.color(for: .text)
+        textView.textColor = Current.themeManager.color(for: .text)
+        Current.themeManager.overrideUserInterfaceStyle(for: collectionView)
     }
     
     private func configureLayout() {
@@ -129,6 +151,11 @@ class BaseFormViewController: BinkViewController, Form {
     }
     
     private func configureCheckboxes() {
+        for subview in stackScrollView.arrangedSubviews {
+            if subview.isKind(of: CheckboxView.self) {
+                subview.removeFromSuperview()
+            }
+        }
         guard !dataSource.checkboxes.isEmpty else { return }
         stackScrollView.add(arrangedSubviews: dataSource.checkboxes)
     }
@@ -171,16 +198,6 @@ extension BaseFormViewController: UICollectionViewDelegate {
     }
 }
 
-extension BaseFormViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.0
-    }
-}
-
 extension BaseFormViewController {
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField) {
         collectionView.collectionViewLayout.invalidateLayout()
@@ -192,6 +209,12 @@ extension BaseFormViewController {
 extension BaseFormViewController: CheckboxViewDelegate {
     func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {
         formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
+    }
+}
+
+extension BaseFormViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        return false
     }
 }
 

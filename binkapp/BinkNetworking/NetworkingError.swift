@@ -23,7 +23,6 @@ enum NetworkingError: BinkError {
     case customError(String)
     case userFacingError(UserFacingNetworkingError)
 
-
     var domain: BinkErrorDomain {
         return .networking
     }
@@ -78,11 +77,12 @@ enum UserFacingNetworkingError: String {
         }
     }
     
-    func message(membershipPlan: CD_MembershipPlan?) -> String {
+    func message(membershipPlan: CD_MembershipPlan?, changedLinkCardsCount: Int? = 1) -> String {
+        let messagePrefix = changedLinkCardsCount == 1 ? L10n.cardAlreadyLinkedMessagePrefix : L10n.cardsAlreadyLinkedMessagePrefix
         let planName = membershipPlan?.account?.planName ?? ""
         let planNameCard = membershipPlan?.account?.planNameCard ?? ""
         let planDetails = "\(planName) \(planNameCard)"
-        return L10n.cardAlreadyLinkedMessage(L10n.cardAlreadyLinkedMessagePrefix, planDetails, planDetails)
+        return L10n.cardAlreadyLinkedMessage(messagePrefix, planDetails, planDetails)
     }
     
     static func errorForKey(_ errorKey: String) -> UserFacingNetworkingError? {

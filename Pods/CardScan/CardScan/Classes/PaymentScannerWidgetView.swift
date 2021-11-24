@@ -55,9 +55,11 @@ class PaymentScannerWidgetView: UIView {
     
     func stopTimer() {
         timer?.invalidate()
+        timer = nil
     }
     
     func configure(withThemeDelegate themeDelegate: ThemeDelegate? = nil) {
+        imageView.accessibilityIdentifier = "Widget imageView"
         clipsToBounds = true
         layer.cornerRadius = Constants.cornerRadius
         backgroundColor = themeDelegate?.widgetBackgroundColor
@@ -70,6 +72,7 @@ class PaymentScannerWidgetView: UIView {
         explainerLabel.textColor = themeDelegate?.widgetTextColor
         imageView.image = UIImage(named: "loyalty_scanner_enter_manually")
         
+        guard timer == nil else { return }
         timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false, block: { [weak self] _ in
             let notificationFeedbackGenerator = UINotificationFeedbackGenerator()
             notificationFeedbackGenerator.prepare()

@@ -23,8 +23,8 @@ class PLRRewardDetailViewController: BinkViewController {
         return stackView
     }()
 
-    private lazy var codeLabel: UILabel = {
-        let label = UILabel()
+    private lazy var codeLabel: BinkCopyableLabel = {
+        let label = BinkCopyableLabel()
         label.font = .headline
         label.numberOfLines = 0
         return label

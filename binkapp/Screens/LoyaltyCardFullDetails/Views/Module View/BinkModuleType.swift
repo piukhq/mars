@@ -33,16 +33,18 @@ enum ModuleState: Equatable {
     case pll(linkedPaymentCards: [CD_PaymentCard]?, paymentCards: [CD_PaymentCard]?)
     case pllNoPaymentCards
     case pllError
+    case lpcLoginRequired
+    case lpcBalance(formattedTitle: String?, lastCheckedDate: Date?)
     
     var imageName: String {
         switch self {
         case .loginUnavailable:
             return Asset.lcdModuleIconsPointsInactive.name
-        case .plrTransactions, .aboutMembership, .pllTransactions:
+        case .plrTransactions, .aboutMembership, .pllTransactions, .lpcBalance:
             return Asset.lcdModuleIconsPointsActive.name
         case .pending:
             return Asset.lcdModuleIconsPointsLoginPending.name
-        case .signUp, .patchGhostCard, .loginChanges, .registerGhostCard, .noReasonCode:
+        case .signUp, .patchGhostCard, .loginChanges, .registerGhostCard, .noReasonCode, .lpcLoginRequired:
             return Asset.lcdModuleIconsPointsLogin.name
         case .unlinkable:
             return Asset.lcdModuleIconsLinkInactive.name
@@ -95,6 +97,10 @@ enum ModuleState: Equatable {
             return L10n.cardLinkedStatus
         case .pllNoPaymentCards, .pllError:
             return L10n.cardLinkStatus
+        case .lpcLoginRequired:
+            return L10n.loginTitle
+        case .lpcBalance(let formattedTitle, _):
+            return formattedTitle ?? ""
         }
     }
     
@@ -146,6 +152,11 @@ enum ModuleState: Equatable {
             return paymentCards?.isEmpty == true ? L10n.linkModuleToNumberOfPaymentCardMessage(linkedPaymentCardsCount, paymentCardsCount) : L10n.linkModuleToNumberOfPaymentCardsMessage(linkedPaymentCardsCount, paymentCardsCount)
         case .pllNoPaymentCards, .pllError:
             return L10n.linkModuleToPaymentCardsMessage
+        case .lpcLoginRequired:
+            return L10n.pointsModuleToSeeHistory
+        case .lpcBalance(_, let lastCheckedDate):
+            let lastCheckedString = lastCheckedDate?.timeAgoString(short: true) ?? ""
+            return "\(L10n.pointsModuleLastChecked) \(lastCheckedString)"
         }
     }
     
@@ -157,7 +168,7 @@ enum ModuleState: Equatable {
             return "plrTransactions"
         case .aboutMembership:
             return "aboutMembership"
-        case .pllTransactions:
+        case .pllTransactions, .lpcBalance:
             return "pllTransactions"
         case .pending:
             return "pending"
@@ -181,6 +192,8 @@ enum ModuleState: Equatable {
             return "pllNoPaymentCards"
         case .pllError:
             return "pllError"
+        case .lpcLoginRequired:
+            return "lpcLoginRequired"
         }
     }
 }

@@ -39,11 +39,12 @@ extension FormDataSourceDelegate {
 }
 
 enum AccessForm {
-    case login
-    case register
+    case magicLink
+    case emailPassword
     case forgottenPassword
     case addEmail
-    case socialTermsAndConditions
+    case termsAndConditions
+    case success
 }
 
 class FormDataSource: NSObject {
@@ -62,6 +63,9 @@ class FormDataSource: NSObject {
     private(set) var membershipPlan: CD_MembershipPlan?
     
     var fields: [FormField] = []
+    private var visibleFields: [FormField] {
+        return fields.filter { !$0.hidden }
+    }
     private(set) var checkboxes: [CheckboxView] = []
     private var cellTextFields: [Int: UITextField] = [:]
     private var selectedCheckboxIndex = 0
@@ -262,7 +266,8 @@ extension FormDataSource {
                             forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
                             fieldCommonName: field.fieldCommonName,
                             alternatives: field.alternativeCommonNames(),
-                            dataSourceRefreshBlock: dataSourceRefreshBlock
+                            dataSourceRefreshBlock: dataSourceRefreshBlock,
+                            hidden: (formPurpose == .addFailed && !(membershipPlan?.isPLL ?? false)) ? true : false
                         )
                     )
                 }
@@ -446,7 +451,7 @@ extension FormDataSource {
             if field.checkbox?.boolValue == true {
                 checkbox.configure(title: attributedString, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: self)
             } else {
-                //If we don't want a checkbox, we don't need a delegate for it, so we will hide the checkbox by checking if we have a delegate or not
+                // If we don't want a checkbox, we don't need a delegate for it, so we will hide the checkbox by checking if we have a delegate or not
                 checkbox.configure(title: attributedString, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: self, hideCheckbox: true)
             }
             checkboxes.append(checkbox)
@@ -459,13 +464,13 @@ extension FormDataSource {
 // MARK: - Login
 
 extension FormDataSource {
-    convenience init(accessForm: AccessForm) {
+    convenience init(accessForm: AccessForm, prefilledValues: [PrefilledValue]? = nil) {
         self.init()
         self.delegate = delegate
-        setupFields(accessForm: accessForm)
+        setupFields(accessForm: accessForm, prefilledValues: prefilledValues)
     }
     
-    private func setupFields(accessForm: AccessForm) {
+    private func setupFields(accessForm: AccessForm, prefilledValues: [PrefilledValue]?) {
         let updatedBlock: FormField.ValueUpdatedBlock = { [weak self] field, newValue in
             guard let self = self else { return }
             self.delegate?.formDataSource(self, changed: newValue, for: field)
@@ -483,7 +488,7 @@ extension FormDataSource {
         
         // Email
         
-        if accessForm != .socialTermsAndConditions {
+        if accessForm != .termsAndConditions && accessForm != .success {
             let emailField = FormField(
                 title: L10n.accessFormEmailTitle,
                 placeholder: L10n.accessFormEmailPlaceholder,
@@ -492,7 +497,9 @@ extension FormDataSource {
                 fieldType: .email,
                 updated: updatedBlock,
                 shouldChange: shouldChangeBlock,
-                fieldExited: fieldExitedBlock
+                fieldExited: fieldExitedBlock,
+                forcedValue: prefilledValues?.first(where: { $0.commonName == .email })?.value,
+                fieldCommonName: .email
             )
             
             fields.append(emailField)
@@ -500,7 +507,7 @@ extension FormDataSource {
         
         // Password
         
-        if accessForm == .login || accessForm == .register {
+        if accessForm == .emailPassword {
             let passwordField = FormField(
                 title: L10n.accessFormPasswordTitle,
                 placeholder: L10n.accessFormPasswordPlaceholder,
@@ -542,53 +549,42 @@ extension FormDataSource {
             fields.append(bundleIDField)
         }
         
-        if accessForm == .register {
-            let manualValidation: FormField.ManualValidateBlock = { [weak self] field in
-                guard let self = self, let delegate = self.delegate else { return false }
-                return delegate.formDataSource(self, manualValidate: field)
-            }
-            
-            let confirmPasswordField = FormField(
-                title: L10n.accessFormConfirmPasswordTitle,
-                placeholder: L10n.accessFormConfirmPasswordPlaceholder,
-                validation: nil,
-                validationErrorMessage: L10n.accessFormConfirmPasswordValidation,
-                fieldType: .confirmPassword,
-                updated: updatedBlock,
-                shouldChange: shouldChangeBlock,
-                fieldExited: fieldExitedBlock,
-                manualValidate: manualValidation
-            )
-            
-            fields.append(confirmPasswordField)
+        let attributedTCs = NSMutableAttributedString(string: L10n.tandcsTitle + "\n" + L10n.tandcsDescription, attributes: [.font: UIFont.bodyTextSmall])
+        let baseTCs = NSString(string: attributedTCs.string)
+        let tcsRange = baseTCs.range(of: L10n.tandcsLink)
+        let privacyPolicyRange = baseTCs.range(of: L10n.ppolicyLink)
+        attributedTCs.addAttributes([.link: "https://bink.com/terms-and-conditions/"], range: tcsRange)
+        attributedTCs.addAttributes([.link: "https://bink.com/privacy-policy/"], range: privacyPolicyRange)
+        
+        let termsAndConditions = CheckboxView(checked: false)
+        termsAndConditions.accessibilityIdentifier = "Terms and conditions"
+        termsAndConditions.configure(title: attributedTCs, columnName: L10n.tandcsLink, columnKind: .none, delegate: self)
+        
+        let attributedMarketing = NSMutableAttributedString(string: L10n.marketingTitle + "\n" + L10n.preferencesPrompt, attributes: [.font: UIFont.bodyTextSmall])
+        let baseMarketing = NSString(string: attributedMarketing.string)
+        let rewardsRange = baseMarketing.range(of: L10n.preferencesPromptHighlightRewards)
+        let offersRange = baseMarketing.range(of: L10n.preferencesPromptHighlightOffers)
+        let updatesRange = baseMarketing.range(of: L10n.preferencesPromptHighlightUpdates)
+        
+        let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 14.0) ?? UIFont()]
+        
+        attributedMarketing.addAttributes(attributes, range: rewardsRange)
+        attributedMarketing.addAttributes(attributes, range: offersRange)
+        attributedMarketing.addAttributes(attributes, range: updatesRange)
+        
+        let marketingCheckbox = CheckboxView(checked: false)
+        marketingCheckbox.configure(title: attributedMarketing, columnName: "marketing-bink", columnKind: .userPreference, delegate: self, optional: true)
+        
+        if accessForm == .termsAndConditions {
+            checkboxes.append(termsAndConditions)
+            checkboxes.append(marketingCheckbox)
         }
         
-        if accessForm == .socialTermsAndConditions || accessForm == .register {
-            let attributedTCs = NSMutableAttributedString(string: L10n.tandcsTitle + "\n" + L10n.tandcsDescription, attributes: [.font: UIFont.bodyTextSmall])
-            let baseTCs = NSString(string: attributedTCs.string)
-            let tcsRange = baseTCs.range(of: L10n.tandcsLink)
-            let privacyPolicyRange = baseTCs.range(of: L10n.ppolicyLink)
-            attributedTCs.addAttributes([.link: "https://bink.com/terms-and-conditions/"], range: tcsRange)
-            attributedTCs.addAttributes([.link: "https://bink.com/privacy-policy/"], range: privacyPolicyRange)
-            
-            let termsAndConditions = CheckboxView(checked: false)
-            termsAndConditions.configure(title: attributedTCs, columnName: L10n.tandcsLink, columnKind: .none, delegate: self)
+        if accessForm == .magicLink {
             checkboxes.append(termsAndConditions)
+        }
         
-            let attributedMarketing = NSMutableAttributedString(string: L10n.marketingTitle + "\n" + L10n.preferencesPrompt, attributes: [.font: UIFont.bodyTextSmall])
-            let baseMarketing = NSString(string: attributedMarketing.string)
-            let rewardsRange = baseMarketing.range(of: L10n.preferencesPromptHighlightRewards)
-            let offersRange = baseMarketing.range(of: L10n.preferencesPromptHighlightOffers)
-            let updatesRange = baseMarketing.range(of: L10n.preferencesPromptHighlightUpdates)
-            
-            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 14.0) ?? UIFont()]
-            
-            attributedMarketing.addAttributes(attributes, range: rewardsRange)
-            attributedMarketing.addAttributes(attributes, range: offersRange)
-            attributedMarketing.addAttributes(attributes, range: updatesRange)
-            
-            let marketingCheckbox = CheckboxView(checked: false)
-            marketingCheckbox.configure(title: attributedMarketing, columnName: "marketing-bink", columnKind: .userPreference, delegate: self, optional: true)
+        if accessForm == .success {
             checkboxes.append(marketingCheckbox)
         }
     }
@@ -615,13 +611,13 @@ extension FormDataSource: CheckboxViewDelegate {
 
 extension FormDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return fields.count
+        return visibleFields.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: FormCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
         
-        if let field = fields[safe: indexPath.item] {
+        if let field = visibleFields[safe: indexPath.item] {
             cell.configure(with: field, delegate: self)
             cellTextFields[indexPath.row] = cell.textField
         }

@@ -15,14 +15,16 @@ public struct ReusableModalConfiguration {
     var primaryButtonAction: BinkButtonAction?
     var secondaryButtonTitle: String?
     var secondaryButtonAction: BinkButtonAction?
+    var membershipPlan: CD_MembershipPlan?
     
-    init(title: String = "", text: NSMutableAttributedString, primaryButtonTitle: String? = nil, primaryButtonAction: BinkButtonAction? = nil, secondaryButtonTitle: String? = nil, secondaryButtonAction: BinkButtonAction? = nil) {
+    init(title: String = "", text: NSMutableAttributedString, primaryButtonTitle: String? = nil, primaryButtonAction: BinkButtonAction? = nil, secondaryButtonTitle: String? = nil, secondaryButtonAction: BinkButtonAction? = nil, membershipPlan: CD_MembershipPlan? = nil) {
         self.title = title
         self.text = text
         self.primaryButtonTitle = primaryButtonTitle
         self.primaryButtonAction = primaryButtonAction
         self.secondaryButtonTitle = secondaryButtonTitle
         self.secondaryButtonAction = secondaryButtonAction
+        self.membershipPlan = membershipPlan
     }
 
     static func makeAttributedString(title: String, description: String) -> NSMutableAttributedString {
@@ -63,6 +65,10 @@ open class ReusableModalViewModel {
         return configurationModel.secondaryButtonAction
     }
     
+    var membershipPlan: CD_MembershipPlan? {
+        return configurationModel.membershipPlan
+    }
+    
     var shouldHideButtonsView: Bool {
         return primaryButtonTitle == nil && secondaryButtonTitle == nil
     }
@@ -77,5 +83,12 @@ open class ReusableModalViewModel {
     
     func secondaryButtonWasTapped() {
         secondaryButtonAction?()
+    }
+    
+    func toAboutMembershipPlan() {
+        guard let plan = membershipPlan else { return }
+        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: plan)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 }

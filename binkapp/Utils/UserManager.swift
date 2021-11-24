@@ -10,6 +10,7 @@ import Foundation
 import KeychainAccess
 import Sentry
 import Firebase
+import WidgetKit
 
 private enum UserManagerError: Error {
     case missingData
@@ -58,8 +59,13 @@ class UserManager {
     
     var hasCurrentUser: Bool {
         // We can safely assume that if we have no token, we have no user
-        guard let token = currentToken else { return false }
-        guard !token.isEmpty else { return false }
+        guard let token = currentToken, !token.isEmpty else {
+            UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(false, forDefaultsKey: .hasCurrentUser)
+            return false
+        }
+        
+        // Store in shared container
+        UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(true, forDefaultsKey: .hasCurrentUser)
         return true
     }
     
@@ -77,12 +83,11 @@ class UserManager {
         return token
     }
     
-    func setNewUser<T>(with response: T) where T: TokenResponseProtocol {
+    func setNewUser(with response: LoginResponse) {
         do {
             try setToken(with: response)
-            if let loginRegisterResponse = response as? LoginRegisterResponse {
-                try setEmail(with: loginRegisterResponse)
-            }
+            try setEmail(with: response)
+            UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(true, forDefaultsKey: .hasCurrentUser)
         } catch {
             if #available(iOS 14.0, *) {
                 BinkLogger.error(UserLoggerError.setNewUser, value: error.localizedDescription)
@@ -117,13 +122,13 @@ class UserManager {
         }
     }
     
-    private func setToken(with response: TokenResponseProtocol) throws {
-        guard let token = response.apiKey else { throw UserManagerError.missingData }
+    private func setToken(with response: LoginResponse) throws {
+        guard let token = response.jwt else { throw UserManagerError.missingData }
         try keychain.set(token, key: Constants.tokenKey)
         currentToken = token
     }
     
-    private func setEmail(with response: LoginRegisterResponse) throws {
+    private func setEmail(with response: LoginResponse) throws {
         guard let email = response.email else { throw UserManagerError.missingData }
         try keychain.set(email, key: Constants.emailKey)
         currentEmailAddress = email
@@ -141,6 +146,9 @@ class UserManager {
         currentEmailAddress = nil
         currentFirstName = nil
         currentLastName = nil
+        
+        UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(false, forDefaultsKey: .hasCurrentUser)
+        WidgetController().reloadWidget(type: .quickLaunch)
     }
     
     func clearKeychainIfNecessary() {

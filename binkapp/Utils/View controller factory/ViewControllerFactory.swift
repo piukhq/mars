@@ -8,13 +8,14 @@
 
 import UIKit
 import CardScan
+import SwiftUI
 
 enum ViewControllerFactory {
     // MARK: - Adding Cards
     
-    static func makeLoyaltyScannerViewController(forPlan plan: CD_MembershipPlan? = nil, delegate: BarcodeScannerViewControllerDelegate?) -> BarcodeScannerViewController {
+    static func makeLoyaltyScannerViewController(forPlan plan: CD_MembershipPlan? = nil, hideNavigationBar: Bool = true, delegate: BarcodeScannerViewControllerDelegate?) -> BarcodeScannerViewController {
         let viewModel = BarcodeScannerViewModel(plan: plan)
-        return BarcodeScannerViewController(viewModel: viewModel, delegate: delegate)
+        return BarcodeScannerViewController(viewModel: viewModel, hideNavigationBar: hideNavigationBar, delegate: delegate)
     }
     
     static func makeBrowseBrandsViewController(section: Int? = nil) -> BrowseBrandsViewController {
@@ -71,9 +72,9 @@ enum ViewControllerFactory {
     
     // MARK: - Loyalty Card Detail
     
-    static func makeLoyaltyCardDetailViewController(membershipCard: CD_MembershipCard) -> LoyaltyCardFullDetailsViewController {
+    static func makeLoyaltyCardDetailViewController(membershipCard: CD_MembershipCard, animateContent: Bool = true) -> LoyaltyCardFullDetailsViewController {
         let factory = WalletCardDetailInformationRowFactory()
-        let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: membershipCard, informationRowFactory: factory)
+        let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: membershipCard, informationRowFactory: factory, animated: animateContent)
         let viewController = LoyaltyCardFullDetailsViewController(viewModel: viewModel)
         factory.delegate = viewController
         return viewController
@@ -158,12 +159,12 @@ enum ViewControllerFactory {
         return PortraitNavigationController(rootViewController: OnboardingViewController())
     }
 
-    static func makeSocialTermsAndConditionsViewController(requestType: SocialLoginRequestType) -> SocialTermsAndConditionsViewController {
-        return SocialTermsAndConditionsViewController(requestType: requestType)
+    static func makeSocialTermsAndConditionsViewController(requestType: LoginRequestType) -> TermsAndConditionsViewController {
+        return TermsAndConditionsViewController(requestType: requestType)
     }
-
-    static func makeRegisterViewController() -> RegisterViewController {
-        return RegisterViewController()
+    
+    static func makeLoginSuccessViewController() -> LoginSuccessViewController {
+        return LoginSuccessViewController()
     }
 
     static func makeLoginViewController() -> LoginViewController {
@@ -173,6 +174,47 @@ enum ViewControllerFactory {
     static func makeForgottenPasswordViewController() -> ForgotPasswordViewController {
         let viewModel = ForgotPasswordViewModel(repository: ForgotPasswordRepository())
         return ForgotPasswordViewController(viewModel: viewModel)
+    }
+    
+    static func makeCheckYourInboxViewController(configuration: ReusableModalConfiguration) -> CheckYourInboxViewController {
+        let viewModel = ReusableModalViewModel(configurationModel: configuration)
+        return CheckYourInboxViewController(viewModel: viewModel)
+    }
+    
+    // MARK: - Local Points Collection
+    
+    static func makeLocalPointsCollectionBalanceRefreshViewController(membershipCard: CD_MembershipCard, lastCheckedDate: Date?) -> ReusableTemplateViewController {
+        let buttonAction: BinkButtonAction = {
+            Current.navigate.close {
+                Current.pointsScrapingManager.performBalanceRefresh(for: membershipCard)
+            }
+        }
+        let planName = membershipCard.membershipPlan?.account?.planName ?? ""
+        let lastCheckedString = L10n.lpcPointsModuleBalanceExplainerBodyTimeAgo(lastCheckedDate?.timeAgoString() ?? "")
+        let refreshIntervalString = Current.pointsScrapingManager.isDebugMode ? WalletRefreshManager.RefreshInterval.twoMinutes.readableValue : WalletRefreshManager.RefreshInterval.twelveHours.readableValue
+        
+        var bodyText = ""
+        var showRefreshButton = false
+        switch WalletRefreshManager.cardCanBeForceRefreshed(membershipCard) {
+        case true:
+            if Current.pointsScrapingManager.isCurrentlyScraping(forMembershipCard: membershipCard) {
+                bodyText = L10n.lpcPointsModuleBalanceExplainerBodyRefreshRequested(planName, lastCheckedString, refreshIntervalString)
+            } else {
+                bodyText = L10n.lpcPointsModuleBalanceExplainerBodyRefreshable(planName, lastCheckedString, refreshIntervalString)
+                showRefreshButton = true
+            }
+        case false:
+            bodyText = L10n.lpcPointsModuleBalanceExplainerBody(planName, lastCheckedString, refreshIntervalString)
+        }
+        let attributedString = ReusableModalConfiguration.makeAttributedString(title: L10n.lpcPointsModuleBalanceExplainerTitle, description: bodyText)
+        let baseBodyText = NSString(string: attributedString.string)
+        let lastCheckedRange = baseBodyText.range(of: lastCheckedString)
+        attributedString.addAttribute(NSAttributedString.Key.font, value: UIFont.buttonText, range: lastCheckedRange)
+        
+        let config = ReusableModalConfiguration(title: "", text: attributedString, primaryButtonTitle: showRefreshButton ?  L10n.lpcPointsModuleBalanceExplainerButtonTitle : nil, primaryButtonAction: showRefreshButton ? buttonAction : nil, secondaryButtonTitle: nil, secondaryButtonAction: nil, membershipPlan: membershipCard.membershipPlan)
+        
+        let viewModel = ReusableModalViewModel(configurationModel: config)
+        return ReusableTemplateViewController(viewModel: viewModel)
     }
     
     // MARK: - Reusable
@@ -211,6 +253,16 @@ enum ViewControllerFactory {
         return alert
     }
     
+    static func makeOkCancelAlertViewController(title: String?, message: String?, cancelButton: Bool? = nil, completion: EmptyCompletionBlock? = nil) -> BinkAlertController {
+        let alert = BinkAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: L10n.ok, style: .default, handler: { _ in
+            completion?()
+        }))
+        
+        alert.addAction(UIAlertAction(title: L10n.cancel, style: .cancel))
+        return alert
+    }
+    
     static func makeRecommendedAppUpdateAlertController(skipVersionHandler: @escaping () -> Void) -> BinkAlertController {
         let alert = BinkAlertController(title: L10n.recommendedAppUpdateTitle, message: L10n.recommendedAppUpdateMessage, preferredStyle: .alert)
         
@@ -239,15 +291,35 @@ enum ViewControllerFactory {
         return WebViewController(urlString: urlString)
     }
 
-    static func makeDebugViewController() -> DebugMenuTableViewController {
-        let debugMenuFactory = DebugMenuFactory()
-        let debugMenuViewModel = DebugMenuViewModel(debugMenuFactory: debugMenuFactory)
-        let debugMenuViewController = DebugMenuTableViewController(viewModel: debugMenuViewModel)
-        debugMenuFactory.delegate = debugMenuViewController
-        return debugMenuViewController
+    static func makeDebugViewController() -> UIViewController {
+        if #available(iOS 14.0, *) {
+            return UIHostingController(rootView: DebugMenuView())
+        } else {
+            let debugMenuFactory = DebugMenuFactory()
+            let debugMenuViewModel = DebugMenuViewModel(debugMenuFactory: debugMenuFactory)
+            let debugMenuViewController = DebugMenuTableViewController(viewModel: debugMenuViewModel)
+            debugMenuFactory.delegate = debugMenuViewController
+            return debugMenuViewController
+        }
     }
 
     static func makeJailbrokenViewController() -> JailbrokenViewController {
         return JailbrokenViewController()
+    }
+    
+    static func makeEmailClientsAlertController(_ emailClients: [EmailClient]) -> BinkAlertController {
+        let alert = BinkAlertController(title: L10n.openMailAlertTitle, message: nil, preferredStyle: .actionSheet)
+        
+        emailClients.forEach { emailClient in
+            let action = UIAlertAction(title: emailClient.rawValue.capitalized, style: .default, handler: { _ in
+                emailClient.open()
+            })
+            alert.addAction(action)
+        }
+        
+        let cancelAction = UIAlertAction(title: L10n.cancel, style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        
+        return alert
     }
 }

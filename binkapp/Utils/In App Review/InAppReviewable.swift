@@ -80,7 +80,7 @@ extension InAppReviewable {
     }
 
     private var enabledInRemoteConfig: Bool {
-        return Current.remoteConfig.boolValueForConfigKey(.inAppReviewEnabled)
+        return Current.remoteConfig.configFile?.appConfig?.inAppReviewEnabled ?? false
     }
 
     private func setUpdatedRequestTime() {

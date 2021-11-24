@@ -6,7 +6,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     private enum FetchType {
@@ -19,12 +19,15 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     var foregroundRefreshCount = 0
 
     private(set) var membershipPlans: [CD_MembershipPlan]?
-    private(set) var membershipCards: [CD_MembershipCard]?
+    private(set) var membershipCards: [CD_MembershipCard]? {
+        didSet {
+            WidgetController().writeContentsToDisk(membershipCards: membershipCards)
+        }
+    }
     private(set) var paymentCards: [CD_PaymentCard]?
 
     private var hasLaunched = false
 
-    private(set) var shouldDisplayWalletPrompts: Bool?
     var shouldDisplayLoadingIndicator: Bool {
         let shouldDisplay = !Current.userDefaults.bool(forDefaultsKey: .hasLaunchedWallet)
         Current.userDefaults.set(true, forDefaultsKey: .hasLaunchedWallet)
@@ -108,6 +111,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
 
     func handleLogout() {
         hasLaunched = false
+        membershipCards = nil
     }
 
     var hasPaymentCards: Bool {
@@ -126,6 +130,20 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     private func loadWallets(forType type: FetchType, reloadPlans: Bool, isUserDriven: Bool, completion: ServiceCompletionSuccessHandler<WalletServiceError>? = nil) {
         let dispatchGroup = DispatchGroup()
         let forceRefresh = type == .reload
+        
+        /// If we are fetching wallet data from the API, then also fetch from remote config
+        if forceRefresh {
+            dispatchGroup.enter()
+            Current.remoteConfig.fetch { success in
+                guard success else {
+                    NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
+                    // if this failed, the entire function should fail
+                    completion?(success, nil)
+                    return
+                }
+                dispatchGroup.leave()
+            }
+        }
 
         dispatchGroup.enter()
         getLoyaltyWallet(forceRefresh: forceRefresh, reloadPlans: reloadPlans, isUserDriven: isUserDriven) { (success, error) in
@@ -149,8 +167,10 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             dispatchGroup.leave()
         }
 
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            self?.shouldDisplayWalletPrompts = type == .reload || type == .localReactive
+        dispatchGroup.notify(queue: .main) {
+            if forceRefresh {
+                Current.remoteConfig.handleRemoteConfigFetch()
+            }
             NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
             completion?(true, nil)
         }
@@ -323,7 +343,7 @@ extension Wallet {
         guard let userId = Current.userManager.currentUserId else { return }
         Current.userDefaults.set(order, forDefaultsKey: .localWalletOrder(userId: userId, walletType: walletType))
     }
-
+    
     func reorderMembershipCard(_ card: CD_MembershipCard, from sourceIndex: Int, to destinationIndex: Int) {
         reorderWalletCard(card, in: &localMembershipCardsOrder, from: sourceIndex, to: destinationIndex, updating: &membershipCards)
     }
