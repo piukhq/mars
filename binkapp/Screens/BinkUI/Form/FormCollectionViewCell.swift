@@ -421,6 +421,10 @@ extension FormCollectionViewCell: FormMultipleChoiceInputDelegate {
 }
 
 extension FormCollectionViewCell: AutofillFormInputAccessoryDelegate {
+    func inputAccessoryDidTapDone(_ inputAccessory: AutofillFormInputAccessory) {
+        accessoryDoneTouchUpInside()
+    }
+    
     func inputAccessory(_ inputAccessory: AutofillFormInputAccessory, didSelectValue value: String) {
         formField?.updateValue(value)
         textField.text = value

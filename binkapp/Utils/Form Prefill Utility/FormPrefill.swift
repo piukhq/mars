@@ -8,6 +8,122 @@
 
 import UIKit
 
+protocol AutofillFormInputAccessoryDelegate: AnyObject {
+    func inputAccessory(_ inputAccessory: AutofillFormInputAccessory, didSelectValue value: String)
+    func inputAccessoryDidTapDone(_ inputAccessory: AutofillFormInputAccessory)
+}
+
+class AutofillFormInputAccessory: UIToolbar, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    private let field: FormField
+    private weak var autofillDelegate: AutofillFormInputAccessoryDelegate?
+    
+    init(field: FormField, delegate: AutofillFormInputAccessoryDelegate) {
+        self.field = field
+        self.autofillDelegate = delegate
+        super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100))
+        sizeToFit()
+        configure()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    lazy var collectionViewLayout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.estimatedItemSize = CGSize(width: 1, height: 1)
+        return layout
+    }()
+    
+    lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        return collectionView
+    }()
+    
+    private lazy var doneButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.addTarget(self, action: #selector(handleDoneButtonTap), for: .touchUpInside)
+        button.setTitle("Done", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private lazy var stackview: UIStackView = {
+        let stackview = UIStackView(arrangedSubviews: [collectionView, doneButton])
+        stackview.translatesAutoresizingMaskIntoConstraints = false
+        stackview.axis = .horizontal
+        stackview.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 15)
+        stackview.isLayoutMarginsRelativeArrangement = true
+        addSubview(stackview)
+        return stackview
+    }()
+    
+    var prefilledValues: [String]? {
+        let allPrefilledValues = Current.userDefaults.value(forDefaultsKey: .prefilledFormValues) as? [String: [String]]
+        return allPrefilledValues?[field.title.lowercased()]?.sorted()
+    }
+    
+    private func configure() {
+        collectionView.register(PrefilledFormValueInputCell.self, asNib: false)
+        stackview.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+        stackview.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+    }
+    
+    @objc func handleDoneButtonTap() {
+        autofillDelegate?.inputAccessoryDidTapDone(self)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return prefilledValues?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: PrefilledFormValueInputCell = collectionView.dequeue(indexPath: indexPath)
+        guard let value = prefilledValues?[indexPath.row] else { return cell }
+        cell.configureWithValue(value)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let value = prefilledValues?[indexPath.row] {
+            autofillDelegate?.inputAccessory(self, didSelectValue: value)
+        }
+    }
+}
+
+class PrefilledFormValueInputCell: UICollectionViewCell {
+    private lazy var label: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(label)
+        label.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+        label.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
+        label.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
+        return label
+    }()
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        label.text = nil
+    }
+    
+    func configureWithValue(_ value: String) {
+        label.text = value
+        backgroundColor = .systemGray5
+        layer.cornerCurve = .continuous
+        layer.cornerRadius = 4
+    }
+}
+
+
+
 class PrefillFormValuesViewController: BaseFormViewController {
     init() {
         let dataSource = FormDataSource()
@@ -146,118 +262,5 @@ extension PrefillFormValuesViewController: CoreDataRepositoryProtocol {
             
             completion(fields)
         }
-    }
-}
-
-protocol AutofillFormInputAccessoryDelegate: AnyObject {
-    func inputAccessory(_ inputAccessory: AutofillFormInputAccessory, didSelectValue value: String)
-}
-
-class AutofillFormInputAccessory: UIToolbar, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    private let field: FormField
-    private weak var valueDelegate: AutofillFormInputAccessoryDelegate?
-    
-    init(field: FormField, delegate: AutofillFormInputAccessoryDelegate) {
-        self.field = field
-        self.valueDelegate = delegate
-        super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100))
-        sizeToFit()
-        configure()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    lazy var collectionViewLayout: UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.estimatedItemSize = CGSize(width: 1, height: 1)
-        return layout
-    }()
-    
-    lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        return collectionView
-    }()
-    
-    private lazy var doneButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.addTarget(self, action: #selector(handleDoneButtonTap), for: .touchUpInside)
-        button.setTitle("Done", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    private lazy var stackview: UIStackView = {
-        let stackview = UIStackView(arrangedSubviews: [collectionView, doneButton])
-        stackview.translatesAutoresizingMaskIntoConstraints = false
-        stackview.axis = .horizontal
-        stackview.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 15)
-        stackview.isLayoutMarginsRelativeArrangement = true
-        addSubview(stackview)
-        return stackview
-    }()
-    
-    var prefilledValues: [String]? {
-        let allPrefilledValues = Current.userDefaults.value(forDefaultsKey: .prefilledFormValues) as? [String: [String]]
-        return allPrefilledValues?[field.title.lowercased()]?.sorted()
-    }
-    
-    private func configure() {
-        collectionView.register(PrefilledFormValueInputCell.self, asNib: false)
-        stackview.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
-        stackview.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-    }
-    
-    @objc func handleDoneButtonTap() {
-        print("Done tapped")
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return prefilledValues?.count ?? 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: PrefilledFormValueInputCell = collectionView.dequeue(indexPath: indexPath)
-        guard let value = prefilledValues?[indexPath.row] else { return cell }
-        cell.configureWithValue(value)
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let value = prefilledValues?[indexPath.row] {
-            valueDelegate?.inputAccessory(self, didSelectValue: value)
-        }
-    }
-}
-
-class PrefilledFormValueInputCell: UICollectionViewCell {
-    private lazy var label: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(label)
-        label.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
-        label.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
-        label.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
-        return label
-    }()
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        label.text = nil
-    }
-    
-    func configureWithValue(_ value: String) {
-        label.text = value
-        backgroundColor = .systemGray5
-        layer.cornerCurve = .continuous
-        layer.cornerRadius = 4
     }
 }
