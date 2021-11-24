@@ -403,6 +403,11 @@ extension FormDataSource {
                     )
                 }
             }
+            
+            let checkbox = CheckboxView(checked: false)
+            let title = NSMutableAttributedString(string: "Remember my details", attributes: [.font: UIFont.bodyTextSmall])
+            checkbox.configure(title: title, columnName: "remember-my-details", columnKind: .userPreference, delegate: self, optional: true)
+            checkboxes.append(checkbox)
         }
         
         if formPurpose == .ghostCard || formPurpose == .patchGhostCard {
