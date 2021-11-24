@@ -40,19 +40,6 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
             self.reloadCollectionView()
         }
     }
-    
-    var shouldPromptForPrefilledFormValues = true
-    
-    override func refresh() {
-        super.refresh()
-        if shouldPromptForPrefilledFormValues {
-            shouldPromptForPrefilledFormValues = false
-            
-            let viewController = PrefillFormValuesViewController()
-            let request = ModalNavigationRequest(viewController: viewController)
-            Current.navigate.to(request)
-        }
-    }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {

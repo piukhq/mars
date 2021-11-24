@@ -164,7 +164,7 @@ extension FormDataSource {
             /// We will never reach the force unwrapping if either value is nil
             forcedValue: model.month == nil || model.year == nil ? nil : "\(String(format: "%02d", model.month ?? 0))/\(model.year ?? 0)"
         )
-
+        
         let nameOnCardField = FormField(
             title: "Name on card",
             placeholder: "J Appleseed",
@@ -213,7 +213,7 @@ extension FormDataSource {
             guard let self = self else { return }
             self.delegate?.formDataSourceShouldRefresh(self)
         }
-
+        
         if case .addFromScanner = formPurpose {
             model.account?.formattedAddFields(omitting: [.cardNumber])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
@@ -308,7 +308,7 @@ extension FormDataSource {
                 lpcAuthFields.forEach { field in
                     guard let fieldType = field.type else { return }
                     guard let fieldCommonName = field.commonName else { return }
-
+                    
                     fields.append(
                         FormField(
                             title: field.column ?? "",
@@ -351,7 +351,7 @@ extension FormDataSource {
                     )
                 }
             }
-
+            
             // Local Points Collection
             /// LPC merchants won't have auth fields returned in the API response; instead we get them from remote config
             /// Add them to the fields here. Their values will never be sent to Bink in the POST request.
@@ -359,7 +359,7 @@ extension FormDataSource {
                 lpcAuthFields.forEach { field in
                     guard let fieldType = field.type else { return }
                     guard let fieldCommonName = field.commonName else { return }
-
+                    
                     fields.append(
                         FormField(
                             title: field.column ?? "",
@@ -430,7 +430,7 @@ extension FormDataSource {
                             columnKind: .register,
                             forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
                             fieldCommonName: field.fieldCommonName
-                            )
+                        )
                     )
                 }
             }
@@ -446,7 +446,7 @@ extension FormDataSource {
             let displayFields = field.formattedDisplay
             
             guard displayFields.contains(where: { $0.value == journey.rawValue }) else { return }
-        
+            
             let checkbox = CheckboxView(checked: false)
             
             let url = URL(string: field.url ?? "")
@@ -598,7 +598,7 @@ extension FormDataSource {
         let attributed = NSMutableAttributedString(string: text, attributes: [.font: UIFont.bodyTextSmall])
         let countMinusHyperlinkString = text.count - hyperlink.count
         attributed.addAttributes([.underlineStyle: NSUnderlineStyle.single.rawValue, .foregroundColor: UIColor.blueAccent, .font: UIFont.checkboxText], range: NSMakeRange(countMinusHyperlinkString, hyperlink.count))
-                
+        
         return attributed
     }
 }
