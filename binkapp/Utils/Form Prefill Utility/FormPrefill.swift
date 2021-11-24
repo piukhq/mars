@@ -149,15 +149,15 @@ extension PrefillFormValuesViewController: CoreDataRepositoryProtocol {
     }
 }
 
-protocol PrefilledValuesFormInputAccessoryDelegate: AnyObject {
-    func inputAccessory(_ inputAccessory: PrefilledValuesFormInputAccessory, didSelectValue value: String)
+protocol AutofillFormInputAccessoryDelegate: AnyObject {
+    func inputAccessory(_ inputAccessory: AutofillFormInputAccessory, didSelectValue value: String)
 }
 
-class PrefilledValuesFormInputAccessory: UIToolbar, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class AutofillFormInputAccessory: UIToolbar, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     private let field: FormField
-    private weak var valueDelegate: PrefilledValuesFormInputAccessoryDelegate?
+    private weak var valueDelegate: AutofillFormInputAccessoryDelegate?
     
-    init(field: FormField, delegate: PrefilledValuesFormInputAccessoryDelegate) {
+    init(field: FormField, delegate: AutofillFormInputAccessoryDelegate) {
         self.field = field
         self.valueDelegate = delegate
         super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100))

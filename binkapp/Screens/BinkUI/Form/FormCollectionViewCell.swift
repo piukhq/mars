@@ -241,11 +241,14 @@ class FormCollectionViewCell: UICollectionViewCell {
         textField.autocorrectionType = field.fieldType.autoCorrection()
         textField.autocapitalizationType = field.fieldType.capitalization()
         textField.clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
-        textField.inputAccessoryView = PrefilledValuesFormInputAccessory(field: field, delegate: self)
         textField.accessibilityIdentifier = field.title
         formField = field
         configureTextFieldRightView(shouldDisplay: formField?.value == nil)
         validationLabel.isHidden = textField.text?.isEmpty == true ? true : field.isValid()
+        
+        if Current.userDefaults.bool(forDefaultsKey: .rememberMyDetails) {
+            textField.inputAccessoryView = AutofillFormInputAccessory(field: field, delegate: self)
+        }
         
         if case let .expiry(months, years) = field.fieldType {
             textField.inputView = FormMultipleChoiceInput(with: [months, years], delegate: self)
@@ -426,8 +429,8 @@ extension FormCollectionViewCell: FormMultipleChoiceInputDelegate {
     }
 }
 
-extension FormCollectionViewCell: PrefilledValuesFormInputAccessoryDelegate {
-    func inputAccessory(_ inputAccessory: PrefilledValuesFormInputAccessory, didSelectValue value: String) {
+extension FormCollectionViewCell: AutofillFormInputAccessoryDelegate {
+    func inputAccessory(_ inputAccessory: AutofillFormInputAccessory, didSelectValue value: String) {
         formField?.updateValue(value)
         textField.text = value
     }
