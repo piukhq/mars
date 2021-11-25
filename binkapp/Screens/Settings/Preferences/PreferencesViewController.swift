@@ -90,9 +90,13 @@ class PreferencesViewController: BinkViewController {
         }
     }
     
-    @IBAction func clearCredentialsButtonTapped(_ sender: Any) {
+    func clearStoredCredentials() {
+        Current.userDefaults.set(nil, forDefaultsKey: .autofillFormValues)
     }
     
+    @IBAction func clearCredentialsButtonTapped(_ sender: Any) {
+        clearStoredCredentials()
+    }
 }
 
 extension PreferencesViewController: CheckboxViewDelegate {
@@ -108,9 +112,8 @@ extension PreferencesViewController: CheckboxViewDelegate {
         let dictionary = [columnName: checkboxState]
         
         if column == "Remember my details" && value == "false" {
-            let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: "Clear stored credentials", message: "Would you like to also remove stored credentials from this device?", cancelButton: true) {
-                // TODO: - Clear credentials
-                print("Credentials cleared")
+            let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: "Clear stored credentials", message: "Would you like to also remove stored credentials from this device?", cancelButton: true) { [weak self] in
+                self?.clearStoredCredentials()
             }
             let navigationRequest = AlertNavigationRequest(alertController: alert)
             Current.navigate.to(navigationRequest)
