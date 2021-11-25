@@ -211,32 +211,33 @@ class AuthAndAddViewModel {
     private func storeAutofillValues(formfields: [FormField]) {
         let keychain = Keychain(service: APIConstants.bundleID)
         let keychainKey = "autofill_values"
-        var persistedAutofillDictionary: [String: [String]]?
+        var autofillDictionary: [String: [String]] = [:]
         
         if let autofillDataFromKeychain = try? keychain.getData(keychainKey) {
-            persistedAutofillDictionary = try? JSONDecoder().decode([String: [String]].self, from: autofillDataFromKeychain)
+            if let decodedAutofillValues = try? JSONDecoder().decode([String: [String]].self, from: autofillDataFromKeychain) {
+                autofillDictionary = decodedAutofillValues
+            }
         }
         
-        var newAutofillDictionary: [String: [String]] = persistedAutofillDictionary ?? [:]
         let formFieldValuesDictionary = currentFormFieldValues(formfields)
         
         for key in formFieldValuesDictionary.keys {
             /// If the key already exists in the autofill values, append the new value if unique
-            if var autofillValuesArray = newAutofillDictionary[key] {
+            if var autofillValuesArray = autofillDictionary[key] {
                 if let currentFieldValue = formFieldValuesDictionary[key], !autofillValuesArray.contains(currentFieldValue) {
                     autofillValuesArray.append(currentFieldValue)
-                    newAutofillDictionary[key] = autofillValuesArray
+                    autofillDictionary[key] = autofillValuesArray
                 }
             } else {
                 /// If the key doesn't exist, add it
                 if let value = formFieldValuesDictionary[key] {
-                    newAutofillDictionary[key] = [value]
+                    autofillDictionary[key] = [value]
                 }
             }
         }
         
-        print("AUTOFILL: \(newAutofillDictionary)")
-        if let autofillData = try? JSONEncoder().encode(newAutofillDictionary) {
+        print("AUTOFILL: \(autofillDictionary)")
+        if let autofillData = try? JSONEncoder().encode(autofillDictionary) {
             try? keychain.set(autofillData, key: keychainKey)
         }
     }
