@@ -6,6 +6,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
+import KeychainAccess
 import UIKit
 
 class PreferencesViewController: BinkViewController {
@@ -91,7 +92,8 @@ class PreferencesViewController: BinkViewController {
     }
     
     func clearStoredCredentials() {
-        Current.userDefaults.set(nil, forDefaultsKey: .autofillFormValues)
+        let keychain = Keychain(service: APIConstants.bundleID)
+        try? keychain.remove("autofill_values")
     }
     
     @IBAction func clearCredentialsButtonTapped(_ sender: Any) {

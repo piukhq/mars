@@ -6,6 +6,7 @@
 //  Copyright © 2021 Bink. All rights reserved.
 //
 
+import KeychainAccess
 import UIKit
 
 protocol AutofillFormInputAccessoryDelegate: AnyObject {
@@ -68,8 +69,12 @@ class AutofillFormInputAccessory: UIToolbar {
     
     var autofillValues: [String]? {
         var autofillDictionary: [String: [String]] = [:]
-        if let storedAutofillDict = Current.userDefaults.value(forDefaultsKey: .autofillFormValues) as? [String: [String]] {
-            autofillDictionary = storedAutofillDict
+
+        let keychain = Keychain(service: APIConstants.bundleID)
+        if let storedAutofillData = try? keychain.getData("autofill_values") {
+            if let decodedAutofillData = try? JSONDecoder().decode([String: [String]].self, from: storedAutofillData) {
+                autofillDictionary = decodedAutofillData
+            }
         }
         
         if let userEmail = Current.userManager.currentEmailAddress {

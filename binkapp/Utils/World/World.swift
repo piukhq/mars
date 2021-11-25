@@ -72,7 +72,6 @@ extension UserDefaults: BinkUserDefaults {
         case hasSupportUpdates
         case featureFlags
         case skippedRecommendedVersions
-        case autofillFormValues
         case lpcDebugMode
         case hasCurrentUser
         case installedWidgetIds
@@ -112,8 +111,6 @@ extension UserDefaults: BinkUserDefaults {
                 return "featureFlags"
             case .skippedRecommendedVersions:
                 return "skippedRecommendedVersions"
-            case .autofillFormValues:
-                return "autofillFormValues"
             case .lpcDebugMode:
                 return "lpcDebugMode"
             case .hasCurrentUser:

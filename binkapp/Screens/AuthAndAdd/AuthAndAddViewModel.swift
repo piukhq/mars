@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KeychainAccess
 import UIKit
 
 enum FieldType {
@@ -208,7 +209,14 @@ class AuthAndAddViewModel {
     }
     
     private func storeAutofillValues(formfields: [FormField]) {
-        let persistedAutofillDictionary = Current.userDefaults.value(forDefaultsKey: .autofillFormValues) as? [String: [String]]
+        let keychain = Keychain(service: APIConstants.bundleID)
+        let keychainKey = "autofill_values"
+        var persistedAutofillDictionary: [String: [String]]?
+        
+        if let autofillDataFromKeychain = try? keychain.getData(keychainKey) {
+            persistedAutofillDictionary = try? JSONDecoder().decode([String: [String]].self, from: autofillDataFromKeychain)
+        }
+        
         var newAutofillDictionary: [String: [String]] = persistedAutofillDictionary ?? [:]
         let formFieldValuesDictionary = currentFormFieldValues(formfields)
         
@@ -228,7 +236,9 @@ class AuthAndAddViewModel {
         }
         
         print("AUTOFILL: \(newAutofillDictionary)")
-        Current.userDefaults.set(newAutofillDictionary, forDefaultsKey: .autofillFormValues)
+        if let autofillData = try? JSONEncoder().encode(newAutofillDictionary) {
+            try? keychain.set(autofillData, key: keychainKey)
+        }
     }
     
     private func currentFormFieldValues(_ formfields: [FormField]) -> [String: String] {
