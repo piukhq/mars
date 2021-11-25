@@ -261,6 +261,7 @@
 "preferences_marketing_checkbox" = "Receive marketing messages";
 "preferences_retrieve_fail" = "Cannot retrieve your preferences at the moment. Please try again later.";
 "preferences_update_fail" = "We can't update your preferences at the moment. Please try again later.";
+"preferences_clear_credentials" = "Clear Stored Credentials";
 
 // MARK: - Buttons
 "login_with_email_button" = "Continue with Email";

@@ -574,6 +574,8 @@ internal enum L10n {
   internal static let ppolicyLink = L10n.tr("Localizable", "ppolicy_link")
   /// I accept Bink's Privacy Policy
   internal static let ppolicyTitle = L10n.tr("Localizable", "ppolicy_title")
+  /// Clear Stored Credentials
+  internal static let preferencesClearCredentials = L10n.tr("Localizable", "preferences_clear_credentials")
   /// Receive marketing messages
   internal static let preferencesMarketingCheckbox = L10n.tr("Localizable", "preferences_marketing_checkbox")
   /// Make sure you’re the first to know about available rewards, offers and updates!\nYou can opt out at any time.

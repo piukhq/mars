@@ -12,6 +12,7 @@ class PreferencesViewController: BinkViewController {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var stackView: UIStackView!
+    @IBOutlet private weak var clearCredentialsButton: UIButton!
     @IBOutlet private weak var errorLabel: UILabel!
     
     private let viewModel: PreferencesViewModel
@@ -46,6 +47,12 @@ class PreferencesViewController: BinkViewController {
         
         errorLabel.font = UIFont.bodyTextSmall
         errorLabel.textColor = .red
+        
+        let clearCredentialsAttributedString = NSAttributedString(string: L10n.preferencesClearCredentials, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent])
+        let clearCredentialsAttributedStringHighlighted = NSAttributedString(string: L10n.preferencesClearCredentials, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent.withAlphaComponent(0.5)])
+
+        clearCredentialsButton.setAttributedTitle(clearCredentialsAttributedString, for: .normal)
+        clearCredentialsButton.setAttributedTitle(clearCredentialsAttributedStringHighlighted, for: .highlighted)
         
         let attributedString = NSMutableAttributedString(string: L10n.preferencesScreenDescription, attributes: [.font: UIFont.bodyTextLarge])
         let base = NSString(string: attributedString.string)
@@ -82,6 +89,10 @@ class PreferencesViewController: BinkViewController {
             checkboxes.append(checkboxView)
         }
     }
+    
+    @IBAction func clearCredentialsButtonTapped(_ sender: Any) {
+    }
+    
 }
 
 extension PreferencesViewController: CheckboxViewDelegate {
@@ -98,7 +109,7 @@ extension PreferencesViewController: CheckboxViewDelegate {
         
         if column == "Remember my details" && value == "false" {
             let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: "Clear stored credentials", message: "Would you like to also remove stored credentials from this device?", cancelButton: true) {
-                // Clear credentials
+                // TODO: - Clear credentials
                 print("Credentials cleared")
             }
             let navigationRequest = AlertNavigationRequest(alertController: alert)
