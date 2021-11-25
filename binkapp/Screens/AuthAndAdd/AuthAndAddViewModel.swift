@@ -208,39 +208,39 @@ class AuthAndAddViewModel {
     }
     
     private func storeAutofillValues(formfields: [FormField]) {
-        let persistedPrefillValues = Current.userDefaults.value(forDefaultsKey: .autofillFormValues) as? [String: [String]]
-        var newPrefillValues: [String: [String]] = persistedPrefillValues ?? [:]
-        let fieldValues = currentFieldValues(formfields: formfields)
+        let persistedAutofillDictionary = Current.userDefaults.value(forDefaultsKey: .autofillFormValues) as? [String: [String]]
+        var newAutofillDictionary: [String: [String]] = persistedAutofillDictionary ?? [:]
+        let formFieldValuesDictionary = currentFormFieldValues(formfields)
         
-        for key in fieldValues.keys {
-            /// If the key already exists in the prefilled values, append the new value if unique
-            if var object = newPrefillValues[key] {
-                if let value = fieldValues[key], !object.contains(value) {
-                    object.append(value)
-                    newPrefillValues[key] = object
+        for key in formFieldValuesDictionary.keys {
+            /// If the key already exists in the autofill values, append the new value if unique
+            if var autofillValuesArray = newAutofillDictionary[key] {
+                if let currentFieldValue = formFieldValuesDictionary[key], !autofillValuesArray.contains(currentFieldValue) {
+                    autofillValuesArray.append(currentFieldValue)
+                    newAutofillDictionary[key] = autofillValuesArray
                 }
             } else {
                 /// If the key doesn't exist, add it
-                if let value = fieldValues[key] {
-                    newPrefillValues[key] = [value]
+                if let value = formFieldValuesDictionary[key] {
+                    newAutofillDictionary[key] = [value]
                 }
             }
         }
         
-        print("PREFILL: \(newPrefillValues)")
-        Current.userDefaults.set(newPrefillValues, forDefaultsKey: .autofillFormValues)
+        print("AUTOFILL: \(newAutofillDictionary)")
+        Current.userDefaults.set(newAutofillDictionary, forDefaultsKey: .autofillFormValues)
     }
     
-    private func currentFieldValues(formfields: [FormField]) -> [String: String] {
-        var values: [String: String] = [:]
+    private func currentFormFieldValues(_ formfields: [FormField]) -> [String: String] {
+        var currentFormFieldValuesDictionary: [String: String] = [:]
         let autofillCategories = ["first name", "last name", "email", "phone", "date of birth"]
         
         for field in formfields {
             if autofillCategories.contains(field.title.lowercased()) {
-                values[field.title.lowercased()] = field.value
+                currentFormFieldValuesDictionary[field.title.lowercased()] = field.value
             }
         }
-        return values
+        return currentFormFieldValuesDictionary
     }
     
     private func addGhostCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, existingMembershipCard: CD_MembershipCard?) throws {
