@@ -67,23 +67,25 @@ class AutofillFormInputAccessory: UIToolbar {
     }
     
     var autofillValues: [String]? {
-        var autofillDictionary = Current.userDefaults.value(forDefaultsKey: .autofillFormValues) as? [String: [String]]
+        var autofillDictionary: [String: [String]] = [:]
+        if let storedAutofillDict = Current.userDefaults.value(forDefaultsKey: .autofillFormValues) as? [String: [String]] {
+            autofillDictionary = storedAutofillDict
+        }
         
         if let userEmail = Current.userManager.currentEmailAddress {
             /// If the email key already exists, append user email if unique
-            if field.title == "Email", var storedEmailAddresses = autofillDictionary?["email"] {
+            if field.title == "Email", var storedEmailAddresses = autofillDictionary["email"] {
                 if !storedEmailAddresses.contains(userEmail) {
                     storedEmailAddresses.append(userEmail)
-                    autofillDictionary?["email"] = storedEmailAddresses
+                    autofillDictionary["email"] = storedEmailAddresses
                 }
             } else {
                 /// If the key doesn't exist, add it
-                // TODO: - TEST -> WILL THIS CREATE ENTRY OR DO WE NEED TO CREATE EMPTY AUTOFILL DICT FIRST - optional chaining may fail
-                autofillDictionary?["email"] = [userEmail]
+                autofillDictionary["email"] = [userEmail]
             }
         }
 
-        return autofillDictionary?[field.title.lowercased()]?.sorted()
+        return autofillDictionary[field.title.lowercased()]?.sorted()
     }
     
     private func configure() {
