@@ -14,21 +14,6 @@ protocol AutofillFormInputAccessoryDelegate: AnyObject {
 }
 
 class AutofillFormInputAccessory: UIToolbar {
-    private let field: FormField
-    private weak var autofillDelegate: AutofillFormInputAccessoryDelegate?
-    
-    init(field: FormField, delegate: AutofillFormInputAccessoryDelegate) {
-        self.field = field
-        self.autofillDelegate = delegate
-        super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100))
-        sizeToFit()
-        configure()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     lazy var collectionViewLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -66,8 +51,37 @@ class AutofillFormInputAccessory: UIToolbar {
         return stackview
     }()
     
+    private let field: FormField
+    private weak var autofillDelegate: AutofillFormInputAccessoryDelegate?
+    
+    init(field: FormField, delegate: AutofillFormInputAccessoryDelegate) {
+        self.field = field
+        self.autofillDelegate = delegate
+        super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100))
+        sizeToFit()
+        configure()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     var autofillValues: [String]? {
-        let autofillValues = Current.userDefaults.value(forDefaultsKey: .autofillFormValues) as? [String: [String]]
+        var autofillValues = Current.userDefaults.value(forDefaultsKey: .autofillFormValues) as? [String: [String]]
+        
+        if let userEmail = Current.userManager.currentEmailAddress {
+            /// If the email key already exists, append user email if unique
+            if field.title == "Email", var storedEmailAddresses = autofillValues?["email"] {
+                if !storedEmailAddresses.contains(userEmail) {
+                    storedEmailAddresses.append(userEmail)
+                    autofillValues?["email"] = storedEmailAddresses
+                }
+            } else {
+                /// If the key doesn't exist, add it
+                autofillValues?["email"] = [userEmail]
+            }
+        }
+
         return autofillValues?[field.title.lowercased()]?.sorted()
     }
     
