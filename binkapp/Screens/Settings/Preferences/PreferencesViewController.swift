@@ -95,6 +95,15 @@ extension PreferencesViewController: CheckboxViewDelegate {
         
         let checkboxState = value == "true" ? "1" : "0"
         let dictionary = [columnName: checkboxState]
+        
+        if column == "Remember my details" && value == "false" {
+            let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: "Clear stored credentials", message: "Would you like to also remove stored credentials from this device?", cancelButton: true) {
+                // Clear credentials
+                print("Credentials cleared")
+            }
+            let navigationRequest = AlertNavigationRequest(alertController: alert)
+            Current.navigate.to(navigationRequest)
+        }
 
         viewModel.putPreferences(preferences: dictionary, onSuccess: { [weak self] in
             self?.errorLabel.isHidden = true
