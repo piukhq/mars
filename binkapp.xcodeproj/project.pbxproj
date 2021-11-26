@@ -314,7 +314,7 @@
 		CE990E13261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */; };
 		CEA0E1E1274E35DE00CC2FC6 /* RecommendedVersionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E1E0274E35DE00CC2FC6 /* RecommendedVersionUtil.swift */; };
 		CEA0E1E3274E9CAD00CC2FC6 /* AutofillFormInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E1E2274E9CAD00CC2FC6 /* AutofillFormInputCell.swift */; };
-		CEA0E1E82750E04500CC2FC6 /* Autofill.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E1E72750E04500CC2FC6 /* Autofill.swift */; };
+		CEA0E1E82750E04500CC2FC6 /* AutofillUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E1E72750E04500CC2FC6 /* AutofillUtil.swift */; };
 		CEA16EC526249C6300D449E1 /* BarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA16EC426249C6300D449E1 /* BarcodeView.swift */; };
 		CEA16ED62624B0EE00D449E1 /* BarcodeViewWide.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA16ED52624B0EE00D449E1 /* BarcodeViewWide.swift */; };
 		CEA16EE02625879B00D449E1 /* BarcodeViewCompact.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA16EDF2625879B00D449E1 /* BarcodeViewCompact.xib */; };
@@ -915,7 +915,7 @@
 		CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_1_LoyaltyCards.swift; sourceTree = "<group>"; };
 		CEA0E1E0274E35DE00CC2FC6 /* RecommendedVersionUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendedVersionUtil.swift; path = "binkapp/Utils/Remote Config/RecommendedVersionUtil.swift"; sourceTree = SOURCE_ROOT; };
 		CEA0E1E2274E9CAD00CC2FC6 /* AutofillFormInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillFormInputCell.swift; sourceTree = "<group>"; };
-		CEA0E1E72750E04500CC2FC6 /* Autofill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autofill.swift; sourceTree = "<group>"; };
+		CEA0E1E72750E04500CC2FC6 /* AutofillUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillUtil.swift; sourceTree = "<group>"; };
 		CEA16EC426249C6300D449E1 /* BarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeView.swift; sourceTree = "<group>"; };
 		CEA16ED52624B0EE00D449E1 /* BarcodeViewWide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewWide.swift; sourceTree = "<group>"; };
 		CEA16EDF2625879B00D449E1 /* BarcodeViewCompact.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BarcodeViewCompact.xib; sourceTree = "<group>"; };
@@ -1938,7 +1938,7 @@
 			children = (
 				70FDBD73264E7C6D00DC8DB3 /* AutofillFormInputAccessory.swift */,
 				CEA0E1E2274E9CAD00CC2FC6 /* AutofillFormInputCell.swift */,
-				CEA0E1E72750E04500CC2FC6 /* Autofill.swift */,
+				CEA0E1E72750E04500CC2FC6 /* AutofillUtil.swift */,
 			);
 			path = Autofill;
 			sourceTree = "<group>";
@@ -3764,7 +3764,7 @@
 				BDB0187E232E1FC800BFFA18 /* PaymentCardType.swift in Sources */,
 				B774E9AA233123BD006D4131 /* ReusableTemplateViewController.swift in Sources */,
 				3CB6BF7223141CF400B74882 /* AuthAndAddViewController.swift in Sources */,
-				CEA0E1E82750E04500CC2FC6 /* Autofill.swift in Sources */,
+				CEA0E1E82750E04500CC2FC6 /* AutofillUtil.swift in Sources */,
 				EFA5F7112379A7C70027AB80 /* CD_MembershipPlanAccount.swift in Sources */,
 				EFB055A623F453C400D64F86 /* PLRStampView.swift in Sources */,
 				CE85A1D826B0096B003B74CD /* UniversalLinkUtility.swift in Sources */,

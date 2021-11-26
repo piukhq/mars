@@ -261,7 +261,11 @@
 "preferences_marketing_checkbox" = "Receive marketing messages";
 "preferences_retrieve_fail" = "Cannot retrieve your preferences at the moment. Please try again later.";
 "preferences_update_fail" = "We can't update your preferences at the moment. Please try again later.";
-"preferences_clear_credentials" = "Clear Stored Credentials";
+"preferences_clear_credentials_title" = "Clear Stored Credentials";
+"preferences_clear_credentials_body" = "Would you like to also remove stored credentials from this device?";
+"preferences_clear_credentials_success_title" = "Success";
+"preferences_clear_credentials_success_body" = "Your stored credentials have been deleted";
+"preferences_clear_credentials_error" = "There was a problem deleting your credentials, please try again";
 
 // MARK: - Buttons
 "login_with_email_button" = "Continue with Email";

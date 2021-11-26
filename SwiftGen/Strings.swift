@@ -574,8 +574,16 @@ internal enum L10n {
   internal static let ppolicyLink = L10n.tr("Localizable", "ppolicy_link")
   /// I accept Bink's Privacy Policy
   internal static let ppolicyTitle = L10n.tr("Localizable", "ppolicy_title")
+  /// Would you like to also remove stored credentials from this device?
+  internal static let preferencesClearCredentialsBody = L10n.tr("Localizable", "preferences_clear_credentials_body")
+  /// There was a problem deleting your credentials, please try again
+  internal static let preferencesClearCredentialsError = L10n.tr("Localizable", "preferences_clear_credentials_error")
+  /// Your stored credentials have been deleted
+  internal static let preferencesClearCredentialsSuccessBody = L10n.tr("Localizable", "preferences_clear_credentials_success_body")
+  /// Success
+  internal static let preferencesClearCredentialsSuccessTitle = L10n.tr("Localizable", "preferences_clear_credentials_success_title")
   /// Clear Stored Credentials
-  internal static let preferencesClearCredentials = L10n.tr("Localizable", "preferences_clear_credentials")
+  internal static let preferencesClearCredentialsTitle = L10n.tr("Localizable", "preferences_clear_credentials_title")
   /// Receive marketing messages
   internal static let preferencesMarketingCheckbox = L10n.tr("Localizable", "preferences_marketing_checkbox")
   /// Make sure you’re the first to know about available rewards, offers and updates!\nYou can opt out at any time.

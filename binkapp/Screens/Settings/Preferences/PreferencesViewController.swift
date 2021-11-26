@@ -49,8 +49,8 @@ class PreferencesViewController: BinkViewController {
         errorLabel.font = UIFont.bodyTextSmall
         errorLabel.textColor = .red
         
-        let clearCredentialsAttributedString = NSAttributedString(string: L10n.preferencesClearCredentials, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent])
-        let clearCredentialsAttributedStringHighlighted = NSAttributedString(string: L10n.preferencesClearCredentials, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent.withAlphaComponent(0.5)])
+        let clearCredentialsAttributedString = NSAttributedString(string: L10n.preferencesClearCredentialsTitle, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent])
+        let clearCredentialsAttributedStringHighlighted = NSAttributedString(string: L10n.preferencesClearCredentialsTitle, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent.withAlphaComponent(0.5)])
 
         clearCredentialsButton.setAttributedTitle(clearCredentialsAttributedString, for: .normal)
         clearCredentialsButton.setAttributedTitle(clearCredentialsAttributedStringHighlighted, for: .highlighted)
@@ -94,10 +94,10 @@ class PreferencesViewController: BinkViewController {
     func clearStoredCredentials() {
         var alert: BinkAlertController
         do {
-            try Autofill.clearKeychain()
-            alert = ViewControllerFactory.makeOkAlertViewController(title: "Success", message: "Your stored credentials have been deleted")
+            try AutofillUtil.clearKeychain()
+            alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.preferencesClearCredentialsSuccessTitle, message: L10n.preferencesClearCredentialsSuccessBody)
         } catch {
-            alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: "There was a problem deleting your credentials, please try again")
+            alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: L10n.preferencesClearCredentialsError)
         }
         
         let navigationRequest = AlertNavigationRequest(alertController: alert)
@@ -121,8 +121,8 @@ extension PreferencesViewController: CheckboxViewDelegate {
         let checkboxState = value == "true" ? "1" : "0"
         let dictionary = [columnName: checkboxState]
         
-        if columnName == Autofill.slug && value == "false" {
-            let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: "Clear stored credentials", message: "Would you like to also remove stored credentials from this device?", cancelButton: true) { [weak self] in
+        if columnName == AutofillUtil.slug && value == "false" {
+            let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: L10n.preferencesClearCredentialsTitle, message: L10n.preferencesClearCredentialsBody, cancelButton: true) { [weak self] in
                 self?.clearStoredCredentials()
             }
             let navigationRequest = AlertNavigationRequest(alertController: alert)
@@ -131,7 +131,7 @@ extension PreferencesViewController: CheckboxViewDelegate {
 
         viewModel.putPreferences(preferences: dictionary, onSuccess: { [weak self] in
             self?.errorLabel.isHidden = true
-            if let _ = dictionary[Autofill.slug] {
+            if let _ = dictionary[AutofillUtil.slug] {
                 Current.userDefaults.set(Bool(value), forDefaultsKey: .rememberMyDetails)
             }
         }) { [weak self] _ in

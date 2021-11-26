@@ -68,18 +68,18 @@ class AutofillFormInputAccessory: UIToolbar {
     }
     
     var autofillValues: [String]? {
-        var autofillDictionary: [String: [String]] = Autofill.storedDataFromKeychain() ?? [:]
+        var autofillDictionary: [String: [String]] = AutofillUtil.storedDataFromKeychain() ?? [:]
         
         if let userEmail = Current.userManager.currentEmailAddress {
             /// If the email key already exists, append user email if unique
-            if field.title.lowercased() == Autofill.email, var storedEmailAddresses = autofillDictionary[Autofill.email] {
+            if field.title.lowercased() == AutofillUtil.email, var storedEmailAddresses = autofillDictionary[AutofillUtil.email] {
                 if !storedEmailAddresses.contains(userEmail) {
                     storedEmailAddresses.append(userEmail)
-                    autofillDictionary[Autofill.email] = storedEmailAddresses
+                    autofillDictionary[AutofillUtil.email] = storedEmailAddresses
                 }
             } else {
                 /// If the key doesn't exist, add it
-                autofillDictionary[Autofill.email] = [userEmail]
+                autofillDictionary[AutofillUtil.email] = [userEmail]
             }
         }
 

@@ -1,5 +1,5 @@
 //
-//  AutofillUtility.swift
+//  AutofillUtil.swift
 //  binkapp
 //
 //  Created by Sean Williams on 26/11/2021.
@@ -9,7 +9,7 @@
 import Foundation
 import KeychainAccess
 
-enum Autofill {
+enum AutofillUtil {
     static let keychain = Keychain(service: APIConstants.bundleID)
     static let keychainKey = "autofill_values"
     static let slug = "remember-my-details"
@@ -17,7 +17,7 @@ enum Autofill {
     static let categories = ["first name", "last name", "email", "phone", "date of birth"]
     
     static func storedDataFromKeychain() -> [String: [String]]? {
-        if let autofillDataFromKeychain = try? keychain.getData(Autofill.keychainKey) {
+        if let autofillDataFromKeychain = try? keychain.getData(keychainKey) {
             if let decodedAutofillValues = try? JSONDecoder().decode([String: [String]].self, from: autofillDataFromKeychain) {
                 return decodedAutofillValues
             }
@@ -27,7 +27,7 @@ enum Autofill {
     
     static func save(_ autofillDict: [String: [String]]) {
         if let autofillData = try? JSONEncoder().encode(autofillDict) {
-            try? keychain.set(autofillData, key: Autofill.keychainKey)
+            try? keychain.set(autofillData, key: keychainKey)
         }
     }
     

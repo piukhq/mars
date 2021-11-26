@@ -161,7 +161,7 @@ class AuthAndAddViewModel {
         BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardRequest(request: model, formPurpose: formPurpose))
         let scrapingCredentials = Current.pointsScrapingManager.makeCredentials(fromFormFields: formFields, membershipPlanId: membershipPlan.id)
         
-        if let rememberMyDetailsCheckbox = checkboxes?.first(where: { $0.columnName == "remember-my-details" }) {
+        if let rememberMyDetailsCheckbox = checkboxes?.first(where: { $0.columnName == AutofillUtil.slug }) {
             setUserPreference(checkbox: rememberMyDetailsCheckbox)
             
             if rememberMyDetailsCheckbox.value == "1" {
@@ -209,7 +209,7 @@ class AuthAndAddViewModel {
     }
     
     private func storeAutofillValues(formfields: [FormField]) {
-        var autofillDictionary: [String: [String]] = Autofill.storedDataFromKeychain() ?? [:]
+        var autofillDictionary: [String: [String]] = AutofillUtil.storedDataFromKeychain() ?? [:]
         let formFieldValuesDictionary = currentFormFieldValues(formfields)
         
         for key in formFieldValuesDictionary.keys {
@@ -228,14 +228,14 @@ class AuthAndAddViewModel {
         }
         
         print("AUTOFILL: \(autofillDictionary)")
-        Autofill.save(autofillDictionary)
+        AutofillUtil.save(autofillDictionary)
     }
     
     private func currentFormFieldValues(_ formfields: [FormField]) -> [String: String] {
         var currentFormFieldValuesDictionary: [String: String] = [:]
         
         for field in formfields {
-            if Autofill.categories.contains(field.title.lowercased()) {
+            if AutofillUtil.categories.contains(field.title.lowercased()) {
                 currentFormFieldValuesDictionary[field.title.lowercased()] = field.value
             }
         }
