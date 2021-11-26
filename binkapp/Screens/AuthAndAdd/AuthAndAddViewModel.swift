@@ -209,16 +209,7 @@ class AuthAndAddViewModel {
     }
     
     private func storeAutofillValues(formfields: [FormField]) {
-        let keychain = Keychain(service: APIConstants.bundleID)
-        let keychainKey = "autofill_values"
-        var autofillDictionary: [String: [String]] = [:]
-        
-        if let autofillDataFromKeychain = try? keychain.getData(keychainKey) {
-            if let decodedAutofillValues = try? JSONDecoder().decode([String: [String]].self, from: autofillDataFromKeychain) {
-                autofillDictionary = decodedAutofillValues
-            }
-        }
-        
+        var autofillDictionary: [String: [String]] = Autofill.storedDataFromKeychain() ?? [:]
         let formFieldValuesDictionary = currentFormFieldValues(formfields)
         
         for key in formFieldValuesDictionary.keys {
@@ -237,17 +228,14 @@ class AuthAndAddViewModel {
         }
         
         print("AUTOFILL: \(autofillDictionary)")
-        if let autofillData = try? JSONEncoder().encode(autofillDictionary) {
-            try? keychain.set(autofillData, key: keychainKey)
-        }
+        Autofill.save(autofillDictionary)
     }
     
     private func currentFormFieldValues(_ formfields: [FormField]) -> [String: String] {
         var currentFormFieldValuesDictionary: [String: String] = [:]
-        let autofillCategories = ["first name", "last name", "email", "phone", "date of birth"]
         
         for field in formfields {
-            if autofillCategories.contains(field.title.lowercased()) {
+            if Autofill.categories.contains(field.title.lowercased()) {
                 currentFormFieldValuesDictionary[field.title.lowercased()] = field.value
             }
         }

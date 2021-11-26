@@ -92,8 +92,16 @@ class PreferencesViewController: BinkViewController {
     }
     
     func clearStoredCredentials() {
-        let keychain = Keychain(service: APIConstants.bundleID)
-        try? keychain.remove("autofill_values")
+        var alert: BinkAlertController
+        do {
+            try Autofill.clearKeychain()
+            alert = ViewControllerFactory.makeOkAlertViewController(title: "Success", message: "Your stored credentials have been deleted")
+        } catch {
+            alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: "There was a problem deleting your credentials, please try again")
+        }
+        
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
     }
     
     @IBAction func clearCredentialsButtonTapped(_ sender: Any) {
@@ -113,7 +121,7 @@ extension PreferencesViewController: CheckboxViewDelegate {
         let checkboxState = value == "true" ? "1" : "0"
         let dictionary = [columnName: checkboxState]
         
-        if column == "Remember my details" && value == "false" {
+        if columnName == Autofill.slug && value == "false" {
             let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: "Clear stored credentials", message: "Would you like to also remove stored credentials from this device?", cancelButton: true) { [weak self] in
                 self?.clearStoredCredentials()
             }
@@ -123,7 +131,7 @@ extension PreferencesViewController: CheckboxViewDelegate {
 
         viewModel.putPreferences(preferences: dictionary, onSuccess: { [weak self] in
             self?.errorLabel.isHidden = true
-            if let _ = dictionary["remember-my-details"] {
+            if let _ = dictionary[Autofill.slug] {
                 Current.userDefaults.set(Bool(value), forDefaultsKey: .rememberMyDetails)
             }
         }) { [weak self] _ in
