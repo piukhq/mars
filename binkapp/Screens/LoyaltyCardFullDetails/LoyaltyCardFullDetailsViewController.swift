@@ -431,10 +431,9 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     private func setPadding(animated: Bool = true) {
-//        view.layoutIfNeeded()
         self.contentAnimationSpacerHeightConstraint.constant = 0
-        UIView.animate(withDuration: animated ? 0.4 : 0) { [weak self] in
-            self?.view.layoutIfNeeded()
+        UIView.animate(withDuration: animated ? 0.4 : 0) {
+            self.view.layoutIfNeeded()
         }
     }
 }
