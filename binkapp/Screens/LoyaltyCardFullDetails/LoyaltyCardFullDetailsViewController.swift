@@ -194,7 +194,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        statusBarStyle
+        statusBarStyle 
     }
 
     override func configureForCurrentTheme() {
