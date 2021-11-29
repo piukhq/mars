@@ -9,7 +9,7 @@
 import Foundation
 import KeychainAccess
 
-enum AutofillUtil {
+class AutofillUtil: UserServiceProtocol {
     static let keychain = Keychain(service: APIConstants.bundleID)
     static let keychainKey = "autofill_values"
     static let slug = "remember-my-details"
@@ -33,5 +33,18 @@ enum AutofillUtil {
     
     static func clearKeychain() throws {
         try keychain.remove(keychainKey)
+    }
+    
+    func configureUserPreferenceFromAPI() {
+        getPreferences { result in
+            switch result {
+            case .success(let preferences):
+                let value = preferences.first(where: { $0.slug == AutofillUtil.slug })?.value
+                let checked: Bool = value == "1"
+                Current.userDefaults.set(checked, forDefaultsKey: .rememberMyDetails)
+            case .failure:
+                break
+            }
+        }
     }
 }

@@ -86,6 +86,10 @@ class PreferencesViewController: BinkViewController {
                 NSMutableAttributedString(string: $0.label ?? "", attributes: [.font: UIFont.bodyTextSmall])
             checkboxView.configure(title: attributedString, columnName: $0.slug ?? "", columnKind: .add, delegate: self)
             
+            if $0.slug == AutofillUtil.slug {
+                Current.userDefaults.set(checked, forDefaultsKey: .rememberMyDetails)
+            }
+            
             stackView.addArrangedSubview(checkboxView)
             checkboxes.append(checkboxView)
         }

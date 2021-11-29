@@ -120,6 +120,8 @@ class UserManager {
         if updateZendeskIdentity {
             ZendeskService.setIdentity(firstName: currentFirstName, lastName: currentLastName)
         }
+        
+        AutofillUtil().configureUserPreferenceFromAPI()
     }
     
     private func setToken(with response: LoginResponse) throws {
