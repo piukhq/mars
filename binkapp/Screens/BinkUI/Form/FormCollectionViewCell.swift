@@ -302,8 +302,8 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func accessoryDoneTouchUpInside() {
-        if let multipleChoiceInput = textField.inputView as? FormMultipleChoiceInput {
-            multipleChoiceInputDidUpdate(newValue: multipleChoiceInput.fullContentString, backingData: multipleChoiceInput.backingData)
+        if let multipleChoiceInput = textField.inputView as? FormMultipleChoiceInput, let textFieldIsEmpty = textField.text?.isEmpty {
+            multipleChoiceInputDidUpdate(newValue: textFieldIsEmpty ? "" : multipleChoiceInput.fullContentString, backingData: multipleChoiceInput.backingData)
         }
         
         textField.resignFirstResponder()
@@ -399,7 +399,9 @@ extension FormCollectionViewCell: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField.inputView?.isKind(of: FormMultipleChoiceInput.self) ?? false || textField.inputView?.isKind(of: UIDatePicker.self) ?? false {
-            textField.text = pickerSelectedChoice
+            if let multipleChoiceInput = textField.inputView as? FormMultipleChoiceInput {
+                textField.text = (pickerSelectedChoice?.isEmpty ?? false) ? multipleChoiceInput.fullContentString : pickerSelectedChoice
+            }
         }
         
         setState(.active)
