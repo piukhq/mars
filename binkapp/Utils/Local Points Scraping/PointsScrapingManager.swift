@@ -337,6 +337,8 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
     }
     
     private func transitionToAuthorized(pointsValue: Int, item: QueuedItem, agent: LocalPointsCollectable) {
+        MixpanelUtility.track(.localPointsCollectionSuccess(brandName: item.card.membershipPlan?.account?.companyName ?? "Unknown"))
+        
         fetchMembershipCard(forId: item.card.id) { membershipCard in
             guard let membershipCard = membershipCard else {
                 fatalError("We should never get here. If we passed in a correct membership card id, we should get a card back.")
@@ -475,6 +477,8 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
         if #available(iOS 14.0, *) {
             BinkLogger.error(WalletLoggerError.pointsScrapingFailure, value: error.message)
         }
+        
+        MixpanelUtility.track(.localPointsCollectionFailure(brandName: item.card.membershipPlan?.account?.companyName ?? "Unknown", reason: error.message))
         
         transitionToFailed(item: item)
     }

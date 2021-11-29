@@ -55,6 +55,8 @@ class AuthAndAddViewController: BaseFormViewController {
         if viewModel.shouldRemoveScannerFromStack {
             navigationController?.removeViewControllerBehind(self, ifViewControllerBehindIsOfType: BarcodeScannerViewController.self)
         }
+
+        MixpanelUtility.startTimer(for: .loyaltyCardAdd(brandName: nil))
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -360,6 +360,8 @@ extension Wallet {
         /// Sync the local ordering
         localCardsOrder?.remove(at: sourceIndex)
         localCardsOrder?.insert(card.id, at: destinationIndex)
+        
+        MixpanelUtility.track(.cardsManuallyReordered)
     }
 
     private func applyLocalWalletOrder<C: WalletCard>(_ localOrder: inout [String]?, to cards: [C]?, updating walletDataSource: inout [C]?) {

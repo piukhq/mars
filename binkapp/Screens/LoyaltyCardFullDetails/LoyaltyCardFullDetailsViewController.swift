@@ -149,6 +149,8 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         super.viewDidLoad()
         configureUI()
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidUpdate, object: nil)
+        
+        MixpanelUtility.track(.lcdViewed(brandName: viewModel.brandName))
     }
     
     @objc private func handlePointsScrapingUpdate() {
@@ -182,8 +184,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
             requestInAppReview()
         }
     }
-    
-//    2661325368336
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -194,7 +194,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        statusBarStyle
+        statusBarStyle 
     }
 
     override func configureForCurrentTheme() {
