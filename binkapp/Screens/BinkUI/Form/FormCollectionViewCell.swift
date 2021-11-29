@@ -246,7 +246,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         configureTextFieldRightView(shouldDisplay: formField?.value == nil)
         validationLabel.isHidden = textField.text?.isEmpty == true ? true : field.isValid()
         
-        if Current.userDefaults.bool(forDefaultsKey: .rememberMyDetails) {
+        if Current.userDefaults.bool(forDefaultsKey: .rememberMyDetails) || AutofillUtil.hasStoredData {
             textField.inputAccessoryView = AutofillFormInputAccessory(field: field, delegate: self)
         } else {
             textField.inputAccessoryView = inputAccessory

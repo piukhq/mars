@@ -16,6 +16,10 @@ class AutofillUtil: UserServiceProtocol {
     static let email = "email"
     static let categories = ["first name", "last name", "email", "phone", "date of birth"]
     
+    static var hasStoredData: Bool = {
+        return !(storedDataFromKeychain()?.isEmpty ?? false)
+    }()
+    
     static func storedDataFromKeychain() -> [String: [String]]? {
         if let autofillDataFromKeychain = try? keychain.getData(keychainKey) {
             if let decodedAutofillValues = try? JSONDecoder().decode([String: [String]].self, from: autofillDataFromKeychain) {
