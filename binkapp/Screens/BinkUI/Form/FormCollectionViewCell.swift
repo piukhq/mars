@@ -59,7 +59,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     
     /// Contains title label, text field, camera icon and validation icon
     private lazy var fieldContentHStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [fieldLabelsVStack, validationIconImageView])
+        let stackView = UIStackView(arrangedSubviews: [fieldLabelsVStack])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 7, right: 10)
@@ -75,9 +75,9 @@ class FormCollectionViewCell: UICollectionViewCell {
         return stackView
     }()
     
-    /// The view that contains the text field and the camera icon
+    /// The view that contains the text field, camera icon and the validation icon
     private lazy var textFieldHStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [textField, textFieldRightView])
+        let stackView = UIStackView(arrangedSubviews: [textField, textFieldRightView, validationIconImageView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally
@@ -115,6 +115,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             imageView.widthAnchor.constraint(equalToConstant: 20)
         ])
+        imageView.transform = CGAffineTransform(translationX: -6, y: 0)
         imageView.isHidden = true
         return imageView
     }()
