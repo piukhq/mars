@@ -115,7 +115,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             imageView.widthAnchor.constraint(equalToConstant: 20)
         ])
-        imageView.transform = CGAffineTransform(translationX: -6, y: 0)
+        imageView.transform = CGAffineTransform(translationX: -4, y: 0)
         imageView.isHidden = true
         return imageView
     }()
