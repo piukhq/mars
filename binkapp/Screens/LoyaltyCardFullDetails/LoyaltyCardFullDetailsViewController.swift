@@ -182,14 +182,15 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
             requestInAppReview()
         }
     }
-    
-//    2661325368336
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         didLayoutSubviews = true
         if didLayoutSubviews {
-            setPadding(animated: viewModel.shouldAnimateContent)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) { [weak self] in
+                guard let self = self else { return }
+                self.setPadding(animated: self.viewModel.shouldAnimateContent)
+            }
         }
     }
     
@@ -430,7 +431,6 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     private func setPadding(animated: Bool = true) {
-        view.layoutIfNeeded()
         self.contentAnimationSpacerHeightConstraint.constant = 0
         UIView.animate(withDuration: animated ? 0.4 : 0) {
             self.view.layoutIfNeeded()
