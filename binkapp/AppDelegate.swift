@@ -209,12 +209,20 @@ extension AppDelegate: WCSessionDelegate {
     
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         DispatchQueue.main.async {
-            if let _ = message["watch_app_launch"] as? Bool {
+            if let _ = message["refresh_wallet"] {
                 if Current.userManager.hasCurrentUser {
                     Current.watchController.sendWalletCardsToWatch(membershipCards: Current.wallet.membershipCards)
                 } else {
                     Current.watchController.hasCurrentUser(false)
                 }
+            }
+        }
+    }
+    
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
+        DispatchQueue.main.async {
+            if let _ = message["refresh_wallet"] {
+                
             }
         }
     }

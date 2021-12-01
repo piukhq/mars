@@ -10,7 +10,7 @@ import UIKit
 import WatchConnectivity
 
 final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
-    var session: WCSession
+    private var session: WCSession
     
     init(session: WCSession = .default) {
         self.session = session
@@ -23,6 +23,12 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
     @Published var hasCurrentUser = false
     @Published var didSyncWithPhoneOnLaunch = false
     @Published var noResponseFromPhone = false
+    
+    func getwalletData() {
+        session.sendMessage(["refresh_wallet": true], replyHandler: nil) { error in
+            print(error.localizedDescription)
+        }
+    }
     
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         DispatchQueue.main.async { [weak self] in
@@ -79,7 +85,8 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         guard activationState == .activated else { return }
-        WCSession.default.sendMessage(["watch_app_launch": true], replyHandler: nil)
+        getwalletData()
+//        session.sendMessage(["watch_app_launch": true], replyHandler: nil)
     }
 }
 
