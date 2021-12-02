@@ -31,3 +31,11 @@ struct WatchLoyaltyCardIcon: Codable {
     let id: String
     let imageData: Data?
 }
+
+enum WKSessionKey {
+    static let refreshWallet = "refresh_wallet"
+    static let hasCurrentUser = "has_current_user"
+    static let addCard = "add_card"
+    static let deleteCard = "delete_card"
+    static let iconImage = "icon_image"
+}

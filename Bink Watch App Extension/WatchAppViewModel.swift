@@ -25,7 +25,7 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
     @Published var noResponseFromPhone = false
     
     func getwalletData() {
-        session.sendMessage(["refresh_wallet": true], replyHandler: nil) { error in
+        session.sendMessage([WKSessionKey.refreshWallet: true], replyHandler: nil) { error in
             print(error.localizedDescription)
         }
     }
@@ -35,25 +35,25 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
             guard let self = self else { return }
             self.noResponseFromPhone = false
 
-            if let hasCurrentUser = message["has_current_user"] as? Bool {
+            if let hasCurrentUser = message[WKSessionKey.hasCurrentUser] as? Bool {
                 self.hasCurrentUser = hasCurrentUser
                 self.didSyncWithPhoneOnLaunch = true
                 return
             }
             
-            if let cardToAddDict = message["add_card"] as? [String: Any] {
+            if let cardToAddDict = message[WKSessionKey.addCard] as? [String: Any] {
                 if let newCard = try? WatchLoyaltyCard(dictionary: cardToAddDict) {
                     self.cards.insert(newCard, at: 0)
                     return
                 }
             }
             
-            if let barcode = message["delete_card"] as? String, let indexToDelete = self.cards.firstIndex(where: { $0.id == barcode }) {
+            if let barcode = message[WKSessionKey.deleteCard] as? String, let indexToDelete = self.cards.firstIndex(where: { $0.id == barcode }) {
                 self.cards.remove(at: indexToDelete)
                 return
             }
             
-            if let imageDict = message["icon_image"] as? [String: Any] {
+            if let imageDict = message[WKSessionKey.iconImage] as? [String: Any] {
                 if let watchLoyaltyCardIcon = try? WatchLoyaltyCardIcon(dictionary: imageDict) {
                     for (i, var card) in self.cards.enumerated() {
                         if card.id == watchLoyaltyCardIcon.id {
@@ -65,7 +65,7 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
                 }
             }
 
-            guard let cardDictsFromMessage = message["refresh_wallet"] as? [[String: Any]] else { return }
+            guard let cardDictsFromMessage = message[WKSessionKey.refreshWallet] as? [[String: Any]] else { return }
             
             self.cards = cardDictsFromMessage.map({ loyaltyCardDict in
                 if var loyaltyCard = try? WatchLoyaltyCard(dictionary: loyaltyCardDict) {
@@ -86,7 +86,6 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         guard activationState == .activated else { return }
         getwalletData()
-//        session.sendMessage(["watch_app_launch": true], replyHandler: nil)
     }
 }
 

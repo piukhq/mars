@@ -194,22 +194,13 @@ private extension AppDelegate {
 // MARK: - Watch Connectivity
 
 extension AppDelegate: WCSessionDelegate {
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        print("Watch is active")
-        print(session.isReachable)
-    }
-    func sessionDidBecomeInactive(_ session: WCSession) {
-        print("Watch Inactive")
-        print(session.isReachable)
-    }
-    func sessionDidDeactivate(_ session: WCSession) {
-        print("Watch did Deactivate")
-        print(session.isReachable)
-    }
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
+    func sessionDidBecomeInactive(_ session: WCSession) {}
+    func sessionDidDeactivate(_ session: WCSession) {}
     
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         DispatchQueue.main.async {
-            if let _ = message["refresh_wallet"] {
+            if let _ = message[WKSessionKey.refreshWallet] {
                 if Current.userManager.hasCurrentUser {
                     Current.watchController.sendWalletCardsToWatch(membershipCards: Current.wallet.membershipCards)
                 } else {
@@ -217,18 +208,5 @@ extension AppDelegate: WCSessionDelegate {
                 }
             }
         }
-    }
-    
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
-        DispatchQueue.main.async {
-            if let _ = message["refresh_wallet"] {
-                
-            }
-        }
-    }
-    
-    func sessionReachabilityDidChange(_ session: WCSession) {
-        print("Watch reachability didChange")
-        print(session.isReachable)
     }
 }

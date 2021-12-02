@@ -35,7 +35,7 @@ class WatchController {
                 }
             }
             
-            session.sendMessage(["refresh_wallet": watchLoyaltyCardsDictArray], replyHandler: nil)
+            session.sendMessage([WKSessionKey.refreshWallet: watchLoyaltyCardsDictArray], replyHandler: nil)
             completion?()
 
             for card in membershipCards {
@@ -43,7 +43,7 @@ class WatchController {
                 
                 ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil) { [weak self] retrievedImage in
                     if let imageDict = WatchLoyaltyCardIcon(id: card.card?.barcode ?? "", imageData: retrievedImage?.pngData()).dictionary {
-                        self?.session.sendMessage(["icon_image": imageDict], replyHandler: nil)
+                        self?.session.sendMessage([WKSessionKey.iconImage: imageDict], replyHandler: nil)
                     }
                 }
             }
@@ -61,7 +61,7 @@ class WatchController {
                 let balanceString = "\(walletCardViewModel.pointsValueText ?? "") \(walletCardViewModel.pointsValueSuffixText ?? "")"
                 
                 if let object = WatchLoyaltyCard(id: membershipCard.card?.barcode ?? "", companyName: membershipPlan.account?.companyName ?? "", iconImageData: iconImageData, barcodeImageData: barcodeImageData, balanceString: balanceString).dictionary {
-                    session.sendMessage(["add_card": object], replyHandler: nil)
+                    session.sendMessage([WKSessionKey.addCard: object], replyHandler: nil)
                 }
             }
         }
@@ -69,19 +69,18 @@ class WatchController {
     
     func deleteLoyaltyCardFromWatch(barcode: String) {
         if session.isReachable {
-            session.sendMessage(["delete_card": barcode], replyHandler: nil)
+            session.sendMessage([WKSessionKey.deleteCard: barcode], replyHandler: nil)
         }
     }
     
     func hasCurrentUser(_ hasUser: Bool, completion: EmptyCompletionBlock? = nil) {
         if session.isReachable {
-            session.sendMessage(["has_current_user": hasUser], replyHandler: nil)
+            session.sendMessage([WKSessionKey.hasCurrentUser: hasUser], replyHandler: nil)
             completion?()
         }
     }
 }
 
-// MOVE >>>>>>>>>
 extension Encodable {
     var dictionary: [String: Any]? {
         guard let data = try? JSONEncoder().encode(self) else { return nil }
