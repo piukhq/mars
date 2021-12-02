@@ -125,12 +125,6 @@
 		5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE047522CE579B001BA964 /* Assets.xcassets */; };
 		5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE047722CE579B001BA964 /* LaunchScreen.storyboard */; };
 		5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048322CE579B001BA964 /* binkappTests.swift */; };
-<<<<<<< HEAD
-=======
-		700900D725C1DB7500548F50 /* LocalPointsCollection_DetectElement.js in Resources */ = {isa = PBXBuildFile; fileRef = 700900D625C1DB7500548F50 /* LocalPointsCollection_DetectElement.js */; };
-		701418CA26FB306100BE4DF0 /* SubwayPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701418C926FB306100BE4DF0 /* SubwayPointsScrapingAgent.swift */; };
-		701418CD26FB312100BE4DF0 /* LocalPointsCollection_Navigate_Subway.js in Resources */ = {isa = PBXBuildFile; fileRef = 701418CC26FB312100BE4DF0 /* LocalPointsCollection_Navigate_Subway.js */; };
->>>>>>> master
 		701E2C4A2677567E003F903B /* DebugMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701E2C492677567E003F903B /* DebugMenuView.swift */; };
 		70285D842588B674007B4298 /* BinkButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70285D832588B674007B4298 /* BinkButtonsView.swift */; };
 		702D0E3526306F8E0067E370 /* BinkModuleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D0E3426306F8E0067E370 /* BinkModuleViewModel.swift */; };
@@ -140,7 +134,6 @@
 		706157BF26499CC60002701E /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706157BE26499CC60002701E /* AppVersion.swift */; };
 		706157C8264A84AF0002701E /* AppVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706157C7264A84AF0002701E /* AppVersionTests.swift */; };
 		7063B1E62703720B00C5C633 /* RemoteConfigFileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7063B1E52703720B00C5C633 /* RemoteConfigFileModel.swift */; };
-		7063B1E9270473EE00C5C633 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 7063B1E8270473EE00C5C633 /* FirebaseAnalytics */; };
 		7063B1EB270473EE00C5C633 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 7063B1EA270473EE00C5C633 /* FirebaseStorage */; };
 		7063B1ED270473EE00C5C633 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 7063B1EC270473EE00C5C633 /* FirebaseRemoteConfig */; };
 		706D203924D851BA004BCCF3 /* _CD_CardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D203724D851BA004BCCF3 /* _CD_CardAccount.swift */; };
@@ -155,10 +148,6 @@
 		7075382A26DFA72800690965 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 7075382926DFA72800690965 /* KeychainAccess */; };
 		7075382D26DFA96800690965 /* Disk in Frameworks */ = {isa = PBXBuildFile; productRef = 7075382C26DFA96800690965 /* Disk */; };
 		7075383026DFAB2B00690965 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 7075382F26DFAB2B00690965 /* JWTDecode */; };
-<<<<<<< HEAD
-=======
-		70840E6C2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70840E6B2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift */; };
->>>>>>> master
 		70841DEB26417E2800AF5810 /* MagicLinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70841DEA26417E2800AF5810 /* MagicLinkModel.swift */; };
 		709748A024D32A52008D0E29 /* RemoteConfigUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */; };
 		70A2EDA1261DED3200889914 /* SafeDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A2EDA0261DED3200889914 /* SafeDecoding.swift */; };
@@ -196,7 +185,12 @@
 		70F7EC2B25CAF97A005DE935 /* WebScrapingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2A25CAF97A005DE935 /* WebScrapingViewController.swift */; };
 		70F7EC3025CAF9A2005DE935 /* WebScrapingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2F25CAF9A2005DE935 /* WebScrapingResponse.swift */; };
 		70FD1DB2262D8E59003C0DA0 /* BinkModuleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FD1DB1262D8E59003C0DA0 /* BinkModuleType.swift */; };
+<<<<<<< HEAD
+		70FDBD74264E7C6D00DC8DB3 /* FormPrefill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FDBD73264E7C6D00DC8DB3 /* FormPrefill.swift */; };
+		70FF2B6F2649543200A64DD3 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FF2B6E2649543200A64DD3 /* AppConfiguration.swift */; };
+=======
 		70FF2B6F2649543200A64DD3 /* RecommendedVersionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FF2B6E2649543200A64DD3 /* RecommendedVersionUtil.swift */; };
+>>>>>>> develop
 		96F22E002507C5AC0009951B /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 96F22DFF2507C5AC0009951B /* Sentry */; };
 		96F22E022508B6060009951B /* SentryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F22E012508B6060009951B /* SentryService.swift */; };
 		9B0A103BBA0F62048017D0B8 /* Pods_binkappTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 352CBEDF33DDEB7B603C909B /* Pods_binkappTests.framework */; };
@@ -275,6 +269,8 @@
 		BDFAA07D23E24DC600949271 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFAA07C23E24DC600949271 /* UIImage+Extension.swift */; };
 		C6812158579C0CBB400A495C /* Pods_binkapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF7651BEBD7E19F9F7391DE /* Pods_binkapp.framework */; };
 		CB92D023BF75D98DF0B2550E /* Pods_binkappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0578BBF342AD2E4F349D1822 /* Pods_binkappUITests.framework */; };
+		CE02D5132726BEA0008B9BFA /* CheckYourInboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D5122726BEA0008B9BFA /* CheckYourInboxViewController.swift */; };
+		CE02D5182726EE3F008B9BFA /* Paperplane.json in Resources */ = {isa = PBXBuildFile; fileRef = CE02D5172726EE3F008B9BFA /* Paperplane.json */; };
 		CE07917A25ADB4A4009FE8BA /* LoyaltyWalletAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07917925ADB4A3009FE8BA /* LoyaltyWalletAnimator.swift */; };
 		CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */; };
 		CE0C24792678EDE500CB7150 /* WhoWeAreSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */; };
@@ -339,6 +335,7 @@
 		CEAF2A0226974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF2A0126974CFC006B6EB5 /* AutomatedTesting_4_GoToSite.swift */; };
 		CEAF2A04269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF2A03269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift */; };
 		CEB7ADF026F1FF7C00BD138C /* NunitoSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492D22F99E1D000C1F4D /* NunitoSans-Bold.ttf */; };
+		CEB8242927391F0500F5954D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 7063B1E8270473EE00C5C633 /* FirebaseAnalytics */; };
 		CEC0ACBC2636AD0000845813 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBA2636AD0000845813 /* Assets.swift */; };
 		CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBB2636AD0000845813 /* Strings.swift */; };
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
@@ -728,12 +725,6 @@
 		5ECE049022CE579B001BA964 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		67B8D6E0B8AB406C5DE33137 /* Pods-binkapp.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.app store (internal).xcconfig"; sourceTree = "<group>"; };
 		6D524C6191655F19A0B9384F /* Pods-binkappUITests.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.app store.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.app store.xcconfig"; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		700900D625C1DB7500548F50 /* LocalPointsCollection_DetectElement.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_DetectElement.js; sourceTree = "<group>"; };
-		701418C926FB306100BE4DF0 /* SubwayPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayPointsScrapingAgent.swift; sourceTree = "<group>"; };
-		701418CC26FB312100BE4DF0 /* LocalPointsCollection_Navigate_Subway.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Subway.js; sourceTree = "<group>"; };
->>>>>>> master
 		701E2C492677567E003F903B /* DebugMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuView.swift; sourceTree = "<group>"; };
 		70285D832588B674007B4298 /* BinkButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkButtonsView.swift; sourceTree = "<group>"; };
 		702B1F0725A479CA00C7563F /* binkapp - 5-1-21 - Membership plan image cta url.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 5-1-21 - Membership plan image cta url.xcdatamodel"; sourceTree = "<group>"; };
@@ -792,7 +783,12 @@
 		70F7EC2A25CAF97A005DE935 /* WebScrapingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingViewController.swift; sourceTree = "<group>"; };
 		70F7EC2F25CAF9A2005DE935 /* WebScrapingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingResponse.swift; sourceTree = "<group>"; };
 		70FD1DB1262D8E59003C0DA0 /* BinkModuleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkModuleType.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
+		70FDBD73264E7C6D00DC8DB3 /* FormPrefill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormPrefill.swift; sourceTree = "<group>"; };
+		70FF2B6E2649543200A64DD3 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
+=======
 		70FF2B6E2649543200A64DD3 /* RecommendedVersionUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendedVersionUtil.swift; sourceTree = "<group>"; };
+>>>>>>> develop
 		782FD7EAEC7253B4F80C33EF /* Pods-binkappTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.beta.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.beta.xcconfig"; sourceTree = "<group>"; };
 		96F22E012508B6060009951B /* SentryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentryService.swift; sourceTree = "<group>"; };
 		9AF638C55EA3C2FE09150516 /* Pods-binkappTests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.app store (internal).xcconfig"; sourceTree = "<group>"; };
@@ -876,6 +872,8 @@
 		BDD9C8A6233D07D1003CD616 /* UICollectionViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtension.swift; sourceTree = "<group>"; };
 		BDFAA07A23E243EF00949271 /* LCDPlaceholderGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCDPlaceholderGenerator.swift; sourceTree = "<group>"; };
 		BDFAA07C23E24DC600949271 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		CE02D5122726BEA0008B9BFA /* CheckYourInboxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckYourInboxViewController.swift; sourceTree = "<group>"; };
+		CE02D5172726EE3F008B9BFA /* Paperplane.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Paperplane.json; sourceTree = "<group>"; };
 		CE07917925ADB4A3009FE8BA /* LoyaltyWalletAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletAnimator.swift; sourceTree = "<group>"; };
 		CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardDetailViewModelTests.swift; sourceTree = "<group>"; };
 		CE0AE2DD2542DB81000CDB86 /* binkapp - 23-10-20 - Card secondary colour.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 23-10-20 - Card secondary colour.xcdatamodel"; sourceTree = "<group>"; };
@@ -1171,13 +1169,10 @@
 				C6812158579C0CBB400A495C /* Pods_binkapp.framework in Frameworks */,
 				7075383026DFAB2B00690965 /* JWTDecode in Frameworks */,
 				7075382D26DFA96800690965 /* Disk in Frameworks */,
+				CEB8242927391F0500F5954D /* FirebaseAnalytics in Frameworks */,
 				7075381E26DFA26C00690965 /* Alamofire in Frameworks */,
 				7063B1EB270473EE00C5C633 /* FirebaseStorage in Frameworks */,
 				7075382A26DFA72800690965 /* KeychainAccess in Frameworks */,
-<<<<<<< HEAD
-				7063B1E9270473EE00C5C633 /* FirebaseAnalytics in Frameworks */,
-=======
->>>>>>> master
 				CE85A1DB26B05D95003B74CD /* Lottie in Frameworks */,
 				7075382426DFA38100690965 /* AlamofireNetworkActivityLogger in Frameworks */,
 				7063B1ED270473EE00C5C633 /* FirebaseRemoteConfig in Frameworks */,
@@ -1522,9 +1517,13 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
+				70FDBD72264E7C5300DC8DB3 /* Form Prefill Utility */,
+=======
 				CE1015232722A60E0000A838 /* Vision */,
 				70C8029D2642B231005700A2 /* Deep Linking */,
 				CEAB2D71266670F6006A0F43 /* HTML Parsing */,
+>>>>>>> develop
 				706157BD26499CB30002701E /* App Version */,
 				70A2ED9F261DED1D00889914 /* Safe Decoding */,
 				CE539DFB25F0EB8C00BDA5EF /* Logging */,
@@ -1740,19 +1739,11 @@
 			children = (
 				BD458B37236B417D0029A538 /* LoginViewController.swift */,
 				70EB83872644410A00DD8935 /* LoginController.swift */,
+				CE02D5142726BF58008B9BFA /* CheckYourInbox */,
 				CE85A1D126A5DB43003B74CD /* EmailClient.swift */,
 				CE85A1D526A6CD97003B74CD /* LoginSuccessViewController.swift */,
 			);
 			path = Login;
-			sourceTree = "<group>";
-		};
-		701418C826FB304300BE4DF0 /* Subway */ = {
-			isa = PBXGroup;
-			children = (
-				701418CC26FB312100BE4DF0 /* LocalPointsCollection_Navigate_Subway.js */,
-				701418C926FB306100BE4DF0 /* SubwayPointsScrapingAgent.swift */,
-			);
-			path = Subway;
 			sourceTree = "<group>";
 		};
 		70285D822588B657007B4298 /* Buttons */ = {
@@ -1874,25 +1865,6 @@
 			path = "View controller factory";
 			sourceTree = "<group>";
 		};
-<<<<<<< HEAD
-=======
-		70BD4BD024B774EB006E4E3D /* Agents */ = {
-			isa = PBXGroup;
-			children = (
-				701418C826FB304300BE4DF0 /* Subway */,
-				70703420268CC11D0072F3BF /* Starbucks */,
-				70661B86250792C0006DB009 /* Boots */,
-				70E8DFDB2563E2F20027A244 /* Heathrow */,
-				70661B8D250A56DB006DB009 /* Morrisons */,
-				70E8DFEB2563E8000027A244 /* Perfume Shop */,
-				70840E622562AC76000E17A5 /* Superdrug */,
-				70661B85250792B6006DB009 /* Tesco */,
-				70E8E126256419FD0027A244 /* Waterstones */,
-			);
-			path = Agents;
-			sourceTree = "<group>";
-		};
->>>>>>> master
 		70C3931B25D6E45A0065FDDE /* Feature Toggling */ = {
 			isa = PBXGroup;
 			children = (
@@ -1968,6 +1940,36 @@
 			path = PLL;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
+		70F7EC1F25CAF905005DE935 /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				7098E6B925EFC41300A086C3 /* LocalPointsCollection_Navigate_Template.js */,
+				70907E1B25C87DA3007629BB /* LocalPointsCollection_Login_Template.js */,
+				70907E3325C883D3007629BB /* LocalPointsCollection_Points_Template.js */,
+				700900D625C1DB7500548F50 /* LocalPointsCollection_DetectElement.js */,
+			);
+			path = Scripts;
+			sourceTree = "<group>";
+		};
+		70FDBD72264E7C5300DC8DB3 /* Form Prefill Utility */ = {
+			isa = PBXGroup;
+			children = (
+				70FDBD73264E7C6D00DC8DB3 /* FormPrefill.swift */,
+			);
+			path = "Form Prefill Utility";
+			sourceTree = "<group>";
+		};
+		70FF2B6D2649541B00A64DD3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				70FF2B6E2649543200A64DD3 /* AppConfiguration.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+=======
+>>>>>>> develop
 		AF06D86448D661A8F4142F87 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
@@ -2196,6 +2198,14 @@
 			path = Form;
 			sourceTree = "<group>";
 		};
+		CE02D5142726BF58008B9BFA /* CheckYourInbox */ = {
+			isa = PBXGroup;
+			children = (
+				CE02D5122726BEA0008B9BFA /* CheckYourInboxViewController.swift */,
+			);
+			path = CheckYourInbox;
+			sourceTree = "<group>";
+		};
 		CE085D5D255EA17D003966ED /* PLR */ = {
 			isa = PBXGroup;
 			children = (
@@ -2292,6 +2302,7 @@
 			isa = PBXGroup;
 			children = (
 				CE85A20026B15436003B74CD /* success.json */,
+				CE02D5172726EE3F008B9BFA /* Paperplane.json */,
 			);
 			path = Animations;
 			sourceTree = "<group>";
@@ -2988,12 +2999,9 @@
 				7075382926DFA72800690965 /* KeychainAccess */,
 				7075382C26DFA96800690965 /* Disk */,
 				7075382F26DFAB2B00690965 /* JWTDecode */,
-<<<<<<< HEAD
 				7063B1E8270473EE00C5C633 /* FirebaseAnalytics */,
 				7063B1EA270473EE00C5C633 /* FirebaseStorage */,
 				7063B1EC270473EE00C5C633 /* FirebaseRemoteConfig */,
-=======
->>>>>>> master
 			);
 			productName = binkapp;
 			productReference = 5ECE046822CE5798001BA964 /* Bink α.app */;
@@ -3108,10 +3116,7 @@
 				7075382826DFA72800690965 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				7075382B26DFA96700690965 /* XCRemoteSwiftPackageReference "Disk" */,
 				7075382E26DFAB2B00690965 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
-<<<<<<< HEAD
 				7063B1E7270473EE00C5C633 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-=======
->>>>>>> master
 			);
 			productRefGroup = 5ECE046922CE5798001BA964 /* Products */;
 			projectDirPath = "";
@@ -3146,11 +3151,6 @@
 				EF4B46672346489C009A3651 /* PaymentCardDetailViewController.xib in Resources */,
 				DBE54852240D514B00EDEE90 /* FilterBrandsCollectionViewCell.xib in Resources */,
 				EF99B025240E74860046D41E /* devPublicKey.der in Resources */,
-<<<<<<< HEAD
-=======
-				70AA970D25E51F5400D10EC0 /* LocalPointsCollection_Points_Boots.js in Resources */,
-				701418CD26FB312100BE4DF0 /* LocalPointsCollection_Navigate_Subway.js in Resources */,
->>>>>>> master
 				3CD3493322F99E1D000C1F4D /* NunitoSans-BoldItalic.ttf in Resources */,
 				CEA16EF526258C8E00D449E1 /* BarcodeViewWide.xib in Resources */,
 				3C9CCD2F231695AE00FAF589 /* CheckboxView.xib in Resources */,
@@ -3175,6 +3175,7 @@
 				EFA5F76B2379BD790027AB80 /* PLRStampsInactiveCell.xib in Resources */,
 				3CD3493E22F99E1D000C1F4D /* NunitoSans-Black.ttf in Resources */,
 				EFA5F7672379BD690027AB80 /* PLRStampsActiveCell.xib in Resources */,
+				CE02D5182726EE3F008B9BFA /* Paperplane.json in Resources */,
 				EF7F6E6523E47BFA00352DCF /* GoogleService-Info.plist in Resources */,
 				3CD3493422F99E1D000C1F4D /* NunitoSans-ExtraLight.ttf in Resources */,
 				5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */,
@@ -3597,6 +3598,7 @@
 				3C9B1A2723854BF60078A1EC /* PreferencesViewModel.swift in Sources */,
 				3C7AF52B23757FB0005964E0 /* FloatExtension.swift in Sources */,
 				EF9E9BCC23C3AC19002FF18E /* NSNumberExtension.swift in Sources */,
+				CE02D5132726BEA0008B9BFA /* CheckYourInboxViewController.swift in Sources */,
 				CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */,
 				7061053125B7349600A16DA5 /* ThemeManager.swift in Sources */,
 				3C36071F230FF03000AC76A3 /* BrandHeaderView.swift in Sources */,
@@ -3614,11 +3616,7 @@
 				3CEABFD02316AB88009B1122 /* MembershipCardBalanceModel.swift in Sources */,
 				EFA5F7392379A7C70027AB80 /* _CD_MembershipCardImage.swift in Sources */,
 				CE2CFE9025E3D48E00B1CB93 /* FeatureFlagsTableViewCell.swift in Sources */,
-<<<<<<< HEAD
 				7063B1E62703720B00C5C633 /* RemoteConfigFileModel.swift in Sources */,
-=======
-				701418CA26FB306100BE4DF0 /* SubwayPointsScrapingAgent.swift in Sources */,
->>>>>>> master
 				CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */,
 				3C61FCDE230AF0BB004721A3 /* AppsModel.swift in Sources */,
 				EFF5CD61244F34A8009021A4 /* WalletService.swift in Sources */,
@@ -3646,6 +3644,7 @@
 				B7E2EC0822E5ED6600BB201A /* String+Encrypting.swift in Sources */,
 				CE2CFE5E25E3C5CB00B1CB93 /* MerchantHeroCell.swift in Sources */,
 				CEA9057E25C81994000F69E1 /* BinkAlertController.swift in Sources */,
+				70FDBD74264E7C6D00DC8DB3 /* FormPrefill.swift in Sources */,
 				EF8F0481238D582300BD708B /* _CD_PlanDocument.swift in Sources */,
 				EF2E8811233385A400F678F3 /* World.swift in Sources */,
 				CE2C7A7825DEC635007624FE /* DebugMenuPickerTableViewCell.swift in Sources */,
@@ -4084,11 +4083,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-<<<<<<< HEAD
-				MARKETING_VERSION = 2.3.10;
-=======
-				MARKETING_VERSION = 2.3.9;
->>>>>>> master
+				MARKETING_VERSION = 2.3.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink α";
@@ -4132,11 +4127,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-<<<<<<< HEAD
-				MARKETING_VERSION = 2.3.10;
-=======
-				MARKETING_VERSION = 2.3.9;
->>>>>>> master
+				MARKETING_VERSION = 2.3.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink β";
@@ -4336,11 +4327,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-<<<<<<< HEAD
-				MARKETING_VERSION = 2.3.10;
-=======
-				MARKETING_VERSION = 2.3.9;
->>>>>>> master
+				MARKETING_VERSION = 2.3.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = Bink;
@@ -4489,11 +4476,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-<<<<<<< HEAD
-				MARKETING_VERSION = 2.3.10;
-=======
-				MARKETING_VERSION = 2.3.9;
->>>>>>> master
+				MARKETING_VERSION = 2.3.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink β";
@@ -4621,7 +4604,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.9;
+				MARKETING_VERSION = 2.3.12;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -4696,7 +4679,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.9;
+				MARKETING_VERSION = 2.3.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.widget;
@@ -4771,7 +4754,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.9;
+				MARKETING_VERSION = 2.3.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.widget;
@@ -4846,7 +4829,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.9;
+				MARKETING_VERSION = 2.3.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.widget;

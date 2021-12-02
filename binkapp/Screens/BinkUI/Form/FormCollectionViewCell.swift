@@ -104,7 +104,6 @@ class FormCollectionViewCell: UICollectionViewCell {
         field.heightAnchor.constraint(equalToConstant: Constants.textFieldHeight).isActive = true
         field.addTarget(self, action: .textFieldUpdated, for: .editingChanged)
         field.setContentCompressionResistancePriority(.required, for: .vertical)
-        field.inputAccessoryView = inputAccessory
         field.smartQuotesType = .no // This stops the "smart" apostrophe setting. The default breaks field regex validation
         return field
     }()
@@ -247,6 +246,12 @@ class FormCollectionViewCell: UICollectionViewCell {
         formField = field
         configureTextFieldRightView(shouldDisplay: formField?.value == nil)
         validationLabel.isHidden = textField.text?.isEmpty == true ? true : field.isValid()
+        
+        if Current.userDefaults.bool(forDefaultsKey: .rememberMyDetails) || AutofillUtil.hasStoredData {
+            textField.inputAccessoryView = AutofillFormInputAccessory(field: field, delegate: self)
+        } else {
+            textField.inputAccessoryView = inputAccessory
+        }
         
         if case let .expiry(months, years) = field.fieldType {
             textField.inputView = FormMultipleChoiceInput(with: [months, years], delegate: self)
@@ -426,6 +431,17 @@ extension FormCollectionViewCell: FormMultipleChoiceInputDelegate {
         formField?.updateValue(newValue)
         textField.text = newValue
         if let options = backingData { formField?.pickerDidSelect(options) }
+    }
+}
+
+extension FormCollectionViewCell: AutofillFormInputAccessoryDelegate {
+    func inputAccessoryDidTapDone(_ inputAccessory: AutofillFormInputAccessory) {
+        accessoryDoneTouchUpInside()
+    }
+    
+    func inputAccessory(_ inputAccessory: AutofillFormInputAccessory, didSelectValue value: String) {
+        formField?.updateValue(value)
+        textField.text = value
     }
 }
 
