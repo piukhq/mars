@@ -29,6 +29,26 @@ final class ImageService {
         }
     }
     
+    static func getImageFromDevice(forPathType pathType: PathType) -> UIImage? {
+        let imageService = ImageService()
+        guard let imagePath = imageService.path(forType: pathType, traitCollection: .current) else { return nil }
+        
+        // Is the image available in our cache?
+        if let cachedImage = Cache.sharedImageCache.object(forKey: imagePath.toNSString()) {
+            return cachedImage
+        }
+
+        // If not, is the image on disk?
+        if let imageFromDisk = try? Disk.retrieve(imagePath, from: .caches, as: UIImage.self) {
+            // Promote the image to local memory
+            Cache.sharedImageCache.setObject(imageFromDisk, forKey: imagePath.toNSString())
+            
+            return imageFromDisk
+        }
+        
+        return nil
+    }
+    
     fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy, traitCollection: UITraitCollection? = nil, completion: @escaping ImageCompletionHandler) {
         guard let imagePath = path(forType: pathType, traitCollection: traitCollection) else { return }
 

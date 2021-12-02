@@ -61,6 +61,7 @@ class UserManager {
         // We can safely assume that if we have no token, we have no user
         guard let token = currentToken, !token.isEmpty else {
             UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(false, forDefaultsKey: .hasCurrentUser)
+            Current.watchController.hasCurrentUser(false)
             return false
         }
         
@@ -149,6 +150,7 @@ class UserManager {
         
         UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(false, forDefaultsKey: .hasCurrentUser)
         WidgetController().reloadWidget(type: .quickLaunch)
+        Current.watchController.hasCurrentUser(false)
     }
     
     func clearKeychainIfNecessary() {

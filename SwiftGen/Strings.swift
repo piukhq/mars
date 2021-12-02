@@ -94,6 +94,10 @@ internal enum L10n {
   internal static let barcodeTitle = L10n.tr("Localizable", "barcode_title")
   /// Card number:
   internal static let barcodeViewTitle = L10n.tr("Localizable", "barcode_view_title")
+  /// We can only show you cards with barcodes or vouchers
+  internal static let brandsListNoSupportedCardsDescription = L10n.tr("Localizable", "brands_list_no_supported_cards_description")
+  /// No supported cards
+  internal static let brandsListNoSupportedCardsTitle = L10n.tr("Localizable", "brands_list_no_supported_cards_title")
   /// Browse brands
   internal static let browseBrandsTitle = L10n.tr("Localizable", "browse_brands_title")
   /// Allow Access
@@ -348,6 +352,10 @@ internal enum L10n {
   internal static let noInternetConnectionMessage = L10n.tr("Localizable", "no_internet_connection_message")
   /// No matches
   internal static let noMatches = L10n.tr("Localizable", "no_matches")
+  /// Please open the Bink app on your phone to sync with your watch
+  internal static let noResponseDesciption = L10n.tr("Localizable", "no_response_desciption")
+  /// No response from phone
+  internal static let noResponseTitle = L10n.tr("Localizable", "no_response_title")
   /// Not available
   internal static let notAvailableTitle = L10n.tr("Localizable", "not_available_title")
   /// OK
@@ -780,6 +788,10 @@ internal enum L10n {
   internal static let transactionHistoryUnavailableDescription = L10n.tr("Localizable", "transaction_history_unavailable_description")
   /// Points history
   internal static let transactionHistoryUnavailableTitle = L10n.tr("Localizable", "transaction_history_unavailable_title")
+  /// Please open the Bink app on your phone to login to your wallet
+  internal static let unauthenticatedStateDescription = L10n.tr("Localizable", "unauthenticated_state_description")
+  /// You are not logged in
+  internal static let unauthenticatedStateTitle = L10n.tr("Localizable", "unauthenticated_state_title")
   /// Payment Linked Loyalty (PLL) allows customers’ payment cards to be securely linked to loyalty programmes, enabling every customer to be identified and rewarded every time they shop.\nThis is currently not available for this merchant.
   internal static let unlinkablePllDescription = L10n.tr("Localizable", "unlinkable_pll_description")
   /// Payment Linked Loyalty unavailable

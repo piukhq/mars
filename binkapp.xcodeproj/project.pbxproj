@@ -156,7 +156,6 @@
 		70A61D16263095060073A08A /* BinkModuleViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A61D15263095060073A08A /* BinkModuleViewModelTests.swift */; };
 		70A61D532630A23C0073A08A /* BinkModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A61D512630A23B0073A08A /* BinkModuleView.swift */; };
 		70A61D542630A23C0073A08A /* BinkModuleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70A61D522630A23B0073A08A /* BinkModuleView.xib */; };
-		70AA71B02642B0560088FEC7 /* UniversalLinkUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA71AF2642B0560088FEC7 /* UniversalLinkUtility.swift */; };
 		70B316E724E6AF2800D86DE5 /* Navigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B316E624E6AF2800D86DE5 /* Navigate.swift */; };
 		70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */; };
 		70C3931D25D6E47F0065FDDE /* FeatureTogglingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C3931C25D6E47F0065FDDE /* FeatureTogglingManager.swift */; };
@@ -166,6 +165,14 @@
 		70D6864625715D4800403448 /* DynamicActionsUtilityMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D6864525715D4800403448 /* DynamicActionsUtilityMock.swift */; };
 		70D747FD2552A75D00E9D2C1 /* InAppReviewUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D747FC2552A75D00E9D2C1 /* InAppReviewUtility.swift */; };
 		70D748022552CC7800E9D2C1 /* InAppReviewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D748012552CC7800E9D2C1 /* InAppReviewable.swift */; };
+		70D8782E26E26DCF006778EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70D8782D26E26DCF006778EA /* Assets.xcassets */; };
+		70D8783526E26DCF006778EA /* Bink Watch App Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 70D8783426E26DCF006778EA /* Bink Watch App Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		70D8783A26E26DCF006778EA /* BinkWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D8783926E26DCF006778EA /* BinkWatchApp.swift */; };
+		70D8783C26E26DCF006778EA /* WatchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D8783B26E26DCF006778EA /* WatchContentView.swift */; };
+		70D8784426E26DD0006778EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70D8784326E26DD0006778EA /* Assets.xcassets */; };
+		70D8784726E26DD0006778EA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70D8784626E26DD0006778EA /* Preview Assets.xcassets */; };
+		70D8784C26E26DD0006778EA /* Bink Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 70D8782B26E26DCD006778EA /* Bink Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		70D8785A26E629F4006778EA /* WatchAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D8785926E629F4006778EA /* WatchAppViewModel.swift */; };
 		70E31A8124E56B3B005A30D2 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E31A8024E56B3B005A30D2 /* UserService.swift */; };
 		70E31A8324E56B4D005A30D2 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E31A8224E56B4D005A30D2 /* APIService.swift */; };
 		70E39801256E8CDA009AD8CB /* DynamicActionsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E39800256E8CDA009AD8CB /* DynamicActionsUtility.swift */; };
@@ -266,6 +273,12 @@
 		CB92D023BF75D98DF0B2550E /* Pods_binkappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0578BBF342AD2E4F349D1822 /* Pods_binkappUITests.framework */; };
 		CE02D5132726BEA0008B9BFA /* CheckYourInboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D5122726BEA0008B9BFA /* CheckYourInboxViewController.swift */; };
 		CE02D5182726EE3F008B9BFA /* Paperplane.json in Resources */ = {isa = PBXBuildFile; fileRef = CE02D5172726EE3F008B9BFA /* Paperplane.json */; };
+		CE02D51B27285F14008B9BFA /* WatchLoyaltyCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D51A27285F13008B9BFA /* WatchLoyaltyCard.swift */; };
+		CE02D51C27285F14008B9BFA /* WatchLoyaltyCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D51A27285F13008B9BFA /* WatchLoyaltyCard.swift */; };
+		CE02D51E27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D51D27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift */; };
+		CE02D51F27293F14008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D51D27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift */; };
+		CE02D52027293F14008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D51D27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift */; };
+		CE02D52727298807008B9BFA /* WatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D52627298806008B9BFA /* WatchController.swift */; };
 		CE07917A25ADB4A4009FE8BA /* LoyaltyWalletAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07917925ADB4A3009FE8BA /* LoyaltyWalletAnimator.swift */; };
 		CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */; };
 		CE0C24792678EDE500CB7150 /* WhoWeAreSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */; };
@@ -331,10 +344,22 @@
 		CEAF2A04269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF2A03269894DF006B6EB5 /* AutomatedTesting_5_WireframesNavigation.swift */; };
 		CEB7ADF026F1FF7C00BD138C /* NunitoSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492D22F99E1D000C1F4D /* NunitoSans-Bold.ttf */; };
 		CEB8242927391F0500F5954D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 7063B1E8270473EE00C5C633 /* FirebaseAnalytics */; };
+		CEB8242E2739998200F5954D /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E16226F0FE0E00CAFBBF /* Font+Extension.swift */; };
 		CEC0ACBC2636AD0000845813 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBA2636AD0000845813 /* Assets.swift */; };
 		CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBB2636AD0000845813 /* Strings.swift */; };
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
+		CEC9A90B2757D725006F0630 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC9A90A2757D725006F0630 /* ExtensionDelegate.swift */; };
 		CED69E6B253D7A5700A4CA21 /* HyperlinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */; };
+		CEE208AD272C446F00766BD6 /* BarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE208AC272C446F00766BD6 /* BarcodeView.swift */; };
+		CEE208AE27315A2600766BD6 /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492922F99E1D000C1F4D /* NunitoSans-Regular.ttf */; };
+		CEE208AF27315A2700766BD6 /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492922F99E1D000C1F4D /* NunitoSans-Regular.ttf */; };
+		CEE208B027315A3E00766BD6 /* NunitoSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492822F99E1D000C1F4D /* NunitoSans-ExtraBold.ttf */; };
+		CEE208B127315A3E00766BD6 /* NunitoSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492822F99E1D000C1F4D /* NunitoSans-ExtraBold.ttf */; };
+		CEE208B2273162EA00766BD6 /* NunitoSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492E22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf */; };
+		CEE208B3273162EB00766BD6 /* NunitoSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492E22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf */; };
+		CEE208B42731672C00766BD6 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBB2636AD0000845813 /* Strings.swift */; };
+		CEE208B52731678500766BD6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CC267EF22F4276E00F0F9E3 /* Localizable.strings */; };
+		CEE208BC2734458400766BD6 /* WatchTextStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE208BB2734458400766BD6 /* WatchTextStack.swift */; };
 		CEE209142684653A004D3759 /* WidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209132684653A004D3759 /* WidgetContent.swift */; };
 		CEE209152684653A004D3759 /* WidgetContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209132684653A004D3759 /* WidgetContent.swift */; };
 		CEE2091A2689E1B7004D3759 /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE209192689E1B7004D3759 /* FileManager+Extension.swift */; };
@@ -563,6 +588,20 @@
 			remoteGlobalIDString = 5ECE046722CE5798001BA964;
 			remoteInfo = binkapp;
 		};
+		70D8783626E26DCF006778EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5ECE046022CE5797001BA964 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 70D8783326E26DCF006778EA;
+			remoteInfo = "Bink Watch App Extension";
+		};
+		70D8784A26E26DD0006778EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5ECE046022CE5797001BA964 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 70D8782A26E26DCD006778EA;
+			remoteInfo = "Bink Watch App";
+		};
 		CE6DE56F2681E82C0063A3A9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5ECE046022CE5797001BA964 /* Project object */;
@@ -573,6 +612,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		70D8784D26E26DD0006778EA /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				70D8784C26E26DD0006778EA /* Bink Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70D8785226E26DD0006778EA /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				70D8783526E26DCF006778EA /* Bink Watch App Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BDA4EE9A2320508500A99CB1 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -748,7 +809,6 @@
 		70A61D15263095060073A08A /* BinkModuleViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkModuleViewModelTests.swift; sourceTree = "<group>"; };
 		70A61D512630A23B0073A08A /* BinkModuleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinkModuleView.swift; sourceTree = "<group>"; };
 		70A61D522630A23B0073A08A /* BinkModuleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BinkModuleView.xib; sourceTree = "<group>"; };
-		70AA71AF2642B0560088FEC7 /* UniversalLinkUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalLinkUtility.swift; sourceTree = "<group>"; };
 		70B316E624E6AF2800D86DE5 /* Navigate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigate.swift; sourceTree = "<group>"; };
 		70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel"; sourceTree = "<group>"; };
@@ -759,6 +819,17 @@
 		70D6864525715D4800403448 /* DynamicActionsUtilityMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionsUtilityMock.swift; sourceTree = "<group>"; };
 		70D747FC2552A75D00E9D2C1 /* InAppReviewUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppReviewUtility.swift; sourceTree = "<group>"; };
 		70D748012552CC7800E9D2C1 /* InAppReviewable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppReviewable.swift; sourceTree = "<group>"; };
+		70D8782B26E26DCD006778EA /* Bink Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bink Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		70D8782D26E26DCF006778EA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		70D8782F26E26DCF006778EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		70D8783426E26DCF006778EA /* Bink Watch App Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Bink Watch App Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		70D8783926E26DCF006778EA /* BinkWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkWatchApp.swift; sourceTree = "<group>"; };
+		70D8783B26E26DCF006778EA /* WatchContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchContentView.swift; sourceTree = "<group>"; };
+		70D8784326E26DD0006778EA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		70D8784626E26DD0006778EA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		70D8784826E26DD0006778EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		70D8784926E26DD0006778EA /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		70D8785926E629F4006778EA /* WatchAppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchAppViewModel.swift; sourceTree = "<group>"; };
 		70E31A8024E56B3B005A30D2 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		70E31A8224E56B4D005A30D2 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		70E39800256E8CDA009AD8CB /* DynamicActionsUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionsUtility.swift; sourceTree = "<group>"; };
@@ -864,6 +935,11 @@
 		BDFAA07C23E24DC600949271 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		CE02D5122726BEA0008B9BFA /* CheckYourInboxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckYourInboxViewController.swift; sourceTree = "<group>"; };
 		CE02D5172726EE3F008B9BFA /* Paperplane.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Paperplane.json; sourceTree = "<group>"; };
+		CE02D51927285F12008B9BFA /* Bink Watch App-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bink Watch App-Bridging-Header.h"; sourceTree = "<group>"; };
+		CE02D51A27285F13008B9BFA /* WatchLoyaltyCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchLoyaltyCard.swift; sourceTree = "<group>"; };
+		CE02D51D27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+BinkApp+WidgetApp+WatchApp.swift"; sourceTree = "<group>"; };
+		CE02D52227294A95008B9BFA /* Font+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
+		CE02D52627298806008B9BFA /* WatchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchController.swift; sourceTree = "<group>"; };
 		CE07917925ADB4A3009FE8BA /* LoyaltyWalletAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletAnimator.swift; sourceTree = "<group>"; };
 		CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardDetailViewModelTests.swift; sourceTree = "<group>"; };
 		CE0AE2DD2542DB81000CDB86 /* binkapp - 23-10-20 - Card secondary colour.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 23-10-20 - Card secondary colour.xcdatamodel"; sourceTree = "<group>"; };
@@ -929,7 +1005,11 @@
 		CEC0ACBA2636AD0000845813 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		CEC0ACBB2636AD0000845813 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardScannerStrings.swift; sourceTree = "<group>"; };
+		CEC9A90A2757D725006F0630 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkLabel.swift; sourceTree = "<group>"; };
+		CEE208AC272C446F00766BD6 /* BarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeView.swift; sourceTree = "<group>"; };
+		CEE208B627317F5600766BD6 /* Bink Watch App Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bink Watch App Extension.entitlements"; sourceTree = "<group>"; };
+		CEE208BB2734458400766BD6 /* WatchTextStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchTextStack.swift; sourceTree = "<group>"; };
 		CEE209132684653A004D3759 /* WidgetContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetContent.swift; sourceTree = "<group>"; };
 		CEE209192689E1B7004D3759 /* FileManager+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extension.swift"; sourceTree = "<group>"; };
 		CEE2091C268CC5C4004D3759 /* WidgetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetController.swift; sourceTree = "<group>"; };
@@ -1185,6 +1265,13 @@
 			files = (
 				CE4A624925714EAE003271F6 /* Sentry in Frameworks */,
 				CB92D023BF75D98DF0B2550E /* Pods_binkappUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70D8783126E26DCF006778EA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1619,6 +1706,8 @@
 				5ECE048D22CE579B001BA964 /* binkappUITests */,
 				BD3CB94223285716005C37AE /* Configuration */,
 				CE6DE5692681E8280063A3A9 /* BinkWidget */,
+				70D8782C26E26DCD006778EA /* Bink Watch App */,
+				70D8783826E26DCF006778EA /* Bink Watch App Extension */,
 				492DA371EDF911EDB1A625BF /* Frameworks */,
 				55D2E5494D854AAC5EFAFFC7 /* Pods */,
 				B766599D2321461D00B327BE /* Recovered References */,
@@ -1632,6 +1721,8 @@
 				5ECE047F22CE579B001BA964 /* binkappTests.xctest */,
 				5ECE048A22CE579B001BA964 /* binkappUITests.xctest */,
 				CE6DE5642681E8280063A3A9 /* BinkWidgetExtension.appex */,
+				70D8782B26E26DCD006778EA /* Bink Watch App.app */,
+				70D8783426E26DCF006778EA /* Bink Watch App Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1864,7 +1955,6 @@
 			isa = PBXGroup;
 			children = (
 				CE85A1D726B0096A003B74CD /* UniversalLinkUtility.swift */,
-				70AA71AF2642B0560088FEC7 /* UniversalLinkUtility.swift */,
 			);
 			path = "Deep Linking";
 			sourceTree = "<group>";
@@ -1893,6 +1983,44 @@
 				70D748012552CC7800E9D2C1 /* InAppReviewable.swift */,
 			);
 			path = "In App Review";
+			sourceTree = "<group>";
+		};
+		70D8782C26E26DCD006778EA /* Bink Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				70D8782D26E26DCF006778EA /* Assets.xcassets */,
+				70D8782F26E26DCF006778EA /* Info.plist */,
+			);
+			path = "Bink Watch App";
+			sourceTree = "<group>";
+		};
+		70D8783826E26DCF006778EA /* Bink Watch App Extension */ = {
+			isa = PBXGroup;
+			children = (
+				CEE208B627317F5600766BD6 /* Bink Watch App Extension.entitlements */,
+				70D8783926E26DCF006778EA /* BinkWatchApp.swift */,
+				70D8783B26E26DCF006778EA /* WatchContentView.swift */,
+				CEE208BB2734458400766BD6 /* WatchTextStack.swift */,
+				CEE208AC272C446F00766BD6 /* BarcodeView.swift */,
+				70D8784326E26DD0006778EA /* Assets.xcassets */,
+				70D8784826E26DD0006778EA /* Info.plist */,
+				70D8784926E26DD0006778EA /* PushNotificationPayload.apns */,
+				70D8784526E26DD0006778EA /* Preview Content */,
+				CE02D52627298806008B9BFA /* WatchController.swift */,
+				70D8785926E629F4006778EA /* WatchAppViewModel.swift */,
+				CE02D51A27285F13008B9BFA /* WatchLoyaltyCard.swift */,
+				CE02D51927285F12008B9BFA /* Bink Watch App-Bridging-Header.h */,
+				CEC9A90A2757D725006F0630 /* ExtensionDelegate.swift */,
+			);
+			path = "Bink Watch App Extension";
+			sourceTree = "<group>";
+		};
+		70D8784526E26DD0006778EA /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				70D8784626E26DD0006778EA /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		70E39848256FE78D009AD8CB /* Dynamic Action */ = {
@@ -1954,6 +2082,7 @@
 				5ECE046922CE5798001BA964 /* Products */,
 				B72E82C22313F3F90045607E /* MembershipCardAmount.swift */,
 				B73F7108230D7F1300D82566 /* MembershipCardBalanceModel.swift */,
+				CE02D52227294A95008B9BFA /* Font+Extension.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -2016,6 +2145,7 @@
 				BD1E7289232AB91C002CC85E /* UIAlertController+Extension.swift */,
 				BDD9C8A6233D07D1003CD616 /* UICollectionViewExtension.swift */,
 				3CCC46C822FC6EB7008476E3 /* UIColor+binkapp.swift */,
+				CE02D51D27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift */,
 				EF9E9BD123C73BA1002FF18E /* UIDeviceExtension.swift */,
 				3C63ABC922F9D52F00BE143B /* UIFont+binkapp.swift */,
 				3CE892672338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift */,
@@ -2938,11 +3068,13 @@
 				70FFDD07253F1A58004EF1F1 /* Swift Lint */,
 				E9C9355DDE6B8A796F5CDFF8 /* [CP] Embed Pods Frameworks */,
 				CE6DE5722681E82C0063A3A9 /* Embed App Extensions */,
+				70D8784D26E26DD0006778EA /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				CE6DE5702681E82C0063A3A9 /* PBXTargetDependency */,
+				70D8784B26E26DD0006778EA /* PBXTargetDependency */,
 			);
 			name = binkapp;
 			packageProductDependencies = (
@@ -3006,6 +3138,40 @@
 			productReference = 5ECE048A22CE579B001BA964 /* binkappUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		70D8782A26E26DCD006778EA /* Bink Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 70D8785826E26DD0006778EA /* Build configuration list for PBXNativeTarget "Bink Watch App" */;
+			buildPhases = (
+				70D8782926E26DCD006778EA /* Resources */,
+				70D8785226E26DD0006778EA /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				70D8783726E26DCF006778EA /* PBXTargetDependency */,
+			);
+			name = "Bink Watch App";
+			productName = "Bink Watch App";
+			productReference = 70D8782B26E26DCD006778EA /* Bink Watch App.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		70D8783326E26DCF006778EA /* Bink Watch App Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 70D8785726E26DD0006778EA /* Build configuration list for PBXNativeTarget "Bink Watch App Extension" */;
+			buildPhases = (
+				70D8783026E26DCF006778EA /* Sources */,
+				70D8783126E26DCF006778EA /* Frameworks */,
+				70D8783226E26DCF006778EA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Bink Watch App Extension";
+			productName = "Bink Watch App Extension";
+			productReference = 70D8783426E26DCF006778EA /* Bink Watch App Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
 		CE6DE5632681E8280063A3A9 /* BinkWidgetExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CE6DE5772681E82C0063A3A9 /* Build configuration list for PBXNativeTarget "BinkWidgetExtension" */;
@@ -3045,6 +3211,13 @@
 						CreatedOnToolsVersion = 10.2.1;
 						TestTargetID = 5ECE046722CE5798001BA964;
 					};
+					70D8782A26E26DCD006778EA = {
+						CreatedOnToolsVersion = 12.5;
+						LastSwiftMigration = 1300;
+					};
+					70D8783326E26DCF006778EA = {
+						CreatedOnToolsVersion = 12.5;
+					};
 					CE6DE5632681E8280063A3A9 = {
 						CreatedOnToolsVersion = 12.5;
 					};
@@ -3083,6 +3256,8 @@
 				5ECE048922CE579B001BA964 /* binkappUITests */,
 				EF45F71D2322570F00DA6A29 /* mogenerator */,
 				CE6DE5632681E8280063A3A9 /* BinkWidgetExtension */,
+				70D8782A26E26DCD006778EA /* Bink Watch App */,
+				70D8783326E26DCF006778EA /* Bink Watch App Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -3180,6 +3355,30 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70D8782926E26DCD006778EA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				70D8782E26E26DCF006778EA /* Assets.xcassets in Resources */,
+				CEE208B3273162EB00766BD6 /* NunitoSans-SemiBold.ttf in Resources */,
+				CEE208B127315A3E00766BD6 /* NunitoSans-ExtraBold.ttf in Resources */,
+				CEE208AE27315A2600766BD6 /* NunitoSans-Regular.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70D8783226E26DCF006778EA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEE208B2273162EA00766BD6 /* NunitoSans-SemiBold.ttf in Resources */,
+				CEE208B52731678500766BD6 /* Localizable.strings in Resources */,
+				CEE208B027315A3E00766BD6 /* NunitoSans-ExtraBold.ttf in Resources */,
+				70D8784726E26DD0006778EA /* Preview Assets.xcassets in Resources */,
+				CEE208AF27315A2700766BD6 /* NunitoSans-Regular.ttf in Resources */,
+				70D8784426E26DD0006778EA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3421,11 +3620,13 @@
 				DBE54851240D514B00EDEE90 /* FilterBrandsCollectionViewCell.swift in Sources */,
 				3C2C90FB23191CF700D112E3 /* AuthoriseFieldPostModel.swift in Sources */,
 				B7263347230589EE00951037 /* BalanceModel.swift in Sources */,
+				CE02D51E27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */,
 				EF586FE023578735000917B6 /* WalletPromptCollectionViewCell.swift in Sources */,
 				3C17FC3222F2CCAD00E423A2 /* MembershipCardImageModel.swift in Sources */,
 				3CD4F14E230D35AE0075F63C /* BinkInfoButton.swift in Sources */,
 				EFEB5BFD237E96F500E18743 /* CGFloatExtension.swift in Sources */,
 				3CD8027E239130EE00D26888 /* ForgotPasswordViewController.swift in Sources */,
+				CE02D51B27285F14008B9BFA /* WatchLoyaltyCard.swift in Sources */,
 				BD458B40236C987F0029A538 /* UserManager.swift in Sources */,
 				706D204224D97104004BCCF3 /* AnalyticsEvent.swift in Sources */,
 				BD9FB6B0233761C400E5559A /* UILayoutPriority+Extension.swift in Sources */,
@@ -3475,7 +3676,6 @@
 				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
 				CE0C24792678EDE500CB7150 /* WhoWeAreSwiftUIView.swift in Sources */,
 				EF54911C2371CB3300FE17BE /* PaymentCardDetailTableViewCell.swift in Sources */,
-				70AA71B02642B0560088FEC7 /* UniversalLinkUtility.swift in Sources */,
 				EFA5F7352379A7C70027AB80 /* CD_MembershipCardAmount.swift in Sources */,
 				BDD9C8A7233D07D1003CD616 /* UICollectionViewExtension.swift in Sources */,
 				EFA5F72F2379A7C70027AB80 /* _CD_App.swift in Sources */,
@@ -3559,6 +3759,7 @@
 				7061053125B7349600A16DA5 /* ThemeManager.swift in Sources */,
 				3C36071F230FF03000AC76A3 /* BrandHeaderView.swift in Sources */,
 				EFF59F19234B73C900CF3992 /* CardDetailInfoTableViewCell.swift in Sources */,
+				CE02D52727298807008B9BFA /* WatchController.swift in Sources */,
 				3C873FF522F073CF00FA3031 /* MainTabBarViewModel.swift in Sources */,
 				EFA5F7542379AAB20027AB80 /* CD_VoucherEarn.swift in Sources */,
 				70A4EE7524BC651700FA33B1 /* PointsScrapingManager.swift in Sources */,
@@ -3825,6 +4026,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		70D8783026E26DCF006778EA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEC9A90B2757D725006F0630 /* ExtensionDelegate.swift in Sources */,
+				CEE208B42731672C00766BD6 /* Strings.swift in Sources */,
+				CEE208AD272C446F00766BD6 /* BarcodeView.swift in Sources */,
+				70D8783C26E26DCF006778EA /* WatchContentView.swift in Sources */,
+				CE02D51C27285F14008B9BFA /* WatchLoyaltyCard.swift in Sources */,
+				CEE208BC2734458400766BD6 /* WatchTextStack.swift in Sources */,
+				70D8783A26E26DCF006778EA /* BinkWatchApp.swift in Sources */,
+				CEB8242E2739998200F5954D /* Font+Extension.swift in Sources */,
+				70D8785A26E629F4006778EA /* WatchAppViewModel.swift in Sources */,
+				CE02D52027293F14008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CE6DE5602681E8280063A3A9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3836,6 +4054,7 @@
 				CE52E16026F0BBBF00CAFBBF /* UIColor+Extension.swift in Sources */,
 				CEE20923268E1E0E004D3759 /* AddCardView.swift in Sources */,
 				CEAF29FD2695A051006B6EB5 /* BinkLoggerErrors.swift in Sources */,
+				CE02D51F27293F14008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */,
 				CEAF29FC26959FA7006B6EB5 /* BinkLoggerEvents.swift in Sources */,
 				CE6DE57D268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift in Sources */,
 				CE6DE56B2681E8280063A3A9 /* BinkWidget.swift in Sources */,
@@ -3856,6 +4075,16 @@
 			isa = PBXTargetDependency;
 			target = 5ECE046722CE5798001BA964 /* binkapp */;
 			targetProxy = 5ECE048B22CE579B001BA964 /* PBXContainerItemProxy */;
+		};
+		70D8783726E26DCF006778EA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 70D8783326E26DCF006778EA /* Bink Watch App Extension */;
+			targetProxy = 70D8783626E26DCF006778EA /* PBXContainerItemProxy */;
+		};
+		70D8784B26E26DD0006778EA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 70D8782A26E26DCD006778EA /* Bink Watch App */;
+			targetProxy = 70D8784A26E26DD0006778EA /* PBXContainerItemProxy */;
 		};
 		CE6DE5702681E82C0063A3A9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3940,6 +4169,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -4002,6 +4232,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.beta;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -4024,6 +4255,7 @@
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -4033,6 +4265,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = binkapp/Info.plist;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.alpha;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4060,6 +4293,7 @@
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -4077,6 +4311,7 @@
 					"PB_ENABLE_MALLOC=1",
 				);
 				INFOPLIST_FILE = binkapp/Info.plist;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.beta;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4247,6 +4482,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -4268,6 +4504,7 @@
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG = "";
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -4276,7 +4513,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = binkapp/Info.plist;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4396,6 +4635,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -4417,6 +4657,7 @@
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -4426,6 +4667,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = binkapp/Info.plist;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.beta;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4494,6 +4736,649 @@
 			};
 			name = "App Store (Internal)";
 		};
+		70D8784E26E26DD0006778EA /* Alpha */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = HC34M8YE55;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IBSC_MODULE = Bink_Watch_App_Extension;
+				INFOPLIST_FILE = "Bink Watch App/Info.plist";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.alpha;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MARKETING_VERSION = 2.3.13;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha.watch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.bink.wallet.alpha.watch";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "Bink Watch App Extension/Bink Watch App-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.4;
+			};
+			name = Alpha;
+		};
+		70D8784F26E26DD0006778EA /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = HC34M8YE55;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IBSC_MODULE = Bink_Watch_App_Extension;
+				INFOPLIST_FILE = "Bink Watch App/Info.plist";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.beta;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MARKETING_VERSION = 2.3.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.beta.watch";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "Bink Watch App Extension/Bink Watch App-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 7.4;
+			};
+			name = Beta;
+		};
+		70D8785026E26DD0006778EA /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = HC34M8YE55;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IBSC_MODULE = Bink_Watch_App_Extension;
+				INFOPLIST_FILE = "Bink Watch App/Info.plist";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MARKETING_VERSION = 2.3.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.watch";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "Bink Watch App Extension/Bink Watch App-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 7.4;
+			};
+			name = "App Store";
+		};
+		70D8785126E26DD0006778EA /* App Store (Internal) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = HC34M8YE55;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IBSC_MODULE = Bink_Watch_App_Extension;
+				INFOPLIST_FILE = "Bink Watch App/Info.plist";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.beta;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MARKETING_VERSION = 2.3.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.beta.watch";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "Bink Watch App Extension/Bink Watch App-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 7.4;
+			};
+			name = "App Store (Internal)";
+		};
+		70D8785326E26DD0006778EA /* Alpha */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "Bink Watch App Extension/Bink Watch App Extension.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = HC34M8YE55;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Bink Watch App Extension/Info.plist";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.alpha;
+				INFOPLIST_KEY_WKExtensionDelegateClassName = "$(PRODUCT_MODULE_NAME).ExtensionDelegate";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.3.11;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha.watch.extension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.bink.wallet.alpha.watch.ext";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.4;
+			};
+			name = Alpha;
+		};
+		70D8785426E26DD0006778EA /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "Bink Watch App Extension/Bink Watch App Extension.entitlements";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = HC34M8YE55;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Bink Watch App Extension/Info.plist";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.beta;
+				INFOPLIST_KEY_WKExtensionDelegateClassName = "$(PRODUCT_MODULE_NAME).ExtensionDelegate";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.3.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch.extension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.beta.watch.extension";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 7.4;
+			};
+			name = Beta;
+		};
+		70D8785526E26DD0006778EA /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "Bink Watch App Extension/Bink Watch App Extension.entitlements";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = HC34M8YE55;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Bink Watch App Extension/Info.plist";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet;
+				INFOPLIST_KEY_WKExtensionDelegateClassName = "$(PRODUCT_MODULE_NAME).ExtensionDelegate";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.3.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watch.extension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.watch.extension";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 7.4;
+			};
+			name = "App Store";
+		};
+		70D8785626E26DD0006778EA /* App Store (Internal) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "Bink Watch App Extension/Bink Watch App Extension.entitlements";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = HC34M8YE55;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Bink Watch App Extension/Info.plist";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bink.wallet.beta;
+				INFOPLIST_KEY_WKExtensionDelegateClassName = "$(PRODUCT_MODULE_NAME).ExtensionDelegate";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.3.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch.extension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.beta.watch.extension";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 7.4;
+			};
+			name = "App Store (Internal)";
+		};
 		CE6DE5732681E82C0063A3A9 /* Alpha */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -4553,13 +5438,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = BinkWidget/Info.plist;
+				INFOPLIST_KEY_WKExtensionDelegateClassName = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.13;
+				MARKETING_VERSION = 2.3.11;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -4628,13 +5514,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = BinkWidget/Info.plist;
+				INFOPLIST_KEY_WKExtensionDelegateClassName = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.13;
+				MARKETING_VERSION = 2.3.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.widget;
@@ -4703,13 +5590,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = BinkWidget/Info.plist;
+				INFOPLIST_KEY_WKExtensionDelegateClassName = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.13;
+				MARKETING_VERSION = 2.3.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.widget;
@@ -4778,13 +5666,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = BinkWidget/Info.plist;
+				INFOPLIST_KEY_WKExtensionDelegateClassName = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.13;
+				MARKETING_VERSION = 2.3.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.widget;
@@ -4875,6 +5764,28 @@
 				5ECE049B22CE579B001BA964 /* Beta */,
 				5EFB27E92306A81D0046A2BF /* App Store */,
 				5EFB27F12306A8F90046A2BF /* App Store (Internal) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "App Store";
+		};
+		70D8785726E26DD0006778EA /* Build configuration list for PBXNativeTarget "Bink Watch App Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				70D8785326E26DD0006778EA /* Alpha */,
+				70D8785426E26DD0006778EA /* Beta */,
+				70D8785526E26DD0006778EA /* App Store */,
+				70D8785626E26DD0006778EA /* App Store (Internal) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "App Store";
+		};
+		70D8785826E26DD0006778EA /* Build configuration list for PBXNativeTarget "Bink Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				70D8784E26E26DD0006778EA /* Alpha */,
+				70D8784F26E26DD0006778EA /* Beta */,
+				70D8785026E26DD0006778EA /* App Store */,
+				70D8785126E26DD0006778EA /* App Store (Internal) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "App Store";

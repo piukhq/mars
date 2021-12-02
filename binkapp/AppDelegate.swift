@@ -13,6 +13,7 @@ import AlamofireNetworkActivityLogger
 import CardScan
 import Keys
 import SafariServices
+import WatchConnectivity
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
@@ -21,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     
     let universalLinkUtility = UniversalLinkUtility()
     let widgetController = WidgetController()
+    let watchController = WatchController()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         #if DEBUG
@@ -75,6 +77,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         addObservers()
         InAppReviewUtility.recordAppLaunch()
         Current.userManager.clearKeychainIfNecessary()
+        
+        if WCSession.isSupported() {
+            let session = WCSession.default
+            session.delegate = self
+            session.activate()
+        }
         
         return true
     }
@@ -179,5 +187,26 @@ private extension AppDelegate {
     
     func configureAppForTesting() {
         UIView.setAnimationsEnabled(false)
+    }
+}
+
+
+// MARK: - Watch Connectivity
+
+extension AppDelegate: WCSessionDelegate {
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
+    func sessionDidBecomeInactive(_ session: WCSession) {}
+    func sessionDidDeactivate(_ session: WCSession) {}
+    
+    func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
+        DispatchQueue.main.async {
+            if let _ = message[WKSessionKey.refreshWallet] {
+                if Current.userManager.hasCurrentUser {
+                    Current.watchController.sendWalletCardsToWatch(membershipCards: Current.wallet.membershipCards)
+                } else {
+                    Current.watchController.hasCurrentUser(false)
+                }
+            }
+        }
     }
 }

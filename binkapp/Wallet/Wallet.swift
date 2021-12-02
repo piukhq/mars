@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import WatchConnectivity
 
-class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
+class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
     private enum FetchType {
         case localLaunch // Specifically used on launch to perform desired behaviour not needed at any other time
         case localReactive // Any local fetch other than on launch
@@ -173,6 +174,9 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             }
             NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
             completion?(true, nil)
+            if self.hasLaunched {
+                Current.watchController.sendWalletCardsToWatch(membershipCards: self.membershipCards)
+            }
         }
     }
 
@@ -346,6 +350,7 @@ extension Wallet {
     
     func reorderMembershipCard(_ card: CD_MembershipCard, from sourceIndex: Int, to destinationIndex: Int) {
         reorderWalletCard(card, in: &localMembershipCardsOrder, from: sourceIndex, to: destinationIndex, updating: &membershipCards)
+        WatchController().sendWalletCardsToWatch(membershipCards: membershipCards)
     }
 
     func reorderPaymentCard(_ card: CD_PaymentCard, from sourceIndex: Int, to destinationIndex: Int) {
