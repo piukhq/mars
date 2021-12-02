@@ -51,6 +51,9 @@ class FormCollectionViewCell: UICollectionViewCell {
         stackView.layer.cornerCurve = .continuous
         stackView.layer.cornerRadius = 12
         stackView.clipsToBounds = true
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: .handleCellTap)
+        stackView.addGestureRecognizer(gestureRecognizer)
+        stackView.isUserInteractionEnabled = true
         return stackView
     }()
     
@@ -294,6 +297,10 @@ class FormCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    @objc func handleCellTap() {
+        textField.becomeFirstResponder()
+    }
+    
     @objc func accessoryDoneTouchUpInside() {
         if let multipleChoiceInput = textField.inputView as? FormMultipleChoiceInput {
             multipleChoiceInputDidUpdate(newValue: multipleChoiceInput.fullContentString, backingData: multipleChoiceInput.backingData)
@@ -423,4 +430,5 @@ fileprivate extension Selector {
     static let textFieldUpdated = #selector(FormCollectionViewCell.textFieldUpdated(_:text:backingData:))
     static let accessoryDoneTouchUpInside = #selector(FormCollectionViewCell.accessoryDoneTouchUpInside)
     static let handleScanButtonTap = #selector(FormCollectionViewCell.handleScanButtonTap)
+    static let handleCellTap = #selector(FormCollectionViewCell.handleCellTap)
 }
