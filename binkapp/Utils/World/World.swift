@@ -75,6 +75,7 @@ extension UserDefaults: BinkUserDefaults {
         case lpcDebugMode
         case hasCurrentUser
         case installedWidgetIds
+        case rememberMyDetails
         
         var keyValue: String {
             switch self {
@@ -116,6 +117,8 @@ extension UserDefaults: BinkUserDefaults {
                 return "hasCurrentUser"
             case .installedWidgetIds:
                 return "installedWidgetIds"
+            case .rememberMyDetails:
+                return "rememberMyDetails"
             }
         }
     }

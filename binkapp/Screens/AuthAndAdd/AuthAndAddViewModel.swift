@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KeychainAccess
 import UIKit
 
 enum FieldType {
@@ -160,6 +161,14 @@ class AuthAndAddViewModel {
         BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardRequest(request: model, formPurpose: formPurpose))
         let scrapingCredentials = Current.pointsScrapingManager.makeCredentials(fromFormFields: formFields, membershipPlanId: membershipPlan.id)
         
+        if let rememberMyDetailsCheckbox = checkboxes?.first(where: { $0.columnName == AutofillUtil.slug }) {
+            setUserPreference(checkbox: rememberMyDetailsCheckbox)
+            
+            if rememberMyDetailsCheckbox.value == "1" {
+                storeAutofillValues(formfields: formFields)
+            }
+        }
+        
         repository.addMembershipCard(request: model, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, scrapingCredentials: scrapingCredentials, onSuccess: { card in
             if let card = card {
                 // Navigate to LCD for the new card behind the modal
@@ -185,6 +194,52 @@ class AuthAndAddViewModel {
                 self?.displaySimplePopup(title: L10n.errorTitle, message: error?.localizedDescription)
                 completion()
         })
+    }
+    
+    private func setUserPreference(checkbox: CheckboxView) {
+        guard let columnName = checkbox.columnName else { return }
+        let preferencesRepository = PreferencesRepository()
+        let checkedState: Bool = checkbox.value == "1"
+        let dictionary = [columnName: checkbox.value]
+        
+        preferencesRepository.putPreferences(preferences: dictionary) {
+            Current.userDefaults.set(checkedState, forDefaultsKey: .rememberMyDetails)
+        } onError: { _ in
+        }
+    }
+    
+    private func storeAutofillValues(formfields: [FormField]) {
+        var autofillDictionary: [String: [String]] = AutofillUtil.storedDataFromKeychain() ?? [:]
+        let formFieldValuesDictionary = currentFormFieldValues(formfields)
+        
+        for key in formFieldValuesDictionary.keys {
+            /// If the key already exists in the autofill values, append the new value if unique
+            if var autofillValuesArray = autofillDictionary[key] {
+                if let currentFieldValue = formFieldValuesDictionary[key], !autofillValuesArray.contains(currentFieldValue) {
+                    autofillValuesArray.append(currentFieldValue)
+                    autofillDictionary[key] = autofillValuesArray
+                }
+            } else {
+                /// If the key doesn't exist, add it
+                if let value = formFieldValuesDictionary[key] {
+                    autofillDictionary[key] = [value]
+                }
+            }
+        }
+        
+        print("AUTOFILL: \(autofillDictionary)")
+        AutofillUtil.save(autofillDictionary)
+    }
+    
+    private func currentFormFieldValues(_ formfields: [FormField]) -> [String: String] {
+        var currentFormFieldValuesDictionary: [String: String] = [:]
+        
+        for field in formfields {
+            if AutofillUtil.categories.contains(field.title.lowercased()) {
+                currentFormFieldValuesDictionary[field.title.lowercased()] = field.value
+            }
+        }
+        return currentFormFieldValuesDictionary
     }
     
     private func addGhostCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, existingMembershipCard: CD_MembershipCard?) throws {

@@ -6,12 +6,14 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
+import KeychainAccess
 import UIKit
 
 class PreferencesViewController: BinkViewController {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var stackView: UIStackView!
+    @IBOutlet private weak var clearCredentialsButton: UIButton!
     @IBOutlet private weak var errorLabel: UILabel!
     
     private let viewModel: PreferencesViewModel
@@ -47,13 +49,19 @@ class PreferencesViewController: BinkViewController {
         errorLabel.font = UIFont.bodyTextSmall
         errorLabel.textColor = .red
         
+        let clearCredentialsAttributedString = NSAttributedString(string: L10n.preferencesClearCredentialsTitle, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent])
+        let clearCredentialsAttributedStringHighlighted = NSAttributedString(string: L10n.preferencesClearCredentialsTitle, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent.withAlphaComponent(0.5)])
+
+        clearCredentialsButton.setAttributedTitle(clearCredentialsAttributedString, for: .normal)
+        clearCredentialsButton.setAttributedTitle(clearCredentialsAttributedStringHighlighted, for: .highlighted)
+        
         let attributedString = NSMutableAttributedString(string: L10n.preferencesScreenDescription, attributes: [.font: UIFont.bodyTextLarge])
         let base = NSString(string: attributedString.string)
         let rewardsRange = base.range(of: L10n.preferencesPromptHighlightRewards)
         let offersRange = base.range(of: L10n.preferencesPromptHighlightOffers)
         let updatesRange = base.range(of: L10n.preferencesPromptHighlightUpdates)
         
-        let attributes: [NSAttributedString.Key: Any]  = [.font: UIFont.subtitle]
+        let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.subtitle]
         
         attributedString.addAttributes(attributes, range: rewardsRange)
         attributedString.addAttributes(attributes, range: offersRange)
@@ -78,9 +86,30 @@ class PreferencesViewController: BinkViewController {
                 NSMutableAttributedString(string: $0.label ?? "", attributes: [.font: UIFont.bodyTextSmall])
             checkboxView.configure(title: attributedString, columnName: $0.slug ?? "", columnKind: .add, delegate: self)
             
+            if $0.slug == AutofillUtil.slug {
+                Current.userDefaults.set(checked, forDefaultsKey: .rememberMyDetails)
+            }
+            
             stackView.addArrangedSubview(checkboxView)
             checkboxes.append(checkboxView)
         }
+    }
+    
+    func clearStoredCredentials() {
+        var alert: BinkAlertController
+        do {
+            try AutofillUtil.clearKeychain()
+            alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.preferencesClearCredentialsSuccessTitle, message: L10n.preferencesClearCredentialsSuccessBody)
+        } catch {
+            alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: L10n.preferencesClearCredentialsError)
+        }
+        
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
+    }
+    
+    @IBAction func clearCredentialsButtonTapped(_ sender: Any) {
+        clearStoredCredentials()
     }
 }
 
@@ -95,9 +124,20 @@ extension PreferencesViewController: CheckboxViewDelegate {
         
         let checkboxState = value == "true" ? "1" : "0"
         let dictionary = [columnName: checkboxState]
+        
+        if columnName == AutofillUtil.slug && value == "false" {
+            let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: L10n.preferencesClearCredentialsTitle, message: L10n.preferencesClearCredentialsBody, cancelButton: true) { [weak self] in
+                self?.clearStoredCredentials()
+            }
+            let navigationRequest = AlertNavigationRequest(alertController: alert)
+            Current.navigate.to(navigationRequest)
+        }
 
         viewModel.putPreferences(preferences: dictionary, onSuccess: { [weak self] in
             self?.errorLabel.isHidden = true
+            if let _ = dictionary[AutofillUtil.slug] {
+                Current.userDefaults.set(Bool(value), forDefaultsKey: .rememberMyDetails)
+            }
         }) { [weak self] _ in
             checkboxView.reset()
             self?.errorLabel.text = L10n.preferencesUpdateFail

@@ -120,6 +120,8 @@ class UserManager {
         if updateZendeskIdentity {
             ZendeskService.setIdentity(firstName: currentFirstName, lastName: currentLastName)
         }
+        
+        AutofillUtil().configureUserPreferenceFromAPI()
     }
     
     private func setToken(with response: LoginResponse) throws {
@@ -140,6 +142,7 @@ class UserManager {
         try? keychain.remove(Constants.emailKey)
         try? keychain.remove(Constants.firstNameKey)
         try? keychain.remove(Constants.lastNameKey)
+        try? AutofillUtil.clearKeychain()
         
         // Remove local variables
         currentToken = nil
