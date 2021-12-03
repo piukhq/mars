@@ -27,7 +27,8 @@ plugin 'cocoapods-keys', {
     "zendeskProductionClientId",
     "zendeskProductionUrl",
     "bouncerPaymentCardScanningKeyDev",
-    "bouncerPaymentCardScanningKeyProduction"
+    "bouncerPaymentCardScanningKeyProduction",
+    "binkTestAuthHeaderToken"
   ]
 }
 

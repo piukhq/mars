@@ -27,7 +27,7 @@ PODS:
   - ZXingObjC/All (3.6.5)
 
 DEPENDENCIES:
-  - "CardScan (from `git@git.bink.com:Pantheon/iOS/cardscan-ios.git`)"
+  - "CardScan (from `git@git.bink.com:Pantheon/iOS/cardscan-ios.git`, commit `bf8d4467`)"
   - DTTJailbreakDetection (~> 0.4)
   - Keys (from `Pods/CocoaPodsKeys`)
   - SwiftGen (~> 6.4)
@@ -52,6 +52,7 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   CardScan:
+    :commit: bf8d4467
     :git: "git@git.bink.com:Pantheon/iOS/cardscan-ios.git"
   Keys:
     :path: Pods/CocoaPodsKeys
@@ -60,7 +61,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CardScan:
-    :commit: 12c1bb33beda582d8474256986970f10e22e2b6e
+    :commit: bf8d4467
     :git: "git@git.bink.com:Pantheon/iOS/cardscan-ios.git"
   SwiftyRSA:
     :commit: c4f97d7726b5d1cb9480d7e442be4002716d1be9
@@ -82,6 +83,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: e100a7a0a1bb5d7d43abbde3338727d985a4986d
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 740d891157a720942d72c8a5dfef40750bb2c4db
+PODFILE CHECKSUM: 9b21f704eb798a9db526273edeb15e8cb42c14ed
 
 COCOAPODS: 1.10.1

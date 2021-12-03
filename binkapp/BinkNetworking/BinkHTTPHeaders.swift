@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Keys
 
 enum BinkHTTPHeaders {
     static func asDictionary(_ headers: [BinkHTTPHeader]) -> [String: String] {
@@ -41,7 +42,7 @@ struct BinkHTTPHeader {
     }
     
     static func binkTestAuth() -> BinkHTTPHeader {
-        return BinkHTTPHeader(name: "Bink-Test-Auth", value: "e66cd653a8a1a4ee49ef7b4f2f44517e01e4e513c0c0ad4cc0818696847f98be")
+        return BinkHTTPHeader(name: "Bink-Test-Auth", value: BinkappKeys().binkTestAuthHeaderToken)
     }
     
     // MARK: - Defaults
