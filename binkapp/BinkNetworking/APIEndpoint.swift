@@ -40,7 +40,7 @@ enum APIEndpoint: Equatable {
             headers.append(.authorization(token))
         }
         
-        if requiresBinkTestAuthHeader, !APIConstants.isProduction {
+        if requiresBinkTestAuthHeader {
             headers.append(.binkTestAuth())
         }
         
@@ -114,7 +114,7 @@ enum APIEndpoint: Equatable {
         switch self {
         case .spreedly:
             return false
-        default: return true
+        default: return !APIConstants.isProduction
         }
     }
 
