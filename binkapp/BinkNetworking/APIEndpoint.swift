@@ -39,6 +39,11 @@ enum APIEndpoint: Equatable {
             guard let token = Current.userManager.currentToken else { return headers }
             headers.append(.authorization(token))
         }
+        
+        if requiresBinkTestAuthHeader, !APIConstants.isProduction {
+            headers.append(.binkTestAuth())
+        }
+        
         return headers
     }
 
@@ -98,6 +103,14 @@ enum APIEndpoint: Equatable {
     }
 
     private var usesComponents: Bool {
+        switch self {
+        case .spreedly:
+            return false
+        default: return true
+        }
+    }
+    
+    private var requiresBinkTestAuthHeader: Bool {
         switch self {
         case .spreedly:
             return false

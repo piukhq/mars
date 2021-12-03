@@ -40,6 +40,10 @@ struct BinkHTTPHeader {
         return BinkHTTPHeader(name: "Authorization", value: "Token \(value)")
     }
     
+    static func binkTestAuth() -> BinkHTTPHeader {
+        return BinkHTTPHeader(name: "Bink-Test-Auth", value: "e66cd653a8a1a4ee49ef7b4f2f44517e01e4e513c0c0ad4cc0818696847f98be")
+    }
+    
     // MARK: - Defaults
 
     static let defaultUserAgent: BinkHTTPHeader = {
