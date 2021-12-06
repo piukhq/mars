@@ -346,6 +346,7 @@ extension Wallet {
     
     func reorderMembershipCard(_ card: CD_MembershipCard, from sourceIndex: Int, to destinationIndex: Int) {
         reorderWalletCard(card, in: &localMembershipCardsOrder, from: sourceIndex, to: destinationIndex, updating: &membershipCards)
+        MixpanelUtility.track(.loyaltyCardManuallyReordered(brandName: card.membershipPlan?.account?.companyName ?? "Unknown", originalIndex: sourceIndex, destinationIndex: destinationIndex))
     }
 
     func reorderPaymentCard(_ card: CD_PaymentCard, from sourceIndex: Int, to destinationIndex: Int) {

@@ -34,6 +34,7 @@ class AuthAndAddRepository: WalletServiceProtocol {
                         newObject.status = cdStatus
                         cdStatus.card = newObject
                         BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: newObject))
+                        MixpanelUtility.track(.localPointsCollectionStatus(membershipCard: newObject))
                     }
                     
                     try? context.save()

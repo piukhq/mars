@@ -368,6 +368,8 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
 
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionSuccess(membershipCard: membershipCard))
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
+                MixpanelUtility.track(.localPointsCollectionSuccess(brandName: item.card.membershipPlan?.account?.companyName ?? "Unknown"))
+                MixpanelUtility.track(.localPointsCollectionStatus(membershipCard: membershipCard))
             }
         }
     }
@@ -475,6 +477,8 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
         if #available(iOS 14.0, *) {
             BinkLogger.error(WalletLoggerError.pointsScrapingFailure, value: error.message)
         }
+        
+        MixpanelUtility.track(.localPointsCollectionFailure(brandName: item.card.membershipPlan?.account?.companyName ?? "Unknown", reason: error.message))
         
         transitionToFailed(item: item)
     }
