@@ -79,6 +79,7 @@ class WidgetController {
         }
         Current.navigate.to(navigationRequest)
         isPerformingNavigation = false
+        MixpanelUtility.track(.lcdViewed(brandName: membershipCard.membershipPlan?.account?.companyName ?? "Unknown", route: .quickLaunchWidget))
     }
     
     private func navigateToBrowseBrands(urlPath: String) {

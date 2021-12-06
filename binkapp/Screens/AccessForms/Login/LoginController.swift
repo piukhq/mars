@@ -9,10 +9,10 @@
 import JWTDecode
 import UIKit
 
-enum LoginType {
-    case magicLink
-    case apple
-    case password
+enum LoginType: String {
+    case magicLink = "Magic link"
+    case apple = "Apple"
+    case password = "Password"
 }
 
 class LoginController: UserServiceProtocol {
@@ -75,13 +75,14 @@ class LoginController: UserServiceProtocol {
                     
                     Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
                     BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
+                    MixpanelUtility.track(.login(method: loginType))
                 })
                 
                 Current.rootStateMachine.handleLogin(for: loginType)
                 
                 BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
                 BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
-                
+                                
                 completion(nil)
             })
         case .failure(let error):

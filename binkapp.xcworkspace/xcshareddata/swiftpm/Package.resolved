@@ -155,6 +155,15 @@
         }
       },
       {
+        "package": "Mixpanel",
+        "repositoryURL": "https://github.com/mixpanel/mixpanel-swift.git",
+        "state": {
+          "branch": "master",
+          "revision": "0b88c54c27be9470578beadfe88e80bce5def306",
+          "version": null
+        }
+      },
+      {
         "package": "nanopb",
         "repositoryURL": "https://github.com/firebase/nanopb.git",
         "state": {

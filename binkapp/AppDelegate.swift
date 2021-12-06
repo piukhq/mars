@@ -44,7 +44,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         BinkAnalytics.beginSessionTracking()
         ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyProduction)
         #endif
-
+        
+        MixpanelUtility.configure()
+        
         // Device storage
         StorageUtility.start()
         
