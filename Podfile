@@ -29,7 +29,8 @@ plugin 'cocoapods-keys', {
   "bouncerPaymentCardScanningKeyDev",
   "bouncerPaymentCardScanningKeyProduction",
   "mixpanelTokenDev",
-  "mixpanelTokenProduction"
+  "mixpanelTokenProduction",
+  "binkTestAuthHeaderToken"
   ]
 }
 
