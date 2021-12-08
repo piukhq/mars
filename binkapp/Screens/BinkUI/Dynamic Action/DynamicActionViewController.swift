@@ -85,9 +85,9 @@ class DynamicActionViewController: BinkViewController {
         configureAnimationIfNecessary()
 
         footerButtons = [button]
-        NSLayoutConstraint.activate([
-            descriptionLabel.bottomAnchor.constraint(greaterThanOrEqualTo: footerButtonsView.topAnchor, constant: -20)
-        ])
+//        NSLayoutConstraint.activate([
+//            descriptionLabel.bottomAnchor.constraint(greaterThanOrEqualTo: footerButtonsView.topAnchor, constant: -20)
+//        ])
     }
 
     @objc private func buttonHandler() {
@@ -106,6 +106,8 @@ class DynamicActionHeaderView: CustomView {
 
     func configureWithViewModel(_ viewModel: DynamicActionViewModel) {
         if let imageName = viewModel.headerViewImageName {
+            view.backgroundColor = Current.themeManager.color(for: .viewBackground)
+            imageView.backgroundColor = Current.themeManager.color(for: .viewBackground)
             imageView.image = UIImage(named: imageName)
         }
     }
