@@ -58,6 +58,8 @@ class BinkViewController: UIViewController {
         configureDynamicActionIfNecessary()
         configureForCurrentTheme()
         Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(configureDynamicActionIfNecessary), name: .didLoadWallet, object: nil)
     }
 
     func setScreenName(trackedScreen: TrackedScreen) {
@@ -89,13 +91,17 @@ class BinkViewController: UIViewController {
 // MARK: - Dynamic Actions
 
 private extension BinkViewController {
-    func configureDynamicActionIfNecessary() {
-        // TODO: Respond to a new notification for when remote config has been fetched, and run this method
-        
+    @objc func configureDynamicActionIfNecessary() {
         /// Is there an active dynamic action available for this screen?
-        guard let availableAction = dynamicActionUtility.availableAction(for: self) else { return }
+        guard let availableAction = dynamicActionUtility.availableAction(for: self) else {
+            removeDynamicActions()
+            return
+        }
         dynamicAction = availableAction
-        guard let location = dynamicAction?.location(for: self) else { return }
+        guard let location = dynamicAction?.location(for: self) else {
+            removeDynamicActions()
+            return
+        }
 
         switch location.area {
         case .leftTopBar:
@@ -108,6 +114,11 @@ private extension BinkViewController {
         case .none:
             return
         }
+    }
+    
+    func removeDynamicActions() {
+        /// Extend this as we make more locations available
+        navigationItem.leftBarButtonItem = nil
     }
 
     @objc func dynamicActionHandler() {
