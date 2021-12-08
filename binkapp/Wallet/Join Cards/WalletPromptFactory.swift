@@ -9,12 +9,12 @@
 import Foundation
 import CardScan
 
+enum WalletType {
+    case loyalty
+    case payment
+}
+
 enum WalletPromptFactory {
-    enum WalletType {
-        case loyalty
-        case payment
-    }
-    
     static func makeWalletPrompts(forWallet walletType: WalletType) -> [WalletPrompt] {
         var walletPrompts: [WalletPrompt] = []
         

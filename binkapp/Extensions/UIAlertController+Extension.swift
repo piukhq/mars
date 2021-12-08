@@ -16,7 +16,7 @@ extension UIAlertController {
         vc.present(alert, animated: true, completion: nil)
     }
     
-    static func cardScannerEnterManuallyAlertController(enterManuallyAction: @escaping () -> Void, addFromPhotoLibraryAction: @escaping () -> Void) -> BinkAlertController? {
+    static func cardScannerEnterManuallyAlertController(walletType: WalletType, enterManuallyAction: @escaping () -> Void, addFromPhotoLibraryAction: @escaping () -> Void) -> BinkAlertController? {
         guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return nil }
         
         let alert = BinkAlertController(title: L10n.cameraDeniedTitle, message: L10n.cameraDeniedBody, preferredStyle: .alert)
@@ -32,7 +32,9 @@ extension UIAlertController {
         
         alert.addAction(enterManuallyAction)
         alert.addAction(allowAction)
-        alert.addAction(addFromPhotoLibraryAction)
+        if walletType == .loyalty {
+            alert.addAction(addFromPhotoLibraryAction)
+        }
         alert.addAction(UIAlertAction(title: L10n.cancel, style: .cancel, handler: nil))
         
         return alert
