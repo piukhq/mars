@@ -34,20 +34,19 @@ enum PermissionsUtility {
 
 extension PermissionsUtility {
     static func launchLoyaltyScanner(_ viewController: BarcodeScannerViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil, addFromPhotoLibraryAction: @escaping EmptyCompletionBlock) {
-        launchScanner(viewController: viewController, grantedAction: grantedAction, enterManuallyAction: enterManuallyAction, addFromPhotoLibraryAction: addFromPhotoLibraryAction)
+        launchScanner(walletType: .loyalty, viewController: viewController, grantedAction: grantedAction, enterManuallyAction: enterManuallyAction, addFromPhotoLibraryAction: addFromPhotoLibraryAction)
     }
 
     static func launchPaymentScanner(_ viewController: ScanViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil) {
-        launchScanner(viewController: viewController, grantedAction: grantedAction, enterManuallyAction: enterManuallyAction)
+        launchScanner(walletType: .payment, viewController: viewController, grantedAction: grantedAction, enterManuallyAction: enterManuallyAction)
     }
 
-    private static func launchScanner(viewController: UIViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil, addFromPhotoLibraryAction: EmptyCompletionBlock? = nil) {
-        let enterManuallyAlert = BinkAlertController.cardScannerEnterManuallyAlertController {
+    private static func launchScanner(walletType: WalletType, viewController: UIViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil, addFromPhotoLibraryAction: EmptyCompletionBlock? = nil) {
+        let enterManuallyAlert = BinkAlertController.cardScannerEnterManuallyAlertController(walletType: walletType) {
             enterManuallyAction?()
         } addFromPhotoLibraryAction: {
             addFromPhotoLibraryAction?()
         }
-
 
         if PermissionsUtility.videoCaptureIsAuthorized {
             grantedAction()
