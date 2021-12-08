@@ -37,8 +37,9 @@ protocol CoreDataTestable {
 extension CoreDataTestable {
     static func mapResponseToManagedObject<ResponseModel: CoreDataMappable, ManagedObjectType: CD_BaseObject>(_ responseModel: ResponseModel, managedObjectType: ManagedObjectType.Type, completion: @escaping (ManagedObjectType) -> Void) {
         Current.database.performTask { context in
-            let managedObject = responseModel.mapToCoreData(context, .update, overrideID: nil) as! ManagedObjectType
-            completion(managedObject)
+            if let managedObject = responseModel.mapToCoreData(context, .update, overrideID: nil) as? ManagedObjectType {
+                completion(managedObject)
+            }
         }
     }
     
@@ -46,8 +47,9 @@ extension CoreDataTestable {
         Current.database.performTask { context in
             var managedObjects: [ManagedObjectType] = []
             responseModels.forEach {
-                let managedObject = $0.mapToCoreData(context, .update, overrideID: nil) as! ManagedObjectType
-                managedObjects.append(managedObject)
+                if let managedObject = $0.mapToCoreData(context, .update, overrideID: nil) as? ManagedObjectType {
+                    managedObjects.append(managedObject)
+                }
             }
             completion(managedObjects)
         }
@@ -56,8 +58,9 @@ extension CoreDataTestable {
 
     func mapResponseToManagedObject<ResponseModel: CoreDataMappable, ManagedObjectType: CD_BaseObject>(_ responseModel: ResponseModel, managedObjectType: ManagedObjectType.Type, completion: @escaping (ManagedObjectType) -> Void) {
         Current.database.performTask { context in
-            let managedObject = responseModel.mapToCoreData(context, .update, overrideID: nil) as! ManagedObjectType
-            completion(managedObject)
+            if let managedObject = responseModel.mapToCoreData(context, .update, overrideID: nil) as? ManagedObjectType {
+                completion(managedObject)
+            }
         }
     }
     
@@ -65,8 +68,9 @@ extension CoreDataTestable {
         Current.database.performTask { context in
             var managedObjects: [ManagedObjectType] = []
             responseModels.forEach {
-                let managedObject = $0.mapToCoreData(context, .update, overrideID: nil) as! ManagedObjectType
-                managedObjects.append(managedObject)
+                if let managedObject = $0.mapToCoreData(context, .update, overrideID: nil) as? ManagedObjectType {
+                    managedObjects.append(managedObject)
+                }
             }
             completion(managedObjects)
         }
