@@ -307,7 +307,6 @@
 		CE73F9AE2600B64E00D53BCF /* HeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE73F9AC2600B64E00D53BCF /* HeaderTableViewCell.xib */; };
 		CE85A1D226A5DB43003B74CD /* EmailClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D126A5DB43003B74CD /* EmailClient.swift */; };
 		CE85A1D626A6CD97003B74CD /* LoginSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D526A6CD97003B74CD /* LoginSuccessViewController.swift */; };
-		CE85A1D826B0096B003B74CD /* UniversalLinkUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D726B0096A003B74CD /* UniversalLinkUtility.swift */; };
 		CE85A1DB26B05D95003B74CD /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CE85A1DA26B05D95003B74CD /* Lottie */; };
 		CE85A20126B15436003B74CD /* success.json in Resources */ = {isa = PBXBuildFile; fileRef = CE85A20026B15436003B74CD /* success.json */; };
 		CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */; };
@@ -3775,7 +3774,6 @@
 				CEA0E1E82750E04500CC2FC6 /* AutofillUtil.swift in Sources */,
 				EFA5F7112379A7C70027AB80 /* CD_MembershipPlanAccount.swift in Sources */,
 				EFB055A623F453C400D64F86 /* PLRStampView.swift in Sources */,
-				CE85A1D826B0096B003B74CD /* UniversalLinkUtility.swift in Sources */,
 				3CFDB227230C38A700E75A14 /* BinkTextField.swift in Sources */,
 				DBA6CB4F237C94CD000313D4 /* UIViewController+binkapp.swift in Sources */,
 				BD475E7123A2AED80071302A /* CD_PlanDocumentDisplay.swift in Sources */,
