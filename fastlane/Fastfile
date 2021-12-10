@@ -177,7 +177,7 @@ platform :ios do
     )
 
     upload_to_testflight(
-      changelog: "Develop build for merge: " + options[:git_message]",
+      changelog: "Develop build for merge: " + options[:git_message],
       distribute_external: true,
       groups: "Bink Internal",
       reject_build_waiting_for_review: true
