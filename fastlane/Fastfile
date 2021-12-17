@@ -14,7 +14,7 @@ platform :ios do
     ENV["COVERAGE_EXCLUDE_TARGETS"] = ""
 
     # This allows the command line iTunes Connect uploaded to get through out firewall, otherwise all connections are blocked
-    ENV["DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS"] = "-t DAV"
+    # ENV["DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS"] = "-t DAV"
 
   end
 
