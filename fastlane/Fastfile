@@ -180,7 +180,8 @@ platform :ios do
       changelog: "Develop build for merge: " + options[:git_message],
       distribute_external: true,
       groups: "Bink Internal",
-      reject_build_waiting_for_review: true
+      reject_build_waiting_for_review: true,
+      skip_waiting_for_build_processing: true
     )
   end
 
