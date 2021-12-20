@@ -10,6 +10,8 @@ import UIKit
 import SwiftUI
 import WidgetKit
 
+// swiftlint:disable force_unwrapping
+
 enum WidgetUrlPath: String {
     case addCard = "add_button"
     case signIn = "sign_in"

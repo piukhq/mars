@@ -20,9 +20,9 @@ enum WalletDataSourceSection: Int, CaseIterable {
 }
 
 /// Disabling pending a review of diffable data source and core data behaviour
-//typealias WalletDataSourceItem = AnyHashable
-//typealias WalletDataSource = UICollectionViewDiffableDataSource<WalletDataSourceSection, WalletDataSourceItem>
-//typealias WalletDataSourceSnapshot = NSDiffableDataSourceSnapshot<WalletDataSourceSection, WalletDataSourceItem>
+// typealias WalletDataSourceItem = AnyHashable
+// typealias WalletDataSource = UICollectionViewDiffableDataSource<WalletDataSourceSection, WalletDataSourceItem>
+// typealias WalletDataSourceSnapshot = NSDiffableDataSourceSnapshot<WalletDataSourceSection, WalletDataSourceItem>
 
 class WalletViewController<T: WalletViewModel>: BinkViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, InAppReviewable {
     lazy var collectionView: UICollectionView = {
@@ -185,14 +185,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     func configureCollectionView() {
         view.addSubview(collectionView)
         collectionView.addSubview(refreshControl)
-        
-        /// Disabling pending a review of diffable data source and core data behaviour
-//        if #available(iOS 14.0, *) {
-//            collectionView.dataSource = diffableDataSource
-//        } else {
-//            collectionView.dataSource = self
-//        }
-        
         collectionView.dataSource = self
         collectionView.delegate = self
         
@@ -202,6 +194,13 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
             collectionView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
+        
+        /// Disabling pending a review of diffable data source and core data behaviour
+//        if #available(iOS 14.0, *) {
+//            collectionView.dataSource = diffableDataSource
+//        } else {
+//            collectionView.dataSource = self
+//        }
     }
     
     func reloadCollectionView(animated: Bool = true) {
@@ -242,6 +241,12 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     }
     
     @objc private func refreshLocal() {
+        if let indexPath = indexPathOfCardToDelete {
+            deleteCard(at: indexPath)
+        } else {
+            reloadCollectionView()
+        }
+        
         /// Disabling pending a review of diffable data source and core data behaviour
 //        if #available(iOS 14.0, *) {
 //            reloadCollectionView()
@@ -252,12 +257,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
 //                reloadCollectionView()
 //            }
 //        }
-        
-        if let indexPath = indexPathOfCardToDelete {
-            deleteCard(at: indexPath)
-        } else {
-            reloadCollectionView()
-        }
     }
     
     @objc private func stopRefreshing() {

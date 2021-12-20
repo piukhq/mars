@@ -68,7 +68,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     }()
     
     private lazy var showBarcodeButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .custom)
         button.titleLabel?.font = .bodyTextLarge
         button.addTarget(self, action: #selector(showBarcodeButtonPressed), for: .touchUpInside)
         button.accessibilityIdentifier = "Show barcode button"
