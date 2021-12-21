@@ -98,7 +98,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     }()
     
     private lazy var cancelButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(Asset.close.image, for: .normal)
         button.addTarget(self, action: #selector(close), for: .touchUpInside)

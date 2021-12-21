@@ -167,14 +167,16 @@ class WebScrapingUtility: NSObject {
                 } else {
                     /// If not, use priority web view
                     /// Clear all merchant data from datastore first to ensure no conflicts
-                    defaultDataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), for: records.filter {
-                        if let merchant = agent.merchant {
-                            return $0.displayName.contains(merchant)
-                        }
-                        return false
-                    }) {
-                        completion(.success(self.priorityWebview))
-                        return
+                    defaultDataStore.removeData(
+                        ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
+                        for: records.filter {
+                            if let merchant = agent.merchant {
+                                return $0.displayName.contains(merchant)
+                            }
+                            return false
+                        }) {
+                            completion(.success(self.priorityWebview))
+                            return
                     }
                 }
             }
