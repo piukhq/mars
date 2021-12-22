@@ -164,20 +164,13 @@ platform :ios do
 
     increment_build_number(build_number: options[:build_number])
 
-    run_tests(
-      workspace: "binkapp.xcworkspace",
-      device: "iPhone 12 Pro",
-      scheme: "binkapp tests",
-      testplan: "nightly"
-    )
-
     build_app(
       workspace: "binkapp.xcworkspace",
       scheme: "binkapp app store (internal)"
     )
 
     upload_to_testflight(
-      changelog: "Develop build for merge: " + options[:git_message],
+      changelog: "Latest Develop build",
       distribute_external: true,
       groups: "Bink Internal",
       reject_build_waiting_for_review: true,
