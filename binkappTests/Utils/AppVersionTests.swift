@@ -55,11 +55,12 @@ class AppVersionTests: XCTestCase {
     }
     
     func test_isMoreRecentThanVersion_returnsCorrectly() {
-        let currentAppVersion = AppVersion(versionString: "1.2.3")!
-        var recommendedLiveAppVersion = AppVersion(versionString: "1.2.4")!
-        XCTAssertTrue(recommendedLiveAppVersion.isMoreRecentThanVersion(currentAppVersion))
-        
-        recommendedLiveAppVersion = AppVersion(versionString: "1.2.1")!
-        XCTAssertFalse(recommendedLiveAppVersion.isMoreRecentThanVersion(currentAppVersion))
+        if let currentAppVersion = AppVersion(versionString: "1.2.3"), let recommendedLiveAppVersion = AppVersion(versionString: "1.2.4") {
+            XCTAssertTrue(recommendedLiveAppVersion.isMoreRecentThanVersion(currentAppVersion))
+            
+            if let recommendedLiveAppVersion = AppVersion(versionString: "1.2.1") {
+                XCTAssertFalse(recommendedLiveAppVersion.isMoreRecentThanVersion(currentAppVersion))
+            }
+        }
     }
 }

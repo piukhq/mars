@@ -440,6 +440,7 @@ extension BrowseBrandsViewController: UIImagePickerControllerDelegate, UINavigat
                     let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, existingMembershipCard: nil, prefilledFormValues: [prefilledValues])
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
+                    HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
                 }
             }
         }

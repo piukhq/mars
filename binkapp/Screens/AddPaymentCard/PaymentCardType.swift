@@ -154,7 +154,7 @@ extension String: PrefixContainable {
 
 extension ClosedRange: PrefixContainable {
     func hasCommonPrefix(with text: String) -> Bool {
-        //cannot include Where clause in protocol conformance, so have to ensure Bound == String :(
+        // Cannot include Where clause in protocol conformance, so have to ensure Bound == String :(
         guard let lower = lowerBound as? String, let upper = upperBound as? String else { return false }
         
         let trimmedRange: ClosedRange<Substring> = {

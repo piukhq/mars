@@ -155,6 +155,15 @@
         }
       },
       {
+        "package": "Mixpanel",
+        "repositoryURL": "https://github.com/mixpanel/mixpanel-swift.git",
+        "state": {
+          "branch": "master",
+          "revision": "0b88c54c27be9470578beadfe88e80bce5def306",
+          "version": null
+        }
+      },
+      {
         "package": "nanopb",
         "repositoryURL": "https://github.com/firebase/nanopb.git",
         "state": {
@@ -177,8 +186,8 @@
         "repositoryURL": "https://github.com/getsentry/sentry-cocoa.git",
         "state": {
           "branch": null,
-          "revision": "946cbb6daccedf40d652a12138f78e96f660e1ad",
-          "version": "6.2.1"
+          "revision": "5dcd5c245545a03a27988dcdb1a53f78fbee12a1",
+          "version": "7.8.0"
         }
       },
       {

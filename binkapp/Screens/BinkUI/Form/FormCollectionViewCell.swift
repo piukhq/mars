@@ -51,12 +51,15 @@ class FormCollectionViewCell: UICollectionViewCell {
         stackView.layer.cornerCurve = .continuous
         stackView.layer.cornerRadius = 12
         stackView.clipsToBounds = true
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: .handleCellTap)
+        stackView.addGestureRecognizer(gestureRecognizer)
+        stackView.isUserInteractionEnabled = true
         return stackView
     }()
     
     /// Contains title label, text field, camera icon and validation icon
     private lazy var fieldContentHStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [fieldLabelsVStack, validationIconImageView])
+        let stackView = UIStackView(arrangedSubviews: [fieldLabelsVStack])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 7, right: 10)
@@ -72,9 +75,9 @@ class FormCollectionViewCell: UICollectionViewCell {
         return stackView
     }()
     
-    /// The view that contains the text field and the camera icon
+    /// The view that contains the text field, camera icon and the validation icon
     private lazy var textFieldHStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [textField, textFieldRightView])
+        let stackView = UIStackView(arrangedSubviews: [textField, textFieldRightView, validationIconImageView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally
@@ -101,7 +104,6 @@ class FormCollectionViewCell: UICollectionViewCell {
         field.heightAnchor.constraint(equalToConstant: Constants.textFieldHeight).isActive = true
         field.addTarget(self, action: .textFieldUpdated, for: .editingChanged)
         field.setContentCompressionResistancePriority(.required, for: .vertical)
-        field.inputAccessoryView = inputAccessory
         field.smartQuotesType = .no // This stops the "smart" apostrophe setting. The default breaks field regex validation
         return field
     }()
@@ -112,6 +114,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             imageView.widthAnchor.constraint(equalToConstant: 20)
         ])
+        imageView.transform = CGAffineTransform(translationX: -4, y: 0)
         imageView.isHidden = true
         return imageView
     }()
@@ -244,6 +247,12 @@ class FormCollectionViewCell: UICollectionViewCell {
         configureTextFieldRightView(shouldDisplay: formField?.value == nil)
         validationLabel.isHidden = textField.text?.isEmpty == true ? true : field.isValid()
         
+        if Current.userDefaults.bool(forDefaultsKey: .rememberMyDetails) || AutofillUtil.hasStoredData {
+            textField.inputAccessoryView = AutofillFormInputAccessory(field: field, delegate: self)
+        } else {
+            textField.inputAccessoryView = inputAccessory
+        }
+        
         if case let .expiry(months, years) = field.fieldType {
             textField.inputView = FormMultipleChoiceInput(with: [months, years], delegate: self)
         } else if case let .choice(data) = field.fieldType {
@@ -294,9 +303,13 @@ class FormCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    @objc func handleCellTap() {
+        textField.becomeFirstResponder()
+    }
+    
     @objc func accessoryDoneTouchUpInside() {
-        if let multipleChoiceInput = textField.inputView as? FormMultipleChoiceInput {
-            multipleChoiceInputDidUpdate(newValue: multipleChoiceInput.fullContentString, backingData: multipleChoiceInput.backingData)
+        if let multipleChoiceInput = textField.inputView as? FormMultipleChoiceInput, let textFieldIsEmpty = textField.text?.isEmpty {
+            multipleChoiceInputDidUpdate(newValue: textFieldIsEmpty ? "" : multipleChoiceInput.fullContentString, backingData: multipleChoiceInput.backingData)
         }
         
         textField.resignFirstResponder()
@@ -392,7 +405,9 @@ extension FormCollectionViewCell: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField.inputView?.isKind(of: FormMultipleChoiceInput.self) ?? false || textField.inputView?.isKind(of: UIDatePicker.self) ?? false {
-            textField.text = pickerSelectedChoice
+            if let multipleChoiceInput = textField.inputView as? FormMultipleChoiceInput {
+                textField.text = (pickerSelectedChoice?.isEmpty ?? false) ? multipleChoiceInput.fullContentString : pickerSelectedChoice
+            }
         }
         
         setState(.active)
@@ -419,8 +434,20 @@ extension FormCollectionViewCell: FormMultipleChoiceInputDelegate {
     }
 }
 
+extension FormCollectionViewCell: AutofillFormInputAccessoryDelegate {
+    func inputAccessoryDidTapDone(_ inputAccessory: AutofillFormInputAccessory) {
+        accessoryDoneTouchUpInside()
+    }
+    
+    func inputAccessory(_ inputAccessory: AutofillFormInputAccessory, didSelectValue value: String) {
+        formField?.updateValue(value)
+        textField.text = value
+    }
+}
+
 fileprivate extension Selector {
     static let textFieldUpdated = #selector(FormCollectionViewCell.textFieldUpdated(_:text:backingData:))
     static let accessoryDoneTouchUpInside = #selector(FormCollectionViewCell.accessoryDoneTouchUpInside)
     static let handleScanButtonTap = #selector(FormCollectionViewCell.handleScanButtonTap)
+    static let handleCellTap = #selector(FormCollectionViewCell.handleCellTap)
 }

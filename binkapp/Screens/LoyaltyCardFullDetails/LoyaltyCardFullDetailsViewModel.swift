@@ -108,6 +108,7 @@ class LoyaltyCardFullDetailsViewModel {
         let viewController = ViewControllerFactory.makeBarcodeViewController(membershipCard: membershipCard)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
+        MixpanelUtility.track(.viewBarcode(brandName: membershipCard.membershipPlan?.account?.companyName ?? "Unknown", route: .lcd))
     }
     
     func goToScreenForState(state: ModuleState, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) {
@@ -289,6 +290,8 @@ extension LoyaltyCardFullDetailsViewModel {
                 Current.navigate.to(navigationRequest)
                 return
             }
+            MixpanelUtility.track(.loyaltyCardDeleted(brandName: self.brandName, route: .lcd))
+
             self.repository.delete(self.membershipCard) {
                 if #available(iOS 14.0, *) {
                     BinkLogger.infoPrivateHash(event: LoyaltyCardLoggerEvent.loyaltyCardDeleted, value: self.membershipCard.id)

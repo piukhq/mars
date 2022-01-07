@@ -27,6 +27,7 @@ struct DebugMenuView: View {
                 ToggleDebugRow(title: "Allow custom bundle/client on login", defaultsKey: .allowCustomBundleClientOnLogin)
                 ToggleDebugRow(title: "Response code visualiser", defaultsKey: .responseCodeVisualiser)
                 ToggleDebugRow(title: "Apply in-app review rules", defaultsKey: .applyInAppReviewRules)
+                ToggleDebugRow(title: "Enable analytics", defaultsKey: .analyticsDebugMode)
                 
                 if hasUser {
                     ToggleDebugRow(title: "LPC debug mode", defaultsKey: .lpcDebugMode)
@@ -129,6 +130,13 @@ struct ToggleDebugRow: View {
         .toggleStyle(SwitchToggleStyle(tint: Color(.binkGradientBlueRight)))
         .onChange(of: isEnabled) { enabled in
             Current.userDefaults.set(enabled, forDefaultsKey: userDefaultsKey)
+            
+            if case .analyticsDebugMode = userDefaultsKey {
+                MixpanelUtility.configure()
+                if let userID = Current.userManager.currentUserId {
+                    MixpanelUtility.setUserIdentity(userId: userID)
+                }
+            }
         }
     }
 }

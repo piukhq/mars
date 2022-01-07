@@ -30,7 +30,7 @@ struct AccountPostModel: Codable {
     var enrolFields: [PostModel]?
     var registrationFields: [PostModel]?
     
-    var hasValidPayload: Bool {       
+    var hasValidPayload: Bool {
         guard !(addFields?.contains(where: { $0.value.isNilOrEmpty }) == true) else { return false }
         guard !(authoriseFields?.contains(where: { $0.value.isNilOrEmpty }) == true) else { return false }
         guard !(enrolFields?.contains(where: { $0.value.isNilOrEmpty }) == true) else { return false }

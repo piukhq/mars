@@ -12,9 +12,6 @@ class BinkInfoButton: UIButton {
         super.layoutSubviews()
         
         semanticContentAttribute = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft ? .forceLeftToRight : .forceRightToLeft
-        tintColor = UIColor.blueAccent
-        titleLabel?.font = UIFont.linkTextButtonNormal
-        setTitleColor(UIColor.blueAccent, for: .normal)
         accessibilityIdentifier = "Bink info button"
         
         if imageView != nil {
