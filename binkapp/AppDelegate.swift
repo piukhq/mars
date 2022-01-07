@@ -199,6 +199,7 @@ extension AppDelegate: WCSessionDelegate {
     func sessionDidDeactivate(_ session: WCSession) {}
     
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
+        print("iPhone: Did receive message: \(message)")
         DispatchQueue.main.async {
             if let _ = message[WKSessionKey.refreshWallet] {
                 if Current.userManager.hasCurrentUser {
@@ -206,6 +207,17 @@ extension AppDelegate: WCSessionDelegate {
                 } else {
                     Current.watchController.hasCurrentUser(false)
                 }
+            }
+        }
+    }
+    
+    func sessionReachabilityDidChange(_ session: WCSession) {
+        print("iPhone: reachability did change: \(session.isReachable)")
+        if session.isReachable == true {
+            if Current.userManager.hasCurrentUser {
+                Current.watchController.sendWalletCardsToWatch(membershipCards: Current.wallet.membershipCards)
+            } else {
+                Current.watchController.hasCurrentUser(false)
             }
         }
     }

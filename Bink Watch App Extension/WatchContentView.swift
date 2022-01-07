@@ -24,25 +24,14 @@ struct WatchContentView: View {
     }
     
     @WKExtensionDelegateAdaptor(ExtensionDelegate.self) var delegate
-    @Environment(\.scenePhase) var scenePhase
     @ObservedObject var viewModel = WatchAppViewModel()
     
     var body: some View {
         if viewModel.didSyncWithPhoneOnLaunch {
             if !viewModel.hasCurrentUser {
                 WatchTextStack(title: L10n.unauthenticatedStateTitle, description: L10n.unauthenticatedStateDescription)
-                    .onChange(of: scenePhase) { phase in
-                        if phase == .active {
-                            viewModel.getwalletData()
-                        }
-                    }
             } else if viewModel.cards.isEmpty {
                 WatchTextStack(title: L10n.brandsListNoSupportedCardsTitle, description: L10n.brandsListNoSupportedCardsDescription)
-                    .onChange(of: scenePhase) { phase in
-                        if phase == .active {
-                            viewModel.getwalletData()
-                        }
-                    }
             } else {
                 GeometryReader { geo in
                     ScrollView {
@@ -84,20 +73,10 @@ struct WatchContentView: View {
                     }
                     .edgesIgnoringSafeArea(.bottom)
                 }
-                .onChange(of: scenePhase) { phase in
-                    if phase == .active {
-                        viewModel.getwalletData()
-                    }
-                }
             }
         } else {
             if viewModel.noResponseFromPhone {
                 WatchTextStack(title: L10n.noResponseTitle, description: L10n.noResponseDesciption)
-                    .onChange(of: scenePhase) { phase in
-                        if phase == .active {
-                            viewModel.getwalletData()
-                        }
-                    }
             } else {
                 ProgressView()
                     .onAppear {
