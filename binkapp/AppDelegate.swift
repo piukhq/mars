@@ -81,9 +81,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         Current.userManager.clearKeychainIfNecessary()
         
         if WCSession.isSupported() {
-            let session = WCSession.default
-            session.delegate = self
-            session.activate()
+//            let session = WCSession.default
+            watchController.session.delegate = self
+            watchController.session.activate()
+//            session.delegate = self
+//            session.activate()
         }
         
         return true
@@ -196,9 +198,15 @@ private extension AppDelegate {
 // MARK: - Watch Connectivity
 
 extension AppDelegate: WCSessionDelegate {
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
-    func sessionDidBecomeInactive(_ session: WCSession) {}
-    func sessionDidDeactivate(_ session: WCSession) {}
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        print("iPhone: Activation did complete: \(activationState)")
+    }
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        print("iPhone: Session did become inactive")
+    }
+    func sessionDidDeactivate(_ session: WCSession) {
+        print("iPhone: Session did deactivate")
+    }
     
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         print("iPhone: Did receive message: \(message)")
@@ -215,7 +223,20 @@ extension AppDelegate: WCSessionDelegate {
     
     func sessionReachabilityDidChange(_ session: WCSession) {
         print("iPhone: reachability did change: \(session.isReachable)")
-        if session.isReachable == true {
+        
+        switch session.activationState {
+        case .notActivated:
+            print("Session not activated")
+        case .inactive:
+            print("Session inactive")
+        case .activated:
+            print("Session activated")
+        @unknown default:
+            break
+        }
+        
+        
+        if session.isReachable {
             if Current.userManager.hasCurrentUser {
                 Current.watchController.sendWalletCardsToWatch(membershipCards: Current.wallet.membershipCards)
             } else {

@@ -8,6 +8,7 @@
 
 import UIKit
 import WatchConnectivity
+import WatchKit
 
 final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
     private var session: WCSession
@@ -25,6 +26,9 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
     @Published var noResponseFromPhone = false
     
     func getwalletData() {
+        print("Session state: \(session.activationState)")
+        print("Session reachability: \(session.isReachable)")
+
         session.sendMessage([WKSessionKey.refreshWallet: true], replyHandler: nil) { error in
             print(error.localizedDescription)
         }
@@ -84,8 +88,16 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
     }
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        print("Watch: Session did activate: \(activationState)")
         guard activationState == .activated else { return }
         getwalletData()
+    }
+    
+    func sessionReachabilityDidChange(_ session: WCSession) {
+        print("Watch: reachability did change: \(session.isReachable)")
+        if session.isReachable {
+            getwalletData()
+        }
     }
 }
 

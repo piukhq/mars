@@ -25,6 +25,7 @@ struct WatchContentView: View {
     
     @WKExtensionDelegateAdaptor(ExtensionDelegate.self) var delegate
     @ObservedObject var viewModel = WatchAppViewModel()
+    @Environment(\.scenePhase) var scenePhase
     
     var body: some View {
         if viewModel.didSyncWithPhoneOnLaunch {
@@ -72,11 +73,21 @@ struct WatchContentView: View {
                         .padding(.bottom, 20)
                     }
                     .edgesIgnoringSafeArea(.bottom)
+                    .onChange(of: scenePhase) { phase in
+                        if phase == .active {
+                            viewModel.getwalletData()
+                        }
+                    }
                 }
             }
         } else {
             if viewModel.noResponseFromPhone {
                 WatchTextStack(title: L10n.noResponseTitle, description: L10n.noResponseDesciption)
+                    .onChange(of: scenePhase) { phase in
+                        if phase == .active {
+                            viewModel.getwalletData()
+                        }
+                    }
             } else {
                 ProgressView()
                     .onAppear {
