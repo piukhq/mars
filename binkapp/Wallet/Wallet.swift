@@ -175,7 +175,7 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
             NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
             completion?(true, nil)
             if self.hasLaunched {
-                Current.watchController.sendWalletCardsToWatch(membershipCards: self.membershipCards)
+                Current.watchController.sendMembershipCardsToWatch()
             }
         }
     }
@@ -350,7 +350,7 @@ extension Wallet {
     
     func reorderMembershipCard(_ card: CD_MembershipCard, from sourceIndex: Int, to destinationIndex: Int) {
         reorderWalletCard(card, in: &localMembershipCardsOrder, from: sourceIndex, to: destinationIndex, updating: &membershipCards)
-        WatchController().sendWalletCardsToWatch(membershipCards: membershipCards)
+        WatchController().sendMembershipCardsToWatch()
         MixpanelUtility.track(.loyaltyCardManuallyReordered(brandName: card.membershipPlan?.account?.companyName ?? "Unknown", originalIndex: sourceIndex, destinationIndex: destinationIndex))
     }
 

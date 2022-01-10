@@ -198,50 +198,20 @@ private extension AppDelegate {
 // MARK: - Watch Connectivity
 
 extension AppDelegate: WCSessionDelegate {
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        print("iPhone: Activation did complete: \(activationState)")
-    }
-    func sessionDidBecomeInactive(_ session: WCSession) {
-        print("iPhone: Session did become inactive")
-    }
-    func sessionDidDeactivate(_ session: WCSession) {
-        print("iPhone: Session did deactivate")
-    }
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
+    func sessionDidBecomeInactive(_ session: WCSession) {}
+    func sessionDidDeactivate(_ session: WCSession) {}
     
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
-        print("iPhone: Did receive message: \(message)")
         DispatchQueue.main.async {
             if let _ = message[WKSessionKey.refreshWallet] {
-                if Current.userManager.hasCurrentUser {
-                    Current.watchController.sendWalletCardsToWatch(membershipCards: Current.wallet.membershipCards)
-                } else {
-                    Current.watchController.hasCurrentUser(false)
-                }
+                Current.watchController.sendMembershipCardsToWatch()
             }
         }
     }
     
     func sessionReachabilityDidChange(_ session: WCSession) {
-        print("iPhone: reachability did change: \(session.isReachable)")
-        
-        switch session.activationState {
-        case .notActivated:
-            print("Session not activated")
-        case .inactive:
-            print("Session inactive")
-        case .activated:
-            print("Session activated")
-        @unknown default:
-            break
-        }
-        
-        
-        if session.isReachable {
-            if Current.userManager.hasCurrentUser {
-                Current.watchController.sendWalletCardsToWatch(membershipCards: Current.wallet.membershipCards)
-            } else {
-                Current.watchController.hasCurrentUser(false)
-            }
-        }
+        guard session.isReachable else { return }
+        Current.watchController.sendMembershipCardsToWatch()
     }
 }

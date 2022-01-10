@@ -12,11 +12,16 @@ import WatchConnectivity
 class WatchController {
     let session = WCSession.default
 
-    func sendWalletCardsToWatch(membershipCards: [CD_MembershipCard]?, completion: EmptyCompletionBlock? = nil) {
+    func sendMembershipCardsToWatch(completion: EmptyCompletionBlock? = nil) {
+        guard Current.userManager.hasCurrentUser else {
+            hasCurrentUser(false)
+            return
+        }
+        
         var watchLoyaltyCardsDictArray: [[String: Any]] = []
         
         if session.isReachable {
-            guard let membershipCards = membershipCards else { return }
+            guard let membershipCards = Current.wallet.membershipCards else { return }
             
             for card in membershipCards {
                 let barcodeViewModel = BarcodeViewModel(membershipCard: card)
