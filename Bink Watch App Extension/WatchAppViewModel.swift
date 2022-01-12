@@ -52,10 +52,11 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
             }
             
             if let imageDict = message[WKSessionKey.iconImage] as? [String: Any] {
-                if let watchLoyaltyCardIcon = try? WatchLoyaltyCardIcon(dictionary: imageDict) {
+                if let watchLoyaltyCardImageData = try? WatchLoyaltyCardImageData(dictionary: imageDict) {
                     for (i, var card) in self.cards.enumerated() {
-                        if card.id == watchLoyaltyCardIcon.id {
-                            card.iconImageData = watchLoyaltyCardIcon.imageData
+                        if card.id == watchLoyaltyCardImageData.id {
+                            card.iconImageData = watchLoyaltyCardImageData.iconImageData
+                            card.barcodeImageData = watchLoyaltyCardImageData.barcodeImageData
                             self.cards[i] = card
                         }
                     }

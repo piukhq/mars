@@ -12,7 +12,7 @@ struct WatchLoyaltyCard: Codable {
     let id: String
     let companyName: String
     var iconImageData: Data?
-    let barcodeImageData: Data
+    var barcodeImageData: Data?
     let balanceString: String?
     
     var iconImage: UIImage? {
@@ -23,13 +23,17 @@ struct WatchLoyaltyCard: Codable {
     }
     
     var barcodeImage: UIImage? {
-        return UIImage(data: barcodeImageData)
+        if let barcodeImageData = barcodeImageData {
+            return UIImage(data: barcodeImageData)
+        }
+        return nil
     }
 }
 
-struct WatchLoyaltyCardIcon: Codable {
+struct WatchLoyaltyCardImageData: Codable {
     let id: String
-    let imageData: Data?
+    let iconImageData: Data?
+    let barcodeImageData: Data?
 }
 
 enum WKSessionKey {

@@ -24,9 +24,8 @@ class WatchController {
             guard let membershipCards = Current.wallet.membershipCards else { return }
             
             for card in membershipCards {
-                let barcodeViewModel = BarcodeViewModel(membershipCard: card)
-                if let barcodeImageData = barcodeViewModel.barcodeImage(withSize: CGSize(width: 200, height: 200))?.pngData() {
-                    /// If we have a barcode, send loyalty card to watch
+                /// If we have a barcode, send loyalty card to watch
+                if BarcodeViewModel(membershipCard: card).isBarcodeAvailable {
                     guard let membershipPlan = card.membershipPlan else { return }
                     let walletCardViewModel = WalletLoyaltyCardCellViewModel(membershipCard: card)
                     var balanceString: String?
@@ -34,21 +33,28 @@ class WatchController {
                         balanceString = "\(walletCardViewModel.pointsValueText ?? "") \(walletCardViewModel.pointsValueSuffixText ?? "")"
                     }
                     
-                    if let watchLoyaltyCardsDict = WatchLoyaltyCard(id: card.card?.barcode ?? "", companyName: membershipPlan.account?.companyName ?? "", iconImageData: nil, barcodeImageData: barcodeImageData, balanceString: balanceString).dictionary {
+                    if let watchLoyaltyCardsDict = WatchLoyaltyCard(id: card.card?.barcode ?? "", companyName: membershipPlan.account?.companyName ?? "", iconImageData: nil, barcodeImageData: nil, balanceString: balanceString).dictionary {
                         watchLoyaltyCardsDictArray.append(watchLoyaltyCardsDict)
                     }
                 }
             }
             
-            session.sendMessage([WKSessionKey.refreshWallet: watchLoyaltyCardsDictArray], replyHandler: nil)
+            session.sendMessage([WKSessionKey.refreshWallet: watchLoyaltyCardsDictArray], replyHandler: nil) { error in
+                print(error.localizedDescription)
+            }
             completion?()
 
             for card in membershipCards {
                 guard let plan = card.membershipPlan else { return }
                 
                 ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil) { [weak self] retrievedImage in
-                    if let imageDict = WatchLoyaltyCardIcon(id: card.card?.barcode ?? "", imageData: retrievedImage?.pngData()).dictionary {
-                        self?.session.sendMessage([WKSessionKey.iconImage: imageDict], replyHandler: nil)
+                    let barcodeViewModel = BarcodeViewModel(membershipCard: card)
+                    let barcodeImageData = barcodeViewModel.barcodeImage(withSize: CGSize(width: 200, height: 200))?.pngData()
+                    
+                    if let imageDict = WatchLoyaltyCardImageData(id: card.card?.barcode ?? "", iconImageData: retrievedImage?.pngData(), barcodeImageData: barcodeImageData).dictionary {
+                        self?.session.sendMessage([WKSessionKey.iconImage: imageDict], replyHandler: nil, errorHandler: { error in
+                            print("Images: \(error.localizedDescription)")
+                        })
                     }
                 }
             }
