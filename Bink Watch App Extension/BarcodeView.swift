@@ -14,29 +14,29 @@ struct BarcodeView: View {
     let balance: String?
     
     var body: some View {
-            HStack {
+        HStack {
+            Spacer()
+            VStack {
                 Spacer()
-                VStack {
+                Image(uiImage: barcodeImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                if let balance = balance {
+                    Text(balance)
+                        .foregroundColor(.black)
+                        .font(.nunitoSemiBold(16))
+                } else {
                     Spacer()
-                    Image(uiImage: barcodeImage)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                    if let balance = balance {
-                        Text(balance)
-                            .foregroundColor(.black)
-                            .font(.nunitoSemiBold(16))
-                    } else {
-                        Spacer()
-                    }
                 }
-                Spacer()
             }
-            .background(Color.white)
-            .edgesIgnoringSafeArea([.top, .bottom])
-            .onTapGesture {
-                self.presentationMode.wrappedValue.dismiss()
-            }
+            Spacer()
         }
+        .background(Color.white)
+        .edgesIgnoringSafeArea([.top, .bottom])
+        .onTapGesture {
+            self.presentationMode.wrappedValue.dismiss()
+        }
+    }
 }
 
 struct BarcodeView_Previews: PreviewProvider {

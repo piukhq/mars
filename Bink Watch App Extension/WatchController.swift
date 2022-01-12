@@ -11,6 +11,7 @@ import WatchConnectivity
 
 class WatchController {
     let session = WCSession.default
+    var watchRefreshRequired = true
 
     func sendMembershipCardsToWatch(completion: EmptyCompletionBlock? = nil) {
         guard Current.userManager.hasCurrentUser else {
@@ -20,7 +21,7 @@ class WatchController {
         
         var watchLoyaltyCardsDictArray: [[String: Any]] = []
         
-        if session.isReachable {
+        if session.isReachable && watchRefreshRequired {
             guard let membershipCards = Current.wallet.membershipCards else { return }
             
             for card in membershipCards {
@@ -43,6 +44,7 @@ class WatchController {
                 print(error.localizedDescription)
             }
             completion?()
+            watchRefreshRequired = false
 
             for card in membershipCards {
                 guard let plan = card.membershipPlan else { return }
@@ -73,6 +75,7 @@ class WatchController {
                 
                 if let object = WatchLoyaltyCard(id: membershipCard.card?.barcode ?? "", companyName: membershipPlan.account?.companyName ?? "", iconImageData: iconImageData, barcodeImageData: barcodeImageData, balanceString: balanceString).dictionary {
                     session.sendMessage([WKSessionKey.addCard: object], replyHandler: nil)
+                    watchRefreshRequired = true
                 }
             }
         }
@@ -81,6 +84,7 @@ class WatchController {
     func deleteLoyaltyCardFromWatch(barcode: String) {
         if session.isReachable {
             session.sendMessage([WKSessionKey.deleteCard: barcode], replyHandler: nil)
+            watchRefreshRequired = true
         }
     }
     

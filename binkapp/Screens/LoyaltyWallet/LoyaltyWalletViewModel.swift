@@ -53,7 +53,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
                 return
             }
             
-            WatchController().deleteLoyaltyCardFromWatch(barcode: card.card?.barcode ?? "")
+            Current.watchController.deleteLoyaltyCardFromWatch(barcode: card.card?.barcode ?? "")
 
             self.repository.delete(card) {
                 if #available(iOS 14.0, *) {

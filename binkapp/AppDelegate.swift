@@ -209,9 +209,4 @@ extension AppDelegate: WCSessionDelegate {
             }
         }
     }
-    
-    func sessionReachabilityDidChange(_ session: WCSession) {
-        guard session.isReachable else { return }
-        Current.watchController.sendMembershipCardsToWatch()
-    }
 }
