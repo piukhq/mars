@@ -19,13 +19,25 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
         session.activate()
     }
     
-    @Published var cards: [WatchLoyaltyCard] = []
+    var cards: [WatchLoyaltyCard] = [] {
+        didSet {
+            if !viewingBarcode {
+                refreshWallet()
+            }
+        }
+    }
+    var viewingBarcode = false
+    @Published var publishedCards: [WatchLoyaltyCard] = []
     @Published var hasCurrentUser = false
     @Published var didSyncWithPhoneOnLaunch = false
     @Published var noResponseFromPhone = false
     
     private func getwalletData() {
         session.sendMessage([WKSessionKey.refreshWallet: true], replyHandler: nil)
+    }
+    
+    func refreshWallet() {
+        publishedCards = cards
     }
     
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {

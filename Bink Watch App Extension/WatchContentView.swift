@@ -30,16 +30,16 @@ struct WatchContentView: View {
         if viewModel.didSyncWithPhoneOnLaunch {
             if !viewModel.hasCurrentUser {
                 WatchTextStack(title: L10n.unauthenticatedStateTitle, description: L10n.unauthenticatedStateDescription)
-            } else if viewModel.cards.isEmpty {
+            } else if viewModel.publishedCards.isEmpty {
                 WatchTextStack(title: L10n.brandsListNoSupportedCardsTitle, description: L10n.brandsListNoSupportedCardsDescription)
             } else {
                 GeometryReader { geo in
                     ScrollView {
                         VStack(spacing: geo.size.width > 190 ? Constants.vStackSpacingLarge : Constants.vStackSpacingSmall) {
-                            ForEach(viewModel.cards, id: \.id) { card in
+                            ForEach(viewModel.publishedCards, id: \.id) { card in
                                 NavigationLink {
                                     if let barcodeImage = card.barcodeImage {
-                                        BarcodeView(barcodeImage: barcodeImage, balance: card.balanceString)
+                                        BarcodeView(barcodeImage: barcodeImage, balance: card.balanceString, viewModel: viewModel)
                                             .navigationBarHidden(true)
                                     }
                                 } label: {

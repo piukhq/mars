@@ -12,6 +12,7 @@ struct BarcodeView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     let barcodeImage: UIImage
     let balance: String?
+    let viewModel: WatchAppViewModel
     
     var body: some View {
         HStack {
@@ -36,13 +37,20 @@ struct BarcodeView: View {
         .onTapGesture {
             self.presentationMode.wrappedValue.dismiss()
         }
+        .onAppear(perform: {
+            viewModel.viewingBarcode = true
+        })
+        .onDisappear {
+            viewModel.viewingBarcode = false
+            viewModel.refreshWallet()
+        }
     }
 }
 
 struct BarcodeView_Previews: PreviewProvider {
     static var previews: some View {
         if let image = UIImage(named: "qr") {
-            BarcodeView(barcodeImage: image, balance: "£10.00")
+            BarcodeView(barcodeImage: image, balance: "£10.00", viewModel: WatchAppViewModel())
         }
     }
 }

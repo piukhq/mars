@@ -26,7 +26,8 @@ class WatchController {
             
             for card in membershipCards {
                 /// If we have a barcode, send loyalty card to watch
-                if BarcodeViewModel(membershipCard: card).isBarcodeAvailable {
+                let barcodeViewModel = BarcodeViewModel(membershipCard: card)
+                if let _ = barcodeViewModel.barcodeImage(withSize: CGSize(width: 200, height: 200))?.pngData() {
                     guard let membershipPlan = card.membershipPlan else { return }
                     let walletCardViewModel = WalletLoyaltyCardCellViewModel(membershipCard: card)
                     var balanceString: String?
