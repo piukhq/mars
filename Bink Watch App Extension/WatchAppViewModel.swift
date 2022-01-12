@@ -56,7 +56,11 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
                     for (i, var card) in self.cards.enumerated() {
                         if card.id == watchLoyaltyCardImageData.id {
                             card.iconImageData = watchLoyaltyCardImageData.iconImageData
-                            card.barcodeImageData = watchLoyaltyCardImageData.barcodeImageData
+                            
+                            if card.barcodeImageData == nil {
+                                card.barcodeImageData = watchLoyaltyCardImageData.barcodeImageData
+                            }
+                            
                             self.cards[i] = card
                         }
                     }
