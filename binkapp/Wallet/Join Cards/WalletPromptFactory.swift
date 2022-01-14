@@ -35,7 +35,7 @@ enum WalletPromptFactory {
             
             // PLL
             if !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .link }) {
-                var pllPlans = plans.filter({ $0.featureSet?.planCardType == .link })
+                var pllPlans = plans.filter({ $0.featureSet?.planCardType == .link }).filter { $0.isPlanListable }
                 
                 if Configuration.isDebug() {
                     pllPlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.linkPromptDebugCellCount, sortedPlans: &pllPlans)
