@@ -81,11 +81,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         Current.userManager.clearKeychainIfNecessary()
         
         if WCSession.isSupported() {
-//            let session = WCSession.default
             watchController.session.delegate = self
             watchController.session.activate()
-//            session.delegate = self
-//            session.activate()
         }
         
         return true
