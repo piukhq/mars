@@ -33,11 +33,13 @@ class LoyaltyWalletViewModel: WalletViewModel {
         let viewController = ViewControllerFactory.makeBarcodeViewController(membershipCard: card)
         let navigationRequest = ModalNavigationRequest(viewController: viewController, completion: completion)
         Current.navigate.to(navigationRequest)
+        MixpanelUtility.track(.viewBarcode(brandName: card.membershipPlan?.account?.companyName ?? "Unknown", route: .wallet))
     }
     
     func toCardDetail(for card: CD_MembershipCard) {
         let navigationRequest = PushNavigationRequest(viewController: ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card))
         Current.navigate.to(navigationRequest)
+        MixpanelUtility.track(.lcdViewed(brandName: card.membershipPlan?.account?.companyName ?? "Unknown", route: .wallet))
     }
     
     func showDeleteConfirmationAlert(card: CD_MembershipCard, onCancel: @escaping () -> Void) {
@@ -54,6 +56,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
                 if #available(iOS 14.0, *) {
                     BinkLogger.infoPrivateHash(event: LoyaltyCardLoggerEvent.loyaltyCardDeleted, value: card.id)
                 }
+                MixpanelUtility.track(.loyaltyCardDeleted(brandName: card.membershipPlan?.account?.companyName ?? "Unknown", route: .wallet))
                 Current.wallet.refreshLocal()
             }
         }, onCancel: onCancel)

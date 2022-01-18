@@ -9,12 +9,12 @@
 import Foundation
 import CardScan
 
+enum WalletType {
+    case loyalty
+    case payment
+}
+
 enum WalletPromptFactory {
-    enum WalletType {
-        case loyalty
-        case payment
-    }
-    
     static func makeWalletPrompts(forWallet walletType: WalletType) -> [WalletPrompt] {
         var walletPrompts: [WalletPrompt] = []
         
@@ -48,8 +48,7 @@ enum WalletPromptFactory {
             if !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .view }) {
                 let plansEnabledOnRemoteConfig = Current.pointsScrapingManager.agents.filter { Current.pointsScrapingManager.planIdIsWebScrapable($0.membershipPlanId) }
                 if !plansEnabledOnRemoteConfig.isEmpty {
-                    let seePlans = plans.filter { $0.featureSet?.planCardType == .view }
-                    var liveSeePlans = seePlans.filter { plan -> Bool in
+                    var liveSeePlans = plans.filter { plan -> Bool in
                         return plansEnabledOnRemoteConfig.contains(where: { $0.membershipPlanId == Int(plan.id) })
                     }
                     

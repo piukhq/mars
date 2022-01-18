@@ -71,8 +71,9 @@ class CheckboxView: CustomView {
 
         if hideCheckbox {
             checkboxButton.isHidden = true
+            checkboxButtonExtendedTappableAreaView.isHidden = true
             textView.textContainer.lineFragmentPadding = 0
-            textViewLeadingConstraint.constant = -checkboxButton.frame.width
+            textViewLeadingConstraint.constant = -(checkboxButtonExtendedTappableAreaView.frame.width - 11)
         }
 
         guard let safeUrl = url else {

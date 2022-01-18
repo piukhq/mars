@@ -93,6 +93,7 @@ class WebScrapingUtility: NSObject {
         }
         
         self.agent = agent
+        MixpanelUtility.startTimer(for: .localPointsCollectionSuccess(brandName: agent.merchant ?? "Unknown"))
         
         guard let urlString = agent.pointsCollectionUrlString, let url = URL(string: urlString) else {
             throw WebScrapingUtilityError.agentProvidedInvalidUrl
@@ -166,14 +167,16 @@ class WebScrapingUtility: NSObject {
                 } else {
                     /// If not, use priority web view
                     /// Clear all merchant data from datastore first to ensure no conflicts
-                    defaultDataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), for: records.filter {
-                        if let merchant = agent.merchant {
-                            return $0.displayName.contains(merchant)
-                        }
-                        return false
-                    }) {
-                        completion(.success(self.priorityWebview))
-                        return
+                    defaultDataStore.removeData(
+                        ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
+                        for: records.filter {
+                            if let merchant = agent.merchant {
+                                return $0.displayName.contains(merchant)
+                            }
+                            return false
+                        }) {
+                            completion(.success(self.priorityWebview))
+                            return
                     }
                 }
             }
@@ -262,7 +265,7 @@ class WebScrapingUtility: NSObject {
         let storage = Storage.storage()
         let pathReference = storage.reference(withPath: "local-points-collection/\(merchant.lowercased()).js")
         
-        pathReference.getData(maxSize: 1 * 1024 * 1024) { data, error in
+        pathReference.getData(maxSize: 1 * 1024 * 1024) { data, _ in
             guard let data = data else {
                 completion(nil)
                 return

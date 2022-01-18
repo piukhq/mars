@@ -5,12 +5,11 @@ import Foundation
 import CoreData
 
 public enum CD_BaseImageAttributes: String {
-    case darkModeImageUrl = "darkModeImageUrl"
-    case imageUrl = "imageUrl"
+    case darkModeImageUrl
+    case imageUrl
 }
 
 open class _CD_BaseImage: CD_BaseObject {
-
     // MARK: - Class methods
 
     override open class func entityName () -> String {
@@ -39,13 +38,7 @@ open class _CD_BaseImage: CD_BaseObject {
 
     // MARK: - Properties
 
-    @NSManaged open
-    var darkModeImageUrl: String?
+    @NSManaged open var darkModeImageUrl: String?
 
-    @NSManaged open
-    var imageUrl: String?
-
-    // MARK: - Relationships
-
+    @NSManaged open var imageUrl: String?
 }
-

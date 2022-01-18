@@ -112,9 +112,8 @@ class BrowseBrandsViewModel {
     
     func getSeeMembershipPlans() -> [CD_MembershipPlan] {
         let agentsEnabledForLPS = Current.pointsScrapingManager.agents.filter { Current.pointsScrapingManager.agentEnabled($0) }
-        let seePlans = getMembershipPlans().filter { $0.featureSet?.planCardType == .view }
 
-        return seePlans.filter({ plan -> Bool in
+        return getMembershipPlans().filter({ plan -> Bool in
             return agentsEnabledForLPS.contains(where: { Int(plan.id) == $0.membershipPlanId })
         })
     }
