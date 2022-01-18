@@ -36,6 +36,11 @@ Retrieve and force update all the certificates for all targets and configures yo
 fastlane ios mr
 ```
 Submit merge request build to TestFlight
+### ios nightly
+```
+fastlane ios nightly
+```
+Submit nightly Develop build to TestFlight
 ### ios beta
 ```
 fastlane ios beta
