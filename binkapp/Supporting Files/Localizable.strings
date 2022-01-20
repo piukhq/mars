@@ -155,7 +155,7 @@
 "hours" = "hours";
 "minute" = "minute";
 "minutes" = "minutes";
-"points_history_title" = "Transaction history";
+"transaction_history_title" = "Transaction history";
 "recent_transaction_history_subtitle" = "Your recent transaction history";
 
 "only_points_log_in_description" = "You can log in to your %@ account to see your points balance. This is optional.";

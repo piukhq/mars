@@ -556,8 +556,6 @@ internal enum L10n {
   internal static func pointsAndTransactionsLogInDescription(_ p1: Any) -> String {
     return L10n.tr("Localizable", "points_and_transactions_log_in_description", String(describing: p1))
   }
-  /// Transaction history
-  internal static let pointsHistoryTitle = L10n.tr("Localizable", "points_history_title")
   /// Account exists
   internal static let pointsModuleAccountExistsStatus = L10n.tr("Localizable", "points_module_account_exists_status")
   /// Last checked
@@ -794,6 +792,8 @@ internal enum L10n {
   }
   /// Transaction history not supported
   internal static let transactionHistoryNotSupportedTitle = L10n.tr("Localizable", "transaction_history_not_supported_title")
+  /// Transaction history
+  internal static let transactionHistoryTitle = L10n.tr("Localizable", "transaction_history_title")
   /// No transactions to display since adding your card to Bink\nIn some cases transactions take longer to update
   internal static let transactionHistoryUnavailableDescription = L10n.tr("Localizable", "transaction_history_unavailable_description")
   /// Transaction history
