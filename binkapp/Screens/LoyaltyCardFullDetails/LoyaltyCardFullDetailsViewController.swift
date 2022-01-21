@@ -332,21 +332,13 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     private func configureBrandHeader(with membershipPlan: CD_MembershipPlan) {
-        switch (viewModel.isMembershipCardAuthorised, viewModel.shouldShowBarcode) {
-        case (true, true), (false, true):
+        switch (viewModel.isMembershipCardAuthorised, viewModel.shouldShowBarcode, viewModel.isMembershipCardPLL) {
+        case (true, false, true):
+            brandHeaderImageView.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
+        case (false, false, true):
+            brandHeaderImageView.setImage(forPathType: .membershipPlanHero(plan: membershipPlan), animated: true)
+        default:
             configureBarcodeViewForBrandHeader()
-        case (true, false):
-            if viewModel.isMembershipCardPLL {
-                brandHeaderImageView.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
-            } else {
-                configureBarcodeViewForBrandHeader()
-            }
-        case (false, false):
-            if viewModel.isMembershipCardPLL {
-                brandHeaderImageView.setImage(forPathType: .membershipPlanHero(plan: membershipPlan), animated: true)
-            } else {
-                configureBarcodeViewForBrandHeader()
-            }
         }
     }
     
