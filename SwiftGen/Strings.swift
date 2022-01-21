@@ -556,8 +556,6 @@ internal enum L10n {
   internal static func pointsAndTransactionsLogInDescription(_ p1: Any) -> String {
     return L10n.tr("Localizable", "points_and_transactions_log_in_description", String(describing: p1))
   }
-  /// Points history
-  internal static let pointsHistoryTitle = L10n.tr("Localizable", "points_history_title")
   /// Account exists
   internal static let pointsModuleAccountExistsStatus = L10n.tr("Localizable", "points_module_account_exists_status")
   /// Last checked
@@ -610,7 +608,7 @@ internal enum L10n {
   internal static let preferencesUpdateFail = L10n.tr("Localizable", "preferences_update_fail")
   /// Privacy Policy
   internal static let privacyPolicy = L10n.tr("Localizable", "privacy_policy")
-  /// Your recent transaction history.
+  /// Your recent transaction history
   internal static let recentTransactionHistorySubtitle = L10n.tr("Localizable", "recent_transaction_history_subtitle")
   /// Open App Store
   internal static let recommendedAppUpdateAppStoreAction = L10n.tr("Localizable", "recommended_app_update_app_store_action")
@@ -794,9 +792,11 @@ internal enum L10n {
   }
   /// Transaction history not supported
   internal static let transactionHistoryNotSupportedTitle = L10n.tr("Localizable", "transaction_history_not_supported_title")
-  /// No transactions to display since adding your card to Bink.\nIn some cases transactions take longer to update.
+  /// Transaction history
+  internal static let transactionHistoryTitle = L10n.tr("Localizable", "transaction_history_title")
+  /// No transactions to display since adding your card to Bink\nIn some cases transactions take longer to update
   internal static let transactionHistoryUnavailableDescription = L10n.tr("Localizable", "transaction_history_unavailable_description")
-  /// Points history
+  /// Transaction history
   internal static let transactionHistoryUnavailableTitle = L10n.tr("Localizable", "transaction_history_unavailable_title")
   /// Please open the Bink app on your phone to login to your wallet
   internal static let unauthenticatedStateDescription = L10n.tr("Localizable", "unauthenticated_state_description")
