@@ -17,6 +17,7 @@ enum LoginType: String {
 
 class LoginController: UserServiceProtocol {
     func login(with request: LoginRequest, completion: @escaping (UserServiceError?) -> Void) {
+        MixpanelUtility.track(.onboardingStart(route: .password))
         login(request: request) { [weak self] result in
             self?.handleResult(for: .password, result, completion: completion)
         }
@@ -42,6 +43,7 @@ class LoginController: UserServiceProtocol {
     }
     
     func loginWithApple(request: SignInWithAppleRequest, withPreferences preferences: [String: String], completion: @escaping (UserServiceError?) -> Void) {
+        MixpanelUtility.track(.onboardingStart(route: .apple))
         authWithApple(request: request) { [weak self] result in
             self?.handleResult(for: .apple, result, withPreferences: preferences, completion: completion)
         }

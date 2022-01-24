@@ -10,6 +10,7 @@ import Foundation
 
 class ForgotPasswordRepository: UserServiceProtocol {
     func continueButtonTapped(email: String, completion: @escaping () -> Void) {
+        MixpanelUtility.track(.forgottenPassword)
         submitForgotPasswordRequest(forEmailAddress: email) { (_, _) in
             completion()
         }

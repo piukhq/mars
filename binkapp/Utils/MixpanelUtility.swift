@@ -65,6 +65,8 @@ enum MixpanelTrackableEvent {
     case localPointsCollectionFailure(brandName: String, reason: String?)
     case onboardingStart(route: LoginType)
     case onboardingComplete(route: LoginType)
+    case onboardingCarouselSwipe
+    case forgottenPassword
     case logout
     case viewBarcode(brandName: String, route: JourneyRoute)
     
@@ -96,6 +98,10 @@ enum MixpanelTrackableEvent {
             return "Onboarding start"
         case .onboardingComplete:
             return "Onboarding complete"
+        case .onboardingCarouselSwipe:
+            return "Onboarding carousel swipe"
+        case .forgottenPassword:
+            return "Forgotten password"
         case .logout:
             return "User logged out"
         case .viewBarcode:
@@ -153,7 +159,7 @@ enum MixpanelTrackableEvent {
                 "Brand name": brandName,
                 "Route": route.rawValue
             ]
-        case .logout:
+        case .logout, .onboardingCarouselSwipe, .forgottenPassword:
             return [:]
         }
     }
