@@ -63,7 +63,8 @@ enum MixpanelTrackableEvent {
     case localPointsCollectionSuccess(brandName: String)
     case localPointsCollectionStatus(membershipCard: CD_MembershipCard)
     case localPointsCollectionFailure(brandName: String, reason: String?)
-    case login(method: LoginType)
+    case onboardingStart(route: LoginType)
+    case onboardingComplete(route: LoginType)
     case logout
     case viewBarcode(brandName: String, route: JourneyRoute)
     
@@ -91,8 +92,10 @@ enum MixpanelTrackableEvent {
             return "Local points collection status"
         case .localPointsCollectionFailure:
             return "Local points collection failed"
-        case .login:
-            return "User logged in"
+        case .onboardingStart:
+            return "Onboarding start"
+        case .onboardingComplete:
+            return "Onboarding complete"
         case .logout:
             return "User logged out"
         case .viewBarcode:
@@ -141,8 +144,10 @@ enum MixpanelTrackableEvent {
                 "Brand name": brandName,
                 "Reason": reason ?? "Unknown"
             ]
-        case .login(let method):
-            return ["Method": method.rawValue]
+        case .onboardingStart(let route):
+            return ["Route": route.rawValue]
+        case .onboardingComplete(let route):
+            return ["Route": route.rawValue]
         case .viewBarcode(let brandName, let route):
             return [
                 "Brand name": brandName,
