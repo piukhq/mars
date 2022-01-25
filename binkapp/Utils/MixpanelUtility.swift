@@ -72,7 +72,7 @@ enum MixpanelTrackableEvent {
     
     enum JourneyRoute: String {
         case wallet = "Wallet"
-        case lcd = "Loyalty Dard Detail"
+        case lcd = "Loyalty Card Detail"
         case quickLaunchWidget = "Quick Launch Widget"
     }
     
