@@ -20,10 +20,11 @@ enum MixpanelUtility {
         } else {
             Mixpanel.removeInstance(name: "dev")
             mixpanelInstance = nil
-            #if RELEASE
+            
+            if !Configuration.isDebug() {
                 mixpanelInstance = Mixpanel.initialize(token: BinkappKeys().mixpanelTokenProduction, flushInterval: 60, instanceName: "prod", optOutTrackingByDefault: false)
                 Mixpanel.setMainInstance(name: "prod")
-            #endif
+            }
         }
     }
     
