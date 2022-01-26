@@ -63,7 +63,7 @@ enum MixpanelTrackableEvent {
     case loyaltyCardManuallyReordered(brandName: String, originalIndex: Int, destinationIndex: Int)
     case localPointsCollectionSuccess(brandName: String)
     case localPointsCollectionStatus(membershipCard: CD_MembershipCard)
-    case localPointsCollectionFailure(brandName: String, reason: String?)
+    case localPointsCollectionFailure(brandName: String, reason: String?, underlyingError: String?)
     case login(method: LoginType)
     case logout
     case viewBarcode(brandName: String, route: JourneyRoute)
@@ -137,10 +137,11 @@ enum MixpanelTrackableEvent {
                 "Status": status,
                 "Client account id": id
             ]
-        case .localPointsCollectionFailure(let brandName, let reason):
+        case .localPointsCollectionFailure(let brandName, let reason, let error):
             return [
                 "Brand name": brandName,
-                "Reason": reason ?? "Unknown"
+                "Reason": reason ?? "Unknown",
+                "Underlying error": error
             ]
         case .login(let method):
             return ["Method": method.rawValue]
