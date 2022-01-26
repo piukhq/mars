@@ -29,7 +29,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     }()
 
     lazy var onboardingView2: OnboardingLearningView = {
-        let onboardingView = OnboardingLearningView(frame: .zero)
+        let onboardingView = OnboardingLearningView(frame: .zero) 
         onboardingView.configure(forType: .wallet)
         return onboardingView
     }()
