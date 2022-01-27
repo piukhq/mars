@@ -132,7 +132,9 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         
         /// Link Status
         cardLinkStatusLabel.text = viewModel.linkStatusText
-        cardLinkStatusImage.image = UIImage(named: viewModel.linkStatusImageName)
+        if viewModel.shouldShowLinkImage {
+            cardLinkStatusImage.image = UIImage(named: viewModel.linkStatusImageName)
+        }
         cardLinkStatusImage.isHidden = !viewModel.shouldShowLinkImage
         cardLinkStatusLabel.isHidden = !viewModel.shouldShowLinkStatus
         
