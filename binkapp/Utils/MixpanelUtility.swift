@@ -63,13 +63,16 @@ enum MixpanelTrackableEvent {
     case loyaltyCardManuallyReordered(brandName: String, originalIndex: Int, destinationIndex: Int)
     case localPointsCollectionSuccess(brandName: String)
     case localPointsCollectionFailure(brandName: String, reason: String?, underlyingError: String?)
-    case login(method: LoginType)
+    case onboardingStart(route: LoginType)
+    case onboardingComplete(route: LoginType)
+    case onboardingCarouselSwipe
+    case forgottenPassword
     case logout
     case viewBarcode(brandName: String, route: JourneyRoute)
     
     enum JourneyRoute: String {
         case wallet = "Wallet"
-        case lcd = "Loyalty Dard Detail"
+        case lcd = "Loyalty Card Detail"
         case quickLaunchWidget = "Quick Launch Widget"
     }
     
@@ -89,8 +92,14 @@ enum MixpanelTrackableEvent {
             return "Local points collection succeeded"
         case .localPointsCollectionFailure:
             return "Local points collection failed"
-        case .login:
-            return "User logged in"
+        case .onboardingStart:
+            return "Onboarding start"
+        case .onboardingComplete:
+            return "Onboarding complete"
+        case .onboardingCarouselSwipe:
+            return "Onboarding carousel swipe"
+        case .forgottenPassword:
+            return "Forgotten password"
         case .logout:
             return "User logged out"
         case .viewBarcode:
@@ -131,14 +140,16 @@ enum MixpanelTrackableEvent {
                 "Reason": reason ?? "Unknown",
                 "Underlying error": error
             ]
-        case .login(let method):
-            return ["Method": method.rawValue]
+        case .onboardingStart(let route):
+            return ["Route": route.rawValue]
+        case .onboardingComplete(let route):
+            return ["Route": route.rawValue]
         case .viewBarcode(let brandName, let route):
             return [
                 "Brand name": brandName,
                 "Route": route.rawValue
             ]
-        case .logout:
+        case .logout, .onboardingCarouselSwipe, .forgottenPassword:
             return [:]
         }
     }

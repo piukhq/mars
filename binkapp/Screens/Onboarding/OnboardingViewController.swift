@@ -90,6 +90,8 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
         return pageControl
     }()
     
+    private var onboardingScrollViewCurrentPage = 0
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
@@ -197,10 +199,18 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
         scrollView.setContentOffset(CGPoint(x: x, y: 0), animated: true)
     }
 
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        onboardingScrollViewCurrentPage = pageControl.currentPage
+    }
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let pageNumber = round(scrollView.contentOffset.x / scrollView.frame.size.width)
         pageControl.currentPage = Int(pageNumber)
         startTimer() // invalidate current timer and start again
+        
+        if pageControl.currentPage != onboardingScrollViewCurrentPage {
+            MixpanelUtility.track(.onboardingCarouselSwipe)
+        }
     }
 
     // MARK: Timer
