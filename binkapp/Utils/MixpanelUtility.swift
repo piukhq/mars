@@ -20,10 +20,11 @@ enum MixpanelUtility {
         } else {
             Mixpanel.removeInstance(name: "dev")
             mixpanelInstance = nil
-            #if RELEASE
+            
+            if !Configuration.isDebug() {
                 mixpanelInstance = Mixpanel.initialize(token: BinkappKeys().mixpanelTokenProduction, flushInterval: 60, instanceName: "prod", optOutTrackingByDefault: false)
                 Mixpanel.setMainInstance(name: "prod")
-            #endif
+            }
         }
     }
     
@@ -61,8 +62,7 @@ enum MixpanelTrackableEvent {
     case lcdViewed(brandName: String, route: JourneyRoute)
     case loyaltyCardManuallyReordered(brandName: String, originalIndex: Int, destinationIndex: Int)
     case localPointsCollectionSuccess(brandName: String)
-    case localPointsCollectionStatus(membershipCard: CD_MembershipCard)
-    case localPointsCollectionFailure(brandName: String, reason: String?)
+    case localPointsCollectionFailure(brandName: String, reason: String?, underlyingError: String?)
     case onboardingStart(route: LoginType)
     case onboardingComplete(route: LoginType)
     case onboardingCarouselSwipe
@@ -90,8 +90,6 @@ enum MixpanelTrackableEvent {
             return "Loyalty card manually reordered"
         case .localPointsCollectionSuccess:
             return "Local points collection succeeded"
-        case .localPointsCollectionStatus:
-            return "Local points collection status"
         case .localPointsCollectionFailure:
             return "Local points collection failed"
         case .onboardingStart:
@@ -136,19 +134,11 @@ enum MixpanelTrackableEvent {
             ]
         case .localPointsCollectionSuccess(let brandName):
             return ["Brand name": brandName]
-        case .localPointsCollectionStatus(let membershipCard):
-            guard let planIdString = membershipCard.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
-            guard let id = membershipCard.id else { return nil }
-            guard let status = membershipCard.status?.status?.rawValue else { return nil }
-            return [
-                "Loyalty plan ID": planId,
-                "Status": status,
-                "Client account id": id
-            ]
-        case .localPointsCollectionFailure(let brandName, let reason):
+        case .localPointsCollectionFailure(let brandName, let reason, let error):
             return [
                 "Brand name": brandName,
-                "Reason": reason ?? "Unknown"
+                "Reason": reason ?? "Unknown",
+                "Underlying error": error
             ]
         case .onboardingStart(let route):
             return ["Route": route.rawValue]

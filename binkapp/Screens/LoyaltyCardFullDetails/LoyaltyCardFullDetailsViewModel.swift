@@ -22,6 +22,10 @@ class LoyaltyCardFullDetailsViewModel {
         return membershipCard.status?.status == .authorised
     }
     
+    var isMembershipCardPLL: Bool {
+        return membershipCard.membershipPlan?.isPLL ?? false
+    }
+    
     let barcodeViewModel: BarcodeViewModel
     
     private let animated: Bool

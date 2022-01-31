@@ -26,6 +26,11 @@ final class WatchAppViewModel: NSObject, ObservableObject, WCSessionDelegate {
             }
         }
     }
+    
+    var barcodeSpacerHeight: CGFloat {
+        return 0.17
+    }
+    
     var viewingBarcode = false
     @Published var publishedCards: [WatchLoyaltyCard] = []
     @Published var hasCurrentUser = false

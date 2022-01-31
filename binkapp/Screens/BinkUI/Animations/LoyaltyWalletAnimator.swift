@@ -46,30 +46,41 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let brandHeaderRect = CGRect(x: LayoutHelper.LoyaltyCardDetail.contentPadding, y: topBarHeight + LayoutHelper.PaymentCardDetail.stackScrollViewContentInsets.top, width: lcdViewController.brandHeader.frame.width, height: lcdViewController.brandHeader.frame.height)
         var barcodeTransitionView = BarcodeView(frame: .zero)
 
-        if lcdViewController.viewModel.shouldShowBarcode {
+        if !lcdViewController.viewModel.isMembershipCardPLL {
             /// Barcode View
             barcodeView.layer.cornerRadius = LayoutHelper.RectangleView.cornerRadius
             barcodeView.frame = brandHeaderRect
             barcodeView.alpha = 0
             
             var barcode: BarcodeView
-            switch (lcdViewController.viewModel.barcodeViewModel.barcodeType, lcdViewController.viewModel.barcodeViewModel.barcodeIsMoreSquareThanRectangle) {
-            case (.aztec, _), (.qr, _), (_, true):
-                let barcodeView: BarcodeViewCompact = .fromNib()
+            
+            if !lcdViewController.viewModel.shouldShowBarcode {
+                let barcodeView: BarcodeViewNoBarcode = .fromNib()
                 barcode = barcodeView
                 barcodeView.configure(viewModel: lcdViewController.viewModel)
                 
-                let transitionView: BarcodeViewCompact = .fromNib()
+                let transitionView: BarcodeViewNoBarcode = .fromNib()
                 barcodeTransitionView = transitionView
                 transitionView.configure(viewModel: lcdViewController.viewModel)
-            default:
-                let barcodeView: BarcodeViewWide = .fromNib()
-                barcode = barcodeView
-                barcodeView.configure(viewModel: lcdViewController.viewModel)
-                
-                let transitionView: BarcodeViewWide = .fromNib()
-                barcodeTransitionView = transitionView
-                transitionView.configure(viewModel: lcdViewController.viewModel)
+            } else {
+                switch (lcdViewController.viewModel.barcodeViewModel.barcodeType, lcdViewController.viewModel.barcodeViewModel.barcodeIsMoreSquareThanRectangle) {
+                case (.aztec, _), (.qr, _), (_, true):
+                    let barcodeView: BarcodeViewCompact = .fromNib()
+                    barcode = barcodeView
+                    barcodeView.configure(viewModel: lcdViewController.viewModel)
+                    
+                    let transitionView: BarcodeViewCompact = .fromNib()
+                    barcodeTransitionView = transitionView
+                    transitionView.configure(viewModel: lcdViewController.viewModel)
+                default:
+                    let barcodeView: BarcodeViewWide = .fromNib()
+                    barcode = barcodeView
+                    barcodeView.configure(viewModel: lcdViewController.viewModel)
+                    
+                    let transitionView: BarcodeViewWide = .fromNib()
+                    barcodeTransitionView = transitionView
+                    transitionView.configure(viewModel: lcdViewController.viewModel)
+                }
             }
             
             barcodeView.addSubview(barcode)
