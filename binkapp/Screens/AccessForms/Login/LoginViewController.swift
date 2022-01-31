@@ -182,6 +182,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
                 return
             }
             
+            MixpanelUtility.track(.onboardingStart(route: .magicLink))
             Current.loginController.handleMagicLinkCheckInbox(formDataSource: self.dataSource)
         }
     }

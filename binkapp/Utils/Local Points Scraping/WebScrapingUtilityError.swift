@@ -54,10 +54,19 @@ enum WebScrapingUtilityError: BinkError {
             return "No javascript response"
         case .failedToDecodeJavascripResponse:
             return "Failed to decode javascript response"
-        case .incorrectCredentials(let errorMessage):
-            return "Login failed - incorrect credentials. Error message: \(errorMessage ?? "")"
-        case .genericFailure(let errorMessage):
-            return "Local points collection uncategorized failure. Error message: \(errorMessage ?? "")"
+        case .incorrectCredentials:
+            return "Login failed - incorrect credentials"
+        case .genericFailure:
+            return "Local points collection uncategorized failure"
+        }
+    }
+    
+    var underlyingError: String? {
+        switch self {
+        case .incorrectCredentials(let errorMessage), .genericFailure(let errorMessage):
+            return errorMessage
+        default:
+            return nil
         }
     }
     
