@@ -212,7 +212,8 @@ internal enum L10n {
   internal static let hour = L10n.tr("Localizable", "hour")
   /// hours
   internal static let hours = L10n.tr("Localizable", "hours")
-  /// Bink is the only app where you can store and view all your loyalty programmes on your mobile, and link your everyday payment cards to automatically collect points and rewards.\nThrough our unique technology platform, Payment Linked Loyalty, you can use your everyday payment cards to automatically collect rewards. Using Bink, you will never miss rewards opportunities from your favourite brands again.
+  /// Bink is the only app where you can store and view all your loyalty programmes on your mobile, and link your everyday payment cards to automatically collect points and rewards.
+  /// Through our unique technology platform, Payment Linked Loyalty, you can use your everyday payment cards to automatically collect rewards. Using Bink, you will never miss rewards opportunities from your favourite brands again.
   internal static let howItWorksDescription = L10n.tr("Localizable", "how_it_works_description")
   /// How it works
   internal static let howItWorksTitle = L10n.tr("Localizable", "how_it_works_title")
@@ -266,7 +267,8 @@ internal enum L10n {
   internal static let loginIssues = L10n.tr("Localizable", "login_issues")
   /// Welcome back!
   internal static let loginSubtitle = L10n.tr("Localizable", "login_subtitle")
-  /// You are now logged in with %@ and will remain logged in on this device until you choose to log out.\nYou can log out from settings.
+  /// You are now logged in with %@ and will remain logged in on this device until you choose to log out.
+  /// You can log out from settings.
   internal static func loginSuccesSubtitle(_ p1: Any) -> String {
     return L10n.tr("Localizable", "login_succes_subtitle", String(describing: p1))
   }
@@ -300,11 +302,15 @@ internal enum L10n {
   internal static func lpcPointsModuleBalanceExplainerBody(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
     return L10n.tr("Localizable", "lpc_points_module_balance_explainer_body", String(describing: p1), String(describing: p2), String(describing: p3))
   }
-  /// Your %@ account balance was last updated %@. Bink will try to update this account every %@.\n\nA balance refresh for this card is currently in progress and will update shortly.
+  /// Your %@ account balance was last updated %@. Bink will try to update this account every %@.
+  /// 
+  /// A balance refresh for this card is currently in progress and will update shortly.
   internal static func lpcPointsModuleBalanceExplainerBodyRefreshRequested(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
     return L10n.tr("Localizable", "lpc_points_module_balance_explainer_body_refresh_requested", String(describing: p1), String(describing: p2), String(describing: p3))
   }
-  /// Your %@ account balance was last updated %@. Bink will try to update this account every %@.\n\nYou can manually refresh your balance using the button below.
+  /// Your %@ account balance was last updated %@. Bink will try to update this account every %@.
+  /// 
+  /// You can manually refresh your balance using the button below.
   internal static func lpcPointsModuleBalanceExplainerBodyRefreshable(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
     return L10n.tr("Localizable", "lpc_points_module_balance_explainer_body_refreshable", String(describing: p1), String(describing: p2), String(describing: p3))
   }
@@ -322,7 +328,9 @@ internal enum L10n {
   }
   /// Already Logged In
   internal static let magicLinkAlreadyLoggedInTitle = L10n.tr("Localizable", "magic_link_already_logged_in_title")
-  /// Get a link sent to your inbox so you can register or access your account instantly!\n\nNote: We will send you a Magic Link
+  /// Get a link sent to your inbox so you can register or access your account instantly!
+  /// 
+  /// Note: We will send you a Magic Link
   internal static let magicLinkDescription = L10n.tr("Localizable", "magic_link_description")
   /// Note:
   internal static let magicLinkDescriptionNoteHighlight = L10n.tr("Localizable", "magic_link_description_note_highlight")
@@ -336,7 +344,9 @@ internal enum L10n {
   internal static let minute = L10n.tr("Localizable", "minute")
   /// minutes
   internal static let minutes = L10n.tr("Localizable", "minutes")
-  /// %@ does not support signing up for a new loyalty account via the Bink app.\n\nPlease go to the merchant’s website to sign up for a card, then return to the Bink app and add your new card details.
+  /// %@ does not support signing up for a new loyalty account via the Bink app.
+  /// 
+  /// Please go to the merchant’s website to sign up for a card, then return to the Bink app and add your new card details.
   internal static func nativeJoinUnavailableDescription(_ p1: Any) -> String {
     return L10n.tr("Localizable", "native_join_unavailable_description", String(describing: p1))
   }
@@ -402,7 +412,11 @@ internal enum L10n {
   internal static let pcdActiveCardTitle = L10n.tr("Localizable", "pcd_active_card_title")
   /// Add card
   internal static let pcdAddCardButtonTitle = L10n.tr("Localizable", "pcd_add_card_button_title")
-  /// Your payment card is not authorised and you cannot link any loyalty cards to start earning rewards.\n\nYour card has failed the authorisation process or has expired. Please use the “Delete this card” action below to remove it from your wallet and re-add if required.\n\nIf you have any concerns, please read the FAQs or you can get in touch with Bink by pressing Contact us.
+  /// Your payment card is not authorised and you cannot link any loyalty cards to start earning rewards.
+  /// 
+  /// Your card has failed the authorisation process or has expired. Please use the “Delete this card” action below to remove it from your wallet and re-add if required.
+  /// 
+  /// If you have any concerns, please read the FAQs or you can get in touch with Bink by pressing Contact us.
   internal static let pcdFailedCardDescription = L10n.tr("Localizable", "pcd_failed_card_description")
   /// Payment card inactive
   internal static let pcdFailedCardTitle = L10n.tr("Localizable", "pcd_failed_card_title")
@@ -418,7 +432,9 @@ internal enum L10n {
   internal static func pcdPendingCardAdded(_ p1: Any) -> String {
     return L10n.tr("Localizable", "pcd_pending_card_added", String(describing: p1))
   }
-  /// You cannot link any loyalty cards to start earning rewards.\n\nPlease wait for the card to be authorised. If the problem persists please read our FAQs or you can get in touch with Bink by pressing Contact us.
+  /// You cannot link any loyalty cards to start earning rewards.
+  /// 
+  /// Please wait for the card to be authorised. If the problem persists please read our FAQs or you can get in touch with Bink by pressing Contact us.
   internal static let pcdPendingCardDescription = L10n.tr("Localizable", "pcd_pending_card_description")
   /// Contact us
   internal static let pcdPendingCardHyperlink = L10n.tr("Localizable", "pcd_pending_card_hyperlink")
@@ -484,7 +500,9 @@ internal enum L10n {
   internal static let plrLoyaltyCardSubtitleAccumulator = L10n.tr("Localizable", "plr_loyalty_card_subtitle_accumulator")
   /// earned
   internal static let plrLoyaltyCardSubtitleStamps = L10n.tr("Localizable", "plr_loyalty_card_subtitle_stamps")
-  /// You currently don’t have any linked payment cards.\nYou can only earn rewards by shopping with a linked payment card.\nPlease add a card so you can start earning rewards.
+  /// You currently don’t have any linked payment cards.
+  /// You can only earn rewards by shopping with a linked payment card.
+  /// Please add a card so you can start earning rewards.
   internal static let plrPaymentCardNeededBody = L10n.tr("Localizable", "plr_payment_card_needed_body")
   /// Payment card needed
   internal static let plrPaymentCardNeededTitle = L10n.tr("Localizable", "plr_payment_card_needed_title")
@@ -592,7 +610,8 @@ internal enum L10n {
   internal static let preferencesClearCredentialsTitle = L10n.tr("Localizable", "preferences_clear_credentials_title")
   /// Receive marketing messages
   internal static let preferencesMarketingCheckbox = L10n.tr("Localizable", "preferences_marketing_checkbox")
-  /// Make sure you’re the first to know about available rewards, offers and updates!\nYou can opt out at any time.
+  /// Make sure you’re the first to know about available rewards, offers and updates!
+  /// You can opt out at any time.
   internal static let preferencesPrompt = L10n.tr("Localizable", "preferences_prompt")
   /// offers
   internal static let preferencesPromptHighlightOffers = L10n.tr("Localizable", "preferences_prompt_highlight_offers")
@@ -632,7 +651,9 @@ internal enum L10n {
   }
   /// Register your card
   internal static let registerGhostCardTitle = L10n.tr("Localizable", "register_ghost_card_title")
-  /// Sometimes it takes a while to register with your merchant.\nIn the meantime please do not attempt to register your card again. You can use your card and receive your benefits as normal.\nAfter registration has been completed you will be able to see your points balance.
+  /// Sometimes it takes a while to register with your merchant.
+  /// In the meantime please do not attempt to register your card again. You can use your card and receive your benefits as normal.
+  /// After registration has been completed you will be able to see your points balance.
   internal static let registerPendingDescription = L10n.tr("Localizable", "register_pending_description")
   /// Register Ghost card pending
   internal static let registerPendingTitle = L10n.tr("Localizable", "register_pending_title")
@@ -660,7 +681,9 @@ internal enum L10n {
   internal static let search = L10n.tr("Localizable", "search")
   /// Is my Data Secure?
   internal static let securityAndPrivacyAlertTitle = L10n.tr("Localizable", "security_and_privacy_alert_title")
-  /// Bink takes the security of your information extremely seriously and uses a range of best in class methods to protect your information.\n\nBink is a registered PCI Level 1 Service Provider for the protection of sensitive first party data and personally identifiable information.
+  /// Bink takes the security of your information extremely seriously and uses a range of best in class methods to protect your information.
+  /// 
+  /// Bink is a registered PCI Level 1 Service Provider for the protection of sensitive first party data and personally identifiable information.
   internal static let securityAndPrivacyDescription = L10n.tr("Localizable", "security_and_privacy_description")
   /// How we protect your data
   internal static let securityAndPrivacyMessage = L10n.tr("Localizable", "security_and_privacy_message")
@@ -740,7 +763,9 @@ internal enum L10n {
   internal static func signUpNewCardTitle(_ p1: Any) -> String {
     return L10n.tr("Localizable", "sign_up_new_card_title", String(describing: p1))
   }
-  /// Sometimes it takes a while to sign up with your merchant.\nIn the meantime please do not attempt to sign up again. You can use your card and receive your benefits as normal.\nAfter the sign up has been completed you will be able to see your points balance.
+  /// Sometimes it takes a while to sign up with your merchant.
+  /// In the meantime please do not attempt to sign up again. You can use your card and receive your benefits as normal.
+  /// After the sign up has been completed you will be able to see your points balance.
   internal static let signUpPendingDescription = L10n.tr("Localizable", "sign_up_pending_description")
   /// Sign up pending
   internal static let signUpPendingTitle = L10n.tr("Localizable", "sign_up_pending_title")
@@ -766,7 +791,14 @@ internal enum L10n {
   internal static func supportMailAppVersion(_ p1: Any, _ p2: Any) -> String {
     return L10n.tr("Localizable", "support_mail_app_version", String(describing: p1), String(describing: p2))
   }
-  /// \n\n\n\nThe below information will help us with with your query, please don’t change it.\nBink ID: %@\nVersion: %@\niOS Version: %@
+  /// 
+  /// 
+  /// 
+  /// 
+  /// The below information will help us with with your query, please don’t change it.
+  /// Bink ID: %@
+  /// Version: %@
+  /// iOS Version: %@
   internal static func supportMailBody(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
     return L10n.tr("Localizable", "support_mail_body", String(describing: p1), String(describing: p2), String(describing: p3))
   }
@@ -778,7 +810,9 @@ internal enum L10n {
   internal static let tandcsLink = L10n.tr("Localizable", "tandcs_link")
   /// I agree to Bink's Terms and Conditions
   internal static let tandcsTitle = L10n.tr("Localizable", "tandcs_title")
-  /// I authorise Mastercard, Visa and American Express to monitor activity on my payment card to determine when I have made a qualifying transaction, and for Mastercard, Visa and American Express to share such transaction details with Bink to enable my card-linked offer(s) and target offers that may be of interest to me. \n\nFor information about Bink’s privacy practices please see Bink’s Privacy Policy. You may opt-out of transaction monitoring on the payment card(s) you entered at any time by deleting your payment card from your Bink wallet.
+  /// I authorise Mastercard, Visa and American Express to monitor activity on my payment card to determine when I have made a qualifying transaction, and for Mastercard, Visa and American Express to share such transaction details with Bink to enable my card-linked offer(s) and target offers that may be of interest to me. 
+  /// 
+  /// For information about Bink’s privacy practices please see Bink’s Privacy Policy. You may opt-out of transaction monitoring on the payment card(s) you entered at any time by deleting your payment card from your Bink wallet.
   internal static let termsAndConditionsDescription = L10n.tr("Localizable", "terms_and_conditions_description")
   /// Terms and conditions
   internal static let termsAndConditionsTitle = L10n.tr("Localizable", "terms_and_conditions_title")
@@ -786,7 +820,9 @@ internal enum L10n {
   internal static let toBeImplementedMessage = L10n.tr("Localizable", "to_be_implemented_message")
   /// Go to merchant site
   internal static let toMerchantSiteButton = L10n.tr("Localizable", "to_merchant_site_button")
-  /// %@ does not support displaying your transaction history in the Bink app.\n\nYou can view your history and balance on the merchant’s website.
+  /// %@ does not support displaying your transaction history in the Bink app.
+  /// 
+  /// You can view your history and balance on the merchant’s website.
   internal static func transactionHistoryNotSupportedDescription(_ p1: Any) -> String {
     return L10n.tr("Localizable", "transaction_history_not_supported_description", String(describing: p1))
   }
@@ -794,7 +830,8 @@ internal enum L10n {
   internal static let transactionHistoryNotSupportedTitle = L10n.tr("Localizable", "transaction_history_not_supported_title")
   /// Transaction history
   internal static let transactionHistoryTitle = L10n.tr("Localizable", "transaction_history_title")
-  /// No transactions to display since adding your card to Bink\nIn some cases transactions take longer to update
+  /// No transactions to display since adding your card to Bink
+  /// In some cases transactions take longer to update
   internal static let transactionHistoryUnavailableDescription = L10n.tr("Localizable", "transaction_history_unavailable_description")
   /// Transaction history
   internal static let transactionHistoryUnavailableTitle = L10n.tr("Localizable", "transaction_history_unavailable_title")
@@ -802,7 +839,8 @@ internal enum L10n {
   internal static let unauthenticatedStateDescription = L10n.tr("Localizable", "unauthenticated_state_description")
   /// You are not logged in
   internal static let unauthenticatedStateTitle = L10n.tr("Localizable", "unauthenticated_state_title")
-  /// Payment Linked Loyalty (PLL) allows customers’ payment cards to be securely linked to loyalty programmes, enabling every customer to be identified and rewarded every time they shop.\nThis is currently not available for this merchant.
+  /// Payment Linked Loyalty (PLL) allows customers’ payment cards to be securely linked to loyalty programmes, enabling every customer to be identified and rewarded every time they shop.
+  /// This is currently not available for this merchant.
   internal static let unlinkablePllDescription = L10n.tr("Localizable", "unlinkable_pll_description")
   /// Payment Linked Loyalty unavailable
   internal static let unlinkablePllTitle = L10n.tr("Localizable", "unlinkable_pll_title")
