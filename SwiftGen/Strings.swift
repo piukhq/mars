@@ -296,6 +296,10 @@ internal enum L10n {
   internal static let loyaltyScannerWidgetTitleEnterManuallyText = L10n.tr("Localizable", "loyalty_scanner_widget_title_enter_manually_text")
   /// Unrecognised barcode
   internal static let loyaltyScannerWidgetTitleUnrecognizedBarcodeText = L10n.tr("Localizable", "loyalty_scanner_widget_title_unrecognized_barcode_text")
+  /// You should have received an SMS containing an auth code from Nectar, please enter this below
+  internal static let lpcNectarUserInputAlertBody = L10n.tr("Localizable", "lpc_nectar_user_input_alert_body")
+  /// Nectar auth code
+  internal static let lpcNectarUserInputAlertTitle = L10n.tr("Localizable", "lpc_nectar_user_input_alert_title")
   /// Your %@ account balance was last updated %@. Bink will try to update this account every %@.
   internal static func lpcPointsModuleBalanceExplainerBody(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
     return L10n.tr("Localizable", "lpc_points_module_balance_explainer_body", String(describing: p1), String(describing: p2), String(describing: p3))

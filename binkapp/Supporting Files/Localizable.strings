@@ -482,6 +482,9 @@
 "lpc_points_module_balance_explainer_body_refresh_requested" = "Your %@ account balance was last updated %@. Bink will try to update this account every %@.\n\nA balance refresh for this card is currently in progress and will update shortly.";
 "lpc_points_module_balance_explainer_body_time_ago" = "%@ ago";
 "lpc_points_module_balance_explainer_button_title" = "Refresh";
+"lpc_nectar_user_input_alert_title" = "Nectar auth code";
+"lpc_nectar_user_input_alert_body" = "You should have received an SMS containing an auth code from Nectar, please enter this below";
+
 // MARK: - Watch App
 "brands_list_no_supported_cards_title" = "No supported cards";
 "brands_list_no_supported_cards_description" = "We can only show you cards with barcodes or vouchers";
