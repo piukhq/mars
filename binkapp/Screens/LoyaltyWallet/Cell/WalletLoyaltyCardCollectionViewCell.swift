@@ -156,6 +156,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         }
         
         containerView.backgroundColor = .clear
+        cardIconImageView.layer.cornerRadius = LayoutHelper.iconCornerRadius
     }
     
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {

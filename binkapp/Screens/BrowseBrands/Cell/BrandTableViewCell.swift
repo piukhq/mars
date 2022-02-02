@@ -32,6 +32,7 @@ class BrandTableViewCell: UITableViewCell {
         accessibilityIdentifier = brandName
 
         logoImageView.backgroundColor = .clear
+        logoImageView.layer.cornerRadius = LayoutHelper.iconCornerRadius
         ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: traitCollection) { [weak self] image in
             if self?.tag == indexPath.hashValue {
                 self?.logoImageView.image = image
