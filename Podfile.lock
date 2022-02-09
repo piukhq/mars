@@ -27,12 +27,12 @@ PODS:
   - ZXingObjC/All (3.6.5)
 
 DEPENDENCIES:
-  - "CardScan (from `git@git.bink.com:Pantheon/iOS/cardscan-ios.git`, commit `bf8d4467`)"
+  - "CardScan (from `git@github.com:binkhq/cardscan-ios.git`, commit `bf8d4467`)"
   - DTTJailbreakDetection (~> 0.4)
   - Keys (from `Pods/CocoaPodsKeys`)
   - SwiftGen (~> 6.4)
   - SwiftLint (~> 0.43)
-  - "SwiftyRSA (from `git@git.bink.com:Pantheon/iOS/SwiftyRSA.git`)"
+  - "SwiftyRSA (from `git@github.com:binkhq/SwiftyRSA.git`)"
   - ZendeskSupportSDK (= 5.2.0)
   - ZXingObjC (~> 3.6)
 
@@ -53,19 +53,19 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   CardScan:
     :commit: bf8d4467
-    :git: "git@git.bink.com:Pantheon/iOS/cardscan-ios.git"
+    :git: "git@github.com:binkhq/cardscan-ios.git"
   Keys:
     :path: Pods/CocoaPodsKeys
   SwiftyRSA:
-    :git: "git@git.bink.com:Pantheon/iOS/SwiftyRSA.git"
+    :git: "git@github.com:binkhq/SwiftyRSA.git"
 
 CHECKOUT OPTIONS:
   CardScan:
     :commit: bf8d4467
-    :git: "git@git.bink.com:Pantheon/iOS/cardscan-ios.git"
+    :git: "git@github.com:binkhq/cardscan-ios.git"
   SwiftyRSA:
     :commit: c4f97d7726b5d1cb9480d7e442be4002716d1be9
-    :git: "git@git.bink.com:Pantheon/iOS/SwiftyRSA.git"
+    :git: "git@github.com:binkhq/SwiftyRSA.git"
 
 SPEC CHECKSUMS:
   CardScan: ff2d73951a829020bbb5cb1309355f1006c412f7
@@ -83,6 +83,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: e100a7a0a1bb5d7d43abbde3338727d985a4986d
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 2c9e70c5e065e72d175fb7a1fa8a4494073e161c
+PODFILE CHECKSUM: bdd3d388e3de3e638784349b2227f117e9e2f513
 
 COCOAPODS: 1.10.0
