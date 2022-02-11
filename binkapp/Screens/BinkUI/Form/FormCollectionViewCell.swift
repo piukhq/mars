@@ -44,7 +44,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     
     /// The white background visual field view that contains all user interacion elements
     private lazy var fieldContainerVStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [fieldContentHStack, validationView])
+        let stackView = UIStackView(arrangedSubviews: [fieldContentHStack])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
@@ -55,6 +55,18 @@ class FormCollectionViewCell: UICollectionViewCell {
         stackView.addGestureRecognizer(gestureRecognizer)
         stackView.isUserInteractionEnabled = true
         return stackView
+    }()
+    
+    private lazy var stackBackgroundView: UIView = {
+        // Remove when we drop iOS 13 - add validation view to fieldContainerVStack
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
+        view.layer.cornerRadius = 12
+        view.layer.cornerCurve = .continuous
+        view.addSubview(validationView)
+        view.clipsToBounds = true
+        return view
     }()
     
     /// Contains title label, text field, camera icon and validation icon
@@ -216,7 +228,10 @@ class FormCollectionViewCell: UICollectionViewCell {
             containerStack.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             containerStack.rightAnchor.constraint(equalTo: contentView.rightAnchor),
             topConstraint,
-            bottomConstraint
+            bottomConstraint,
+            validationView.leftAnchor.constraint(equalTo: stackBackgroundView.leftAnchor),
+            validationView.rightAnchor.constraint(equalTo: stackBackgroundView.rightAnchor),
+            validationView.bottomAnchor.constraint(equalTo: stackBackgroundView.bottomAnchor)
         ])
     }
     
@@ -244,6 +259,12 @@ class FormCollectionViewCell: UICollectionViewCell {
         textField.clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
         textField.accessibilityIdentifier = field.title
         formField = field
+        
+        // Remove when we drop iOS 13 - add validation view to fieldContainerVStack
+        fieldContainerVStack.insertSubview(stackBackgroundView, at: 0)
+        stackBackgroundView.pin(to: fieldContainerVStack)
+        //
+        
         configureTextFieldRightView(shouldDisplay: formField?.value == nil)
         validationLabel.isHidden = textField.text?.isEmpty == true ? true : field.isValid()
         
