@@ -24,10 +24,11 @@ class BrandHeaderView: CustomView {
     func configure(plan: CD_MembershipPlan?, delegate: LoyaltyButtonDelegate) {
         self.delegate = delegate
         logoImageView.backgroundColor = .clear
-        view.backgroundColor = .clear
         guard let membershipPlan = plan else { return }
         
         logoImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
+        logoImageView.layer.cornerRadius = LayoutHelper.iconCornerRadius
+        backgroundColor = .clear
         
         if let planName = membershipPlan.account?.planName {
             let attributes: [NSAttributedString.Key: Any] = [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkTextButtonNormal, .foregroundColor: UIColor.blueAccent]

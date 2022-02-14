@@ -44,14 +44,8 @@ enum MixpanelUtility {
         mixpanelInstance?.reset()
     }
     
-    static func setUserProperties() {
-        setUserProperties([
-            .widget(true)
-        ])
-    }
-    
-    static func setUserProperties(_ properties: [MixpanelUserProperty]) {
-//        mixpanelInstance.people.set(properties: properties)
+    static func setUserProperty(_ userProperty: MixpanelUserProperty) {
+        mixpanelInstance?.people.set(properties: userProperty.data)
     }
 }
 
@@ -156,6 +150,7 @@ enum MixpanelTrackableEvent {
 }
 
 enum MixpanelUserProperty {
+    case appleWatchInstalled(Bool)
     case totalLoyaltyCards(Int)
     case totalPLLCards(Int)
     case activePLLCards(Int)
@@ -166,6 +161,8 @@ enum MixpanelUserProperty {
     
     var identifer: String {
         switch self {
+        case .appleWatchInstalled:
+            return "Apple Watch Installed"
         case .totalLoyaltyCards:
             return "Total number of loyalty cards"
         case .totalPLLCards:
@@ -184,6 +181,11 @@ enum MixpanelUserProperty {
     }
     
     var data: [String: MixpanelType] {
-        return ["": ""]
+        switch self {
+        case.appleWatchInstalled(let isInstalled):
+            return [identifer: isInstalled]
+        default:
+            return ["": ""]
+        }
     }
 }

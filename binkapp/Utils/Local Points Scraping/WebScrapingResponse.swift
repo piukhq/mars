@@ -16,7 +16,8 @@ struct WebScrapingResponse: Codable {
     var userActionComplete: Bool?
 
     var pointsValue: Int? {
-        guard let string = pointsString else { return nil }
+        guard var string = pointsString else { return nil }
+        string = string.replacingOccurrences(of: ",", with: "")
         return Int(string)
     }
 

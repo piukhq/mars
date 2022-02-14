@@ -11,6 +11,7 @@ struct LayoutHelper { }
 
 extension LayoutHelper {
     static let statusBarHeight: CGFloat = 20
+    static let iconCornerRadius: CGFloat = 5
 
     static func heightForNavigationBar(_ navigationBar: UINavigationBar?) -> CGFloat {
         return navigationBar?.frame.height ?? 0

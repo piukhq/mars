@@ -62,6 +62,8 @@ class WebScrapingUtility: NSObject {
     private var userActionTimer: Timer?
     
     private var isPerformingUserAction = false
+    private var isPresentingUserInput = false
+    private var userInputValue: String?
     
     private var isInDebugMode: Bool {
         return Current.pointsScrapingManager.isDebugMode
@@ -192,6 +194,8 @@ class WebScrapingUtility: NSObject {
         idleRetryCount = 0
         userActionTimer?.invalidate()
         isPerformingUserAction = false
+        isPresentingUserInput = false
+        userInputValue = nil
         sessionHasAttemptedLogin = false
         
         if activeWebview != priorityWebview {
@@ -224,19 +228,38 @@ class WebScrapingUtility: NSObject {
         SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Beginning user action"))
         
         isPerformingUserAction = true
-        presentWebView()
+        
+        if agent?.merchant == "nectar" {
+            guard !isPresentingUserInput, userInputValue == nil else { return }
+            let vc = ViewControllerFactory.makeAlertViewControllerWithTextfield(title: L10n.lpcNectarUserInputAlertTitle, message: L10n.lpcNectarUserInputAlertBody, cancelButton: true) { authCode in
+                self.userInputValue = authCode
+                self.idleRetryCount = 0
+            } cancelActionHandler: {
+                self.endUserAction()
+                self.finish(withError: .userDismissedWebView)
+            }
+
+            let navigationRequest = AlertNavigationRequest(alertController: vc, completion: nil)
+            Current.navigate.to(navigationRequest)
+            
+            isPresentingUserInput = true
+        } else {
+            presentWebView()
+        }
+
         userActionTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] _ in
-            guard let self = self else { return }
+            guard let self = self, self.agent != nil else { return }
             self.handleWebViewNavigation(stateConfigurator: .userActionRequired)
         })
     }
     
     private func endUserAction() {
         SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Ending user action"))
-        
         isPerformingUserAction = false
         userActionTimer?.invalidate()
         closeWebView()
+        isPresentingUserInput = false
+        userInputValue = nil
         handleWebViewNavigation(stateConfigurator: .userActionComplete)
     }
     
@@ -377,7 +400,9 @@ extension WebScrapingUtility: WKNavigationDelegate {
             }
             
             var configString = ""
-            if let stateConfig = stateConfigurator {
+            if let authCode = self.userInputValue {
+                configString = authCode
+            } else if let stateConfig = stateConfigurator {
                 configString = stateConfig.rawValue
             } else if self.sessionHasAttemptedLogin {
                 configString = WebScrapingStateConfigurator.skipLogin.rawValue
@@ -403,7 +428,6 @@ extension WebScrapingUtility: WKNavigationDelegate {
                         return
                     }
                     
-                    
                     // User action
                     
                     if response.userActionComplete == true {
@@ -414,6 +438,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
                     
                     if response.userActionRequired == true {
                         SentryService.recordBreadcrumb(LocalPointsCollectionSentryBreadcrumb(message: "Site detected user action required"))
+                        self.agent = agent
                         self.beginUserAction()
                         return
                     }
@@ -427,7 +452,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
                         if let card = self.item?.card, self.activeWebview == self.priorityWebview {
                             /// At this point, we know we've attempted a login so there was no valid session
                             /// As we are using the priority web view, we know the membership card is the only one of it's plan type
-                            /// We can safely assume the membership card can be move to the priority list and have it's session reused
+                            /// We can safely assume the membership card can be moved to the priority list and have it's session reused
                             if let priorityCard = PriorityScrapableCard(membershipCard: card), !self.priorityScrapableCards.contains(priorityCard) {
                                 self.priorityScrapableCards.append(priorityCard)
                             }
