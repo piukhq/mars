@@ -20,10 +20,11 @@ enum MixpanelUtility {
         } else {
             Mixpanel.removeInstance(name: "dev")
             mixpanelInstance = nil
-            #if RELEASE
+            
+            if !Configuration.isDebug() {
                 mixpanelInstance = Mixpanel.initialize(token: BinkappKeys().mixpanelTokenProduction, flushInterval: 60, instanceName: "prod", optOutTrackingByDefault: false)
                 Mixpanel.setMainInstance(name: "prod")
-            #endif
+            }
         }
     }
     
@@ -61,15 +62,17 @@ enum MixpanelTrackableEvent {
     case lcdViewed(brandName: String, route: JourneyRoute)
     case loyaltyCardManuallyReordered(brandName: String, originalIndex: Int, destinationIndex: Int)
     case localPointsCollectionSuccess(brandName: String)
-    case localPointsCollectionStatus(membershipCard: CD_MembershipCard)
-    case localPointsCollectionFailure(brandName: String, reason: String?)
-    case login(method: LoginType)
+    case localPointsCollectionFailure(brandName: String, reason: String?, underlyingError: String?)
+    case onboardingStart(route: LoginType)
+    case onboardingComplete(route: LoginType)
+    case onboardingCarouselSwipe
+    case forgottenPassword
     case logout
     case viewBarcode(brandName: String, route: JourneyRoute)
     
     enum JourneyRoute: String {
         case wallet = "Wallet"
-        case lcd = "Loyalty Dard Detail"
+        case lcd = "Loyalty Card Detail"
         case quickLaunchWidget = "Quick Launch Widget"
     }
     
@@ -87,12 +90,16 @@ enum MixpanelTrackableEvent {
             return "Loyalty card manually reordered"
         case .localPointsCollectionSuccess:
             return "Local points collection succeeded"
-        case .localPointsCollectionStatus:
-            return "Local points collection status"
         case .localPointsCollectionFailure:
             return "Local points collection failed"
-        case .login:
-            return "User logged in"
+        case .onboardingStart:
+            return "Onboarding start"
+        case .onboardingComplete:
+            return "Onboarding complete"
+        case .onboardingCarouselSwipe:
+            return "Onboarding carousel swipe"
+        case .forgottenPassword:
+            return "Forgotten password"
         case .logout:
             return "User logged out"
         case .viewBarcode:
@@ -127,28 +134,22 @@ enum MixpanelTrackableEvent {
             ]
         case .localPointsCollectionSuccess(let brandName):
             return ["Brand name": brandName]
-        case .localPointsCollectionStatus(let membershipCard):
-            guard let planIdString = membershipCard.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
-            guard let id = membershipCard.id else { return nil }
-            guard let status = membershipCard.status?.status?.rawValue else { return nil }
-            return [
-                "Loyalty plan ID": planId,
-                "Status": status,
-                "Client account id": id
-            ]
-        case .localPointsCollectionFailure(let brandName, let reason):
+        case .localPointsCollectionFailure(let brandName, let reason, let error):
             return [
                 "Brand name": brandName,
-                "Reason": reason ?? "Unknown"
+                "Reason": reason ?? "Unknown",
+                "Underlying error": error
             ]
-        case .login(let method):
-            return ["Method": method.rawValue]
+        case .onboardingStart(let route):
+            return ["Route": route.rawValue]
+        case .onboardingComplete(let route):
+            return ["Route": route.rawValue]
         case .viewBarcode(let brandName, let route):
             return [
                 "Brand name": brandName,
                 "Route": route.rawValue
             ]
-        case .logout:
+        case .logout, .onboardingCarouselSwipe, .forgottenPassword:
             return [:]
         }
     }

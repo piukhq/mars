@@ -375,6 +375,8 @@
 		CEE20925268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE20924268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift */; };
 		CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF389EA255D72E90063C718 /* DateExtensionTests.swift */; };
 		CEF837E925DA7AB10066C77E /* FeatureFlagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF837E825DA7AB10066C77E /* FeatureFlagsTableViewController.swift */; };
+		CEFAB4E9279ABD0A00D061A9 /* BarcodeViewNoBarcode.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFAB4E8279ABD0900D061A9 /* BarcodeViewNoBarcode.xib */; };
+		CEFAB4EB279AC10B00D061A9 /* BarcodeViewNoBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFAB4EA279AC10B00D061A9 /* BarcodeViewNoBarcode.swift */; };
 		CEFB742325668A5100896DE5 /* BrandHeaderViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE387AA02565749D006BAC11 /* BrandHeaderViewTests.swift */; };
 		DB088545234FD8A30041A67A /* PLLScreenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB088544234FD8A30041A67A /* PLLScreenRepository.swift */; };
 		DB4D8EAD2440864C0085595D /* SettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4D8EAC2440864C0085595D /* SettingsViewModelTests.swift */; };
@@ -1027,6 +1029,8 @@
 		CEE20924268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLaunchWidgetGridSpacerView.swift; sourceTree = "<group>"; };
 		CEF389EA255D72E90063C718 /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		CEF837E825DA7AB10066C77E /* FeatureFlagsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsTableViewController.swift; sourceTree = "<group>"; };
+		CEFAB4E8279ABD0900D061A9 /* BarcodeViewNoBarcode.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BarcodeViewNoBarcode.xib; sourceTree = "<group>"; };
+		CEFAB4EA279AC10B00D061A9 /* BarcodeViewNoBarcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewNoBarcode.swift; sourceTree = "<group>"; };
 		DB088544234FD8A30041A67A /* PLLScreenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenRepository.swift; sourceTree = "<group>"; };
 		DB4D8EAC2440864C0085595D /* SettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModelTests.swift; sourceTree = "<group>"; };
 		DB8DE3592373130100F07F11 /* Bundle+binkapp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+binkapp.swift"; sourceTree = "<group>"; };
@@ -2423,6 +2427,8 @@
 				CEA16EF426258C8E00D449E1 /* BarcodeViewWide.xib */,
 				CEA16EDF2625879B00D449E1 /* BarcodeViewCompact.xib */,
 				CEA16EFC2625B0F100D449E1 /* BarcodeViewCompact.swift */,
+				CEFAB4E8279ABD0900D061A9 /* BarcodeViewNoBarcode.xib */,
+				CEFAB4EA279AC10B00D061A9 /* BarcodeViewNoBarcode.swift */,
 			);
 			path = "Barcode Views";
 			sourceTree = "<group>";
@@ -3362,6 +3368,7 @@
 				706D203E24D96D35004BCCF3 /* GoogleService-Info-BETA.plist in Resources */,
 				BD25E6972388610B0027FF3E /* LoadingScreen.xib in Resources */,
 				3CD3493D22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf in Resources */,
+				CEFAB4E9279ABD0A00D061A9 /* BarcodeViewNoBarcode.xib in Resources */,
 				3CADDEB1231566E5006C3D9C /* LoginTextFieldView.xib in Resources */,
 				70A61D542630A23C0073A08A /* BinkModuleView.xib in Resources */,
 				EF2E8827233A6FDB00F678F3 /* CardAlertView.xib in Resources */,
@@ -3848,6 +3855,7 @@
 				EFA5F7242379A7C70027AB80 /* _CD_RegistrationField.swift in Sources */,
 				EFA5F73C2379A7C70027AB80 /* CD_PaymentCardCard.swift in Sources */,
 				70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */,
+				CEFAB4EB279AC10B00D061A9 /* BarcodeViewNoBarcode.swift in Sources */,
 				EFA5F71F2379A7C70027AB80 /* _CD_MembershipCardBalance.swift in Sources */,
 				EFA5F7142379A7C70027AB80 /* _CD_AuthoriseField.swift in Sources */,
 				70E8677A248E76C9001ED282 /* WebScrapingUtility.swift in Sources */,
@@ -4299,7 +4307,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.15;
+				MARKETING_VERSION = 2.3.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink α";
@@ -4345,7 +4353,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.15;
+				MARKETING_VERSION = 2.3.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink β";
@@ -4549,7 +4557,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.15;
+				MARKETING_VERSION = 2.3.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = Bink;
@@ -4701,7 +4709,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.15;
+				MARKETING_VERSION = 2.3.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink β";
@@ -4831,7 +4839,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.15;
+				MARKETING_VERSION = 2.3.16;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -4910,7 +4918,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.15;
+				MARKETING_VERSION = 2.3.16;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch;
@@ -4990,7 +4998,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.15;
+				MARKETING_VERSION = 2.3.16;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watch;
@@ -5069,7 +5077,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.15;
+				MARKETING_VERSION = 2.3.16;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch;
@@ -5155,7 +5163,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.15;
+				MARKETING_VERSION = 2.3.16;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -5233,7 +5241,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.15;
+				MARKETING_VERSION = 2.3.16;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch.extension;
@@ -5312,7 +5320,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.15;
+				MARKETING_VERSION = 2.3.16;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watch.extension;
@@ -5390,7 +5398,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.15;
+				MARKETING_VERSION = 2.3.16;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch.extension;
@@ -5473,7 +5481,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.15;
+				MARKETING_VERSION = 2.3.16;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -5549,7 +5557,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.15;
+				MARKETING_VERSION = 2.3.16;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.widget;
@@ -5625,7 +5633,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.15;
+				MARKETING_VERSION = 2.3.16;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.widget;
@@ -5701,7 +5709,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.15;
+				MARKETING_VERSION = 2.3.16;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.widget;

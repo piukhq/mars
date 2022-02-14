@@ -44,11 +44,11 @@ class AutomatedTesting_4_GoToSite: XCTestCase {
         goToSiteAndAssertErrorAlertExistanceIsFalse()
     }
 
-    func test_03_harveyNichols_goToSite_loadsWebpage_successfully() {
-        openBrowseBrands()
-        app.tables.cells["Harvey Nichols"].tap()
-        goToSiteAndAssertErrorAlertExistanceIsFalse()
-    }
+//    func test_03_harveyNichols_goToSite_loadsWebpage_successfully() {
+//        openBrowseBrands()
+//        app.tables.cells["Harvey Nichols"].tap()
+//        goToSiteAndAssertErrorAlertExistanceIsFalse()
+//    }
 
     func test_04_iceland_goToSite_loadsWebpage_successfully() {
         openBrowseBrands()

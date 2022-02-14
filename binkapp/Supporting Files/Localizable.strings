@@ -144,8 +144,8 @@
 
 // MARK: - Transactions
 
-"transaction_history_unavailable_title" = "Points history";
-"transaction_history_unavailable_description" = "No transactions to display since adding your card to Bink.\nIn some cases transactions take longer to update.";
+"transaction_history_unavailable_title" = "Transaction history";
+"transaction_history_unavailable_description" = "No transactions to display since adding your card to Bink\nIn some cases transactions take longer to update";
 "transaction_history_not_supported_title" = "Transaction history not supported";
 "transaction_history_not_supported_description" = "%@ does not support displaying your transaction history in the Bink app.\n\nYou can view your history and balance on the merchant’s website.";
 
@@ -155,8 +155,8 @@
 "hours" = "hours";
 "minute" = "minute";
 "minutes" = "minutes";
-"points_history_title" = "Points history";
-"recent_transaction_history_subtitle" = "Your recent transaction history.";
+"transaction_history_title" = "Transaction history";
+"recent_transaction_history_subtitle" = "Your recent transaction history";
 
 "only_points_log_in_description" = "You can log in to your %@ account to see your points balance. This is optional.";
 "points_and_transactions_log_in_description" = "You can log in to your %@ account to see your points balance and transaction history. This is optional.";

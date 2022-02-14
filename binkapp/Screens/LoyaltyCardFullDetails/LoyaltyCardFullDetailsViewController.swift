@@ -318,7 +318,7 @@ private extension LoyaltyCardFullDetailsViewController {
         guard let plan = viewModel.membershipCard.membershipPlan else { return }
         
         // Build Placeholder
-        if !viewModel.shouldShowBarcode, let hexStringColor = viewModel.membershipCard.card?.colour {
+        if viewModel.isMembershipCardPLL, let hexStringColor = viewModel.membershipCard.card?.colour {
             brandHeaderImageView.backgroundColor = UIColor(hexString: hexStringColor)
             brandHeaderImageView.layoutIfNeeded()
             let placeholderName = plan.account?.planNameCard ?? plan.account?.planName ?? ""
@@ -332,27 +332,34 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     private func configureBrandHeader(with membershipPlan: CD_MembershipPlan) {
-        switch (viewModel.isMembershipCardAuthorised, viewModel.shouldShowBarcode) {
-        case (true, true), (false, true):
-            configureBarcodeViewForBrandHeader()
-        case (true, false):
+        switch (viewModel.isMembershipCardAuthorised, viewModel.shouldShowBarcode, viewModel.isMembershipCardPLL) {
+        case (true, false, true):
             brandHeaderImageView.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
-        case (false, false):
+        case (false, false, true):
             brandHeaderImageView.setImage(forPathType: .membershipPlanHero(plan: membershipPlan), animated: true)
+        default:
+            configureBarcodeViewForBrandHeader()
         }
     }
     
     private func configureBarcodeViewForBrandHeader() {
         var barcode: BarcodeView
-        switch (viewModel.barcodeViewModel.barcodeType, viewModel.barcodeViewModel.barcodeIsMoreSquareThanRectangle) {
-        case (.aztec, _), (.qr, _), (.dataMatrix, _), (_, true):
-            let barcodeView: BarcodeViewCompact = .fromNib()
+        
+        if !viewModel.shouldShowBarcode {
+            let barcodeView: BarcodeViewNoBarcode = .fromNib()
             barcode = barcodeView
             barcodeView.configure(viewModel: viewModel)
-        default:
-            let barcodeView: BarcodeViewWide = .fromNib()
-            barcode = barcodeView
-            barcodeView.configure(viewModel: viewModel)
+        } else {
+            switch (viewModel.barcodeViewModel.barcodeType, viewModel.barcodeViewModel.barcodeIsMoreSquareThanRectangle) {
+            case (.aztec, _), (.qr, _), (.dataMatrix, _), (_, true):
+                let barcodeView: BarcodeViewCompact = .fromNib()
+                barcode = barcodeView
+                barcodeView.configure(viewModel: viewModel)
+            default:
+                let barcodeView: BarcodeViewWide = .fromNib()
+                barcode = barcodeView
+                barcodeView.configure(viewModel: viewModel)
+            }
         }
         
         barcode.translatesAutoresizingMaskIntoConstraints = false

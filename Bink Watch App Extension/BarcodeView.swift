@@ -15,34 +15,38 @@ struct BarcodeView: View {
     let viewModel: WatchAppViewModel
     
     var body: some View {
-        HStack {
-            Spacer()
-            VStack {
+        GeometryReader { geo in
+            HStack {
                 Spacer()
-                Image(uiImage: barcodeImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                if let balance = balance {
-                    Text(balance)
-                        .foregroundColor(.black)
-                        .font(.nunitoSemiBold(16))
-                } else {
+                VStack {
                     Spacer()
+                        .frame(height: geo.size.height * viewModel.barcodeSpacerHeight)
+                    Image(uiImage: barcodeImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                    if let balance = balance {
+                        Text(balance)
+                            .foregroundColor(.black)
+                            .font(.nunitoSemiBold(16))
+                    } else {
+                        Spacer()
+                            .frame(height: geo.size.height * viewModel.barcodeSpacerHeight)
+                    }
                 }
+                Spacer()
             }
-            Spacer()
-        }
-        .background(Color.white)
-        .edgesIgnoringSafeArea([.top, .bottom])
-        .onTapGesture {
-            self.presentationMode.wrappedValue.dismiss()
-        }
-        .onAppear(perform: {
-            viewModel.viewingBarcode = true
-        })
-        .onDisappear {
-            viewModel.viewingBarcode = false
-            viewModel.refreshWallet()
+            .background(Color.white)
+            .edgesIgnoringSafeArea([.top, .bottom])
+            .onTapGesture {
+                self.presentationMode.wrappedValue.dismiss()
+            }
+            .onAppear(perform: {
+                viewModel.viewingBarcode = true
+            })
+            .onDisappear {
+                viewModel.viewingBarcode = false
+                viewModel.refreshWallet()
+            }
         }
     }
 }

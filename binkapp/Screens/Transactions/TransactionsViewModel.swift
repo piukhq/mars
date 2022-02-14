@@ -15,7 +15,7 @@ struct TransactionsViewModel {
         if transactions.isEmpty {
             return L10n.transactionHistoryUnavailableTitle
         }
-        return L10n.pointsHistoryTitle
+        return L10n.transactionHistoryTitle
     }
     
     var description: String {
