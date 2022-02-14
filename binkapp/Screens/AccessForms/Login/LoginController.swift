@@ -84,6 +84,7 @@ class LoginController: UserServiceProtocol {
                 BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
                 BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
                 MixpanelUtility.track(.onboardingComplete(route: loginType))
+                Current.watchController.setMixpanelUserProperty()
                                 
                 completion(nil)
             })

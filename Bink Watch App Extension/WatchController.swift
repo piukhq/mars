@@ -12,8 +12,13 @@ import WatchConnectivity
 class WatchController {
     let session = WCSession.default
     var watchRefreshRequired = true
+    private var mixpanelUserPropertyUpdated = false
 
     func sendMembershipCardsToWatch(completion: EmptyCompletionBlock? = nil) {
+        if !mixpanelUserPropertyUpdated {
+            setMixpanelUserProperty()
+        }
+        
         guard Current.userManager.hasCurrentUser else {
             hasCurrentUser(false)
             return
@@ -94,6 +99,12 @@ class WatchController {
             session.sendMessage([WKSessionKey.hasCurrentUser: hasUser], replyHandler: nil)
             completion?()
         }
+    }
+    
+    func setMixpanelUserProperty() {
+        guard session.activationState == .activated else { return }
+        MixpanelUtility.setUserProperty(.appleWatchInstalled(session.isWatchAppInstalled))
+        mixpanelUserPropertyUpdated = true
     }
 }
 
