@@ -144,7 +144,7 @@ class PaymentCardDetailViewModel {
     // MARK: PLL membership plans
 
     var pllMembershipPlans: [CD_MembershipPlan]? {
-        return Current.wallet.membershipPlans?.filter { $0.featureSet?.planCardType == .link }
+        return Current.wallet.membershipPlans?.filter { $0.featureSet?.planCardType == .link && $0.isPlanListable }
     }
 
     var pllPlansAddedToWallet: [CD_MembershipPlan]? {
