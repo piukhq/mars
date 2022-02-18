@@ -16,4 +16,10 @@ class BarcodeViewNoBarcode: BarcodeView {
             iconImageView.setImage(forPathType: .membershipPlanAlternativeHero(plan: plan))
         }
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        iconImageView.layer.cornerRadius = 10
+        iconImageView.layer.cornerCurve = .continuous
+    }
 }

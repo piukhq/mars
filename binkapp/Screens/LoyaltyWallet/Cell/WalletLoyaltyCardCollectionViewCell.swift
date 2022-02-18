@@ -132,7 +132,9 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         
         /// Link Status
         cardLinkStatusLabel.text = viewModel.linkStatusText
-        cardLinkStatusImage.image = UIImage(named: viewModel.linkStatusImageName)
+        if viewModel.shouldShowLinkImage {
+            cardLinkStatusImage.image = UIImage(named: viewModel.linkStatusImageName)
+        }
         cardLinkStatusImage.isHidden = !viewModel.shouldShowLinkImage
         cardLinkStatusLabel.isHidden = !viewModel.shouldShowLinkStatus
         
@@ -154,6 +156,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         }
         
         containerView.backgroundColor = .clear
+        cardIconImageView.layer.cornerRadius = LayoutHelper.iconCornerRadius
     }
     
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {

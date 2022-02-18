@@ -42,4 +42,13 @@ extension UIView {
             return nil
         }
     }
+    
+    func pin(to view: UIView) {
+        NSLayoutConstraint.activate([
+            leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            topAnchor.constraint(equalTo: view.topAnchor),
+            bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
 }

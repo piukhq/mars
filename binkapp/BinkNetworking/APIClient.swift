@@ -23,6 +23,7 @@ typealias APIClientCompletionHandler<ResponseType: Any> = (Result<ResponseType, 
 final class APIClient {
     enum Certificates {
         static let bink = Certificates.certificate(filename: "bink")
+        static let binkOld = Certificates.certificate(filename: "binkOld")
 
         private static func certificate(filename: String) -> SecCertificate {
             let filePath = Bundle.main.path(forResource: filename, ofType: "der")!
@@ -88,7 +89,7 @@ final class APIClient {
         let evaluators = [
             url:
                 PinnedCertificatesTrustEvaluator(certificates: [
-                    Certificates.bink
+                    Certificates.bink, Certificates.binkOld
                 ])
         ]
 

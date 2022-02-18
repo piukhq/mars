@@ -54,12 +54,13 @@ class LoyaltyWalletViewModel: WalletViewModel {
             }
             
             Current.watchController.deleteLoyaltyCardFromWatch(barcode: card.card?.barcode ?? "")
-
+            let brandName = card.membershipPlan?.account?.companyName
             self.repository.delete(card) {
                 if #available(iOS 14.0, *) {
                     BinkLogger.infoPrivateHash(event: LoyaltyCardLoggerEvent.loyaltyCardDeleted, value: card.id)
                 }
-                MixpanelUtility.track(.loyaltyCardDeleted(brandName: card.membershipPlan?.account?.companyName ?? "Unknown", route: .wallet))
+                
+                MixpanelUtility.track(.loyaltyCardDeleted(brandName: brandName ?? "Unknown", route: .wallet))
                 Current.wallet.refreshLocal()
             }
         }, onCancel: onCancel)

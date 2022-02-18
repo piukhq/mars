@@ -195,7 +195,10 @@ private extension AppDelegate {
 // MARK: - Watch Connectivity
 
 extension AppDelegate: WCSessionDelegate {
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        Current.watchController.setMixpanelUserProperty()
+    }
+    
     func sessionDidBecomeInactive(_ session: WCSession) {}
     func sessionDidDeactivate(_ session: WCSession) {}
     
