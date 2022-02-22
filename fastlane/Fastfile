@@ -165,7 +165,7 @@ platform :ios do
       distribute_external: true,
       groups: "Bink Internal",
       reject_build_waiting_for_review: true,
-      skip_waiting_for_build_processing: true
+      skip_waiting_for_build_processing: false
     )
   end
 
