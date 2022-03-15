@@ -84,7 +84,7 @@ final class ImageService {
         case .membershipPlanHero(let plan):
             image = plan.image(ofType: .hero)
         case .membershipPlanAlternativeHero(let plan):
-            image = plan.image(ofType: .alternativeHero)
+            image = plan.image(ofType: .alternativeHero) ?? plan.image(ofType: .icon)
         case .membershipPlanTier(let card):
             /// If we have a tier image, return that, otherwise return hero
             image = card.image(ofType: .tier) ?? card.membershipPlan?.image(ofType: .hero)

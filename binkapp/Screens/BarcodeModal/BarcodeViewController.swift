@@ -81,15 +81,19 @@ class BarcodeViewController: BinkViewController {
         stackView.setCustomSpacing(Constants.largeSpace, after: numberLabel.isHidden ? barcodeNumberLabel : numberLabel)
         
         if let barcodeImage = viewModel.barcodeImage(withSize: barcodeImageView.frame.size) {
-            barcodeImageView.isHidden = false
-            imageContainerView.isHidden = false
+//            barcodeImageView.isHidden = false
+//            imageContainerView.isHidden = false
             barcodeErrorLabel.isHidden = true
             barcodeImageView.image = barcodeImage
         } else {
-            barcodeImageView.isHidden = true
-            imageContainerView.isHidden = true
-            barcodeErrorLabel.text = L10n.barcodeError
-            barcodeErrorLabel.font = UIFont.bodyTextLarge
+            if let plan = viewModel.membershipCard.membershipPlan {
+                barcodeImageView.setImage(forPathType: .membershipPlanAlternativeHero(plan: plan))
+            }
+            
+//            barcodeImageView.isHidden = true
+//            imageContainerView.isHidden = true
+//            barcodeErrorLabel.text = L10n.barcodeError
+//            barcodeErrorLabel.font = UIFont.bodyTextLarge
             barcodeErrorLabel.isHidden = viewModel.isBarcodeAvailable ? false : true
         }
                 
