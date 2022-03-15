@@ -9,7 +9,11 @@ open class CD_PaymentCard: _CD_PaymentCard, WalletCardProtocol {
     }
     
     var paymentCardStatus: PaymentCardStatus {
-        return PaymentCardStatus(rawValue: status ?? "") ?? .pending
+        if isExpired {
+            return .expired
+        } else {
+            return PaymentCardStatus(rawValue: status ?? "") ?? .pending
+        }
     }
 
     var isExpired: Bool {
