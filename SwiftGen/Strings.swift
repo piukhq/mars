@@ -90,7 +90,7 @@ internal enum L10n {
   internal static let barcodeMaximiseButton = L10n.tr("Localizable", "barcode_maximise_button")
   /// Barcode
   internal static let barcodeSwipeTitle = L10n.tr("Localizable", "barcode_swipe_title")
-  /// Barcode:
+  /// Barcode
   internal static let barcodeTitle = L10n.tr("Localizable", "barcode_title")
   /// Card number:
   internal static let barcodeViewTitle = L10n.tr("Localizable", "barcode_view_title")
@@ -138,7 +138,7 @@ internal enum L10n {
   internal static let cardLinkedStatus = L10n.tr("Localizable", "card_linked_status")
   /// Linking
   internal static let cardLinkingStatus = L10n.tr("Localizable", "card_linking_status")
-  /// Card number:
+  /// Membership number
   internal static let cardNumberTitle = L10n.tr("Localizable", "card_number_title")
   /// One of these payment cards are
   internal static let cardsAlreadyLinkedMessagePrefix = L10n.tr("Localizable", "cards_already_linked_message_prefix")
