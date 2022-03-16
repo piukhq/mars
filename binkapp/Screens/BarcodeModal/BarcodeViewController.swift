@@ -11,11 +11,16 @@ class BarcodeViewController: BinkViewController {
     enum Constants {
         static let largeSpace: CGFloat = 20
         static let smallSpace: CGFloat = -5
+        static let imageCornerRadius: CGFloat = 10
+        static let iconImageAspectRatio: CGFloat = 1
     }
     
     @IBOutlet private weak var stackView: UIStackView!
     @IBOutlet weak var barcodeImageView: UIImageView!
-    @IBOutlet weak var barcodeErrorLabel: UILabel!
+    @IBOutlet weak var logoImageContainer: UIView!
+    @IBOutlet weak var logoImageView: UIImageView!
+    
+    @IBOutlet weak var logoImageViewAspectRatio: NSLayoutConstraint!
     @IBOutlet weak var barcodeLabel: UILabel!
     @IBOutlet weak var barcodeNumberLabel: BinkCopyableLabel!
     @IBOutlet weak var titleLabel: UILabel!
@@ -81,20 +86,32 @@ class BarcodeViewController: BinkViewController {
         stackView.setCustomSpacing(Constants.largeSpace, after: numberLabel.isHidden ? barcodeNumberLabel : numberLabel)
         
         if let barcodeImage = viewModel.barcodeImage(withSize: barcodeImageView.frame.size) {
-//            barcodeImageView.isHidden = false
-//            imageContainerView.isHidden = false
-            barcodeErrorLabel.isHidden = true
+            logoImageView.isHidden = true
+            logoImageContainer.isHidden = true
             barcodeImageView.image = barcodeImage
+            logoImageView.isHidden = true
         } else {
             if let plan = viewModel.membershipCard.membershipPlan {
-                barcodeImageView.setImage(forPathType: .membershipPlanAlternativeHero(plan: plan))
+                barcodeImageView.isHidden = true
+                imageContainerView.isHidden = true
+                logoImageView.layer.cornerRadius = Constants.imageCornerRadius
+                logoImageView.layer.cornerCurve = .continuous
+                
+                ImageService.getImage(forPathType: .membershipPlanAlternativeHero(plan: plan), traitCollection: traitCollection) { [weak self] retrievedImage in
+                    if let retrievedImage = retrievedImage {
+                        self?.logoImageView.image = retrievedImage
+                    } else {
+                        ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: self?.traitCollection) { retrievedImage in
+                            /// If we can't retrieve the hero image, adjust aspect ratio and use square icon
+                            self?.logoImageView.image = retrievedImage
+                            self?.logoImageViewAspectRatio.isActive = false
+                            if let heightAnchor = self?.logoImageView.heightAnchor {
+                                self?.logoImageView.widthAnchor.constraint(equalTo: heightAnchor, multiplier: Constants.iconImageAspectRatio).isActive = true
+                            }
+                        }
+                    }
+                }
             }
-            
-//            barcodeImageView.isHidden = true
-//            imageContainerView.isHidden = true
-//            barcodeErrorLabel.text = L10n.barcodeError
-//            barcodeErrorLabel.font = UIFont.bodyTextLarge
-            barcodeErrorLabel.isHidden = viewModel.isBarcodeAvailable ? false : true
         }
                 
         barcodeLabel.font = UIFont.headline

@@ -50,7 +50,7 @@ final class ImageService {
     }
     
     fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy, traitCollection: UITraitCollection? = nil, completion: @escaping ImageCompletionHandler) {
-        guard let imagePath = path(forType: pathType, traitCollection: traitCollection) else { return }
+        guard let imagePath = path(forType: pathType, traitCollection: traitCollection) else { return completion(nil) }
 
         // Are we forcing a refresh?
         if !forceRefresh {
@@ -84,7 +84,7 @@ final class ImageService {
         case .membershipPlanHero(let plan):
             image = plan.image(ofType: .hero)
         case .membershipPlanAlternativeHero(let plan):
-            image = plan.image(ofType: .alternativeHero) ?? plan.image(ofType: .icon)
+            image = plan.image(ofType: .alternativeHero)
         case .membershipPlanTier(let card):
             /// If we have a tier image, return that, otherwise return hero
             image = card.image(ofType: .tier) ?? card.membershipPlan?.image(ofType: .hero)
