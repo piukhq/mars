@@ -81,6 +81,10 @@ class BarcodeViewModel {
         return membershipCard.card?.barcode ?? ""
     }
     
+    var barcodeMatchesMembershipNumber: Bool {
+        return cardNumber == barcodeNumber
+    }
+    
     var barcodeUse: BarcodeUse = .loyaltyCard
     
     var barcodeType: BarcodeType {

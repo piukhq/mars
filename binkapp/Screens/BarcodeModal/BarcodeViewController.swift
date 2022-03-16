@@ -130,6 +130,11 @@ class BarcodeViewController: BinkViewController {
         descriptionLabel.font = UIFont.bodyTextLarge
         descriptionLabel.textAlignment = .justified
         
+        if viewModel.barcodeMatchesMembershipNumber {
+            barcodeLabel.isHidden = true
+            barcodeNumberLabel.isHidden = true
+        }
+        
         switch viewModel.barcodeUse {
         case .loyaltyCard:
             if viewModel.isBarcodeAvailable {
