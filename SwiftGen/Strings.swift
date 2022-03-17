@@ -78,9 +78,9 @@ internal enum L10n {
   internal static func authScreenDescription(_ p1: Any) -> String {
     return L10n.tr("Localizable", "auth_screen_description", String(describing: p1))
   }
-  /// Scan this barcode at the store, just like you would a physical loyalty card. Bear in mind that some store scanners cannot read from screens.
+  /// Show this barcode in-store just like you would a physical loyalty card.
   internal static let barcodeCardDescription = L10n.tr("Localizable", "barcode_card_description")
-  /// Show this card number in-store just like you would a physical loyalty card.
+  /// Share this number in-store just like you would a physical loyalty card.
   internal static let barcodeCardNumberDescription = L10n.tr("Localizable", "barcode_card_number_description")
   /// Scan this barcode at the store, just like you would a physical coupon. Bear in mind that some store scanners cannot read from screens.
   internal static let barcodeCouponDescription = L10n.tr("Localizable", "barcode_coupon_description")
