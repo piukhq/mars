@@ -60,13 +60,14 @@ enum BarcodeType: Int {
 
 class BarcodeViewModel {
     let membershipCard: CD_MembershipCard
+    var barcodeImageIsRenderable = false
     
     var title: String {
         return membershipCard.membershipPlan?.account?.companyName ?? ""
     }
     
     var isBarcodeAvailable: Bool {
-        return membershipCard.card?.barcode != nil
+        return membershipCard.card?.barcode != nil && barcodeImageIsRenderable
     }
     
     var isCardNumberAvailable: Bool {

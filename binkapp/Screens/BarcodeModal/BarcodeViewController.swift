@@ -75,7 +75,6 @@ class BarcodeViewController: BinkViewController {
     
     func configureUI() {
         guard !hasDrawnBarcode else { return }
-        barcodeImageView.isHidden = !viewModel.isBarcodeAvailable
         [numberLabel, titleLabel].forEach {
             $0?.isHidden = viewModel.cardNumber == nil
         }
@@ -86,6 +85,7 @@ class BarcodeViewController: BinkViewController {
         stackView.setCustomSpacing(Constants.largeSpace, after: numberLabel.isHidden ? barcodeNumberLabel : numberLabel)
         
         if let barcodeImage = viewModel.barcodeImage(withSize: barcodeImageView.frame.size) {
+            viewModel.barcodeImageIsRenderable = true
             logoImageView.isHidden = true
             logoImageContainer.isHidden = true
             barcodeImageView.image = barcodeImage
