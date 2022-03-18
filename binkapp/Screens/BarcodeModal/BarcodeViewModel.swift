@@ -60,7 +60,10 @@ enum BarcodeType: Int {
 
 class BarcodeViewModel {
     let membershipCard: CD_MembershipCard
-    var barcodeImageIsRenderable = false
+    
+    var barcodeImageIsRenderable: Bool {
+        return barcodeImage(withSize: CGSize(width: 100, height: 100)) != nil
+    }
     
     var title: String {
         return membershipCard.membershipPlan?.account?.companyName ?? ""

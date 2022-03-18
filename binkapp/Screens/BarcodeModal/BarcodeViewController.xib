@@ -10,17 +10,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BarcodeViewController" customModule="binkapp" customModuleProvider="target">
             <connections>
-                <outlet property="barcodeImageView" destination="W07-ft-Vcs" id="VfC-kQ-PEc"/>
-                <outlet property="barcodeLabel" destination="rDB-WQ-Xw9" id="Dnr-LY-WbC"/>
-                <outlet property="barcodeNumberLabel" destination="xaV-ek-2XU" id="APx-Iu-QXX"/>
-                <outlet property="descriptionLabel" destination="aBF-M2-M8O" id="DD7-BP-Wgg"/>
-                <outlet property="imageContainerView" destination="F3Z-f4-lSw" id="8wg-uP-SgL"/>
-                <outlet property="logoImageContainer" destination="eqQ-oS-XpC" id="BxY-2u-Ccb"/>
-                <outlet property="logoImageView" destination="dSz-5F-EI0" id="Ay1-dm-VPp"/>
-                <outlet property="logoImageViewAspectRatio" destination="u6y-gl-5ki" id="oc1-8e-Y2W"/>
-                <outlet property="numberLabel" destination="pql-nN-4DC" id="y00-tr-R3u"/>
-                <outlet property="stackView" destination="bEh-RB-7fs" id="7k5-zz-gsj"/>
-                <outlet property="titleLabel" destination="uM9-25-u1E" id="oJJ-fa-Sjl"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -29,7 +18,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pfc-LG-qkr">
+                <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pfc-LG-qkr">
                     <rect key="frame" x="0.0" y="64" width="414" height="431"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eqQ-oS-XpC">
@@ -74,7 +63,7 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </stackView>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="bEh-RB-7fs">
+                <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="bEh-RB-7fs">
                     <rect key="frame" x="20" y="515" width="374" height="101.66666666666663"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uM9-25-u1E">

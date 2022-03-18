@@ -298,6 +298,8 @@
 		CE3D31DC2649660C0072BD97 /* ScanLoyaltyCardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D31DA2649660C0072BD97 /* ScanLoyaltyCardButton.swift */; };
 		CE3D31DD2649660C0072BD97 /* ScanLoyaltyCardButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */; };
 		CE4A624925714EAE003271F6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* Sentry */; };
+		CE518D6C27E3406D00A36E90 /* HighVisibilitySwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE518D6B27E3406D00A36E90 /* HighVisibilitySwiftUIView.swift */; };
+		CE518D8827E4818200A36E90 /* HighVisibilityLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE518D8727E4818200A36E90 /* HighVisibilityLabelView.swift */; };
 		CE52E15B26F0ABE400CAFBBF /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492922F99E1D000C1F4D /* NunitoSans-Regular.ttf */; };
 		CE52E15C26F0AE0400CAFBBF /* NunitoSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492E22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf */; };
 		CE52E16026F0BBBF00CAFBBF /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E15E26F0BBBF00CAFBBF /* UIColor+Extension.swift */; };
@@ -970,6 +972,8 @@
 		CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanLoyaltyCardButton.xib; sourceTree = "<group>"; };
 		CE4A628025715519003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A6285257155AE003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE518D6B27E3406D00A36E90 /* HighVisibilitySwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighVisibilitySwiftUIView.swift; sourceTree = "<group>"; };
+		CE518D8727E4818200A36E90 /* HighVisibilityLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighVisibilityLabelView.swift; sourceTree = "<group>"; };
 		CE52E15E26F0BBBF00CAFBBF /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		CE52E16226F0FE0E00CAFBBF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 		CE539DAD25E80C1100BDA5EF /* BinkTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkTableViewController.swift; sourceTree = "<group>"; };
@@ -1308,6 +1312,7 @@
 			children = (
 				3CCC46C622FC6540008476E3 /* BarcodeViewModel.swift */,
 				3CCC46C222FC652C008476E3 /* BarcodeViewController.swift */,
+				CE518D6B27E3406D00A36E90 /* HighVisibilitySwiftUIView.swift */,
 				3CCC46C322FC652C008476E3 /* BarcodeViewController.xib */,
 			);
 			path = BarcodeModal;
@@ -1940,6 +1945,7 @@
 			isa = PBXGroup;
 			children = (
 				701E2C492677567E003F903B /* DebugMenuView.swift */,
+				CE518D8727E4818200A36E90 /* HighVisibilityLabelView.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -3643,6 +3649,7 @@
 				EF5491202371D9C800FE17BE /* PaymentCardDetailAddLoyaltyCardCellViewModel.swift in Sources */,
 				CEA16ED62624B0EE00D449E1 /* BarcodeViewWide.swift in Sources */,
 				BD458B3E236B5C0E0029A538 /* LoginRequest.swift in Sources */,
+				CE518D8827E4818200A36E90 /* HighVisibilityLabelView.swift in Sources */,
 				3C05F27E240FC28300060818 /* PaymentCardDetailLinkLoyaltyCardCellViewModel.swift in Sources */,
 				EFEB5C0123853B7900E18743 /* WalletRefreshManager.swift in Sources */,
 				BD99D2E22354945100823FC4 /* SettingsTableViewCell.swift in Sources */,
@@ -3660,6 +3667,7 @@
 				3C17FC3222F2CCAD00E423A2 /* MembershipCardImageModel.swift in Sources */,
 				3CD4F14E230D35AE0075F63C /* BinkInfoButton.swift in Sources */,
 				EFEB5BFD237E96F500E18743 /* CGFloatExtension.swift in Sources */,
+				CE518D6C27E3406D00A36E90 /* HighVisibilitySwiftUIView.swift in Sources */,
 				3CD8027E239130EE00D26888 /* ForgotPasswordViewController.swift in Sources */,
 				CE02D51B27285F14008B9BFA /* WatchLoyaltyCard.swift in Sources */,
 				BD458B40236C987F0029A538 /* UserManager.swift in Sources */,
