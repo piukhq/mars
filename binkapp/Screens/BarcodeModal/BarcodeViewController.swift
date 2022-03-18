@@ -11,7 +11,7 @@ import SwiftUI
 class BarcodeViewController: BinkViewController {
     enum Constants {
         static let largeSpace: CGFloat = 20
-        static let smallSpace: CGFloat = -5
+        static let smallSpace: CGFloat = 10
         static let imageCornerRadius: CGFloat = 10
         static let iconImageAspectRatio: CGFloat = 1
         static let horizontalInset: CGFloat = 25.0
@@ -29,18 +29,20 @@ class BarcodeViewController: BinkViewController {
 //    @IBOutlet weak var barcodeNumberLabel: BinkCopyableLabel!
 //    @IBOutlet weak var titleLabel: UILabel!
 //    @IBOutlet weak var numberLabel: BinkCopyableLabel!
-//    @IBOutlet weak var descriptionLabel: UILabel!
     
     lazy var stackScrollView: StackScrollView = {
-        let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [barcodeImageView, logoImageContainerView, descriptionLabel], adjustForKeyboard: true)
+        let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [barcodeImageView, logoImageContainerView, descriptionLabel, membershipNumberTitleLabel], adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .clear
         stackView.margin = UIEdgeInsets(top: 0, left: Constants.horizontalInset, bottom: 0, right: Constants.horizontalInset)
         stackView.distribution = .fill
         stackView.alignment = .fill
+
         stackView.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: Constants.bottomInset, right: 0)
-//        stackView.customPadding(Constants.postCollectionViewPadding, after: collectionView)
-//        stackView.customPadding(Constants.preCollectionViewPadding, before: collectionView)
+        stackView.customPadding(Constants.largeSpace, after: barcodeImageView)
+        stackView.customPadding(Constants.largeSpace, after: logoImageContainerView)
+        stackView.customPadding(Constants.smallSpace, after: descriptionLabel)
+        stackView.customPadding(Constants.smallSpace, after: membershipNumberTitleLabel)
         view.addSubview(stackView)
         return stackView
     }()
@@ -79,10 +81,18 @@ class BarcodeViewController: BinkViewController {
     }()
     
     private lazy var descriptionLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var membershipNumberTitleLabel: UILabel = {
+        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+
     
     private var previousBrightness: CGFloat?
 
@@ -150,11 +160,12 @@ class BarcodeViewController: BinkViewController {
 //            $0?.isHidden = viewModel.cardNumber == nil
 //        }
         
-//        stackView.setCustomSpacing(Constants.largeSpace, after: barcodeImageView)
 //        stackView.setCustomSpacing(Constants.smallSpace, after: barcodeLabel)
 //        stackView.setCustomSpacing(Constants.smallSpace, after: titleLabel)
 //        stackView.setCustomSpacing(Constants.largeSpace, after: numberLabel.isHidden ? barcodeNumberLabel : numberLabel)
         
+        
+        /// Barcode Image
         barcodeImageView.layoutIfNeeded()
         if let barcodeImage = viewModel.barcodeImage(withSize: barcodeImageView.frame.size) {
             logoImageContainerView.isHidden = true
@@ -180,6 +191,35 @@ class BarcodeViewController: BinkViewController {
                 }
             }
         }
+        
+        /// Description label
+        descriptionLabel.font = UIFont.bodyTextLarge
+        descriptionLabel.textAlignment = .justified
+        
+        switch viewModel.barcodeUse {
+        case .loyaltyCard:
+            if viewModel.isBarcodeAvailable {
+                descriptionLabel.text = L10n.barcodeCardDescription
+            } else {
+                descriptionLabel.text = L10n.barcodeCardNumberDescription
+            }
+        case .coupon:
+            descriptionLabel.text = L10n.barcodeCouponDescription
+        }
+        
+        /// Membership number
+        membershipNumberTitleLabel.font = .headline
+        membershipNumberTitleLabel.text = L10n.cardNumberTitle
+        
+        let highVisibilityLabelSwiftUIView = HighVisibilityLabelView(text: viewModel.cardNumber ?? "", parentViewWidth: view.frame.width - (Constants.horizontalInset * 2))
+        let hostingController = UIHostingController(rootView: highVisibilityLabelSwiftUIView, ignoreSafeArea: true)
+        addChild(hostingController)
+        stackScrollView.insert(arrangedSubview: hostingController.view, atIndex: 4)
+        
+        
+        hostingController.didMove(toParent: self)
+        hostingController.view.backgroundColor = .clear
+        
                 
 //        barcodeLabel.font = UIFont.headline
 //        barcodeLabel.text = viewModel.isBarcodeAvailable ? L10n.barcodeTitle : nil
@@ -194,8 +234,7 @@ class BarcodeViewController: BinkViewController {
 //        numberLabel.textColor = .blueAccent
 //        numberLabel.text = viewModel.cardNumber
 //
-//        descriptionLabel.font = UIFont.bodyTextLarge
-//        descriptionLabel.textAlignment = .justified
+    
         
 //        if viewModel.barcodeMatchesMembershipNumber {
 //            barcodeLabel.isHidden = true
@@ -211,19 +250,41 @@ class BarcodeViewController: BinkViewController {
 //            barcodeNumberLabel.isHidden = true
 //
 //        }
-        
-//        switch viewModel.barcodeUse {
-//        case .loyaltyCard:
-//            if viewModel.isBarcodeAvailable {
-//                descriptionLabel.text = L10n.barcodeCardDescription
-//            } else {
-//                descriptionLabel.text = L10n.barcodeCardNumberDescription
-//            }
-//        case .coupon:
-//            descriptionLabel.text = L10n.barcodeCouponDescription
-//        }
 //
 //        hasDrawnBarcode = true
 //        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    }
+}
+
+extension UIHostingController {
+    convenience public init(rootView: Content, ignoreSafeArea: Bool) {
+        self.init(rootView: rootView)
+        
+        if ignoreSafeArea {
+            disableSafeArea()
+        }
+    }
+    
+    func disableSafeArea() {
+        guard let viewClass = object_getClass(view) else { return }
+        
+        let viewSubclassName = String(cString: class_getName(viewClass)).appending("_IgnoreSafeArea")
+        if let viewSubclass = NSClassFromString(viewSubclassName) {
+            object_setClass(view, viewSubclass)
+        }
+        else {
+            guard let viewClassNameUtf8 = (viewSubclassName as NSString).utf8String else { return }
+            guard let viewSubclass = objc_allocateClassPair(viewClass, viewClassNameUtf8, 0) else { return }
+            
+            if let method = class_getInstanceMethod(UIView.self, #selector(getter: UIView.safeAreaInsets)) {
+                let safeAreaInsets: @convention(block) (AnyObject) -> UIEdgeInsets = { _ in
+                    return .zero
+                }
+                class_addMethod(viewSubclass, #selector(getter: UIView.safeAreaInsets), imp_implementationWithBlock(safeAreaInsets), method_getTypeEncoding(method))
+            }
+            
+            objc_registerClassPair(viewSubclass)
+            object_setClass(view, viewSubclass)
+        }
     }
 }

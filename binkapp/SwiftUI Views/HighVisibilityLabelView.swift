@@ -50,6 +50,7 @@ struct HighVisibilityLabelRow: View {
             ForEach(Array(membershipNumber.enumerated()), id: \.offset) { char in
                 HighVisibilityBox(digit: String(char.element), offset: char.offset, row: row, parentViewWidth: parentViewWidth)
             }
+            Spacer()
         }
     }
 }
