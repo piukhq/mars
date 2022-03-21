@@ -147,10 +147,9 @@ class BarcodeViewController: BinkViewController {
     
     override func configureForCurrentTheme() {
         super.configureForCurrentTheme()
-//        barcodeLabel.textColor = Current.themeManager.color(for: .text)
-//        barcodeNumberLabel.textColor = Current.themeManager.color(for: .text)
-//        titleLabel.textColor = Current.themeManager.color(for: .text)
-//        descriptionLabel.textColor = Current.themeManager.color(for: .text)
+        barcodeTitleLabel.textColor = Current.themeManager.color(for: .text)
+        membershipNumberTitleLabel.textColor = Current.themeManager.color(for: .text)
+        descriptionLabel.textColor = Current.themeManager.color(for: .text)
     }
     
     private func configureHighVisibilityView(text: String) -> UIView {
@@ -158,8 +157,22 @@ class BarcodeViewController: BinkViewController {
         let hostingController = UIHostingController(rootView: highVisibilityLabelSwiftUIView, ignoreSafeArea: true)
         addChild(hostingController)
         hostingController.didMove(toParent: self)
+        hostingController.view.backgroundColor = .clear
+        
+//        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(showMenu))
+//        hostingController.view.addGestureRecognizer(longPressRecognizer)
         return hostingController.view
     }
+    
+//    @objc private func showMenu(_ sender: Any) {
+//        becomeFirstResponder()
+//        let menu = UIMenuController.shared
+//        if !menu.isMenuVisible {
+//            let xPosition = self.intrinsicContentSize.width / 2
+//            let rect = CGRect(x: xPosition, y: bounds.midY - 4, width: 0.0, height: 0.0)
+//            menu.showMenu(from: self, rect: rect)
+//        }
+//    }
     
     private func configureLayout() {
         NSLayoutConstraint.activate([

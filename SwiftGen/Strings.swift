@@ -82,6 +82,8 @@ internal enum L10n {
   internal static let barcodeCardDescription = L10n.tr("Localizable", "barcode_card_description")
   /// Share this number in-store just like you would a physical loyalty card.
   internal static let barcodeCardNumberDescription = L10n.tr("Localizable", "barcode_card_number_description")
+  /// Copy
+  internal static let barcodeCopyLabel = L10n.tr("Localizable", "barcode_copy_label")
   /// Scan this barcode at the store, just like you would a physical coupon. Bear in mind that some store scanners cannot read from screens.
   internal static let barcodeCouponDescription = L10n.tr("Localizable", "barcode_coupon_description")
   /// This barcode cannot be displayed
