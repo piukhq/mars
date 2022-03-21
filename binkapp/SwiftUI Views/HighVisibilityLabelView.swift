@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HighVisibilityLabelView: View {
     let text: String
-    let parentViewWidth: CGFloat
+//    let parentViewWidth: CGFloat
     
     var membershipNumberArray: [String] {
         var mutableLabelText = text
@@ -25,29 +25,30 @@ struct HighVisibilityLabelView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            ForEach(Array(membershipNumberArray.enumerated()), id: \.offset) { characters in
-                HighVisibilityLabelRow(membershipNumber: characters.element, row: characters.offset, parentViewWidth: parentViewWidth)
+        GeometryReader { geometry in
+            VStack(alignment: .leading, spacing: 0) {
+                ForEach(Array(membershipNumberArray.enumerated()), id: \.offset) { characters in
+                    HighVisibilityLabelRow(membershipNumber: characters.element, row: characters.offset, parentViewWidth: geometry.size.width)
+                }
             }
-        }
-        .contextMenu {
-            Button {
-                UIPasteboard.general.string = text
-            } label: {
-                if #available(iOS 14.0, *) {
-                    Label(L10n.barcodeCopyLabel, systemImage: "doc.on.doc")
-                } else {
-                    Text(L10n.barcodeCopyLabel)
+            .contextMenu {
+                Button {
+                    UIPasteboard.general.string = text
+                } label: {
+                    if #available(iOS 14.0, *) {
+                        Label(L10n.barcodeCopyLabel, systemImage: "doc.on.doc")
+                    } else {
+                        Text(L10n.barcodeCopyLabel)
+                    }
                 }
             }
         }
     }
 }
 
-
 struct HighVisibilityLabelView_Previews: PreviewProvider {
     static var previews: some View {
-        HighVisibilityLabelView(text: "187387098209820982", parentViewWidth: UIScreen.main.bounds.width - 40)
+        HighVisibilityLabelView(text: "187387098209820982")
     }
 }
 
@@ -61,7 +62,7 @@ struct HighVisibilityLabelRow: View {
             ForEach(Array(membershipNumber.enumerated()), id: \.offset) { char in
                 HighVisibilityBox(digit: String(char.element), offset: char.offset, row: row, parentViewWidth: parentViewWidth)
             }
-            Spacer()
+//            Spacer()
         }
     }
 }

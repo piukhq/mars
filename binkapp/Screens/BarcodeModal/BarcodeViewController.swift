@@ -153,11 +153,11 @@ class BarcodeViewController: BinkViewController {
     }
     
     private func configureHighVisibilityView(text: String) -> UIView {
-        let highVisibilityLabelSwiftUIView = HighVisibilityLabelView(text: text, parentViewWidth: view.frame.width - (Constants.horizontalInset * 2))
+        let highVisibilityLabelSwiftUIView = HighVisibilityLabelView(text: text)
         let hostingController = UIHostingController(rootView: highVisibilityLabelSwiftUIView, ignoreSafeArea: true)
         addChild(hostingController)
         hostingController.didMove(toParent: self)
-        hostingController.view.backgroundColor = .clear
+//        hostingController.view.backgroundColor = .clear
         
 //        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(showMenu))
 //        hostingController.view.addGestureRecognizer(longPressRecognizer)

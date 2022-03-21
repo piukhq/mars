@@ -58,8 +58,10 @@ enum BarcodeType: Int {
     }
 }
 
-class BarcodeViewModel {
+class BarcodeViewModel: ObservableObject {
     let membershipCard: CD_MembershipCard
+    
+    @Published var merchantImage: UIImage?
     
     var barcodeImageIsRenderable: Bool {
         return barcodeImage(withSize: CGSize(width: 100, height: 100)) != nil
@@ -67,6 +69,19 @@ class BarcodeViewModel {
     
     var title: String {
         return membershipCard.membershipPlan?.account?.companyName ?? ""
+    }
+    
+    var descriptionText: String {
+        switch barcodeUse {
+        case .loyaltyCard:
+            if isBarcodeAvailable {
+                return L10n.barcodeCardDescription
+            } else {
+                return L10n.barcodeCardNumberDescription
+            }
+        case .coupon:
+            return L10n.barcodeCouponDescription
+        }
     }
     
     var isBarcodeAvailable: Bool {
@@ -104,6 +119,22 @@ class BarcodeViewModel {
 
     init(membershipCard: CD_MembershipCard) {
         self.membershipCard = membershipCard
+        getMerchantImage()
+    }
+    
+    func getMerchantImage()  {
+        if let plan = membershipCard.membershipPlan {
+            ImageService.getImage(forPathType: .membershipPlanAlternativeHero(plan: plan), userInterfaceStyle: .light) { [weak self] retrievedImage in
+                if let retrievedImage = retrievedImage {
+                    self?.merchantImage = retrievedImage
+                } else {
+                    ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), userInterfaceStyle: .light) { retrievedImage in
+                        /// If we can't retrieve the hero image, adjust aspect ratio and use square icon
+                        self?.merchantImage = retrievedImage
+                    }
+                }
+            }
+        }
     }
     
     var barcodeIsMoreSquareThanRectangle: Bool {

@@ -299,6 +299,7 @@
 		CE3D31DD2649660C0072BD97 /* ScanLoyaltyCardButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */; };
 		CE4A624925714EAE003271F6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* Sentry */; };
 		CE518D8827E4818200A36E90 /* HighVisibilityLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE518D8727E4818200A36E90 /* HighVisibilityLabelView.swift */; };
+		CE518D8A27E8C8E000A36E90 /* BarcodeScreenSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE518D8927E8C8DF00A36E90 /* BarcodeScreenSwiftUIView.swift */; };
 		CE52E15B26F0ABE400CAFBBF /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492922F99E1D000C1F4D /* NunitoSans-Regular.ttf */; };
 		CE52E15C26F0AE0400CAFBBF /* NunitoSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492E22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf */; };
 		CE52E16026F0BBBF00CAFBBF /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E15E26F0BBBF00CAFBBF /* UIColor+Extension.swift */; };
@@ -972,6 +973,7 @@
 		CE4A628025715519003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A6285257155AE003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE518D8727E4818200A36E90 /* HighVisibilityLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighVisibilityLabelView.swift; sourceTree = "<group>"; };
+		CE518D8927E8C8DF00A36E90 /* BarcodeScreenSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScreenSwiftUIView.swift; sourceTree = "<group>"; };
 		CE52E15E26F0BBBF00CAFBBF /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		CE52E16226F0FE0E00CAFBBF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 		CE539DAD25E80C1100BDA5EF /* BinkTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkTableViewController.swift; sourceTree = "<group>"; };
@@ -1310,6 +1312,7 @@
 			children = (
 				3CCC46C622FC6540008476E3 /* BarcodeViewModel.swift */,
 				3CCC46C222FC652C008476E3 /* BarcodeViewController.swift */,
+				CE518D8927E8C8DF00A36E90 /* BarcodeScreenSwiftUIView.swift */,
 				3CCC46C322FC652C008476E3 /* BarcodeViewController.xib */,
 			);
 			path = BarcodeModal;
@@ -3914,6 +3917,7 @@
 				709748A024D32A52008D0E29 /* RemoteConfigUtil.swift in Sources */,
 				CE55086E278888D800A39178 /* UniversalLinkUtility.swift in Sources */,
 				EFA5F70D2379A7C70027AB80 /* _CD_PaymentCardAccount.swift in Sources */,
+				CE518D8A27E8C8E000A36E90 /* BarcodeScreenSwiftUIView.swift in Sources */,
 				EF4B46602343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift in Sources */,
 				CE3D31DC2649660C0072BD97 /* ScanLoyaltyCardButton.swift in Sources */,
 				3CF029F622F45B53009A0E61 /* CustomView.swift in Sources */,

@@ -9,6 +9,7 @@
 import UIKit
 import Disk
 import DeepDiff
+import SwiftUI
 
 final class ImageService {
     typealias ImageCompletionHandler = (UIImage?) -> Void
@@ -20,6 +21,16 @@ final class ImageService {
         case membershipPlanTier(card: CD_MembershipCard)
         case membershipPlanOfferTile(url: String)
     }
+    
+    /// Retrieve an image returned in a completion handler
+    static func getImage(forPathType pathType: PathType, policy: StorageUtility.ExpiryPolicy = .week, userInterfaceStyle: UIUserInterfaceStyle?, completion: @escaping (UIImage?) -> Void) {
+//        let imageService = ImageService()
+//        imageService.retrieveImage(forPathType: pathType, policy: policy, traitCollection: traitCollection) { retrievedImage in
+//            completion(retrievedImage)
+//        }
+    }
+    
+    
     
     /// Retrieve an image returned in a completion handler
     static func getImage(forPathType pathType: PathType, policy: StorageUtility.ExpiryPolicy = .week, traitCollection: UITraitCollection?, completion: @escaping (UIImage?) -> Void) {
