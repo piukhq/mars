@@ -70,7 +70,7 @@ class BarcodeViewModel {
     }
     
     var isBarcodeAvailable: Bool {
-        return membershipCard.card?.barcode != nil && barcodeImageIsRenderable
+        return membershipCard.card?.barcode != nil
     }
     
     var isCardNumberAvailable: Bool {
@@ -87,6 +87,10 @@ class BarcodeViewModel {
     
     var barcodeMatchesMembershipNumber: Bool {
         return cardNumber == barcodeNumber
+    }
+    
+    var shouldShowbarcodeNumber: Bool {
+        return !barcodeMatchesMembershipNumber && isBarcodeAvailable
     }
     
     var barcodeUse: BarcodeUse = .loyaltyCard
