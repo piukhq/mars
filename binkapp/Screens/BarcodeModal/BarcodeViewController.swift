@@ -92,19 +92,11 @@ class BarcodeViewController: BinkViewController {
     }()
 
     private lazy var membershipNumberHighVisView: UIView = {
-        let highVisibilityLabelSwiftUIView = HighVisibilityLabelView(text: viewModel.cardNumber ?? "", parentViewWidth: view.frame.width - (Constants.horizontalInset * 2))
-        let hostingController = UIHostingController(rootView: highVisibilityLabelSwiftUIView, ignoreSafeArea: true)
-        addChild(hostingController)
-        hostingController.didMove(toParent: self)
-        return hostingController.view
+        return configureHighVisibilityView(text: viewModel.cardNumber ?? "")
     }()
     
     private lazy var barcodeNumberHighVisView: UIView = {
-        let highVisibilityLabelSwiftUIView = HighVisibilityLabelView(text: viewModel.barcodeNumber, parentViewWidth: view.frame.width - (Constants.horizontalInset * 2))
-        let hostingController = UIHostingController(rootView: highVisibilityLabelSwiftUIView, ignoreSafeArea: true)
-        addChild(hostingController)
-        hostingController.didMove(toParent: self)
-        return hostingController.view
+        return configureHighVisibilityView(text: viewModel.barcodeNumber)
     }()
     
     private lazy var barcodeTitleLabel: UILabel = {
@@ -159,6 +151,14 @@ class BarcodeViewController: BinkViewController {
 //        barcodeNumberLabel.textColor = Current.themeManager.color(for: .text)
 //        titleLabel.textColor = Current.themeManager.color(for: .text)
 //        descriptionLabel.textColor = Current.themeManager.color(for: .text)
+    }
+    
+    private func configureHighVisibilityView(text: String) -> UIView {
+        let highVisibilityLabelSwiftUIView = HighVisibilityLabelView(text: text, parentViewWidth: view.frame.width - (Constants.horizontalInset * 2))
+        let hostingController = UIHostingController(rootView: highVisibilityLabelSwiftUIView, ignoreSafeArea: true)
+        addChild(hostingController)
+        hostingController.didMove(toParent: self)
+        return hostingController.view
     }
     
     private func configureLayout() {
