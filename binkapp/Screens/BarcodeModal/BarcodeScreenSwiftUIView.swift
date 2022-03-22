@@ -77,14 +77,14 @@ struct BarcodeScreenSwiftUIView: View {
                     .padding(.bottom, 16)
                     .actionSheet(isPresented: $viewModel.showingReportIssueOptions) {
                         ActionSheet(title: Text(""), message: Text("We're sorry you're experiencing an issue. Thank you for reporting it to us"), buttons: [
-                            .default(Text("Membership number incorrect"), action: {
-                                MixpanelUtility.track(.barcodeScreenIssueReported(brandName: <#T##String#>))
+                            .default(Text(BarcodeScreenIssue.membershipNumberIncorrect.rawValue), action: {
+                                MixpanelUtility.track(.barcodeScreenIssueReported(brandName: viewModel.title, reason: .membershipNumberIncorrect))
                             }),
-                            .default(Text("Barcode won't scan"), action: {
-                                
+                            .default(Text(BarcodeScreenIssue.barcodeWontScan.rawValue), action: {
+                                MixpanelUtility.track(.barcodeScreenIssueReported(brandName: viewModel.title, reason: .barcodeWontScan))
                             }),
                             .default(Text("Other"), action: {
-                                
+                                ZendeskTickets().launch()
                             }),
                             .cancel()
                         ])
@@ -138,5 +138,4 @@ struct BarcodeScreenSwiftUIView_Previews: PreviewProvider {
 enum BarcodeScreenIssue: String {
     case membershipNumberIncorrect = "Membership number incorrect"
     case barcodeWontScan = "Barcode won't scan"
-    case other
 }
