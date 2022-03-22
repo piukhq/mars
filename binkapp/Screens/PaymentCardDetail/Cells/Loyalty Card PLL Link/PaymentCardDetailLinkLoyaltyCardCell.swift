@@ -35,7 +35,7 @@ class PaymentCardDetailLinkLoyaltyCardCell: PaymentCardDetailTableViewCell {
         linkToggle.isOn = viewModel.isLinked
         
         guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
-        ImageService.getImage(forPathType: .membershipPlanIcon(plan: membershipPlan), traitCollection: traitCollection) { [weak self] image in
+        ImageService.getImage(forPathType: .membershipPlanIcon(plan: membershipPlan), userInterfaceStyle: traitCollection.userInterfaceStyle) { [weak self] image in
             if self?.tag == indexPath.row {
                 self?.iconImageView.image = image
             }

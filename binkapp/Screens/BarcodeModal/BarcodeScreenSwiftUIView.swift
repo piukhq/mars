@@ -8,9 +8,16 @@
 
 import SwiftUI
 
+struct RemoteImage: View {
+    var image: Image?
+    
+    var body: some View {
+        image?.resizable() ?? Image(Asset.binkLogo.name).resizable()
+    }
+}
+
 struct BarcodeScreenSwiftUIView: View {
     @ObservedObject var viewModel: BarcodeViewModel
-    
     @Environment(\.colorScheme) var colorScheme
 
     
@@ -22,10 +29,17 @@ struct BarcodeScreenSwiftUIView: View {
                     Image(uiImage: barcodeImage)
                         .resizable()
                 } else {
-                    if let image = $viewModel.merchantImage.wrappedValue {
-                        Image(uiImage: image)
-                            .resizable()
-                            .frame(height: 128)
+                    switch viewModel.imageType {
+                    case .icon:
+                        RemoteImage(image: viewModel.merchantImage)
+                            .frame(width: 128, height: 128, alignment: .center)
+                            .aspectRatio(contentMode: .fit)
+                            .cornerRadius(10)
+                    case .hero:
+                        RemoteImage(image: viewModel.merchantImage)
+                            .frame(width: 182, height: 115, alignment: .center)
+                            .aspectRatio(CGSize(width: 182, height: 115), contentMode: .fit)
+                            .cornerRadius(10)
                     }
                 }
                 
@@ -55,7 +69,8 @@ struct BarcodeScreenSwiftUIView: View {
                         .frame(height: heightForHighVisView(text: viewModel.barcodeNumber))
                 }
             }
-            .padding(.horizontal, 20)
+            .padding(.horizontal, 25)
+            .padding(.top, 15)
         }
     }
     

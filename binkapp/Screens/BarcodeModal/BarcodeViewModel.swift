@@ -6,12 +6,18 @@
 //
 
 import Foundation
+import SwiftUI
 import UIKit
 import ZXingObjC
 
 enum BarcodeUse {
     case loyaltyCard
     case coupon
+}
+
+enum MerchantImageType {
+    case icon
+    case hero
 }
 
 enum BarcodeType: Int {
@@ -61,7 +67,8 @@ enum BarcodeType: Int {
 class BarcodeViewModel: ObservableObject {
     let membershipCard: CD_MembershipCard
     
-    @Published var merchantImage: UIImage?
+    @Published var merchantImage: Image?
+    var imageType: MerchantImageType = .hero
     
     var barcodeImageIsRenderable: Bool {
         return barcodeImage(withSize: CGSize(width: 100, height: 100)) != nil
@@ -74,7 +81,7 @@ class BarcodeViewModel: ObservableObject {
     var descriptionText: String {
         switch barcodeUse {
         case .loyaltyCard:
-            if isBarcodeAvailable {
+            if barcodeImageIsRenderable {
                 return L10n.barcodeCardDescription
             } else {
                 return L10n.barcodeCardNumberDescription
@@ -122,15 +129,19 @@ class BarcodeViewModel: ObservableObject {
         getMerchantImage()
     }
     
-    func getMerchantImage()  {
+    func getMerchantImage() {
         if let plan = membershipCard.membershipPlan {
             ImageService.getImage(forPathType: .membershipPlanAlternativeHero(plan: plan), userInterfaceStyle: .light) { [weak self] retrievedImage in
                 if let retrievedImage = retrievedImage {
-                    self?.merchantImage = retrievedImage
+                    self?.merchantImage = Image(uiImage: retrievedImage)
+                    self?.imageType = .hero
                 } else {
                     ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), userInterfaceStyle: .light) { retrievedImage in
                         /// If we can't retrieve the hero image, adjust aspect ratio and use square icon
-                        self?.merchantImage = retrievedImage
+                        if let retrievedImage = retrievedImage {
+                            self?.merchantImage = Image(uiImage: retrievedImage)
+                            self?.imageType = .icon
+                        }
                     }
                 }
             }

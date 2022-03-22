@@ -201,11 +201,11 @@ class BarcodeViewController: BinkViewController {
                 barcodeImageView.isHidden = true
                 logoImageView.backgroundColor = .purple
                 
-                ImageService.getImage(forPathType: .membershipPlanAlternativeHero(plan: plan), traitCollection: traitCollection) { [weak self] retrievedImage in
+                ImageService.getImage(forPathType: .membershipPlanAlternativeHero(plan: plan), userInterfaceStyle: traitCollection.userInterfaceStyle) { [weak self] retrievedImage in
                     if let retrievedImage = retrievedImage {
                         self?.logoImageView.image = retrievedImage
                     } else {
-                        ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: self?.traitCollection) { retrievedImage in
+                        ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), userInterfaceStyle: self?.traitCollection.userInterfaceStyle) { retrievedImage in
                             /// If we can't retrieve the hero image, adjust aspect ratio and use square icon
                             self?.logoImageView.image = retrievedImage
                             self?.logoImageViewAspectRatio.isActive = false

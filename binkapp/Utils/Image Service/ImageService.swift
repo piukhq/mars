@@ -23,26 +23,16 @@ final class ImageService {
     }
     
     /// Retrieve an image returned in a completion handler
-    static func getImage(forPathType pathType: PathType, policy: StorageUtility.ExpiryPolicy = .week, userInterfaceStyle: UIUserInterfaceStyle?, completion: @escaping (UIImage?) -> Void) {
-//        let imageService = ImageService()
-//        imageService.retrieveImage(forPathType: pathType, policy: policy, traitCollection: traitCollection) { retrievedImage in
-//            completion(retrievedImage)
-//        }
-    }
-    
-    
-    
-    /// Retrieve an image returned in a completion handler
-    static func getImage(forPathType pathType: PathType, policy: StorageUtility.ExpiryPolicy = .week, traitCollection: UITraitCollection?, completion: @escaping (UIImage?) -> Void) {
+    static func getImage(forPathType pathType: PathType, policy: StorageUtility.ExpiryPolicy = .week, userInterfaceStyle: UIUserInterfaceStyle? = nil, completion: @escaping (UIImage?) -> Void) {
         let imageService = ImageService()
-        imageService.retrieveImage(forPathType: pathType, policy: policy, traitCollection: traitCollection) { retrievedImage in
+        imageService.retrieveImage(forPathType: pathType, policy: policy, userInterfaceStyle: userInterfaceStyle) { retrievedImage in
             completion(retrievedImage)
         }
     }
     
-    static func getImageFromDevice(forPathType pathType: PathType) -> UIImage? {
+    static func getImageFromDevice(forPathType pathType: PathType, userInterfaceStyle: UIUserInterfaceStyle?) -> UIImage? {
         let imageService = ImageService()
-        guard let imagePath = imageService.path(forType: pathType, traitCollection: .current) else { return nil }
+        guard let imagePath = imageService.path(forType: pathType, userInterfaceStyle: userInterfaceStyle) else { return nil }
         
         // Is the image available in our cache?
         if let cachedImage = Cache.sharedImageCache.object(forKey: imagePath.toNSString()) {
@@ -60,8 +50,8 @@ final class ImageService {
         return nil
     }
     
-    fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy, traitCollection: UITraitCollection? = nil, completion: @escaping ImageCompletionHandler) {
-        guard let imagePath = path(forType: pathType, traitCollection: traitCollection) else { return completion(nil) }
+    fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy, userInterfaceStyle: UIUserInterfaceStyle? = nil, completion: @escaping ImageCompletionHandler) {
+        guard let imagePath = path(forType: pathType, userInterfaceStyle: userInterfaceStyle) else { return completion(nil) }
 
         // Are we forcing a refresh?
         if !forceRefresh {
@@ -86,7 +76,7 @@ final class ImageService {
         downloadImage(forPath: imagePath, withPolicy: policy, completion: completion)
     }
 
-    private func path(forType type: PathType, traitCollection: UITraitCollection?) -> String? {
+    private func path(forType type: PathType, userInterfaceStyle: UIUserInterfaceStyle?) -> String? {
         var image: CD_BaseImage? = CD_BaseImage()
         
         switch type {
@@ -111,7 +101,7 @@ final class ImageService {
         case .dark:
             url = image?.darkModeImageUrl ?? image?.imageUrl
         case .system:
-            switch traitCollection?.userInterfaceStyle {
+            switch userInterfaceStyle {
             case .light:
                 url = image?.imageUrl
             case .dark:
@@ -152,7 +142,7 @@ extension UIImageView {
         image = placeholder
 
         let imageService = ImageService()
-        imageService.retrieveImage(forPathType: pathType, policy: policy, traitCollection: traitCollection) { [weak self] retrievedImage in
+        imageService.retrieveImage(forPathType: pathType, policy: policy, userInterfaceStyle: traitCollection.userInterfaceStyle) { [weak self] retrievedImage in
             if let self = self, animated {
                 UIView.transition(with: self, duration: 0.3, options: .transitionCrossDissolve, animations: { self.image = retrievedImage }, completion: nil)
             } else {
