@@ -27,6 +27,7 @@ struct BarcodeScreenSwiftUIView: View {
                 if let barcodeImage = viewModel.barcodeImage(withSize: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)) {
                     Image(uiImage: barcodeImage)
                         .resizable()
+                        .aspectRatio(contentMode: .fit)
                 } else {
                     switch viewModel.imageType {
                     case .icon:
@@ -43,29 +44,18 @@ struct BarcodeScreenSwiftUIView: View {
                 }
                 
                 /// Description label
-                HStack {
-                    Text(viewModel.descriptionText)
-                    Spacer()
-                }
-                .padding(.vertical, 20)
+                TextStackView(text: viewModel.descriptionText, font: .custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
+                .padding(.vertical, 15)
                 
                 /// Membership number
-                HStack {
-                    Text(L10n.cardNumberTitle)
-                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
-                    Spacer()
-                }
+                TextStackView(text: L10n.cardNumberTitle, font: .custom(UIFont.headline.fontName, size: 20))
                 HighVisibilityLabelView(text: viewModel.cardNumber ?? "")
                     .frame(height: heightForHighVisView(text: viewModel.cardNumber ?? ""))
                 
                 
                 /// Barcode number
                 if viewModel.shouldShowbarcodeNumber {
-                    HStack {
-                        Text(L10n.barcodeTitle)
-                            .foregroundColor(Color(Current.themeManager.color(for: .text)))
-                        Spacer()
-                    }
+                    TextStackView(text: L10n.barcodeTitle, font: .custom(UIFont.headline.fontName, size: 20))
                     HighVisibilityLabelView(text: viewModel.barcodeNumber)
                         .frame(height: heightForHighVisView(text: viewModel.barcodeNumber))
                 }
@@ -77,6 +67,19 @@ struct BarcodeScreenSwiftUIView: View {
             }
         }
         .background(Color(Current.themeManager.color(for: .viewBackground)))
+    }
+    
+    struct TextStackView: View {
+        let text: String
+        let font: Font
+        
+        var body: some View {
+            HStack {
+                Text(text)
+                    .font(font)
+                Spacer()
+            }
+        }
     }
     
     func heightForHighVisView(text: String) -> CGFloat {
