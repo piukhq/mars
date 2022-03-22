@@ -19,7 +19,6 @@ struct RemoteImage: View {
 struct BarcodeScreenSwiftUIView: View {
     @ObservedObject var viewModel: BarcodeViewModel
     @Environment(\.colorScheme) var colorScheme
-
     
     var body: some View {
         ScrollView {
@@ -53,16 +52,18 @@ struct BarcodeScreenSwiftUIView: View {
                 /// Membership number
                 HStack {
                     Text(L10n.cardNumberTitle)
+                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
                     Spacer()
                 }
                 HighVisibilityLabelView(text: viewModel.cardNumber ?? "")
                     .frame(height: heightForHighVisView(text: viewModel.cardNumber ?? ""))
-
+                
                 
                 /// Barcode number
                 if viewModel.shouldShowbarcodeNumber {
                     HStack {
                         Text(L10n.barcodeTitle)
+                            .foregroundColor(Color(Current.themeManager.color(for: .text)))
                         Spacer()
                     }
                     HighVisibilityLabelView(text: viewModel.barcodeNumber)
@@ -71,18 +72,11 @@ struct BarcodeScreenSwiftUIView: View {
             }
             .padding(.horizontal, 25)
             .padding(.top, 15)
+            .onAppear {
+                viewModel.getMerchantImage(colorScheme: colorScheme)
+            }
         }
-    }
-    
-    func uiStyleForColorScheme() -> UIUserInterfaceStyle {
-        switch colorScheme {
-        case .dark:
-            return .dark
-        case .light:
-            return .light
-        @unknown default:
-            return .light
-        }
+        .background(Color(Current.themeManager.color(for: .viewBackground)))
     }
     
     func heightForHighVisView(text: String) -> CGFloat {
