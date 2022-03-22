@@ -78,7 +78,7 @@ struct BarcodeScreenSwiftUIView: View {
                     .actionSheet(isPresented: $viewModel.showingReportIssueOptions) {
                         ActionSheet(title: Text(""), message: Text("We're sorry you're experiencing an issue. Thank you for reporting it to us"), buttons: [
                             .default(Text("Membership number incorrect"), action: {
-                                
+                                MixpanelUtility.track(.barcodeScreenIssueReported(brandName: <#T##String#>))
                             }),
                             .default(Text("Barcode won't scan"), action: {
                                 
@@ -92,7 +92,7 @@ struct BarcodeScreenSwiftUIView: View {
             }
         }
     }
-    
+
     struct TextStackView: View {
         let text: String
         let font: Font
@@ -132,4 +132,11 @@ struct BarcodeScreenSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
         BarcodeScreenSwiftUIView(viewModel: BarcodeViewModel(membershipCard: CD_MembershipCard()))
     }
+}
+
+
+enum BarcodeScreenIssue: String {
+    case membershipNumberIncorrect = "Membership number incorrect"
+    case barcodeWontScan = "Barcode won't scan"
+    case other
 }
