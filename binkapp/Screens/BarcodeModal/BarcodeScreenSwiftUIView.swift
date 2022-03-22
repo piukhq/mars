@@ -19,6 +19,7 @@ struct RemoteImage: View {
 struct BarcodeScreenSwiftUIView: View {
     @ObservedObject var viewModel: BarcodeViewModel
     @Environment(\.colorScheme) var colorScheme
+//    @State private var showingReportIssueOptions = false
     
     var body: some View {
         ZStack(alignment: .center) {
@@ -74,6 +75,20 @@ struct BarcodeScreenSwiftUIView: View {
                 Spacer()
                 BinkButtonsStackView(buttons: [viewModel.reportIssueButton])
                     .padding(.bottom, 16)
+                    .actionSheet(isPresented: $viewModel.showingReportIssueOptions) {
+                        ActionSheet(title: Text(""), message: Text("We're sorry you're experiencing an issue. Thank you for reporting it to us"), buttons: [
+                            .default(Text("Membership number incorrect"), action: {
+                                
+                            }),
+                            .default(Text("Barcode won't scan"), action: {
+                                
+                            }),
+                            .default(Text("Other"), action: {
+                                
+                            }),
+                            .cancel()
+                        ])
+                    }
             }
         }
     }
