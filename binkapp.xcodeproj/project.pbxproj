@@ -300,6 +300,7 @@
 		CE4A624925714EAE003271F6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* Sentry */; };
 		CE518D8827E4818200A36E90 /* HighVisibilityLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE518D8727E4818200A36E90 /* HighVisibilityLabelView.swift */; };
 		CE518D8A27E8C8E000A36E90 /* BarcodeScreenSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE518D8927E8C8DF00A36E90 /* BarcodeScreenSwiftUIView.swift */; };
+		CE518D8E27EA1C8200A36E90 /* BinkButtonSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE518D8D27EA1C8100A36E90 /* BinkButtonSwiftUIView.swift */; };
 		CE52E15B26F0ABE400CAFBBF /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492922F99E1D000C1F4D /* NunitoSans-Regular.ttf */; };
 		CE52E15C26F0AE0400CAFBBF /* NunitoSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492E22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf */; };
 		CE52E16026F0BBBF00CAFBBF /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E15E26F0BBBF00CAFBBF /* UIColor+Extension.swift */; };
@@ -974,6 +975,7 @@
 		CE4A6285257155AE003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE518D8727E4818200A36E90 /* HighVisibilityLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighVisibilityLabelView.swift; sourceTree = "<group>"; };
 		CE518D8927E8C8DF00A36E90 /* BarcodeScreenSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScreenSwiftUIView.swift; sourceTree = "<group>"; };
+		CE518D8D27EA1C8100A36E90 /* BinkButtonSwiftUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinkButtonSwiftUIView.swift; sourceTree = "<group>"; };
 		CE52E15E26F0BBBF00CAFBBF /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		CE52E16226F0FE0E00CAFBBF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 		CE539DAD25E80C1100BDA5EF /* BinkTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkTableViewController.swift; sourceTree = "<group>"; };
@@ -1851,6 +1853,7 @@
 			children = (
 				70285D832588B674007B4298 /* BinkButtonsView.swift */,
 				70CE8966258A807E00078ADA /* BinkButton.swift */,
+				CE518D8D27EA1C8100A36E90 /* BinkButtonSwiftUIView.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -3655,6 +3658,7 @@
 				BD99D2E22354945100823FC4 /* SettingsTableViewCell.swift in Sources */,
 				EFA81024240565750000D21D /* _CD_PlanDynamicContent.swift in Sources */,
 				EFA5F7222379A7C70027AB80 /* _CD_EnrolField.swift in Sources */,
+				CE518D8E27EA1C8200A36E90 /* BinkButtonSwiftUIView.swift in Sources */,
 				3C3853D52407DAF5004D6C2A /* TransactionView.swift in Sources */,
 				3CD39616231E8E7100CD5C31 /* LayoutHelper.swift in Sources */,
 				EFCAF9212371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.swift in Sources */,

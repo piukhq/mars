@@ -70,6 +70,12 @@ class BarcodeViewModel: ObservableObject {
     var barcodeUse: BarcodeUse = .loyaltyCard
 
     @Published var merchantImage: Image?
+    
+    lazy var reportIssueButton: BinkButtonSwiftUIView = {
+        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: "Report Issue"), enabled: true, buttonTapped: {
+            print("TAPPPPPPP")
+        }, type: .gradient)
+    }()
 
     
     // MARK: Computed properties
