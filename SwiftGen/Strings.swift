@@ -416,6 +416,10 @@ internal enum L10n {
   internal static let pcdActiveCardTitle = L10n.tr("Localizable", "pcd_active_card_title")
   /// Add card
   internal static let pcdAddCardButtonTitle = L10n.tr("Localizable", "pcd_add_card_button_title")
+  /// Your payment card has expired. Please use the “Delete this card” action below to remove it from your wallet and add your new payment card if applicable. If you have any concerns, please read the FAQs or you can get in touch with Bink by pressing Contact us.
+  internal static let pcdExpiredCardDescription = L10n.tr("Localizable", "pcd_expired_card_description")
+  /// Payment card expired
+  internal static let pcdExpiredCardTitle = L10n.tr("Localizable", "pcd_expired_card_title")
   /// Your payment card is not authorised and you cannot link any loyalty cards to start earning rewards.
   /// 
   /// Your card has failed the authorisation process or has expired. Please use the “Delete this card” action below to remove it from your wallet and re-add if required.

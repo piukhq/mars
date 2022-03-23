@@ -37,7 +37,7 @@ struct PaymentCardCellViewModel {
         }
         
         switch status {
-        case .pending, .failed:
+        case .pending, .failed, .expired:
             return status.rawValue.capitalized
         case .active:
             if paymentCardIsLinkedToMembershipCards {
