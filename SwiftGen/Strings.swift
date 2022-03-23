@@ -90,6 +90,8 @@ internal enum L10n {
   internal static let barcodeError = L10n.tr("Localizable", "barcode_error")
   /// Maximise barcode
   internal static let barcodeMaximiseButton = L10n.tr("Localizable", "barcode_maximise_button")
+  /// Report Issue
+  internal static let barcodeReportIssueButtonTitle = L10n.tr("Localizable", "barcode_report_issue_button_title")
   /// We're sorry you're experiencing an issue. Thank you for reporting it to us
   internal static let barcodeReportIssueTitle = L10n.tr("Localizable", "barcode_report_issue_title")
   /// Barcode

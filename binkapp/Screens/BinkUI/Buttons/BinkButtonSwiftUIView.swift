@@ -49,8 +49,8 @@ struct BinkButtonSwiftUIView: View, Identifiable {
                 .font(.custom(UIFont.buttonText.fontName, size: UIFont.buttonText.pointSize))
                 Spacer()
             }
+            .frame(width: UIScreen.main.bounds.width * 0.75, height: 52.0)
         }
-        .frame(width: UIScreen.main.bounds.width * 0.75, height: 52.0)
         .disabled(!enabled)
         .background(
             ZStack {

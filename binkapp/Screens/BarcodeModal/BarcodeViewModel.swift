@@ -77,7 +77,7 @@ class BarcodeViewModel: ObservableObject {
     }
     
     lazy var reportIssueButton: BinkButtonSwiftUIView = {
-        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: "Report Issue"), enabled: true, buttonTapped: { [weak self] in
+        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.barcodeReportIssueButtonTitle), enabled: true, buttonTapped: { [weak self] in
             self?.showingReportIssueOptions = true
         }, type: .gradient)
     }()

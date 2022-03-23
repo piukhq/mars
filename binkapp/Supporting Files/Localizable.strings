@@ -69,6 +69,7 @@
 "barcode_maximise_button" = "Maximise barcode";
 "barcode_copy_label" = "Copy";
 "barcode_report_issue_title" = "We're sorry you're experiencing an issue. Thank you for reporting it to us";
+"barcode_report_issue_button_title" = "Report Issue";
 
 "add_join_screen_store_title" = "Store";
 "add_join_screen_view_title" = "View";
