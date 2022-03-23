@@ -289,7 +289,6 @@
 		CE2CFE9025E3D48E00B1CB93 /* FeatureFlagsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CFE8E25E3D48D00B1CB93 /* FeatureFlagsTableViewCell.swift */; };
 		CE2CFE9125E3D48E00B1CB93 /* FeatureFlagsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2CFE8F25E3D48D00B1CB93 /* FeatureFlagsTableViewCell.xib */; };
 		CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE38784A2562EEDA006BAC11 /* BarcodeViewModelTests.swift */; };
-		CE3878BE2563ED9A006BAC11 /* BarcodeViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878BD2563ED9A006BAC11 /* BarcodeViewControllerTests.swift */; };
 		CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */; };
 		CE3A54DE253E0F27007989FE /* ZendeskTickets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A54DD253E0F27007989FE /* ZendeskTickets.swift */; };
 		CE3A5518253EE89A007989FE /* DebugInfoAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A5517253EE89A007989FE /* DebugInfoAlertView.swift */; };
@@ -960,7 +959,6 @@
 		CE2CFE8E25E3D48D00B1CB93 /* FeatureFlagsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsTableViewCell.swift; sourceTree = "<group>"; };
 		CE2CFE8F25E3D48D00B1CB93 /* FeatureFlagsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeatureFlagsTableViewCell.xib; sourceTree = "<group>"; };
 		CE38784A2562EEDA006BAC11 /* BarcodeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewModelTests.swift; sourceTree = "<group>"; };
-		CE3878BD2563ED9A006BAC11 /* BarcodeViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewControllerTests.swift; sourceTree = "<group>"; };
 		CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPromptTests.swift; sourceTree = "<group>"; };
 		CE387AA02565749D006BAC11 /* BrandHeaderViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandHeaderViewTests.swift; sourceTree = "<group>"; };
 		CE3A54DD253E0F27007989FE /* ZendeskTickets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZendeskTickets.swift; sourceTree = "<group>"; };
@@ -2362,7 +2360,6 @@
 			isa = PBXGroup;
 			children = (
 				CE38784A2562EEDA006BAC11 /* BarcodeViewModelTests.swift */,
-				CE3878BD2563ED9A006BAC11 /* BarcodeViewControllerTests.swift */,
 			);
 			path = Barcode;
 			sourceTree = "<group>";
@@ -3146,6 +3143,8 @@
 				5ECE048122CE579B001BA964 /* PBXTargetDependency */,
 			);
 			name = binkappTests;
+			packageProductDependencies = (
+			);
 			productName = binkappTests;
 			productReference = 5ECE047F22CE579B001BA964 /* binkappTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -4050,7 +4049,6 @@
 				70A61D16263095060073A08A /* BinkModuleViewModelTests.swift in Sources */,
 				CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */,
 				EF8B701223587BE3006CE3DD /* MembershipCardBalanceModelTests.swift in Sources */,
-				CE3878BE2563ED9A006BAC11 /* BarcodeViewControllerTests.swift in Sources */,
 				CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */,
 				EF758E1623225F95000D26A9 /* DatabaseTests.swift in Sources */,
 			);
