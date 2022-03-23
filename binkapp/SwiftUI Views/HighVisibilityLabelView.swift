@@ -9,7 +9,6 @@ import SwiftUI
 
 struct HighVisibilityLabelView: View {
     let text: String
-//    let parentViewWidth: CGFloat
     
     var membershipNumberArray: [String] {
         var mutableLabelText = text
@@ -62,7 +61,6 @@ struct HighVisibilityLabelRow: View {
             ForEach(Array(membershipNumber.enumerated()), id: \.offset) { char in
                 HighVisibilityBox(digit: String(char.element), offset: char.offset, row: row, parentViewWidth: parentViewWidth)
             }
-//            Spacer()
         }
     }
 }
@@ -98,6 +96,7 @@ struct HighVisibilityBox: View {
             VStack(spacing: 6) {
                 Text(digit)
                     .font(.system(size: 40, weight: .medium, design: .default))
+                    .foregroundColor(Color(Current.themeManager.color(for: .text)))
                 Text(String(digitCount))
                     .font(.system(size: 10, weight: .medium, design: .default))
                     .foregroundColor(.gray)

@@ -68,6 +68,7 @@
 "barcode_coupon_description" = "Scan this barcode at the store, just like you would a physical coupon. Bear in mind that some store scanners cannot read from screens.";
 "barcode_maximise_button" = "Maximise barcode";
 "barcode_copy_label" = "Copy";
+"barcode_report_issue_title" = "We're sorry you're experiencing an issue. Thank you for reporting it to us";
 
 "add_join_screen_store_title" = "Store";
 "add_join_screen_view_title" = "View";
