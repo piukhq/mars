@@ -19,7 +19,6 @@ struct RemoteImage: View {
 struct BarcodeScreenSwiftUIView: View {
     @ObservedObject var viewModel: BarcodeViewModel
     @Environment(\.colorScheme) var colorScheme
-//    @State private var showingReportIssueOptions = false
     
     var body: some View {
         ZStack(alignment: .center) {

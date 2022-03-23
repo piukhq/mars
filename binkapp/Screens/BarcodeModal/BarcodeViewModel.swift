@@ -70,7 +70,11 @@ class BarcodeViewModel: ObservableObject {
     var barcodeUse: BarcodeUse = .loyaltyCard
 
     @Published var merchantImage: Image?
-    @Published var showingReportIssueOptions = false
+    @Published var showingReportIssueOptions = false {
+        didSet {
+            reportIssueButton.viewModel.isLoading = false
+        }
+    }
     
     lazy var reportIssueButton: BinkButtonSwiftUIView = {
         return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: "Report Issue"), enabled: true, buttonTapped: { [weak self] in
