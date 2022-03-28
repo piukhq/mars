@@ -13,6 +13,7 @@ enum PaymentCardStatus: String {
     case active
     case pending
     case failed
+    case expired
 }
 
 struct PaymentCardModel: Codable {

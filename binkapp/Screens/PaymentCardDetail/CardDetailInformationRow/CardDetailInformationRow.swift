@@ -88,7 +88,7 @@ class WalletCardDetailInformationRowFactory: CardDetailInformationRowFactory {
         switch status {
         case .active:
             return [makeSecurityAndPrivacyRow(), makeDeletePaymentCardRow()]
-        case .failed, .pending:
+        case .failed, .pending, .expired:
             return [makeSecurityAndPrivacyRow(), makeDeletePaymentCardRow(), makeFAQsRow()]
         }
     }

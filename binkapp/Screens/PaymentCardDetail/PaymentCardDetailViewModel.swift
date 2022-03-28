@@ -58,9 +58,11 @@ class PaymentCardDetailViewModel {
         case .active:
             return L10n.pcdActiveCardTitle
         case .pending:
-            return paymentCard.isExpired ? L10n.pcdFailedCardTitle : L10n.pcdPendingCardTitle
+            return L10n.pcdPendingCardTitle
         case .failed:
             return L10n.pcdFailedCardTitle
+        case .expired:
+            return L10n.pcdExpiredCardTitle
         }
     }
 
@@ -69,9 +71,11 @@ class PaymentCardDetailViewModel {
         case .active:
             return L10n.pcdActiveCardDescription
         case .pending:
-            return paymentCard.isExpired ? L10n.pcdFailedCardDescription : L10n.pcdPendingCardDescription
+            return L10n.pcdPendingCardDescription
         case .failed:
             return L10n.pcdFailedCardDescription
+        case .expired:
+            return L10n.pcdExpiredCardDescription
         }
     }
     
