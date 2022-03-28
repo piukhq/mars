@@ -144,8 +144,6 @@ internal enum L10n {
   internal static let cardLinkedStatus = L10n.tr("Localizable", "card_linked_status")
   /// Linking
   internal static let cardLinkingStatus = L10n.tr("Localizable", "card_linking_status")
-  /// Membership number
-  internal static let cardNumberTitle = L10n.tr("Localizable", "card_number_title")
   /// One of these payment cards are
   internal static let cardsAlreadyLinkedMessagePrefix = L10n.tr("Localizable", "cards_already_linked_message_prefix")
   /// We have just emailed a link to %@. Click the link and you will be signed in.
@@ -350,6 +348,8 @@ internal enum L10n {
   internal static let magicLinkTitle = L10n.tr("Localizable", "magic_link_title")
   /// Opt in to receive marketing messages.
   internal static let marketingTitle = L10n.tr("Localizable", "marketing_title")
+  /// Membership number
+  internal static let membershipNumberTitle = L10n.tr("Localizable", "membership_number_title")
   /// minute
   internal static let minute = L10n.tr("Localizable", "minute")
   /// minutes

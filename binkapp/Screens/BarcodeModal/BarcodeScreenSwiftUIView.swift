@@ -68,7 +68,7 @@ struct BarcodeScreenSwiftUIView: View {
                         .padding(.vertical, Constants.smallSpace)
                     
                     /// Membership number
-                    TextStackView(text: L10n.cardNumberTitle, font: .custom(UIFont.headline.fontName, size: Constants.titleFontSize))
+                    TextStackView(text: L10n.membershipNumberTitle, font: .custom(UIFont.headline.fontName, size: Constants.titleFontSize))
                     HighVisibilityLabelView(text: viewModel.cardNumber ?? "")
                         .frame(height: heightForHighVisView(text: viewModel.cardNumber ?? ""))
                         .padding(.bottom, Constants.smallSpace)
