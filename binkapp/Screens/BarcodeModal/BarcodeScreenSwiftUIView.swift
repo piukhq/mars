@@ -54,14 +54,14 @@ struct BarcodeScreenSwiftUIView: View {
                     /// Membership number
                     TextStackView(text: L10n.membershipNumberTitle, font: .custom(UIFont.headline.fontName, size: Constants.titleFontSize))
                     HighVisibilityLabelView(text: viewModel.cardNumber ?? "")
-                        .frame(height: heightForHighVisView(text: viewModel.cardNumber ?? ""))
+                        .frame(height: viewModel.heightForHighVisView(text: viewModel.cardNumber ?? ""))
                         .padding(.bottom, Constants.smallSpace)
                     
                     /// Barcode number
                     if viewModel.shouldShowbarcodeNumber {
                         TextStackView(text: L10n.barcodeTitle, font: .custom(UIFont.headline.fontName, size: Constants.titleFontSize))
                         HighVisibilityLabelView(text: viewModel.barcodeNumber)
-                            .frame(height: heightForHighVisView(text: viewModel.barcodeNumber))
+                            .frame(height: viewModel.heightForHighVisView(text: viewModel.barcodeNumber))
                     }
                 }
                 .padding(.horizontal, Constants.horizontalInset)
@@ -133,27 +133,6 @@ struct BarcodeScreenSwiftUIView: View {
                 Spacer()
             }
         }
-    }
-    
-    func heightForHighVisView(text: String) -> CGFloat {
-        let rowCount = splitStringIntoArray(text: text).count
-        let widthOfStackView = UIScreen.main.bounds.width - (Constants.horizontalInset * 2)
-        let boxWidth = widthOfStackView / 8
-        let boxHeight = boxWidth * 1.8
-        return boxHeight * CGFloat(rowCount)
-    }
-    
-    func splitStringIntoArray(text: String) -> [String] {
-        var mutableLabelText = text
-        var array: [String] = []
-        
-        while !mutableLabelText.isEmpty {
-            let str = String(mutableLabelText.prefix(8))
-            array.append(str)
-            mutableLabelText = String(mutableLabelText.dropFirst(8))
-        }
-        
-        return array
     }
 }
 

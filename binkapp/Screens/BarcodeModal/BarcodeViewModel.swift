@@ -208,6 +208,14 @@ class BarcodeViewModel: ObservableObject {
             }
         }
     }
+    
+    func heightForHighVisView(text: String) -> CGFloat {
+        let rowCount = text.splitStringIntoArray(elementLength: 8).count
+        let widthOfStackView = UIScreen.main.bounds.width - (BarcodeScreenSwiftUIView.Constants.horizontalInset * 2)
+        let boxWidth = widthOfStackView / 8
+        let boxHeight = boxWidth * 1.8
+        return boxHeight * CGFloat(rowCount)
+    }
 }
 
 extension ColorScheme {

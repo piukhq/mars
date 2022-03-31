@@ -11,16 +11,7 @@ struct HighVisibilityLabelView: View {
     let text: String
     
     var membershipNumberArray: [String] {
-        var mutableLabelText = text
-        var array: [String] = []
-        
-        while !mutableLabelText.isEmpty {
-            let str = String(mutableLabelText.prefix(8))
-            array.append(str)
-            mutableLabelText = String(mutableLabelText.dropFirst(8))
-        }
-
-        return array
+        return text.splitStringIntoArray(elementLength: 8)
     }
     
     var body: some View {
