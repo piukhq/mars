@@ -58,7 +58,7 @@ struct BinkButtonSwiftUIView: View, Identifiable {
             HStack {
                 Spacer()
             Text(loading ? "" : viewModel.title)
-                    .foregroundColor(enabled ? textColor : .white.opacity(Constants.halfOpacity))
+                .foregroundColor(enabled ? textColor : .white.opacity(Constants.halfOpacity))
                 .font(.custom(UIFont.buttonText.fontName, size: UIFont.buttonText.pointSize))
                 Spacer()
             }
@@ -98,6 +98,31 @@ struct ActivityIndicator: UIViewRepresentable {
     }
 }
 
+
+class BinkButtonsStackViewModel {
+    enum Constants {
+        static let gradientOpacity: CGFloat = 0.1
+    }
+    
+    func dynamicMaskGradientClearColor(colorScheme: ColorScheme) -> Color {
+        switch Current.themeManager.currentTheme.type {
+        case .system:
+            switch colorScheme {
+            case .light:
+                return .white.opacity(Constants.gradientOpacity)
+            case .dark:
+                return .clear
+            @unknown default:
+                return .white.opacity(Constants.gradientOpacity)
+        }
+        case .light:
+            return .white.opacity(Constants.gradientOpacity)
+        case .dark:
+            return .clear
+        }
+    }
+}
+
 struct BinkButtonsStackView: View {
     enum Constants {
         static let buttonSpacing: CGFloat = 25.0
@@ -108,12 +133,13 @@ struct BinkButtonsStackView: View {
     
     @Environment(\.colorScheme) private var colorScheme
     var buttons: [BinkButtonSwiftUIView]
+    let viewModel = BinkButtonsStackViewModel()
     
     var body: some View {
         VStack {
             Spacer()
             ZStack {
-                LinearGradient(gradient: Gradient(colors: [Color(Current.themeManager.color(for: .viewBackground)), dynamicMaskGradientClearColor]), startPoint: .bottom, endPoint: .top)
+                LinearGradient(gradient: Gradient(colors: [Color(Current.themeManager.color(for: .viewBackground)), viewModel.dynamicMaskGradientClearColor(colorScheme: colorScheme)]), startPoint: .bottom, endPoint: .top)
                     .padding(.top, Constants.topPadding)
                 
                 VStack(alignment: .center, spacing: Constants.buttonSpacing) {
@@ -136,37 +162,18 @@ struct BinkButtonsStackView: View {
         .edgesIgnoringSafeArea(.bottom)
         .offset(y: BinkButtonsView.bottomSafePadding - BinkButtonsView.bottomPadding)
     }
-    
-    private var dynamicMaskGradientClearColor: Color {
-        switch Current.themeManager.currentTheme.type {
-        case .system:
-            switch colorScheme {
-            case .light:
-                return .white.opacity(Constants.gradientOpacity)
-            case .dark:
-                return .clear
-            @unknown default:
-                return .white.opacity(Constants.gradientOpacity)
-        }
-        case .light:
-            return .white.opacity(Constants.gradientOpacity)
-        case .dark:
-            return .clear
+}
+
+struct BinkButtonStackView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            ZStack {
+                Rectangle()
+                    .foregroundColor(Color(UIColor.grey10))
+                BinkButtonsStackView(buttons: [
+                    BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: "Continue"), buttonTapped: {}, type: .gradient)
+                ])
+            }
         }
     }
 }
-
-//struct BinkButtonStackView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        Group {
-//            ZStack {
-//                Rectangle()
-//                    .foregroundColor(Color(UIColor.grey10))
-//                BinkButtonsStackView(buttons: [
-//                    BinkButtonSwiftUIView(viewModel: ButtonViewModel(datasource: FormDataSource(accessForm: .magicLink), title: "Continue"), loading: false, buttonTapped: {}, type: .gradient, alwaysEnabled: true),
-//                    BinkButtonSwiftUIView(viewModel: ButtonViewModel(datasource: FormDataSource(accessForm: .addEmail), title: "Continue"), buttonTapped: {}, type: .plain)
-//                ])
-//            }
-//        }
-//    }
-//}
