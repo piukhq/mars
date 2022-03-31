@@ -19,6 +19,19 @@ class ButtonViewModel: ObservableObject {
 }
 
 struct BinkButtonSwiftUIView: View, Identifiable {
+    enum Constants {
+        static let halfOpacity: CGFloat = 0.5
+        static let fullOpacity: CGFloat = 1
+        static let aspectRatioMultiplier: CGFloat = 0.75
+        static let height: CGFloat = 52
+        static let cornerRadius: CGFloat = 52 / 2
+        static let shadowSemiOpaque: CGFloat = 0.2
+        static let shadowTransparent: CGFloat = 0
+        static let shadowRadius: CGFloat = 10
+        static let shadowXPosition: CGFloat = 3.0
+        static let shadowYPosition: CGFloat = 8.0
+    }
+    
     @ObservedObject var viewModel: ButtonViewModel
     @State var enabled = false
     @State var loading = false
@@ -45,11 +58,11 @@ struct BinkButtonSwiftUIView: View, Identifiable {
             HStack {
                 Spacer()
             Text(loading ? "" : viewModel.title)
-                .foregroundColor(enabled ? textColor : .white.opacity(0.5))
+                    .foregroundColor(enabled ? textColor : .white.opacity(Constants.halfOpacity))
                 .font(.custom(UIFont.buttonText.fontName, size: UIFont.buttonText.pointSize))
                 Spacer()
             }
-            .frame(width: UIScreen.main.bounds.width * 0.75, height: 52.0)
+            .frame(width: UIScreen.main.bounds.width * Constants.aspectRatioMultiplier, height: Constants.height)
         }
         .disabled(!enabled)
         .background(
@@ -57,11 +70,11 @@ struct BinkButtonSwiftUIView: View, Identifiable {
                 Color(Current.themeManager.color(for: .viewBackground))
                 if type == .gradient {
                     LinearGradient(gradient: Gradient(colors: [Color(.binkGradientBlueRight), Color(.binkGradientBlueLeft)]), startPoint: .leading, endPoint: .trailing)
-                        .opacity(enabled ? 1.0 : 0.5)
+                        .opacity(enabled ? Constants.fullOpacity : Constants.halfOpacity)
                 }
             })
-        .cornerRadius(52 / 2)
-        .shadow(color: .black.opacity(type == .gradient ? 0.2 : 0.0), radius: 10, x: 3.0, y: 8.0)
+        .cornerRadius(Constants.cornerRadius)
+        .shadow(color: .black.opacity(type == .gradient ? Constants.shadowSemiOpaque : Constants.shadowTransparent), radius: Constants.shadowRadius, x: Constants.shadowXPosition, y: Constants.shadowYPosition)
         .overlay(ActivityIndicator(animate: $loading, style: .medium), alignment: .center)
         .onReceive(viewModel.$isLoading) { isLoading in
             self.loading = isLoading
@@ -87,9 +100,10 @@ struct ActivityIndicator: UIViewRepresentable {
 
 struct BinkButtonsStackView: View {
     enum Constants {
-        static let buttonHeight: CGFloat = 52.0
         static let buttonSpacing: CGFloat = 25.0
-        static let height: CGFloat = buttonHeight + buttonSpacing
+        static let height: CGFloat = BinkButtonSwiftUIView.Constants.height + buttonSpacing
+        static let topPadding: CGFloat = 20
+        static let gradientOpacity: CGFloat = 0.1
     }
     
     @Environment(\.colorScheme) private var colorScheme
@@ -100,7 +114,7 @@ struct BinkButtonsStackView: View {
             Spacer()
             ZStack {
                 LinearGradient(gradient: Gradient(colors: [Color(Current.themeManager.color(for: .viewBackground)), dynamicMaskGradientClearColor]), startPoint: .bottom, endPoint: .top)
-                    .padding(.top, 20)
+                    .padding(.top, Constants.topPadding)
                 
                 VStack(alignment: .center, spacing: Constants.buttonSpacing) {
                     Spacer(minLength: Constants.buttonSpacing)
@@ -128,14 +142,14 @@ struct BinkButtonsStackView: View {
         case .system:
             switch colorScheme {
             case .light:
-                return .white.opacity(0.01)
+                return .white.opacity(Constants.gradientOpacity)
             case .dark:
                 return .clear
             @unknown default:
-                return .white.opacity(0.01)
+                return .white.opacity(Constants.gradientOpacity)
         }
         case .light:
-            return .white.opacity(0.01)
+            return .white.opacity(Constants.gradientOpacity)
         case .dark:
             return .clear
         }
