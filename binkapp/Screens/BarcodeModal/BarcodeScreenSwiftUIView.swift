@@ -45,23 +45,7 @@ struct BarcodeScreenSwiftUIView: View {
             ScrollView {
                 VStack {
                     /// Barcode image
-                    if let barcodeImage = viewModel.barcodeImage(withSize: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)) {
-                        Image(uiImage: barcodeImage)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    } else {
-                        switch viewModel.imageType {
-                        case .icon:
-                            RemoteImage(image: viewModel.merchantImage)
-                                .frame(width: Constants.iconImageSize, height: Constants.iconImageSize, alignment: .center)
-                                .aspectRatio(contentMode: .fit)
-                                .cornerRadius(Constants.cornerRadius)
-                        case .hero:
-                            RemoteImage(image: viewModel.merchantImage)
-                                .frame(width: Constants.heroImageWidth, height: Constants.heroImageHeight, alignment: .center)
-                                .cornerRadius(Constants.cornerRadius)
-                        }
-                    }
+                    BarcodeImageView(viewModel: viewModel)
                     
                     /// Description label
                     TextStackView(text: viewModel.descriptionText, font: .custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
@@ -109,6 +93,30 @@ struct BarcodeScreenSwiftUIView: View {
                             .cancel()
                         ])
                     }
+            }
+        }
+    }
+    
+    struct BarcodeImageView: View {
+        @ObservedObject var viewModel: BarcodeViewModel
+        
+        var body: some View {
+            if let barcodeImage = viewModel.barcodeImage(withSize: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)) {
+                Image(uiImage: barcodeImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+            } else {
+                switch viewModel.imageType {
+                case .icon:
+                    RemoteImage(image: viewModel.merchantImage)
+                        .frame(width: Constants.iconImageSize, height: Constants.iconImageSize, alignment: .center)
+                        .aspectRatio(contentMode: .fit)
+                        .cornerRadius(Constants.cornerRadius)
+                case .hero:
+                    RemoteImage(image: viewModel.merchantImage)
+                        .frame(width: Constants.heroImageWidth, height: Constants.heroImageHeight, alignment: .center)
+                        .cornerRadius(Constants.cornerRadius)
+                }
             }
         }
     }
