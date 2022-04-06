@@ -7,11 +7,16 @@
 
 import SwiftUI
 
+enum HighVisibilityLabelConstants {
+    static let numberOfElementsPerRow = 8
+    static let boxHeightRatio = 1.8
+}
+
 struct HighVisibilityLabelView: View {
     let text: String
     
     var membershipNumberArray: [String] {
-        return text.splitStringIntoArray(elementLength: 8)
+        return text.splitStringIntoArray(elementLength: HighVisibilityLabelConstants.numberOfElementsPerRow)
     }
     
     var body: some View {
@@ -63,7 +68,7 @@ struct HighVisibilityBox: View {
     let parentViewWidth: CGFloat
     
     var cellWidth: CGFloat {
-        return parentViewWidth / 8
+        return parentViewWidth / CGFloat(HighVisibilityLabelConstants.numberOfElementsPerRow)
     }
     
     var grayScale: GrayScale {
@@ -75,14 +80,14 @@ struct HighVisibilityBox: View {
     }
     
     var digitCount: Int {
-        return (offset + 1) + (8 * (row))
+        return (offset + 1) + (HighVisibilityLabelConstants.numberOfElementsPerRow * row)
     }
     
     var body: some View {
         ZStack {
             Rectangle()
                 .fill(grayScale.color)
-                .frame(width: cellWidth, height: cellWidth * 1.8)
+                .frame(width: cellWidth, height: cellWidth * HighVisibilityLabelConstants.boxHeightRatio)
             
             VStack(spacing: 6) {
                 Text(digit)
