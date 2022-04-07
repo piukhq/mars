@@ -80,9 +80,9 @@ enum ViewControllerFactory {
         return viewController
     }
     
-    static func makeBarcodeViewController(membershipCard: CD_MembershipCard) -> BarcodeViewController {
+    static func makeBarcodeViewController(membershipCard: CD_MembershipCard) -> UIViewController {
         let viewModel = BarcodeViewModel(membershipCard: membershipCard)
-        return BarcodeViewController(viewModel: viewModel)
+        return UIHostingController(rootView: BarcodeScreenSwiftUIView(viewModel: viewModel))
     }
     
     static func makeVoucherDetailViewController(voucher: CD_Voucher, plan: CD_MembershipPlan) -> PLRRewardDetailViewController {

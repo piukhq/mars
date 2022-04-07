@@ -80,8 +80,6 @@
 		3CC267F022F4276E00F0F9E3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CC267EF22F4276E00F0F9E3 /* Localizable.strings */; };
 		3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC267F122F428A400F0F9E3 /* String+Localization.swift */; };
 		3CCAB7522379B520001B566D /* RegistrationFieldPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCAB7512379B520001B566D /* RegistrationFieldPostModel.swift */; };
-		3CCC46C422FC652C008476E3 /* BarcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCC46C222FC652C008476E3 /* BarcodeViewController.swift */; };
-		3CCC46C522FC652C008476E3 /* BarcodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CCC46C322FC652C008476E3 /* BarcodeViewController.xib */; };
 		3CCC46C722FC6540008476E3 /* BarcodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCC46C622FC6540008476E3 /* BarcodeViewModel.swift */; };
 		3CCC46C922FC6EB8008476E3 /* UIColor+binkapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCC46C822FC6EB7008476E3 /* UIColor+binkapp.swift */; };
 		3CD2CBBF2346059100862A5A /* EnrolFieldPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD2CBBE2346059100862A5A /* EnrolFieldPostModel.swift */; };
@@ -291,13 +289,15 @@
 		CE2CFE9025E3D48E00B1CB93 /* FeatureFlagsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CFE8E25E3D48D00B1CB93 /* FeatureFlagsTableViewCell.swift */; };
 		CE2CFE9125E3D48E00B1CB93 /* FeatureFlagsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2CFE8F25E3D48D00B1CB93 /* FeatureFlagsTableViewCell.xib */; };
 		CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE38784A2562EEDA006BAC11 /* BarcodeViewModelTests.swift */; };
-		CE3878BE2563ED9A006BAC11 /* BarcodeViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878BD2563ED9A006BAC11 /* BarcodeViewControllerTests.swift */; };
 		CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */; };
 		CE3A54DE253E0F27007989FE /* ZendeskTickets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A54DD253E0F27007989FE /* ZendeskTickets.swift */; };
 		CE3A5518253EE89A007989FE /* DebugInfoAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A5517253EE89A007989FE /* DebugInfoAlertView.swift */; };
 		CE3D31DC2649660C0072BD97 /* ScanLoyaltyCardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D31DA2649660C0072BD97 /* ScanLoyaltyCardButton.swift */; };
 		CE3D31DD2649660C0072BD97 /* ScanLoyaltyCardButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */; };
 		CE4A624925714EAE003271F6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* Sentry */; };
+		CE518D8827E4818200A36E90 /* HighVisibilityLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE518D8727E4818200A36E90 /* HighVisibilityLabelView.swift */; };
+		CE518D8A27E8C8E000A36E90 /* BarcodeScreenSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE518D8927E8C8DF00A36E90 /* BarcodeScreenSwiftUIView.swift */; };
+		CE518D8E27EA1C8200A36E90 /* BinkButtonSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE518D8D27EA1C8100A36E90 /* BinkButtonSwiftUIView.swift */; };
 		CE52E15B26F0ABE400CAFBBF /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492922F99E1D000C1F4D /* NunitoSans-Regular.ttf */; };
 		CE52E15C26F0AE0400CAFBBF /* NunitoSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492E22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf */; };
 		CE52E16026F0BBBF00CAFBBF /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52E15E26F0BBBF00CAFBBF /* UIColor+Extension.swift */; };
@@ -734,8 +734,6 @@
 		3CC267EF22F4276E00F0F9E3 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		3CC267F122F428A400F0F9E3 /* String+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localization.swift"; sourceTree = "<group>"; };
 		3CCAB7512379B520001B566D /* RegistrationFieldPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFieldPostModel.swift; sourceTree = "<group>"; };
-		3CCC46C222FC652C008476E3 /* BarcodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewController.swift; sourceTree = "<group>"; };
-		3CCC46C322FC652C008476E3 /* BarcodeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BarcodeViewController.xib; sourceTree = "<group>"; };
 		3CCC46C622FC6540008476E3 /* BarcodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewModel.swift; sourceTree = "<group>"; };
 		3CCC46C822FC6EB7008476E3 /* UIColor+binkapp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+binkapp.swift"; sourceTree = "<group>"; };
 		3CD2CBBE2346059100862A5A /* EnrolFieldPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrolFieldPostModel.swift; sourceTree = "<group>"; };
@@ -961,7 +959,6 @@
 		CE2CFE8E25E3D48D00B1CB93 /* FeatureFlagsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsTableViewCell.swift; sourceTree = "<group>"; };
 		CE2CFE8F25E3D48D00B1CB93 /* FeatureFlagsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeatureFlagsTableViewCell.xib; sourceTree = "<group>"; };
 		CE38784A2562EEDA006BAC11 /* BarcodeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewModelTests.swift; sourceTree = "<group>"; };
-		CE3878BD2563ED9A006BAC11 /* BarcodeViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewControllerTests.swift; sourceTree = "<group>"; };
 		CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPromptTests.swift; sourceTree = "<group>"; };
 		CE387AA02565749D006BAC11 /* BrandHeaderViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandHeaderViewTests.swift; sourceTree = "<group>"; };
 		CE3A54DD253E0F27007989FE /* ZendeskTickets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZendeskTickets.swift; sourceTree = "<group>"; };
@@ -970,6 +967,9 @@
 		CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanLoyaltyCardButton.xib; sourceTree = "<group>"; };
 		CE4A628025715519003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A6285257155AE003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE518D8727E4818200A36E90 /* HighVisibilityLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighVisibilityLabelView.swift; sourceTree = "<group>"; };
+		CE518D8927E8C8DF00A36E90 /* BarcodeScreenSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScreenSwiftUIView.swift; sourceTree = "<group>"; };
+		CE518D8D27EA1C8100A36E90 /* BinkButtonSwiftUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinkButtonSwiftUIView.swift; sourceTree = "<group>"; };
 		CE52E15E26F0BBBF00CAFBBF /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		CE52E16226F0FE0E00CAFBBF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 		CE539DAD25E80C1100BDA5EF /* BinkTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkTableViewController.swift; sourceTree = "<group>"; };
@@ -1307,8 +1307,7 @@
 			isa = PBXGroup;
 			children = (
 				3CCC46C622FC6540008476E3 /* BarcodeViewModel.swift */,
-				3CCC46C222FC652C008476E3 /* BarcodeViewController.swift */,
-				3CCC46C322FC652C008476E3 /* BarcodeViewController.xib */,
+				CE518D8927E8C8DF00A36E90 /* BarcodeScreenSwiftUIView.swift */,
 			);
 			path = BarcodeModal;
 			sourceTree = "<group>";
@@ -1846,6 +1845,7 @@
 			children = (
 				70285D832588B674007B4298 /* BinkButtonsView.swift */,
 				70CE8966258A807E00078ADA /* BinkButton.swift */,
+				CE518D8D27EA1C8100A36E90 /* BinkButtonSwiftUIView.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -1940,6 +1940,7 @@
 			isa = PBXGroup;
 			children = (
 				701E2C492677567E003F903B /* DebugMenuView.swift */,
+				CE518D8727E4818200A36E90 /* HighVisibilityLabelView.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -2359,7 +2360,6 @@
 			isa = PBXGroup;
 			children = (
 				CE38784A2562EEDA006BAC11 /* BarcodeViewModelTests.swift */,
-				CE3878BD2563ED9A006BAC11 /* BarcodeViewControllerTests.swift */,
 			);
 			path = Barcode;
 			sourceTree = "<group>";
@@ -3143,6 +3143,8 @@
 				5ECE048122CE579B001BA964 /* PBXTargetDependency */,
 			);
 			name = binkappTests;
+			packageProductDependencies = (
+			);
 			productName = binkappTests;
 			productReference = 5ECE047F22CE579B001BA964 /* binkappTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -3311,7 +3313,6 @@
 				BD01E123231FA38900D52713 /* WalletLoyaltyCardCollectionViewCell.xib in Resources */,
 				CEA16EE02625879B00D449E1 /* BarcodeViewCompact.xib in Resources */,
 				3C71683524069F370058701E /* bink.der in Resources */,
-				3CCC46C522FC652C008476E3 /* BarcodeViewController.xib in Resources */,
 				EF4B46672346489C009A3651 /* PaymentCardDetailViewController.xib in Resources */,
 				DBE54852240D514B00EDEE90 /* FilterBrandsCollectionViewCell.xib in Resources */,
 				EF99B025240E74860046D41E /* devPublicKey.der in Resources */,
@@ -3643,11 +3644,13 @@
 				EF5491202371D9C800FE17BE /* PaymentCardDetailAddLoyaltyCardCellViewModel.swift in Sources */,
 				CEA16ED62624B0EE00D449E1 /* BarcodeViewWide.swift in Sources */,
 				BD458B3E236B5C0E0029A538 /* LoginRequest.swift in Sources */,
+				CE518D8827E4818200A36E90 /* HighVisibilityLabelView.swift in Sources */,
 				3C05F27E240FC28300060818 /* PaymentCardDetailLinkLoyaltyCardCellViewModel.swift in Sources */,
 				EFEB5C0123853B7900E18743 /* WalletRefreshManager.swift in Sources */,
 				BD99D2E22354945100823FC4 /* SettingsTableViewCell.swift in Sources */,
 				EFA81024240565750000D21D /* _CD_PlanDynamicContent.swift in Sources */,
 				EFA5F7222379A7C70027AB80 /* _CD_EnrolField.swift in Sources */,
+				CE518D8E27EA1C8200A36E90 /* BinkButtonSwiftUIView.swift in Sources */,
 				3C3853D52407DAF5004D6C2A /* TransactionView.swift in Sources */,
 				3CD39616231E8E7100CD5C31 /* LayoutHelper.swift in Sources */,
 				EFCAF9212371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.swift in Sources */,
@@ -3910,6 +3913,7 @@
 				709748A024D32A52008D0E29 /* RemoteConfigUtil.swift in Sources */,
 				CE55086E278888D800A39178 /* UniversalLinkUtility.swift in Sources */,
 				EFA5F70D2379A7C70027AB80 /* _CD_PaymentCardAccount.swift in Sources */,
+				CE518D8A27E8C8E000A36E90 /* BarcodeScreenSwiftUIView.swift in Sources */,
 				EF4B46602343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift in Sources */,
 				CE3D31DC2649660C0072BD97 /* ScanLoyaltyCardButton.swift in Sources */,
 				3CF029F622F45B53009A0E61 /* CustomView.swift in Sources */,
@@ -4013,7 +4017,6 @@
 				70FD1DB2262D8E59003C0DA0 /* BinkModuleType.swift in Sources */,
 				CE6DE55F267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift in Sources */,
 				EFA5F7252379A7C70027AB80 /* CD_Card.swift in Sources */,
-				3CCC46C422FC652C008476E3 /* BarcodeViewController.swift in Sources */,
 				EFA5F7402379A7C70027AB80 /* _CD_PaymentCardCard.swift in Sources */,
 				70CA2F05256E79D1008E0A81 /* DynamicActionModel.swift in Sources */,
 				EFB7ED652379CA5900B72D06 /* PLRRewardDetailViewController.swift in Sources */,
@@ -4046,7 +4049,6 @@
 				70A61D16263095060073A08A /* BinkModuleViewModelTests.swift in Sources */,
 				CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */,
 				EF8B701223587BE3006CE3DD /* MembershipCardBalanceModelTests.swift in Sources */,
-				CE3878BE2563ED9A006BAC11 /* BarcodeViewControllerTests.swift in Sources */,
 				CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */,
 				EF758E1623225F95000D26A9 /* DatabaseTests.swift in Sources */,
 			);

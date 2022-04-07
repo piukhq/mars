@@ -43,7 +43,7 @@ class MerchantHeroCell: UICollectionViewCell {
             backgroundColor = UIColor(patternImage: placeholder)
             layer.cornerRadius = 0
             imageView.layer.cornerRadius = 0
-            ImageService.getImage(forPathType: .membershipPlanAlternativeHero(plan: membershipPlan), traitCollection: traitCollection) { [weak self] image in
+            ImageService.getImage(forPathType: .membershipPlanAlternativeHero(plan: membershipPlan), userInterfaceStyle: traitCollection.userInterfaceStyle) { [weak self] image in
                 if self?.tag == indexPath.row {
                     self?.imageView.image = image
                 }
@@ -56,7 +56,7 @@ class MerchantHeroCell: UICollectionViewCell {
                 imageView.contentMode = .scaleAspectFit
                 imageView.tintColor = .white
             } else {
-                ImageService.getImage(forPathType: .membershipPlanIcon(plan: membershipPlan), traitCollection: traitCollection) { [weak self] image in
+                ImageService.getImage(forPathType: .membershipPlanIcon(plan: membershipPlan), userInterfaceStyle: traitCollection.userInterfaceStyle) { [weak self] image in
                     if self?.tag == indexPath.row {
                         self?.imageView.image = image
                     }

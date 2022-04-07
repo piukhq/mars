@@ -30,6 +30,19 @@ extension String {
         return "\(prefix ?? "")\(formatter.string(from: date))\(suffix ?? "")"
     }
     
+    func splitStringIntoArray(elementLength: Int) -> [String] {
+        var mutableLabelText = self
+        var array: [String] = []
+        
+        while !mutableLabelText.isEmpty {
+            let str = String(mutableLabelText.prefix(elementLength))
+            array.append(str)
+            mutableLabelText = String(mutableLabelText.dropFirst(elementLength))
+        }
+        
+        return array
+    }
+    
     func toNSString() -> NSString {
         return self as NSString
     }

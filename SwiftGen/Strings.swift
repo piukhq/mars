@@ -78,19 +78,25 @@ internal enum L10n {
   internal static func authScreenDescription(_ p1: Any) -> String {
     return L10n.tr("Localizable", "auth_screen_description", String(describing: p1))
   }
-  /// Scan this barcode at the store, just like you would a physical loyalty card. Bear in mind that some store scanners cannot read from screens.
+  /// Show this barcode in-store just like you would a physical loyalty card.
   internal static let barcodeCardDescription = L10n.tr("Localizable", "barcode_card_description")
-  /// Show this card number in-store just like you would a physical loyalty card.
+  /// Share this number in-store just like you would a physical loyalty card.
   internal static let barcodeCardNumberDescription = L10n.tr("Localizable", "barcode_card_number_description")
+  /// Copy
+  internal static let barcodeCopyLabel = L10n.tr("Localizable", "barcode_copy_label")
   /// Scan this barcode at the store, just like you would a physical coupon. Bear in mind that some store scanners cannot read from screens.
   internal static let barcodeCouponDescription = L10n.tr("Localizable", "barcode_coupon_description")
   /// This barcode cannot be displayed
   internal static let barcodeError = L10n.tr("Localizable", "barcode_error")
   /// Maximise barcode
   internal static let barcodeMaximiseButton = L10n.tr("Localizable", "barcode_maximise_button")
+  /// Report Issue
+  internal static let barcodeReportIssueButtonTitle = L10n.tr("Localizable", "barcode_report_issue_button_title")
+  /// We're sorry you're experiencing an issue. Thank you for reporting it to us
+  internal static let barcodeReportIssueTitle = L10n.tr("Localizable", "barcode_report_issue_title")
   /// Barcode
   internal static let barcodeSwipeTitle = L10n.tr("Localizable", "barcode_swipe_title")
-  /// Barcode:
+  /// Barcode
   internal static let barcodeTitle = L10n.tr("Localizable", "barcode_title")
   /// Card number:
   internal static let barcodeViewTitle = L10n.tr("Localizable", "barcode_view_title")
@@ -138,8 +144,6 @@ internal enum L10n {
   internal static let cardLinkedStatus = L10n.tr("Localizable", "card_linked_status")
   /// Linking
   internal static let cardLinkingStatus = L10n.tr("Localizable", "card_linking_status")
-  /// Card number:
-  internal static let cardNumberTitle = L10n.tr("Localizable", "card_number_title")
   /// One of these payment cards are
   internal static let cardsAlreadyLinkedMessagePrefix = L10n.tr("Localizable", "cards_already_linked_message_prefix")
   /// We have just emailed a link to %@. Click the link and you will be signed in.
@@ -344,6 +348,8 @@ internal enum L10n {
   internal static let magicLinkTitle = L10n.tr("Localizable", "magic_link_title")
   /// Opt in to receive marketing messages.
   internal static let marketingTitle = L10n.tr("Localizable", "marketing_title")
+  /// Membership number
+  internal static let membershipNumberTitle = L10n.tr("Localizable", "membership_number_title")
   /// minute
   internal static let minute = L10n.tr("Localizable", "minute")
   /// minutes

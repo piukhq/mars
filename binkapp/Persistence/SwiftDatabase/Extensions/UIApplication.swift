@@ -16,4 +16,9 @@ public extension UIApplication {
     static var isRunningUITests: Bool {
         return CommandLine.arguments.contains("UI-testing")
     }
+    
+    static let bottomSafeArea: CGFloat = {
+        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+        return window?.safeAreaInsets.bottom ?? 0
+    }()
 }
