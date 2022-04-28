@@ -18,7 +18,7 @@ class BrandHeaderView: CustomView {
     private weak var delegate: LoyaltyButtonDelegate?
     
     @IBAction func loyaltyButtonAction(_ sender: Any) {
-        delegate?.brandHeaderViewWasTapped(self)
+//        delegate?.brandHeaderViewWasTapped(self)
     }
     
     func configure(plan: CD_MembershipPlan?, delegate: LoyaltyButtonDelegate) {
@@ -28,7 +28,10 @@ class BrandHeaderView: CustomView {
         
         logoImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
         logoImageView.layer.cornerRadius = LayoutHelper.iconCornerRadius
-        backgroundColor = .clear
+        backgroundColor = .systemIndigo
+        
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(brandHeaderTapped))
+        addGestureRecognizer(gesture)
         
         if let planName = membershipPlan.account?.planName {
             let attributes: [NSAttributedString.Key: Any] = [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkTextButtonNormal, .foregroundColor: UIColor.blueAccent]
@@ -37,5 +40,9 @@ class BrandHeaderView: CustomView {
         } else {
             loyaltyPlanButton.isHidden = true
         }
+    }
+    
+    @objc func brandHeaderTapped() {
+        delegate?.brandHeaderViewWasTapped(self)
     }
 }
