@@ -520,6 +520,14 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
 extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDelegate {
     func modalWillDismiss() {
         configureModules()
+
+        Current.wallet.reload { [weak self] in
+            guard let self = self else { return }
+            if let updatedMembershipCard = Current.wallet.membershipCards?.first(where: { $0.id == self.viewModel.membershipCard.id }) {
+                self.viewModel.membershipCard = updatedMembershipCard
+                self.configureModules()
+            }
+        }
     }
 }
 

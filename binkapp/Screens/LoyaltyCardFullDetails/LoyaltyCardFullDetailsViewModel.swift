@@ -16,7 +16,7 @@ class LoyaltyCardFullDetailsViewModel {
     var paymentCards: [CD_PaymentCard]? {
         return Current.wallet.paymentCards
     }
-    let membershipCard: CD_MembershipCard
+    var membershipCard: CD_MembershipCard
     
     var isMembershipCardAuthorised: Bool {
         return membershipCard.status?.status == .authorised
