@@ -66,6 +66,7 @@ enum BarcodeType: Int {
 
 class BarcodeViewModel: ObservableObject {
     let membershipCard: CD_MembershipCard
+    let zendeskTickets = ZendeskTickets()
     var imageType: MerchantImageType = .hero
     var barcodeUse: BarcodeUse = .loyaltyCard
 
