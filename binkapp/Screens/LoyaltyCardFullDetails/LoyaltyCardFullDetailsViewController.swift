@@ -213,9 +213,11 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         let plrVoucherCells = stackScrollView.arrangedSubviews.filter { $0.isKind(of: PLRBaseCollectionViewCell.self) }
         if let voucherCells = plrVoucherCells as? [PLRBaseCollectionViewCell], let vouchers = viewModel.vouchers {
             for index in 0..<voucherCells.count {
-                let cellViewModel = PLRCellViewModel(voucher: vouchers[index])
-                voucherCells[index].configureWithViewModel(cellViewModel) { [weak self] in
-                    self?.viewModel.toVoucherDetailScreen(voucher: vouchers[index])
+                if let voucher = vouchers[safe: index] {
+                    let cellViewModel = PLRCellViewModel(voucher: voucher)
+                    voucherCells[index].configureWithViewModel(cellViewModel) { [weak self] in
+                        self?.viewModel.toVoucherDetailScreen(voucher: vouchers[index])
+                    }
                 }
             }
         }
@@ -262,7 +264,7 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.headerToBarcodeButtonPadding, after: brandHeader)
         stackScrollView.add(arrangedSubview: brandHeaderBarcodeButtonPadding)
         
-        if viewModel.membershipCard.card?.barcode != nil || viewModel.membershipCard.card?.membershipId != nil {
+        if viewModel.shouldShowBarcodeButton {
             showBarcodeButton.setTitle(viewModel.barcodeButtonTitle, for: .normal)
             stackScrollView.add(arrangedSubview: showBarcodeButton)
             let gestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(showBarcodeButtonPressed))
@@ -270,31 +272,10 @@ private extension LoyaltyCardFullDetailsViewController {
         }
         
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: showBarcodeButton)
-        
         stackScrollView.add(arrangedSubview: modulesStackView)
         configureModules()
-        
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: modulesStackView)
-        
-        if viewModel.shouldShouldPLR {
-            if let vouchers = viewModel.vouchers {
-                for voucher in vouchers {
-                    let state = viewModel.state(forVoucher: voucher)
-                    switch (state, voucher.earnType) {
-                    case (.inProgress, .accumulator), (.issued, .accumulator):
-                        setupCellForType(PLRAccumulatorActiveCell.self, voucher: voucher)
-                    case (.redeemed, .accumulator), (.expired, .accumulator):
-                        setupCellForType(PLRAccumulatorInactiveCell.self, voucher: voucher)
-                    case (.inProgress, .stamps), (.issued, .stamps):
-                        setupCellForType(PLRStampsActiveCell.self, voucher: voucher)
-                    case (.redeemed, .stamps), (.expired, .stamps):
-                        setupCellForType(PLRStampsInactiveCell.self, voucher: voucher)
-                    default:
-                        break
-                    }
-                }
-            }
-        }
+        configurePLRCells()
         
         if viewModel.shouldShowOfferTiles {
             stackScrollView.add(arrangedSubview: offerTilesStackView)
@@ -375,7 +356,8 @@ private extension LoyaltyCardFullDetailsViewController {
         cell.configureWithViewModel(cellViewModel) { [weak self] in
             self?.viewModel.toVoucherDetailScreen(voucher: voucher)
         }
-        stackScrollView.add(arrangedSubview: cell)
+
+        stackScrollView.insert(arrangedSubview: cell, atIndex: viewModel.indexToInsertVoucherCell)
         cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
         stackScrollView.customPadding(Constants.postCellPadding, after: cell)
     }
@@ -431,6 +413,28 @@ private extension LoyaltyCardFullDetailsViewController {
     func configureModules() {
         pointsModule.configure(with: BinkModuleViewModel(type: .points(membershipCard: viewModel.membershipCard)), delegate: self)
         linkModule.configure(with: BinkModuleViewModel(type: .link(membershipCard: viewModel.membershipCard, paymentCards: viewModel.paymentCards)), delegate: self)
+    }
+    
+    func configurePLRCells() {
+        if viewModel.shouldShowPLR {
+            if let vouchers = viewModel.vouchers {
+                for voucher in vouchers {
+                    let state = viewModel.state(forVoucher: voucher)
+                    switch (state, voucher.earnType) {
+                    case (.inProgress, .accumulator), (.issued, .accumulator):
+                        setupCellForType(PLRAccumulatorActiveCell.self, voucher: voucher)
+                    case (.redeemed, .accumulator), (.expired, .accumulator):
+                        setupCellForType(PLRAccumulatorInactiveCell.self, voucher: voucher)
+                    case (.inProgress, .stamps), (.issued, .stamps):
+                        setupCellForType(PLRStampsActiveCell.self, voucher: voucher)
+                    case (.redeemed, .stamps), (.expired, .stamps):
+                        setupCellForType(PLRStampsInactiveCell.self, voucher: voucher)
+                    default:
+                        break
+                    }
+                }
+            }
+        }
     }
     
     @objc func showBarcodeButtonPressed() {
@@ -526,6 +530,7 @@ extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDeleg
             if let updatedMembershipCard = Current.wallet.membershipCards?.first(where: { $0.id == self.viewModel.membershipCard.id }) {
                 self.viewModel.membershipCard = updatedMembershipCard
                 self.configureModules()
+                self.configurePLRCells()
             }
         }
     }

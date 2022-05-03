@@ -85,6 +85,10 @@ class LoyaltyCardFullDetailsViewModel {
         return !(membershipCard.membershipPlan?.featureSet?.planCardType == .link) && barcodeViewModel.isBarcodeAvailable && barcodeViewModel.barcodeImage(withSize: .zero) != nil
     }
     
+    var shouldShowBarcodeButton: Bool {
+        return membershipCard.card?.barcode != nil || membershipCard.card?.membershipId != nil
+    }
+    
     var shouldAnimateContent: Bool {
         return animated
     }
@@ -104,6 +108,10 @@ class LoyaltyCardFullDetailsViewModel {
         }
 
         return buttonTitle
+    }
+    
+    var indexToInsertVoucherCell: Int {
+        return shouldShowBarcodeButton ? 4 : 3
     }
         
     // MARK: - Public methods
@@ -243,8 +251,7 @@ class LoyaltyCardFullDetailsViewModel {
     
     // MARK: PLR
 
-    
-    var shouldShouldPLR: Bool {
+    var shouldShowPLR: Bool {
         return membershipCard.membershipPlan?.isPLR ?? false && !membershipCard.vouchers.isEmpty
     }
     
