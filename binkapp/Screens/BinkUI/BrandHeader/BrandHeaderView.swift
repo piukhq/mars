@@ -30,12 +30,20 @@ class BrandHeaderView: CustomView {
         logoImageView.layer.cornerRadius = LayoutHelper.iconCornerRadius
         backgroundColor = .clear
         
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(brandHeaderTapped))
+        addGestureRecognizer(gesture)
+        
         if let planName = membershipPlan.account?.planName {
             let attributes: [NSAttributedString.Key: Any] = [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkTextButtonNormal, .foregroundColor: UIColor.blueAccent]
             let titleAttributedString = NSMutableAttributedString(string: "About \(planName)", attributes: attributes)
             loyaltyPlanButton.setAttributedTitle(titleAttributedString, for: .normal)
+            loyaltyPlanButton.titleLabel?.textAlignment = .center
         } else {
             loyaltyPlanButton.isHidden = true
         }
+    }
+    
+    @objc func brandHeaderTapped() {
+        delegate?.brandHeaderViewWasTapped(self)
     }
 }
