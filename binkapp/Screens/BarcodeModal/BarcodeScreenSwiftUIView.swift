@@ -88,7 +88,7 @@ struct BarcodeScreenSwiftUIView: View {
                             }),
                             .default(Text(BarcodeScreenIssue.other.rawValue), action: {
                                 MixpanelUtility.track(.barcodeScreenIssueReported(brandName: viewModel.title, reason: .other))
-                                ZendeskTickets().launch()
+                                viewModel.zendeskTickets.launch()
                             }),
                             .cancel()
                         ])
