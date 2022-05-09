@@ -63,6 +63,7 @@ enum MixpanelTrackableEvent {
     case forgottenPassword
     case logout
     case viewBarcode(brandName: String, route: JourneyRoute)
+    case barcodeScreenIssueReported(brandName: String, reason: BarcodeScreenIssue)
     
     enum JourneyRoute: String {
         case wallet = "Wallet"
@@ -98,6 +99,8 @@ enum MixpanelTrackableEvent {
             return "User logged out"
         case .viewBarcode:
             return "Barcode viewed"
+        case .barcodeScreenIssueReported:
+            return "Barcode screen issue reported"
         }
     }
     
@@ -145,6 +148,11 @@ enum MixpanelTrackableEvent {
             ]
         case .logout, .onboardingCarouselSwipe, .forgottenPassword:
             return [:]
+        case .barcodeScreenIssueReported(brandName: let brandName, let reason):
+            return [
+                "Reason": reason.rawValue,
+                "Brand name": brandName
+            ]
         }
     }
 }

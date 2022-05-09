@@ -6,12 +6,18 @@
 //
 
 import Foundation
+import SwiftUI
 import UIKit
 import ZXingObjC
 
 enum BarcodeUse {
     case loyaltyCard
     case coupon
+}
+
+enum MerchantImageType {
+    case icon
+    case hero
 }
 
 enum BarcodeType: Int {
@@ -58,11 +64,47 @@ enum BarcodeType: Int {
     }
 }
 
-class BarcodeViewModel {
+class BarcodeViewModel: ObservableObject {
     let membershipCard: CD_MembershipCard
+    let zendeskTickets = ZendeskTickets()
+    var imageType: MerchantImageType = .hero
+    var barcodeUse: BarcodeUse = .loyaltyCard
+
+    @Published var merchantImage: Image?
+    @Published var showingReportIssueOptions = false {
+        didSet {
+            reportIssueButton.viewModel.isLoading = false
+        }
+    }
+    
+    lazy var reportIssueButton: BinkButtonSwiftUIView = {
+        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.barcodeReportIssueButtonTitle), enabled: true, buttonTapped: { [weak self] in
+            self?.showingReportIssueOptions = true
+        }, type: .gradient)
+    }()
+
+    
+    // MARK: Computed properties
+
+    var barcodeImageIsRenderable: Bool {
+        return barcodeImage(withSize: CGSize(width: 100, height: 100)) != nil
+    }
     
     var title: String {
         return membershipCard.membershipPlan?.account?.companyName ?? ""
+    }
+    
+    var descriptionText: String {
+        switch barcodeUse {
+        case .loyaltyCard:
+            if barcodeImageIsRenderable {
+                return L10n.barcodeCardDescription
+            } else {
+                return L10n.barcodeCardNumberDescription
+            }
+        case .coupon:
+            return L10n.barcodeCouponDescription
+        }
     }
     
     var isBarcodeAvailable: Bool {
@@ -81,7 +123,13 @@ class BarcodeViewModel {
         return membershipCard.card?.barcode ?? ""
     }
     
-    var barcodeUse: BarcodeUse = .loyaltyCard
+    var barcodeMatchesMembershipNumber: Bool {
+        return cardNumber == barcodeNumber
+    }
+    
+    var shouldShowbarcodeNumber: Bool {
+        return !barcodeMatchesMembershipNumber && isBarcodeAvailable
+    }
     
     var barcodeType: BarcodeType {
         guard let barcodeType = membershipCard.card?.barcodeType?.intValue else {
@@ -89,6 +137,9 @@ class BarcodeViewModel {
         }
         return BarcodeType(rawValue: barcodeType) ?? .code128
     }
+    
+    
+    // MARK: Init
 
     init(membershipCard: CD_MembershipCard) {
         self.membershipCard = membershipCard
@@ -102,6 +153,9 @@ class BarcodeViewModel {
         return false
     }
     
+    
+    // MARK: Functions
+
     func barcodeImage(withSize size: CGSize, drawInContainer: Bool = true) -> UIImage? {
         guard let barcodeString = membershipCard.card?.barcode else { return nil }
         
@@ -135,5 +189,45 @@ class BarcodeViewModel {
         }
         
         return exception == nil ? image : nil
+    }
+    
+    func getMerchantImage(colorScheme: ColorScheme) {
+        if let plan = membershipCard.membershipPlan {
+            ImageService.getImage(forPathType: .membershipPlanAlternativeHero(plan: plan), userInterfaceStyle: colorScheme.userInterfaceStyle()) { [weak self] retrievedImage in
+                if let retrievedImage = retrievedImage {
+                    self?.merchantImage = Image(uiImage: retrievedImage)
+                    self?.imageType = .hero
+                } else {
+                    ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), userInterfaceStyle: colorScheme.userInterfaceStyle()) { retrievedImage in
+                        /// If we can't retrieve the hero image, adjust aspect ratio and use square icon
+                        if let retrievedImage = retrievedImage {
+                            self?.merchantImage = Image(uiImage: retrievedImage)
+                            self?.imageType = .icon
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func heightForHighVisView(text: String) -> CGFloat {
+        let rowCount = text.splitStringIntoArray(elementLength: 8).count
+        let widthOfStackView = UIScreen.main.bounds.width - (BarcodeScreenSwiftUIView.Constants.horizontalInset * 2)
+        let boxWidth = widthOfStackView / 8
+        let boxHeight = boxWidth * 1.8
+        return boxHeight * CGFloat(rowCount)
+    }
+}
+
+extension ColorScheme {
+    func userInterfaceStyle() -> UIUserInterfaceStyle {
+        switch self {
+        case .dark:
+            return .dark
+        case .light:
+            return .light
+        @unknown default:
+            return .light
+        }
     }
 }

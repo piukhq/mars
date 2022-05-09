@@ -112,7 +112,7 @@ class WidgetController {
             guard let plan = membershipCard.membershipPlan, i < 4 else { break }
             imageRequestGroup.enter()
             
-            ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil) { retrievedImage in
+            ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan)) { retrievedImage in
                 let membershipCardWidget = MembershipCardWidget(id: membershipCard.id, imageData: retrievedImage?.pngData(), backgroundColor: membershipCard.membershipPlan?.card?.colour, planName: membershipCard.membershipPlan?.account?.planName)
                 widgetCards.append(membershipCardWidget)
                 imageRequestGroup.leave()

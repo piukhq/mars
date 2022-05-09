@@ -55,7 +55,7 @@ class WatchController {
             for card in membershipCards {
                 guard let plan = card.membershipPlan else { return }
                 
-                ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: nil) { [weak self] retrievedImage in
+                ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), userInterfaceStyle: .light) { [weak self] retrievedImage in
                     let barcodeViewModel = BarcodeViewModel(membershipCard: card)
                     let barcodeImageData = barcodeViewModel.barcodeImage(withSize: CGSize(width: 200, height: 200))?.pngData()
                     
@@ -74,7 +74,7 @@ class WatchController {
             let barcodeViewModel = BarcodeViewModel(membershipCard: membershipCard)
             if let barcodeImageData = barcodeViewModel.barcodeImage(withSize: CGSize(width: 200, height: 200))?.pngData() {
                 guard let membershipPlan = membershipCard.membershipPlan else { return }
-                let iconImageData = ImageService.getImageFromDevice(forPathType: .membershipPlanIcon(plan: membershipPlan))?.pngData()
+                let iconImageData = ImageService.getImageFromDevice(forPathType: .membershipPlanIcon(plan: membershipPlan), userInterfaceStyle: .light)?.pngData()
                 
                 let walletCardViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
                 let balanceString = "\(walletCardViewModel.pointsValueText ?? "") \(walletCardViewModel.pointsValueSuffixText ?? "")"

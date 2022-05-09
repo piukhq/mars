@@ -114,7 +114,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         tag = indexPath.row
         
         guard let plan = viewModel.membershipPlan else { return }
-        ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), traitCollection: traitCollection) { [weak self] image in
+        ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), userInterfaceStyle: traitCollection.userInterfaceStyle) { [weak self] image in
             if self?.tag == indexPath.row {
                 self?.cardIconImageView.image = image
             }
