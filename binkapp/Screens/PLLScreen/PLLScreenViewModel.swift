@@ -109,7 +109,9 @@ class PLLScreenViewModel {
                     completion(false)
                 })
             default:
-                break
+                self?.displaySimplePopup(title: L10n.errorTitle, message: nil, completion: {
+                    completion(false)
+                })
             }
         }
     }

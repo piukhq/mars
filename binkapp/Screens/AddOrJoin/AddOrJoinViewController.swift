@@ -30,7 +30,7 @@ class AddOrJoinViewController: BinkViewController {
     
     private lazy var brandHeaderView: BrandHeaderView = {
         let brandHeader = BrandHeaderView()
-        brandHeader.heightAnchor.constraint(equalToConstant: 110).isActive = true
+        brandHeader.heightAnchor.constraint(equalToConstant: 130).isActive = true
         return brandHeader
     }()
     
