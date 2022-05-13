@@ -456,6 +456,8 @@ internal enum L10n {
   internal static let pcdPendingCardHyperlink = L10n.tr("Localizable", "pcd_pending_card_hyperlink")
   /// Payment card pending
   internal static let pcdPendingCardTitle = L10n.tr("Localizable", "pcd_pending_card_title")
+  /// Ready to link
+  internal static let pcdStatusTextReadyToLink = L10n.tr("Localizable", "pcd_status_text_ready_to_link")
   /// You can link this card
   internal static let pcdYouCanLink = L10n.tr("Localizable", "pcd_you_can_link")
   /// Pending
