@@ -8,8 +8,9 @@
 
 import Foundation
 import CardScan
+import VisionKit
 
-class PaymentWalletViewModel: WalletViewModel {
+class PaymentWalletViewModel: NSObject, WalletViewModel {
     typealias T = CD_PaymentCard
 
     private let repository = PaymentWalletRepository()
@@ -33,9 +34,14 @@ class PaymentWalletViewModel: WalletViewModel {
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
         switch walletPrompt.type {
         case .addPaymentCards:
-            guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
-            PermissionsUtility.launchPaymentScanner(viewController) {
-                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+//            let visionScanner = VNDocumentCameraViewController()
+//            visionScanner.delegate = self
+            
+            let scannerViewController = ViewControllerFactory.makeScannerViewController(type: .payment, delegate: Current.navigate.scannerDelegate)
+            
+//            guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
+            PermissionsUtility.launchPaymentScanner(scannerViewController) {
+                let navigationRequest = ModalNavigationRequest(viewController: scannerViewController)
                 Current.navigate.to(navigationRequest)
             } enterManuallyAction: {
                 let addPaymentCardViewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .wallet)
@@ -67,5 +73,27 @@ class PaymentWalletViewModel: WalletViewModel {
         
         let navigationRequest = AlertNavigationRequest(alertController: alert)
         Current.navigate.to(navigationRequest)
+    }
+}
+
+extension PaymentWalletViewModel: VNDocumentCameraViewControllerDelegate {
+    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
+        guard scan.pageCount >= 1 else {
+            controller.dismiss(animated: true)
+            return
+        }
+        
+        VisionImageDetectionUtility().processImage(scan.imageOfPage(at: 0))
+ 
+        controller.dismiss(animated: true)
+    }
+    
+    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFailWithError error: Error) {
+        //Handle properly error
+        controller.dismiss(animated: true)
+    }
+    
+    func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
+        controller.dismiss(animated: true)
     }
 }

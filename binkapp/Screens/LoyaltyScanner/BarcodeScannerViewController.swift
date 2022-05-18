@@ -10,8 +10,14 @@ import UIKit
 import AVFoundation
 import Vision
 
+enum ScanType {
+    case loyalty
+    case payment
+}
+
 struct BarcodeScannerViewModel {
     let plan: CD_MembershipPlan?
+    let type: ScanType
     var isScanning = false
     
     var hasPlan: Bool {
@@ -58,7 +64,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private weak var delegate: BarcodeScannerViewControllerDelegate?
 
     private var session = AVCaptureSession()
-    private var captureOutput: AVCaptureMetadataOutput?
+    private var captureOutput: AVCaptureOutput?
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     private var previewView = UIView()
     private let schemeScanningQueue = DispatchQueue(label: "com.bink.wallet.scanning.loyalty.scheme.queue")
@@ -208,7 +214,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         guard let backCamera = AVCaptureDevice.default(for: .video) else { return }
         guard let input = try? AVCaptureDeviceInput(device: backCamera) else { return }
         performCaptureChecksForDevice(backCamera)
-        captureOutput = AVCaptureMetadataOutput()
 
         if session.canAddInput(input) {
             session.addInput(input)
@@ -222,30 +227,46 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         previewView.layer.addSublayer(videoPreviewLayer)
         videoPreviewLayer.frame = view.frame
 
-        guard let captureOutput = captureOutput else { return }
+//        guard let captureOutput = captureOutput else { return }
 
-        if session.outputs.isEmpty {
-            if session.canAddOutput(captureOutput) {
-                session.addOutput(captureOutput)
-                captureOutput.setMetadataObjectsDelegate(self, queue: schemeScanningQueue)
-                captureOutput.metadataObjectTypes = [
-                    .qr,
-                    .code128,
-                    .aztec,
-                    .pdf417,
-                    .ean13,
-                    .dataMatrix,
-                    .interleaved2of5,
-                    .code39
-                ]
+        switch viewModel.type {
+        case .loyalty:
+            let metadataCaptureOutput = AVCaptureMetadataOutput()
+            if session.outputs.isEmpty {
+                if session.canAddOutput(metadataCaptureOutput) {
+                    session.addOutput(metadataCaptureOutput)
+                                    
+                    metadataCaptureOutput.setMetadataObjectsDelegate(self, queue: schemeScanningQueue)
+                    metadataCaptureOutput.metadataObjectTypes = [
+                        .qr,
+                        .code128,
+                        .aztec,
+                        .pdf417,
+                        .ean13,
+                        .dataMatrix,
+                        .interleaved2of5,
+                        .code39
+                    ]
+                }
             }
+            metadataCaptureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
+            captureOutput = metadataCaptureOutput
+        case .payment:
+            let photoCaptureOutput = AVCapturePhotoOutput()
+            if session.outputs.isEmpty {
+                if session.canAddOutput(photoCaptureOutput) {
+                    session.addOutput(photoCaptureOutput)
+                }
+            }
+//            let cameraLayer = AVCaptureVideoPreviewLayer(session: session)
+//            cameraLayer.frame = rectOfInterest
+//            view.layer.addSublayer(cameraLayer)
+            captureOutput = photoCaptureOutput
         }
 
         if !session.isRunning {
             session.startRunning()
         }
-
-        captureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
 
         scheduleTimer()
     }
@@ -317,10 +338,19 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     }
     
     @objc private func enterManually() {
-        delegate?.barcodeScannerViewControllerShouldEnterManually(self, completion: { [weak self] in
-            guard let self = self else { return }
-            self.navigationController?.removeViewController(self)
-        })
+        let photoSettings = AVCapturePhotoSettings()
+        if let photoPreviewType = photoSettings.availablePreviewPhotoPixelFormatTypes.first {
+            photoSettings.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String: photoPreviewType]
+            if let photoOutput = captureOutput as? AVCapturePhotoOutput {
+                photoOutput.capturePhoto(with: photoSettings, delegate: self)
+            }
+        }
+        
+        
+//        delegate?.barcodeScannerViewControllerShouldEnterManually(self, completion: { [weak self] in
+//            guard let self = self else { return }
+//            self.navigationController?.removeViewController(self)
+//        })
     }
     
     @objc private func close() {
@@ -437,6 +467,15 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         Current.navigate.close(animated: true) {
             self.scheduleTimer()
+        }
+    }
+}
+
+extension BarcodeScannerViewController: AVCapturePhotoCaptureDelegate {
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        guard let imageData = photo.fileDataRepresentation() else { return }
+        if let image = UIImage(data: imageData) {
+            VisionImageDetectionUtility().processImage(image)
         }
     }
 }
