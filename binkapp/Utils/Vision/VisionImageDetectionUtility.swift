@@ -83,13 +83,16 @@ class VisionImageDetectionUtility {
         
         let textDetectionRequest = VNDetectTextRectanglesRequest()
         
-        try? self.requestHandler.perform([rectangleDetectionRequest], on: frame)
+        try? self.requestHandler.perform([rectangleDetectionRequest, textDetectionRequest], on: frame)
         
-        guard let rectangle = rectangleDetectionRequest.results?.first,
-              let text = textDetectionRequest.results?.first,
-              rectangle.boundingBox.contains(text.boundingBox) else {
-            // no credit card rectangle detected
-            return nil
+        print(rectangleDetectionRequest.results as Any)
+        print(textDetectionRequest.results as Any)
+        
+        guard let rectangle = (rectangleDetectionRequest.results)?.first,
+              let text = (textDetectionRequest.results)?.first,
+            rectangle.boundingBox.contains(text.boundingBox) else {
+                // no credit card rectangle detected
+                return nil
         }
         
         return rectangle

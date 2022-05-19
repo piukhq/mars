@@ -75,6 +75,10 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private var shouldAllowScanning = true
     private var captureSource: BarcodeCaptureSource
     private let visionUtility = VisionImageDetectionUtility()
+    private var paymentCardRectangleObservation: VNRectangleObservation?
+    private var trackingRect: CAShapeLayer?
+    private let requestHandler = VNSequenceRequestHandler()
+
 
     private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .regular))
@@ -135,41 +139,41 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         super.viewDidLoad()
         view.addSubview(previewView)
 
-        // BLUR AND MASK
-        blurredView.frame = view.frame
-        let maskLayer = CAShapeLayer()
-        maskLayer.frame = view.frame
-        // Setup rect of interest
-        let inset = Constants.rectOfInterestInset
-        let width = view.frame.size.width - (inset * 2)
-        let viewFrameRatio = Constants.viewFrameRatio
-        let height: CGFloat = floor(viewFrameRatio * width)
-        let maskedAreaFrame = CGRect(x: inset, y: Constants.maskedAreaY, width: width, height: height)
-        rectOfInterest = maskedAreaFrame
-        let maskedPath = UIBezierPath(roundedRect: rectOfInterest, cornerRadius: Constants.maskedAreaCornerRadius)
-        maskedPath.append(UIBezierPath(rect: view.bounds))
-        maskLayer.fillRule = .evenOdd
-        maskLayer.path = maskedPath.cgPath
-        blurredView.layer.mask = maskLayer
-        view.addSubview(blurredView)
+//        // BLUR AND MASK
+//        blurredView.frame = view.frame
+//        let maskLayer = CAShapeLayer()
+//        maskLayer.frame = view.frame
+//        // Setup rect of interest
+//        let inset = Constants.rectOfInterestInset
+//        let width = view.frame.size.width - (inset * 2)
+//        let viewFrameRatio = Constants.viewFrameRatio
+//        let height: CGFloat = floor(viewFrameRatio * width)
+//        let maskedAreaFrame = CGRect(x: inset, y: Constants.maskedAreaY, width: width, height: height)
+//        rectOfInterest = maskedAreaFrame
+//        let maskedPath = UIBezierPath(roundedRect: rectOfInterest, cornerRadius: Constants.maskedAreaCornerRadius)
+//        maskedPath.append(UIBezierPath(rect: view.bounds))
+//        maskLayer.fillRule = .evenOdd
+//        maskLayer.path = maskedPath.cgPath
+//        blurredView.layer.mask = maskLayer
+//        view.addSubview(blurredView)
 
-        guideImageView.frame = rectOfInterest.inset(by: Constants.guideImageInset)
-        view.addSubview(guideImageView)
-        view.addSubview(explainerLabel)
-        view.addSubview(widgetView)
+//        guideImageView.frame = rectOfInterest.inset(by: Constants.guideImageInset)
+//        view.addSubview(guideImageView)
+//        view.addSubview(explainerLabel)
+//        view.addSubview(widgetView)
         
-        footerButtons = [photoLibraryButton]
+//        footerButtons = [photoLibraryButton]
         
-        NSLayoutConstraint.activate([
-            explainerLabel.topAnchor.constraint(equalTo: guideImageView.bottomAnchor, constant: Constants.explainerLabelPadding),
-            explainerLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.explainerLabelPadding),
-            explainerLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.explainerLabelPadding),
-            explainerLabel.heightAnchor.constraint(equalToConstant: Constants.explainerLabelHeight),
-            widgetView.topAnchor.constraint(equalTo: explainerLabel.bottomAnchor, constant: Constants.widgetViewTopPadding),
-            widgetView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.widgetViewLeftRightPadding),
-            widgetView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.widgetViewLeftRightPadding),
-            widgetView.heightAnchor.constraint(equalToConstant: Constants.widgetViewHeight)
-        ])
+//        NSLayoutConstraint.activate([
+//            explainerLabel.topAnchor.constraint(equalTo: guideImageView.bottomAnchor, constant: Constants.explainerLabelPadding),
+//            explainerLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.explainerLabelPadding),
+//            explainerLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.explainerLabelPadding),
+//            explainerLabel.heightAnchor.constraint(equalToConstant: Constants.explainerLabelHeight),
+//            widgetView.topAnchor.constraint(equalTo: explainerLabel.bottomAnchor, constant: Constants.widgetViewTopPadding),
+//            widgetView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.widgetViewLeftRightPadding),
+//            widgetView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.widgetViewLeftRightPadding),
+//            widgetView.heightAnchor.constraint(equalToConstant: Constants.widgetViewHeight)
+//        ])
         
         navigationController?.setNavigationBarVisibility(false)
     }
@@ -207,6 +211,8 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         cancelButton.tintColor = Current.themeManager.color(for: .text)
         widgetView.configure()
     }
+    
+
     
     private func startScanning() {
         viewModel.isScanning = true
@@ -252,16 +258,23 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
             metadataCaptureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
             captureOutput = metadataCaptureOutput
         case .payment:
-            let photoCaptureOutput = AVCapturePhotoOutput()
+            let videoOutput = AVCaptureVideoDataOutput()
+            videoOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as NSString): NSNumber(value: kCVPixelFormatType_32BGRA)] as [String : Any]
+            videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "my.image.handling.queue")) /// Change to global variable queue?
+            
             if session.outputs.isEmpty {
-                if session.canAddOutput(photoCaptureOutput) {
-                    session.addOutput(photoCaptureOutput)
+                if session.canAddOutput(videoOutput) {
+                    session.addOutput(videoOutput)
                 }
             }
+            
+            guard let connection = videoOutput.connection(with: AVMediaType.video), connection.isVideoOrientationSupported else { return }
+            connection.videoOrientation = .portrait
+            
 //            let cameraLayer = AVCaptureVideoPreviewLayer(session: session)
 //            cameraLayer.frame = rectOfInterest
 //            view.layer.addSublayer(cameraLayer)
-            captureOutput = photoCaptureOutput
+            captureOutput = videoOutput
         }
 
         if !session.isRunning {
@@ -338,13 +351,13 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     }
     
     @objc private func enterManually() {
-        let photoSettings = AVCapturePhotoSettings()
-        if let photoPreviewType = photoSettings.availablePreviewPhotoPixelFormatTypes.first {
-            photoSettings.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String: photoPreviewType]
-            if let photoOutput = captureOutput as? AVCapturePhotoOutput {
-                photoOutput.capturePhoto(with: photoSettings, delegate: self)
-            }
-        }
+//        let photoSettings = AVCapturePhotoSettings()
+//        if let photoPreviewType = photoSettings.availablePreviewPhotoPixelFormatTypes.first {
+//            photoSettings.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String: photoPreviewType]
+//            if let photoOutput = captureOutput as? AVCapturePhotoOutput {
+//                photoOutput.capturePhoto(with: photoSettings, delegate: self)
+//            }
+//        }
         
         
 //        delegate?.barcodeScannerViewControllerShouldEnterManually(self, completion: { [weak self] in
@@ -471,11 +484,246 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
     }
 }
 
-extension BarcodeScannerViewController: AVCapturePhotoCaptureDelegate {
-    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-        guard let imageData = photo.fileDataRepresentation() else { return }
-        if let image = UIImage(data: imageData) {
-            VisionImageDetectionUtility().processImage(image)
+//extension BarcodeScannerViewController: AVCapturePhotoCaptureDelegate {
+//    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+//        guard let imageData = photo.fileDataRepresentation() else { return }
+//        if let image = UIImage(data: imageData) {
+//            VisionImageDetectionUtility().processImage(image)
+//        }
+//    }
+//}
+
+extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        guard let frame = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+            print("Unable to get image from sample buffer")
+            return
         }
+        
+        DispatchQueue.main.async {
+            self.trackingRect?.removeFromSuperlayer() // removes old rectangle drawings
+        }
+        if let paymentCardRectangleObservation = self.paymentCardRectangleObservation {
+            self.handleObservedPaymentCard(paymentCardRectangleObservation, in: frame)
+        } else if let paymentCardRectangleObservation = self.detectPaymentCard(frame: frame) {
+            self.paymentCardRectangleObservation = paymentCardRectangleObservation
+        }
+    }
+    
+    func detectPaymentCard(frame: CVImageBuffer) -> VNRectangleObservation? {
+        let rectangleDetectionRequest = VNDetectRectanglesRequest()
+//        let paymentCardAspectRatio: Float = 85.60 / 53.98
+//        rectangleDetectionRequest.minimumAspectRatio = paymentCardAspectRatio * 0.95
+//        rectangleDetectionRequest.maximumAspectRatio = paymentCardAspectRatio * 0.10
+        
+        let textDetectionRequest = VNDetectTextRectanglesRequest()
+        
+        try? self.requestHandler.perform([rectangleDetectionRequest, textDetectionRequest], on: frame)
+        
+        guard let rectangle = (rectangleDetectionRequest.results)?.first,
+              let text = (textDetectionRequest.results)?.first,
+            rectangle.boundingBox.contains(text.boundingBox) else {
+                // no credit card rectangle detected
+                return nil
+        }
+        
+        return rectangle
+    }
+    
+    private func handleObservedPaymentCard(_ observation: VNRectangleObservation, in frame: CVImageBuffer) {
+        if let trackedPaymentCardRectangle = self.trackPaymentCard(for: observation, in: frame) {
+            DispatchQueue.main.async {
+                self.trackingRect?.removeFromSuperlayer()
+                self.trackingRect = self.createRectangleDrawring(trackedPaymentCardRectangle)
+                self.view.layer.addSublayer(self.trackingRect!)
+            }
+            
+            DispatchQueue.global(qos: .userInitiated).async {
+                if let paymentCardNumber = self.extractPaymentCardNumber(frame: frame, rectangle: observation) {
+                    print("Card Number: - \(paymentCardNumber)")
+                }
+//                if let textObservations = self.getCandidates(frame: frame, rectangle: observation) {
+//                    if let paymentCardNumber = self.extractPaymentCardNumber(texts: textObservations) {
+//                        print("Card Number: - \(paymentCardNumber)")
+//                    }
+//
+//                    //                let expiry = extractExpiryDate(observations: textObservations)
+//                    //                print("Expiry: - \(String(describing: expiry))")
+//                }
+            }
+        } else {
+            self.paymentCardRectangleObservation = nil
+        }
+    }
+    
+    private func getCandidates(frame: CVImageBuffer, rectangle: VNRectangleObservation) -> [VNRecognizedTextObservation]? {
+        let cardPositionInImage = VNImageRectForNormalizedRect(rectangle.boundingBox, CVPixelBufferGetWidth(frame), CVPixelBufferGetHeight(frame))
+        let ciImage = CIImage(cvImageBuffer: frame)
+        let croppedImage = ciImage.cropped(to: cardPositionInImage)
+        
+        let request = VNRecognizeTextRequest()
+        request.recognitionLevel = .accurate
+        request.usesLanguageCorrection = false
+        
+        let stillImageRequestHandler = VNImageRequestHandler(ciImage: croppedImage, options: [:])
+        try? stillImageRequestHandler.perform([request])
+        
+        guard let observations = request.results, !observations.isEmpty else {
+            // no text detected
+            return nil
+        }
+        
+        return observations
+    }
+    
+    private func extractPaymentCardNumber(frame: CVImageBuffer, rectangle: VNRectangleObservation) -> String? {
+        
+        let cardPositionInImage = VNImageRectForNormalizedRect(rectangle.boundingBox, CVPixelBufferGetWidth(frame), CVPixelBufferGetHeight(frame))
+        let ciImage = CIImage(cvImageBuffer: frame)
+        let croppedImage = ciImage.cropped(to: cardPositionInImage)
+        
+        let request = VNRecognizeTextRequest()
+        request.recognitionLevel = .accurate
+        request.usesLanguageCorrection = false
+        
+        let stillImageRequestHandler = VNImageRequestHandler(ciImage: croppedImage, options: [:])
+        try? stillImageRequestHandler.perform([request])
+        
+        guard let texts = request.results, !texts.isEmpty else {
+            // no text detected
+            return nil
+        }
+        
+        let recognizedText = texts.compactMap { observation in
+            return observation.topCandidates(1).first?.string
+        }
+//        print(recognizedText)
+//        print("----------")
+        let creditCard = parseResults(for: recognizedText)
+        print(creditCard ?? "")
+        return creditCard
+//        for observation in texts {
+//            guard let topCandidate = observation.topCandidates(1).first?.string else { return nil }
+//            return parseResults(for: [topCandidate])
+////            let trimmed = topCandidate.trimmingCharacters(in: .whitespaces)
+////            if trimmed.count == 16 {
+////                print("SW: \(trimmed)")
+////                return trimmed
+////            }
+//        }
+//        return nil
+//        let digitsRecognized = texts
+//            .flatMap({ $0.topCandidates(10).map({ $0.string }) })
+//            .map({ $0.trimmingCharacters(in: .whitespaces) })
+////            .filter({ CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: $0)) })
+//        let _16digits = digitsRecognized.first(where: { $0.count == 16 })
+//        let has16Digits = _16digits != nil
+//        let _4digits = digitsRecognized.filter({ $0.count == 4 })
+//        let has4sections4digits = _4digits.count == 4
+//
+//        let digits = _16digits ?? _4digits.joined()
+//        let digitsIsValid = (has16Digits || has4sections4digits) && self.checkDigits(digits)
+//        return digitsIsValid ? digits : nil
+    }
+
+    
+//    private func extractPaymentCardNumber(texts: [VNRecognizedTextObservation]) -> String? {
+//        let digitsRecognized = texts
+//            .flatMap({ $0.topCandidates(10).map({ $0.string }) })
+//            .map({ $0.trimmingCharacters(in: .whitespaces) })
+//            .filter({ CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: $0)) })
+//
+//        let _16digits = digitsRecognized.first(where: { $0.count == 16 })
+//        let has16Digits = _16digits != nil
+//        let _4digits = digitsRecognized.filter({ $0.count == 4 })
+//        let has4sections4digits = _4digits.count == 4
+//
+//        let digits = _16digits ?? _4digits.joined()
+//        let digitsIsValid = (has16Digits || has4sections4digits) && self.checkDigits(digits)
+//
+//        return digitsIsValid ? digits : nil
+//    }
+    
+    func parseResults(for recognizedText: [String]) -> String? {
+        // Credit Card Number
+        let creditCardNumber = recognizedText.first(where: { $0.count > 14 && ["4", "5", "3", "6"].contains($0.first) })
+        return creditCardNumber
+    }
+    
+    private func extractExpiryDate(observations: [VNRecognizedTextObservation]) -> (String, String)? {
+        for text in observations.flatMap( {$0.topCandidates(1)}) {
+            if let expiry = likelyExpiry(text.string) {
+                return expiry
+            }
+        }
+        return nil
+    }
+    
+    private func trackPaymentCard(for observation: VNRectangleObservation, in frame: CVImageBuffer) -> VNRectangleObservation? {
+        let request = VNTrackRectangleRequest(rectangleObservation: observation)
+        request.trackingLevel = .fast
+        
+        try? self.requestHandler.perform([request], on: frame)
+        
+        guard let trackedRectangle = (request.results as? [VNRectangleObservation])?.first else {
+            return nil
+        }
+        return trackedRectangle
+    }
+    
+    private func createRectangleDrawring(_ rectangleObservation: VNRectangleObservation) -> CAShapeLayer {
+        let transform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -self.view.frame.height)
+        let scale = CGAffineTransform.identity.scaledBy(x: self.view.frame.width, y: self.view.frame.height)
+        let rectOnScreen = rectangleObservation.boundingBox.applying(scale).applying(transform)
+        let boundingBoxPath = CGPath(rect: rectOnScreen, transform: nil)
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = boundingBoxPath
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.strokeColor = UIColor.white.cgColor
+        shapeLayer.lineWidth = 5
+        shapeLayer.borderWidth = 5
+        return shapeLayer
+    }
+    
+    private func checkDigits(_ digits: String) -> Bool {
+        guard digits.count == 16, CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: digits)) else {
+            return false
+        }
+        var digits = digits
+        let checksum = digits.removeLast()
+        let sum = digits.reversed()
+            .enumerated()
+            .map({ (index, element) -> Int in
+                if (index % 2) == 0 {
+                   let doubled = Int(String(element))!*2
+                   return doubled > 9
+                       ? Int(String(String(doubled).first!))! + Int(String(String(doubled).last!))!
+                       : doubled
+                } else {
+                    return Int(String(element))!
+                }
+            })
+            .reduce(0, { (res, next) in res + next })
+        let checkDigitCalc = (sum * 9) % 10
+        return Int(String(checksum))! == checkDigitCalc
+    }
+    
+    func likelyExpiry(_ string: String) -> (String, String)? {
+        guard let regex = try? NSRegularExpression(pattern: "^.*(0[1-9]|1[0-2])[./]([1-2][0-9])$") else {
+            return nil
+        }
+
+        let result = regex.matches(in: string, range: NSRange(string.startIndex..., in: string))
+        
+        if result.isEmpty {
+            return nil
+        }
+        
+        guard let nsrange1 = result.first?.range(at: 1),
+            let range1 = Range(nsrange1, in: string) else { return nil }
+        guard let nsrange2 = result.first?.range(at: 2),
+            let range2 = Range(nsrange2, in: string) else { return nil }
+
+        return (String(string[range1]), String(string[range2]))
     }
 }
