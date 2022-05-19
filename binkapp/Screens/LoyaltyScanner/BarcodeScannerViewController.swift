@@ -42,6 +42,7 @@ enum BarcodeCaptureSource {
 protocol BarcodeScannerViewControllerDelegate: AnyObject {
     func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?)
     func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?)
+    func scannerViewController(_ viewController: BarcodeScannerViewController, didScanPaymentCard: PaymentCardCreateModel)
 }
 
 class BarcodeScannerViewController: BinkViewController, UINavigationControllerDelegate {
@@ -540,18 +541,27 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
             
             DispatchQueue.global(qos: .userInitiated).async {
                 if let textObservations = self.getCandidates(frame: frame, rectangle: observation) {
-                    if let paymentCardNumber = self.extractPaymentCardNumber(texts: textObservations) {
-                        print("Card Number: - \(paymentCardNumber)")
+                    let paymentCardNumber = self.extractPaymentCardNumber(texts: textObservations)
+                        print("Card Number: - \(paymentCardNumber ?? "")")
+                    
+                    var expiryMonth: Int?
+                    var expiryYear: Int?
+                    if let (month, year) = self.extractExpiryDate(observations: textObservations) {
+                        print("Expiry: - \(month + year)")
+                        expiryMonth = Int(month)
+                        expiryYear = Int(year)
                     }
-
-                    if let expiry = self.extractExpiryDate(observations: textObservations) {
-                        print("Expiry: - \(expiry)")
-                    }
+                    let paymentCard = PaymentCardCreateModel(fullPan: paymentCardNumber, nameOnCard: nil, month: expiryMonth, year: expiryYear)
+                    self.delegate?.scannerViewController(self, didScanPaymentCard: paymentCard)
                 }
             }
         } else {
             self.paymentCardRectangleObservation = nil
         }
+    }
+    
+    private func parseCardData(completion: () -> Void) {
+        
     }
     
     private func getCandidates(frame: CVImageBuffer, rectangle: VNRectangleObservation) -> [VNRecognizedTextObservation]? {
@@ -650,7 +660,7 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
         guard let regex = try? NSRegularExpression(pattern: "^.*(0[1-9]|1[0-2])[./]([1-2][0-9])$") else {
             return nil
         }
-
+        
         let result = regex.matches(in: string, range: NSRange(string.startIndex..., in: string))
         
         if result.isEmpty {
@@ -658,10 +668,10 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
         }
         
         guard let nsrange1 = result.first?.range(at: 1),
-            let range1 = Range(nsrange1, in: string) else { return nil }
+              let range1 = Range(nsrange1, in: string) else { return nil }
         guard let nsrange2 = result.first?.range(at: 2),
-            let range2 = Range(nsrange2, in: string) else { return nil }
-
+              let range2 = Range(nsrange2, in: string) else { return nil }
+        
         return (String(string[range1]), String(string[range2]))
     }
 }
