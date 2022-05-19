@@ -539,17 +539,15 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
             }
             
             DispatchQueue.global(qos: .userInitiated).async {
-                if let paymentCardNumber = self.extractPaymentCardNumber(frame: frame, rectangle: observation) {
-                    print("Card Number: - \(paymentCardNumber)")
+                if let textObservations = self.getCandidates(frame: frame, rectangle: observation) {
+                    if let paymentCardNumber = self.extractPaymentCardNumber(texts: textObservations) {
+                        print("Card Number: - \(paymentCardNumber)")
+                    }
+
+                    if let expiry = self.extractExpiryDate(observations: textObservations) {
+                        print("Expiry: - \(expiry)")
+                    }
                 }
-//                if let textObservations = self.getCandidates(frame: frame, rectangle: observation) {
-//                    if let paymentCardNumber = self.extractPaymentCardNumber(texts: textObservations) {
-//                        print("Card Number: - \(paymentCardNumber)")
-//                    }
-//
-//                    //                let expiry = extractExpiryDate(observations: textObservations)
-//                    //                print("Expiry: - \(String(describing: expiry))")
-//                }
             }
         } else {
             self.paymentCardRectangleObservation = nil
@@ -576,76 +574,16 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
         return observations
     }
     
-    private func extractPaymentCardNumber(frame: CVImageBuffer, rectangle: VNRectangleObservation) -> String? {
-        
-        let cardPositionInImage = VNImageRectForNormalizedRect(rectangle.boundingBox, CVPixelBufferGetWidth(frame), CVPixelBufferGetHeight(frame))
-        let ciImage = CIImage(cvImageBuffer: frame)
-        let croppedImage = ciImage.cropped(to: cardPositionInImage)
-        
-        let request = VNRecognizeTextRequest()
-        request.recognitionLevel = .accurate
-        request.usesLanguageCorrection = false
-        
-        let stillImageRequestHandler = VNImageRequestHandler(ciImage: croppedImage, options: [:])
-        try? stillImageRequestHandler.perform([request])
-        
-        guard let texts = request.results, !texts.isEmpty else {
-            // no text detected
-            return nil
-        }
-        
+    private func extractPaymentCardNumber(texts: [VNRecognizedTextObservation]) -> String? {
         let recognizedText = texts.compactMap { observation in
             return observation.topCandidates(1).first?.string
         }
-//        print(recognizedText)
-//        print("----------")
+        
         let creditCard = parseResults(for: recognizedText)
-        print(creditCard ?? "")
         return creditCard
-//        for observation in texts {
-//            guard let topCandidate = observation.topCandidates(1).first?.string else { return nil }
-//            return parseResults(for: [topCandidate])
-////            let trimmed = topCandidate.trimmingCharacters(in: .whitespaces)
-////            if trimmed.count == 16 {
-////                print("SW: \(trimmed)")
-////                return trimmed
-////            }
-//        }
-//        return nil
-//        let digitsRecognized = texts
-//            .flatMap({ $0.topCandidates(10).map({ $0.string }) })
-//            .map({ $0.trimmingCharacters(in: .whitespaces) })
-////            .filter({ CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: $0)) })
-//        let _16digits = digitsRecognized.first(where: { $0.count == 16 })
-//        let has16Digits = _16digits != nil
-//        let _4digits = digitsRecognized.filter({ $0.count == 4 })
-//        let has4sections4digits = _4digits.count == 4
-//
-//        let digits = _16digits ?? _4digits.joined()
-//        let digitsIsValid = (has16Digits || has4sections4digits) && self.checkDigits(digits)
-//        return digitsIsValid ? digits : nil
     }
-
-    
-//    private func extractPaymentCardNumber(texts: [VNRecognizedTextObservation]) -> String? {
-//        let digitsRecognized = texts
-//            .flatMap({ $0.topCandidates(10).map({ $0.string }) })
-//            .map({ $0.trimmingCharacters(in: .whitespaces) })
-//            .filter({ CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: $0)) })
-//
-//        let _16digits = digitsRecognized.first(where: { $0.count == 16 })
-//        let has16Digits = _16digits != nil
-//        let _4digits = digitsRecognized.filter({ $0.count == 4 })
-//        let has4sections4digits = _4digits.count == 4
-//
-//        let digits = _16digits ?? _4digits.joined()
-//        let digitsIsValid = (has16Digits || has4sections4digits) && self.checkDigits(digits)
-//
-//        return digitsIsValid ? digits : nil
-//    }
     
     func parseResults(for recognizedText: [String]) -> String? {
-        // Credit Card Number
         let creditCardNumber = recognizedText.first(where: { $0.count > 14 && ["4", "5", "3", "6"].contains($0.first) })
         return creditCardNumber
     }
