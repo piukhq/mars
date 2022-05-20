@@ -73,7 +73,7 @@ extension MainTabBarViewController: UITabBarControllerDelegate {
     }
 }
 
-extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDelegate {
+extension MainTabBarViewController: BarcodeScannerViewControllerDelegate {
     func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
         let prefilledBarcodeValue = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
         let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, prefilledFormValues: [prefilledBarcodeValue])
@@ -108,6 +108,12 @@ extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDe
     
     func userDidSkip(_ scanViewController: ScanViewController) {
         let viewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .wallet)
+        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+        Current.navigate.to(navigationRequest)
+    }
+    
+    func scannerViewController(_ viewController: BarcodeScannerViewController, didScan paymentCard: PaymentCardCreateModel) {
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: paymentCard, journey: .wallet)
         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
         Current.navigate.to(navigationRequest)
     }

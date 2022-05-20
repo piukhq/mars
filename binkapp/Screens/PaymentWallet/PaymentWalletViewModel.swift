@@ -76,24 +76,24 @@ class PaymentWalletViewModel: NSObject, WalletViewModel {
     }
 }
 
-extension PaymentWalletViewModel: VNDocumentCameraViewControllerDelegate {
-    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
-        guard scan.pageCount >= 1 else {
-            controller.dismiss(animated: true)
-            return
-        }
-        
-        VisionImageDetectionUtility().processImage(scan.imageOfPage(at: 0))
- 
-        controller.dismiss(animated: true)
-    }
-    
-    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFailWithError error: Error) {
-        //Handle properly error
-        controller.dismiss(animated: true)
-    }
-    
-    func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
-        controller.dismiss(animated: true)
-    }
-}
+//extension PaymentWalletViewModel: VNDocumentCameraViewControllerDelegate {
+//    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
+//        guard scan.pageCount >= 1 else {
+//            controller.dismiss(animated: true)
+//            return
+//        }
+//        
+//        VisionUtility().processImage(scan.imageOfPage(at: 0))
+// 
+//        controller.dismiss(animated: true)
+//    }
+//    
+//    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFailWithError error: Error) {
+//        //Handle properly error
+//        controller.dismiss(animated: true)
+//    }
+//    
+//    func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
+//        controller.dismiss(animated: true)
+//    }
+//}

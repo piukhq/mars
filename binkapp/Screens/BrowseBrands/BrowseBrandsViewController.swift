@@ -65,7 +65,7 @@ class BrowseBrandsViewController: BinkViewController {
     private var selectedFilters: [String]
     private var didLayoutSubviews = false
     private var sectionToScrollTo: Int?
-    private let visionUtility = VisionImageDetectionUtility()
+    private let visionUtility = VisionUtility()
     
     init(viewModel: BrowseBrandsViewModel, section: Int?) {
         self.viewModel = viewModel

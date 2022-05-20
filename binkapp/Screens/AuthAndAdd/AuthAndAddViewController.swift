@@ -27,7 +27,7 @@ class AuthAndAddViewController: BaseFormViewController {
         }
     }()
     
-    private let visionUtility = VisionImageDetectionUtility()
+    private let visionUtility = VisionUtility()
     private let viewModel: AuthAndAddViewModel
     
     init(viewModel: AuthAndAddViewModel) {
