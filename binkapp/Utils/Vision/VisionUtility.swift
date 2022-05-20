@@ -67,21 +67,10 @@ class VisionUtility {
             return observation.topCandidates(1).first?.string
         }
         
-//        let potentialPANs = recognizedText.map { $0.trimmingCharacters(in: .whitespaces) }
         let PAN = recognizedText.first(where: { ["3", "4", "5", "6"].contains($0.first) })
         let formattedPAN = PAN?.replacingOccurrences(of: " ", with: "")
-        
-        if luhnCheck(formattedPAN ?? "") {
-            return formattedPAN
-        } else {
-            return nil
-        }
+        return luhnCheck(formattedPAN ?? "") ? formattedPAN : nil
     }
-    
-//    func parseResults(for recognizedText: [String]) -> String? {
-//        let creditCardNumber = recognizedText.first(where: { $0.count > 14 && ["4", "5", "3", "6"].contains($0.first) })
-//        return creditCardNumber
-//    }
     
     private func extractExpiryDate(observations: [VNRecognizedTextObservation]) -> (String, String)? {
         for text in observations.flatMap( { $0.topCandidates(1) }) {

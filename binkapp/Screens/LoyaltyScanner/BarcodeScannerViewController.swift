@@ -84,7 +84,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private var trackingRect: CAShapeLayer?
     private let requestHandler = VNSequenceRequestHandler()
 
-
     private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     }()
@@ -144,41 +143,41 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         super.viewDidLoad()
         view.addSubview(previewView)
 
-//        // BLUR AND MASK
-//        blurredView.frame = view.frame
-//        let maskLayer = CAShapeLayer()
-//        maskLayer.frame = view.frame
-//        // Setup rect of interest
-//        let inset = Constants.rectOfInterestInset
-//        let width = view.frame.size.width - (inset * 2)
-//        let viewFrameRatio = Constants.viewFrameRatio
-//        let height: CGFloat = floor(viewFrameRatio * width)
-//        let maskedAreaFrame = CGRect(x: inset, y: Constants.maskedAreaY, width: width, height: height)
-//        rectOfInterest = maskedAreaFrame
-//        let maskedPath = UIBezierPath(roundedRect: rectOfInterest, cornerRadius: Constants.maskedAreaCornerRadius)
-//        maskedPath.append(UIBezierPath(rect: view.bounds))
-//        maskLayer.fillRule = .evenOdd
-//        maskLayer.path = maskedPath.cgPath
-//        blurredView.layer.mask = maskLayer
-//        view.addSubview(blurredView)
+        // BLUR AND MASK
+        blurredView.frame = view.frame
+        let maskLayer = CAShapeLayer()
+        maskLayer.frame = view.frame
+        // Setup rect of interest
+        let inset = Constants.rectOfInterestInset
+        let width = view.frame.size.width - (inset * 2)
+        let viewFrameRatio = Constants.viewFrameRatio
+        let height: CGFloat = floor(viewFrameRatio * width)
+        let maskedAreaFrame = CGRect(x: inset, y: Constants.maskedAreaY, width: width, height: height)
+        rectOfInterest = maskedAreaFrame
+        let maskedPath = UIBezierPath(roundedRect: rectOfInterest, cornerRadius: Constants.maskedAreaCornerRadius)
+        maskedPath.append(UIBezierPath(rect: view.bounds))
+        maskLayer.fillRule = .evenOdd
+        maskLayer.path = maskedPath.cgPath
+        blurredView.layer.mask = maskLayer
+        view.addSubview(blurredView)
 
-//        guideImageView.frame = rectOfInterest.inset(by: Constants.guideImageInset)
-//        view.addSubview(guideImageView)
-//        view.addSubview(explainerLabel)
-//        view.addSubview(widgetView)
+        guideImageView.frame = rectOfInterest.inset(by: Constants.guideImageInset)
+        view.addSubview(guideImageView)
+        view.addSubview(explainerLabel)
+        view.addSubview(widgetView)
         
-//        footerButtons = [photoLibraryButton]
+        footerButtons = [photoLibraryButton]
         
-//        NSLayoutConstraint.activate([
-//            explainerLabel.topAnchor.constraint(equalTo: guideImageView.bottomAnchor, constant: Constants.explainerLabelPadding),
-//            explainerLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.explainerLabelPadding),
-//            explainerLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.explainerLabelPadding),
-//            explainerLabel.heightAnchor.constraint(equalToConstant: Constants.explainerLabelHeight),
-//            widgetView.topAnchor.constraint(equalTo: explainerLabel.bottomAnchor, constant: Constants.widgetViewTopPadding),
-//            widgetView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.widgetViewLeftRightPadding),
-//            widgetView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.widgetViewLeftRightPadding),
-//            widgetView.heightAnchor.constraint(equalToConstant: Constants.widgetViewHeight)
-//        ])
+        NSLayoutConstraint.activate([
+            explainerLabel.topAnchor.constraint(equalTo: guideImageView.bottomAnchor, constant: Constants.explainerLabelPadding),
+            explainerLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.explainerLabelPadding),
+            explainerLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.explainerLabelPadding),
+            explainerLabel.heightAnchor.constraint(equalToConstant: Constants.explainerLabelHeight),
+            widgetView.topAnchor.constraint(equalTo: explainerLabel.bottomAnchor, constant: Constants.widgetViewTopPadding),
+            widgetView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.widgetViewLeftRightPadding),
+            widgetView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.widgetViewLeftRightPadding),
+            widgetView.heightAnchor.constraint(equalToConstant: Constants.widgetViewHeight)
+        ])
         
         navigationController?.setNavigationBarVisibility(false)
     }
@@ -489,15 +488,6 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
     }
 }
 
-//extension BarcodeScannerViewController: AVCapturePhotoCaptureDelegate {
-//    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-//        guard let imageData = photo.fileDataRepresentation() else { return }
-//        if let image = UIImage(data: imageData) {
-//            VisionImageDetectionUtility().processImage(image)
-//        }
-//    }
-//}
-
 extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         guard let frame = CMSampleBufferGetImageBuffer(sampleBuffer) else {
@@ -524,7 +514,6 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
         try? self.requestHandler.perform([rectangleDetectionRequest, textDetectionRequest], on: frame)
         
         guard let rectangle = (rectangleDetectionRequest.results)?.first, let text = (textDetectionRequest.results)?.first, rectangle.boundingBox.contains(text.boundingBox) else {
-                // no credit card rectangle detected
                 return nil
         }
         
@@ -545,11 +534,9 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
                         guard let paymentCard = paymentCard, let self = self, self.viewModel.isScanning else { return }
                         self.stopScanning()
                         self.delegate?.scannerViewController(self, didScan: paymentCard)
-//                        completion()
                     }
                 }
             }
-            
         } else {
             self.paymentCardRectangleObservation = nil
         }
@@ -561,9 +548,7 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
         
         try? self.requestHandler.perform([request], on: frame)
         
-        guard let trackedRectangle = (request.results as? [VNRectangleObservation])?.first else {
-            return nil
-        }
+        guard let trackedRectangle = (request.results as? [VNRectangleObservation])?.first else { return nil }
         return trackedRectangle
     }
     
@@ -575,7 +560,7 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = boundingBoxPath
         shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.strokeColor = UIColor.white.cgColor
+        shapeLayer.strokeColor = UIColor.greenOk.cgColor
         shapeLayer.lineWidth = 5
         shapeLayer.borderWidth = 5
         return shapeLayer
