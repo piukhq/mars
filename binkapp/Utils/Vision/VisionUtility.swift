@@ -28,9 +28,8 @@ class VisionUtility {
             }
             
             if expiryMonth == nil || expiryYear == nil, let (month, year) = self.extractExpiryDate(observations: observations) {
-                print("Expiry: - \(month + year)")
                 self.expiryMonth = Int(month)
-                self.expiryYear = Int(year)
+                self.expiryYear = Int("20\(year)")
             }
             
             if ocrComplete {
@@ -70,7 +69,7 @@ class VisionUtility {
     }
     
     private func extractExpiryDate(observations: [VNRecognizedTextObservation]) -> (String, String)? {
-        for text in observations.flatMap( { $0.topCandidates(1) }) {
+        for text in observations.flatMap({ $0.topCandidates(1) }) {
             if let expiry = likelyExpiry(text.string) {
                 return expiry
             }
@@ -84,14 +83,9 @@ class VisionUtility {
         }
         
         let result = regex.matches(in: string, range: NSRange(string.startIndex..., in: string))
-        
-        if result.isEmpty {
-            return nil
-        }
-        
+        guard !result.isEmpty else { return nil }
         guard let nsrange1 = result.first?.range(at: 1), let range1 = Range(nsrange1, in: string) else { return nil }
         guard let nsrange2 = result.first?.range(at: 2), let range2 = Range(nsrange2, in: string) else { return nil }
-        
         return (String(string[range1]), String(string[range2]))
     }
     
