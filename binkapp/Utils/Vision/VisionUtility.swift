@@ -54,7 +54,7 @@ class VisionUtility {
         try? stillImageRequestHandler.perform([request])
         
         guard let observations = request.results, !observations.isEmpty else {
-            // no text detected
+            /// No text detected
             completion(nil)
             return
         }
@@ -66,10 +66,7 @@ class VisionUtility {
         let recognizedText = texts.compactMap { observation in
             return observation.topCandidates(1).first?.string
         }
-        
-        let PAN = recognizedText.first(where: { ["3", "4", "5", "6"].contains($0.first) })
-        let formattedPAN = PAN?.replacingOccurrences(of: " ", with: "")
-        return luhnCheck(formattedPAN ?? "") ? formattedPAN : nil
+        return recognizedText.first(where: { PaymentCardType.validate(fullPan: $0) })
     }
     
     private func extractExpiryDate(observations: [VNRecognizedTextObservation]) -> (String, String)? {
@@ -79,29 +76,6 @@ class VisionUtility {
             }
         }
         return nil
-    }
-    
-    private func luhnCheck(_ digits: String) -> Bool {
-        guard digits.count == 16, CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: digits)) else {
-            return false
-        }
-        var digits = digits
-        let checksum = digits.removeLast()
-        let sum = digits.reversed()
-            .enumerated()
-            .map({ (index, element) -> Int in
-                if (index % 2) == 0 {
-                   let doubled = Int(String(element))! * 2
-                   return doubled > 9
-                       ? Int(String(String(doubled).first!))! + Int(String(String(doubled).last!))!
-                       : doubled
-                } else {
-                    return Int(String(element))!
-                }
-            })
-            .reduce(0, { (res, next) in res + next })
-        let checkDigitCalc = (sum * 9) % 10
-        return Int(String(checksum))! == checkDigitCalc
     }
     
     private func likelyExpiry(_ string: String) -> (String, String)? {
