@@ -82,7 +82,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private let visionUtility = VisionUtility()
     private var paymentCardRectangleObservation: VNRectangleObservation?
     private var trackingRect: CAShapeLayer?
-    private let requestHandler = VNSequenceRequestHandler()
 
     private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .regular))
@@ -495,37 +494,19 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
             return
         }
         
-        DispatchQueue.main.async {
-            self.trackingRect?.removeFromSuperlayer() // removes old rectangle drawings
-        }
         if let paymentCardRectangleObservation = self.paymentCardRectangleObservation {
             self.handleObservedPaymentCard(paymentCardRectangleObservation, in: frame) {
                 return
             }
-        } else if let paymentCardRectangleObservation = self.detectPaymentCard(frame: frame) {
+        } else if let paymentCardRectangleObservation = self.visionUtility.detectPaymentCard(frame: frame) {
             self.paymentCardRectangleObservation = paymentCardRectangleObservation
         }
     }
     
-    func detectPaymentCard(frame: CVImageBuffer) -> VNRectangleObservation? {
-        let rectangleDetectionRequest = VNDetectRectanglesRequest()
-        let textDetectionRequest = VNDetectTextRectanglesRequest()
-        
-        try? self.requestHandler.perform([rectangleDetectionRequest, textDetectionRequest], on: frame)
-        
-        guard let rectangle = (rectangleDetectionRequest.results)?.first, let text = (textDetectionRequest.results)?.first, rectangle.boundingBox.contains(text.boundingBox) else {
-                return nil
-        }
-        
-        return rectangle
-    }
-    
     private func handleObservedPaymentCard(_ observation: VNRectangleObservation, in frame: CVImageBuffer, completion: @escaping () -> Void) {
-        if let trackedPaymentCardRectangle = self.trackPaymentCard(for: observation, in: frame) {
+        if let trackedPaymentCardRectangle = self.visionUtility.trackPaymentCard(for: observation, in: frame) {
             DispatchQueue.main.async {
-                self.trackingRect?.removeFromSuperlayer()
-                self.trackingRect = self.createRectangleDrawring(trackedPaymentCardRectangle)
-                self.view.layer.addSublayer(self.trackingRect!)
+                self.createRectangleDrawring(trackedPaymentCardRectangle)
             }
             
             DispatchQueue.global(qos: .userInitiated).async {
@@ -542,17 +523,8 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
         }
     }
     
-    private func trackPaymentCard(for observation: VNRectangleObservation, in frame: CVImageBuffer) -> VNRectangleObservation? {
-        let request = VNTrackRectangleRequest(rectangleObservation: observation)
-        request.trackingLevel = .fast
-        
-        try? self.requestHandler.perform([request], on: frame)
-        
-        guard let trackedRectangle = (request.results as? [VNRectangleObservation])?.first else { return nil }
-        return trackedRectangle
-    }
-    
-    private func createRectangleDrawring(_ rectangleObservation: VNRectangleObservation) -> CAShapeLayer {
+    private func createRectangleDrawring(_ rectangleObservation: VNRectangleObservation) {
+        self.trackingRect?.removeFromSuperlayer()
         let transform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -self.view.frame.height)
         let scale = CGAffineTransform.identity.scaledBy(x: self.view.frame.width, y: self.view.frame.height)
         let rectOnScreen = rectangleObservation.boundingBox.applying(scale).applying(transform)
@@ -561,8 +533,9 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
         shapeLayer.path = boundingBoxPath
         shapeLayer.fillColor = UIColor.clear.cgColor
         shapeLayer.strokeColor = UIColor.greenOk.cgColor
-        shapeLayer.lineWidth = 5
+        shapeLayer.lineWidth = 3
         shapeLayer.borderWidth = 5
-        return shapeLayer
+        self.trackingRect = shapeLayer
+        self.view.layer.addSublayer(shapeLayer)
     }
 }

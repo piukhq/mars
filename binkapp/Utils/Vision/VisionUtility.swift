@@ -10,6 +10,8 @@ import UIKit
 import Vision
 
 class VisionUtility {
+    private let requestHandler = VNSequenceRequestHandler()
+
     // MARK: - Payment Card
     var pan: String?
     var expiryMonth: Int?
@@ -38,6 +40,29 @@ class VisionUtility {
                 completion(nil)
             }
         }
+    }
+    
+    func detectPaymentCard(frame: CVImageBuffer) -> VNRectangleObservation? {
+        let rectangleDetectionRequest = VNDetectRectanglesRequest()
+        let textDetectionRequest = VNDetectTextRectanglesRequest()
+        
+        try? self.requestHandler.perform([rectangleDetectionRequest, textDetectionRequest], on: frame)
+        
+        guard let rectangle = (rectangleDetectionRequest.results)?.first, let text = (textDetectionRequest.results)?.first, rectangle.boundingBox.contains(text.boundingBox) else {
+            return nil
+        }
+        
+        return rectangle
+    }
+    
+    func trackPaymentCard(for observation: VNRectangleObservation, in frame: CVImageBuffer) -> VNRectangleObservation? {
+        let request = VNTrackRectangleRequest(rectangleObservation: observation)
+        request.trackingLevel = .fast
+        
+        try? self.requestHandler.perform([request], on: frame)
+        
+        guard let trackedRectangle = (request.results as? [VNRectangleObservation])?.first else { return nil }
+        return trackedRectangle
     }
     
     private func performTextRecognition(frame: CVImageBuffer, rectangle: VNRectangleObservation, completion: ([VNRecognizedTextObservation]?) -> Void) {
