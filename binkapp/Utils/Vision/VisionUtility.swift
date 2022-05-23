@@ -9,31 +9,22 @@
 import UIKit
 import Vision
 
-struct PaymentCardNameRecognition {
-    static let blacklist: Set = ["monzo", "customer", "debit", "visa", "mastercard", "navy", "american", "express", "thru", "good",
-                                 "authorized", "signature", "wells", "navy", "credit", "federal",
-                                 "union", "bank", "valid", "validfrom", "validthru", "llc", "business", "netspend",
-                                 "goodthru", "chase", "fargo", "hsbc", "usaa", "chaseo", "commerce",
-                                 "last", "of", "lastdayof", "check", "card", "inc", "first", "member", "since",
-                                 "american", "express", "republic", "bmo", "capital", "one", "capitalone", "platinum",
-                                 "expiry", "date", "expiration", "cash", "back", "td", "access", "international", "interac",
-                                 "nterac", "entreprise", "business", "md", "enterprise", "fifth", "third", "fifththird",
-                                 "world", "rewards", "citi", "member", "cardmember", "cardholder", "valued", "since",
-                                 "membersince", "cardmembersince", "cardholdersince", "freedom", "quicksilver", "penfed",
-                                 "use", "this", "card", "is", "subject", "to", "the", "inc", "not", "transferable", "gto",
-                                 "mgy", "sign", "exp", "end", "from"]
+enum PaymentCardNameRecognition {
+    static let ignoreList: Set = [
+        "monzo", "customer", "debit", "visa", "mastercard", "navy", "american", "express", "thru", "good", "authorized", "signature", "wells", "navy", "credit", "federal", "union", "bank", "valid", "validfrom", "validthru", "llc", "business", "netspend", "goodthru", "chase", "fargo", "hsbc", "usaa", "chaseo", "commerce", "last", "of", "lastdayof", "check", "card", "inc", "first", "member", "since", "american", "express", "republic", "bmo", "capital", "one", "capitalone", "platinum", "expiry", "date", "expiration", "cash", "back", "td", "access", "international", "interac", "nterac", "entreprise", "business", "md", "enterprise", "fifth", "third", "fifththird", "world", "rewards", "citi", "member", "cardmember", "cardholder", "valued", "since", "membersince", "cardmembersince", "cardholdersince", "freedom", "quicksilver", "penfed", "use", "this", "card", "is", "subject", "to", "the", "inc", "not", "transferable", "gto", "mgy", "sign", "exp", "end", "from"
+    ]
     
     
     static func nonNameWordMatch(_ text: String) -> Bool {
         let lowerCase = text.lowercased()
-        return blacklist.contains(lowerCase)
+        return ignoreList.contains(lowerCase)
     }
     
     static func onlyLettersAndSpaces(_ text: String) -> Bool {
         let lettersAndSpace = text.reduce(true) { acc, value in
             let capitalLetter = value >= "A" && value <= "Z"
-            // for now we're only going to accept upper case names
-            //let lowerCaseLetter = value >= "a" && value <= "z"
+            // We're only going to accept upper case names
+            // let lowerCaseLetter = value >= "a" && value <= "z"
             let space = value == " "
             return acc && (capitalLetter || space)
         }
@@ -59,11 +50,11 @@ class VisionUtility {
         performTextRecognition(frame: frame, rectangle: rectangle) { observations in
             guard let observations = observations else { return }
             let recognizedTexts = observations.compactMap { observation in
-                return observation.topCandidates(1).first?.string
+                return observation.topCandidates(1).first
             }
-//            observations.first?.topCandidates(1).first.conf
-            if pan == nil, let paymentCard = recognizedTexts.first(where: { PaymentCardType.validate(fullPan: $0) }) {
-                self.pan = paymentCard
+            
+            if pan == nil, let validatedPanText = recognizedTexts.first(where: { PaymentCardType.validate(fullPan: $0.string) }) {
+                self.pan = validatedPanText.string
             }
             
             if expiryMonth == nil || expiryYear == nil, let (month, year) = self.extractExpiryDate(observations: observations) {
@@ -72,7 +63,7 @@ class VisionUtility {
             }
             
             for text in recognizedTexts {
-                if let name = self.likelyName(text: text) {
+                if text.confidence == 1, let name = self.likelyName(text: text.string) {
                     print("SW: \(name)")
                     self.name = name
                 }
@@ -132,7 +123,7 @@ class VisionUtility {
     
     private func extractExpiryDate(observations: [VNRecognizedTextObservation]) -> (String, String)? {
         for text in observations.flatMap({ $0.topCandidates(1) }) {
-            if let expiry = likelyExpiry(text.string) {
+            if text.confidence == 1, let expiry = likelyExpiry(text.string) {
                 return expiry
             }
         }
