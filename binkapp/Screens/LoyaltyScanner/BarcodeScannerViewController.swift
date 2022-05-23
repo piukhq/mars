@@ -69,6 +69,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private weak var delegate: BarcodeScannerViewControllerDelegate?
 
     private var session = AVCaptureSession()
+    private var captureDevice: AVCaptureDevice?
     private var captureOutput: AVCaptureOutput?
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     private var previewView = UIView()
@@ -78,6 +79,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private var canPresentScanError = true
     private var hideNavigationBar = true
     private var shouldAllowScanning = true
+    private var paymentCardIsFocused = false
     private var captureSource: BarcodeCaptureSource
     private let visionUtility = VisionUtility()
     private var paymentCardRectangleObservation: VNRectangleObservation?
@@ -215,12 +217,11 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         widgetView.configure()
     }
     
-
-    
     private func startScanning() {
         viewModel.isScanning = true
         session.sessionPreset = .high
         guard let backCamera = AVCaptureDevice.default(for: .video) else { return }
+        self.captureDevice = backCamera
         guard let input = try? AVCaptureDeviceInput(device: backCamera) else { return }
         performCaptureChecksForDevice(backCamera)
 
@@ -235,7 +236,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
 
         previewView.layer.addSublayer(videoPreviewLayer)
         videoPreviewLayer.frame = view.frame
-
+        
 //        guard let captureOutput = captureOutput else { return }
 
         switch viewModel.type {
@@ -262,7 +263,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
             captureOutput = metadataCaptureOutput
         case .payment:
             let videoOutput = AVCaptureVideoDataOutput()
-            videoOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as NSString): NSNumber(value: kCVPixelFormatType_32BGRA)] as [String : Any]
+            videoOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as NSString): NSNumber(value: kCVPixelFormatType_32BGRA)] as [String: Any]
             videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "my.image.handling.queue")) /// Change to global variable queue?
             
             if session.outputs.isEmpty {
@@ -354,6 +355,8 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     }
     
     @objc private func enterManually() {
+        paymentCardIsFocused = true
+        
 //        let photoSettings = AVCapturePhotoSettings()
 //        if let photoPreviewType = photoSettings.availablePreviewPhotoPixelFormatTypes.first {
 //            photoSettings.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String: photoPreviewType]
@@ -489,14 +492,27 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
 
 extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+//        guard paymentCardIsFocused else { return }
+        
         guard let frame = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             print("Unable to get image from sample buffer")
             return
         }
-        
+
         if let paymentCardRectangleObservation = self.paymentCardRectangleObservation {
-            self.handleObservedPaymentCard(paymentCardRectangleObservation, in: frame) {
-                return
+            DispatchQueue.main.async {
+//                let transform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -self.view.frame.height)
+//                let scale = CGAffineTransform.identity.scaledBy(x: self.view.frame.width, y: self.view.frame.height)
+//                let rectOnScreen = paymentCardRectangleObservation.boundingBox.applying(scale).applying(transform)
+//                print("SW: - Width: \(rectOnScreen.width) - height: \(rectOnScreen.height)")
+//                guard self.rectOfInterest.contains(rectOnScreen) else {
+//                    print("SW: Not in focus")
+//                    return
+//                }
+                
+                self.handleObservedPaymentCard(paymentCardRectangleObservation, in: frame) {
+                    return
+                }
             }
         } else if let paymentCardRectangleObservation = self.visionUtility.detectPaymentCard(frame: frame) {
             self.paymentCardRectangleObservation = paymentCardRectangleObservation
@@ -506,15 +522,17 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
     private func handleObservedPaymentCard(_ observation: VNRectangleObservation, in frame: CVImageBuffer, completion: @escaping () -> Void) {
         if let trackedPaymentCardRectangle = self.visionUtility.trackPaymentCard(for: observation, in: frame) {
             DispatchQueue.main.async {
-                self.createRectangleDrawring(trackedPaymentCardRectangle)
-            }
-            
-            DispatchQueue.global(qos: .userInitiated).async {
-                self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation) { [weak self] paymentCard in
-                    DispatchQueue.main.async {
-                        guard let paymentCard = paymentCard, let self = self, self.viewModel.isScanning else { return }
-                        self.stopScanning()
-                        self.delegate?.scannerViewController(self, didScan: paymentCard)
+                let rect = self.createRectangleDrawing(trackedPaymentCardRectangle)
+                
+                guard self.paymentCardIsFocused(rect: rect) else { return }
+                print("SW: FOCUSED")
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation) { [weak self] paymentCard in
+                        DispatchQueue.main.async {
+                            guard let paymentCard = paymentCard, let self = self, self.viewModel.isScanning else { return }
+                            self.stopScanning()
+                            self.delegate?.scannerViewController(self, didScan: paymentCard)
+                        }
                     }
                 }
             }
@@ -523,11 +541,22 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
         }
     }
     
-    private func createRectangleDrawring(_ rectangleObservation: VNRectangleObservation) {
+    private func paymentCardIsFocused(rect: CGRect) -> Bool {
+        let xPos = rect.minX > 25
+        let yPos = rect.minY < 100
+        let width = rect.width > 280
+        let height = rect.height > 200
+        
+        return xPos && yPos && width && height
+    }
+    
+    private func createRectangleDrawing(_ rectangleObservation: VNRectangleObservation) -> CGRect {
         self.trackingRect?.removeFromSuperlayer()
         let transform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -self.view.frame.height)
         let scale = CGAffineTransform.identity.scaledBy(x: self.view.frame.width, y: self.view.frame.height)
         let rectOnScreen = rectangleObservation.boundingBox.applying(scale).applying(transform)
+        print("SW: - \(rectOnScreen)")
+        
         let boundingBoxPath = CGPath(rect: rectOnScreen, transform: nil)
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = boundingBoxPath
@@ -537,5 +566,6 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
         shapeLayer.borderWidth = 5
         self.trackingRect = shapeLayer
         self.view.layer.addSublayer(shapeLayer)
+        return rectOnScreen
     }
 }
