@@ -189,13 +189,12 @@ class PaymentCardDetailViewModel {
     }
 
     func pllPlanNotAddedToWallet(forIndexPath indexPath: IndexPath) -> CD_MembershipPlan? {
-        return pllPlansNotAddedToWallet?[indexPath.row]
+        return pllPlansNotAddedToWallet?[safe: indexPath.row]
     }
 
     // MARK: - PLL membership cards in wallet
 
     var pllMembershipCards: [CD_MembershipCard]? {
-        // TODO: this should have the same sort as in the loyalty wallet
         return Current.wallet.membershipCards?.filter { $0.membershipPlan?.featureSet?.planCardType == .link }
     }
 
@@ -213,11 +212,11 @@ class PaymentCardDetailViewModel {
     }
 
     func membershipCard(forIndexPath indexPath: IndexPath) -> CD_MembershipCard? {
-        return pllMembershipCards?[indexPath.row]
+        return pllMembershipCards?[safe: indexPath.row]
     }
 
     func statusForMembershipCard(atIndexPath indexPath: IndexPath) -> CD_MembershipCardStatus? {
-        return pllMembershipCards?[indexPath.row].status
+        return pllMembershipCards?[safe: indexPath.row]?.status
     }
 
     // MARK: Routing
