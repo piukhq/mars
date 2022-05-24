@@ -79,7 +79,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private var canPresentScanError = true
     private var hideNavigationBar = true
     private var shouldAllowScanning = true
-    private var paymentCardIsFocused = false
     private var captureSource: BarcodeCaptureSource
     private let visionUtility = VisionUtility()
     private var paymentCardRectangleObservation: VNRectangleObservation?
@@ -355,8 +354,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     }
     
     @objc private func enterManually() {
-        paymentCardIsFocused = true
-        
 //        let photoSettings = AVCapturePhotoSettings()
 //        if let photoPreviewType = photoSettings.availablePreviewPhotoPixelFormatTypes.first {
 //            photoSettings.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String: photoPreviewType]
@@ -492,24 +489,10 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
 
 extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-//        guard paymentCardIsFocused else { return }
-        
-        guard let frame = CMSampleBufferGetImageBuffer(sampleBuffer) else {
-            print("Unable to get image from sample buffer")
-            return
-        }
+        guard let frame = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
 
         if let paymentCardRectangleObservation = self.paymentCardRectangleObservation {
             DispatchQueue.main.async {
-//                let transform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -self.view.frame.height)
-//                let scale = CGAffineTransform.identity.scaledBy(x: self.view.frame.width, y: self.view.frame.height)
-//                let rectOnScreen = paymentCardRectangleObservation.boundingBox.applying(scale).applying(transform)
-//                print("SW: - Width: \(rectOnScreen.width) - height: \(rectOnScreen.height)")
-//                guard self.rectOfInterest.contains(rectOnScreen) else {
-//                    print("SW: Not in focus")
-//                    return
-//                }
-                
                 self.handleObservedPaymentCard(paymentCardRectangleObservation, in: frame) {
                     return
                 }
@@ -522,10 +505,9 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
     private func handleObservedPaymentCard(_ observation: VNRectangleObservation, in frame: CVImageBuffer, completion: @escaping () -> Void) {
         if let trackedPaymentCardRectangle = self.visionUtility.trackPaymentCard(for: observation, in: frame) {
             DispatchQueue.main.async {
-                let rect = self.createRectangleDrawing(trackedPaymentCardRectangle)
+                let paymentCardRectOnScreen = self.createRectangleDrawing(trackedPaymentCardRectangle)
+                guard self.paymentCardIsFocused(paymentCardRectOnScreen) else { return }
                 
-                guard self.paymentCardIsFocused(rect: rect) else { return }
-                print("SW: FOCUSED")
                 DispatchQueue.global(qos: .userInitiated).async {
                     self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation) { [weak self] paymentCard in
                         DispatchQueue.main.async {
@@ -541,13 +523,18 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
         }
     }
     
-    private func paymentCardIsFocused(rect: CGRect) -> Bool {
-        let xPos = rect.minX > 25
-        let yPos = rect.minY < 100
-        let width = rect.width > 280
-        let height = rect.height > 200
+    private func paymentCardIsFocused(_ rect: CGRect) -> Bool {
+        let inset = Constants.rectOfInterestInset
+        let width = view.frame.size.width - (inset * 2)
+        let viewFrameRatio = Constants.viewFrameRatio
+        let height: CGFloat = floor(viewFrameRatio * width)
         
-        return xPos && yPos && width && height
+        let xPosMatched = rect.minX > Constants.rectOfInterestInset
+        let yPosMatched = rect.minY < Constants.maskedAreaY
+        let widthMatched = rect.width > (width - 60)
+        let heightMatched = rect.height > (height - 26)
+        
+        return xPosMatched && yPosMatched && widthMatched && heightMatched
     }
     
     private func createRectangleDrawing(_ rectangleObservation: VNRectangleObservation) -> CGRect {
@@ -555,8 +542,6 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
         let transform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -self.view.frame.height)
         let scale = CGAffineTransform.identity.scaledBy(x: self.view.frame.width, y: self.view.frame.height)
         let rectOnScreen = rectangleObservation.boundingBox.applying(scale).applying(transform)
-        print("SW: - \(rectOnScreen)")
-        
         let boundingBoxPath = CGPath(rect: rectOnScreen, transform: nil)
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = boundingBoxPath
