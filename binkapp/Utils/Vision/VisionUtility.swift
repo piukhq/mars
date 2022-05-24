@@ -9,29 +9,6 @@
 import UIKit
 import Vision
 
-enum PaymentCardNameRecognition {
-    static let ignoreList: Set = [
-        "monzo", "customer", "debit", "visa", "mastercard", "navy", "american", "express", "thru", "good", "authorized", "signature", "wells", "navy", "credit", "federal", "union", "bank", "valid", "validfrom", "validthru", "llc", "business", "netspend", "goodthru", "chase", "fargo", "hsbc", "usaa", "chaseo", "commerce", "last", "of", "lastdayof", "check", "card", "inc", "first", "member", "since", "american", "express", "republic", "bmo", "capital", "one", "capitalone", "platinum", "expiry", "date", "expiration", "cash", "back", "td", "access", "international", "interac", "nterac", "entreprise", "business", "md", "enterprise", "fifth", "third", "fifththird", "world", "rewards", "citi", "member", "cardmember", "cardholder", "valued", "since", "membersince", "cardmembersince", "cardholdersince", "freedom", "quicksilver", "penfed", "use", "this", "card", "is", "subject", "to", "the", "inc", "not", "transferable", "gto", "mgy", "sign", "exp", "end", "from"
-    ]
-    
-    static func nonNameWordMatch(_ text: String) -> Bool {
-        let lowerCase = text.lowercased()
-        return ignoreList.contains(lowerCase)
-    }
-    
-    static func onlyLettersAndSpaces(_ text: String) -> Bool {
-        let lettersAndSpace = text.reduce(true) { acc, value in
-            let capitalLetter = value >= "A" && value <= "Z"
-            // We're only going to accept upper case names
-            // let lowerCaseLetter = value >= "a" && value <= "z"
-            let space = value == " "
-            return acc && (capitalLetter || space)
-        }
-        
-        return lettersAndSpace
-    }
-}
-
 class VisionUtility {
     private let requestHandler = VNSequenceRequestHandler()
 
@@ -63,7 +40,6 @@ class VisionUtility {
             
             for text in recognizedTexts {
                 if text.confidence == 1, let name = self.likelyName(text: text.string) {
-                    print("SW: NAME ----------------- \(name)")
                     self.name = name
                 }
             }
@@ -78,7 +54,7 @@ class VisionUtility {
     
     func detectPaymentCard(frame: CVImageBuffer) -> VNRectangleObservation? {
         let rectangleDetectionRequest = VNDetectRectanglesRequest()
-        let paymentCardAspectRatio: Float = 85.60/53.98
+        let paymentCardAspectRatio: Float = 85.60 / 53.98
         rectangleDetectionRequest.minimumAspectRatio = paymentCardAspectRatio * 0.95
         rectangleDetectionRequest.maximumAspectRatio = paymentCardAspectRatio * 1.10
         let textDetectionRequest = VNDetectTextRectanglesRequest()
@@ -100,6 +76,13 @@ class VisionUtility {
         
         guard let trackedRectangle = (request.results as? [VNRectangleObservation])?.first else { return nil }
         return trackedRectangle
+    }
+    
+    func restartOCR() {
+        pan = nil
+        expiryMonth = nil
+        expiryYear = nil
+        name = nil
     }
     
     private func performTextRecognition(frame: CVImageBuffer, rectangle: VNRectangleObservation, completion: ([VNRecognizedTextObservation]?) -> Void) {
@@ -126,12 +109,19 @@ class VisionUtility {
     private func extractExpiryDate(observations: [VNRecognizedTextObservation]) -> (String, String)? {
         for text in observations.flatMap({ $0.topCandidates(1) }) {
             if text.confidence == 1, let expiry = likelyExpiry(text.string) {
-                return expiry
+                guard let expiryMonth = Int(expiry.0) else { return nil }
+                guard let expiryYear = Int("20" + expiry.1) else { return nil }
+                guard let date = Date.makeDate(year: expiryYear, month: expiryMonth, day: 01, hr: 12, min: 00, sec: 00) else { return nil }
+                if date.monthHasNotExpired {
+                    return expiry
+                } else {
+                    return nil
+                }
             }
         }
         return nil
     }
-    
+
     private func likelyName(text: String) -> String? {
         let words = text.split(separator: " ").map { String($0) }
         let validWords = words.filter { !PaymentCardNameRecognition.nonNameWordMatch($0) && PaymentCardNameRecognition.onlyLettersAndSpaces($0) }

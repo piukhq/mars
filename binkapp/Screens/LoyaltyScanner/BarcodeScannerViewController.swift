@@ -260,6 +260,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
             }
             metadataCaptureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
             captureOutput = metadataCaptureOutput
+            
         case .payment:
             let videoOutput = AVCaptureVideoDataOutput()
             videoOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as NSString): NSNumber(value: kCVPixelFormatType_32BGRA)] as [String: Any]
@@ -302,6 +303,8 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private func scheduleTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: Constants.timerInterval, repeats: false, block: { [weak self] _ in
             self?.widgetView.timeout()
+            self?.paymentCardRectangleObservation = nil
+            self?.visionUtility.restartOCR()
         })
     }
 
@@ -354,19 +357,10 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     }
     
     @objc private func enterManually() {
-//        let photoSettings = AVCapturePhotoSettings()
-//        if let photoPreviewType = photoSettings.availablePreviewPhotoPixelFormatTypes.first {
-//            photoSettings.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String: photoPreviewType]
-//            if let photoOutput = captureOutput as? AVCapturePhotoOutput {
-//                photoOutput.capturePhoto(with: photoSettings, delegate: self)
-//            }
-//        }
-        
-        
-//        delegate?.barcodeScannerViewControllerShouldEnterManually(self, completion: { [weak self] in
-//            guard let self = self else { return }
-//            self.navigationController?.removeViewController(self)
-//        })
+        delegate?.barcodeScannerViewControllerShouldEnterManually(self, completion: { [weak self] in
+            guard let self = self else { return }
+            self.navigationController?.removeViewController(self)
+        })
     }
     
     @objc private func close() {

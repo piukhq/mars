@@ -281,6 +281,7 @@
 		CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */; };
 		CE0C24792678EDE500CB7150 /* WhoWeAreSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */; };
 		CE1015252722A63F0000A838 /* VisionUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1015242722A63F0000A838 /* VisionUtility.swift */; };
+		CE261634283CD926003570D8 /* PaymentCardNameRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE261633283CD926003570D8 /* PaymentCardNameRecognition.swift */; };
 		CE27A0DA25DA990E00C58412 /* OnboardingCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */; };
 		CE27A0DB25DA990E00C58412 /* OnboardingCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */; };
 		CE2C7A7825DEC635007624FE /* DebugMenuPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C7A7625DEC635007624FE /* DebugMenuPickerTableViewCell.swift */; };
@@ -951,6 +952,7 @@
 		CE0AE2DD2542DB81000CDB86 /* binkapp - 23-10-20 - Card secondary colour.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 23-10-20 - Card secondary colour.xcdatamodel"; sourceTree = "<group>"; };
 		CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoWeAreSwiftUIView.swift; sourceTree = "<group>"; };
 		CE1015242722A63F0000A838 /* VisionUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionUtility.swift; sourceTree = "<group>"; };
+		CE261633283CD926003570D8 /* PaymentCardNameRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardNameRecognition.swift; sourceTree = "<group>"; };
 		CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingCardCollectionViewCell.xib; sourceTree = "<group>"; };
 		CE2C7A7625DEC635007624FE /* DebugMenuPickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuPickerTableViewCell.swift; sourceTree = "<group>"; };
@@ -2333,6 +2335,7 @@
 			isa = PBXGroup;
 			children = (
 				CE1015242722A63F0000A838 /* VisionUtility.swift */,
+				CE261633283CD926003570D8 /* PaymentCardNameRecognition.swift */,
 			);
 			path = Vision;
 			sourceTree = "<group>";
@@ -3739,6 +3742,7 @@
 				70A61D532630A23C0073A08A /* BinkModuleView.swift in Sources */,
 				CEA0E1E3274E9CAD00CC2FC6 /* AutofillFormInputCell.swift in Sources */,
 				3C453CB72338E84F00287B56 /* PaymentWalletViewModel.swift in Sources */,
+				CE261634283CD926003570D8 /* PaymentCardNameRecognition.swift in Sources */,
 				EF4B46662346489C009A3651 /* PaymentCardDetailViewController.swift in Sources */,
 				CEE209142684653A004D3759 /* WidgetContent.swift in Sources */,
 				CEA16EC526249C6300D449E1 /* BarcodeView.swift in Sources */,
@@ -4295,7 +4299,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Alpha";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
+				CODE_SIGN_IDENTITY = "Apple Development: Greg Gormley (83RWG25XKA)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
 				CURRENT_PROJECT_VERSION = 1;
@@ -4814,7 +4818,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
+				CODE_SIGN_IDENTITY = "Apple Development: Greg Gormley (83RWG25XKA)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
@@ -5136,7 +5140,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = "Bink Watch App Extension/Bink Watch App Extension.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
+				CODE_SIGN_IDENTITY = "Apple Development: Greg Gormley (83RWG25XKA)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
@@ -5457,7 +5461,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = binkapp/BinkWidgetExtension.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
+				CODE_SIGN_IDENTITY = "Apple Development: Greg Gormley (83RWG25XKA)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
