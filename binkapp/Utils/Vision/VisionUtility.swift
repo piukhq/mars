@@ -78,6 +78,9 @@ class VisionUtility {
     
     func detectPaymentCard(frame: CVImageBuffer) -> VNRectangleObservation? {
         let rectangleDetectionRequest = VNDetectRectanglesRequest()
+        let paymentCardAspectRatio: Float = 85.60/53.98
+        rectangleDetectionRequest.minimumAspectRatio = paymentCardAspectRatio * 0.95
+        rectangleDetectionRequest.maximumAspectRatio = paymentCardAspectRatio * 1.10
         let textDetectionRequest = VNDetectTextRectanglesRequest()
         
         try? self.requestHandler.perform([rectangleDetectionRequest, textDetectionRequest], on: frame)
