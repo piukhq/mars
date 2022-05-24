@@ -179,7 +179,7 @@ class AuthAndAddViewModel {
                     if card.membershipPlan?.isPLL == true {
                         PllLoyaltyInAppReviewableJourney().begin()
 
-                        let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
+                        let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard, delegate: lcdViewController)
                         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
                         Current.navigate.to(navigationRequest)
                     } else {

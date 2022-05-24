@@ -43,7 +43,7 @@ struct PaymentCardCellViewModel {
             if paymentCardIsLinkedToMembershipCards {
                 return "Linked to \(linkedMembershipCardsCount) loyalty card\(linkedMembershipCardsCount > 1 ? "s" : "")"
             } else {
-                return "Not linked"
+                return L10n.pcdStatusTextReadyToLink
             }
         }
     }
