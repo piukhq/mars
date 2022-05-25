@@ -96,6 +96,40 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         let imageView = UIImageView(image: Asset.scannerGuide.image)
         return imageView
     }()
+    
+    private lazy var panLabel: UILabel = {
+        let label = UILabel()
+        label.font = .headline
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var expiryLabel: UILabel = {
+        let label = UILabel()
+        label.font = .subtitle
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        return label
+    }()
+    
+//    private lazy var nameOnCardLabel: UILabel = {
+//        let label = UILabel()
+//        label.font = .subtitle
+//        label.textColor = .white
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        label.textAlignment = .left
+//        return label
+//    }()
+    
+//    private lazy var textStack: UIStackView = {
+//        let stackview = UIStackView(arrangedSubviews: [panLabel, expiryLabel, nameOnCardLabel])
+//        stackview.axis = .vertical
+//        stackview.translatesAutoresizingMaskIntoConstraints = false
+//        return stackview
+//    }()
 
     private lazy var explainerLabel: UILabel = {
         let label = UILabel()
@@ -172,6 +206,10 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         
         footerButtons = [photoLibraryButton]
         
+        view.addSubview(panLabel)
+        view.addSubview(expiryLabel)
+//        view.addSubview(nameOnCardLabel)
+        
         NSLayoutConstraint.activate([
             explainerLabel.topAnchor.constraint(equalTo: guideImageView.bottomAnchor, constant: Constants.explainerLabelPadding),
             explainerLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.explainerLabelPadding),
@@ -180,7 +218,13 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
             widgetView.topAnchor.constraint(equalTo: explainerLabel.bottomAnchor, constant: Constants.widgetViewTopPadding),
             widgetView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.widgetViewLeftRightPadding),
             widgetView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.widgetViewLeftRightPadding),
-            widgetView.heightAnchor.constraint(equalToConstant: Constants.widgetViewHeight)
+            widgetView.heightAnchor.constraint(equalToConstant: Constants.widgetViewHeight),
+            panLabel.centerXAnchor.constraint(equalTo: guideImageView.centerXAnchor),
+            panLabel.centerYAnchor.constraint(equalTo: guideImageView.centerYAnchor, constant: 20),
+            expiryLabel.topAnchor.constraint(equalTo: panLabel.bottomAnchor),
+            expiryLabel.centerXAnchor.constraint(equalTo: panLabel.centerXAnchor),
+//            nameOnCardLabel.leadingAnchor.constraint(equalTo: panLabel.leadingAnchor),
+//            nameOnCardLabel.topAnchor.constraint(equalTo: expiryLabel.bottomAnchor)
         ])
         
         navigationController?.setNavigationBarVisibility(false)
@@ -189,13 +233,21 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
             switch completion {
             case .finished:
                 print("Received finished")
+                DispatchQueue.main.async {
+                    self.delegate?.scannerViewController(self, didScan: self.visionUtility.paymentCard)
+                }
             case .failure(let error):
                 print("Received error: \(error)")
             }
         } receiveValue: { paymentCard in
-//            print("Received message: \(paymentCard.fullPan ?? "SEAN")")
-            print("SW: \(paymentCard)")
-            self.delegate?.scannerViewController(self, didScan: paymentCard)
+            DispatchQueue.main.async {
+                self.panLabel.text = paymentCard.fullPan
+                if paymentCard.fullPan != nil {
+                    self.expiryLabel.text = paymentCard.formattedExpiryDate() ?? ""
+                }
+//                self.nameOnCardLabel.text = paymentCard.nameOnCard ?? ""
+//                self.delegate?.scannerViewController(self, didScan: paymentCard)
+            }
         }
         .store(in: &subscriptions)
     }
@@ -213,7 +265,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
                 cancelButton.widthAnchor.constraint(equalToConstant: Constants.closeButtonSize.width)
             ])
         }
-
 
         if !viewModel.isScanning {
             startScanning()
@@ -527,27 +578,29 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
     }
     
     private func handleObservedPaymentCard(_ observation: VNRectangleObservation, in frame: CVImageBuffer, completion: @escaping () -> Void) {
-        if let trackedPaymentCardRectangle = self.visionUtility.trackPaymentCard(for: observation, in: frame) {
-            DispatchQueue.main.async {
-                let _ = self.createRectangleDrawing(trackedPaymentCardRectangle)
-//                let paymentCardRectOnScreen = self.createRectangleDrawing(trackedPaymentCardRectangle)
-//                guard self.paymentCardIsFocused(paymentCardRectOnScreen) else { return }
-                
-                DispatchQueue.global(qos: .userInitiated).async {
-                    self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation)
-                    
-//                    self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation) { [weak self] paymentCard in
-//                        DispatchQueue.main.async {
-//                            guard let paymentCard = paymentCard, let self = self, self.viewModel.isScanning else { return }
-//                            self.stopScanning()
-//                            self.delegate?.scannerViewController(self, didScan: paymentCard)
-//                        }
-//                    }
-                }
-            }
-        } else {
-            self.paymentCardRectangleObservation = nil
-        }
+        self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation)
+
+//        if let trackedPaymentCardRectangle = self.visionUtility.trackPaymentCard(for: observation, in: frame) {
+//            DispatchQueue.main.async {
+//                let _ = self.createRectangleDrawing(trackedPaymentCardRectangle)
+////                let paymentCardRectOnScreen = self.createRectangleDrawing(trackedPaymentCardRectangle)
+////                guard self.paymentCardIsFocused(paymentCardRectOnScreen) else { return }
+//
+//                DispatchQueue.global(qos: .userInitiated).async {
+//                    self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation)
+//
+////                    self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation) { [weak self] paymentCard in
+////                        DispatchQueue.main.async {
+////                            guard let paymentCard = paymentCard, let self = self, self.viewModel.isScanning else { return }
+////                            self.stopScanning()
+////                            self.delegate?.scannerViewController(self, didScan: paymentCard)
+////                        }
+////                    }
+//                }
+//            }
+//        } else {
+//            self.paymentCardRectangleObservation = nil
+//        }
     }
     
     private func paymentCardIsFocused(_ rect: CGRect) -> Bool {
@@ -573,7 +626,7 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = boundingBoxPath
         shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.strokeColor = UIColor.greenOk.cgColor
+        shapeLayer.strokeColor = UIColor.clear.cgColor
         shapeLayer.lineWidth = 3
         shapeLayer.borderWidth = 5
         self.trackingRect = shapeLayer
