@@ -578,29 +578,29 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
     }
     
     private func handleObservedPaymentCard(_ observation: VNRectangleObservation, in frame: CVImageBuffer, completion: @escaping () -> Void) {
-        self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation)
+//        self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation)
 
-//        if let trackedPaymentCardRectangle = self.visionUtility.trackPaymentCard(for: observation, in: frame) {
-//            DispatchQueue.main.async {
-//                let _ = self.createRectangleDrawing(trackedPaymentCardRectangle)
-////                let paymentCardRectOnScreen = self.createRectangleDrawing(trackedPaymentCardRectangle)
-////                guard self.paymentCardIsFocused(paymentCardRectOnScreen) else { return }
-//
-//                DispatchQueue.global(qos: .userInitiated).async {
-//                    self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation)
-//
-////                    self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation) { [weak self] paymentCard in
-////                        DispatchQueue.main.async {
-////                            guard let paymentCard = paymentCard, let self = self, self.viewModel.isScanning else { return }
-////                            self.stopScanning()
-////                            self.delegate?.scannerViewController(self, didScan: paymentCard)
-////                        }
-////                    }
-//                }
-//            }
-//        } else {
-//            self.paymentCardRectangleObservation = nil
-//        }
+        if let trackedPaymentCardRectangle = self.visionUtility.trackPaymentCard(for: observation, in: frame) {
+            DispatchQueue.main.async {
+                let _ = self.createRectangleDrawing(trackedPaymentCardRectangle)
+//                let paymentCardRectOnScreen = self.createRectangleDrawing(trackedPaymentCardRectangle)
+//                guard self.paymentCardIsFocused(paymentCardRectOnScreen) else { return }
+
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation)
+
+//                    self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation) { [weak self] paymentCard in
+//                        DispatchQueue.main.async {
+//                            guard let paymentCard = paymentCard, let self = self, self.viewModel.isScanning else { return }
+//                            self.stopScanning()
+//                            self.delegate?.scannerViewController(self, didScan: paymentCard)
+//                        }
+//                    }
+                }
+            }
+        } else {
+            self.paymentCardRectangleObservation = nil
+        }
     }
     
     private func paymentCardIsFocused(_ rect: CGRect) -> Bool {

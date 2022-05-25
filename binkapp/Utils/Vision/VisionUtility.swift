@@ -19,9 +19,15 @@ class VisionUtility: ObservableObject {
     var expiryMonth: Int?
     var expiryYear: Int?
     var name: String?
+    
     var paymentCard: PaymentCardCreateModel {
         return PaymentCardCreateModel(fullPan: pan, nameOnCard: name, month: expiryMonth, year: expiryYear)
     }
+    
+    var ocrComplete: Bool {
+        return pan != nil && expiryMonth != nil && expiryYear != nil && name != nil
+    }
+    
     let subject = PassthroughSubject<PaymentCardCreateModel, Error>()
     
     func recognizePaymentCard(frame: CVImageBuffer, rectangle: VNRectangleObservation) {
@@ -53,9 +59,9 @@ class VisionUtility: ObservableObject {
                 }
             }
             
-            print("Reached end")
-            
-            // If all values aren't nil - snd passthrough subject
+            if ocrComplete {
+                self.subject.send(completion: .finished)
+            }
         }
     }
     
