@@ -34,12 +34,7 @@ class PaymentWalletViewModel: NSObject, WalletViewModel {
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
         switch walletPrompt.type {
         case .addPaymentCards:
-//            let visionScanner = VNDocumentCameraViewController()
-//            visionScanner.delegate = self
-            
             let scannerViewController = ViewControllerFactory.makeScannerViewController(type: .payment, delegate: Current.navigate.scannerDelegate)
-            
-//            guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
             PermissionsUtility.launchPaymentScanner(scannerViewController) {
                 let navigationRequest = ModalNavigationRequest(viewController: scannerViewController)
                 Current.navigate.to(navigationRequest)
@@ -75,25 +70,3 @@ class PaymentWalletViewModel: NSObject, WalletViewModel {
         Current.navigate.to(navigationRequest)
     }
 }
-
-//extension PaymentWalletViewModel: VNDocumentCameraViewControllerDelegate {
-//    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
-//        guard scan.pageCount >= 1 else {
-//            controller.dismiss(animated: true)
-//            return
-//        }
-//        
-//        VisionUtility().processImage(scan.imageOfPage(at: 0))
-// 
-//        controller.dismiss(animated: true)
-//    }
-//    
-//    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFailWithError error: Error) {
-//        //Handle properly error
-//        controller.dismiss(animated: true)
-//    }
-//    
-//    func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
-//        controller.dismiss(animated: true)
-//    }
-//}

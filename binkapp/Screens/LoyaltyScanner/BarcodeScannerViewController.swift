@@ -6,6 +6,7 @@
 //  Copyright © 2020 Bink. All rights reserved.
 //
 
+import Combine
 import UIKit
 import AVFoundation
 import Vision
@@ -76,6 +77,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private let schemeScanningQueue = DispatchQueue(label: "com.bink.wallet.scanning.loyalty.scheme.queue")
     private var rectOfInterest = CGRect.zero
     private var timer: Timer?
+    private var ocrTimer: Timer?
     private var canPresentScanError = true
     private var hideNavigationBar = true
     private var shouldAllowScanning = true
@@ -84,6 +86,8 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private var paymentCardRectangleObservation: VNRectangleObservation?
     private var trackingRect: CAShapeLayer?
 
+    private var subscriptions = Set<AnyCancellable>()
+    
     private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     }()
@@ -180,6 +184,20 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         ])
         
         navigationController?.setNavigationBarVisibility(false)
+        
+        visionUtility.subject.sink { completion in
+            switch completion {
+            case .finished:
+                print("Received finished")
+            case .failure(let error):
+                print("Received error: \(error)")
+            }
+        } receiveValue: { paymentCard in
+//            print("Received message: \(paymentCard.fullPan ?? "SEAN")")
+            print("SW: \(paymentCard)")
+            self.delegate?.scannerViewController(self, didScan: paymentCard)
+        }
+        .store(in: &subscriptions)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -286,6 +304,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         }
 
         scheduleTimer()
+//        scheduleOcrTimer()
     }
 
     private func stopScanning() {
@@ -297,15 +316,25 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
                 self?.session.removeOutput(output)
             }
             self?.timer?.invalidate()
+            self?.ocrTimer?.invalidate()
         }
     }
     
     private func scheduleTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: Constants.timerInterval, repeats: false, block: { [weak self] _ in
             self?.widgetView.timeout()
-            self?.paymentCardRectangleObservation = nil
-            self?.visionUtility.restartOCR()
+//            self?.paymentCardRectangleObservation = nil
+//            self?.visionUtility.restartOCR()
         })
+    }
+    
+    private func scheduleOcrTimer() {
+//        ocrTimer = Timer.scheduledTimer(withTimeInterval: 4, repeats: true, block: { [weak self] _ in
+//            self?.paymentCardRectangleObservation = nil
+//            self?.visionUtility.restartOCR()
+//            self?.trackingRect?.removeFromSuperlayer()
+//            print("SW: restart OCR")
+//        })
     }
 
     private func performCaptureChecksForDevice(_ device: AVCaptureDevice) {
@@ -435,6 +464,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
                 self?.shouldAllowScanning = true
                 if !barcodeDetected {
                     self?.scheduleTimer()
+                    self?.scheduleOcrTimer()
                 }
             })
         }
@@ -499,17 +529,20 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
     private func handleObservedPaymentCard(_ observation: VNRectangleObservation, in frame: CVImageBuffer, completion: @escaping () -> Void) {
         if let trackedPaymentCardRectangle = self.visionUtility.trackPaymentCard(for: observation, in: frame) {
             DispatchQueue.main.async {
-                let paymentCardRectOnScreen = self.createRectangleDrawing(trackedPaymentCardRectangle)
-                guard self.paymentCardIsFocused(paymentCardRectOnScreen) else { return }
+                let _ = self.createRectangleDrawing(trackedPaymentCardRectangle)
+//                let paymentCardRectOnScreen = self.createRectangleDrawing(trackedPaymentCardRectangle)
+//                guard self.paymentCardIsFocused(paymentCardRectOnScreen) else { return }
                 
                 DispatchQueue.global(qos: .userInitiated).async {
-                    self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation) { [weak self] paymentCard in
-                        DispatchQueue.main.async {
-                            guard let paymentCard = paymentCard, let self = self, self.viewModel.isScanning else { return }
-                            self.stopScanning()
-                            self.delegate?.scannerViewController(self, didScan: paymentCard)
-                        }
-                    }
+                    self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation)
+                    
+//                    self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation) { [weak self] paymentCard in
+//                        DispatchQueue.main.async {
+//                            guard let paymentCard = paymentCard, let self = self, self.viewModel.isScanning else { return }
+//                            self.stopScanning()
+//                            self.delegate?.scannerViewController(self, didScan: paymentCard)
+//                        }
+//                    }
                 }
             }
         } else {
@@ -520,15 +553,15 @@ extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDele
     private func paymentCardIsFocused(_ rect: CGRect) -> Bool {
         let inset = Constants.rectOfInterestInset
         let width = view.frame.size.width - (inset * 2)
-        let viewFrameRatio = Constants.viewFrameRatio
-        let height: CGFloat = floor(viewFrameRatio * width)
+//        let viewFrameRatio = Constants.viewFrameRatio
+//        let height: CGFloat = floor(viewFrameRatio * width)
         
         let xPosMatched = rect.minX > Constants.rectOfInterestInset
         let yPosMatched = rect.minY < Constants.maskedAreaY
         let widthMatched = rect.width > (width - 60)
-        let heightMatched = rect.height > (height - 26)
+//        let heightMatched = rect.height > (height - 26)
         
-        return xPosMatched && yPosMatched && widthMatched && heightMatched
+        return xPosMatched && yPosMatched && widthMatched
     }
     
     private func createRectangleDrawing(_ rectangleObservation: VNRectangleObservation) -> CGRect {

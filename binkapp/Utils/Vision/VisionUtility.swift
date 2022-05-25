@@ -6,11 +6,13 @@
 //  Copyright © 2021 Bink. All rights reserved.
 //
 
+import Combine
 import UIKit
 import Vision
 
-class VisionUtility {
+class VisionUtility: ObservableObject {
     private let requestHandler = VNSequenceRequestHandler()
+    private var timer: Timer?
 
     // MARK: - Payment Card
     var pan: String?
@@ -18,36 +20,37 @@ class VisionUtility {
     var expiryYear: Int?
     var name: String?
     
-    var ocrComplete: Bool {
-        return pan != nil && expiryMonth != nil && expiryYear != nil && name != nil
-    }
+    @Published var recognizedPaymentCard = PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil)
+    let subject = PassthroughSubject<PaymentCardCreateModel, Error>()
     
-    func recognizePaymentCard(frame: CVImageBuffer, rectangle: VNRectangleObservation, completion: (PaymentCardCreateModel?) -> Void) {
-        performTextRecognition(frame: frame, rectangle: rectangle) { observations in
+    func recognizePaymentCard(frame: CVImageBuffer, rectangle: VNRectangleObservation) {
+        performTextRecognition(frame: frame, rectangle: rectangle) { [weak self] observations in
             guard let observations = observations else { return }
+            guard let self = self else { return }
             let recognizedTexts = observations.compactMap { observation in
                 return observation.topCandidates(1).first
             }
             
             if pan == nil, let validatedPanText = recognizedTexts.first(where: { PaymentCardType.validate(fullPan: $0.string) }) {
                 self.pan = validatedPanText.string
+                self.scheduleTimer()
+                print("SW: pan \(validatedPanText.string)")
             }
             
             if expiryMonth == nil || expiryYear == nil, let (month, year) = self.extractExpiryDate(observations: observations) {
                 self.expiryMonth = Int(month)
                 self.expiryYear = Int("20\(year)")
+//                print("SW: month \(month)")
+//                print("SW: year \(year)")
+
             }
             
             for text in recognizedTexts {
                 if text.confidence == 1, let name = self.likelyName(text: text.string) {
                     self.name = name
+//                    print("SW: name \(name)")
+
                 }
-            }
-            
-            if ocrComplete {
-                completion(PaymentCardCreateModel(fullPan: pan, nameOnCard: name, month: expiryMonth, year: expiryYear))
-            } else {
-                completion(nil)
             }
         }
     }
@@ -85,6 +88,23 @@ class VisionUtility {
         name = nil
     }
     
+    private func scheduleTimer() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+            print("SW: TRIGGERED")
+
+            guard let self = self else { return }
+            self.subject.send(PaymentCardCreateModel(fullPan: self.pan, nameOnCard: self.name, month: self.expiryMonth, year: self.expiryYear))
+        }
+        
+//        timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { [weak self] _ in
+//            print("SW: TRIGGERED")
+//
+//            guard let self = self else { return }
+////            self.recognizedPaymentCard = PaymentCardCreateModel(fullPan: self.pan, nameOnCard: self.name, month: self.expiryMonth, year: self.expiryYear)
+//            self.subject.send(PaymentCardCreateModel(fullPan: self.pan, nameOnCard: self.name, month: self.expiryMonth, year: self.expiryYear))
+//        })
+    }
+    
     private func performTextRecognition(frame: CVImageBuffer, rectangle: VNRectangleObservation, completion: ([VNRecognizedTextObservation]?) -> Void) {
         let cardPositionInImage = VNImageRectForNormalizedRect(rectangle.boundingBox, CVPixelBufferGetWidth(frame), CVPixelBufferGetHeight(frame))
         let ciImage = CIImage(cvImageBuffer: frame)
@@ -112,6 +132,7 @@ class VisionUtility {
                 guard let expiryMonth = Int(expiry.0) else { return nil }
                 guard let expiryYear = Int("20" + expiry.1) else { return nil }
                 guard let date = Date.makeDate(year: expiryYear, month: expiryMonth, day: 01, hr: 12, min: 00, sec: 00) else { return nil }
+
                 if date.monthHasNotExpired {
                     return expiry
                 } else {
