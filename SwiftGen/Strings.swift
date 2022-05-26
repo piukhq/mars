@@ -72,6 +72,10 @@ internal enum L10n {
   internal static let addPaymentErrorMessage = L10n.tr("Localizable", "add_payment_error_message")
   /// Error Adding Card
   internal static let addPaymentErrorTitle = L10n.tr("Localizable", "add_payment_error_title")
+  /// While your card is pending it cannot be deleted. Please try again later.
+  internal static let alertViewCannotDeleteCardBody = L10n.tr("Localizable", "alert_view_cannot_delete_card_body")
+  /// Cannot delete
+  internal static let alertViewCannotDeleteCardTitle = L10n.tr("Localizable", "alert_view_cannot_delete_card_title")
   /// All
   internal static let allTitle = L10n.tr("Localizable", "all_title")
   /// Please enter your %@ credentials below to add this card to your wallet.

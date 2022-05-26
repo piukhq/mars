@@ -498,3 +498,7 @@
 "unauthenticated_state_description" = "Please open the Bink app on your phone to login to your wallet";
 "no_response_title" = "No response from phone";
 "no_response_desciption" = "Please open the Bink app on your phone to sync with your watch";
+
+// MARK: - Global
+"alert_view_cannot_delete_card_title" = "Cannot delete";
+"alert_view_cannot_delete_card_body" = "While your card is pending it cannot be deleted. Please try again later.";

@@ -43,6 +43,15 @@ class LoyaltyWalletViewModel: WalletViewModel {
     }
     
     func showDeleteConfirmationAlert(card: CD_MembershipCard, onCancel: @escaping () -> Void) {
+        guard card.status?.status != .pending else {
+            let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.alertViewCannotDeleteCardTitle, message: L10n.alertViewCannotDeleteCardBody) {
+                onCancel()
+            }
+            let navigationRequest = AlertNavigationRequest(alertController: alert)
+            Current.navigate.to(navigationRequest)
+            return
+        }
+        
         let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: L10n.deleteCardConfirmation, deleteAction: { [weak self] in
             guard let self = self else { return }
             guard Current.apiClient.networkIsReachable else {
