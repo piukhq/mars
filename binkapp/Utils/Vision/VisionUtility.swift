@@ -42,8 +42,6 @@ class VisionUtility: ObservableObject {
                 self.pan = validatedPanText.string
                 self.scheduleTimer()
                 self.subject.send(PaymentCardCreateModel(fullPan: self.pan, nameOnCard: self.name, month: self.expiryMonth, year: self.expiryYear))
-
-                print("SW: pan \(validatedPanText.string)")
             }
             
             if expiryMonth == nil || expiryYear == nil, let (month, year) = self.extractExpiryDate(observations: observations) {

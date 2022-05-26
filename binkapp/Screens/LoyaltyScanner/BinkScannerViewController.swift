@@ -159,7 +159,7 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
         })
     }()
 
-    private var viewModel: BarcodeScannerViewModel
+    var viewModel: BarcodeScannerViewModel
 
     init(viewModel: BarcodeScannerViewModel, hideNavigationBar: Bool = true, delegate: BinkScannerViewControllerDelegate?) {
         self.viewModel = viewModel
@@ -229,9 +229,8 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
             switch completion {
             case .finished:
                 DispatchQueue.main.async {
-                    self.nameOnCardLabel.text = self.visionUtility.paymentCard.nameOnCard ?? ""
-
                     UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
+                        self.nameOnCardLabel.text = self.visionUtility.paymentCard.nameOnCard ?? ""
                         self.nameOnCardLabel.alpha = 1
                         self.guideImageView.tintColor = .green
                         self.guideImageView.layer.addBinkAnimation(.shake)

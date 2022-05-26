@@ -52,6 +52,7 @@ class AddPaymentCardViewController: BaseFormViewController {
         configureLayout()
         
         navigationController?.setNavigationBarHidden(false, animated: true)
+        formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
     }
     
     override func viewDidAppear(_ animated: Bool) {
