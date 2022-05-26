@@ -70,7 +70,6 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
     private weak var delegate: BinkScannerViewControllerDelegate?
 
     private var session = AVCaptureSession()
-    private var captureDevice: AVCaptureDevice?
     private var captureOutput: AVCaptureOutput?
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     private var previewView = UIView()
@@ -230,9 +229,10 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
             case .finished:
                 DispatchQueue.main.async {
                     UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
+                        self.stopScanning()
                         self.nameOnCardLabel.text = self.visionUtility.paymentCard.nameOnCard ?? ""
                         self.nameOnCardLabel.alpha = 1
-                        self.guideImageView.tintColor = .green
+                        self.guideImageView.tintColor = .binkBlueTitleText
                         self.guideImageView.layer.addBinkAnimation(.shake)
                     } completion: { _ in
                         HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
@@ -299,7 +299,6 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
         viewModel.isScanning = true
         session.sessionPreset = .high
         guard let backCamera = AVCaptureDevice.default(for: .video) else { return }
-        self.captureDevice = backCamera
         guard let input = try? AVCaptureDeviceInput(device: backCamera) else { return }
         performCaptureChecksForDevice(backCamera)
 
@@ -314,8 +313,6 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
 
         previewView.layer.addSublayer(videoPreviewLayer)
         videoPreviewLayer.frame = view.frame
-        
-//        guard let captureOutput = captureOutput else { return }
 
         switch viewModel.type {
         case .loyalty:
@@ -337,6 +334,11 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
                     ]
                 }
             }
+            
+            if !session.isRunning {
+                session.startRunning()
+            }
+            
             metadataCaptureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
             captureOutput = metadataCaptureOutput
             
@@ -353,15 +355,11 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
             
             guard let connection = videoOutput.connection(with: AVMediaType.video), connection.isVideoOrientationSupported else { return }
             connection.videoOrientation = .portrait
-            
-//            let cameraLayer = AVCaptureVideoPreviewLayer(session: session)
-//            cameraLayer.frame = rectOfInterest
-//            view.layer.addSublayer(cameraLayer)
+  
+            if !session.isRunning {
+                session.startRunning()
+            }
             captureOutput = videoOutput
-        }
-
-        if !session.isRunning {
-            session.startRunning()
         }
 
         scheduleTimer()
@@ -565,39 +563,30 @@ extension BinkScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegat
 
         if let paymentCardRectangleObservation = self.paymentCardRectangleObservation {
             DispatchQueue.main.async {
-                self.handleObservedPaymentCard(paymentCardRectangleObservation, in: frame) {
-                    return
-                }
+                self.handleObservedPaymentCard(paymentCardRectangleObservation, in: frame)
             }
         } else if let paymentCardRectangleObservation = self.visionUtility.detectPaymentCard(frame: frame) {
             self.paymentCardRectangleObservation = paymentCardRectangleObservation
         }
     }
     
-    private func handleObservedPaymentCard(_ observation: VNRectangleObservation, in frame: CVImageBuffer, completion: @escaping () -> Void) {
-//        self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation)
+    private func handleObservedPaymentCard(_ observation: VNRectangleObservation, in frame: CVImageBuffer) {
+        self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation)
 
-        if let trackedPaymentCardRectangle = self.visionUtility.trackPaymentCard(for: observation, in: frame) {
-            DispatchQueue.main.async {
-                let _ = self.createRectangleDrawing(trackedPaymentCardRectangle)
+//        if let trackedPaymentCardRectangle = self.visionUtility.trackPaymentCard(for: observation, in: frame) {
+//            DispatchQueue.main.async {
 //                let paymentCardRectOnScreen = self.createRectangleDrawing(trackedPaymentCardRectangle)
-//                guard self.paymentCardIsFocused(paymentCardRectOnScreen) else { return }
-
-                DispatchQueue.global(qos: .userInitiated).async {
-                    self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation)
-
-//                    self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation) { [weak self] paymentCard in
-//                        DispatchQueue.main.async {
-//                            guard let paymentCard = paymentCard, let self = self, self.viewModel.isScanning else { return }
-//                            self.stopScanning()
-//                            self.delegate?.scannerViewController(self, didScan: paymentCard)
-//                        }
-//                    }
-                }
-            }
-        } else {
-            self.paymentCardRectangleObservation = nil
-        }
+//                guard self.paymentCardIsFocused(paymentCardRectOnScreen) else {
+//                    return
+//                }
+//
+//                DispatchQueue.global(qos: .userInitiated).async {
+//                    self.visionUtility.recognizePaymentCard(frame: frame, rectangle: observation)
+//                }
+//            }
+//        } else {
+//            self.paymentCardRectangleObservation = nil
+//        }
     }
     
     private func paymentCardIsFocused(_ rect: CGRect) -> Bool {
