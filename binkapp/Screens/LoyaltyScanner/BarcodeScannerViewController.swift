@@ -366,7 +366,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         }
 
         scheduleTimer()
-//        scheduleOcrTimer()
     }
 
     private func stopScanning() {
@@ -385,18 +384,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private func scheduleTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: Constants.timerInterval, repeats: false, block: { [weak self] _ in
             self?.widgetView.timeout()
-//            self?.paymentCardRectangleObservation = nil
-//            self?.visionUtility.restartOCR()
         })
-    }
-    
-    private func scheduleOcrTimer() {
-//        ocrTimer = Timer.scheduledTimer(withTimeInterval: 4, repeats: true, block: { [weak self] _ in
-//            self?.paymentCardRectangleObservation = nil
-//            self?.visionUtility.restartOCR()
-//            self?.trackingRect?.removeFromSuperlayer()
-//            print("SW: restart OCR")
-//        })
     }
 
     private func performCaptureChecksForDevice(_ device: AVCaptureDevice) {
@@ -526,7 +514,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
                 self?.shouldAllowScanning = true
                 if !barcodeDetected {
                     self?.scheduleTimer()
-                    self?.scheduleOcrTimer()
                 }
             })
         }
