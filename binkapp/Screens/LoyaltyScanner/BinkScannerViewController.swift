@@ -40,17 +40,17 @@ enum BarcodeCaptureSource {
     }
 }
 
-protocol BarcodeScannerViewControllerDelegate: AnyObject {
-    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?)
-    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?)
-    func scannerViewController(_ viewController: BarcodeScannerViewController, didScan paymentCard: PaymentCardCreateModel)
+protocol BinkScannerViewControllerDelegate: AnyObject {
+    func binkScannerViewController(_ viewController: BinkScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?)
+    func binkScannerViewControllerShouldEnterManually(_ viewController: BinkScannerViewController, completion: (() -> Void)?)
+    func binkScannerViewController(_ viewController: BinkScannerViewController, didScan paymentCard: PaymentCardCreateModel)
 }
 
-extension BarcodeScannerViewControllerDelegate {
-    func scannerViewController(_ viewController: BarcodeScannerViewController, didScan paymentCard: PaymentCardCreateModel) {}
+extension BinkScannerViewControllerDelegate {
+    func binkScannerViewController(_ viewController: BinkScannerViewController, didScan paymentCard: PaymentCardCreateModel) {}
 }
 
-class BarcodeScannerViewController: BinkViewController, UINavigationControllerDelegate {
+class BinkScannerViewController: BinkViewController, UINavigationControllerDelegate {
     enum Constants {
         static let rectOfInterestInset: CGFloat = 25
         static let viewFrameRatio: CGFloat = 12 / 18
@@ -67,7 +67,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         static let scanErrorThreshold: TimeInterval = 1.0
     }
 
-    private weak var delegate: BarcodeScannerViewControllerDelegate?
+    private weak var delegate: BinkScannerViewControllerDelegate?
 
     private var session = AVCaptureSession()
     private var captureDevice: AVCaptureDevice?
@@ -161,7 +161,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
 
     private var viewModel: BarcodeScannerViewModel
 
-    init(viewModel: BarcodeScannerViewModel, hideNavigationBar: Bool = true, delegate: BarcodeScannerViewControllerDelegate?) {
+    init(viewModel: BarcodeScannerViewModel, hideNavigationBar: Bool = true, delegate: BinkScannerViewControllerDelegate?) {
         self.viewModel = viewModel
         self.delegate = delegate
         self.hideNavigationBar = hideNavigationBar
@@ -238,7 +238,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
                     } completion: { _ in
                         HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-                            self.delegate?.scannerViewController(self, didScan: self.visionUtility.paymentCard)
+                            self.delegate?.binkScannerViewController(self, didScan: self.visionUtility.paymentCard)
                         }
                     }
                 }
@@ -436,7 +436,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     }
     
     @objc private func enterManually() {
-        delegate?.barcodeScannerViewControllerShouldEnterManually(self, completion: { [weak self] in
+        delegate?.binkScannerViewControllerShouldEnterManually(self, completion: { [weak self] in
             guard let self = self else { return }
             self.navigationController?.removeViewController(self)
         })
@@ -492,7 +492,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
                 
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
-                    self.delegate?.barcodeScannerViewController(self, didScanBarcode: barcode, forMembershipPlan: membershipPlan, completion: nil)
+                    self.delegate?.binkScannerViewController(self, didScanBarcode: barcode, forMembershipPlan: membershipPlan, completion: nil)
                 }
             }
         } else {
@@ -501,7 +501,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
             
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                self.delegate?.barcodeScannerViewController(self, didScanBarcode: barcode, forMembershipPlan: membershipPlan, completion: nil)
+                self.delegate?.binkScannerViewController(self, didScanBarcode: barcode, forMembershipPlan: membershipPlan, completion: nil)
             }
         }
     }
@@ -522,7 +522,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     }
 }
 
-extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
+extension BinkScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         timer?.invalidate()
         guard shouldAllowScanning else { return }
@@ -539,7 +539,7 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
 
 // MARK: - Detect barcode from image
 
-extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
+extension BinkScannerViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
         Current.navigate.close(animated: true) { [weak self] in
@@ -560,7 +560,7 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
     }
 }
 
-extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
+extension BinkScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         guard let frame = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
 

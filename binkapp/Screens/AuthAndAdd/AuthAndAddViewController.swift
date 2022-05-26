@@ -53,7 +53,7 @@ class AuthAndAddViewController: BaseFormViewController {
         
         // If we enter this view controller from the scanner, we should safely remove the barcode scanner from the stack
         if viewModel.shouldRemoveScannerFromStack {
-            navigationController?.removeViewControllerBehind(self, ifViewControllerBehindIsOfType: BarcodeScannerViewController.self)
+            navigationController?.removeViewControllerBehind(self, ifViewControllerBehindIsOfType: BinkScannerViewController.self)
         }
     }
     
@@ -134,14 +134,14 @@ class AuthAndAddViewController: BaseFormViewController {
     }
 }
 
-extension AuthAndAddViewController: BarcodeScannerViewControllerDelegate {
-    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
+extension AuthAndAddViewController: BinkScannerViewControllerDelegate {
+    func binkScannerViewController(_ viewController: BinkScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
         Current.navigate.close(animated: true) { [weak self] in
             self?.refreshForm(for: barcode)
         }
     }
     
-    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
+    func binkScannerViewControllerShouldEnterManually(_ viewController: BinkScannerViewController, completion: (() -> Void)?) {
         Current.navigate.close()
     }
 }

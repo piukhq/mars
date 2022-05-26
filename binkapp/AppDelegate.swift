@@ -154,7 +154,7 @@ private extension AppDelegate {
 
         // Dismiss scanners and alerts
         if let navigationController = topViewController as? PortraitNavigationController {
-            if navigationController.visibleViewController?.isKind(of: CardScan.ScanViewController.self) == true || navigationController.visibleViewController?.isKind(of: BarcodeScannerViewController.self) == true {
+            if navigationController.visibleViewController?.isKind(of: CardScan.ScanViewController.self) == true || navigationController.visibleViewController?.isKind(of: BinkScannerViewController.self) == true {
                 Current.navigate.close(animated: false) {
                     self.displayLaunchScreen()
                     return

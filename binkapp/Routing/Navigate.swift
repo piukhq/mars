@@ -120,7 +120,7 @@ class Navigate {
         return rootViewController as? MainTabBarViewController
     }
     
-    var scannerDelegate: BarcodeScannerViewControllerDelegate? {
+    var scannerDelegate: BinkScannerViewControllerDelegate? {
         return tabBarController
     }
 

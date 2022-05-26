@@ -73,15 +73,15 @@ extension MainTabBarViewController: UITabBarControllerDelegate {
     }
 }
 
-extension MainTabBarViewController: BarcodeScannerViewControllerDelegate {
-    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
+extension MainTabBarViewController: BinkScannerViewControllerDelegate {
+    func binkScannerViewController(_ viewController: BinkScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
         let prefilledBarcodeValue = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
         let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, prefilledFormValues: [prefilledBarcodeValue])
         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
         Current.navigate.to(navigationRequest)
     }
     
-    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
+    func binkScannerViewControllerShouldEnterManually(_ viewController: BinkScannerViewController, completion: (() -> Void)?) {
         Current.navigate.close {
             let viewController = ViewControllerFactory.makeBrowseBrandsViewController()
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
@@ -112,7 +112,7 @@ extension MainTabBarViewController: BarcodeScannerViewControllerDelegate {
         Current.navigate.to(navigationRequest)
     }
     
-    func scannerViewController(_ viewController: BarcodeScannerViewController, didScan paymentCard: PaymentCardCreateModel) {
+    func binkScannerViewController(_ viewController: BinkScannerViewController, didScan paymentCard: PaymentCardCreateModel) {
         let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: paymentCard, journey: .wallet)
         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
         Current.navigate.to(navigationRequest)
