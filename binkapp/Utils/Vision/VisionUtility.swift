@@ -99,10 +99,9 @@ class VisionUtility: ObservableObject {
     }
     
     private func scheduleTimer() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
             guard let self = self else { return }
             self.subject.send(completion: .finished)
-//            self.subject.send(PaymentCardCreateModel(fullPan: self.pan, nameOnCard: self.name, month: self.expiryMonth, year: self.expiryYear))
         }
     }
     

@@ -85,7 +85,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private let visionUtility = VisionUtility()
     private var paymentCardRectangleObservation: VNRectangleObservation?
     private var trackingRect: CAShapeLayer?
-
     private var subscriptions = Set<AnyCancellable>()
     
     private lazy var blurredView: UIVisualEffectView = {
@@ -94,6 +93,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
 
     private lazy var guideImageView: UIImageView = {
         let imageView = UIImageView(image: Asset.scannerGuide.image)
+        imageView.tintColor = .white
         return imageView
     }()
     
@@ -103,6 +103,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
+        label.alpha = 0
         return label
     }()
     
@@ -112,24 +113,19 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
+        label.alpha = 0
         return label
     }()
     
-//    private lazy var nameOnCardLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = .subtitle
-//        label.textColor = .white
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        label.textAlignment = .left
-//        return label
-//    }()
-    
-//    private lazy var textStack: UIStackView = {
-//        let stackview = UIStackView(arrangedSubviews: [panLabel, expiryLabel, nameOnCardLabel])
-//        stackview.axis = .vertical
-//        stackview.translatesAutoresizingMaskIntoConstraints = false
-//        return stackview
-//    }()
+    private lazy var nameOnCardLabel: UILabel = {
+        let label = UILabel()
+        label.font = .subtitle
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.alpha = 0
+        return label
+    }()
 
     private lazy var explainerLabel: UILabel = {
         let label = UILabel()
@@ -208,7 +204,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         
         view.addSubview(panLabel)
         view.addSubview(expiryLabel)
-//        view.addSubview(nameOnCardLabel)
+        view.addSubview(nameOnCardLabel)
         
         NSLayoutConstraint.activate([
             explainerLabel.topAnchor.constraint(equalTo: guideImageView.bottomAnchor, constant: Constants.explainerLabelPadding),
@@ -223,8 +219,8 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
             panLabel.centerYAnchor.constraint(equalTo: guideImageView.centerYAnchor, constant: 20),
             expiryLabel.topAnchor.constraint(equalTo: panLabel.bottomAnchor),
             expiryLabel.centerXAnchor.constraint(equalTo: panLabel.centerXAnchor),
-//            nameOnCardLabel.leadingAnchor.constraint(equalTo: panLabel.leadingAnchor),
-//            nameOnCardLabel.topAnchor.constraint(equalTo: expiryLabel.bottomAnchor)
+            nameOnCardLabel.leadingAnchor.constraint(equalTo: guideImageView.leadingAnchor, constant: 25),
+            nameOnCardLabel.bottomAnchor.constraint(equalTo: guideImageView.bottomAnchor, constant: -10)
         ])
         
         navigationController?.setNavigationBarVisibility(false)
@@ -232,9 +228,19 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         visionUtility.subject.sink { completion in
             switch completion {
             case .finished:
-                print("Received finished")
                 DispatchQueue.main.async {
-                    self.delegate?.scannerViewController(self, didScan: self.visionUtility.paymentCard)
+                    self.nameOnCardLabel.text = self.visionUtility.paymentCard.nameOnCard ?? ""
+
+                    UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
+                        self.nameOnCardLabel.alpha = 1
+                        self.guideImageView.tintColor = .green
+                        self.guideImageView.layer.addBinkAnimation(.shake)
+                    } completion: { _ in
+                        HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                            self.delegate?.scannerViewController(self, didScan: self.visionUtility.paymentCard)
+                        }
+                    }
                 }
             case .failure(let error):
                 print("Received error: \(error)")
@@ -245,8 +251,13 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
                 if paymentCard.fullPan != nil {
                     self.expiryLabel.text = paymentCard.formattedExpiryDate() ?? ""
                 }
-//                self.nameOnCardLabel.text = paymentCard.nameOnCard ?? ""
-//                self.delegate?.scannerViewController(self, didScan: paymentCard)
+                
+                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
+                    self.panLabel.alpha = 1
+                    if let _ = paymentCard.formattedExpiryDate() {
+                        self.expiryLabel.alpha = 1
+                    }
+                }
             }
         }
         .store(in: &subscriptions)
