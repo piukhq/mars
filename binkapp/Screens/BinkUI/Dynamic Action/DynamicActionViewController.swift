@@ -44,7 +44,7 @@ struct DynamicActionViewModel {
     func buttonHandler() {
         switch dynamicAction.event?.body?.cta?.action {
         case .zendeskContactUs:
-            zendeskTickets.launch()
+            BinkSupportUtility.launchContactSupport()
         case .none:
             return
         }

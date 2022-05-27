@@ -14,30 +14,6 @@ final class ZendeskTickets: NSObject, UITextFieldDelegate {
     private var zendeskPromptLastNameTextField: UITextField!
     private var zendeskPromptOKAction: UIAlertAction!
     
-    func launch() {
-        let launchContactUs = {
-            let viewController = RequestUi.buildRequestList()
-            let navigationRequest = ModalNavigationRequest(viewController: viewController, hideCloseButton: true)
-            Current.navigate.to(navigationRequest)
-        }
-    
-        if ZendeskService.shouldPromptForIdentity {
-            let alert = BinkAlertController.makeZendeskIdentityAlertController(firstNameTextField: { [weak self] textField in
-                self?.zendeskPromptFirstNameTextField = textField
-            }, lastNameTextField: { [weak self] textField in
-                self?.zendeskPromptLastNameTextField = textField
-            }, okActionObject: { [weak self] actionObject in
-                self?.zendeskPromptOKAction = actionObject
-            }, okActionHandler: {
-                launchContactUs()
-            }, textFieldDelegate: self)
-            let navigationRequest = AlertNavigationRequest(alertController: alert)
-            Current.navigate.to(navigationRequest)
-        } else {
-            launchContactUs()
-        }
-    }
-    
     internal func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         /// If both textfields are empty, disable ok action as at least one textfield will be empty after updating
         let firstNameText = zendeskPromptFirstNameTextField.text ?? ""

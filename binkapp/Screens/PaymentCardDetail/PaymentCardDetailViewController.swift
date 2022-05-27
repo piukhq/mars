@@ -432,6 +432,6 @@ extension LayoutHelper {
 
 extension PaymentCardDetailViewController: HyperlinkLabelDelegate {
     func hyperlinkLabelWasTapped(_ hyperlinkLabel: HyperlinkLabel) {
-        zendeskTickets.launch()
+        BinkSupportUtility.launchContactSupport()
     }
 }
