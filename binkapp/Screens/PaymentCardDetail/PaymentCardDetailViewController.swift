@@ -14,7 +14,6 @@ class PaymentCardDetailViewController: BinkViewController {
     private var hasSetupCell = false
     
     private var refreshTimer: Timer?
-    private let zendeskTickets = ZendeskTickets()
 
     // MARK: - UI lazy vars
 

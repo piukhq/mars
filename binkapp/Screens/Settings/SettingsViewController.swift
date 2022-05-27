@@ -171,13 +171,7 @@ extension SettingsViewController: UITableViewDelegate {
                 navigationBarRequiresThemeUpdate = true
                 switch service {
                 case .faq:
-                    let helpCenterConfig = HelpCenterUiConfiguration()
-                    helpCenterConfig.showContactOptions = false
-                    let articleConfig = ArticleUiConfiguration()
-                    articleConfig.showContactOptions = false
-                    let viewController = ZDKHelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [helpCenterConfig, articleConfig])
-                    let navigationRequest = PushNavigationRequest(viewController: viewController)
-                    Current.navigate.to(navigationRequest)
+                    BinkSupportUtility.launchFAQs()
                 case .contactUs:
                     BinkSupportUtility.launchContactSupport()
                 }

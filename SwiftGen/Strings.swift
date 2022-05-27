@@ -820,6 +820,10 @@ internal enum L10n {
   internal static func supportMailBody(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
     return L10n.tr("Localizable", "support_mail_body", String(describing: p1), String(describing: p2), String(describing: p3))
   }
+  /// No Mail accounts set up, please email us directly: support@bink.com
+  internal static let supportMailNoEmailAppsBody = L10n.tr("Localizable", "support_mail_no_email_apps_body")
+  /// No email app installed
+  internal static let supportMailNoEmailAppsTitle = L10n.tr("Localizable", "support_mail_no_email_apps_title")
   /// Bink App Support
   internal static let supportMailSubject = L10n.tr("Localizable", "support_mail_subject")
   /// Please read the Bink Privacy Policy for further details of how your data will be processed
