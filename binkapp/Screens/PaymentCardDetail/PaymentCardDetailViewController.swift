@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SupportSDK
 
 class PaymentCardDetailViewController: BinkViewController {
     private var viewModel: PaymentCardDetailViewModel

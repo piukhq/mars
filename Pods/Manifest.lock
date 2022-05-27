@@ -9,19 +9,6 @@ PODS:
   - SwiftyRSA (1.6.0):
     - SwiftyRSA/ObjC (= 1.6.0)
   - SwiftyRSA/ObjC (1.6.0)
-  - ZendeskCommonUISDK (6.1.0)
-  - ZendeskCoreSDK (2.5.0)
-  - ZendeskMessagingAPISDK (3.8.1):
-    - ZendeskSDKConfigurationsSDK (~> 1.1.7)
-  - ZendeskMessagingSDK (3.8.1):
-    - ZendeskCommonUISDK (~> 6.1.0)
-    - ZendeskMessagingAPISDK (~> 3.8.1)
-  - ZendeskSDKConfigurationsSDK (1.1.7)
-  - ZendeskSupportProvidersSDK (5.2.0):
-    - ZendeskCoreSDK (~> 2.5.0)
-  - ZendeskSupportSDK (5.2.0):
-    - ZendeskMessagingSDK (~> 3.8.1)
-    - ZendeskSupportProvidersSDK (~> 5.2.0)
   - ZXingObjC (3.6.5):
     - ZXingObjC/All (= 3.6.5)
   - ZXingObjC/All (3.6.5)
@@ -33,7 +20,6 @@ DEPENDENCIES:
   - SwiftGen (~> 6.4)
   - SwiftLint (~> 0.43)
   - "SwiftyRSA (from `git@github.com:binkhq/SwiftyRSA.git`)"
-  - ZendeskSupportSDK (= 5.2.0)
   - ZXingObjC (~> 3.6)
 
 SPEC REPOS:
@@ -41,13 +27,6 @@ SPEC REPOS:
     - DTTJailbreakDetection
     - SwiftGen
     - SwiftLint
-    - ZendeskCommonUISDK
-    - ZendeskCoreSDK
-    - ZendeskMessagingAPISDK
-    - ZendeskMessagingSDK
-    - ZendeskSDKConfigurationsSDK
-    - ZendeskSupportProvidersSDK
-    - ZendeskSupportSDK
     - ZXingObjC
 
 EXTERNAL SOURCES:
@@ -74,15 +53,8 @@ SPEC CHECKSUMS:
   SwiftGen: a6d22010845f08fe18fbdf3a07a8e380fd22e0ea
   SwiftLint: aaa29a9f649316095a9079595cb60906bd899353
   SwiftyRSA: 3b9c9179744217951facc6a3e9ae8d8c97061ffa
-  ZendeskCommonUISDK: 92ca6b16956430a2cb61c89aeaa6ca123d1f81fd
-  ZendeskCoreSDK: f3d5dcd6a18186dcecbecd56f66296c40fb2fcb4
-  ZendeskMessagingAPISDK: 986919a8f6f11a7019660d1ff798f1efb42fa572
-  ZendeskMessagingSDK: bf9a06f0cbb219617d9cf60a46aba1b68c8f3b30
-  ZendeskSDKConfigurationsSDK: 45fa87ec8418697f7fce5e56bec472052f0aedb5
-  ZendeskSupportProvidersSDK: 5221df6ca45e0b6f12470a5e8e65ccf3ccca17fa
-  ZendeskSupportSDK: e100a7a0a1bb5d7d43abbde3338727d985a4986d
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: bdd3d388e3de3e638784349b2227f117e9e2f513
+PODFILE CHECKSUM: c61673cc53aeb8d9fd9e9963bf77188cb72d2aa4
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.11.2

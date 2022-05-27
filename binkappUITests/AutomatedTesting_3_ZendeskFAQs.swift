@@ -30,7 +30,6 @@ class AutomatedTesting_3_ZendeskFAQs: XCTestCase {
         
         sleep(10)
         
-        app.tables.staticTexts["Does Bink cost anything?"].tap()
-        XCTAssertTrue(app.scrollViews["ZDKarticleViewScrollView"].otherElements.webViews.staticTexts["Does Bink cost anything?"].waitForExistence(timeout: 20))
+        XCTAssertTrue(app.staticTexts["Bink Help"].waitForExistence(timeout: 20))
     }
 }

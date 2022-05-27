@@ -70,7 +70,6 @@ extension UserDefaults: BinkUserDefaults {
         case hasPreviouslyLaunchedApp
         case localWalletOrder(userId: String, walletType: Wallet.WalletType)
         case theme
-        case hasSupportUpdates
         case featureFlags
         case skippedRecommendedVersions
         case lpcDebugMode
@@ -107,8 +106,6 @@ extension UserDefaults: BinkUserDefaults {
                 return "localWalletOrders_user_\(userId)_\(walletType.rawValue)"
             case .theme:
                 return "theme"
-            case .hasSupportUpdates:
-                return "hasSupportUpdates"
             case .featureFlags:
                 return "featureFlags"
             case .skippedRecommendedVersions:

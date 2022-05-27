@@ -99,5 +99,5 @@ struct DynamicActionEventBodyCTA: Codable {
 }
 
 enum DynamicActionEventBodyCTAHandler: String, Codable {
-    case zendeskContactUs = "zd_contact_us"
+    case contactUs = "zd_contact_us"
 }
