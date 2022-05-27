@@ -179,7 +179,13 @@ extension SettingsViewController: UITableViewDelegate {
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
                 case .contactUs:
-                    zendeskTickets.launch()
+                    if EmailClient.availableEmailClientsForDevice().isEmpty {
+                        let alert = ViewControllerFactory.makeOkAlertViewController(title: "No email app installed", message: "No Mail accounts set up, please email us directly: support@bink.com.")
+                        let navigationRequest = AlertNavigationRequest(alertController: alert)
+                        Current.navigate.to(navigationRequest)
+                    } else {
+                        EmailClient.openDefault(address: "support@bink.com", subject: "Bink App \(Bundle.currentVersion?.versionString ?? "") - Support Request")
+                    }
                 }
             case let .pushToViewController(viewController: viewControllerType):
                 switch viewControllerType {
