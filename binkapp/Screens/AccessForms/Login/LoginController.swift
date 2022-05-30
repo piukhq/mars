@@ -75,7 +75,7 @@ class LoginController: UserServiceProtocol {
                         return
                     }
                     
-                    Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
+                    Current.userManager.setProfile(withResponse: response)
                     BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
                 })
                 

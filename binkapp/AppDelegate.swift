@@ -55,9 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         // Remote config
         Current.remoteConfig.configure()
 
-        // Initialise Zendesk
-        ZendeskService.start()
-        
         // Start points scraping manager
         Current.pointsScrapingManager.start()
         
@@ -65,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         if Current.userManager.hasCurrentUser {
             getUserProfile { result in
                 guard let response = try? result.get() else { return }
-                Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
+                Current.userManager.setProfile(withResponse: response)
             }
         }
 

@@ -314,53 +314,71 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
         previewView.layer.addSublayer(videoPreviewLayer)
         videoPreviewLayer.frame = view.frame
 
-        switch viewModel.type {
-        case .loyalty:
-            let metadataCaptureOutput = AVCaptureMetadataOutput()
-            if session.outputs.isEmpty {
-                if session.canAddOutput(metadataCaptureOutput) {
-                    session.addOutput(metadataCaptureOutput)
-                                    
-                    metadataCaptureOutput.setMetadataObjectsDelegate(self, queue: schemeScanningQueue)
-                    metadataCaptureOutput.metadataObjectTypes = [
-                        .qr,
-                        .code128,
-                        .aztec,
-                        .pdf417,
-                        .ean13,
-                        .dataMatrix,
-                        .interleaved2of5,
-                        .code39
-                    ]
-                }
+//        switch viewModel.type {
+//        case .loyalty:
+//            let metadataCaptureOutput = AVCaptureMetadataOutput()
+//            if session.outputs.isEmpty {
+//                if session.canAddOutput(metadataCaptureOutput) {
+//                    session.addOutput(metadataCaptureOutput)
+//
+//                    metadataCaptureOutput.setMetadataObjectsDelegate(self, queue: schemeScanningQueue)
+//                    metadataCaptureOutput.metadataObjectTypes = [
+//                        .qr,
+//                        .code128,
+//                        .aztec,
+//                        .pdf417,
+//                        .ean13,
+//                        .dataMatrix,
+//                        .interleaved2of5,
+//                        .code39
+//                    ]
+//                }
+//            }
+//
+//            if !session.isRunning {
+//                session.startRunning()
+//            }
+//
+//            metadataCaptureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
+//            captureOutput = metadataCaptureOutput
+//
+//        case .payment:
+//            let videoOutput = AVCaptureVideoDataOutput()
+//            videoOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as NSString): NSNumber(value: kCVPixelFormatType_32BGRA)] as [String: Any]
+//            videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "my.image.handling.queue")) /// Change to global variable queue?
+//
+//            if session.outputs.isEmpty {
+//                if session.canAddOutput(videoOutput) {
+//                    session.addOutput(videoOutput)
+//                }
+//            }
+//
+//            guard let connection = videoOutput.connection(with: AVMediaType.video), connection.isVideoOrientationSupported else { return }
+//            connection.videoOrientation = .portrait
+//
+//            if !session.isRunning {
+//                session.startRunning()
+//            }
+//            captureOutput = videoOutput
+//        }
+        
+        let videoOutput = AVCaptureVideoDataOutput()
+        videoOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as NSString): NSNumber(value: kCVPixelFormatType_32BGRA)] as [String: Any]
+        videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "my.image.handling.queue")) /// Change to global variable queue?
+        
+        if session.outputs.isEmpty {
+            if session.canAddOutput(videoOutput) {
+                session.addOutput(videoOutput)
             }
-            
-            if !session.isRunning {
-                session.startRunning()
-            }
-            
-            metadataCaptureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
-            captureOutput = metadataCaptureOutput
-            
-        case .payment:
-            let videoOutput = AVCaptureVideoDataOutput()
-            videoOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as NSString): NSNumber(value: kCVPixelFormatType_32BGRA)] as [String: Any]
-            videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "my.image.handling.queue")) /// Change to global variable queue?
-            
-            if session.outputs.isEmpty {
-                if session.canAddOutput(videoOutput) {
-                    session.addOutput(videoOutput)
-                }
-            }
-            
-            guard let connection = videoOutput.connection(with: AVMediaType.video), connection.isVideoOrientationSupported else { return }
-            connection.videoOrientation = .portrait
-  
-            if !session.isRunning {
-                session.startRunning()
-            }
-            captureOutput = videoOutput
         }
+        
+        guard let connection = videoOutput.connection(with: AVMediaType.video), connection.isVideoOrientationSupported else { return }
+        connection.videoOrientation = .portrait
+
+        if !session.isRunning {
+            session.startRunning()
+        }
+        captureOutput = videoOutput
 
         scheduleTimer()
     }
@@ -381,6 +399,10 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
     private func scheduleTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: Constants.timerInterval, repeats: false, block: { [weak self] _ in
             self?.widgetView.timeout()
+            
+            if self?.viewModel.type == .loyalty {
+                /// If after 5 seconds no barcode has been scanned, switch to 
+            }
         })
     }
 
@@ -539,8 +561,9 @@ extension BinkScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
 extension BinkScannerViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
+        
         Current.navigate.close(animated: true) { [weak self] in
-            self?.visionUtility.createVisionRequest(image: image) { barcode in
+            self?.visionUtility.createVisionRequest(image: image.ciImage) { barcode in
                 guard let barcode = barcode else {
                     self?.showError(barcodeDetected: false)
                     return
@@ -560,13 +583,22 @@ extension BinkScannerViewController: UIImagePickerControllerDelegate {
 extension BinkScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         guard let frame = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
-
-        if let paymentCardRectangleObservation = self.paymentCardRectangleObservation {
-            DispatchQueue.main.async {
-                self.handleObservedPaymentCard(paymentCardRectangleObservation, in: frame)
+        
+        switch viewModel.type {
+        case .payment:
+            if let paymentCardRectangleObservation = self.paymentCardRectangleObservation {
+                DispatchQueue.main.async {
+                    self.handleObservedPaymentCard(paymentCardRectangleObservation, in: frame)
+                }
+            } else if let paymentCardRectangleObservation = self.visionUtility.detectPaymentCard(frame: frame) {
+                self.paymentCardRectangleObservation = paymentCardRectangleObservation
             }
-        } else if let paymentCardRectangleObservation = self.visionUtility.detectPaymentCard(frame: frame) {
-            self.paymentCardRectangleObservation = paymentCardRectangleObservation
+        case .loyalty:
+            break
+//            let ciImage = CIImage(cvImageBuffer: frame)
+//            visionUtility.createVisionRequest(image: ciImage) { barcode in
+//                print(barcode ?? "SEAN")
+//            }
         }
     }
     

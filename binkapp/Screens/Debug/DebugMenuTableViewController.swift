@@ -8,9 +8,6 @@
 
 import UIKit
 
-import ZendeskCoreSDK
-import SupportSDK
-
 class DebugMenuTableViewController: BinkTableViewController {
     private let viewModel: DebugMenuViewModel
     

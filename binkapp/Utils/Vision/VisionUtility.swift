@@ -163,9 +163,12 @@ class VisionUtility: ObservableObject {
     
     // MARK: - Still image
     
-    func createVisionRequest(image: UIImage, completion: @escaping (String?) -> Void ) {
-        guard let cgImage = image.cgImage else { return }
-        
+    func createVisionRequest(image: CIImage?, completion: @escaping (String?) -> Void ) {
+        guard let image = image else {
+            completion(nil)
+            return
+        }
+
         var vnBarcodeDetectionRequest: VNDetectBarcodesRequest {
             let request = VNDetectBarcodesRequest { request, error in
                 guard error == nil else {
@@ -187,7 +190,7 @@ class VisionUtility: ObservableObject {
             return request
         }
         
-        let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+        let requestHandler = VNImageRequestHandler(ciImage: image, options: [:])
         let vnRequests = [vnBarcodeDetectionRequest]
         
         DispatchQueue.global(qos: .userInitiated).async {
