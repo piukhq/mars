@@ -201,7 +201,7 @@ extension AuthAndAddViewController: AuthAndAddViewModelDelegate {
 extension AuthAndAddViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
-        visionUtility.createVisionRequest(image: image.ciImage) { barcode in
+        visionUtility.detectBarcode(uiImage: image) { barcode in
             Current.navigate.close(animated: true) { [weak self] in
                 guard let barcode = barcode else {
                     self?.showError(barcodeDetected: false)

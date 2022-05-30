@@ -541,20 +541,20 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
     }
 }
 
-extension BinkScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
-    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        timer?.invalidate()
-        guard shouldAllowScanning else { return }
-        shouldAllowScanning = false
-
-        if let object = metadataObjects.first {
-            guard let readableObject = object as? AVMetadataMachineReadableCodeObject else { return }
-            guard let stringValue = readableObject.stringValue else { return }
-            captureSource = .camera(viewModel.plan)
-            identifyMembershipPlanForBarcode(stringValue)
-        }
-    }
-}
+//extension BinkScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
+//    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+//        timer?.invalidate()
+//        guard shouldAllowScanning else { return }
+//        shouldAllowScanning = false
+//
+//        if let object = metadataObjects.first {
+//            guard let readableObject = object as? AVMetadataMachineReadableCodeObject else { return }
+//            guard let stringValue = readableObject.stringValue else { return }
+//            captureSource = .camera(viewModel.plan)
+//            identifyMembershipPlanForBarcode(stringValue)
+//        }
+//    }
+//}
 
 // MARK: - Detect barcode from image
 
@@ -563,7 +563,7 @@ extension BinkScannerViewController: UIImagePickerControllerDelegate {
         guard let image = info[.editedImage] as? UIImage else { return }
         
         Current.navigate.close(animated: true) { [weak self] in
-            self?.visionUtility.createVisionRequest(image: image.ciImage) { barcode in
+            self?.visionUtility.detectBarcode(uiImage: image) { barcode in
                 guard let barcode = barcode else {
                     self?.showError(barcodeDetected: false)
                     return
@@ -594,11 +594,15 @@ extension BinkScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegat
                 self.paymentCardRectangleObservation = paymentCardRectangleObservation
             }
         case .loyalty:
-            break
-//            let ciImage = CIImage(cvImageBuffer: frame)
-//            visionUtility.createVisionRequest(image: ciImage) { barcode in
-//                print(barcode ?? "SEAN")
-//            }
+            let ciImage = CIImage(cvImageBuffer: frame)
+            visionUtility.detectBarcode(ciImage: ciImage) { [weak self] barcode in
+                guard let barcode = barcode, let self = self else { return }
+                self.timer?.invalidate()
+                guard self.shouldAllowScanning else { return }
+                self.shouldAllowScanning = false
+                self.captureSource = .camera(self.viewModel.plan)
+                self.identifyMembershipPlanForBarcode(barcode)
+            }
         }
     }
     

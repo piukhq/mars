@@ -163,12 +163,7 @@ class VisionUtility: ObservableObject {
     
     // MARK: - Still image
     
-    func createVisionRequest(image: CIImage?, completion: @escaping (String?) -> Void ) {
-        guard let image = image else {
-            completion(nil)
-            return
-        }
-
+    func detectBarcode(uiImage: UIImage? = nil, ciImage: CIImage? = nil, completion: @escaping (String?) -> Void ) {
         var vnBarcodeDetectionRequest: VNDetectBarcodesRequest {
             let request = VNDetectBarcodesRequest { request, error in
                 guard error == nil else {
@@ -190,12 +185,19 @@ class VisionUtility: ObservableObject {
             return request
         }
         
-        let requestHandler = VNImageRequestHandler(ciImage: image, options: [:])
+        var requestHandler: VNImageRequestHandler?
+        
+        if let cgImage = uiImage?.cgImage {
+            requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+        } else if let ciImage = ciImage {
+            requestHandler = VNImageRequestHandler(ciImage: ciImage, options: [:])
+        }
+        
         let vnRequests = [vnBarcodeDetectionRequest]
         
         DispatchQueue.global(qos: .userInitiated).async {
             do {
-                try requestHandler.perform(vnRequests)
+                try requestHandler?.perform(vnRequests)
             } catch {
                 completion(nil)
             }
