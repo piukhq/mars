@@ -293,6 +293,13 @@ extension LoyaltyCardFullDetailsViewModel {
     }
     
     func showDeleteConfirmationAlert() {
+        guard membershipCard.status?.status != .pending else {
+            let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.alertViewCannotDeleteCardTitle, message: L10n.alertViewCannotDeleteCardBody)
+            let navigationRequest = AlertNavigationRequest(alertController: alert)
+            Current.navigate.to(navigationRequest)
+            return
+        }
+        
         let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: L10n.deleteCardConfirmation, deleteAction: { [weak self] in
             guard let self = self else { return }
             guard Current.apiClient.networkIsReachable else {
@@ -302,7 +309,7 @@ extension LoyaltyCardFullDetailsViewModel {
                 return
             }
             MixpanelUtility.track(.loyaltyCardDeleted(brandName: self.brandName, route: .lcd))
-
+            
             self.repository.delete(self.membershipCard) {
                 if #available(iOS 14.0, *) {
                     BinkLogger.infoPrivateHash(event: LoyaltyCardLoggerEvent.loyaltyCardDeleted, value: self.membershipCard.id)
