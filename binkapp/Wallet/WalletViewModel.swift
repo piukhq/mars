@@ -21,7 +21,7 @@ protocol WalletViewModel {
     func reloadWallet()
     func refreshLocalWallet()
     func toCardDetail(for card: T)
-    func toSettings(rowsWithActionRequired: [SettingsRow.RowType]?, delegate: SettingsViewControllerDelegate?)
+    func toSettings(rowsWithActionRequired: [SettingsRow.RowType]?)
     func showDeleteConfirmationAlert(card: T, onCancel: @escaping () -> Void)
 }
 
@@ -46,8 +46,8 @@ extension WalletViewModel {
         Current.wallet.refreshLocal()
     }
     
-    func toSettings(rowsWithActionRequired: [SettingsRow.RowType]?, delegate: SettingsViewControllerDelegate?) {
-        let viewController = ViewControllerFactory.makeSettingsViewController(rowsWithActionRequired: rowsWithActionRequired, delegate: delegate)
+    func toSettings(rowsWithActionRequired: [SettingsRow.RowType]?) {
+        let viewController = ViewControllerFactory.makeSettingsViewController(rowsWithActionRequired: rowsWithActionRequired)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }

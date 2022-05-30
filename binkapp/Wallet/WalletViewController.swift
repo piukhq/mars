@@ -79,6 +79,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         refreshControl.addTarget(self, action: #selector(reloadWallet), for: .valueChanged)
         
         configureCollectionView()
+        configureNavigationItem()
         
         /// Disabling pending a review of diffable data source and core data behaviour
 //        if #available(iOS 14.0, *) {
@@ -100,7 +101,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         }
         
         configureLoadingIndicator()
-        checkForZendeskUpdates()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -127,8 +127,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         dotView.removeFromSuperview()
     }
     
-    private func configureNavigationItem(hasSupportUpdates: Bool) {
-        self.hasSupportUpdates = hasSupportUpdates
+    private func configureNavigationItem() {
         let settingsIcon = Asset.settings.image.withRenderingMode(.alwaysOriginal)
         let settingsBarButton = UIBarButtonItem(image: settingsIcon, style: .plain, target: self, action: #selector(settingsButtonTapped))
         settingsBarButton.accessibilityIdentifier = "settings"
@@ -146,23 +145,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             rightInset = 7
         }
         settingsBarButton.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: rightInset)
-        
-        guard hasSupportUpdates else {
-            dotView.removeFromSuperview()
-            return
-        }
-        if let navBar = navigationController?.navigationBar {
-            dotView.translatesAutoresizingMaskIntoConstraints = false
-            dotView.backgroundColor = .systemRed
-            dotView.layer.cornerRadius = 5
-            navBar.addSubview(dotView)
-            NSLayoutConstraint.activate([
-                dotView.widthAnchor.constraint(equalToConstant: WalletViewControllerConstants.dotViewHeightWidth),
-                dotView.heightAnchor.constraint(equalToConstant: WalletViewControllerConstants.dotViewHeightWidth),
-                dotView.rightAnchor.constraint(equalTo: navBar.rightAnchor, constant: -WalletViewControllerConstants.dotViewRightPadding),
-                dotView.topAnchor.constraint(equalTo: navBar.topAnchor, constant: WalletViewControllerConstants.dotViewTopPadding)
-            ])
-        }
     }
     
     @objc func settingsButtonTapped() {
@@ -170,16 +152,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         if hasSupportUpdates {
             actionRequiredSettings.append(.contactUs)
         }
-        viewModel.toSettings(rowsWithActionRequired: actionRequiredSettings, delegate: self)
-    }
-    
-    func checkForZendeskUpdates() {
-        /// In case the Zendesk SDK is slow to return a state, we should configure the navigation item to a default state
-        configureNavigationItem(hasSupportUpdates: Current.userDefaults.bool(forDefaultsKey: .hasSupportUpdates))
-        
-        ZendeskService.getIdentityRequestUpdates { hasUpdates in
-            self.configureNavigationItem(hasSupportUpdates: hasUpdates)
-        }
+        viewModel.toSettings(rowsWithActionRequired: actionRequiredSettings)
     }
     
     func configureCollectionView() {
@@ -413,12 +386,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
 //            }
 //        }
 //    }
-}
-
-extension WalletViewController: SettingsViewControllerDelegate {
-    func settingsViewControllerDidDismiss(_ settingsViewController: SettingsViewController) {
-        checkForZendeskUpdates()
-    }
 }
 
 struct WalletOrderingManager {

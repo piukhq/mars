@@ -96,7 +96,7 @@ class UserManager {
         }
     }
     
-    func setProfile(withResponse response: UserProfileResponse, updateZendeskIdentity: Bool) {
+    func setProfile(withResponse response: UserProfileResponse) {
         // Store what we can, but don't bail if the values don't exist
         if let email = response.email {
             try? keychain.set(email, key: Constants.emailKey)
@@ -118,10 +118,6 @@ class UserManager {
             Analytics.setUserID(userId)
             
             MixpanelUtility.setUserIdentity(userId: userId)
-        }
-        
-        if updateZendeskIdentity {
-            ZendeskService.setIdentity(firstName: currentFirstName, lastName: currentLastName)
         }
         
         AutofillUtil().configureUserPreferenceFromAPI()

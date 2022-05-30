@@ -263,9 +263,7 @@ class PaymentCardDetailViewModel {
     }
     
     func toFAQsScreen() {
-        let viewController = ZendeskService.makeFAQViewController()
-        let navigationRequest = ModalNavigationRequest(viewController: viewController, hideCloseButton: true)
-        Current.navigate.to(navigationRequest)
+        BinkSupportUtility.launchFAQs()
     }
     
     func showDeleteConfirmationAlert() {
