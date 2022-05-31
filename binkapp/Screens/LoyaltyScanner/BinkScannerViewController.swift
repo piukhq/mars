@@ -174,6 +174,45 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
+        navigationController?.setNavigationBarVisibility(false)
+        configureSubscribers()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if hideNavigationBar {
+            navigationController?.setNavigationBarHidden(true, animated: false)
+            
+            view.addSubview(cancelButton)
+            NSLayoutConstraint.activate([
+                cancelButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
+                cancelButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -4),
+                cancelButton.heightAnchor.constraint(equalToConstant: Constants.closeButtonSize.height),
+                cancelButton.widthAnchor.constraint(equalToConstant: Constants.closeButtonSize.width)
+            ])
+        }
+
+        if !viewModel.isScanning {
+            startScanning()
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        stopScanning()
+        navigationController?.setNavigationBarVisibility(true)
+    }
+
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        blurredView.backgroundColor = Current.themeManager.color(for: .bar)
+        explainerLabel.textColor = Current.themeManager.color(for: .text)
+        cancelButton.tintColor = Current.themeManager.color(for: .text)
+        widgetView.configure()
+    }
+    
+    private func configureUI() {
         view.addSubview(previewView)
 
         // BLUR AND MASK
@@ -221,42 +260,6 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
             nameOnCardLabel.leadingAnchor.constraint(equalTo: guideImageView.leadingAnchor, constant: 25),
             nameOnCardLabel.bottomAnchor.constraint(equalTo: guideImageView.bottomAnchor, constant: -10)
         ])
-        
-        navigationController?.setNavigationBarVisibility(false)
-        configureSubscribers()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if hideNavigationBar {
-            navigationController?.setNavigationBarHidden(true, animated: false)
-            
-            view.addSubview(cancelButton)
-            NSLayoutConstraint.activate([
-                cancelButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
-                cancelButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -4),
-                cancelButton.heightAnchor.constraint(equalToConstant: Constants.closeButtonSize.height),
-                cancelButton.widthAnchor.constraint(equalToConstant: Constants.closeButtonSize.width)
-            ])
-        }
-
-        if !viewModel.isScanning {
-            startScanning()
-        }
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        stopScanning()
-        navigationController?.setNavigationBarVisibility(true)
-    }
-
-    override func configureForCurrentTheme() {
-        super.configureForCurrentTheme()
-        blurredView.backgroundColor = Current.themeManager.color(for: .bar)
-        explainerLabel.textColor = Current.themeManager.color(for: .text)
-        cancelButton.tintColor = Current.themeManager.color(for: .text)
-        widgetView.configure()
     }
     
     private func startScanning() {
