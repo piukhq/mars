@@ -321,54 +321,6 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
 
         previewView.layer.addSublayer(videoPreviewLayer)
         videoPreviewLayer.frame = view.frame
-
-//        switch viewModel.type {
-//        case .loyalty:
-//            let metadataCaptureOutput = AVCaptureMetadataOutput()
-//            if session.outputs.isEmpty {
-//                if session.canAddOutput(metadataCaptureOutput) {
-//                    session.addOutput(metadataCaptureOutput)
-//
-//                    metadataCaptureOutput.setMetadataObjectsDelegate(self, queue: schemeScanningQueue)
-//                    metadataCaptureOutput.metadataObjectTypes = [
-//                        .qr,
-//                        .code128,
-//                        .aztec,
-//                        .pdf417,
-//                        .ean13,
-//                        .dataMatrix,
-//                        .interleaved2of5,
-//                        .code39
-//                    ]
-//                }
-//            }
-//
-//            if !session.isRunning {
-//                session.startRunning()
-//            }
-//
-//            metadataCaptureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
-//            captureOutput = metadataCaptureOutput
-//
-//        case .payment:
-//            let videoOutput = AVCaptureVideoDataOutput()
-//            videoOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as NSString): NSNumber(value: kCVPixelFormatType_32BGRA)] as [String: Any]
-//            videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "my.image.handling.queue")) /// Change to global variable queue?
-//
-//            if session.outputs.isEmpty {
-//                if session.canAddOutput(videoOutput) {
-//                    session.addOutput(videoOutput)
-//                }
-//            }
-//
-//            guard let connection = videoOutput.connection(with: AVMediaType.video), connection.isVideoOrientationSupported else { return }
-//            connection.videoOrientation = .portrait
-//
-//            if !session.isRunning {
-//                session.startRunning()
-//            }
-//            captureOutput = videoOutput
-//        }
         
         let videoOutput = AVCaptureVideoDataOutput()
         videoOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as NSString): NSNumber(value: kCVPixelFormatType_32BGRA)] as [String: Any]
@@ -549,20 +501,6 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
     }
 }
 
-//extension BinkScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
-//    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-//        timer?.invalidate()
-//        guard shouldAllowScanning else { return }
-//        shouldAllowScanning = false
-//
-//        if let object = metadataObjects.first {
-//            guard let readableObject = object as? AVMetadataMachineReadableCodeObject else { return }
-//            guard let stringValue = readableObject.stringValue else { return }
-//            captureSource = .camera(viewModel.plan)
-//            identifyMembershipPlanForBarcode(stringValue)
-//        }
-//    }
-//}
 
 // MARK: - Detect barcode from image
 
