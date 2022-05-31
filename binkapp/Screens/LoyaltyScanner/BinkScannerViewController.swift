@@ -411,6 +411,7 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
     }
 
     private func toPhotoLibrary() {
+        self.shouldAllowScanning = false
         let picker = UIImagePickerController()
         picker.allowsEditing = true
         picker.delegate = self
@@ -516,7 +517,7 @@ extension BinkScannerViewController: UIImagePickerControllerDelegate {
         guard let image = info[.editedImage] as? UIImage else { return }
         
         Current.navigate.close(animated: true) { [weak self] in
-            self?.visionUtility.detectBarcode(uiImage: image) { barcode in
+            self?.visionUtility.detectBarcode(ciImage: image.ciImage()) { barcode in
                 guard let barcode = barcode else {
                     self?.showError(barcodeDetected: false)
                     return
@@ -547,11 +548,11 @@ extension BinkScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegat
                 self.paymentCardRectangleObservation = paymentCardRectangleObservation
             }
         case .loyalty:
+            guard shouldAllowScanning else { return }
             let ciImage = CIImage(cvImageBuffer: frame)
             visionUtility.detectBarcode(ciImage: ciImage) { [weak self] barcode in
-                guard let barcode = barcode, let self = self else { return }
+                guard let barcode = barcode, let self = self, self.shouldAllowScanning else { return }
                 self.timer?.invalidate()
-                guard self.shouldAllowScanning else { return }
                 self.shouldAllowScanning = false
                 self.captureSource = .camera(self.viewModel.plan)
                 self.identifyMembershipPlanForBarcode(barcode)

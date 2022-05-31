@@ -425,7 +425,7 @@ extension BrowseBrandsViewController: ScanLoyaltyCardButtonDelegate {
 extension BrowseBrandsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
-        visionUtility.detectBarcode(uiImage: image) { [weak self] barcode in
+        visionUtility.detectBarcode(ciImage: image.ciImage()) { [weak self] barcode in
             guard let barcode = barcode else {
                 Current.navigate.close(animated: true) { [weak self] in
                     self?.showError()

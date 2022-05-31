@@ -168,7 +168,7 @@ class VisionUtility: ObservableObject {
     
     // MARK: - Still image
     
-    func detectBarcode(uiImage: UIImage? = nil, ciImage: CIImage? = nil, completion: @escaping (String?) -> Void ) {
+    func detectBarcode(ciImage: CIImage? = nil, completion: @escaping (String?) -> Void ) {
         var vnBarcodeDetectionRequest: VNDetectBarcodesRequest {
             let request = VNDetectBarcodesRequest { request, error in
                 guard error == nil else {
@@ -184,6 +184,7 @@ class VisionUtility: ObservableObject {
                 }
                 
                 DispatchQueue.main.async {
+                    
                     completion(stringValue)
                 }
             }
@@ -191,15 +192,14 @@ class VisionUtility: ObservableObject {
         }
         
         if membershipPlan == nil {
-            detectBarcodeString(from: ciImage)
+            detectBarcodeString(from: ciImage) { barcode in
+                completion(barcode)
+            }
         }
         
         // Detect barcode
         var requestHandler: VNImageRequestHandler?
-        
-        if let cgImage = uiImage?.cgImage {
-            requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
-        } else if let ciImage = ciImage {
+        if let ciImage = ciImage {
             requestHandler = VNImageRequestHandler(ciImage: ciImage, options: [:])
         }
         
@@ -214,7 +214,7 @@ class VisionUtility: ObservableObject {
         }
     }
     
-    private func detectBarcodeString(from ciImage: CIImage?) {
+    private func detectBarcodeString(from ciImage: CIImage?, completion: @escaping (String?) -> Void ) {
         guard let ciImage = ciImage else { return }
 
         let vnTextTextRecognitionRequest = VNRecognizeTextRequest()
@@ -232,13 +232,14 @@ class VisionUtility: ObservableObject {
             for text in recognizedTexts {
                 let formattedText = text.string.replacingOccurrences(of: " ", with: "")
                 Current.wallet.identifyMembershipPlanForBarcode(formattedText) { plan in
-                    guard !self.barcodeDetected else { return }
-                    if let plan = plan {
-                        self.membershipPlan = plan
-                        self.barcode = formattedText
-                        print("SW: - \(text.string)")
-                        self.barcodeDetected = true
-                    }
+//                    guard !self.barcodeDetected else { return }
+                    guard plan != nil else { return }
+//                        self.membershipPlan = plan
+//                        self.barcode = formattedText
+//                        self.barcodeDetected = true
+//
+                        completion(formattedText)
+//                    }
                 }
             }
         }

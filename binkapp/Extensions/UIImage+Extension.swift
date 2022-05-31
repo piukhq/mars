@@ -13,4 +13,11 @@ extension UIImage {
         guard let alpha: CGImageAlphaInfo = self.cgImage?.alphaInfo else { return false }
         return alpha == .first || alpha == .last || alpha == .premultipliedFirst || alpha == .premultipliedLast
     }
+    
+    public func ciImage() -> CIImage? {
+        if let cgImage = cgImage {
+            return CoreImage.CIImage(cgImage: cgImage)
+        }
+        return nil
+    }
 }
