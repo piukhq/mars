@@ -223,51 +223,7 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
         ])
         
         navigationController?.setNavigationBarVisibility(false)
-        
-        visionUtility.subject.sink { completion in
-            switch completion {
-            case .finished:
-                DispatchQueue.main.async {
-                    UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
-                        self.stopScanning()
-                        self.nameOnCardLabel.text = self.visionUtility.paymentCard.nameOnCard ?? ""
-                        self.nameOnCardLabel.alpha = 1
-                        self.guideImageView.tintColor = .binkBlueTitleText
-                        self.guideImageView.layer.addBinkAnimation(.shake)
-                    } completion: { _ in
-                        HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-                            self.delegate?.binkScannerViewController(self, didScan: self.visionUtility.paymentCard)
-                        }
-                    }
-                }
-            case .failure(let error):
-                print("Received error: \(error)")
-            }
-        } receiveValue: { paymentCard in
-            DispatchQueue.main.async {
-                self.panLabel.text = paymentCard.fullPan
-                if paymentCard.fullPan != nil {
-                    self.expiryLabel.text = paymentCard.formattedExpiryDate() ?? ""
-                }
-                
-                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
-                    self.panLabel.alpha = 1
-                    if let _ = paymentCard.formattedExpiryDate() {
-                        self.expiryLabel.alpha = 1
-                    }
-                }
-            }
-        }
-        .store(in: &subscriptions)
-        
-        visionUtility.$barcodeDetected
-            .sink { [unowned self] _ in
-                guard let barcode = self.visionUtility.barcode, let plan = self.visionUtility.membershipPlan, self.shouldAllowScanning else { return }
-                self.captureSource = .camera(self.viewModel.plan)
-                self.passDataToBarcodeScannerDelegate(barcode: barcode, membershipPlan: plan)
-            }
-            .store(in: &subscriptions)
+        configureSubscribers()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -401,6 +357,54 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
         device.activeVideoMaxFrameDuration = CMTime(value: 1, timescale: 10)
         device.activeVideoMinFrameDuration = CMTime(value: 1, timescale: 10)
         device.unlockForConfiguration()
+    }
+    
+    private func configureSubscribers() {
+        visionUtility.subject.sink { completion in
+            switch completion {
+            case .finished:
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
+                        self.stopScanning()
+                        self.nameOnCardLabel.text = self.visionUtility.paymentCard.nameOnCard ?? ""
+                        self.nameOnCardLabel.alpha = 1
+                        self.guideImageView.tintColor = .binkBlueTitleText
+                        self.guideImageView.layer.addBinkAnimation(.shake)
+                    } completion: { _ in
+                        HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                            self.delegate?.binkScannerViewController(self, didScan: self.visionUtility.paymentCard)
+                        }
+                    }
+                }
+            case .failure(let error):
+                print("Received error: \(error)")
+            }
+        } receiveValue: { paymentCard in
+            DispatchQueue.main.async {
+                self.panLabel.text = paymentCard.fullPan
+                if paymentCard.fullPan != nil {
+                    self.expiryLabel.text = paymentCard.formattedExpiryDate() ?? ""
+                }
+                
+                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
+                    self.panLabel.alpha = 1
+                    if let _ = paymentCard.formattedExpiryDate() {
+                        self.expiryLabel.alpha = 1
+                    }
+                }
+            }
+        }
+        .store(in: &subscriptions)
+        
+        visionUtility.$barcodeDetected
+            .sink { [unowned self] _ in
+                guard let barcode = self.visionUtility.barcode, let plan = self.visionUtility.membershipPlan, self.shouldAllowScanning else { return }
+                self.shouldAllowScanning = false
+                self.captureSource = .camera(self.viewModel.plan)
+                self.passDataToBarcodeScannerDelegate(barcode: barcode, membershipPlan: plan)
+            }
+            .store(in: &subscriptions)
     }
 
     private func toPhotoLibrary() {
