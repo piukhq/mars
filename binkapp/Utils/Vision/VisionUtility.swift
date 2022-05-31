@@ -12,7 +12,12 @@ import Vision
 
 class VisionUtility: ObservableObject {
     private let requestHandler = VNSequenceRequestHandler()
-    private var timer: Timer?
+    
+    // MARK: - Loyalty Card
+    var barcode: String?
+    var membershipPlan: CD_MembershipPlan?
+    @Published var barcodeDetected = false
+    
 
     // MARK: - Payment Card
     var pan: String?
@@ -185,6 +190,11 @@ class VisionUtility: ObservableObject {
             return request
         }
         
+        if membershipPlan == nil {
+            detectBarcodeString(from: ciImage)
+        }
+        
+        // Detect barcode
         var requestHandler: VNImageRequestHandler?
         
         if let cgImage = uiImage?.cgImage {
@@ -200,6 +210,36 @@ class VisionUtility: ObservableObject {
                 try requestHandler?.perform(vnRequests)
             } catch {
                 completion(nil)
+            }
+        }
+    }
+    
+    private func detectBarcodeString(from ciImage: CIImage?) {
+        guard let ciImage = ciImage else { return }
+
+        let vnTextTextRecognitionRequest = VNRecognizeTextRequest()
+        vnTextTextRecognitionRequest.recognitionLevel = .accurate
+        vnTextTextRecognitionRequest.usesLanguageCorrection = false
+        
+        let stillImageRequestHandler = VNImageRequestHandler(ciImage: ciImage, options: [:])
+        try? stillImageRequestHandler.perform([vnTextTextRecognitionRequest])
+        
+        if let observations = vnTextTextRecognitionRequest.results, !observations.isEmpty {
+            let recognizedTexts = observations.compactMap { observation in
+                return observation.topCandidates(1).first
+            }
+            
+            for text in recognizedTexts {
+                let formattedText = text.string.replacingOccurrences(of: " ", with: "")
+                Current.wallet.identifyMembershipPlanForBarcode(formattedText) { plan in
+                    guard !self.barcodeDetected else { return }
+                    if let plan = plan {
+                        self.membershipPlan = plan
+                        self.barcode = formattedText
+                        print("SW: - \(text.string)")
+                        self.barcodeDetected = true
+                    }
+                }
             }
         }
     }

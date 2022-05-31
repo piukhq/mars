@@ -260,6 +260,14 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
             }
         }
         .store(in: &subscriptions)
+        
+        visionUtility.$barcodeDetected
+            .sink { [unowned self] _ in
+                guard let barcode = self.visionUtility.barcode, let plan = self.visionUtility.membershipPlan, self.shouldAllowScanning else { return }
+                self.captureSource = .camera(self.viewModel.plan)
+                self.passDataToBarcodeScannerDelegate(barcode: barcode, membershipPlan: plan)
+            }
+            .store(in: &subscriptions)
     }
 
     override func viewWillAppear(_ animated: Bool) {
