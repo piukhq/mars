@@ -8,13 +8,7 @@
 
 import UIKit
 import MessageUI
-import ZendeskCoreSDK
-import SupportSDK
 import SwiftUI
-
-protocol SettingsViewControllerDelegate: AnyObject {
-    func settingsViewControllerDidDismiss(_ settingsViewController: SettingsViewController)
-}
 
 class SettingsViewController: BinkViewController {
     // MARK: - Helpers
@@ -43,17 +37,14 @@ class SettingsViewController: BinkViewController {
         return tableView
     }()
 
-    private let zendeskTickets = ZendeskTickets()
-    private weak var delegate: SettingsViewControllerDelegate?
 
     /// Zendesk view controllers malform our navigation bar. This flag tells our view controller to reconfigure for the current theme next time it comes into view.
     private var navigationBarRequiresThemeUpdate = false
     
     // MARK: - View Lifecycle
     
-    init(viewModel: SettingsViewModel, delegate: SettingsViewControllerDelegate?) {
+    init(viewModel: SettingsViewModel) {
         self.viewModel = viewModel
-        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -82,12 +73,7 @@ class SettingsViewController: BinkViewController {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .settings)
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        delegate?.settingsViewControllerDidDismiss(self)
-    }
-
+ 
     override func configureForCurrentTheme() {
         super.configureForCurrentTheme()
         tableView.reloadData()
@@ -171,20 +157,14 @@ extension SettingsViewController: UITableViewDelegate {
                 navigationBarRequiresThemeUpdate = true
                 switch service {
                 case .faq:
-                    let helpCenterConfig = HelpCenterUiConfiguration()
-                    helpCenterConfig.showContactOptions = false
-                    let articleConfig = ArticleUiConfiguration()
-                    articleConfig.showContactOptions = false
-                    let viewController = ZDKHelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [helpCenterConfig, articleConfig])
-                    let navigationRequest = PushNavigationRequest(viewController: viewController)
-                    Current.navigate.to(navigationRequest)
+                    BinkSupportUtility.launchFAQs()
                 case .contactUs:
-                    zendeskTickets.launch()
+                    BinkSupportUtility.launchContactSupport()
                 }
             case let .pushToViewController(viewController: viewControllerType):
                 switch viewControllerType {
                 case is SettingsViewController.Type:
-                    let vc = SettingsViewController(viewModel: viewModel, delegate: nil)
+                    let vc = SettingsViewController(viewModel: viewModel)
                     present(vc, animated: true)
                 case is DebugMenuTableViewController.Type:
                     let viewController = ViewControllerFactory.makeDebugViewController()

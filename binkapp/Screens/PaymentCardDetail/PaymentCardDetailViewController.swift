@@ -7,14 +7,12 @@
 //
 
 import UIKit
-import SupportSDK
 
 class PaymentCardDetailViewController: BinkViewController {
     private var viewModel: PaymentCardDetailViewModel
     private var hasSetupCell = false
     
     private var refreshTimer: Timer?
-    private let zendeskTickets = ZendeskTickets()
 
     // MARK: - UI lazy vars
 
@@ -432,6 +430,6 @@ extension LayoutHelper {
 
 extension PaymentCardDetailViewController: HyperlinkLabelDelegate {
     func hyperlinkLabelWasTapped(_ hyperlinkLabel: HyperlinkLabel) {
-        zendeskTickets.launch()
+        BinkSupportUtility.launchContactSupport()
     }
 }

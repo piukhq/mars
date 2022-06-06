@@ -1,13 +1,15 @@
 # Uncomment the next line to define a global platform for your project
 platform :ios, '12.0'
 
+source 'https://github.com/CocoaPods/Specs.git'
+source 'https://cdn.cocoapods.org/' 
+
 inhibit_all_warnings!
 
 def common_pods
 
 pod 'DTTJailbreakDetection', '~> 0.4' # No SPM package available - NF 01/09/21
 pod 'SwiftyRSA', :git => 'git@github.com:binkhq/SwiftyRSA.git'
-pod 'ZendeskSupportSDK', '5.2.0' # Cannot update due to deprecations - NF 01/09/21
 pod 'CardScan', :git => 'git@github.com:binkhq/cardscan-ios.git', :commit => 'bf8d4467'
 pod 'SwiftLint', '~> 0.43' # SPM led to compilation errors - NF 01/09/21
 pod 'SwiftGen', '~> 6.4' # SPM led to compilation errors - NF 01/09/21
@@ -20,12 +22,6 @@ plugin 'cocoapods-keys', {
   "devPaymentCardHashingSecret1",
   "stagingPaymentCardHashingSecret1",
   "prodPaymentCardHashingSecret1",
-  "zendeskSandboxAppId",
-  "zendeskSandboxClientId",
-  "zendeskSandboxUrl",
-  "zendeskProductionAppId",
-  "zendeskProductionClientId",
-  "zendeskProductionUrl",
   "bouncerPaymentCardScanningKeyDev",
   "bouncerPaymentCardScanningKeyProduction",
   "mixpanelTokenDev",

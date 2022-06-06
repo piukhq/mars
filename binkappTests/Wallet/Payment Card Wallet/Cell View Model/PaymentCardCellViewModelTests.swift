@@ -88,7 +88,7 @@ class PaymentCardCellViewModelTests: XCTestCase, CoreDataTestable {
     func test_linkedText_ifNoLinkedMembershipCards() {
         Self.basePaymentCardResponse.membershipCards = nil
         mapPaymentCard()
-        XCTAssertEqual(Self.sut.statusText, "Not linked")
+        XCTAssertEqual(Self.sut.statusText, L10n.pcdStatusTextReadyToLink)
     }
 
     func test_linkedText_ifLinkedToOneMembershipCard() {

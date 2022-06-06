@@ -56,12 +56,13 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
 
     /// Fetch the wallets from the API.
     /// Should only be called from a pull to refresh.
-    func reload() {
+    func reload(completion: EmptyCompletionBlock? = nil) {
         /// Not nested in a refresh manager condition, as pull to refresh should always be permitted
         loadWallets(forType: .reload, reloadPlans: true, isUserDriven: true) { [weak self] (success, _) in
             if success {
                 self?.refreshManager.resetAll()
                 Current.pointsScrapingManager.refreshBalancesIfNecessary()
+                completion?()
             }
         }
     }
