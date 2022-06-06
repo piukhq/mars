@@ -14,9 +14,9 @@ class VisionUtility: ObservableObject {
     private let requestHandler = VNSequenceRequestHandler()
     
     // MARK: - Loyalty Card
-    var barcode: String?
-    var membershipPlan: CD_MembershipPlan?
-    @Published var barcodeDetected = false
+//    var barcode: String?
+//    var membershipPlan: CD_MembershipPlan?
+    var barcodeDetected = false
     
 
     // MARK: - Payment Card
@@ -184,17 +184,18 @@ class VisionUtility: ObservableObject {
                 }
                 
                 DispatchQueue.main.async {
-                    
+                    guard !self.barcodeDetected else { return }
+                    self.barcodeDetected = true
                     completion(stringValue)
                 }
             }
             return request
         }
         
-        if membershipPlan == nil {
-            detectBarcodeString(from: ciImage) { barcode in
-                completion(barcode)
-            }
+        detectBarcodeString(from: ciImage) { barcode in
+            guard !self.barcodeDetected else { return }
+            self.barcodeDetected = true
+            completion(barcode)
         }
         
         // Detect barcode
