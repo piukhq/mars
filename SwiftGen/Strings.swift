@@ -170,6 +170,8 @@ internal enum L10n {
   internal static let debugMenuToolsSectionTitle = L10n.tr("Localizable", "debug_menu_tools_section_title")
   /// Decline
   internal static let decline = L10n.tr("Localizable", "decline")
+  /// Delete
+  internal static let deleteActionTitle = L10n.tr("Localizable", "delete_action_title")
   /// Are you sure you want to delete this card?
   internal static let deleteCardConfirmation = L10n.tr("Localizable", "delete_card_confirmation")
   /// Remove this card from Bink
@@ -180,8 +182,6 @@ internal enum L10n {
   }
   /// Delete this card
   internal static let deleteCardTitle = L10n.tr("Localizable", "delete_card_title")
-  /// Delete
-  internal static let deleteSwipeTitle = L10n.tr("Localizable", "delete_swipe_title")
   /// Tap to enlarge Aztec code
   internal static let detailsHeaderShowAztecCode = L10n.tr("Localizable", "details_header_show_aztec_code")
   /// Tap to enlarge barcode
@@ -715,13 +715,15 @@ internal enum L10n {
   internal static let seeDescription = L10n.tr("Localizable", "see_description")
   /// See your balance
   internal static let seeTitle = L10n.tr("Localizable", "see_title")
+  /// Account deletion is irreversible, are you sure you want to delete your account?
+  internal static let settingsDeleteAccountActionSubtitle = L10n.tr("Localizable", "settings_delete_account_action_subtitle")
+  /// Delete Account
+  internal static let settingsDeleteAccountActionTitle = L10n.tr("Localizable", "settings_delete_account_action_title")
   /// Get in touch with Bink
   internal static let settingsRowContactSubtitle = L10n.tr("Localizable", "settings_row_contact_subtitle")
   /// Contact us
   internal static let settingsRowContactTitle = L10n.tr("Localizable", "settings_row_contact_title")
-  /// Account deletion is irreversible, are you sure you want to delete your account?
-  internal static let settingsRowDeleteAccountSubtitle = L10n.tr("Localizable", "settings_row_delete_account_subtitle")
-  /// Delete Account
+  /// Delete my account
   internal static let settingsRowDeleteAccountTitle = L10n.tr("Localizable", "settings_row_delete_account_title")
   /// Frequently asked questions
   internal static let settingsRowFaqsSubtitle = L10n.tr("Localizable", "settings_row_faqs_subtitle")

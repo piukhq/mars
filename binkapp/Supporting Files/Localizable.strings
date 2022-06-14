@@ -17,7 +17,6 @@
 "form_field_validation_error" = "Incorrect Format";
 
 "barcode_swipe_title" = "Barcode";
-"delete_swipe_title" = "Delete";
 "please_wait_title" = "Please wait";
 "sign_up_failed_title" = "Sign up failed";
 "please_try_again_title" = "Please try again";
@@ -250,8 +249,9 @@
 "settings_section_beta_title" = "Beta";
 "settings_row_featureflags_title" = "Feature flags";
 
-"settings_row_delete_account_title" = "Delete Account";
-"settings_row_delete_account_subtitle" = "Account deletion is irreversible, are you sure you want to delete your account?";
+"settings_row_delete_account_title" = "Delete my account";
+"settings_delete_account_action_title" = "Delete Account";
+"settings_delete_account_action_subtitle" = "Account deletion is irreversible, are you sure you want to delete your account?";
 
 
 // MARK: - Support mail
@@ -508,3 +508,5 @@
 // MARK: - Global
 "alert_view_cannot_delete_card_title" = "Cannot delete";
 "alert_view_cannot_delete_card_body" = "While your card is pending it cannot be deleted. Please try again later.";
+"delete_action_title" = "Delete";
+

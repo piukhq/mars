@@ -253,9 +253,9 @@ enum ViewControllerFactory {
         return alert
     }
     
-    static func makeOkCancelAlertViewController(title: String?, message: String?, cancelButton: Bool? = nil, completion: EmptyCompletionBlock? = nil) -> BinkAlertController {
+    static func makeOkCancelAlertViewController(title: String?, message: String?, okActionTitle: String? = nil, cancelButton: Bool? = nil, completion: EmptyCompletionBlock? = nil) -> BinkAlertController {
         let alert = BinkAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: L10n.ok, style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: okActionTitle ?? L10n.ok, style: .default, handler: { _ in
             completion?()
         }))
         
@@ -291,7 +291,7 @@ enum ViewControllerFactory {
         return WebViewController(urlString: urlString)
     }
     
-    static func makeAlertViewControllerWithTextfield(title: String?, message: String?, cancelButton: Bool? = nil, okActionHandler: @escaping (String) -> Void, cancelActionHandler: EmptyCompletionBlock? = nil ) -> BinkAlertController {
+    static func makeAlertViewControllerWithTextfield(title: String?, message: String?, cancelButton: Bool?, okActionHandler: @escaping (String) -> Void, cancelActionHandler: EmptyCompletionBlock? = nil ) -> BinkAlertController {
         let alert = BinkAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addTextField { textfield in
             textfield.textContentType = .oneTimeCode
