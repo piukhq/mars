@@ -30,6 +30,7 @@ struct SettingsRow {
         case whoWeAre
         case theme
         case featureFlags
+        case delete
         
         var title: String {
             switch self {
@@ -59,6 +60,8 @@ struct SettingsRow {
                 return L10n.settingsRowThemeTitle
             case .featureFlags:
                 return L10n.settingsRowFeatureflagsTitle
+            case .delete:
+                return L10n.settingsRowDeleteAccountTitle
             }
         }
     }

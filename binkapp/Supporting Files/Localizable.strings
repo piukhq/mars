@@ -250,6 +250,10 @@
 "settings_section_beta_title" = "Beta";
 "settings_row_featureflags_title" = "Feature flags";
 
+"settings_row_delete_account_title" = "Delete Account";
+"settings_row_delete_account_subtitle" = "Account deletion is irreversible, are you sure you want to delete your account?";
+
+
 // MARK: - Support mail
 
 "support_mail_subject" = "Bink App Support";

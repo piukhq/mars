@@ -719,6 +719,10 @@ internal enum L10n {
   internal static let settingsRowContactSubtitle = L10n.tr("Localizable", "settings_row_contact_subtitle")
   /// Contact us
   internal static let settingsRowContactTitle = L10n.tr("Localizable", "settings_row_contact_title")
+  /// Account deletion is irreversible, are you sure you want to delete your account?
+  internal static let settingsRowDeleteAccountSubtitle = L10n.tr("Localizable", "settings_row_delete_account_subtitle")
+  /// Delete Account
+  internal static let settingsRowDeleteAccountTitle = L10n.tr("Localizable", "settings_row_delete_account_title")
   /// Frequently asked questions
   internal static let settingsRowFaqsSubtitle = L10n.tr("Localizable", "settings_row_faqs_subtitle")
   /// FAQs

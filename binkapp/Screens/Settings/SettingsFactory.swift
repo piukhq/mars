@@ -121,6 +121,13 @@ struct SettingsFactory {
                     Current.navigate.to(navigationRequest)
                 }),
                 actionRequired: rowsWithActionRequired?.contains(.rateThisApp) ?? false
+            ),
+            SettingsRow(
+                type: .delete,
+                action: .customAction(action: {
+                    print("Delete")
+                }),
+                actionRequired: rowsWithActionRequired?.contains(.delete) ?? false
             )
         ])
         
