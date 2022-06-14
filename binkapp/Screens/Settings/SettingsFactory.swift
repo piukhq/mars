@@ -124,13 +124,7 @@ struct SettingsFactory {
             ),
             SettingsRow(
                 type: .delete,
-                action: .customAction(action: {
-                    let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: L10n.settingsDeleteAccountActionTitle, message: L10n.settingsDeleteAccountActionSubtitle, okActionTitle: L10n.deleteActionTitle, cancelButton: true) {
-                        
-                    }
-                    let navigationRequest = AlertNavigationRequest(alertController: alert)
-                    Current.navigate.to(navigationRequest)
-                }),
+                action: .delete,
                 actionRequired: rowsWithActionRequired?.contains(.delete) ?? false
             )
         ])

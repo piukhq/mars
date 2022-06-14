@@ -18,6 +18,7 @@ enum UserServiceError: BinkError {
     case failedToLogin
     case failedToAuthWithApple
     case failedToCreateService
+    case failedToDeleteService
     case failedToGetPreferences
     case failedToSetPreferences
     case failedToRenewToken
@@ -52,6 +53,8 @@ enum UserServiceError: BinkError {
             return "Failed to auth with apple"
         case .failedToCreateService:
             return "Failed to create service"
+        case.failedToDeleteService:
+            return "Failed to delete service"
         case .failedToGetPreferences:
             return "Failed to get preferences"
         case .failedToSetPreferences:
@@ -236,6 +239,23 @@ extension UserServiceProtocol {
             if #available(iOS 14.0, *) {
                 BinkLogger.info(event: UserLoggerEvent.createdService)
             }
+            completion?(true, nil)
+        }
+    }
+    
+    func deleteService(params: [String: Any], completion: ServiceCompletionSuccessHandler<UserServiceError>? = nil) {
+        let request = BinkNetworkRequest(endpoint: .service, method: .delete, headers: nil, isUserDriven: false)
+        Current.apiClient.performRequestWithNoResponse(request, body: params) { (success, _, rawResponse) in
+            guard success else {
+//                if #available(iOS 14.0, *) {
+//                    BinkLogger.error(UserLoggerError.createServiceFailure, value: rawResponse?.urlResponse?.statusCode.description)
+//                }
+                completion?(false, .failedToDeleteService)
+                return
+            }
+//            if #available(iOS 14.0, *) {
+//                BinkLogger.info(event: UserLoggerEvent.createdService)
+//            }
             completion?(true, nil)
         }
     }

@@ -73,6 +73,7 @@ struct SettingsRow {
         case logout
         case customAction(action: VoidClosure)
         case launchSupport(service: SupportService)
+        case delete
     }
     
     enum ReusableScreen {

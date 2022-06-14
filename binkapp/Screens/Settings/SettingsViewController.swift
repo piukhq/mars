@@ -142,7 +142,7 @@ extension SettingsViewController: UITableViewDataSource {
 
 // MARK: - TableView
 
-extension SettingsViewController: UITableViewDelegate {
+extension SettingsViewController: UITableViewDelegate, UserServiceProtocol {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell: SettingsTableViewCell? = tableView.cellForRow(at: indexPath) as? SettingsTableViewCell
         cell?.removeActionRequired()
@@ -215,6 +215,21 @@ extension SettingsViewController: UITableViewDelegate {
                     })
                 )
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
+            case .delete:
+                let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: L10n.settingsDeleteAccountActionTitle, message: L10n.settingsDeleteAccountActionSubtitle, okActionTitle: L10n.deleteActionTitle, cancelButton: true) {
+                    // Show loading screen
+                    Current.rootStateMachine.startLoading()
+                    
+//                    self.deleteService(params: APIConstants.makeServiceRequest(email: Current.userManager.currentEmailAddress ?? "")) { success, error in
+//                        guard success else {
+//                            print("Failed to delete")
+//                            return
+//                        }
+//                        
+//                    }
+                }
                 let navigationRequest = AlertNavigationRequest(alertController: alert)
                 Current.navigate.to(navigationRequest)
             }
