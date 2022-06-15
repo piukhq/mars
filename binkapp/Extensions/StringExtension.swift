@@ -87,4 +87,11 @@ extension String {
         }
         return ranges
     }
+    
+    func insertCharacterInString(step: Int = 1, withCharacter: Character) -> String {
+        return String(enumerated().map {
+            $0 > 0 && $0 % step == 0 ? [withCharacter, $1] : [$1]
+        }
+        .joined())
+    }
 }

@@ -28,6 +28,12 @@ class PLRRewardDetailViewModel {
     }
 
     var codeString: String? {
+        if let code = voucher.code {
+            if code.contains("Due:") {
+                return code.insertCharacterInString(step: 4, withCharacter: " ")
+            }
+        }
+        
         return voucher.code
     }
 
