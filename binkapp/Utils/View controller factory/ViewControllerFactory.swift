@@ -263,6 +263,19 @@ enum ViewControllerFactory {
         return alert
     }
     
+    static func makeTwoButtonAlertViewController(title: String?, message: String?, primaryButtonTitle: String, secondaryButtonTitle: String, primaryButtonCompletion: @escaping EmptyCompletionBlock, secondaryButtonCompletion: @escaping EmptyCompletionBlock) -> BinkAlertController {
+        let alert = BinkAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: primaryButtonTitle, style: .default, handler: { _ in
+            primaryButtonCompletion()
+        }))
+        
+        alert.addAction(UIAlertAction(title: secondaryButtonTitle, style: .default, handler: { _ in
+            secondaryButtonCompletion()
+        }))
+
+        return alert
+    }
+    
     static func makeRecommendedAppUpdateAlertController(skipVersionHandler: @escaping () -> Void) -> BinkAlertController {
         let alert = BinkAlertController(title: L10n.recommendedAppUpdateTitle, message: L10n.recommendedAppUpdateMessage, preferredStyle: .alert)
         

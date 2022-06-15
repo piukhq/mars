@@ -719,6 +719,8 @@ internal enum L10n {
   internal static let settingsDeleteAccountActionSubtitle = L10n.tr("Localizable", "settings_delete_account_action_subtitle")
   /// Delete Account
   internal static let settingsDeleteAccountActionTitle = L10n.tr("Localizable", "settings_delete_account_action_title")
+  /// Account deletion failed, please contact us
+  internal static let settingsDeleteAccountFailedAlertMessage = L10n.tr("Localizable", "settings_delete_account_failed_alert_message")
   /// Get in touch with Bink
   internal static let settingsRowContactSubtitle = L10n.tr("Localizable", "settings_row_contact_subtitle")
   /// Contact us

@@ -219,16 +219,24 @@ extension SettingsViewController: UITableViewDelegate, UserServiceProtocol {
                 Current.navigate.to(navigationRequest)
             case .delete:
                 let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: L10n.settingsDeleteAccountActionTitle, message: L10n.settingsDeleteAccountActionSubtitle, okActionTitle: L10n.deleteActionTitle, cancelButton: true) {
-                    // Show loading screen
                     Current.rootStateMachine.startLoading()
                     
-//                    self.deleteService(params: APIConstants.makeServiceRequest(email: Current.userManager.currentEmailAddress ?? "")) { success, error in
-//                        guard success else {
-//                            print("Failed to delete")
-//                            return
-//                        }
-//                        
-//                    }
+                    self.deleteService(params: APIConstants.makeServiceRequest(email: Current.userManager.currentEmailAddress ?? "")) { success, _ in
+                        guard success else {
+                            let alert = ViewControllerFactory.makeTwoButtonAlertViewController(title: L10n.errorTitle, message: L10n.settingsDeleteAccountFailedAlertMessage, primaryButtonTitle: L10n.ok, secondaryButtonTitle: L10n.settingsRowContactTitle) {
+                                NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                            } secondaryButtonCompletion: {
+                                BinkSupportUtility.launchContactSupport()
+                                NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                            }
+
+                            let navigationRequest = AlertNavigationRequest(alertController: alert)
+                            Current.navigate.to(navigationRequest)
+                            return
+                        }
+                        
+                        NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                    }
                 }
                 let navigationRequest = AlertNavigationRequest(alertController: alert)
                 Current.navigate.to(navigationRequest)
