@@ -247,15 +247,15 @@ extension UserServiceProtocol {
         let request = BinkNetworkRequest(endpoint: .service, method: .delete, headers: nil, isUserDriven: false)
         Current.apiClient.performRequestWithNoResponse(request, body: params) { (success, _, rawResponse) in
             guard success else {
-//                if #available(iOS 14.0, *) {
-//                    BinkLogger.error(UserLoggerError.createServiceFailure, value: rawResponse?.urlResponse?.statusCode.description)
-//                }
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(UserLoggerError.deleteServiceFailure, value: rawResponse?.urlResponse?.statusCode.description)
+                }
                 completion?(false, .failedToDeleteService)
                 return
             }
-//            if #available(iOS 14.0, *) {
-//                BinkLogger.info(event: UserLoggerEvent.createdService)
-//            }
+            if #available(iOS 14.0, *) {
+                BinkLogger.info(event: UserLoggerEvent.deletedService)
+            }
             completion?(true, nil)
         }
     }
