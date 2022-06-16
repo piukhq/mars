@@ -30,7 +30,8 @@ class PLRRewardDetailViewModel {
     var codeString: String? {
         if let code = voucher.code {
             if code.contains("Due:") {
-                return code.insertCharacterInString(step: 4, withCharacter: " ")
+                let filteredCode = code.filter { !$0.isWhitespace }
+                return filteredCode.insertCharacterInString(step: 4, withCharacter: " ")
             }
         }
         
