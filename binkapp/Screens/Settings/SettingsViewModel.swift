@@ -54,17 +54,17 @@ class SettingsViewModel: UserServiceProtocol {
         Current.navigate.to(navigationRequest)
     }
     
-    func handleRowActionForAccountDeletion() {
+    func handleRowActionForAccountDeletion(loadingCompleteViewController: UIViewController) {
         let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: L10n.settingsDeleteAccountActionTitle, message: L10n.settingsDeleteAccountActionSubtitle, okActionTitle: L10n.deleteActionTitle, cancelButton: true) {
-            Current.rootStateMachine.startLoading()
+            Current.rootStateMachine.startLoading(from: loadingCompleteViewController)
             
             self.deleteService(params: APIConstants.makeServiceRequest(email: Current.userManager.currentEmailAddress ?? "")) { success, _ in
                 guard success else {
                     let alert = ViewControllerFactory.makeTwoButtonAlertViewController(title: L10n.errorTitle, message: L10n.settingsDeleteAccountFailedAlertMessage, primaryButtonTitle: L10n.ok, secondaryButtonTitle: L10n.settingsRowContactTitle) {
-                        NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                        Current.rootStateMachine.stopLoading()
                     } secondaryButtonCompletion: {
+                        Current.rootStateMachine.stopLoading()
                         BinkSupportUtility.launchContactSupport()
-                        NotificationCenter.default.post(name: .shouldLogout, object: nil)
                     }
 
                     let navigationRequest = AlertNavigationRequest(alertController: alert)

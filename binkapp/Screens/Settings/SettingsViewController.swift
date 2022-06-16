@@ -218,7 +218,7 @@ extension SettingsViewController: UITableViewDelegate {
                 let navigationRequest = AlertNavigationRequest(alertController: alert)
                 Current.navigate.to(navigationRequest)
             case .delete:
-                viewModel.handleRowActionForAccountDeletion()
+                viewModel.handleRowActionForAccountDeletion(loadingCompleteViewController: self)
             }
         }
     }
