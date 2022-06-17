@@ -240,11 +240,13 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     }
     
     private func deleteCard(at indexPath: IndexPath) {
-        self.collectionView.performBatchUpdates({ [weak self] in
-            self?.collectionView.deleteItems(at: [indexPath])
-        }) { [weak self] _ in
-            self?.reloadCollectionView()
-            self?.indexPathOfCardToDelete = nil
+        if self.collectionView.numberOfItems(inSection: indexPath.section) > 0 {
+            self.collectionView.performBatchUpdates({ [weak self] in
+                self?.collectionView.deleteItems(at: [indexPath])
+            }) { [weak self] _ in
+                self?.reloadCollectionView()
+                self?.indexPathOfCardToDelete = nil
+            }
         }
     }
     
