@@ -22,7 +22,7 @@ class PLRCellViewModel {
     var voucherAmountText: String? {
         switch voucherEarnType {
         case .accumulator:
-            return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value?.twoDecimalPointString() ?? "")\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
+            return "\(voucher.burn?.prefix ?? "") \(voucher.burn?.value?.twoDecimalPointString() ?? "")\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
         case .stamps:
             var valueString = ""
             if let burnValueString = voucher.burn?.value?.twoDecimalPointString() {
