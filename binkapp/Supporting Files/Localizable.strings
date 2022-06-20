@@ -511,4 +511,5 @@
 "alert_view_cannot_delete_card_title" = "Cannot delete";
 "alert_view_cannot_delete_card_body" = "While your card is pending it cannot be deleted. Please try again later.";
 "delete_action_title" = "Delete";
+"contact_us_action_title" = "Contact Us";
 

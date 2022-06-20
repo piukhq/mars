@@ -61,7 +61,7 @@ class SettingsViewModel: UserServiceProtocol {
             
             self.deleteService(params: APIConstants.makeServiceRequest(email: Current.userManager.currentEmailAddress ?? "")) { success, _ in
                 guard success else {
-                    let alert = ViewControllerFactory.makeTwoButtonAlertViewController(title: L10n.errorTitle, message: L10n.settingsDeleteAccountFailedAlertMessage, primaryButtonTitle: L10n.ok, secondaryButtonTitle: L10n.settingsRowContactTitle) {
+                    let alert = ViewControllerFactory.makeTwoButtonAlertViewController(title: L10n.errorTitle, message: L10n.settingsDeleteAccountFailedAlertMessage, primaryButtonTitle: L10n.ok, secondaryButtonTitle: L10n.contactUsActionTitle) {
                         Current.navigate.close()
                     } secondaryButtonCompletion: {
                         Current.navigate.close() {

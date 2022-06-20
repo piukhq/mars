@@ -158,6 +158,8 @@ internal enum L10n {
   internal static let checkInboxTitle = L10n.tr("Localizable", "check_inbox_title")
   /// There was a problem communicating with the server. Please try again later.
   internal static let communicationError = L10n.tr("Localizable", "communication_error")
+  /// Contact Us
+  internal static let contactUsActionTitle = L10n.tr("Localizable", "contact_us_action_title")
   /// Continue
   internal static let continueButtonTitle = L10n.tr("Localizable", "continue_button_title")
   /// Enter credentials
