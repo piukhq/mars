@@ -24,7 +24,7 @@ enum WalletDataSourceSection: Int, CaseIterable {
 // typealias WalletDataSource = UICollectionViewDiffableDataSource<WalletDataSourceSection, WalletDataSourceItem>
 // typealias WalletDataSourceSnapshot = NSDiffableDataSourceSnapshot<WalletDataSourceSection, WalletDataSourceItem>
 
-class WalletViewController<T: WalletViewModel>: BinkViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, InAppReviewable {
+class WalletViewController<T: WalletViewModel>: BinkViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, InAppReviewable, UIPopoverPresentationControllerDelegate, OptionItemListViewControllerDelegate {
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -130,8 +130,10 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     private func configureNavigationItem() {
         let settingsIcon = Asset.settings.image.withRenderingMode(.alwaysOriginal)
         let settingsBarButton = UIBarButtonItem(image: settingsIcon, style: .plain, target: self, action: #selector(settingsButtonTapped))
+        let sortBarButton = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down"), style: .plain, target: self, action: #selector(sortButtonTapped))
+        
         settingsBarButton.accessibilityIdentifier = "settings"
-        navigationItem.rightBarButtonItem = settingsBarButton
+        navigationItem.rightBarButtonItems = [settingsBarButton, sortBarButton]
         
         var rightInset: CGFloat = 0
         switch UIDevice.current.width {
@@ -153,6 +155,23 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             actionRequiredSettings.append(.contactUs)
         }
         viewModel.toSettings(rowsWithActionRequired: actionRequiredSettings)
+    }
+    
+    @objc func sortButtonTapped(_ sender: UIBarButtonItem) {
+        let newestOptionItem = SortOrderOptionItem(text: "Newest", font: UIFont.systemFont(ofSize: 15), isSelected: true, orderType: .newest)
+        let customOptionItem = SortOrderOptionItem(text: "Custom", font: UIFont.systemFont(ofSize: 15), isSelected: false, orderType: .custom)
+        presentOptionsPopover(withOptionItems: [[newestOptionItem, customOptionItem]], fromBarButtonItem: sender)
+    }
+    
+    func presentOptionsPopover(withOptionItems items: [[OptionItem]], fromBarButtonItem barButtonItem: UIBarButtonItem) {
+        let optionItemListVC = OptionItemListViewController()
+        optionItemListVC.items = items
+        optionItemListVC.delegate = self
+        
+        guard let popoverPresentationController = optionItemListVC.popoverPresentationController else { fatalError("Set Modal presentation style") }
+        popoverPresentationController.barButtonItem = barButtonItem
+        popoverPresentationController.delegate = self
+        self.present(optionItemListVC, animated: true, completion: nil)
     }
     
     func configureCollectionView() {
@@ -326,6 +345,17 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         refreshControl.tintColor = Current.themeManager.color(for: .text)
         reloadCollectionView()
         collectionView.indicatorStyle = Current.themeManager.scrollViewIndicatorStyle(for: traitCollection)
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+    
+    func optionItemListViewController(_ controller: OptionItemListViewController, didSelectOptionItem item: OptionItem) {
+        controller.dismiss(animated: true)
+        if item.isSelected {
+            print(item)
+        }
     }
     
     // MARK: - Diffable data source
