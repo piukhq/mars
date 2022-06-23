@@ -130,10 +130,9 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     private func configureNavigationItem() {
         let settingsIcon = Asset.settings.image.withRenderingMode(.alwaysOriginal)
         let settingsBarButton = UIBarButtonItem(image: settingsIcon, style: .plain, target: self, action: #selector(settingsButtonTapped))
-        let sortBarButton = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down"), style: .plain, target: self, action: #selector(sortButtonTapped))
-        
+
         settingsBarButton.accessibilityIdentifier = "settings"
-        navigationItem.rightBarButtonItems = [settingsBarButton, sortBarButton]
+        navigationItem.rightBarButtonItems = [settingsBarButton, setupSortBarButton()]
         
         var rightInset: CGFloat = 0
         switch UIDevice.current.width {
@@ -149,6 +148,23 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         settingsBarButton.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: rightInset)
     }
     
+    func setupSortBarButton() -> UIBarButtonItem {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(systemName: "arrow.up.arrow.down"), for: .normal)
+        button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+        button.frame = CGRect(x: 0, y: 0, width: 32, height: 22)
+        let label = UILabel(frame: CGRect(x: 0, y: 12, width: 32, height: 20))
+        label.font = .tabBarSmall
+        label.text = "Newest"
+        label.textAlignment = .center
+        label.textColor = Current.themeManager.color(for: .text)
+        label.backgroundColor = .clear
+        button.addSubview(label)
+        let sortbarButton = UIBarButtonItem(customView: button)
+        sortbarButton.accessibilityIdentifier = "sort"
+        return sortbarButton
+    }
+    
     @objc func settingsButtonTapped() {
         var actionRequiredSettings: [SettingsRow.RowType] = []
         if hasSupportUpdates {
@@ -157,19 +173,20 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         viewModel.toSettings(rowsWithActionRequired: actionRequiredSettings)
     }
     
-    @objc func sortButtonTapped(_ sender: UIBarButtonItem) {
+    @objc func sortButtonTapped(_ sender: UIButton) {
         let newestOptionItem = SortOrderOptionItem(text: "Newest", font: UIFont.systemFont(ofSize: 15), isSelected: true, orderType: .newest)
         let customOptionItem = SortOrderOptionItem(text: "Custom", font: UIFont.systemFont(ofSize: 15), isSelected: false, orderType: .custom)
         presentOptionsPopover(withOptionItems: [[newestOptionItem, customOptionItem]], fromBarButtonItem: sender)
     }
     
-    func presentOptionsPopover(withOptionItems items: [[OptionItem]], fromBarButtonItem barButtonItem: UIBarButtonItem) {
+    func presentOptionsPopover(withOptionItems items: [[OptionItem]], fromBarButtonItem barButtonItem: UIButton) {
         let optionItemListVC = OptionItemListViewController()
         optionItemListVC.items = items
         optionItemListVC.delegate = self
         
         guard let popoverPresentationController = optionItemListVC.popoverPresentationController else { fatalError("Set Modal presentation style") }
-        popoverPresentationController.barButtonItem = barButtonItem
+        popoverPresentationController.sourceView = barButtonItem
+        popoverPresentationController.sourceRect = barButtonItem.bounds
         popoverPresentationController.delegate = self
         self.present(optionItemListVC, animated: true, completion: nil)
     }
@@ -354,7 +371,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     func optionItemListViewController(_ controller: OptionItemListViewController, didSelectOptionItem item: OptionItem) {
         controller.dismiss(animated: true)
         if item.isSelected {
-            print(item)
+            print(item.text)
         }
     }
     

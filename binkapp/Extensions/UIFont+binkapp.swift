@@ -93,6 +93,10 @@ extension UIFont {
         return UIFont(name: "NunitoSans-Regular", size: 12.0) ?? UIFont()
     }
     
+    class var tabBarSmall: UIFont {
+        return UIFont(name: "NunitoSans-Regular", size: 8.0) ?? UIFont()
+    }
+    
     class var navBar: UIFont {
         return UIFont(name: "NunitoSans-ExtraBold", size: 18.0) ?? UIFont()
     }

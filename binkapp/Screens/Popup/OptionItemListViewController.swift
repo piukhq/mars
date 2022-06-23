@@ -18,6 +18,7 @@ extension UITableViewCell {
     func configure(with optionItem: OptionItem) {
         textLabel?.text = optionItem.text
         textLabel?.font = optionItem.font
+        tintColor = Current.themeManager.color(for: .text)
     }
 }
 
