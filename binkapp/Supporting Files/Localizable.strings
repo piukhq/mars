@@ -504,3 +504,5 @@
 // MARK: - Global
 "alert_view_cannot_delete_card_title" = "Cannot delete";
 "alert_view_cannot_delete_card_body" = "While your card is pending it cannot be deleted. Please try again later.";
+"alert_view_changing_sort" = "Changing Sort";
+"alert_view_changing_sort_body" = "Some of your cards have been ordered manually. Press OK to change the sort order, but please note that your manual ordering of cards will be lost.";

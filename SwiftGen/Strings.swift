@@ -76,6 +76,10 @@ internal enum L10n {
   internal static let alertViewCannotDeleteCardBody = L10n.tr("Localizable", "alert_view_cannot_delete_card_body")
   /// Cannot delete
   internal static let alertViewCannotDeleteCardTitle = L10n.tr("Localizable", "alert_view_cannot_delete_card_title")
+  /// Changing Sort
+  internal static let alertViewChangingSort = L10n.tr("Localizable", "alert_view_changing_sort")
+  /// Some of your cards have been ordered manually. Press OK to change the sort order, but please note that your manual ordering of cards will be lost.
+  internal static let alertViewChangingSortBody = L10n.tr("Localizable", "alert_view_changing_sort_body")
   /// All
   internal static let allTitle = L10n.tr("Localizable", "all_title")
   /// Please enter your %@ credentials below to add this card to your wallet.

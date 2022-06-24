@@ -105,7 +105,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
     }
     
     func showSortOrderChangeAlert(onCancel: @escaping () -> Void) {
-        let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: "Changing Sort", message: L10n.preferencesClearCredentialsBody, cancelButton: true) {
+        let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: L10n.alertViewChangingSort, message: L10n.alertViewChangingSortBody, cancelButton: true) {
             onCancel()
         }
         let navigationRequest = AlertNavigationRequest(alertController: alert)
