@@ -78,6 +78,7 @@ extension UserDefaults: BinkUserDefaults {
         case analyticsDebugMode
         case rememberMyDetails
         case membershipCardsSortType
+        case hasMembershipOrderChanged
         
         var keyValue: String {
             switch self {
@@ -123,6 +124,8 @@ extension UserDefaults: BinkUserDefaults {
                 return "rememberMyDetails"
             case .membershipCardsSortType:
                 return "membershipCardsSortType"
+            case .hasMembershipOrderChanged:
+                return "hasMembershipOrderChanged"
             }
         }
     }

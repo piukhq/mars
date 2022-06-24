@@ -30,6 +30,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     func presentOptionsPopover(withOptionItems items: [[OptionItem]], fromBarButtonItem barButtonItem: UIButton) {
         let optionItemListVC = OptionItemListViewController()
+        optionItemListVC.title = "Sort Order"
         optionItemListVC.items = items
         optionItemListVC.delegate = self
         
@@ -37,6 +38,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         popoverPresentationController.sourceView = barButtonItem
         popoverPresentationController.sourceRect = barButtonItem.bounds
         popoverPresentationController.delegate = self
+        
         self.present(optionItemListVC, animated: true, completion: nil)
     }
     
@@ -75,8 +77,11 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     @objc private func sortButtonTapped(_ sender: UIButton) {
         let sortType = viewModel.getCurrentMembershipCardsSortType()
-        let newestOptionItem = SortOrderOptionItem(text: "Newest", font: UIFont.systemFont(ofSize: 15), isSelected: sortType == SortState.newest.keyValue, orderType: .newest)
-        let customOptionItem = SortOrderOptionItem(text: "Custom", font: UIFont.systemFont(ofSize: 15), isSelected: sortType == SortState.custom.keyValue, orderType: .custom)
+        let newestString = MembershipCardsSortState.newest.keyValue
+        let customString = MembershipCardsSortState.custom.keyValue
+        
+        let newestOptionItem = SortOrderOptionItem(text: newestString, font: UIFont.systemFont(ofSize: 15), isSelected: sortType == newestString, orderType: MembershipCardsSortState.newest)
+        let customOptionItem = SortOrderOptionItem(text: customString, font: UIFont.systemFont(ofSize: 15), isSelected: sortType == customString, orderType: MembershipCardsSortState.custom)
         presentOptionsPopover(withOptionItems: [[newestOptionItem, customOptionItem]], fromBarButtonItem: sender)
     }
     
@@ -132,7 +137,8 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         guard let membershipCard = viewModel.cards?[sourceIndexPath.row] else { return }
-        viewModel.setMembershipCardsSortingType(sortType: SortState.custom.keyValue)
+        viewModel.setMembershipCardMoved(hasMoved: true)
+        viewModel.setMembershipCardsSortingType(sortType: MembershipCardsSortState.custom.keyValue)
         self.setupSortBarButton()
         Current.wallet.reorderMembershipCard(membershipCard, from: sourceIndexPath.row, to: destinationIndexPath.row)
     }
@@ -254,7 +260,11 @@ extension LoyaltyWalletViewController: OptionItemListViewControllerDelegate {
         let previousSortType = viewModel.getCurrentMembershipCardsSortType()
         
         if item.isSelected {
-            if previousSortType == SortState.custom.keyValue && item.text == SortState.newest.keyValue {
+            if item.text == previousSortType {
+                return
+            }
+            
+            if viewModel.hasMembershipCardMoved() && previousSortType == MembershipCardsSortState.custom.keyValue && item.text == MembershipCardsSortState.newest.keyValue {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4, execute: {
                     self.viewModel.showSortOrderChangeAlert() {
                         print("action")
@@ -270,5 +280,7 @@ extension LoyaltyWalletViewController: OptionItemListViewControllerDelegate {
                 setupSortBarButton()
             }
         }
+        
+        viewModel.setMembershipCardMoved(hasMoved: false)
     }
 }

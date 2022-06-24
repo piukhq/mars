@@ -11,7 +11,7 @@ import DeepDiff
 import CoreData
 import CardScan
 
-enum SortState {
+enum MembershipCardsSortState {
     case newest
     case custom
     
@@ -45,25 +45,30 @@ class LoyaltyWalletViewModel: WalletViewModel {
             return type
         }
         
+        let newestString = MembershipCardsSortState.newest.keyValue
+        let customString = MembershipCardsSortState.newest.keyValue
+        
         if let sortedCards = localWalletSortedCardsKey() {
             if !sortedCards.isEmpty {
-                Current.userDefaults.set("Custom", forDefaultsKey: .hasLaunchedWallet)
-                return "Custom"
+                setMembershipCardsSortingType(sortType: newestString)
+                return newestString
             }
         }
         
-        Current.userDefaults.set("Newest", forDefaultsKey: .hasLaunchedWallet)
-        return "Newest"
+        setMembershipCardsSortingType(sortType: customString)
+        return customString
     }
     
     func setMembershipCardsSortingType(sortType: String) {
         Current.userDefaults.set(sortType, forDefaultsKey: .membershipCardsSortType)
+        MixpanelUtility.track(.membershipCardsSortOrder(value: sortType))
     }
     
     func localWalletSortedCardsKey() -> String? {
         guard let userId = Current.userManager.currentUserId else {
             return nil
         }
+        
         return UserDefaults.Keys.localWalletOrder(userId: userId, walletType: Wallet.WalletType.loyalty).keyValue
     }
     
@@ -73,6 +78,14 @@ class LoyaltyWalletViewModel: WalletViewModel {
         }
         
         Current.userDefaults.set([String](), forDefaultsKey: UserDefaults.Keys.localWalletOrder(userId: userId, walletType: Wallet.WalletType.loyalty))
+    }
+    
+    func setMembershipCardMoved(hasMoved: Bool) {
+        Current.userDefaults.set(hasMoved, forDefaultsKey: .hasMembershipOrderChanged)
+    }
+    
+    func hasMembershipCardMoved() -> Bool {
+        return Current.userDefaults.bool(forDefaultsKey: .hasMembershipOrderChanged)
     }
     
     func toBarcodeViewController(indexPath: IndexPath, completion: @escaping () -> Void) {

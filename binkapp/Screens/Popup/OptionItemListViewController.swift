@@ -38,8 +38,7 @@ class OptionItemListViewController: UIViewController {
             calculateAndSetPreferredContentSize()
         }
     }
-    
-    private(set) weak var tableView: UITableView?
+    var tableView = UITableView()
     weak var delegate: OptionItemListViewControllerDelegate?
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -52,21 +51,42 @@ class OptionItemListViewController: UIViewController {
     }
     
     override func loadView() {
-        view = UITableView(frame: .zero, style: UITableView.Style.plain)
-        tableView = view as? UITableView
-        tableView?.isScrollEnabled = false
+        super.loadView()
+
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.font = .tabBar
+        label.text = self.title
+
+        view.addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
+        label.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 34).isActive = true
+        label.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -34).isActive = true
+        
+        tableView.isScrollEnabled = false
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10).isActive = true
+        tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        
+        view.backgroundColor = tableView.backgroundColor
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView?.dataSource = self
-        tableView?.delegate = self
-        tableView?.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
     }
     
     func calculateAndSetPreferredContentSize() {
         let totalItems = CGFloat(items.flatMap { $0 }.count)
-        let totalHeight = totalItems * 64
+        let totalHeight = totalItems * 80
         preferredContentSize = CGSize(width: CGFloat(200), height: totalHeight)
     }
 }
@@ -111,5 +131,5 @@ struct SortOrderOptionItem: OptionItem {
     var text: String
     var font = UIFont.systemFont(ofSize: 13)
     var isSelected: Bool
-    var orderType: SortState
+    var orderType: MembershipCardsSortState
 }
