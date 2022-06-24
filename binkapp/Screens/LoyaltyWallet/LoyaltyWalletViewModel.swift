@@ -11,6 +11,20 @@ import DeepDiff
 import CoreData
 import CardScan
 
+enum SortState {
+    case newest
+    case custom
+    
+    var keyValue: String {
+        switch self {
+        case .newest:
+            return "Newest"
+        case .custom:
+            return "Custom"
+        }
+    }
+}
+
 class LoyaltyWalletViewModel: WalletViewModel {
     typealias T = CD_MembershipCard
     
@@ -24,6 +38,41 @@ class LoyaltyWalletViewModel: WalletViewModel {
     
     func setupWalletPrompts() {
         walletPrompts = WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty)
+    }
+    
+    func getCurrentMembershipCardsSortType() -> String {
+        if let type = Current.userDefaults.string(forDefaultsKey: .membershipCardsSortType) {
+            return type
+        }
+        
+        if let sortedCards = localWalletSortedCardsKey() {
+            if !sortedCards.isEmpty {
+                Current.userDefaults.set("Custom", forDefaultsKey: .hasLaunchedWallet)
+                return "Custom"
+            }
+        }
+        
+        Current.userDefaults.set("Newest", forDefaultsKey: .hasLaunchedWallet)
+        return "Newest"
+    }
+    
+    func setMembershipCardsSortingType(sortType: String) {
+        Current.userDefaults.set(sortType, forDefaultsKey: .membershipCardsSortType)
+    }
+    
+    func localWalletSortedCardsKey() -> String? {
+        guard let userId = Current.userManager.currentUserId else {
+            return nil
+        }
+        return UserDefaults.Keys.localWalletOrder(userId: userId, walletType: Wallet.WalletType.loyalty).keyValue
+    }
+    
+    func clearLocalWalletSortedCardsKey() {
+        guard let userId = Current.userManager.currentUserId else {
+            return
+        }
+        
+        Current.userDefaults.set([String](), forDefaultsKey: UserDefaults.Keys.localWalletOrder(userId: userId, walletType: Wallet.WalletType.loyalty))
     }
     
     func toBarcodeViewController(indexPath: IndexPath, completion: @escaping () -> Void) {
@@ -42,6 +91,14 @@ class LoyaltyWalletViewModel: WalletViewModel {
         MixpanelUtility.track(.lcdViewed(brandName: card.membershipPlan?.account?.companyName ?? "Unknown", route: .wallet))
     }
     
+    func showSortOrderChangeAlert(onCancel: @escaping () -> Void) {
+        let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: "Changing Sort", message: L10n.preferencesClearCredentialsBody, cancelButton: true) {
+            onCancel()
+        }
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
+    }
+        
     func showDeleteConfirmationAlert(card: CD_MembershipCard, onCancel: @escaping () -> Void) {
         guard card.status?.status != .pending else {
             let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.alertViewCannotDeleteCardTitle, message: L10n.alertViewCannotDeleteCardBody) {

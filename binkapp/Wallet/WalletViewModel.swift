@@ -9,11 +9,6 @@
 import Foundation
 import CardScan
 
-enum SortState {
-    case newest
-    case custom
-}
-
 protocol WalletViewModel {
     associatedtype T
     

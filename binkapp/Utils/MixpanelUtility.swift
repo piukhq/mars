@@ -64,6 +64,7 @@ enum MixpanelTrackableEvent {
     case logout
     case viewBarcode(brandName: String, route: JourneyRoute)
     case barcodeScreenIssueReported(brandName: String, reason: BarcodeScreenIssue)
+    case membershipCardsSortOrder(value: String)
     
     enum JourneyRoute: String {
         case wallet = "Wallet"
@@ -101,6 +102,8 @@ enum MixpanelTrackableEvent {
             return "Barcode viewed"
         case .barcodeScreenIssueReported:
             return "Barcode screen issue reported"
+        case .membershipCardsSortOrder:
+            return "Wallet Sort Setting"
         }
     }
     
@@ -153,6 +156,8 @@ enum MixpanelTrackableEvent {
                 "Reason": reason.rawValue,
                 "Brand name": brandName
             ]
+        case .membershipCardsSortOrder(let value):
+            return ["Wallet Sort Setting": value]
         }
     }
 }

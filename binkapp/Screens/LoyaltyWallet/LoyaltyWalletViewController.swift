@@ -24,6 +24,20 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         super.viewDidLoad()
         navigationController?.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidUpdate, object: nil)
+        
+        setupSortBarButton()
+    }
+    
+    func presentOptionsPopover(withOptionItems items: [[OptionItem]], fromBarButtonItem barButtonItem: UIButton) {
+        let optionItemListVC = OptionItemListViewController()
+        optionItemListVC.items = items
+        optionItemListVC.delegate = self
+        
+        guard let popoverPresentationController = optionItemListVC.popoverPresentationController else { fatalError("Set Modal presentation style") }
+        popoverPresentationController.sourceView = barButtonItem
+        popoverPresentationController.sourceRect = barButtonItem.bounds
+        popoverPresentationController.delegate = self
+        self.present(optionItemListVC, animated: true, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,6 +48,36 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .loyaltyWallet)
+    }
+    
+    func setupSortBarButton() {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(systemName: "arrow.up.arrow.down"), for: .normal)
+        button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+        button.frame = CGRect(x: 0, y: 0, width: 32, height: 22)
+        let label = UILabel(frame: CGRect(x: 0, y: 12, width: 32, height: 20))
+        label.font = .tabBarSmall
+        label.text = viewModel.getCurrentMembershipCardsSortType()
+        label.textAlignment = .center
+        label.textColor = Current.themeManager.color(for: .text)
+        label.backgroundColor = .clear
+        button.addSubview(label)
+        let sortbarButton = UIBarButtonItem(customView: button)
+        sortbarButton.accessibilityIdentifier = "sort"
+        
+        if navigationItem.rightBarButtonItems?.count == 1 {
+            navigationItem.rightBarButtonItems?.append(sortbarButton)
+        } else {
+            navigationItem.rightBarButtonItems?.remove(at: 1)
+            navigationItem.rightBarButtonItems?.append(sortbarButton)
+        }
+    }
+    
+    @objc private func sortButtonTapped(_ sender: UIButton) {
+        let sortType = viewModel.getCurrentMembershipCardsSortType()
+        let newestOptionItem = SortOrderOptionItem(text: "Newest", font: UIFont.systemFont(ofSize: 15), isSelected: sortType == SortState.newest.keyValue, orderType: .newest)
+        let customOptionItem = SortOrderOptionItem(text: "Custom", font: UIFont.systemFont(ofSize: 15), isSelected: sortType == SortState.custom.keyValue, orderType: .custom)
+        presentOptionsPopover(withOptionItems: [[newestOptionItem, customOptionItem]], fromBarButtonItem: sender)
     }
     
     @objc private func handlePointsScrapingUpdate() {
@@ -88,6 +132,8 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         guard let membershipCard = viewModel.cards?[sourceIndexPath.row] else { return }
+        viewModel.setMembershipCardsSortingType(sortType: SortState.custom.keyValue)
+        self.setupSortBarButton()
         Current.wallet.reorderMembershipCard(membershipCard, from: sourceIndexPath.row, to: destinationIndexPath.row)
     }
     
@@ -193,5 +239,36 @@ extension LoyaltyWalletViewController: UINavigationControllerDelegate {
             return operation == .push ? LoyaltyWalletAnimator() : nil
         }
         return nil
+    }
+}
+
+extension LoyaltyWalletViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+}
+
+extension LoyaltyWalletViewController: OptionItemListViewControllerDelegate {
+    func optionItemListViewController(_ controller: OptionItemListViewController, didSelectOptionItem item: OptionItem) {
+        controller.dismiss(animated: true)
+        let previousSortType = viewModel.getCurrentMembershipCardsSortType()
+        
+        if item.isSelected {
+            if previousSortType == SortState.custom.keyValue && item.text == SortState.newest.keyValue {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4, execute: {
+                    self.viewModel.showSortOrderChangeAlert() {
+                        print("action")
+                        self.viewModel.setMembershipCardsSortingType(sortType: item.text)
+                        self.setupSortBarButton()
+                        self.viewModel.clearLocalWalletSortedCardsKey()
+                        Current.wallet.launch()
+                    }
+                })
+            } else {
+                print(item.text)
+                viewModel.setMembershipCardsSortingType(sortType: item.text)
+                setupSortBarButton()
+            }
+        }
     }
 }
