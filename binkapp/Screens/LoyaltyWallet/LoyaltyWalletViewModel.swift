@@ -42,18 +42,13 @@ class LoyaltyWalletViewModel: WalletViewModel {
     
     func getCurrentMembershipCardsSortType() -> String {
         if let type = Current.userDefaults.string(forDefaultsKey: .membershipCardsSortType) {
-            return type
+            if !type.isEmpty {
+                return type
+            }
         }
         
         let newestString = MembershipCardsSortState.newest.keyValue
         let customString = MembershipCardsSortState.custom.keyValue
-        
-        if let appLaunches = Current.userDefaults.value(forDefaultsKey: .appLaunches) as? [TimeInterval] {
-            if appLaunches.count == 1 {
-                setMembershipCardsSortingType(sortType: newestString)
-                return newestString
-            }
-        }
         
         if let sortedCards = localWalletSortedCardsKey() {
             if !sortedCards.isEmpty {
@@ -71,12 +66,11 @@ class LoyaltyWalletViewModel: WalletViewModel {
         MixpanelUtility.track(.membershipCardsSortOrder(value: sortType))
     }
     
-    func localWalletSortedCardsKey() -> String? {
+    func localWalletSortedCardsKey() -> [String]? {
         guard let userId = Current.userManager.currentUserId else {
             return nil
         }
-        
-        return UserDefaults.Keys.localWalletOrder(userId: userId, walletType: Wallet.WalletType.loyalty).keyValue
+        return Current.userDefaults.value(forDefaultsKey: UserDefaults.Keys.localWalletOrder(userId: userId, walletType: Wallet.WalletType.loyalty)) as? [String]
     }
     
     func clearLocalWalletSortedCardsKey() {
