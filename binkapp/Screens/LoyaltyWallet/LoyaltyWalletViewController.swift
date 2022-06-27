@@ -36,7 +36,8 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         
         guard let popoverPresentationController = optionItemListVC.popoverPresentationController else { fatalError("Set Modal presentation style") }
         popoverPresentationController.sourceView = barButtonItem
-        popoverPresentationController.sourceRect = barButtonItem.bounds
+        let sourceRect = CGRect(x: barButtonItem.bounds.origin.x, y: barButtonItem.bounds.origin.y, width: barButtonItem.bounds.width, height: barButtonItem.bounds.height + 6)
+        popoverPresentationController.sourceRect = sourceRect
         popoverPresentationController.delegate = self
         
         self.present(optionItemListVC, animated: true, completion: nil)
@@ -57,13 +58,16 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         button.setImage(UIImage(systemName: "arrow.up.arrow.down"), for: .normal)
         button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
         button.frame = CGRect(x: 0, y: 0, width: 32, height: 22)
+        button.tintColor = UIColor.sortBarButton
+        
         let label = UILabel(frame: CGRect(x: 0, y: 12, width: 32, height: 20))
         label.font = .tabBarSmall
         label.text = viewModel.getCurrentMembershipCardsSortType()
         label.textAlignment = .center
-        label.textColor = Current.themeManager.color(for: .text)
+        label.textColor = UIColor.sortBarButton
         label.backgroundColor = .clear
         button.addSubview(label)
+        
         let sortbarButton = UIBarButtonItem(customView: button)
         sortbarButton.accessibilityIdentifier = "sort"
         
@@ -80,8 +84,8 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         let newestString = MembershipCardsSortState.newest.keyValue
         let customString = MembershipCardsSortState.custom.keyValue
         
-        let newestOptionItem = SortOrderOptionItem(text: newestString, font: UIFont.systemFont(ofSize: 15), isSelected: sortType == newestString, orderType: MembershipCardsSortState.newest)
-        let customOptionItem = SortOrderOptionItem(text: customString, font: UIFont.systemFont(ofSize: 15), isSelected: sortType == customString, orderType: MembershipCardsSortState.custom)
+        let newestOptionItem = SortOrderOptionItem(text: newestString, font: .walletPromptTitleSmall, isSelected: sortType == newestString, orderType: MembershipCardsSortState.newest)
+        let customOptionItem = SortOrderOptionItem(text: customString, font: .walletPromptTitleSmall, isSelected: sortType == customString, orderType: MembershipCardsSortState.custom)
         presentOptionsPopover(withOptionItems: [[newestOptionItem, customOptionItem]], fromBarButtonItem: sender)
     }
     
@@ -267,7 +271,6 @@ extension LoyaltyWalletViewController: OptionItemListViewControllerDelegate {
             if viewModel.hasMembershipCardMoved() && previousSortType == MembershipCardsSortState.custom.keyValue && item.text == MembershipCardsSortState.newest.keyValue {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4, execute: {
                     self.viewModel.showSortOrderChangeAlert() {
-                        print("action")
                         self.viewModel.setMembershipCardsSortingType(sortType: item.text)
                         self.setupSortBarButton()
                         self.viewModel.clearLocalWalletSortedCardsKey()

@@ -46,17 +46,24 @@ class LoyaltyWalletViewModel: WalletViewModel {
         }
         
         let newestString = MembershipCardsSortState.newest.keyValue
-        let customString = MembershipCardsSortState.newest.keyValue
+        let customString = MembershipCardsSortState.custom.keyValue
         
-        if let sortedCards = localWalletSortedCardsKey() {
-            if !sortedCards.isEmpty {
+        if let appLaunches = Current.userDefaults.value(forDefaultsKey: .appLaunches) as? [TimeInterval] {
+            if appLaunches.count == 1 {
                 setMembershipCardsSortingType(sortType: newestString)
                 return newestString
             }
         }
         
-        setMembershipCardsSortingType(sortType: customString)
-        return customString
+        if let sortedCards = localWalletSortedCardsKey() {
+            if !sortedCards.isEmpty {
+                setMembershipCardsSortingType(sortType: customString)
+                return customString
+            }
+        }
+        
+        setMembershipCardsSortingType(sortType: newestString)
+        return newestString
     }
     
     func setMembershipCardsSortingType(sortType: String) {
