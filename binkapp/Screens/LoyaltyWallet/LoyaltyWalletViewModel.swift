@@ -40,55 +40,6 @@ class LoyaltyWalletViewModel: WalletViewModel {
         walletPrompts = WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty)
     }
     
-    func getCurrentMembershipCardsSortType() -> String {
-        if let type = Current.userDefaults.string(forDefaultsKey: .membershipCardsSortType) {
-            if !type.isEmpty {
-                return type
-            }
-        }
-        
-        let newestString = MembershipCardsSortState.newest.keyValue
-        let customString = MembershipCardsSortState.custom.keyValue
-        
-        if let sortedCards = localWalletSortedCardsKey() {
-            if !sortedCards.isEmpty {
-                setMembershipCardsSortingType(sortType: customString)
-                return customString
-            }
-        }
-        
-        setMembershipCardsSortingType(sortType: newestString)
-        return newestString
-    }
-    
-    func setMembershipCardsSortingType(sortType: String) {
-        Current.userDefaults.set(sortType, forDefaultsKey: .membershipCardsSortType)
-        MixpanelUtility.track(.membershipCardsSortOrder(value: sortType))
-    }
-    
-    func localWalletSortedCardsKey() -> [String]? {
-        guard let userId = Current.userManager.currentUserId else {
-            return nil
-        }
-        return Current.userDefaults.value(forDefaultsKey: UserDefaults.Keys.localWalletOrder(userId: userId, walletType: Wallet.WalletType.loyalty)) as? [String]
-    }
-    
-    func clearLocalWalletSortedCardsKey() {
-        guard let userId = Current.userManager.currentUserId else {
-            return
-        }
-        
-        Current.userDefaults.set([String](), forDefaultsKey: UserDefaults.Keys.localWalletOrder(userId: userId, walletType: Wallet.WalletType.loyalty))
-    }
-    
-    func setMembershipCardMoved(hasMoved: Bool) {
-        Current.userDefaults.set(hasMoved, forDefaultsKey: .hasMembershipOrderChanged)
-    }
-    
-    func hasMembershipCardMoved() -> Bool {
-        return Current.userDefaults.bool(forDefaultsKey: .hasMembershipOrderChanged)
-    }
-    
     func toBarcodeViewController(indexPath: IndexPath, completion: @escaping () -> Void) {
         guard let card = cards?[indexPath.row] else {
             return
@@ -153,5 +104,54 @@ class LoyaltyWalletViewModel: WalletViewModel {
         let alert = ViewControllerFactory.makeOkAlertViewController(title: "No Barcode", message: "No barcode or card number to display. Please check the status of this card.")
         let navigationRequest = AlertNavigationRequest(alertController: alert, completion: completion)
         Current.navigate.to(navigationRequest)
+    }
+    
+    func getCurrentMembershipCardsSortType() -> String {
+        if let type = Current.userDefaults.string(forDefaultsKey: .membershipCardsSortType) {
+            if !type.isEmpty {
+                return type
+            }
+        }
+        
+        let newestString = MembershipCardsSortState.newest.keyValue
+        let customString = MembershipCardsSortState.custom.keyValue
+        
+        if let sortedCards = localWalletSortedCardsKey() {
+            if !sortedCards.isEmpty {
+                setMembershipCardsSortingType(sortType: customString)
+                return customString
+            }
+        }
+        
+        setMembershipCardsSortingType(sortType: newestString)
+        return newestString
+    }
+    
+    func setMembershipCardsSortingType(sortType: String) {
+        Current.userDefaults.set(sortType, forDefaultsKey: .membershipCardsSortType)
+        MixpanelUtility.track(.membershipCardsSortOrder(value: sortType))
+    }
+    
+    func localWalletSortedCardsKey() -> [String]? {
+        guard let userId = Current.userManager.currentUserId else {
+            return nil
+        }
+        return Current.userDefaults.value(forDefaultsKey: UserDefaults.Keys.localWalletOrder(userId: userId, walletType: Wallet.WalletType.loyalty)) as? [String]
+    }
+    
+    func clearLocalWalletSortedCardsKey() {
+        guard let userId = Current.userManager.currentUserId else {
+            return
+        }
+        
+        Current.userDefaults.set([String](), forDefaultsKey: UserDefaults.Keys.localWalletOrder(userId: userId, walletType: Wallet.WalletType.loyalty))
+    }
+    
+    func setMembershipCardMoved(hasMoved: Bool) {
+        Current.userDefaults.set(hasMoved, forDefaultsKey: .hasMembershipOrderChanged)
+    }
+    
+    func hasMembershipCardMoved() -> Bool {
+        return Current.userDefaults.bool(forDefaultsKey: .hasMembershipOrderChanged)
     }
 }
