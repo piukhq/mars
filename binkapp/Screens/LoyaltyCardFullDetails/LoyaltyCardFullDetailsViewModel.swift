@@ -123,6 +123,12 @@ class LoyaltyCardFullDetailsViewModel {
         MixpanelUtility.track(.viewBarcode(brandName: membershipCard.membershipPlan?.account?.companyName ?? "Unknown", route: .lcd))
     }
     
+    func toGeoLocations() {
+        let viewController = ViewControllerFactory.makeGeoLocationsViewController()
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+    }
+    
     func goToScreenForState(state: ModuleState, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) {
         switch state {
         case .loginChanges, .lpcLoginRequired:

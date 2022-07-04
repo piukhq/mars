@@ -515,7 +515,7 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     @objc func showMapLocations() {
-        print("to map locations")
+        viewModel.toGeoLocations()
     }
     
     private func setPadding(animated: Bool = true) {
