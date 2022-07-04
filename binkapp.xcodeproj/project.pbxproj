@@ -22,6 +22,9 @@
 
 /* Begin PBXBuildFile section */
 		21393EFB285A1E1C002C8E79 /* StringHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21393EFA285A1E1C002C8E79 /* StringHelperTests.swift */; };
+		214EC01F28732020000A3F73 /* GifLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC01E28732020000A3F73 /* GifLoader.swift */; };
+		214EC021287320FD000A3F73 /* place-marker.gif in Resources */ = {isa = PBXBuildFile; fileRef = 214EC020287320FD000A3F73 /* place-marker.gif */; };
+		21CE710C2872F2C3003EC968 /* tesco-locations.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 21CE710B2872F2C2003EC968 /* tesco-locations.geojson */; };
 		3C05A9DC2327CD3D00620583 /* AppDelegate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DB2327CD3D00620583 /* AppDelegate+Extension.swift */; };
 		3C05A9DE2327CE6300620583 /* PaymentCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DD2327CE6300620583 /* PaymentCardModel.swift */; };
 		3C05A9E02327D35100620583 /* PortraitNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DF2327D35100620583 /* PortraitNavigationController.swift */; };
@@ -669,6 +672,9 @@
 		0578BBF342AD2E4F349D1822 /* Pods_binkappUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21393EFA285A1E1C002C8E79 /* StringHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHelperTests.swift; sourceTree = "<group>"; };
 		2144647F3F7FD0825EAA4342 /* Pods-binkapp-binkappUITests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp-binkappUITests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkapp-binkappUITests/Pods-binkapp-binkappUITests.app store (internal).xcconfig"; sourceTree = "<group>"; };
+		214EC01E28732020000A3F73 /* GifLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifLoader.swift; sourceTree = "<group>"; };
+		214EC020287320FD000A3F73 /* place-marker.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "place-marker.gif"; sourceTree = "<group>"; };
+		21CE710B2872F2C2003EC968 /* tesco-locations.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "tesco-locations.geojson"; sourceTree = "<group>"; };
 		2211289D0FB0F1A14BC9E957 /* Pods-binkapp.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.beta.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.beta.xcconfig"; sourceTree = "<group>"; };
 		26F00637A9D94FD020319165 /* Pods-binkappUITests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.app store (internal).xcconfig"; sourceTree = "<group>"; };
 		352CBEDF33DDEB7B603C909B /* Pods_binkappTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1640,6 +1646,7 @@
 				EF4B46612344A73D009A3651 /* HapticFeedbackUtil.swift */,
 				BD458B3F236C987F0029A538 /* UserManager.swift */,
 				CE65ED972840D8F70043E7B8 /* BinkSupportUtility.swift */,
+				214EC01E28732020000A3F73 /* GifLoader.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2981,6 +2988,8 @@
 		EFCB2C182329368D0060F73B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				214EC020287320FD000A3F73 /* place-marker.gif */,
+				21CE710B2872F2C2003EC968 /* tesco-locations.geojson */,
 				CE85A1FF26B1535B003B74CD /* Animations */,
 				EF99B024240E74860046D41E /* devPublicKey.der */,
 				EF5229B72423FC4E004AC972 /* stagingPublicKey.der */,
@@ -3319,6 +3328,7 @@
 				3CD3493C22F99E1D000C1F4D /* NunitoSans-Bold.ttf in Resources */,
 				3C794D8D23018C25000A31FD /* BrowseBrandsViewController.xib in Resources */,
 				EF5229B82423FC4E004AC972 /* stagingPublicKey.der in Resources */,
+				21CE710C2872F2C3003EC968 /* tesco-locations.geojson in Resources */,
 				B7FE19BB234391B000F2D6A0 /* PaymentCardCell.xib in Resources */,
 				CE822D8227B1322B00916C74 /* binkOld.der in Resources */,
 				5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */,
@@ -3326,6 +3336,7 @@
 				3C9B1A2323854B9D0078A1EC /* PreferencesViewController.xib in Resources */,
 				3CD3493822F99E1D000C1F4D /* NunitoSans-Regular.ttf in Resources */,
 				3C360721230FF03B00AC76A3 /* BrandHeaderView.xib in Resources */,
+				214EC021287320FD000A3F73 /* place-marker.gif in Resources */,
 				3CD3493922F99E1D000C1F4D /* NunitoSans-SemiBoldItalic.ttf in Resources */,
 				EFEF54A9246EB52900A630F3 /* PLRStampViewCell.xib in Resources */,
 				EFF59F25234DEE8E00CF3992 /* DetailNavigationTitleView.xib in Resources */,
@@ -3766,6 +3777,7 @@
 				3CEABFCA2316AB42009B1122 /* MembershipTransaction.swift in Sources */,
 				B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */,
 				BD9E4CD823740A7500C6F098 /* PreferenceChangeResponse.swift in Sources */,
+				214EC01F28732020000A3F73 /* GifLoader.swift in Sources */,
 				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
 				EF758E0F23225F45000D26A9 /* NSManagedObjectContext.swift in Sources */,
 				3C8BBC292326541D00363349 /* NotificationNameExtension.swift in Sources */,
@@ -4152,7 +4164,7 @@
 			baseConfigurationReference = BD3CB9432328573C005C37AE /* Dev.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				API_BASE_URL = api.dev.gb.bink.com;
+				API_BASE_URL = api.staging.gb.bink.com;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -4285,7 +4297,7 @@
 			baseConfigurationReference = E708C17C8E9A69A07732E058 /* Pods-binkapp.alpha.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				API_BASE_URL = api.dev.gb.bink.com;
+				API_BASE_URL = api.staging.gb.bink.com;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Alpha";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;

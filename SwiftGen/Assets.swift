@@ -90,6 +90,7 @@ internal enum Asset {
   internal static let fullclose = ImageAsset(name: "fullclose")
   internal static let iconsChevronRight = ImageAsset(name: "iconsChevronRight")
   internal static let inactiveCheck = ImageAsset(name: "inactive_check")
+  internal static let locationArrow = ImageAsset(name: "location_arrow")
   internal static let navbarIconsBack = ImageAsset(name: "navbarIconsBack")
   internal static let navbarIconsBackMask = ImageAsset(name: "navbarIconsBackMask")
   internal static let payment = ImageAsset(name: "payment")
