@@ -318,7 +318,9 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
             
             if let cell = selectedCell {
-                animate(cell, to: CGAffineTransform(translationX: 0, y: -LayoutHelper.WalletDimensions.cardLineSpacing))
+                if !cell.isKind(of: WalletPromptCollectionViewCell.self) && !cell.isKind(of: OnboardingCardCollectionViewCell.self) {
+                    animate(cell, to: CGAffineTransform(translationX: 0, y: -LayoutHelper.WalletDimensions.cardLineSpacing))
+                }
             }
         case .changed:
             if let bounds = gesture.view?.bounds {
