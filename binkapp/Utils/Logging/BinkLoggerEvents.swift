@@ -95,6 +95,7 @@ enum UserLoggerEvent: String, BinkLoggerProtocol {
     case userLoggedIn = "User logged in"
     case signedInWithApple = "Signed in with Apple"
     case createdService = "Created service"
+    case deletedService = "Deleted service"
     case fetchedPreferences = "Fetched preferences"
     case setPreferences = "Set preferences success"
     case renewedToken = "Renewed token"
