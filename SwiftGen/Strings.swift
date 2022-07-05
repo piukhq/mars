@@ -94,6 +94,10 @@ internal enum L10n {
   internal static let barcodeError = L10n.tr("Localizable", "barcode_error")
   /// Maximise barcode
   internal static let barcodeMaximiseButton = L10n.tr("Localizable", "barcode_maximise_button")
+  /// %@ Number
+  internal static func barcodeMembershipNumberTitle(_ p1: Any) -> String {
+    return L10n.tr("Localizable", "barcode_membership_number_title", String(describing: p1))
+  }
   /// Report Issue
   internal static let barcodeReportIssueButtonTitle = L10n.tr("Localizable", "barcode_report_issue_button_title")
   /// We're sorry you're experiencing an issue. Thank you for reporting it to us
