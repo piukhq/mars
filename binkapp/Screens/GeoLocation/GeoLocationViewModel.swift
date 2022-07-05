@@ -11,7 +11,6 @@ import MapKit
 
 class GeoLocationViewModel {
     var geoLocationDataModel: GeoModel?
-    var coordinates: [CLLocation] = []
     
     private func getGeoLocationData() -> Data? {
         if let filePath = Bundle.main.path(forResource: "tesco-locations", ofType: "geojson") {
@@ -30,10 +29,6 @@ class GeoLocationViewModel {
         if let jsonData = getGeoLocationData() {
             do {
                 geoLocationDataModel = try JSONDecoder().decode(GeoModel.self, from: jsonData)
-                for feature in geoLocationDataModel?.features ?? [] {
-                    let location = CLLocation(latitude: feature.geometry.coordinates[1], longitude: feature.geometry.coordinates[0])
-                    coordinates.append(location)
-                }
             } catch let error {
                 print(error.localizedDescription)
             }

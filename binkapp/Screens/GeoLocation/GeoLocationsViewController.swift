@@ -40,6 +40,7 @@ class GeoLocationsViewController: UIViewController {
         mapView.delegate = self
         mapView.isZoomEnabled = true
         mapView.isScrollEnabled = true
+        mapView.showsUserLocation = true
     }
     
     override func viewDidLoad() {
@@ -48,6 +49,7 @@ class GeoLocationsViewController: UIViewController {
         setMapConstraints()
         viewModel.parseGeoJson()
         determineCurrentLocation()
+        addAnnotations()
     }
     
     func determineCurrentLocation() {
@@ -60,9 +62,44 @@ class GeoLocationsViewController: UIViewController {
             locationManager.startUpdatingLocation()
         }
     }
+    
+    func addAnnotations() {
+        for feature in viewModel.geoLocationDataModel?.features ?? [] {
+            print(feature)
+            let coordinates = CLLocationCoordinate2D(latitude: feature.geometry.coordinates[1], longitude: feature.geometry.coordinates[0])
+            let pin = CustomAnnotation(
+            title: feature.properties.location_name,
+            location: feature.properties.city,
+            coordinate: coordinates)
+            mapView.addAnnotation(pin)
+        }
+    }
 }
 
 extension GeoLocationsViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let annotation = annotation as? CustomAnnotation else {
+            return nil
+        }
+        
+        let identifier = "customAnnotation"
+        var view: MKMarkerAnnotationView
+        
+        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView {
+            dequeuedView.annotation = annotation
+            view = dequeuedView
+        } else {
+            view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            view.canShowCallout = true
+            view.calloutOffset = CGPoint(x: -5, y: 5)
+            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        }
+        return view
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        print("tapped")
+    }
 }
 
 extension GeoLocationsViewController: CLLocationManagerDelegate {
@@ -70,19 +107,32 @@ extension GeoLocationsViewController: CLLocationManagerDelegate {
         let userLocation: CLLocation = locations[0] as CLLocation
 
         let center = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
 
         mapView.setRegion(region, animated: true)
-        
-        let annotation = MKPointAnnotation()
-            annotation.coordinate = CLLocationCoordinate2DMake(userLocation.coordinate.latitude, userLocation.coordinate.longitude)
-            annotation.title = currentLocationStr
-            mapView.addAnnotation(annotation)
         
         locationManager.stopUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error - locationManager: \(error.localizedDescription)")
+    }
+}
+
+class CustomAnnotation: NSObject, MKAnnotation {
+    let title: String?
+    let location: String?
+    let coordinate: CLLocationCoordinate2D
+    
+    init(title: String?, location: String?, coordinate: CLLocationCoordinate2D) {
+        self.title = title
+        self.location = location
+        self.coordinate = coordinate
+        
+        super.init()
+    }
+    
+    var subtitle: String? {
+        return location
     }
 }
