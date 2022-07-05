@@ -10,7 +10,9 @@ import Foundation
 import UIKit
 import MapKit
 
-class GeoLocationsViewController : UIViewController {
+class GeoLocationsViewController: UIViewController {
+    private let viewModel = GeoLocationViewModel()
+    
     private lazy var mapView: MKMapView = {
         let map = MKMapView()
         map.overrideUserInterfaceStyle = .dark
@@ -40,9 +42,11 @@ class GeoLocationsViewController : UIViewController {
         super.viewDidLoad()
         
         setMapConstraints()
+        
+        viewModel.parseGeoJson()
     }
 }
 
-extension GeoLocationsViewController : MKMapViewDelegate {
+extension GeoLocationsViewController: MKMapViewDelegate {
      
 }
