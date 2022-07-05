@@ -30,7 +30,6 @@ class GeoLocationViewModel {
         if let jsonData = getGeoLocationData() {
             do {
                 geoLocationDataModel = try JSONDecoder().decode(GeoModel.self, from: jsonData)
-                print(geoLocationDataModel ?? "")
                 for feature in geoLocationDataModel?.features ?? [] {
                     let location = CLLocation(latitude: feature.geometry.coordinates[1], longitude: feature.geometry.coordinates[0])
                     coordinates.append(location)

@@ -12,6 +12,8 @@ import MapKit
 
 class GeoLocationsViewController: UIViewController {
     private let viewModel = GeoLocationViewModel()
+    var locationManager: CLLocationManager!
+    var currentLocationStr = "Current location"
     
     private lazy var mapView: MKMapView = {
         let map = MKMapView()
@@ -36,17 +38,51 @@ class GeoLocationsViewController: UIViewController {
         mapView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         
         mapView.delegate = self
+        mapView.isZoomEnabled = true
+        mapView.isScrollEnabled = true
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setMapConstraints()
-        
         viewModel.parseGeoJson()
+        determineCurrentLocation()
+    }
+    
+    func determineCurrentLocation() {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+        }
     }
 }
 
 extension GeoLocationsViewController: MKMapViewDelegate {
-     
+}
+
+extension GeoLocationsViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let userLocation: CLLocation = locations[0] as CLLocation
+
+        let center = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+
+        mapView.setRegion(region, animated: true)
+        
+        let annotation = MKPointAnnotation()
+            annotation.coordinate = CLLocationCoordinate2DMake(userLocation.coordinate.latitude, userLocation.coordinate.longitude)
+            annotation.title = currentLocationStr
+            mapView.addAnnotation(annotation)
+        
+        locationManager.stopUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Error - locationManager: \(error.localizedDescription)")
+    }
 }
