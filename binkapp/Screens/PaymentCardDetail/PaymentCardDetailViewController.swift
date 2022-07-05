@@ -170,6 +170,8 @@ private extension PaymentCardDetailViewController {
     
     func configureUI() {
         addedCardsTitleLabel.text = viewModel.addedCardsTitle
+        
+        addedCardsDescriptionLabel.textColor = Current.themeManager.color(for: .text)
         viewModel.paymentCardIsActive ? addedCardsDescriptionLabel.text = viewModel.addedCardsDescription : addedCardsDescriptionLabel.configure(viewModel.addedCardsDescription, withHyperlink: L10n.pcdPendingCardHyperlink, delegate: self)
         
         otherCardsTitleLabel.text = viewModel.otherCardsTitle
@@ -195,7 +197,6 @@ private extension PaymentCardDetailViewController {
         
         stackScrollView.backgroundColor = Current.themeManager.color(for: .viewBackground)
         addedCardsTitleLabel.textColor = Current.themeManager.color(for: .text)
-        addedCardsDescriptionLabel.textColor = Current.themeManager.color(for: .text)
         otherCardsTitleLabel.textColor = Current.themeManager.color(for: .text)
         otherCardsDescriptionLabel.textColor = Current.themeManager.color(for: .text)
         cardAddedLabel.textColor = Current.themeManager.color(for: .text)
