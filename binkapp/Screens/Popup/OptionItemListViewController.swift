@@ -66,10 +66,20 @@ class OptionItemListViewController: UIViewController {
         label.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 34).isActive = true
         label.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -34).isActive = true
         
+        let line = UIView()
+        line.backgroundColor = Current.themeManager.color(for: .text)
+        line.alpha = 0.3
+        view.addSubview(line)
+        line.translatesAutoresizingMaskIntoConstraints = false
+        line.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 4).isActive = true
+        line.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        line.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        line.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        
         tableView.isScrollEnabled = false
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 4).isActive = true
+        tableView.topAnchor.constraint(equalTo: line.bottomAnchor, constant: 1).isActive = true
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true

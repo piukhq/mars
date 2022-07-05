@@ -60,7 +60,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         button.frame = CGRect(x: 0, y: 0, width: 32, height: 22)
         button.tintColor = UIColor.sortBarButton
         
-        let label = UILabel(frame: CGRect(x: 0, y: 12, width: 32, height: 20))
+        let label = UILabel(frame: CGRect(x: 0, y: 14, width: 32, height: 20))
         label.font = .tabBarSmall
         label.text = viewModel.getCurrentMembershipCardsSortType()
         label.textAlignment = .center
@@ -274,16 +274,14 @@ extension LoyaltyWalletViewController: OptionItemListViewControllerDelegate {
                         self.viewModel.setMembershipCardsSortingType(sortType: item.text)
                         self.setupSortBarButton()
                         self.viewModel.clearLocalWalletSortedCardsKey()
+                        self.viewModel.setMembershipCardMoved(hasMoved: false)
                         Current.wallet.launch()
                     }
                 })
             } else {
-                print(item.text)
                 viewModel.setMembershipCardsSortingType(sortType: item.text)
                 setupSortBarButton()
             }
         }
-        
-        viewModel.setMembershipCardMoved(hasMoved: false)
     }
 }
