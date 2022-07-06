@@ -14,10 +14,11 @@ class GeoLocationsViewController: UIViewController {
     private let viewModel = GeoLocationViewModel()
     var locationManager: CLLocationManager!
     var currentLocationStr = "Current location"
+    var selectedAnnotation: CustomAnnotation?
+    
     
     private lazy var mapView: MKMapView = {
         let map = MKMapView()
-        map.overrideUserInterfaceStyle = .dark
         return map
     }()
     
@@ -65,14 +66,32 @@ class GeoLocationsViewController: UIViewController {
     
     func addAnnotations() {
         for feature in viewModel.geoLocationDataModel?.features ?? [] {
-            print(feature)
             let coordinates = CLLocationCoordinate2D(latitude: feature.geometry.coordinates[1], longitude: feature.geometry.coordinates[0])
             let pin = CustomAnnotation(
-            title: feature.properties.location_name,
-            location: feature.properties.city,
-            coordinate: coordinates)
+                location: (feature.properties.location_name ?? "") + " - " + (feature.properties.city ?? ""),
+            coordinate: coordinates,
+            image: UIImage(named: "location_arrow"))
             mapView.addAnnotation(pin)
         }
+    }
+    
+    @objc func tap(sender: UIButton) {
+        if let annotation = selectedAnnotation {
+            let latitude = annotation.coordinate.latitude
+            let longitude = annotation.coordinate.longitude
+            let regionDistance: CLLocationDistance = 10000
+            let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
+            let regionSpan = MKCoordinateRegion(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
+            let options = [
+                MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+                MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
+            ]
+            let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+            let mapItem = MKMapItem(placemark: placemark)
+            mapItem.name = annotation.location
+            mapItem.openInMaps(launchOptions: options)
+        }
+        selectedAnnotation = nil
     }
 }
 
@@ -82,23 +101,28 @@ extension GeoLocationsViewController: MKMapViewDelegate {
             return nil
         }
         
-        let identifier = "customAnnotation"
-        var view: MKMarkerAnnotationView
-        
-        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView {
-            dequeuedView.annotation = annotation
-            view = dequeuedView
-        } else {
-            view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            view.canShowCallout = true
-            view.calloutOffset = CGPoint(x: -5, y: 5)
-            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-        }
-        return view
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        annotationView?.canShowCallout = true
+        annotationView?.detailCalloutAccessoryView = CalloutView(annotation: annotation)
+        return annotationView
     }
     
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print("tapped")
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        self.selectedAnnotation = view.annotation as? CustomAnnotation
+        for gesture in view.gestureRecognizers ?? [] {
+            view.removeGestureRecognizer(gesture)
+        }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(GeoLocationsViewController.tap(sender:)))
+        view.addGestureRecognizer(tapGesture)
+        print("tapped pin")
+    }
+    
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        self.selectedAnnotation = nil
+        for gesture in view.gestureRecognizers ?? [] {
+            view.removeGestureRecognizer(gesture)
+        }
     }
 }
 
@@ -120,19 +144,76 @@ extension GeoLocationsViewController: CLLocationManagerDelegate {
 }
 
 class CustomAnnotation: NSObject, MKAnnotation {
-    let title: String?
     let location: String?
     let coordinate: CLLocationCoordinate2D
+    let image: UIImage?
     
-    init(title: String?, location: String?, coordinate: CLLocationCoordinate2D) {
-        self.title = title
+    init(location: String?, coordinate: CLLocationCoordinate2D, image: UIImage?) {
         self.location = location
         self.coordinate = coordinate
+        self.image = image
         
         super.init()
     }
+}
+
+class CalloutView: UIView {
+    private let titleLabel = UILabel(frame: .zero)
+    private let subtitleLabel = UILabel(frame: .zero)
+    private let imageView = UIImageView(frame: .zero)
+    private let annotation: CustomAnnotation
     
-    var subtitle: String? {
-        return location
+    init(annotation: CustomAnnotation) {
+        self.annotation = annotation
+        super.init(frame: .zero)
+        setupView()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupView() {
+        translatesAutoresizingMaskIntoConstraints = false
+        heightAnchor.constraint(equalToConstant: 80).isActive = true
+        widthAnchor.constraint(equalToConstant: 340).isActive = true
+        
+        setupTitle()
+        setupSubtitle()
+        setupImageView()
+    }
+    
+    private func setupTitle() {
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        titleLabel.text = annotation.location
+        titleLabel.textColor = Current.themeManager.color(for: .text)
+        addSubview(titleLabel)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 84).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+    }
+    
+    private func setupSubtitle() {
+        subtitleLabel.font = UIFont.systemFont(ofSize: 14)
+        subtitleLabel.textColor = Current.themeManager.color(for: .text)
+        subtitleLabel.text = "Press for directions"
+        addSubview(subtitleLabel)
+        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).isActive = true
+        subtitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 84).isActive = true
+        subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+    }
+    
+    private func setupImageView() {
+        imageView.image = annotation.image
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        addSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 18).isActive = true
+        imageView.topAnchor.constraint(equalTo: topAnchor, constant: 18).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -18).isActive = true
+        imageView.rightAnchor.constraint(equalTo: titleLabel.leftAnchor, constant: -18).isActive = true
     }
 }
