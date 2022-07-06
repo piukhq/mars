@@ -19,6 +19,7 @@ extension UITableViewCell {
         textLabel?.text = optionItem.text
         textLabel?.font = optionItem.font
         tintColor = Current.themeManager.color(for: .text)
+        backgroundColor = Current.themeManager.color(for: .walletCardBackground)
     }
 }
 
@@ -83,8 +84,9 @@ class OptionItemListViewController: UIViewController {
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        tableView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         
-        view.backgroundColor = tableView.backgroundColor
+        view.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
     }
     
     override func viewDidLoad() {
