@@ -293,6 +293,18 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         return proposedIndexPath
     }
     
+    private func animate(_ cell: UICollectionViewCell, to transform: CGAffineTransform) {
+        UIView.animate(
+            withDuration: 0.4,
+            delay: 0,
+            usingSpringWithDamping: 0.4,
+            initialSpringVelocity: 3,
+            options: [.curveEaseInOut],
+            animations: {
+                cell.transform = transform
+            }, completion: nil)
+    }
+    
     @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
         switch gesture.state {
         case .began:
@@ -304,11 +316,17 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             
             orderingManager.start()
             collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+            
+            if let cell = selectedCell {
+                if !cell.isKind(of: WalletPromptCollectionViewCell.self) && !cell.isKind(of: OnboardingCardCollectionViewCell.self) {
+                    animate(cell, to: CGAffineTransform(translationX: 0, y: -LayoutHelper.WalletDimensions.cardLineSpacing))
+                }
+            }
         case .changed:
             if let bounds = gesture.view?.bounds {
                 let gestureLocation = gesture.location(in: gesture.view)
                 let centerX: CGFloat = bounds.size.width / 2
-                let updatedLocation = CGPoint(x: centerX, y: gestureLocation.y + (distanceFromCenterOfCell ?? 0))
+                let updatedLocation = CGPoint(x: centerX, y: gestureLocation.y - LayoutHelper.WalletDimensions.cardLineSpacing + (distanceFromCenterOfCell ?? 0))
                 collectionView.updateInteractiveMovementTargetPosition(updatedLocation)
             }
         case .ended:
