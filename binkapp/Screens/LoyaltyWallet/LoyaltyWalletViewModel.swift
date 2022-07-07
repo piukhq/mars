@@ -11,18 +11,9 @@ import DeepDiff
 import CoreData
 import CardScan
 
-enum MembershipCardsSortState {
-    case newest
-    case custom
-    
-    var keyValue: String {
-        switch self {
-        case .newest:
-            return "Newest"
-        case .custom:
-            return "Custom"
-        }
-    }
+enum MembershipCardsSortState: String {
+    case newest = "Newest"
+    case custom = "Custom"
 }
 
 class LoyaltyWalletViewModel: WalletViewModel {
@@ -106,30 +97,28 @@ class LoyaltyWalletViewModel: WalletViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func getCurrentMembershipCardsSortType() -> String {
+    func getCurrentMembershipCardsSortType() -> MembershipCardsSortState? {
         if let type = Current.userDefaults.string(forDefaultsKey: .membershipCardsSortType) {
             if !type.isEmpty {
-                return type
+                return MembershipCardsSortState(rawValue: type)
             }
         }
-        
-        let newestString = MembershipCardsSortState.newest.keyValue
-        let customString = MembershipCardsSortState.custom.keyValue
         
         if let sortedCards = getLocalWalletOrderFromUserDefaults() {
             if !sortedCards.isEmpty {
                 setMembershipCardsSortingType(sortType: .custom)
-                return customString
+                return .custom
             }
         }
         
         setMembershipCardsSortingType(sortType: .newest)
-        return newestString
+        return .newest
     }
     
-    func setMembershipCardsSortingType(sortType: MembershipCardsSortState) {
-        Current.userDefaults.set(sortType.keyValue, forDefaultsKey: .membershipCardsSortType)
-        MixpanelUtility.track(.loyaltyCardsSortOrder(value: sortType.keyValue))
+    func setMembershipCardsSortingType(sortType: MembershipCardsSortState?) {
+        guard let value = sortType?.rawValue else { return }
+        Current.userDefaults.set(value, forDefaultsKey: .membershipCardsSortType)
+        MixpanelUtility.track(.loyaltyCardsSortOrder(value: value))
     }
     
     func getLocalWalletOrderFromUserDefaults() -> [String]? {
