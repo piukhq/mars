@@ -11,20 +11,23 @@ import UIKit
 import MapKit
 
 class GeoLocationsViewController: UIViewController {
-    private let viewModel = GeoLocationViewModel()
-    var locationManager: CLLocationManager!
-    var currentLocationStr = "Current location"
-    var selectedAnnotation: CustomAnnotation?
+    private let viewModel: GeoLocationViewModel
+    private var locationManager: CLLocationManager!
+    private var currentLocationStr = "Current location"
+    private var selectedAnnotation: CustomAnnotation?
     
+    init(viewModel: GeoLocationViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
     private lazy var mapView: MKMapView = {
         let map = MKMapView()
+        map.isZoomEnabled = true
+        map.isScrollEnabled = true
+        map.showsUserLocation = true
         return map
     }()
-    
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -39,9 +42,6 @@ class GeoLocationsViewController: UIViewController {
         mapView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         
         mapView.delegate = self
-        mapView.isZoomEnabled = true
-        mapView.isScrollEnabled = true
-        mapView.showsUserLocation = true
     }
     
     override func viewDidLoad() {
@@ -57,7 +57,7 @@ class GeoLocationsViewController: UIViewController {
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
 
         if CLLocationManager.locationServicesEnabled() {
             locationManager.startUpdatingLocation()
@@ -65,14 +65,7 @@ class GeoLocationsViewController: UIViewController {
     }
     
     func addAnnotations() {
-        for feature in viewModel.geoLocationDataModel?.features ?? [] {
-            let coordinates = CLLocationCoordinate2D(latitude: feature.geometry.coordinates[1], longitude: feature.geometry.coordinates[0])
-            let pin = CustomAnnotation(
-                location: (feature.properties.location_name ?? "") + " - " + (feature.properties.city ?? ""),
-            coordinate: coordinates,
-            image: UIImage(named: "location_arrow"))
-            mapView.addAnnotation(pin)
-        }
+        mapView.addAnnotations(viewModel.annotations)
     }
     
     @objc func tap(sender: UIButton) {
@@ -184,7 +177,7 @@ class CalloutView: UIView {
     }
     
     private func setupTitle() {
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        titleLabel.font = .alertText
         titleLabel.text = annotation.location
         titleLabel.textColor = Current.themeManager.color(for: .text)
         addSubview(titleLabel)
@@ -195,7 +188,7 @@ class CalloutView: UIView {
     }
     
     private func setupSubtitle() {
-        subtitleLabel.font = UIFont.systemFont(ofSize: 14)
+        subtitleLabel.font = .navbarHeaderLine2
         subtitleLabel.textColor = Current.themeManager.color(for: .text)
         subtitleLabel.text = "Press for directions"
         addSubview(subtitleLabel)

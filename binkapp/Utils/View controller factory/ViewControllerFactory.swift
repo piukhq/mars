@@ -86,7 +86,8 @@ enum ViewControllerFactory {
     }
     
     static func makeGeoLocationsViewController() -> GeoLocationsViewController {
-        return GeoLocationsViewController()
+        let viewModel = GeoLocationViewModel()
+        return GeoLocationsViewController(viewModel: viewModel)
     }
     
     static func makeVoucherDetailViewController(voucher: CD_Voucher, plan: CD_MembershipPlan) -> PLRRewardDetailViewController {

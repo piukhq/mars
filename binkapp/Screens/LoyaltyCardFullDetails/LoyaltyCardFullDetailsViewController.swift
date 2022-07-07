@@ -134,7 +134,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Show Tesco Locations"
-        label.font = UIFont.alertText
+        label.font = .alertText
         label.textAlignment = .left
         label.textColor = Current.themeManager.color(for: .text)
         return label
@@ -145,7 +145,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Find your nearest store"
         label.textAlignment = .left
-        label.font = UIFont.navbarHeaderLine2
+        label.font = .navbarHeaderLine2
         label.textColor = Current.themeManager.color(for: .text)
         return label
     }()
@@ -362,7 +362,6 @@ private extension LoyaltyCardFullDetailsViewController {
             locationImage.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -32),
             locationImage.rightAnchor.constraint(equalTo: nearestStoresText.leftAnchor, constant: -6)
         ])
-        ///////////////////
         
         stackScrollView.add(arrangedSubview: separator)
         stackScrollView.add(arrangedSubview: informationTableView)
