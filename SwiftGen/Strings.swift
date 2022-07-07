@@ -263,6 +263,8 @@ internal enum L10n {
   internal static let linkedStatusImageName = L10n.tr("Localizable", "linked_status_image_name")
   /// There was a problem loading the page, please try again later.
   internal static let loadingError = L10n.tr("Localizable", "loading_error")
+  /// Locations
+  internal static let locations = L10n.tr("Localizable", "locations")
   /// Log in failed
   internal static let logInFailedTitle = L10n.tr("Localizable", "log_in_failed_title")
   /// You are seeing this because sometimes it takes a while to log in with the merchant. In the meantime please do not attempt to log in again, but you can use your card and receive your benefits as usual. After you are logged in you will be able to see your points balance.

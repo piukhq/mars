@@ -119,6 +119,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     }()
     
     private lazy var locationImage: UIImageView = {
+        // RS = using a gif at the moment. This asset might not be final
         let image = UIImage.gifImageWithName("place-marker")
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -349,18 +350,18 @@ private extension LoyaltyCardFullDetailsViewController {
         locationView.addSubview(showLocationsText)
         locationView.addSubview(nearestStoresText)
         NSLayoutConstraint.activate([
-            showLocationsText.rightAnchor.constraint(equalTo: locationView.rightAnchor, constant: -8),
-            showLocationsText.topAnchor.constraint(equalTo: locationView.topAnchor, constant: 32),
-            showLocationsText.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: 84),
+            showLocationsText.rightAnchor.constraint(equalTo: locationView.rightAnchor, constant: -LayoutHelper.GeoLocationCallout.locationsTextRightOffset),
+            showLocationsText.topAnchor.constraint(equalTo: locationView.topAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextTopOffset),
+            showLocationsText.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextLeftOffset),
 
-            nearestStoresText.rightAnchor.constraint(equalTo: locationView.rightAnchor, constant: -8),
-            nearestStoresText.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -32),
-            nearestStoresText.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: 84),
+            nearestStoresText.rightAnchor.constraint(equalTo: locationView.rightAnchor, constant: -LayoutHelper.GeoLocationCallout.nearestStoresTextRightOffset),
+            nearestStoresText.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.nearestStoresTextBottomOffset),
+            nearestStoresText.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextLeftOffset),
             
-            locationImage.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: 6),
-            locationImage.topAnchor.constraint(equalTo: locationView.topAnchor, constant: 32),
-            locationImage.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -32),
-            locationImage.rightAnchor.constraint(equalTo: nearestStoresText.leftAnchor, constant: -6)
+            locationImage.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset),
+            locationImage.topAnchor.constraint(equalTo: locationView.topAnchor, constant: LayoutHelper.GeoLocationCallout.locationImageVerticalOffset),
+            locationImage.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageVerticalOffset),
+            locationImage.rightAnchor.constraint(equalTo: nearestStoresText.leftAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset)
         ])
         
         stackScrollView.add(arrangedSubview: separator)

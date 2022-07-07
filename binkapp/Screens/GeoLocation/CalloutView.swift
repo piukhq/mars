@@ -25,9 +25,30 @@ class CustomAnnotation: NSObject, MKAnnotation {
 }
 
 class CalloutView: UIView {
-    private let titleLabel = UILabel(frame: .zero)
-    private let subtitleLabel = UILabel(frame: .zero)
-    private let imageView = UIImageView(frame: .zero)
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .alertText
+        label.text = annotation.location
+        label.textColor = Current.themeManager.color(for: .text)
+        return label
+    }()
+    
+    private lazy var subtitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .navbarHeaderLine2
+        label.textColor = Current.themeManager.color(for: .text)
+        label.text = L10n.pressForDirections
+        return label
+    }()
+    
+    private lazy var imageView: UIImageView = {
+        let view = UIImageView()
+        view.image = annotation.image
+        view.contentMode = .scaleAspectFit
+        view.clipsToBounds = true
+        return view
+    }()
+    
     private let annotation: CustomAnnotation
     
     init(annotation: CustomAnnotation) {
@@ -42,8 +63,8 @@ class CalloutView: UIView {
     
     private func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
-        heightAnchor.constraint(equalToConstant: 80).isActive = true
-        widthAnchor.constraint(equalToConstant: 340).isActive = true
+        heightAnchor.constraint(equalToConstant: LayoutHelper.GeoLocationCallout.calloutHeight).isActive = true
+        widthAnchor.constraint(equalToConstant: LayoutHelper.GeoLocationCallout.calloutwidth).isActive = true
         
         setupTitle()
         setupSubtitle()
@@ -51,36 +72,27 @@ class CalloutView: UIView {
     }
     
     private func setupTitle() {
-        titleLabel.font = .alertText
-        titleLabel.text = annotation.location
-        titleLabel.textColor = Current.themeManager.color(for: .text)
         addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 84).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: LayoutHelper.GeoLocationCallout.titleLabelTopOffset).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: LayoutHelper.GeoLocationCallout.titleLabelLeadingOffset).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
     }
     
     private func setupSubtitle() {
-        subtitleLabel.font = .navbarHeaderLine2
-        subtitleLabel.textColor = Current.themeManager.color(for: .text)
-        subtitleLabel.text = L10n.pressForDirections
         addSubview(subtitleLabel)
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).isActive = true
-        subtitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 84).isActive = true
+        subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: LayoutHelper.GeoLocationCallout.subTitleLabelTopOffset).isActive = true
+        subtitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: LayoutHelper.GeoLocationCallout.titleLabelLeadingOffset).isActive = true
         subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
     }
     
     private func setupImageView() {
-        imageView.image = annotation.image
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
         addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 18).isActive = true
-        imageView.topAnchor.constraint(equalTo: topAnchor, constant: 18).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -18).isActive = true
-        imageView.rightAnchor.constraint(equalTo: titleLabel.leftAnchor, constant: -18).isActive = true
+        imageView.leftAnchor.constraint(equalTo: leftAnchor, constant: LayoutHelper.GeoLocationCallout.imageViewOffset).isActive = true
+        imageView.topAnchor.constraint(equalTo: topAnchor, constant: LayoutHelper.GeoLocationCallout.imageViewOffset).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.imageViewOffset).isActive = true
+        imageView.rightAnchor.constraint(equalTo: titleLabel.leftAnchor, constant: -LayoutHelper.GeoLocationCallout.imageViewOffset).isActive = true
     }
 }

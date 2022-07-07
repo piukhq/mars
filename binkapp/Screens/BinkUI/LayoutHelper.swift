@@ -21,6 +21,22 @@ extension LayoutHelper {
         static let imageEdgeInsets = UIEdgeInsets(top: 8, left: 6, bottom: 7, right: 5)
         static let titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 3)
     }
+    
+    enum GeoLocationCallout {
+        static let calloutHeight: CGFloat = 80.0
+        static let calloutwidth: CGFloat = 340.0
+        static let titleLabelTopOffset: CGFloat = 16.0
+        static let titleLabelLeadingOffset: CGFloat = 84.0
+        static let subTitleLabelTopOffset: CGFloat = 8
+        static let imageViewOffset: CGFloat = 18
+        static let locationsTextTopOffset: CGFloat = 32
+        static let locationsTextRightOffset: CGFloat = 8
+        static let locationsTextLeftOffset: CGFloat = 84
+        static let nearestStoresTextRightOffset: CGFloat = 8
+        static let nearestStoresTextBottomOffset: CGFloat = 32
+        static let locationImageVerticalOffset: CGFloat = 32
+        static let locationImageHorizontalOffset: CGFloat = 6
+    }
 
     enum WalletDimensions {
         static let cardHorizontalPadding: CGFloat = 25.0

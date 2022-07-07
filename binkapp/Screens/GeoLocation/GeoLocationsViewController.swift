@@ -68,7 +68,7 @@ class GeoLocationsViewController: UIViewController {
         mapView.addAnnotations(viewModel.annotations)
     }
     
-    @objc func tap(sender: UIButton) {
+    @objc func tapOnCallout(sender: UIButton) {
         if let annotation = selectedAnnotation {
             let latitude = annotation.coordinate.latitude
             let longitude = annotation.coordinate.longitude
@@ -108,9 +108,8 @@ extension GeoLocationsViewController: MKMapViewDelegate {
             view.removeGestureRecognizer(gesture)
         }
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(GeoLocationsViewController.tap(sender:)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(GeoLocationsViewController.tapOnCallout(sender:)))
         view.addGestureRecognizer(tapGesture)
-        print("tapped pin")
     }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
@@ -131,9 +130,5 @@ extension GeoLocationsViewController: CLLocationManagerDelegate {
         mapView.setRegion(region, animated: true)
         
         locationManager.stopUpdatingLocation()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Error - locationManager: \(error.localizedDescription)")
     }
 }
