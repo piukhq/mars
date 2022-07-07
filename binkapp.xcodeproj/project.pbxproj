@@ -21,6 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		212F0C442876EB7E007F09CE /* CalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C432876EB7E007F09CE /* CalloutView.swift */; };
+		212F0C462876EC63007F09CE /* GeoLocationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */; };
 		21393EFB285A1E1C002C8E79 /* StringHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21393EFA285A1E1C002C8E79 /* StringHelperTests.swift */; };
 		214EC01F28732020000A3F73 /* GifLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC01E28732020000A3F73 /* GifLoader.swift */; };
 		214EC021287320FD000A3F73 /* place-marker.gif in Resources */ = {isa = PBXBuildFile; fileRef = 214EC020287320FD000A3F73 /* place-marker.gif */; };
@@ -673,6 +675,8 @@
 
 /* Begin PBXFileReference section */
 		0578BBF342AD2E4F349D1822 /* Pods_binkappUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		212F0C432876EB7E007F09CE /* CalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalloutView.swift; sourceTree = "<group>"; };
+		212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationModelTests.swift; sourceTree = "<group>"; };
 		21393EFA285A1E1C002C8E79 /* StringHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHelperTests.swift; sourceTree = "<group>"; };
 		2144647F3F7FD0825EAA4342 /* Pods-binkapp-binkappUITests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp-binkappUITests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkapp-binkappUITests/Pods-binkapp-binkappUITests.app store (internal).xcconfig"; sourceTree = "<group>"; };
 		214EC01E28732020000A3F73 /* GifLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifLoader.swift; sourceTree = "<group>"; };
@@ -1321,6 +1325,7 @@
 				214EC02528734B45000A3F73 /* GeoLocationsViewController.swift */,
 				214EC02828743165000A3F73 /* GeoModel.swift */,
 				214EC02D28743883000A3F73 /* GeoLocationViewModel.swift */,
+				212F0C432876EB7E007F09CE /* CalloutView.swift */,
 			);
 			path = GeoLocation;
 			sourceTree = "<group>";
@@ -2817,6 +2822,7 @@
 			isa = PBXGroup;
 			children = (
 				EF8B701123587BE3006CE3DD /* MembershipCardBalanceModelTests.swift */,
+				212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3976,6 +3982,7 @@
 				EFA5F70E2379A7C70027AB80 /* CD_ReasonCode.swift in Sources */,
 				EF335C892350D2C600D49223 /* WalletCard.swift in Sources */,
 				3CD2CBBF2346059100862A5A /* EnrolFieldPostModel.swift in Sources */,
+				212F0C442876EB7E007F09CE /* CalloutView.swift in Sources */,
 				CE539DAE25E80C1100BDA5EF /* BinkTableViewController.swift in Sources */,
 				3C4BE8C8233B590100EC4BF6 /* ReusableModalViewModel.swift in Sources */,
 				EF480C1B2355F9470060B7C1 /* WalletViewController.swift in Sources */,
@@ -4063,6 +4070,7 @@
 				EF7F6E6123E4288C00352DCF /* StorageUtilityTests.swift in Sources */,
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
 				3CEE169B2440550D00933859 /* BrowseBrandsViewModelTests.swift in Sources */,
+				212F0C462876EC63007F09CE /* GeoLocationModelTests.swift in Sources */,
 				3CFD913022F1BA8200F25AF1 /* (null) in Sources */,
 				EF758E1523225F95000D26A9 /* TestDatabase.xcdatamodeld in Sources */,
 				CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */,

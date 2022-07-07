@@ -41,6 +41,7 @@ class GeoLocationViewModel: ObservableObject {
     }
     
     private func getGeoLocationData() -> Data? {
+        //RS - loading from the bundle for now. In the future this will eventually coming down through firebase and will be different per company
         if let filePath = Bundle.main.path(forResource: "tesco-locations", ofType: "geojson") {
             do {
                 let data = try String(contentsOfFile: filePath).data(using: .utf8)

@@ -1,10 +1,7 @@
-//
-//  iOSDevCenters+GIF.swift
-//  GIF-Swift
-//
-//  Created by iOSDevCenters on 11/12/15.
-//  Copyright © 2016 iOSDevCenters. All rights reserved.
-//
+// swiftlint:disable all
+/*
+ Source: https://github.com/kiritmodi2702/GIF-Swift/blob/master/GIF-Swift/iOSDevCenters%2BGIF.swift
+ */
 import UIKit
 import ImageIO
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
