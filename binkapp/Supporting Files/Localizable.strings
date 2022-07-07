@@ -517,3 +517,4 @@
 "alert_view_changing_sort" = "Changing Sort";
 "alert_view_changing_sort_body" = "Some of your cards have been ordered manually. Press OK to change the sort order, but please note that your manual ordering of cards will be lost.";
 
+"sort_order" = "Sort Order";

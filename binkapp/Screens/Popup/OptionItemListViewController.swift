@@ -141,7 +141,7 @@ extension OptionItemListViewController: UITableViewDelegate {
 
 struct SortOrderOptionItem: OptionItem {
     var text: String
-    var font = UIFont.systemFont(ofSize: 13)
+    var font = UIFont.walletPromptTitleSmall
     var isSelected: Bool
     var orderType: MembershipCardsSortState
 }

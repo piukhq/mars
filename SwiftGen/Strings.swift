@@ -817,6 +817,8 @@ internal enum L10n {
   internal static let somethingWentWrongDescription = L10n.tr("Localizable", "something_went_wrong_description")
   /// Something went wrong
   internal static let somethingWentWrongTitle = L10n.tr("Localizable", "something_went_wrong_title")
+  /// Sort Order
+  internal static let sortOrder = L10n.tr("Localizable", "sort_order")
   /// Connection error. Please try again.
   internal static let sslPinningFailureText = L10n.tr("Localizable", "ssl_pinning_failure_text")
   /// Error
