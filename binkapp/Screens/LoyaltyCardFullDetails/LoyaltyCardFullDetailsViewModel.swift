@@ -124,9 +124,11 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     func toGeoLocations() {
-        let viewController = ViewControllerFactory.makeGeoLocationsViewController()
+        let companyName = membershipCard.membershipPlan?.account?.companyName ?? "Unknown"
+        let viewController = ViewControllerFactory.makeGeoLocationsViewController(companyName: companyName)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
+        MixpanelUtility.track(.toLocations(brandName: companyName, description: L10n.tappedShowLocations))
     }
     
     func goToScreenForState(state: ModuleState, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) {

@@ -9,8 +9,13 @@
 import Foundation
 import MapKit
 
-class GeoLocationViewModel {
-    var geoLocationDataModel: GeoModel?
+class GeoLocationViewModel: ObservableObject {
+    private var geoLocationDataModel: GeoModel?
+    private var companyName: String
+    
+    init(companyName: String) {
+        self.companyName = companyName
+    }
     
     var annotations: [CustomAnnotation] {
         features.compactMap { feature in
@@ -25,6 +30,14 @@ class GeoLocationViewModel {
     
     var features: [Feature] {
         return geoLocationDataModel?.features ?? []
+    }
+    
+    var title : String {
+        return companyName + " " + "Locations"
+    }
+    
+    func trackEvent() {
+        MixpanelUtility.track(.toAppleMaps(brandName: companyName, description: L10n.launchedAppleMaps))
     }
     
     private func getGeoLocationData() -> Data? {

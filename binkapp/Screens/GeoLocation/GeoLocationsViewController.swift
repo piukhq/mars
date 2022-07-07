@@ -13,7 +13,6 @@ import MapKit
 class GeoLocationsViewController: UIViewController {
     private let viewModel: GeoLocationViewModel
     private var locationManager: CLLocationManager!
-    private var currentLocationStr = "Current location"
     private var selectedAnnotation: CustomAnnotation?
     
     init(viewModel: GeoLocationViewModel) {
@@ -46,6 +45,7 @@ class GeoLocationsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = viewModel.title
         
         setMapConstraints()
         viewModel.parseGeoJson()
@@ -79,10 +79,12 @@ class GeoLocationsViewController: UIViewController {
                 MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
                 MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
             ]
-            let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+            let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: options)
             let mapItem = MKMapItem(placemark: placemark)
             mapItem.name = annotation.location
-            mapItem.openInMaps(launchOptions: options)
+            if mapItem.openInMaps(launchOptions: nil) {
+                viewModel.trackEvent()
+            }
         }
         selectedAnnotation = nil
     }
@@ -190,7 +192,7 @@ class CalloutView: UIView {
     private func setupSubtitle() {
         subtitleLabel.font = .navbarHeaderLine2
         subtitleLabel.textColor = Current.themeManager.color(for: .text)
-        subtitleLabel.text = "Press for directions"
+        subtitleLabel.text = L10n.pressForDirections
         addSubview(subtitleLabel)
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).isActive = true

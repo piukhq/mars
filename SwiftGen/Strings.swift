@@ -202,6 +202,8 @@ internal enum L10n {
   internal static let filtersButtonTitle = L10n.tr("Localizable", "filters_button_title")
   /// Find and join loyalty schemes
   internal static let findAndJoinDescription = L10n.tr("Localizable", "find_and_join_description")
+  /// Find your nearest store
+  internal static let findNearestStore = L10n.tr("Localizable", "find_nearest_store")
   /// If the email address you entered is associated with a Bink account, then a password reset email will be sent.
   internal static let fogrotPasswordPopupText = L10n.tr("Localizable", "fogrot_password_popup_text")
   /// Please enter your email address and if it is associated with a Bink account, then a password reset email will be sent
@@ -235,6 +237,8 @@ internal enum L10n {
   internal static let infoTitle = L10n.tr("Localizable", "info_title")
   /// Issues logging in?
   internal static let issuesLoggingIn = L10n.tr("Localizable", "issues_logging_in")
+  /// Launch Apple Maps for Directions
+  internal static let launchedAppleMaps = L10n.tr("Localizable", "launched_apple_maps")
   /// Learn more about how it works
   internal static let learnMore = L10n.tr("Localizable", "learn_more")
   /// To keep your account safe, links are only valid for a short period of time. Tap Retry and we will send you another.
@@ -649,6 +653,8 @@ internal enum L10n {
   internal static let preferencesScreenDescription = L10n.tr("Localizable", "preferences_screen_description")
   /// We can't update your preferences at the moment. Please try again later.
   internal static let preferencesUpdateFail = L10n.tr("Localizable", "preferences_update_fail")
+  /// Press for directions
+  internal static let pressForDirections = L10n.tr("Localizable", "press_for_directions")
   /// Privacy Policy
   internal static let privacyPolicy = L10n.tr("Localizable", "privacy_policy")
   /// Your recent transaction history
@@ -785,6 +791,8 @@ internal enum L10n {
   internal static let settingsTitle = L10n.tr("Localizable", "settings_title")
   /// Who we are
   internal static let settingsWhoWeAreTitle = L10n.tr("Localizable", "settings_who_we_are_title")
+  /// Show Tesco Locations
+  internal static let showTescoLocations = L10n.tr("Localizable", "show_tesco_locations")
   /// Sign up
   internal static let signUpButtonTitle = L10n.tr("Localizable", "sign_up_button_title")
   /// Sign up failed
@@ -848,6 +856,8 @@ internal enum L10n {
   internal static let tandcsLink = L10n.tr("Localizable", "tandcs_link")
   /// I agree to Bink's Terms and Conditions
   internal static let tandcsTitle = L10n.tr("Localizable", "tandcs_title")
+  /// Tapped Show Locations
+  internal static let tappedShowLocations = L10n.tr("Localizable", "tapped_show_locations")
   /// I authorise Mastercard, Visa and American Express to monitor activity on my payment card to determine when I have made a qualifying transaction, and for Mastercard, Visa and American Express to share such transaction details with Bink to enable my card-linked offer(s) and target offers that may be of interest to me. 
   /// 
   /// For information about Bink’s privacy practices please see Bink’s Privacy Policy. You may opt-out of transaction monitoring on the payment card(s) you entered at any time by deleting your payment card from your Bink wallet.
