@@ -46,7 +46,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         setupSortBarButton()
     }
     
-    func presentOptionsPopover(withOptionItems items: [[OptionItem]], fromBarButtonItem barButtonItem: UIButton) {
+    func presentOptionsPopover(withOptionItems items: [[OptionItemProtocol]], fromBarButtonItem barButtonItem: UIButton) {
         let optionItemListVC = OptionItemListViewController()
         optionItemListVC.title = L10n.sortOrder
         optionItemListVC.items = items
@@ -267,7 +267,7 @@ extension LoyaltyWalletViewController: UIPopoverPresentationControllerDelegate {
 }
 
 extension LoyaltyWalletViewController: OptionItemListViewControllerDelegate {
-    func optionItemListViewController(_ controller: OptionItemListViewController, didSelectOptionItem item: OptionItem) {
+    func optionItemListViewController(_ controller: OptionItemListViewController, didSelectOptionItem item: OptionItemProtocol) {
         controller.dismiss(animated: true)
         let previousSortType = viewModel.getCurrentMembershipCardsSortType()
         

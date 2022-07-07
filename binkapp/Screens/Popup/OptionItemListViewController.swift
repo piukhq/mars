@@ -8,38 +8,55 @@
 
 import UIKit
 
-protocol OptionItem {
+protocol OptionItemProtocol {
     var text: String { get }
     var isSelected: Bool { get set }
-    var font: UIFont { get set }
 }
 
 extension UITableViewCell {
-    func configure(with optionItem: OptionItem) {
+    func configure(with optionItem: OptionItemProtocol) {
         textLabel?.text = optionItem.text
-        textLabel?.font = optionItem.font
+        textLabel?.font = UIFont.walletPromptTitleSmall
         tintColor = Current.themeManager.color(for: .text)
         backgroundColor = Current.themeManager.color(for: .walletCardBackground)
     }
 }
 
-extension OptionItem {
-    func sizeForDisplayText() -> CGSize {
-        return text.size(withAttributes: [NSAttributedString.Key.font: font])
-    }
-}
-
 protocol OptionItemListViewControllerDelegate: AnyObject {
-    func optionItemListViewController(_ controller: OptionItemListViewController, didSelectOptionItem item: OptionItem)
+    func optionItemListViewController(_ controller: OptionItemListViewController, didSelectOptionItem item: OptionItemProtocol)
 }
 
 class OptionItemListViewController: UIViewController {
-    var items = [[OptionItem]]() {
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.font = .tabBar
+        label.text = self.title
+        return label
+    }()
+    
+    private lazy var lineView: UIView = {
+        let line = UIView()
+        line.backgroundColor = Current.themeManager.color(for: .text)
+        line.alpha = 0.3
+        return line
+    }()
+    
+    private lazy var tableView: UITableView = {
+        let table = UITableView()
+        table.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
+        table.isScrollEnabled = false
+        return table
+    }()
+    
+    var items = [[OptionItemProtocol]]() {
         didSet {
             calculateAndSetPreferredContentSize()
         }
     }
-    var tableView = UITableView()
+    
     weak var delegate: OptionItemListViewControllerDelegate?
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -54,37 +71,25 @@ class OptionItemListViewController: UIViewController {
     override func loadView() {
         super.loadView()
 
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.font = .tabBar
-        label.text = self.title
-
-        view.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
-        label.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 34).isActive = true
-        label.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -34).isActive = true
+        view.addSubview(titleLabel)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: LayoutHelper.SortOrderLayout.titleLabelTopOffset).isActive = true
+        titleLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: LayoutHelper.SortOrderLayout.titleLabelHorizontalOffset).isActive = true
+        titleLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -LayoutHelper.SortOrderLayout.titleLabelHorizontalOffset).isActive = true
         
-        let line = UIView()
-        line.backgroundColor = Current.themeManager.color(for: .text)
-        line.alpha = 0.3
-        view.addSubview(line)
-        line.translatesAutoresizingMaskIntoConstraints = false
-        line.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 4).isActive = true
-        line.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        line.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        line.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        view.addSubview(lineView)
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        lineView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: LayoutHelper.SortOrderLayout.lineSeparatorTopOffset).isActive = true
+        lineView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        lineView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        lineView.heightAnchor.constraint(equalToConstant: LayoutHelper.SortOrderLayout.lineSeparatorHeight).isActive = true
         
-        tableView.isScrollEnabled = false
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: line.bottomAnchor, constant: 1).isActive = true
+        tableView.topAnchor.constraint(equalTo: lineView.bottomAnchor, constant: LayoutHelper.SortOrderLayout.lineSeparatorHeight).isActive = true
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        tableView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         
         view.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
     }
@@ -113,7 +118,7 @@ extension OptionItemListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 64
+        return LayoutHelper.SortOrderLayout.cellHeight
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -121,11 +126,7 @@ extension OptionItemListViewController: UITableViewDataSource {
         let item = items[indexPath.section][indexPath.row]
         cell.configure(with: item)
         
-        if item.isSelected {
-            cell.accessoryType = .checkmark
-        } else {
-            cell.accessoryType = .none
-        }
+        cell.accessoryType = item.isSelected ? .checkmark : .none
         
         return cell
     }
@@ -139,9 +140,8 @@ extension OptionItemListViewController: UITableViewDelegate {
     }
 }
 
-struct SortOrderOptionItem: OptionItem {
+struct SortOrderOptionItem: OptionItemProtocol {
     var text: String
-    var font = UIFont.walletPromptTitleSmall
     var isSelected: Bool
     var orderType: MembershipCardsSortState
 }

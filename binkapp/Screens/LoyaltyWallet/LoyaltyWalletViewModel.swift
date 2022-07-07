@@ -116,7 +116,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
         let newestString = MembershipCardsSortState.newest.keyValue
         let customString = MembershipCardsSortState.custom.keyValue
         
-        if let sortedCards = localWalletSortedCardsKey() {
+        if let sortedCards = getLocalWalletOrderFromUserDefaults() {
             if !sortedCards.isEmpty {
                 setMembershipCardsSortingType(sortType: .custom)
                 return customString
@@ -129,22 +129,17 @@ class LoyaltyWalletViewModel: WalletViewModel {
     
     func setMembershipCardsSortingType(sortType: MembershipCardsSortState) {
         Current.userDefaults.set(sortType.keyValue, forDefaultsKey: .membershipCardsSortType)
-        MixpanelUtility.track(.membershipCardsSortOrder(value: sortType.keyValue))
+        MixpanelUtility.track(.loyaltyCardsSortOrder(value: sortType.keyValue))
     }
     
-    func localWalletSortedCardsKey() -> [String]? {
-        guard let userId = Current.userManager.currentUserId else {
-            return nil
-        }
-        return Current.userDefaults.value(forDefaultsKey: UserDefaults.Keys.localWalletOrder(userId: userId, walletType: Wallet.WalletType.loyalty)) as? [String]
+    func getLocalWalletOrderFromUserDefaults() -> [String]? {
+        guard let userId = Current.userManager.currentUserId else { return nil }
+        return Current.userDefaults.value(forDefaultsKey: .localWalletOrder(userId: userId, walletType: .loyalty)) as? [String]
     }
     
     func clearLocalWalletSortedCardsKey() {
-        guard let userId = Current.userManager.currentUserId else {
-            return
-        }
-        
-        Current.userDefaults.set([String](), forDefaultsKey: UserDefaults.Keys.localWalletOrder(userId: userId, walletType: Wallet.WalletType.loyalty))
+        guard let userId = Current.userManager.currentUserId else { return }
+        Current.userDefaults.set([String](), forDefaultsKey: .localWalletOrder(userId: userId, walletType: .loyalty))
     }
     
     func setMembershipCardMoved(hasMoved: Bool) {

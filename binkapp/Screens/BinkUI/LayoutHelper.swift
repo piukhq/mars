@@ -24,6 +24,11 @@ extension LayoutHelper {
     
     enum SortOrderLayout {
         static let sourceRectHeightOffset: CGFloat = 6
+        static let cellHeight: CGFloat = 64
+        static let titleLabelTopOffset: CGFloat = 20
+        static let titleLabelHorizontalOffset: CGFloat = 34
+        static let lineSeparatorTopOffset: CGFloat = 4
+        static let lineSeparatorHeight: CGFloat = 1
     }
 
     enum WalletDimensions {
