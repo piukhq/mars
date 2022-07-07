@@ -51,7 +51,7 @@ class OptionItemListViewController: UIViewController {
         return table
     }()
     
-    var items = [[OptionItemProtocol]]() {
+    var items = [OptionItemProtocol]() {
         didSet {
             calculateAndSetPreferredContentSize()
         }
@@ -102,7 +102,7 @@ class OptionItemListViewController: UIViewController {
     }
     
     func calculateAndSetPreferredContentSize() {
-        let totalItems = CGFloat(items.flatMap { $0 }.count)
+        let totalItems = CGFloat(items.count)
         let totalHeight = totalItems * 80
         preferredContentSize = CGSize(width: CGFloat(200), height: totalHeight)
     }
@@ -110,11 +110,11 @@ class OptionItemListViewController: UIViewController {
 
 extension OptionItemListViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return items.count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items[section].count
+        return items.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -123,7 +123,7 @@ extension OptionItemListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
-        let item = items[indexPath.section][indexPath.row]
+        let item = items[indexPath.row]
         cell.configure(with: item)
         
         cell.accessoryType = item.isSelected ? .checkmark : .none
@@ -134,7 +134,7 @@ extension OptionItemListViewController: UITableViewDataSource {
 
 extension OptionItemListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var item = items[indexPath.section][indexPath.row]
+        var item = items[indexPath.row]
         item.isSelected = true
         delegate?.optionItemListViewController(self, didSelectOptionItem: item)
     }

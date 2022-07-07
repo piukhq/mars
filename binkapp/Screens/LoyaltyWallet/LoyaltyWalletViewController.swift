@@ -46,7 +46,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         setupSortBarButton()
     }
     
-    func presentOptionsPopover(withOptionItems items: [[OptionItemProtocol]], fromBarButtonItem barButtonItem: UIButton) {
+    func presentOptionsPopover(withOptionItems items: [OptionItemProtocol], fromBarButtonItem barButtonItem: UIButton) {
         let optionItemListVC = OptionItemListViewController()
         optionItemListVC.title = L10n.sortOrder
         optionItemListVC.items = items
@@ -94,7 +94,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         let customString = MembershipCardsSortState.custom.keyValue
         let newestOptionItem = SortOrderOptionItem(text: newestString, isSelected: sortType == newestString, orderType: .newest)
         let customOptionItem = SortOrderOptionItem(text: customString, isSelected: sortType == customString, orderType: .custom)
-        presentOptionsPopover(withOptionItems: [[newestOptionItem, customOptionItem]], fromBarButtonItem: sender)
+        presentOptionsPopover(withOptionItems: [newestOptionItem, customOptionItem], fromBarButtonItem: sender)
     }
     
     @objc private func handlePointsScrapingUpdate() {
