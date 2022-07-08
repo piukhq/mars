@@ -51,7 +51,7 @@ class OptionItemListViewController: UIViewController {
         return table
     }()
     
-    var items = [OptionItemProtocol]() {
+    var items: [OptionItemProtocol] = [] {
         didSet {
             calculateAndSetPreferredContentSize()
         }
@@ -141,7 +141,9 @@ extension OptionItemListViewController: UITableViewDelegate {
 }
 
 struct SortOrderOptionItem: OptionItemProtocol {
-    var text: String
+    var text: String {
+        return orderType.rawValue
+    }
     var isSelected: Bool
     var orderType: MembershipCardsSortState
 }

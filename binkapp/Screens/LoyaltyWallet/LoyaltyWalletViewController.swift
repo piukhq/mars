@@ -46,7 +46,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         setupSortBarButton()
     }
     
-    func presentOptionsPopover(withOptionItems items: [OptionItemProtocol], fromBarButtonItem barButtonItem: UIButton) {
+    func presentOptionsPopover(withOptionItems items: [SortOrderOptionItem], fromBarButtonItem barButtonItem: UIButton) {
         let optionItemListVC = OptionItemListViewController()
         optionItemListVC.title = L10n.sortOrder
         optionItemListVC.items = items
@@ -90,10 +90,8 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     @objc private func sortButtonTapped(_ sender: UIButton) {
         let sortType = viewModel.getCurrentMembershipCardsSortType()
-        let newestString = MembershipCardsSortState.newest.rawValue
-        let customString = MembershipCardsSortState.custom.rawValue
-        let newestOptionItem = SortOrderOptionItem(text: newestString, isSelected: sortType?.rawValue == newestString, orderType: .newest)
-        let customOptionItem = SortOrderOptionItem(text: customString, isSelected: sortType?.rawValue == customString, orderType: .custom)
+        let newestOptionItem = SortOrderOptionItem(isSelected: sortType == .newest, orderType: .newest)
+        let customOptionItem = SortOrderOptionItem(isSelected: sortType == .custom, orderType: .custom)
         presentOptionsPopover(withOptionItems: [newestOptionItem, customOptionItem], fromBarButtonItem: sender)
     }
     
@@ -271,13 +269,15 @@ extension LoyaltyWalletViewController: OptionItemListViewControllerDelegate {
         controller.dismiss(animated: true)
         let previousSortType = viewModel.getCurrentMembershipCardsSortType()
         
-        if item.isSelected {
-            guard item.text != previousSortType?.rawValue else { return }
+        guard let sortItem = item as? SortOrderOptionItem else { return }
+        
+        if sortItem.isSelected {
+            guard sortItem.orderType != previousSortType else { return }
             
-            if viewModel.hasMembershipCardMoved() && previousSortType?.rawValue == MembershipCardsSortState.custom.rawValue && item.text == MembershipCardsSortState.newest.rawValue {
+            if viewModel.hasMembershipCardMoved() && previousSortType == .custom && sortItem.orderType == .newest {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4, execute: {
                     self.viewModel.showSortOrderChangeAlert() {
-                        self.viewModel.setMembershipCardsSortingType(sortType: MembershipCardsSortState(rawValue: item.text))
+                        self.viewModel.setMembershipCardsSortingType(sortType: sortItem.orderType)
                         self.setupSortBarButton()
                         self.viewModel.clearLocalWalletSortedCardsKey()
                         self.viewModel.setMembershipCardMoved(hasMoved: false)
@@ -285,7 +285,7 @@ extension LoyaltyWalletViewController: OptionItemListViewControllerDelegate {
                     }
                 })
             } else {
-                viewModel.setMembershipCardsSortingType(sortType: MembershipCardsSortState(rawValue: item.text))
+                viewModel.setMembershipCardsSortingType(sortType: sortItem.orderType)
                 setupSortBarButton()
             }
         }
