@@ -12,16 +12,16 @@ import XCTest
 class SortStateTests: XCTestCase {
     func test_sortStateIsNewest() throws {
         let loyaltyModel = LoyaltyWalletViewModel()
-        loyaltyModel.setMembershipCardsSortingType(sortType: "Newest")
-        let type = loyaltyModel.getCurrentMembershipCardsSortType()
+        loyaltyModel.setMembershipCardsSortingType(sortType: .newest)
+        let type = loyaltyModel.getCurrentMembershipCardsSortType()?.rawValue
         
         XCTAssertEqual(type, "Newest")
     }
     
     func test_sortStateIsCustom() throws {
         let loyaltyModel = LoyaltyWalletViewModel()
-        loyaltyModel.setMembershipCardsSortingType(sortType: "Custom")
-        let type = loyaltyModel.getCurrentMembershipCardsSortType()
+        loyaltyModel.setMembershipCardsSortingType(sortType: .custom)
+        let type = loyaltyModel.getCurrentMembershipCardsSortType()?.rawValue
         
         XCTAssertEqual(type, "Custom")
     }
