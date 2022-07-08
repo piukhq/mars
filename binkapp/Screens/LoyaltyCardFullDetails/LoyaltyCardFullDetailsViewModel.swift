@@ -41,6 +41,12 @@ class LoyaltyCardFullDetailsViewModel {
         return membershipCard.membershipPlan?.account?.companyName ?? ""
     }
     
+    var shouldDisplayLocationOption: Bool {
+        // RS - the planid 230 is Tesco's. For now we only want to display the locations option only when a Tesco LC is tapped
+        let planId = membershipCard.membershipPlan?.id
+        return planId == "230" && Current.featureManager.isFeatureEnabled(.tesco_locations)
+    }
+    
     var balance: CD_MembershipCardBalance? {
         return membershipCard.balances.allObjects.first as? CD_MembershipCardBalance
     }

@@ -10,6 +10,7 @@ import Foundation
 
 enum FeatureType: String, Codable {
     case themes
+    case tesco_locations
 }
 
 struct BetaFeature: Codable, Identifiable {
