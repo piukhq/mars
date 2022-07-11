@@ -11,6 +11,12 @@ import Foundation
 enum FeatureType: String, Codable {
     case themes
     case tesco_locations
+    case unknown
+        init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            let string = try container.decode(String.self)
+            self = FeatureType(rawValue: string) ?? .unknown
+        }
 }
 
 struct BetaFeature: Codable, Identifiable {
