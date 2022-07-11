@@ -12,6 +12,7 @@ import MapKit
 class GeoLocationViewModel: ObservableObject {
     private var geoLocationDataModel: GeoModel?
     private var companyName: String
+    var selectedAnnotation: CustomAnnotation?
     
     init(companyName: String) {
         self.companyName = companyName
@@ -36,10 +37,6 @@ class GeoLocationViewModel: ObservableObject {
         return companyName + " " + L10n.locations
     }
     
-    func trackEvent() {
-        MixpanelUtility.track(.toAppleMaps(brandName: companyName, description: L10n.launchedAppleMaps))
-    }
-    
     private func getGeoLocationData() -> Data? {
         // RS - loading from the bundle for now. In the future this will eventually coming down through firebase and will be different per company
         if let filePath = Bundle.main.path(forResource: "tesco-locations", ofType: "geojson") {
@@ -62,5 +59,26 @@ class GeoLocationViewModel: ObservableObject {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    func openAppleMaps() {
+        if let annotation = selectedAnnotation {
+            let latitude = annotation.coordinate.latitude
+            let longitude = annotation.coordinate.longitude
+            let regionDistance: CLLocationDistance = 10000
+            let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
+            let regionSpan = MKCoordinateRegion(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
+            let options = [
+                MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+                MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
+            ]
+            let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: options)
+            let mapItem = MKMapItem(placemark: placemark)
+            mapItem.name = annotation.location
+            if mapItem.openInMaps(launchOptions: nil) {
+                MixpanelUtility.track(.toAppleMaps(brandName: companyName, description: L10n.launchedAppleMaps))
+            }
+        }
+        selectedAnnotation = nil
     }
 }

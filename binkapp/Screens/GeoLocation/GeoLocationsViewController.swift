@@ -13,7 +13,6 @@ import MapKit
 class GeoLocationsViewController: UIViewController {
     private let viewModel: GeoLocationViewModel
     private var locationManager: CLLocationManager!
-    private var selectedAnnotation: CustomAnnotation?
     
     init(viewModel: GeoLocationViewModel) {
         self.viewModel = viewModel
@@ -69,24 +68,7 @@ class GeoLocationsViewController: UIViewController {
     }
     
     @objc func tapOnCallout(sender: UIButton) {
-        if let annotation = selectedAnnotation {
-            let latitude = annotation.coordinate.latitude
-            let longitude = annotation.coordinate.longitude
-            let regionDistance: CLLocationDistance = 10000
-            let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
-            let regionSpan = MKCoordinateRegion(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
-            let options = [
-                MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
-                MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
-            ]
-            let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: options)
-            let mapItem = MKMapItem(placemark: placemark)
-            mapItem.name = annotation.location
-            if mapItem.openInMaps(launchOptions: nil) {
-                viewModel.trackEvent()
-            }
-        }
-        selectedAnnotation = nil
+        viewModel.openAppleMaps()
     }
 }
 
@@ -103,7 +85,7 @@ extension GeoLocationsViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        self.selectedAnnotation = view.annotation as? CustomAnnotation
+        viewModel.selectedAnnotation = view.annotation as? CustomAnnotation
         for gesture in view.gestureRecognizers ?? [] {
             view.removeGestureRecognizer(gesture)
         }
@@ -113,7 +95,7 @@ extension GeoLocationsViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        self.selectedAnnotation = nil
+        viewModel.selectedAnnotation = nil
         for gesture in view.gestureRecognizers ?? [] {
             view.removeGestureRecognizer(gesture)
         }
