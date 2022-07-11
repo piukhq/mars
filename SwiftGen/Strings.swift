@@ -196,6 +196,11 @@ internal enum L10n {
   internal static let done = L10n.tr("Localizable", "done")
   /// Use magic link
   internal static let emailMagicLink = L10n.tr("Localizable", "email_magic_link")
+  /// No rewards to display. Come back
+  ///  after you've earned vouchers to see
+  ///  your issued, redeemed or expired
+  ///  rewards
+  internal static let emptyRewards = L10n.tr("Localizable", "empty_rewards")
   /// Error
   internal static let errorTitle = L10n.tr("Localizable", "error_title")
   /// Filters

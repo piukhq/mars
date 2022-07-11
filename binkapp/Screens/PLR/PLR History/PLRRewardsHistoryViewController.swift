@@ -39,6 +39,25 @@ class PLRRewardsHistoryViewController: BinkViewController {
         label.font = .bodyTextLarge
         return label
     }()
+    
+    private lazy var emptyWalletImage: UIImageView = {
+        let imageView = UIImageView(image: Asset.emptyWallet.image.withRenderingMode(.alwaysTemplate))
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        imageView.tintColor = Current.themeManager.color(for: .text)
+        return imageView
+    }()
+    
+    private lazy var noRewardsLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .bodyTextLarge
+        label.text = L10n.emptyRewards
+        label.textColor = Current.themeManager.color(for: .text)
+        label.numberOfLines = 4
+        label.textAlignment = .center
+        return label
+    }()
 
     private let viewModel: PLRRewardsHistoryViewModel
 
@@ -60,7 +79,7 @@ class PLRRewardsHistoryViewController: BinkViewController {
         subtitleLabel.text = viewModel.subtitleText
 
         stackScrollView.add(arrangedSubviews: [titleLabel, subtitleLabel])
-        stackScrollView.customPadding(25, after: subtitleLabel)
+        stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: subtitleLabel)
 
         NSLayoutConstraint.activate([
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -87,9 +106,15 @@ class PLRRewardsHistoryViewController: BinkViewController {
                     }
                 }
             }
-        }
-        else {
-            //add empty wallet stuff here
+        } else {
+            stackScrollView.customPadding(Constants.postCellPadding * 2, after: subtitleLabel)
+            stackScrollView.add(arrangedSubview: emptyWalletImage)
+            emptyWalletImage.heightAnchor.constraint(equalToConstant: LayoutHelper.LoyaltyCardDetail.contentPadding * 4).isActive = true
+            emptyWalletImage.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
+
+            stackScrollView.customPadding(Constants.postCellPadding, after: emptyWalletImage)
+            stackScrollView.add(arrangedSubview: noRewardsLabel)
+            noRewardsLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
         }
     }
     
