@@ -69,23 +69,27 @@ class PLRRewardsHistoryViewController: BinkViewController {
         ])
         
         // MARK: - Add vouchers
-    
-        if let vouchers = viewModel.vouchers {
-            for voucher in vouchers {
-                let state = VoucherState(rawValue: voucher.state ?? "")
-                switch (state, voucher.earnType) {
-                case (.inProgress, .accumulator), (.issued, .accumulator):
-                    setupCellForType(PLRAccumulatorActiveCell.self, voucher: voucher)
-                case (.redeemed, .accumulator), (.expired, .accumulator), (.cancelled, .accumulator):
-                    setupCellForType(PLRAccumulatorInactiveCell.self, voucher: voucher)
-                case (.inProgress, .stamps), (.issued, .stamps):
-                    setupCellForType(PLRStampsActiveCell.self, voucher: voucher)
-                case (.redeemed, .stamps), (.expired, .stamps), (.cancelled, .stamps):
-                    setupCellForType(PLRStampsInactiveCell.self, voucher: voucher)
-                default:
-                    break
+        if viewModel.vouchersCount > 0 {
+            if let vouchers = viewModel.vouchers {
+                for voucher in vouchers {
+                    let state = VoucherState(rawValue: voucher.state ?? "")
+                    switch (state, voucher.earnType) {
+                    case (.inProgress, .accumulator), (.issued, .accumulator):
+                        setupCellForType(PLRAccumulatorActiveCell.self, voucher: voucher)
+                    case (.redeemed, .accumulator), (.expired, .accumulator), (.cancelled, .accumulator):
+                        setupCellForType(PLRAccumulatorInactiveCell.self, voucher: voucher)
+                    case (.inProgress, .stamps), (.issued, .stamps):
+                        setupCellForType(PLRStampsActiveCell.self, voucher: voucher)
+                    case (.redeemed, .stamps), (.expired, .stamps), (.cancelled, .stamps):
+                        setupCellForType(PLRStampsInactiveCell.self, voucher: voucher)
+                    default:
+                        break
+                    }
                 }
             }
+        }
+        else {
+            //add empty wallet stuff here
         }
     }
     
