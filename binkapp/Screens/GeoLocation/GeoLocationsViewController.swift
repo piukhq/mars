@@ -82,16 +82,9 @@ extension GeoLocationsViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let annotation = annotation as? CustomAnnotation else { return nil }
         
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-        
-        if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-            annotationView?.canShowCallout = true
-            annotationView?.detailCalloutAccessoryView = CalloutView(annotation: annotation)
-        } else {
-            annotationView?.annotation = annotation
-        }
-        
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        annotationView?.canShowCallout = true
+        annotationView?.detailCalloutAccessoryView = CalloutView(annotation: annotation)
         return annotationView
     }
     
