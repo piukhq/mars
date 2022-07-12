@@ -397,7 +397,7 @@
 "plr_voucher_detail_expired_date_prefix" = "Expired ";
 "plr_voucher_detail_expires_date_prefix" = "Expires ";
 "plr_voucher_detail_subtext_inprogress" = "Spend %@%@ with us and you'll get a %@%@ %@.";
-"plr_voucher_detail_subtext_issued" = "Use the code above to redeem your reward. You will get %@%@%@ off your purchase.";
+"plr_voucher_detail_subtext_issued" = "Use the code above to redeem your reward. You will get a %@%@ %@ off your purchase.";
 "plr_lcd_points_module_title" = "Collecting";
 "plr_lcd_points_module_auth_title" = "Earning";
 "plr_lcd_points_module_description" = "Towards rewards";
