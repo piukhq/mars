@@ -126,8 +126,12 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = Constants.cornerRadius
         imageView.clipsToBounds = true
-        imageView.image = image
+        imageView.animationImages = image?.images
+        imageView.animationRepeatCount = 1
+        imageView.animationDuration = 2.5
+        imageView.image = image?.images?.last
         imageView.tintColor = Current.themeManager.color(for: .walletCardBackground)
+        imageView.startAnimating()
         return imageView
     }()
     
@@ -341,16 +345,15 @@ private extension LoyaltyCardFullDetailsViewController {
             // Build locations
             stackScrollView.add(arrangedSubview: locationView)
             stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: locationView)
-            NSLayoutConstraint.activate([
-                locationView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
-                locationView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
-                locationView.heightAnchor.constraint(equalToConstant: 120)
-            ])
             
             locationView.addSubview(locationImage)
             locationView.addSubview(showLocationsText)
             locationView.addSubview(nearestStoresText)
             NSLayoutConstraint.activate([
+                locationView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
+                locationView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
+                locationView.heightAnchor.constraint(equalToConstant: LayoutHelper.GeoLocationCallout.locationViewHeight),
+                
                 showLocationsText.rightAnchor.constraint(equalTo: locationView.rightAnchor, constant: -LayoutHelper.GeoLocationCallout.locationsTextRightOffset),
                 showLocationsText.topAnchor.constraint(equalTo: locationView.topAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextTopOffset),
                 showLocationsText.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextLeftOffset),

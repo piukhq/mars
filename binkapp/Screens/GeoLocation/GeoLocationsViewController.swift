@@ -23,7 +23,11 @@ class GeoLocationsViewController: UIViewController {
         let map = MKMapView()
         map.isZoomEnabled = true
         map.isScrollEnabled = true
+        map.isUserInteractionEnabled = true
         map.showsUserLocation = true
+        map.delegate = self
+        map.tintColor = .systemBlue
+        map.translatesAutoresizingMaskIntoConstraints = false
         return map
     }()
     
@@ -33,13 +37,10 @@ class GeoLocationsViewController: UIViewController {
     
     private func setMapConstraints() {
         view.addSubview(mapView)
-        mapView.translatesAutoresizingMaskIntoConstraints = false
         mapView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         mapView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         mapView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         mapView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        
-        mapView.delegate = self
     }
     
     override func viewDidLoad() {
@@ -48,11 +49,11 @@ class GeoLocationsViewController: UIViewController {
         
         setMapConstraints()
         viewModel.parseGeoJson()
-        determineCurrentLocation()
         addAnnotations()
+        determineCurrentLocation()
     }
     
-    func determineCurrentLocation() {
+    private func determineCurrentLocation() {
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -63,7 +64,7 @@ class GeoLocationsViewController: UIViewController {
         }
     }
     
-    func addAnnotations() {
+    private func addAnnotations() {
         mapView.addAnnotations(viewModel.annotations)
     }
     
@@ -74,10 +75,8 @@ class GeoLocationsViewController: UIViewController {
 
 extension GeoLocationsViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let annotation = annotation as? CustomAnnotation else {
-            return nil
-        }
-        
+        guard let annotation = annotation as? CustomAnnotation else { return nil }
+
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         annotationView?.canShowCallout = true
         annotationView?.detailCalloutAccessoryView = CalloutView(annotation: annotation)
@@ -90,7 +89,7 @@ extension GeoLocationsViewController: MKMapViewDelegate {
             view.removeGestureRecognizer(gesture)
         }
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(GeoLocationsViewController.tapOnCallout(sender:)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnCallout(sender:)))
         view.addGestureRecognizer(tapGesture)
     }
     
@@ -104,13 +103,17 @@ extension GeoLocationsViewController: MKMapViewDelegate {
 
 extension GeoLocationsViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let userLocation: CLLocation = locations[0] as CLLocation
-
-        let center = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
-
-        mapView.setRegion(region, animated: true)
-        
-        locationManager.stopUpdatingLocation()
+        if let userLocation = locations.last {
+            let center = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+            
+            mapView.setRegion(region, animated: true)
+            
+            locationManager.stopUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Error - locationManager: \(error.localizedDescription)")
     }
 }

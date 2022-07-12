@@ -64,7 +64,7 @@ class CalloutView: UIView {
     private func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: LayoutHelper.GeoLocationCallout.calloutHeight).isActive = true
-        widthAnchor.constraint(equalToConstant: LayoutHelper.GeoLocationCallout.calloutwidth).isActive = true
+        widthAnchor.constraint(equalToConstant: LayoutHelper.GeoLocationCallout.calloutWidth).isActive = true
         
         setupTitle()
         setupSubtitle()
@@ -82,7 +82,7 @@ class CalloutView: UIView {
     private func setupSubtitle() {
         addSubview(subtitleLabel)
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: LayoutHelper.GeoLocationCallout.subTitleLabelTopOffset).isActive = true
+        subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: LayoutHelper.GeoLocationCallout.subtitleLabelTopOffset).isActive = true
         subtitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: LayoutHelper.GeoLocationCallout.titleLabelLeadingOffset).isActive = true
         subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
     }

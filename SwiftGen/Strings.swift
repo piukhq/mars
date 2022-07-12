@@ -237,8 +237,6 @@ internal enum L10n {
   internal static let infoTitle = L10n.tr("Localizable", "info_title")
   /// Issues logging in?
   internal static let issuesLoggingIn = L10n.tr("Localizable", "issues_logging_in")
-  /// Launch Apple Maps for Directions
-  internal static let launchedAppleMaps = L10n.tr("Localizable", "launched_apple_maps")
   /// Learn more about how it works
   internal static let learnMore = L10n.tr("Localizable", "learn_more")
   /// To keep your account safe, links are only valid for a short period of time. Tap Retry and we will send you another.
@@ -858,8 +856,6 @@ internal enum L10n {
   internal static let tandcsLink = L10n.tr("Localizable", "tandcs_link")
   /// I agree to Bink's Terms and Conditions
   internal static let tandcsTitle = L10n.tr("Localizable", "tandcs_title")
-  /// Tapped Show Locations
-  internal static let tappedShowLocations = L10n.tr("Localizable", "tapped_show_locations")
   /// I authorise Mastercard, Visa and American Express to monitor activity on my payment card to determine when I have made a qualifying transaction, and for Mastercard, Visa and American Express to share such transaction details with Bink to enable my card-linked offer(s) and target offers that may be of interest to me. 
   /// 
   /// For information about Bink’s privacy practices please see Bink’s Privacy Policy. You may opt-out of transaction monitoring on the payment card(s) you entered at any time by deleting your payment card from your Bink wallet.

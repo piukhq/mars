@@ -20,10 +20,10 @@ class GeoLocationViewModel: ObservableObject {
     
     var annotations: [CustomAnnotation] {
         features.compactMap { feature in
-            let coordinates = CLLocationCoordinate2D(latitude: feature.geometry.coordinates[1], longitude: feature.geometry.coordinates[0])
+            guard let lat = feature.geometry.coordinates[safe: 1], let lon = feature.geometry.coordinates[safe: 0] else { return nil }
             let annotation = CustomAnnotation(
-                location: (feature.properties.location_name ?? "") + " - " + (feature.properties.city ?? ""),
-                coordinate: coordinates,
+                location: (feature.properties.locationName ?? "") + " - " + (feature.properties.city ?? ""),
+                coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon),
                 image: UIImage(named: Asset.locationArrow.name))
             return annotation
         }
@@ -76,7 +76,7 @@ class GeoLocationViewModel: ObservableObject {
             let mapItem = MKMapItem(placemark: placemark)
             mapItem.name = annotation.location
             if mapItem.openInMaps(launchOptions: nil) {
-                MixpanelUtility.track(.toAppleMaps(brandName: companyName, description: L10n.launchedAppleMaps))
+                MixpanelUtility.track(.toAppleMaps(brandName: companyName))
             }
         }
         selectedAnnotation = nil

@@ -25,13 +25,25 @@ struct Geometry: Codable {
 }
 
 struct Properties: Codable {
-    let location_name: String?
+    let locationName: String?
     let latitude: String?
     let longitude: String?
-    let street_address: String?
+    let streetAddress: String?
     let city: String?
     let region: String?
-    let postal_code: String?
-    let phone_number: String?
-    let open_hours: String?
+    let postalCode: String?
+    let phoneNumber: String?
+    let openHours: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case locationName = "location_name"
+        case latitude
+        case longitude
+        case streetAddress = "street_address"
+        case city
+        case region
+        case postalCode = "postal_code"
+        case phoneNumber = "phone_number"
+        case openHours = "open_hours"
+    }
 }
