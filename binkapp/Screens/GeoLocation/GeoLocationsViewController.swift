@@ -13,6 +13,7 @@ import MapKit
 class GeoLocationsViewController: UIViewController {
     private let viewModel: GeoLocationViewModel
     private var locationManager: CLLocationManager!
+    private var foundLocation = false
     
     init(viewModel: GeoLocationViewModel) {
         self.viewModel = viewModel
@@ -48,9 +49,13 @@ class GeoLocationsViewController: UIViewController {
         navigationItem.title = viewModel.title
         
         setMapConstraints()
-        viewModel.parseGeoJson()
-        addAnnotations()
         determineCurrentLocation()
+        viewModel.parseGeoJson()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        addAnnotations()
     }
     
     private func determineCurrentLocation() {
@@ -76,10 +81,17 @@ class GeoLocationsViewController: UIViewController {
 extension GeoLocationsViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let annotation = annotation as? CustomAnnotation else { return nil }
-
-        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-        annotationView?.canShowCallout = true
-        annotationView?.detailCalloutAccessoryView = CalloutView(annotation: annotation)
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+            annotationView?.canShowCallout = true
+            annotationView?.detailCalloutAccessoryView = CalloutView(annotation: annotation)
+        } else {
+            annotationView?.annotation = annotation
+        }
+        
         return annotationView
     }
     
@@ -103,13 +115,16 @@ extension GeoLocationsViewController: MKMapViewDelegate {
 
 extension GeoLocationsViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let userLocation = locations.last {
-            let center = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
-            
-            mapView.setRegion(region, animated: true)
-            
-            locationManager.stopUpdatingLocation()
+        if !foundLocation {
+            if let userLocation = locations.last {
+                let center = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+                let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+                
+                mapView.setRegion(region, animated: false)
+                
+                locationManager.stopUpdatingLocation()
+                foundLocation = true
+            }
         }
     }
     
