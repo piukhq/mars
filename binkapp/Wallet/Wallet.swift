@@ -25,7 +25,7 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
             WidgetController().writeContentsToDisk(membershipCards: membershipCards)
         }
     }
-    private(set) var paymentCards: [CD_PaymentCard]?
+    var paymentCards: [CD_PaymentCard]?
 
     private var hasLaunched = false
 

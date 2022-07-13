@@ -15,6 +15,7 @@ class PLLScreenViewModelTests: XCTestCase, CoreDataTestable {
 
     // We have our dependancy model, which is mapped to core data from our response models and injected into view models
     static var membershipCard: CD_MembershipCard!
+    static var paymentCard: CD_PaymentCard!
 
     // Our base system under test
     static let baseSut = PLLScreenViewModel(membershipCard: membershipCard, journey: .newCard)
@@ -24,11 +25,29 @@ class PLLScreenViewModelTests: XCTestCase, CoreDataTestable {
     // Do as much setup in here as possible so that we can keep the amount of core data usage
     override class func setUp() {
         super.setUp()
+        // Membership Card
         baseMembershipCardResponse = MembershipCardModel(apiId: nil, membershipPlan: nil, membershipTransactions: nil, status: nil, card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
 
         mapResponseToManagedObject(baseMembershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
             self.membershipCard = membershipCard
         }
+        
+        // Payment Card
+        let linkedResponse = LinkedCardResponse(id: 1, activeLink: true)
+        let paymentCard = PaymentCardModel(apiId: 0, membershipCards: [linkedResponse], status: "active", card: nil, account: PaymentCardAccountResponse(apiId: 0, verificationInProgress: nil, status: 0, consents: []))
+        
+        mapResponseToManagedObject(paymentCard, managedObjectType: CD_PaymentCard.self) { paymentCard in
+            self.paymentCard = paymentCard
+        }
+    }
+    
+    
+    private func addPaymentCardToWallet() {
+        Current.wallet.paymentCards?.append(Self.paymentCard)
+    }
+    
+    private func removePaymentCardFromWallet() {
+        Current.wallet.paymentCards = []
     }
 
     // MARK: - Empty wallet
@@ -68,5 +87,33 @@ class PLLScreenViewModelTests: XCTestCase, CoreDataTestable {
 
     func test_titleText_isCorrect() {
         XCTAssertEqual(Self.baseSut.titleText, "Link to payment cards")
+    }
+    
+    func test_primaryMessageText_isCorrect() {
+        XCTAssertEqual(Self.baseSut.primaryMessageText, "You have not added any payment cards yet.")
+        
+        addPaymentCardToWallet()
+        XCTAssertEqual(Self.baseSut.primaryMessageText, "The payment cards below will be linked to your . Simply pay with them to collect points.")
+        removePaymentCardFromWallet()
+    }
+    
+    func test_secondaryMessageText_isCorrect() {
+        XCTAssertEqual(Self.baseSut.secondaryMessageText, "Add them to link this card and others.")
+    }
+    
+    func test_shouldAllowDismiss_returnsCorrectBool() {
+        XCTAssertTrue(Self.baseSut.shouldAllowDismiss)
+        
+        addPaymentCardToWallet()
+        XCTAssertFalse(Self.baseSut.shouldAllowDismiss)
+        removePaymentCardFromWallet()
+    }
+    
+    func test_addingCardToChangedCardsArray_worksCorrectly() {
+        XCTAssertTrue(Self.baseSut.changedLinkCards.isEmpty)
+        Self.baseSut.addCardToChangedCardsArray(card: Self.paymentCard)
+        XCTAssertFalse(Self.baseSut.changedLinkCards.isEmpty)
+        Self.baseSut.addCardToChangedCardsArray(card: Self.paymentCard)
+        XCTAssertTrue(Self.baseSut.changedLinkCards.isEmpty)
     }
 }
