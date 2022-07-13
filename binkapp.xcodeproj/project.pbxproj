@@ -326,6 +326,7 @@
 		CE85A1DB26B05D95003B74CD /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CE85A1DA26B05D95003B74CD /* Lottie */; };
 		CE85A20126B15436003B74CD /* success.json in Resources */ = {isa = PBXBuildFile; fileRef = CE85A20026B15436003B74CD /* success.json */; };
 		CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */; };
+		CE971A28287EE138001D7E1C /* DebugMenuFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A27287EE138001D7E1C /* DebugMenuFactoryTests.swift */; };
 		CE990E13261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */; };
 		CEA0E1E1274E35DE00CC2FC6 /* RecommendedVersionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E1E0274E35DE00CC2FC6 /* RecommendedVersionUtil.swift */; };
 		CEA0E1E3274E9CAD00CC2FC6 /* AutofillFormInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E1E2274E9CAD00CC2FC6 /* AutofillFormInputCell.swift */; };
@@ -995,6 +996,7 @@
 		CE85A1D726B0096A003B74CD /* UniversalLinkUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalLinkUtility.swift; sourceTree = "<group>"; };
 		CE85A20026B15436003B74CD /* success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = success.json; sourceTree = "<group>"; };
 		CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkCopyableLabel.swift; sourceTree = "<group>"; };
+		CE971A27287EE138001D7E1C /* DebugMenuFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugMenuFactoryTests.swift; sourceTree = "<group>"; };
 		CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_1_LoyaltyCards.swift; sourceTree = "<group>"; };
 		CEA0E1E0274E35DE00CC2FC6 /* RecommendedVersionUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendedVersionUtil.swift; path = "binkapp/Utils/Remote Config/RecommendedVersionUtil.swift"; sourceTree = SOURCE_ROOT; };
 		CEA0E1E2274E9CAD00CC2FC6 /* AutofillFormInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillFormInputCell.swift; sourceTree = "<group>"; };
@@ -1780,6 +1782,7 @@
 				EF586FE12357A8DC000917B6 /* Wallet */,
 				EF758E1123225F6D000D26A9 /* SwiftDatabase */,
 				EF485578231E5A3600FC9E5F /* Screens */,
+				CE971A26287EE138001D7E1C /* Debug */,
 				5ECE048322CE579B001BA964 /* binkappTests.swift */,
 				5ECE048522CE579B001BA964 /* Info.plist */,
 			);
@@ -2419,6 +2422,15 @@
 				CE02D5172726EE3F008B9BFA /* Paperplane.json */,
 			);
 			path = Animations;
+			sourceTree = "<group>";
+		};
+		CE971A26287EE138001D7E1C /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				CE971A27287EE138001D7E1C /* DebugMenuFactoryTests.swift */,
+			);
+			name = Debug;
+			path = Screens/Debug;
 			sourceTree = "<group>";
 		};
 		CEA16EC926249D6700D449E1 /* Barcode Views */ = {
@@ -4037,6 +4049,7 @@
 				70E8E37B2566DE430027A244 /* PLLScreenViewModelTests.swift in Sources */,
 				CEFB742325668A5100896DE5 /* BrandHeaderViewTests.swift in Sources */,
 				EF586FE52357A90C000917B6 /* PaymentCardCellViewModelTests.swift in Sources */,
+				CE971A28287EE138001D7E1C /* DebugMenuFactoryTests.swift in Sources */,
 				DB4D8EAD2440864C0085595D /* SettingsViewModelTests.swift in Sources */,
 				70A61D16263095060073A08A /* BinkModuleViewModelTests.swift in Sources */,
 				CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */,

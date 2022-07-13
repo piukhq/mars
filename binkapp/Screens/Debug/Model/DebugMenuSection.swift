@@ -25,7 +25,7 @@ struct DebugMenuRow {
         case customBundleClientLogin
     }
     
-    enum CellType {
+    enum CellType: Equatable {
         case titleSubtitle
         case segmentedControl
         case picker(PromptType?)
