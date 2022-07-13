@@ -327,6 +327,7 @@
 		CE85A20126B15436003B74CD /* success.json in Resources */ = {isa = PBXBuildFile; fileRef = CE85A20026B15436003B74CD /* success.json */; };
 		CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */; };
 		CE971A28287EE138001D7E1C /* DebugMenuFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A27287EE138001D7E1C /* DebugMenuFactoryTests.swift */; };
+		CE971A2A287EFDB4001D7E1C /* DebugMenuViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A29287EFDB4001D7E1C /* DebugMenuViewModelTests.swift */; };
 		CE990E13261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */; };
 		CEA0E1E1274E35DE00CC2FC6 /* RecommendedVersionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E1E0274E35DE00CC2FC6 /* RecommendedVersionUtil.swift */; };
 		CEA0E1E3274E9CAD00CC2FC6 /* AutofillFormInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E1E2274E9CAD00CC2FC6 /* AutofillFormInputCell.swift */; };
@@ -997,6 +998,7 @@
 		CE85A20026B15436003B74CD /* success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = success.json; sourceTree = "<group>"; };
 		CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkCopyableLabel.swift; sourceTree = "<group>"; };
 		CE971A27287EE138001D7E1C /* DebugMenuFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugMenuFactoryTests.swift; sourceTree = "<group>"; };
+		CE971A29287EFDB4001D7E1C /* DebugMenuViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewModelTests.swift; sourceTree = "<group>"; };
 		CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_1_LoyaltyCards.swift; sourceTree = "<group>"; };
 		CEA0E1E0274E35DE00CC2FC6 /* RecommendedVersionUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendedVersionUtil.swift; path = "binkapp/Utils/Remote Config/RecommendedVersionUtil.swift"; sourceTree = SOURCE_ROOT; };
 		CEA0E1E2274E9CAD00CC2FC6 /* AutofillFormInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillFormInputCell.swift; sourceTree = "<group>"; };
@@ -2428,6 +2430,7 @@
 			isa = PBXGroup;
 			children = (
 				CE971A27287EE138001D7E1C /* DebugMenuFactoryTests.swift */,
+				CE971A29287EFDB4001D7E1C /* DebugMenuViewModelTests.swift */,
 			);
 			name = Debug;
 			path = Screens/Debug;
@@ -4038,6 +4041,7 @@
 				70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */,
 				70D6863E257152F300403448 /* DynamicActionsTests.swift in Sources */,
 				706157C8264A84AF0002701E /* AppVersionTests.swift in Sources */,
+				CE971A2A287EFDB4001D7E1C /* DebugMenuViewModelTests.swift in Sources */,
 				CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */,
 				21393EFB285A1E1C002C8E79 /* StringHelperTests.swift in Sources */,
 				EF7F6E6123E4288C00352DCF /* StorageUtilityTests.swift in Sources */,
