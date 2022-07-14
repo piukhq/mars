@@ -199,7 +199,6 @@
 		B7136629232690F7008A0ED7 /* PLLScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7136628232690F7008A0ED7 /* PLLScreenViewModel.swift */; };
 		B713662B2329374D008A0ED7 /* OfferTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B713662A2329374D008A0ED7 /* OfferTileView.swift */; };
 		B71D51F92343692000BB3406 /* OfferTileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71D51F82343692000BB3406 /* OfferTileView.xib */; };
-		B726333F230586CC00951037 /* MembershipPlanModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B726333E230586CC00951037 /* MembershipPlanModel.swift */; };
 		B72633412305883D00951037 /* MembershipPlanAccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72633402305883D00951037 /* MembershipPlanAccountModel.swift */; };
 		B72633432305899200951037 /* AddFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72633422305899200951037 /* AddFieldModel.swift */; };
 		B7263345230589C300951037 /* AuthoriseFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7263344230589C300951037 /* AuthoriseFieldModel.swift */; };
@@ -329,6 +328,8 @@
 		CE971A28287EE138001D7E1C /* DebugMenuFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A27287EE138001D7E1C /* DebugMenuFactoryTests.swift */; };
 		CE971A2A287EFDB4001D7E1C /* DebugMenuViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A29287EFDB4001D7E1C /* DebugMenuViewModelTests.swift */; };
 		CE971A2C28802AEC001D7E1C /* PaymentCardDetailLoyaltyCardStatusCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A2B28802AEB001D7E1C /* PaymentCardDetailLoyaltyCardStatusCellViewModelTests.swift */; };
+		CE971A3128806953001D7E1C /* MembershipPlanModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B726333E230586CC00951037 /* MembershipPlanModel.swift */; };
+		CE971A3328806968001D7E1C /* MembershipPlanModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A2E28806270001D7E1C /* MembershipPlanModelTests.swift */; };
 		CE990E13261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */; };
 		CEA0E1E1274E35DE00CC2FC6 /* RecommendedVersionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E1E0274E35DE00CC2FC6 /* RecommendedVersionUtil.swift */; };
 		CEA0E1E3274E9CAD00CC2FC6 /* AutofillFormInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E1E2274E9CAD00CC2FC6 /* AutofillFormInputCell.swift */; };
@@ -1001,6 +1002,7 @@
 		CE971A27287EE138001D7E1C /* DebugMenuFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugMenuFactoryTests.swift; sourceTree = "<group>"; };
 		CE971A29287EFDB4001D7E1C /* DebugMenuViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewModelTests.swift; sourceTree = "<group>"; };
 		CE971A2B28802AEB001D7E1C /* PaymentCardDetailLoyaltyCardStatusCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailLoyaltyCardStatusCellViewModelTests.swift; sourceTree = "<group>"; };
+		CE971A2E28806270001D7E1C /* MembershipPlanModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipPlanModelTests.swift; sourceTree = "<group>"; };
 		CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_1_LoyaltyCards.swift; sourceTree = "<group>"; };
 		CEA0E1E0274E35DE00CC2FC6 /* RecommendedVersionUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendedVersionUtil.swift; path = "binkapp/Utils/Remote Config/RecommendedVersionUtil.swift"; sourceTree = SOURCE_ROOT; };
 		CEA0E1E2274E9CAD00CC2FC6 /* AutofillFormInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillFormInputCell.swift; sourceTree = "<group>"; };
@@ -2819,6 +2821,7 @@
 			isa = PBXGroup;
 			children = (
 				EF8B701123587BE3006CE3DD /* MembershipCardBalanceModelTests.swift */,
+				CE971A2E28806270001D7E1C /* MembershipPlanModelTests.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3737,7 +3740,6 @@
 				EFA5F72F2379A7C70027AB80 /* _CD_App.swift in Sources */,
 				3C9B1A2923854C040078A1EC /* PreferencesRepository.swift in Sources */,
 				B726334B23058A5C00951037 /* FeatureSetModel.swift in Sources */,
-				B726333F230586CC00951037 /* MembershipPlanModel.swift in Sources */,
 				EF7F6E6323E4296C00352DCF /* StorageUtilityMock.swift in Sources */,
 				EFA5F7432379A7C70027AB80 /* CD_PaymentCardAccount.swift in Sources */,
 				EFA81015240405070000D21D /* JailbrokenViewController.swift in Sources */,
@@ -3761,6 +3763,7 @@
 				CEE209142684653A004D3759 /* WidgetContent.swift in Sources */,
 				CEA16EC526249C6300D449E1 /* BarcodeView.swift in Sources */,
 				EF59A1312448B769001B60B8 /* APIErrorResponses.swift in Sources */,
+				CE971A3128806953001D7E1C /* MembershipPlanModel.swift in Sources */,
 				EFEB5BF7237DCA5A00E18743 /* PLRAccumulatorCell.swift in Sources */,
 				7061054125B8555600A16DA5 /* Styling.swift in Sources */,
 				EFA5F7272379A7C70027AB80 /* _CD_ReasonCode.swift in Sources */,
@@ -4069,6 +4072,7 @@
 				DB4D8EAD2440864C0085595D /* SettingsViewModelTests.swift in Sources */,
 				70A61D16263095060073A08A /* BinkModuleViewModelTests.swift in Sources */,
 				CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */,
+				CE971A3328806968001D7E1C /* MembershipPlanModelTests.swift in Sources */,
 				EF8B701223587BE3006CE3DD /* MembershipCardBalanceModelTests.swift in Sources */,
 				CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */,
 				EF758E1623225F95000D26A9 /* DatabaseTests.swift in Sources */,
