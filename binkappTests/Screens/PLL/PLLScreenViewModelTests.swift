@@ -25,8 +25,12 @@ class PLLScreenViewModelTests: XCTestCase, CoreDataTestable {
     // Do as much setup in here as possible so that we can keep the amount of core data usage
     override class func setUp() {
         super.setUp()
+        // Membership Plan
+        let plan = MembershipPlanModel(apiId: 500, status: nil, featureSet: nil, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+        mapResponseToManagedObject(plan, managedObjectType: CD_MembershipPlan.self) { _ in }
+        
         // Membership Card
-        baseMembershipCardResponse = MembershipCardModel(apiId: nil, membershipPlan: nil, membershipTransactions: nil, status: nil, card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
+        baseMembershipCardResponse = MembershipCardModel(apiId: 300, membershipPlan: 500, membershipTransactions: nil, status: nil, card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
 
         mapResponseToManagedObject(baseMembershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
             self.membershipCard = membershipCard
@@ -115,5 +119,13 @@ class PLLScreenViewModelTests: XCTestCase, CoreDataTestable {
         XCTAssertFalse(Self.baseSut.changedLinkCards.isEmpty)
         Self.baseSut.addCardToChangedCardsArray(card: Self.paymentCard)
         XCTAssertTrue(Self.baseSut.changedLinkCards.isEmpty)
+    }
+    
+    func test_getMembershipPlan_returnsCorrectPlan() {
+        XCTAssertEqual(Self.baseSut.getMembershipPlan()?.id, "500")
+    }
+    
+    func test_getMembershipCard_returnsCorrectCard() {
+        XCTAssertEqual(Self.baseSut.getMembershipCard().id, "300")
     }
 }
