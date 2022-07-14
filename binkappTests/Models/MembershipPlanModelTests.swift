@@ -12,7 +12,7 @@ import XCTest
 @testable import binkapp
 
 class MembershipPlanModelTests: XCTestCase {
-    static let membershipPlanAccountModel = MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: nil, category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
+    static let membershipPlanAccountModel = MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "Tesco", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
     let stubbedValidResponse: [String: Any?] = [
         "id": 0,
         "status": "active",
@@ -25,8 +25,8 @@ class MembershipPlanModelTests: XCTestCase {
         "card": nil
     ]
 
-    let stubbedInvalidResponse: [String: Any] = [
-        "id": 0,
+    let stubbedInvalidResponse: [String: Any?] = [
+        "id": "0",
         "status": "active",
         "featuresSet": "",
         "images": [],
@@ -41,5 +41,20 @@ class MembershipPlanModelTests: XCTestCase {
         let responseData = try! JSONSerialization.data(withJSONObject: stubbedValidResponse, options: .prettyPrinted)
         let decodedResponse = try! JSONDecoder().decode(MembershipPlanModel.self, from: responseData)
         XCTAssertNotNil(decodedResponse)
+    }
+    
+    func test_membershipPlan_invalidResponse_failsToDecode() {
+        let responseData = try? JSONSerialization.data(withJSONObject: stubbedInvalidResponse, options: .prettyPrinted)
+        let decodedResponse = try? JSONDecoder().decode(MembershipPlanModel.self, from: responseData!)
+        XCTAssertNil(decodedResponse)
+    }
+    
+    func test_membershipPlan_decodeValues() {
+        let responseData = try! JSONSerialization.data(withJSONObject: stubbedValidResponse, options: .prettyPrinted)
+        let decodedResponse = try! JSONDecoder().decode(MembershipPlanModel.self, from: responseData)
+        XCTAssertEqual(decodedResponse.apiId, 0)
+        XCTAssertEqual(decodedResponse.status, "active")
+        XCTAssertEqual(decodedResponse.card, nil)
+        XCTAssertEqual(decodedResponse.account?.companyName, "Tesco")
     }
 }
