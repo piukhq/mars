@@ -217,6 +217,8 @@ extension SettingsViewController: UITableViewDelegate {
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
                 let navigationRequest = AlertNavigationRequest(alertController: alert)
                 Current.navigate.to(navigationRequest)
+            case .delete:
+                viewModel.handleRowActionForAccountDeletion(loadingCompleteViewController: self)
             }
         }
     }

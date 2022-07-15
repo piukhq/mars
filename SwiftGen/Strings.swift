@@ -158,6 +158,8 @@ internal enum L10n {
   internal static let checkInboxTitle = L10n.tr("Localizable", "check_inbox_title")
   /// There was a problem communicating with the server. Please try again later.
   internal static let communicationError = L10n.tr("Localizable", "communication_error")
+  /// Contact Us
+  internal static let contactUsActionTitle = L10n.tr("Localizable", "contact_us_action_title")
   /// Continue
   internal static let continueButtonTitle = L10n.tr("Localizable", "continue_button_title")
   /// Enter credentials
@@ -170,6 +172,8 @@ internal enum L10n {
   internal static let debugMenuToolsSectionTitle = L10n.tr("Localizable", "debug_menu_tools_section_title")
   /// Decline
   internal static let decline = L10n.tr("Localizable", "decline")
+  /// Delete
+  internal static let deleteActionTitle = L10n.tr("Localizable", "delete_action_title")
   /// Are you sure you want to delete this card?
   internal static let deleteCardConfirmation = L10n.tr("Localizable", "delete_card_confirmation")
   /// Remove this card from Bink
@@ -180,8 +184,6 @@ internal enum L10n {
   }
   /// Delete this card
   internal static let deleteCardTitle = L10n.tr("Localizable", "delete_card_title")
-  /// Delete
-  internal static let deleteSwipeTitle = L10n.tr("Localizable", "delete_swipe_title")
   /// Tap to enlarge Aztec code
   internal static let detailsHeaderShowAztecCode = L10n.tr("Localizable", "details_header_show_aztec_code")
   /// Tap to enlarge barcode
@@ -578,7 +580,7 @@ internal enum L10n {
   internal static func plrVoucherDetailSubtextInprogress(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
     return L10n.tr("Localizable", "plr_voucher_detail_subtext_inprogress", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
   }
-  /// Use the code above to redeem your reward. You will get %@%@%@ off your purchase.
+  /// Use the code above to redeem your reward. You will get a %@%@ %@ off your purchase.
   internal static func plrVoucherDetailSubtextIssued(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
     return L10n.tr("Localizable", "plr_voucher_detail_subtext_issued", String(describing: p1), String(describing: p2), String(describing: p3))
   }
@@ -715,10 +717,20 @@ internal enum L10n {
   internal static let seeDescription = L10n.tr("Localizable", "see_description")
   /// See your balance
   internal static let seeTitle = L10n.tr("Localizable", "see_title")
+  /// Account deletion is irreversible, are you sure you want to delete your account?
+  internal static let settingsDeleteAccountActionSubtitle = L10n.tr("Localizable", "settings_delete_account_action_subtitle")
+  /// Delete Account
+  internal static let settingsDeleteAccountActionTitle = L10n.tr("Localizable", "settings_delete_account_action_title")
+  /// Account deletion failed, please contact us
+  internal static let settingsDeleteAccountFailedAlertMessage = L10n.tr("Localizable", "settings_delete_account_failed_alert_message")
+  /// Account deletion is successful
+  internal static let settingsDeleteAccountSuccessAlertMessage = L10n.tr("Localizable", "settings_delete_account_success_alert_message")
   /// Get in touch with Bink
   internal static let settingsRowContactSubtitle = L10n.tr("Localizable", "settings_row_contact_subtitle")
   /// Contact us
   internal static let settingsRowContactTitle = L10n.tr("Localizable", "settings_row_contact_title")
+  /// Delete my account
+  internal static let settingsRowDeleteAccountTitle = L10n.tr("Localizable", "settings_row_delete_account_title")
   /// Frequently asked questions
   internal static let settingsRowFaqsSubtitle = L10n.tr("Localizable", "settings_row_faqs_subtitle")
   /// FAQs

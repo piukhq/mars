@@ -17,7 +17,6 @@
 "form_field_validation_error" = "Incorrect Format";
 
 "barcode_swipe_title" = "Barcode";
-"delete_swipe_title" = "Delete";
 "please_wait_title" = "Please wait";
 "sign_up_failed_title" = "Sign up failed";
 "please_try_again_title" = "Please try again";
@@ -250,6 +249,13 @@
 "settings_section_beta_title" = "Beta";
 "settings_row_featureflags_title" = "Feature flags";
 
+"settings_row_delete_account_title" = "Delete my account";
+"settings_delete_account_action_title" = "Delete Account";
+"settings_delete_account_action_subtitle" = "Account deletion is irreversible, are you sure you want to delete your account?";
+"settings_delete_account_failed_alert_message" = "Account deletion failed, please contact us";
+"settings_delete_account_success_alert_message"= "Account deletion is successful";
+
+
 // MARK: - Support mail
 
 "support_mail_subject" = "Bink App Support";
@@ -391,7 +397,7 @@
 "plr_voucher_detail_expired_date_prefix" = "Expired ";
 "plr_voucher_detail_expires_date_prefix" = "Expires ";
 "plr_voucher_detail_subtext_inprogress" = "Spend %@%@ with us and you'll get a %@%@ %@.";
-"plr_voucher_detail_subtext_issued" = "Use the code above to redeem your reward. You will get %@%@%@ off your purchase.";
+"plr_voucher_detail_subtext_issued" = "Use the code above to redeem your reward. You will get a %@%@ %@ off your purchase.";
 "plr_lcd_points_module_title" = "Collecting";
 "plr_lcd_points_module_auth_title" = "Earning";
 "plr_lcd_points_module_description" = "Towards rewards";
@@ -504,3 +510,6 @@
 // MARK: - Global
 "alert_view_cannot_delete_card_title" = "Cannot delete";
 "alert_view_cannot_delete_card_body" = "While your card is pending it cannot be deleted. Please try again later.";
+"delete_action_title" = "Delete";
+"contact_us_action_title" = "Contact Us";
+
