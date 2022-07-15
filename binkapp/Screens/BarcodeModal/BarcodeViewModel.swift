@@ -83,7 +83,7 @@ class BarcodeViewModel: ObservableObject {
     }()
 
     
-    // MARK: Computed properties
+    // MARK: - Computed properties
 
     var barcodeImageIsRenderable: Bool {
         return barcodeImage(withSize: CGSize(width: 100, height: 100)) != nil
@@ -104,6 +104,10 @@ class BarcodeViewModel: ObservableObject {
         case .coupon:
             return L10n.barcodeCouponDescription
         }
+    }
+    
+    var membershipNumberTitle: String {
+        return L10n.barcodeMembershipNumberTitle(membershipCard.membershipPlan?.account?.planNameCard ?? "")
     }
     
     var isBarcodeAvailable: Bool {
@@ -153,7 +157,7 @@ class BarcodeViewModel: ObservableObject {
     }
     
     
-    // MARK: Functions
+    // MARK: - Functions
 
     func barcodeImage(withSize size: CGSize, drawInContainer: Bool = true) -> UIImage? {
         guard let barcodeString = membershipCard.card?.barcode else { return nil }

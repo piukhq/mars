@@ -69,6 +69,7 @@
 "barcode_copy_label" = "Copy";
 "barcode_report_issue_title" = "We're sorry you're experiencing an issue. Thank you for reporting it to us";
 "barcode_report_issue_button_title" = "Report Issue";
+"barcode_membership_number_title" = "%@ Number";
 
 "add_join_screen_store_title" = "Store";
 "add_join_screen_view_title" = "View";
@@ -512,4 +513,6 @@
 "alert_view_cannot_delete_card_body" = "While your card is pending it cannot be deleted. Please try again later.";
 "delete_action_title" = "Delete";
 "contact_us_action_title" = "Contact Us";
+
+"empty_rewards" = "No rewards to display. Come back\n after you've earned vouchers to see\n your issued, redeemed or expired\n rewards";
 

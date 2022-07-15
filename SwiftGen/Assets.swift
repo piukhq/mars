@@ -64,6 +64,7 @@ internal enum Asset {
   internal static let cardPaymentSublogoAmEx = ImageAsset(name: "cardPaymentSublogoAmEx")
   internal static let cardPaymentSublogoMasterCard = ImageAsset(name: "cardPaymentSublogoMasterCard")
   internal static let cardPaymentSublogoVisa = ImageAsset(name: "cardPaymentSublogoVisa")
+  internal static let emptyWallet = ImageAsset(name: "empty-wallet")
   internal static let iconSwipeBarcode = ImageAsset(name: "iconSwipeBarcode")
   internal static let iconSwipeDelete = ImageAsset(name: "iconSwipeDelete")
   internal static let icons8Barcode = ImageAsset(name: "icons8Barcode")
