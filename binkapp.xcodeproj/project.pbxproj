@@ -330,6 +330,7 @@
 		CE971A2C28802AEC001D7E1C /* PaymentCardDetailLoyaltyCardStatusCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A2B28802AEB001D7E1C /* PaymentCardDetailLoyaltyCardStatusCellViewModelTests.swift */; };
 		CE971A3128806953001D7E1C /* MembershipPlanModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B726333E230586CC00951037 /* MembershipPlanModel.swift */; };
 		CE971A3328806968001D7E1C /* MembershipPlanModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A2E28806270001D7E1C /* MembershipPlanModelTests.swift */; };
+		CE971A3528807FBB001D7E1C /* BinkInfoButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A3428807FBB001D7E1C /* BinkInfoButtonTests.swift */; };
 		CE990E13261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */; };
 		CEA0E1E1274E35DE00CC2FC6 /* RecommendedVersionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E1E0274E35DE00CC2FC6 /* RecommendedVersionUtil.swift */; };
 		CEA0E1E3274E9CAD00CC2FC6 /* AutofillFormInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E1E2274E9CAD00CC2FC6 /* AutofillFormInputCell.swift */; };
@@ -1003,6 +1004,7 @@
 		CE971A29287EFDB4001D7E1C /* DebugMenuViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewModelTests.swift; sourceTree = "<group>"; };
 		CE971A2B28802AEB001D7E1C /* PaymentCardDetailLoyaltyCardStatusCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailLoyaltyCardStatusCellViewModelTests.swift; sourceTree = "<group>"; };
 		CE971A2E28806270001D7E1C /* MembershipPlanModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipPlanModelTests.swift; sourceTree = "<group>"; };
+		CE971A3428807FBB001D7E1C /* BinkInfoButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkInfoButtonTests.swift; sourceTree = "<group>"; };
 		CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_1_LoyaltyCards.swift; sourceTree = "<group>"; };
 		CEA0E1E0274E35DE00CC2FC6 /* RecommendedVersionUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendedVersionUtil.swift; path = "binkapp/Utils/Remote Config/RecommendedVersionUtil.swift"; sourceTree = SOURCE_ROOT; };
 		CEA0E1E2274E9CAD00CC2FC6 /* AutofillFormInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillFormInputCell.swift; sourceTree = "<group>"; };
@@ -2385,6 +2387,7 @@
 			isa = PBXGroup;
 			children = (
 				CE387AA02565749D006BAC11 /* BrandHeaderViewTests.swift */,
+				CE971A3428807FBB001D7E1C /* BinkInfoButtonTests.swift */,
 				70A61D15263095060073A08A /* BinkModuleViewModelTests.swift */,
 			);
 			path = BinkUI;
@@ -4056,6 +4059,7 @@
 				70D6863E257152F300403448 /* DynamicActionsTests.swift in Sources */,
 				706157C8264A84AF0002701E /* AppVersionTests.swift in Sources */,
 				CE971A2A287EFDB4001D7E1C /* DebugMenuViewModelTests.swift in Sources */,
+				CE971A3528807FBB001D7E1C /* BinkInfoButtonTests.swift in Sources */,
 				CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */,
 				21393EFB285A1E1C002C8E79 /* StringHelperTests.swift in Sources */,
 				EF7F6E6123E4288C00352DCF /* StorageUtilityTests.swift in Sources */,
