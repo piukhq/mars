@@ -94,6 +94,10 @@ internal enum L10n {
   internal static let barcodeError = L10n.tr("Localizable", "barcode_error")
   /// Maximise barcode
   internal static let barcodeMaximiseButton = L10n.tr("Localizable", "barcode_maximise_button")
+  /// %@ Number
+  internal static func barcodeMembershipNumberTitle(_ p1: Any) -> String {
+    return L10n.tr("Localizable", "barcode_membership_number_title", String(describing: p1))
+  }
   /// Report Issue
   internal static let barcodeReportIssueButtonTitle = L10n.tr("Localizable", "barcode_report_issue_button_title")
   /// We're sorry you're experiencing an issue. Thank you for reporting it to us
@@ -196,6 +200,11 @@ internal enum L10n {
   internal static let done = L10n.tr("Localizable", "done")
   /// Use magic link
   internal static let emailMagicLink = L10n.tr("Localizable", "email_magic_link")
+  /// No rewards to display. Come back
+  ///  after you've earned vouchers to see
+  ///  your issued, redeemed or expired
+  ///  rewards
+  internal static let emptyRewards = L10n.tr("Localizable", "empty_rewards")
   /// Error
   internal static let errorTitle = L10n.tr("Localizable", "error_title")
   /// Filters
@@ -584,7 +593,7 @@ internal enum L10n {
   internal static func plrVoucherDetailSubtextInprogress(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
     return L10n.tr("Localizable", "plr_voucher_detail_subtext_inprogress", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
   }
-  /// Use the code above to redeem your reward. You will get %@%@%@ off your purchase.
+  /// Use the code above to redeem your reward. You will get a %@%@ %@ off your purchase.
   internal static func plrVoucherDetailSubtextIssued(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
     return L10n.tr("Localizable", "plr_voucher_detail_subtext_issued", String(describing: p1), String(describing: p2), String(describing: p3))
   }
