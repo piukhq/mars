@@ -21,8 +21,9 @@ class AddOrJoinViewModelTests: XCTestCase, CoreDataTestable {
     override class func setUp() {
         super.setUp()
         let featureSet = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: nil, hasVouchers: nil)
-        let planAccountModel = MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "Harvey Nichols", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
-        membershipPlanResponse = MembershipPlanModel(apiId: 5, status: nil, featureSet: featureSet, images: nil, account: planAccountModel, balances: nil, dynamicContent: nil, hasVouchers: true, card: nil)
+        let enrolField = EnrolFieldModel(apiId: nil, column: nil, validation: nil, fieldDescription: nil, type: nil, choices: [], commonName: nil)
+        let planAccountModel = MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "Harvey Nichols", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: [enrolField])
+        membershipPlanResponse = MembershipPlanModel(apiId: 5, status: nil, featureSet: featureSet, images: nil, account: planAccountModel, balances: nil, dynamicContent: nil, hasVouchers: false, card: nil)
         
         cardResponse = CardModel(apiId: nil, barcode: "123456789", membershipId: "999 666", barcodeType: 0, colour: nil, secondaryColour: nil)
         membershipCardResponse = MembershipCardModel(apiId: nil, membershipPlan: 5, membershipTransactions: nil, status: nil, card: cardResponse, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
@@ -38,5 +39,28 @@ class AddOrJoinViewModelTests: XCTestCase, CoreDataTestable {
     
     func test_shouldShowAddCardButton_returnCorrectBool() {
         XCTAssertTrue(Self.sut.shouldShowAddCardButton)
+        
+        Self.membershipPlanResponse.hasVouchers = true
+        mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { _ in
+            XCTAssertFalse(Self.sut.shouldShowAddCardButton)
+            
+            Self.membershipPlanResponse.featureSet?.linkingSupport = [.add]
+            self.mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { _ in
+                XCTAssertTrue(Self.sut.shouldShowAddCardButton)
+            }
+        }
+    }
+    
+    func test_shouldShowNewCardButton_returnCorrectBool() {
+        XCTAssertFalse(Self.sut.shouldShowNewCardButton)
+        
+        Self.membershipPlanResponse.featureSet?.linkingSupport = [.enrol]
+        self.mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { _ in
+            XCTAssertTrue(Self.sut.shouldShowNewCardButton)
+        }
+    }
+    
+    func test_getMembershipPlan_returnsCorrectPlan() {
+        XCTAssertEqual(Self.sut.getMembershipPlan(), Self.membershipPlan)
     }
 }
