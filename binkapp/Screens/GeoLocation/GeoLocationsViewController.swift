@@ -74,7 +74,11 @@ class GeoLocationsViewController: UIViewController {
     }
     
     @objc func tapOnCallout(sender: UIButton) {
-        viewModel.openAppleMaps()
+        if viewModel.selectedAnnotation != nil {
+            viewModel.openAppleMaps()
+            mapView.deselectAnnotation(viewModel.selectedAnnotation, animated: false)
+            viewModel.selectedAnnotation = nil
+        }
     }
 }
 

@@ -79,6 +79,5 @@ class GeoLocationViewModel: ObservableObject {
                 MixpanelUtility.track(.toAppleMaps(brandName: companyName))
             }
         }
-        selectedAnnotation = nil
     }
 }
