@@ -589,7 +589,7 @@ internal enum L10n {
   internal static func plrVoucherDetailSubtextInprogress(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
     return L10n.tr("Localizable", "plr_voucher_detail_subtext_inprogress", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
   }
-  /// Use the code above to redeem your reward. You will get %@%@%@ off your purchase.
+  /// Use the code above to redeem your reward. You will get a %@%@ %@ off your purchase.
   internal static func plrVoucherDetailSubtextIssued(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
     return L10n.tr("Localizable", "plr_voucher_detail_subtext_issued", String(describing: p1), String(describing: p2), String(describing: p3))
   }
