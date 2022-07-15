@@ -139,7 +139,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = L10n.showTescoLocations
-        label.font = .alertText
+        label.font = .navBar
         label.textAlignment = .left
         label.textColor = Current.themeManager.color(for: .text)
         return label
@@ -150,7 +150,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = L10n.findNearestStore
         label.textAlignment = .left
-        label.font = .navbarHeaderLine2
+        label.font = .bodyTextLarge
         label.textColor = Current.themeManager.color(for: .text)
         return label
     }()

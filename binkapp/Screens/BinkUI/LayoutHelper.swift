@@ -29,14 +29,14 @@ extension LayoutHelper {
         static let titleLabelLeadingOffset: CGFloat = 84.0
         static let subtitleLabelTopOffset: CGFloat = 8
         static let imageViewOffset: CGFloat = 18
-        static let locationsTextTopOffset: CGFloat = 32
+        static let locationsTextTopOffset: CGFloat = 24
         static let locationsTextRightOffset: CGFloat = 8
         static let locationsTextLeftOffset: CGFloat = 84
         static let nearestStoresTextRightOffset: CGFloat = 8
-        static let nearestStoresTextBottomOffset: CGFloat = 32
-        static let locationImageVerticalOffset: CGFloat = 32
-        static let locationImageHorizontalOffset: CGFloat = 6
-        static let locationViewHeight: CGFloat = 120
+        static let nearestStoresTextBottomOffset: CGFloat = 24
+        static let locationImageVerticalOffset: CGFloat = 24
+        static let locationImageHorizontalOffset: CGFloat = 2
+        static let locationViewHeight: CGFloat = 100
     }
 
     enum WalletDimensions {
