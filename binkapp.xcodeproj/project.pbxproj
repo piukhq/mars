@@ -332,6 +332,7 @@
 		CE971A3328806968001D7E1C /* MembershipPlanModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A2E28806270001D7E1C /* MembershipPlanModelTests.swift */; };
 		CE971A3528807FBB001D7E1C /* BinkInfoButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A3428807FBB001D7E1C /* BinkInfoButtonTests.swift */; };
 		CE971A3728817A41001D7E1C /* AddOrJoinViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A3628817A40001D7E1C /* AddOrJoinViewModelTests.swift */; };
+		CE971A3A2881AE1D001D7E1C /* PaymentCardDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A392881AE1D001D7E1C /* PaymentCardDetailViewModelTests.swift */; };
 		CE990E13261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */; };
 		CEA0E1E1274E35DE00CC2FC6 /* RecommendedVersionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E1E0274E35DE00CC2FC6 /* RecommendedVersionUtil.swift */; };
 		CEA0E1E3274E9CAD00CC2FC6 /* AutofillFormInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E1E2274E9CAD00CC2FC6 /* AutofillFormInputCell.swift */; };
@@ -1007,6 +1008,7 @@
 		CE971A2E28806270001D7E1C /* MembershipPlanModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipPlanModelTests.swift; sourceTree = "<group>"; };
 		CE971A3428807FBB001D7E1C /* BinkInfoButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkInfoButtonTests.swift; sourceTree = "<group>"; };
 		CE971A3628817A40001D7E1C /* AddOrJoinViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrJoinViewModelTests.swift; sourceTree = "<group>"; };
+		CE971A392881AE1D001D7E1C /* PaymentCardDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailViewModelTests.swift; sourceTree = "<group>"; };
 		CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_1_LoyaltyCards.swift; sourceTree = "<group>"; };
 		CEA0E1E0274E35DE00CC2FC6 /* RecommendedVersionUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendedVersionUtil.swift; path = "binkapp/Utils/Remote Config/RecommendedVersionUtil.swift"; sourceTree = SOURCE_ROOT; };
 		CEA0E1E2274E9CAD00CC2FC6 /* AutofillFormInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillFormInputCell.swift; sourceTree = "<group>"; };
@@ -2449,6 +2451,7 @@
 			isa = PBXGroup;
 			children = (
 				CE971A2B28802AEB001D7E1C /* PaymentCardDetailLoyaltyCardStatusCellViewModelTests.swift */,
+				CE971A392881AE1D001D7E1C /* PaymentCardDetailViewModelTests.swift */,
 			);
 			path = PaymentCardDetail;
 			sourceTree = "<group>";
@@ -4077,6 +4080,7 @@
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
 				3CEE169B2440550D00933859 /* BrowseBrandsViewModelTests.swift in Sources */,
 				3CFD913022F1BA8200F25AF1 /* (null) in Sources */,
+				CE971A3A2881AE1D001D7E1C /* PaymentCardDetailViewModelTests.swift in Sources */,
 				CE971A3728817A41001D7E1C /* AddOrJoinViewModelTests.swift in Sources */,
 				EF758E1523225F95000D26A9 /* TestDatabase.xcdatamodeld in Sources */,
 				CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */,

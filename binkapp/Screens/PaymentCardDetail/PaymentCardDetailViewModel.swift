@@ -241,7 +241,7 @@ class PaymentCardDetailViewModel {
     }
 
     // MARK: Information rows
-    private func buildInformationRows() {
+    func buildInformationRows() {
         informationRows = informationRowFactory.makePaymentInformationRows(for: paymentCardStatus)
     }
 
