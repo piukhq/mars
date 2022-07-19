@@ -64,6 +64,8 @@ enum MixpanelTrackableEvent {
     case logout
     case viewBarcode(brandName: String, route: JourneyRoute)
     case barcodeScreenIssueReported(brandName: String, reason: BarcodeScreenIssue)
+    case toLocations(brandName: String)
+    case toAppleMaps(brandName: String)
     
     enum JourneyRoute: String {
         case wallet = "Wallet"
@@ -101,6 +103,10 @@ enum MixpanelTrackableEvent {
             return "Barcode viewed"
         case .barcodeScreenIssueReported:
             return "Barcode screen issue reported"
+        case .toLocations:
+            return "Tapped Show Locations"
+        case .toAppleMaps:
+            return "Launch Apple Maps for Directions"
         }
     }
     
@@ -153,6 +159,10 @@ enum MixpanelTrackableEvent {
                 "Reason": reason.rawValue,
                 "Brand name": brandName
             ]
+        case .toLocations(brandName: let brandName):
+            return ["Brand": brandName]
+        case .toAppleMaps(brandName: let brandName):
+            return ["Brand": brandName]
         }
     }
 }

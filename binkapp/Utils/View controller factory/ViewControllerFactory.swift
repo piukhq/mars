@@ -85,6 +85,11 @@ enum ViewControllerFactory {
         return UIHostingController(rootView: BarcodeScreenSwiftUIView(viewModel: viewModel))
     }
     
+    static func makeGeoLocationsViewController(companyName: String) -> GeoLocationsViewController {
+        let viewModel = GeoLocationViewModel(companyName: companyName)
+        return GeoLocationsViewController(viewModel: viewModel)
+    }
+    
     static func makeVoucherDetailViewController(voucher: CD_Voucher, plan: CD_MembershipPlan) -> PLRRewardDetailViewController {
         let viewModel = PLRRewardDetailViewModel(voucher: voucher, plan: plan)
         return PLRRewardDetailViewController(viewModel: viewModel)

@@ -41,6 +41,16 @@ class LoyaltyCardFullDetailsViewModel {
         return membershipCard.membershipPlan?.account?.companyName ?? ""
     }
     
+    var shouldDisplayLocationOption: Bool {
+        // RS - For now we only want to display the locations option only when a Tesco LC is tapped
+        if let companyName = membershipCard.membershipPlan?.account?.companyName {
+            let isTesco = companyName.contains("Tesco")
+            return isTesco && Current.featureManager.isFeatureEnabled(.tescoLocations)
+        }
+        
+        return false
+    }
+    
     var balance: CD_MembershipCardBalance? {
         return membershipCard.balances.allObjects.first as? CD_MembershipCardBalance
     }
@@ -121,6 +131,14 @@ class LoyaltyCardFullDetailsViewModel {
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
         MixpanelUtility.track(.viewBarcode(brandName: membershipCard.membershipPlan?.account?.companyName ?? "Unknown", route: .lcd))
+    }
+    
+    func toGeoLocations() {
+        let companyName = membershipCard.membershipPlan?.account?.companyName ?? "Unknown"
+        let viewController = ViewControllerFactory.makeGeoLocationsViewController(companyName: companyName)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+        MixpanelUtility.track(.toLocations(brandName: companyName))
     }
     
     func goToScreenForState(state: ModuleState, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) {

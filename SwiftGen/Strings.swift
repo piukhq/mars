@@ -211,6 +211,8 @@ internal enum L10n {
   internal static let filtersButtonTitle = L10n.tr("Localizable", "filters_button_title")
   /// Find and join loyalty schemes
   internal static let findAndJoinDescription = L10n.tr("Localizable", "find_and_join_description")
+  /// Find your nearest store
+  internal static let findNearestStore = L10n.tr("Localizable", "find_nearest_store")
   /// If the email address you entered is associated with a Bink account, then a password reset email will be sent.
   internal static let fogrotPasswordPopupText = L10n.tr("Localizable", "fogrot_password_popup_text")
   /// Please enter your email address and if it is associated with a Bink account, then a password reset email will be sent
@@ -268,6 +270,8 @@ internal enum L10n {
   internal static let linkedStatusImageName = L10n.tr("Localizable", "linked_status_image_name")
   /// There was a problem loading the page, please try again later.
   internal static let loadingError = L10n.tr("Localizable", "loading_error")
+  /// Locations
+  internal static let locations = L10n.tr("Localizable", "locations")
   /// Log in failed
   internal static let logInFailedTitle = L10n.tr("Localizable", "log_in_failed_title")
   /// You are seeing this because sometimes it takes a while to log in with the merchant. In the meantime please do not attempt to log in again, but you can use your card and receive your benefits as usual. After you are logged in you will be able to see your points balance.
@@ -658,6 +662,8 @@ internal enum L10n {
   internal static let preferencesScreenDescription = L10n.tr("Localizable", "preferences_screen_description")
   /// We can't update your preferences at the moment. Please try again later.
   internal static let preferencesUpdateFail = L10n.tr("Localizable", "preferences_update_fail")
+  /// Press for directions
+  internal static let pressForDirections = L10n.tr("Localizable", "press_for_directions")
   /// Privacy Policy
   internal static let privacyPolicy = L10n.tr("Localizable", "privacy_policy")
   /// Your recent transaction history
@@ -794,6 +800,8 @@ internal enum L10n {
   internal static let settingsTitle = L10n.tr("Localizable", "settings_title")
   /// Who we are
   internal static let settingsWhoWeAreTitle = L10n.tr("Localizable", "settings_who_we_are_title")
+  /// Show Tesco Locations
+  internal static let showTescoLocations = L10n.tr("Localizable", "show_tesco_locations")
   /// Sign up
   internal static let signUpButtonTitle = L10n.tr("Localizable", "sign_up_button_title")
   /// Sign up failed
