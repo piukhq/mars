@@ -32,8 +32,10 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable {
         }
         
         // Payment Card
+        let card = PaymentCardCardResponse(apiId: nil, firstSix: nil, lastFour: "1234", month: 30, year: 3000, country: nil, currencyCode: nil, nameOnCard: "Sean Williams", provider: nil, type: nil)
+        
         let linkedResponse = LinkedCardResponse(id: 1, activeLink: true)
-        basePaymentCardResponse = PaymentCardModel(apiId: 0, membershipCards: [linkedResponse], status: "active", card: nil, account: PaymentCardAccountResponse(apiId: 0, verificationInProgress: nil, status: 0, consents: []))
+        basePaymentCardResponse = PaymentCardModel(apiId: 100, membershipCards: [linkedResponse], status: "active", card: card, account: PaymentCardAccountResponse(apiId: 0, verificationInProgress: nil, status: 0, consents: []))
         
         mapResponseToManagedObject(basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
             self.paymentCard = paymentCard
@@ -96,5 +98,35 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable {
     
     func test_pendingRefreshInterval_isCorrect() {
         XCTAssertEqual(Self.baseSut.pendingRefreshInterval, 30.0)
+    }
+    
+    func test_paymentCardCellViewModel_initialisesViewModelCorrectly() {
+        XCTAssertEqual(Self.baseSut.paymentCardCellViewModel, PaymentCardCellViewModel(paymentCard: Self.paymentCard))
+    }
+    
+    func test_navigationViewTitleText_returnsCorrectTitle() {
+        XCTAssertEqual(Self.baseSut.navigationViewTitleText, Self.paymentCard.card?.nameOnCard)
+    }
+    
+    func test_navigationViewDetailText_returnsCorrectDigits() {
+        XCTAssertEqual(Self.baseSut.navigationViewDetailText, "•••• \(Self.paymentCard.card?.lastFour ?? "")")
+    }
+    
+    func test_addedCardsTitle_returnsCorrectTitleForStatus() {
+        switchCardStatus(status: .active) {
+            XCTAssertEqual(Self.baseSut.addedCardsTitle, L10n.pcdActiveCardTitle)
+        }
+        
+        switchCardStatus(status: .pending) {
+            XCTAssertEqual(Self.baseSut.addedCardsTitle, L10n.pcdPendingCardTitle)
+        }
+        
+        switchCardStatus(status: .failed) {
+            XCTAssertEqual(Self.baseSut.addedCardsTitle, L10n.pcdFailedCardTitle)
+        }
+        
+        switchCardStatus(status: .expired) {
+            XCTAssertEqual(Self.baseSut.addedCardsTitle, L10n.pcdExpiredCardTitle)
+        }
     }
 }
