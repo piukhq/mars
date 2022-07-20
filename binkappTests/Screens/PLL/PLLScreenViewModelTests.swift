@@ -47,7 +47,7 @@ class PLLScreenViewModelTests: XCTestCase, CoreDataTestable {
     
     
     private func addPaymentCardToWallet() {
-        Current.wallet.paymentCards?.append(Self.paymentCard)
+        Current.wallet.paymentCards = [Self.paymentCard]
     }
     
     private func removePaymentCardFromWallet() {

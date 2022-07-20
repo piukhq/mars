@@ -58,9 +58,60 @@ class AddOrJoinViewModelTests: XCTestCase, CoreDataTestable {
         self.mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { _ in
             XCTAssertTrue(Self.sut.shouldShowNewCardButton)
         }
+        
+        Self.membershipPlanResponse.account = nil
+        self.mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { _ in
+            XCTAssertFalse(Self.sut.shouldShowNewCardButton)
+        }
+        
+        Self.membershipPlanResponse.featureSet = nil
+        self.mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { _ in
+            XCTAssertFalse(Self.sut.shouldShowNewCardButton)
+        }
     }
     
     func test_getMembershipPlan_returnsCorrectPlan() {
         XCTAssertEqual(Self.sut.getMembershipPlan(), Self.membershipPlan)
+    }
+    
+    func test_toAuthAndAddScreen_1() {
+        Self.membershipPlanResponse.hasVouchers = false
+        self.mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { _ in
+            Self.sut.toAuthAndAddScreen()
+            if let navigationController = Current.navigate.navigationHandler.topViewController as? PortraitNavigationController {
+                XCTAssertTrue(navigationController.visibleViewController?.isKind(of: AuthAndAddViewController.self) == true)
+                
+                if let authAndAdd = navigationController.visibleViewController as? AuthAndAddViewController {
+                    XCTAssertEqual(authAndAdd.viewModel.formPurpose, .addFailed)
+                    
+                    Current.navigate.navigationHandler.navigationController?.viewControllers.removeLast()
+                }
+            }
+        }
+    }
+    
+    func test_toAuthAndAddScreen_2() {
+//        Current.navigate.navigationHandler.navigationController?.viewControllers.remove(at: 1)
+        Self.sut.membershipCard = nil
+        self.mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { _ in
+            Self.sut.toAuthAndAddScreen()
+            if let navigationController = Current.navigate.navigationHandler.topViewController as? PortraitNavigationController {
+                XCTAssertTrue(navigationController.visibleViewController?.isKind(of: AuthAndAddViewController.self) == true)
+                
+                if let authAndAdd = navigationController.visibleViewController as? AuthAndAddViewController {
+                    XCTAssertEqual(authAndAdd.viewModel.formPurpose, .add)
+                }
+            }
+        }
+    }
+    
+    func test_toAuthAndAddScreen_3() {
+        Self.membershipPlanResponse.hasVouchers = true
+        self.mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { _ in
+            Self.sut.toAuthAndAddScreen()
+            if let navigationController = Current.navigate.navigationHandler.topViewController as? PortraitNavigationController {
+                XCTAssertTrue(navigationController.visibleViewController?.isKind(of: ReusableTemplateViewController.self) == true)
+            }
+        }
     }
 }
