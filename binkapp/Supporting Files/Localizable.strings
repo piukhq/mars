@@ -69,6 +69,7 @@
 "barcode_copy_label" = "Copy";
 "barcode_report_issue_title" = "We're sorry you're experiencing an issue. Thank you for reporting it to us";
 "barcode_report_issue_button_title" = "Report Issue";
+"barcode_membership_number_title" = "%@ Number";
 
 "add_join_screen_store_title" = "Store";
 "add_join_screen_view_title" = "View";
@@ -397,7 +398,7 @@
 "plr_voucher_detail_expired_date_prefix" = "Expired ";
 "plr_voucher_detail_expires_date_prefix" = "Expires ";
 "plr_voucher_detail_subtext_inprogress" = "Spend %@%@ with us and you'll get a %@%@ %@.";
-"plr_voucher_detail_subtext_issued" = "Use the code above to redeem your reward. You will get %@%@%@ off your purchase.";
+"plr_voucher_detail_subtext_issued" = "Use the code above to redeem your reward. You will get a %@%@ %@ off your purchase.";
 "plr_lcd_points_module_title" = "Collecting";
 "plr_lcd_points_module_auth_title" = "Earning";
 "plr_lcd_points_module_description" = "Towards rewards";
@@ -516,5 +517,12 @@
 
 "alert_view_changing_sort" = "Changing Sort";
 "alert_view_changing_sort_body" = "Some of your cards have been ordered manually. Press OK to change the sort order, but please note that your manual ordering of cards will be lost.";
-
 "sort_order" = "Sort Order";
+
+"empty_rewards" = "No rewards to display. Come back\n after you've earned vouchers to see\n your issued, redeemed or expired\n rewards";
+
+"show_tesco_locations" = "Show Tesco Locations";
+"find_nearest_store" = "Find your nearest store";
+"press_for_directions" = "Press for directions";
+"locations" = "Locations";
+

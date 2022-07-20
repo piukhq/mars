@@ -98,6 +98,10 @@ internal enum L10n {
   internal static let barcodeError = L10n.tr("Localizable", "barcode_error")
   /// Maximise barcode
   internal static let barcodeMaximiseButton = L10n.tr("Localizable", "barcode_maximise_button")
+  /// %@ Number
+  internal static func barcodeMembershipNumberTitle(_ p1: Any) -> String {
+    return L10n.tr("Localizable", "barcode_membership_number_title", String(describing: p1))
+  }
   /// Report Issue
   internal static let barcodeReportIssueButtonTitle = L10n.tr("Localizable", "barcode_report_issue_button_title")
   /// We're sorry you're experiencing an issue. Thank you for reporting it to us
@@ -200,12 +204,19 @@ internal enum L10n {
   internal static let done = L10n.tr("Localizable", "done")
   /// Use magic link
   internal static let emailMagicLink = L10n.tr("Localizable", "email_magic_link")
+  /// No rewards to display. Come back
+  ///  after you've earned vouchers to see
+  ///  your issued, redeemed or expired
+  ///  rewards
+  internal static let emptyRewards = L10n.tr("Localizable", "empty_rewards")
   /// Error
   internal static let errorTitle = L10n.tr("Localizable", "error_title")
   /// Filters
   internal static let filtersButtonTitle = L10n.tr("Localizable", "filters_button_title")
   /// Find and join loyalty schemes
   internal static let findAndJoinDescription = L10n.tr("Localizable", "find_and_join_description")
+  /// Find your nearest store
+  internal static let findNearestStore = L10n.tr("Localizable", "find_nearest_store")
   /// If the email address you entered is associated with a Bink account, then a password reset email will be sent.
   internal static let fogrotPasswordPopupText = L10n.tr("Localizable", "fogrot_password_popup_text")
   /// Please enter your email address and if it is associated with a Bink account, then a password reset email will be sent
@@ -263,6 +274,8 @@ internal enum L10n {
   internal static let linkedStatusImageName = L10n.tr("Localizable", "linked_status_image_name")
   /// There was a problem loading the page, please try again later.
   internal static let loadingError = L10n.tr("Localizable", "loading_error")
+  /// Locations
+  internal static let locations = L10n.tr("Localizable", "locations")
   /// Log in failed
   internal static let logInFailedTitle = L10n.tr("Localizable", "log_in_failed_title")
   /// You are seeing this because sometimes it takes a while to log in with the merchant. In the meantime please do not attempt to log in again, but you can use your card and receive your benefits as usual. After you are logged in you will be able to see your points balance.
@@ -584,7 +597,7 @@ internal enum L10n {
   internal static func plrVoucherDetailSubtextInprogress(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
     return L10n.tr("Localizable", "plr_voucher_detail_subtext_inprogress", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
   }
-  /// Use the code above to redeem your reward. You will get %@%@%@ off your purchase.
+  /// Use the code above to redeem your reward. You will get a %@%@ %@ off your purchase.
   internal static func plrVoucherDetailSubtextIssued(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
     return L10n.tr("Localizable", "plr_voucher_detail_subtext_issued", String(describing: p1), String(describing: p2), String(describing: p3))
   }
@@ -653,6 +666,8 @@ internal enum L10n {
   internal static let preferencesScreenDescription = L10n.tr("Localizable", "preferences_screen_description")
   /// We can't update your preferences at the moment. Please try again later.
   internal static let preferencesUpdateFail = L10n.tr("Localizable", "preferences_update_fail")
+  /// Press for directions
+  internal static let pressForDirections = L10n.tr("Localizable", "press_for_directions")
   /// Privacy Policy
   internal static let privacyPolicy = L10n.tr("Localizable", "privacy_policy")
   /// Your recent transaction history
@@ -789,6 +804,8 @@ internal enum L10n {
   internal static let settingsTitle = L10n.tr("Localizable", "settings_title")
   /// Who we are
   internal static let settingsWhoWeAreTitle = L10n.tr("Localizable", "settings_who_we_are_title")
+  /// Show Tesco Locations
+  internal static let showTescoLocations = L10n.tr("Localizable", "show_tesco_locations")
   /// Sign up
   internal static let signUpButtonTitle = L10n.tr("Localizable", "sign_up_button_title")
   /// Sign up failed
