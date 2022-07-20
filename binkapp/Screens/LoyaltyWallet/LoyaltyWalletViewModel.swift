@@ -118,7 +118,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
     func setMembershipCardsSortingType(sortType: MembershipCardsSortState?) {
         guard let value = sortType?.rawValue else { return }
         Current.userDefaults.set(value, forDefaultsKey: .membershipCardsSortType)
-        MixpanelUtility.track(.loyaltyCardsSortOrder(value: value))
+        MixpanelUtility.setUserProperty(.loyaltyCardsSortOrder(value))
     }
     
     func getLocalWalletOrderFromUserDefaults() -> [String]? {
