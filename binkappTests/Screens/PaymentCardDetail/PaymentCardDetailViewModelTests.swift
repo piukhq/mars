@@ -171,11 +171,68 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable {
     }
     
     func test_otherCardsTitle_returnsCorrectString() {
+        Self.walletDelegate?.updateMembershipCards(membershipCards: [])
         XCTAssertEqual(Self.baseSut.otherCardsTitle, L10n.pcdOtherCardTitleNoCardsAdded)
         
         switchCardStatus(status: .active) {
             Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
             XCTAssertEqual(Self.baseSut.otherCardsTitle, L10n.pcdOtherCardTitleCardsAdded)
+        }
+    }
+    
+    func test_otherCardsDescription_returnsCorrectString() {
+        Self.walletDelegate?.updateMembershipCards(membershipCards: [])
+        XCTAssertEqual(Self.baseSut.otherCardsDescription, L10n.pcdOtherCardDescriptionNoCardsAdded)
+        
+        switchCardStatus(status: .active) {
+            Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
+            XCTAssertEqual(Self.baseSut.otherCardsDescription, L10n.pcdOtherCardDescriptionCardsAdded)
+        }
+    }
+    
+    func test_shouldShowPaymentCardCell_returnsTrue() {
+        XCTAssertTrue(Self.baseSut.shouldShowPaymentCardCell)
+    }
+    
+    func test_shouldShowAddedCardsTitleLabel_returnsCorrectBool() {
+        Self.walletDelegate?.updateMembershipCards(membershipCards: [])
+        switchCardStatus(status: .failed) {
+            XCTAssertTrue(Self.baseSut.shouldShowAddedCardsTitleLabel)
+        }
+        
+        switchCardStatus(status: .active) {
+            XCTAssertFalse(Self.baseSut.shouldShowAddedCardsTitleLabel)
+
+            Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
+            XCTAssertTrue(Self.baseSut.shouldShowAddedCardsTitleLabel)
+        }
+    }
+    
+    func test_shouldShowAddedCardsDescriptionLabel_returnsCorrectBool() {
+        Self.walletDelegate?.updateMembershipCards(membershipCards: [])
+        switchCardStatus(status: .failed) {
+            XCTAssertTrue(Self.baseSut.shouldShowAddedCardsDescriptionLabel)
+        }
+        
+        switchCardStatus(status: .active) {
+            XCTAssertFalse(Self.baseSut.shouldShowAddedCardsDescriptionLabel)
+
+            Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
+            XCTAssertTrue(Self.baseSut.shouldShowAddedCardsDescriptionLabel)
+        }
+    }
+    
+    func test_shouldShowOtherCardsTitleLabel_returnsCorrectBool() {
+        Self.walletDelegate?.updateMembershipCards(membershipCards: [])
+        switchCardStatus(status: .failed) {
+            XCTAssertFalse(Self.baseSut.shouldShowOtherCardsTitleLabel)
+        }
+        
+        switchCardStatus(status: .active) {
+            XCTAssertFalse(Self.baseSut.shouldShowOtherCardsTitleLabel)
+
+//            Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
+//            XCTAssertTrue(Self.baseSut.shouldShowOtherCardsTitleLabel)
         }
     }
 }
