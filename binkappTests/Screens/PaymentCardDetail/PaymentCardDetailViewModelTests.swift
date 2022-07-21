@@ -12,9 +12,11 @@ import XCTest
 class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable {
     static var baseMembershipCardResponse: MembershipCardModel!
     static var basePaymentCardResponse: PaymentCardModel!
+    static let linkedResponse = LinkedCardResponse(id: 300, activeLink: true)
 
     static var membershipCard: CD_MembershipCard!
     static var paymentCard: CD_PaymentCard!
+    static var membershipCardStatus: CD_MembershipCardStatus!
 
     static let baseSut = PaymentCardDetailViewModel(paymentCard: paymentCard, informationRowFactory: WalletCardDetailInformationRowFactory())
     
@@ -28,7 +30,12 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable {
         mapResponseToManagedObject(plan, managedObjectType: CD_MembershipPlan.self) { _ in }
         
         // Membership Card
-        baseMembershipCardResponse = MembershipCardModel(apiId: 300, membershipPlan: 500, membershipTransactions: nil, status: nil, card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
+        let statusResponse = MembershipCardStatusModel(apiId: 0, state: .authorised, reasonCodes: nil)
+        mapResponseToManagedObject(statusResponse, managedObjectType: CD_MembershipCardStatus.self) { membershipCardStatus in
+            self.membershipCardStatus = membershipCardStatus
+        }
+        
+        baseMembershipCardResponse = MembershipCardModel(apiId: 300, membershipPlan: 500, membershipTransactions: nil, status: statusResponse, card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
 
         mapResponseToManagedObject(baseMembershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
             self.membershipCard = membershipCard
@@ -36,9 +43,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable {
         
         // Payment Card
         let card = PaymentCardCardResponse(apiId: 100, firstSix: nil, lastFour: "1234", month: 30, year: 3000, country: nil, currencyCode: nil, nameOnCard: "Sean Williams", provider: nil, type: nil)
-        
-        let linkedResponse = LinkedCardResponse(id: 300, activeLink: true)
-        
+                
         basePaymentCardResponse = PaymentCardModel(apiId: 100, membershipCards: [linkedResponse], status: "active", card: card, account: PaymentCardAccountResponse(apiId: 0, verificationInProgress: nil, status: 0, consents: []))
         
         mapResponseToManagedObject(basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
@@ -289,5 +294,34 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable {
             Self.paymentCard = paymentCard
             XCTAssertEqual(Self.baseSut.linkedMembershipCardIds, [])
         }
+    }
+    
+    func test_membershipCardIsLinked_returnsCorrectBool() {
+        Self.basePaymentCardResponse.membershipCards = [Self.linkedResponse]
+        mapResponseToManagedObject(Self.basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { _ in
+            XCTAssertTrue(Self.baseSut.membershipCardIsLinked(Self.membershipCard))
+        }
+        
+        Self.basePaymentCardResponse.membershipCards = []
+        mapResponseToManagedObject(Self.basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
+            Self.paymentCard = paymentCard
+            XCTAssertFalse(Self.baseSut.membershipCardIsLinked(Self.membershipCard))
+        }
+    }
+    
+    func test_membershipCardForIndexPath_returnsCorrectCard() {
+        Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
+        XCTAssertEqual(Self.baseSut.membershipCard(forIndexPath: IndexPath(row: 0, section: 0)), Self.membershipCard)
+        
+        Self.walletDelegate?.updateMembershipCards(membershipCards: [])
+        XCTAssertNil(Self.baseSut.membershipCard(forIndexPath: IndexPath(row: 0, section: 0)))
+    }
+    
+    func test_statusForMembershipCard_returnsCorrectStatus() {
+        Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
+        XCTAssertEqual(Self.baseSut.statusForMembershipCard(atIndexPath: IndexPath(row: 0, section: 0))?.status, Self.membershipCardStatus.status)
+        
+        Self.walletDelegate?.updateMembershipCards(membershipCards: [])
+        XCTAssertNil(Self.baseSut.statusForMembershipCard(atIndexPath: IndexPath(row: 0, section: 0)))
     }
 }

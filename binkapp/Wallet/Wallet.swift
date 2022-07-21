@@ -13,11 +13,7 @@ protocol WalletTestable {
     func updateMembershipCards(membershipCards: [CD_MembershipCard])
 }
 
-class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol, WalletTestable {
-    func updateMembershipCards(membershipCards: [CD_MembershipCard]) {
-        self.membershipCards = membershipCards
-    }
-    
+class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
     private enum FetchType {
         case localLaunch // Specifically used on launch to perform desired behaviour not needed at any other time
         case localReactive // Any local fetch other than on launch
@@ -412,5 +408,11 @@ extension Wallet {
             localOrder = cards.compactMap { $0.id }
             walletDataSource = cards
         }
+    }
+}
+
+extension Wallet: WalletTestable {
+    func updateMembershipCards(membershipCards: [CD_MembershipCard]) {
+        self.membershipCards = membershipCards
     }
 }
