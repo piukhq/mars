@@ -11,7 +11,7 @@ import Foundation
 class PaymentCardDetailViewModel {
     typealias EmptyCompletionBlock = () -> Void
 
-    private var paymentCard: CD_PaymentCard {
+    var paymentCard: CD_PaymentCard {
         didSet {
             buildInformationRows()
         }
