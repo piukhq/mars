@@ -35,9 +35,9 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable {
         }
         
         // Payment Card
-        let card = PaymentCardCardResponse(apiId: nil, firstSix: nil, lastFour: "1234", month: 30, year: 3000, country: nil, currencyCode: nil, nameOnCard: "Sean Williams", provider: nil, type: nil)
+        let card = PaymentCardCardResponse(apiId: 100, firstSix: nil, lastFour: "1234", month: 30, year: 3000, country: nil, currencyCode: nil, nameOnCard: "Sean Williams", provider: nil, type: nil)
         
-        let linkedResponse = LinkedCardResponse(id: 1, activeLink: true)
+        let linkedResponse = LinkedCardResponse(id: 300, activeLink: true)
         
         basePaymentCardResponse = PaymentCardModel(apiId: 100, membershipCards: [linkedResponse], status: "active", card: card, account: PaymentCardAccountResponse(apiId: 0, verificationInProgress: nil, status: 0, consents: []))
         
@@ -230,9 +230,64 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable {
         
         switchCardStatus(status: .active) {
             XCTAssertFalse(Self.baseSut.shouldShowOtherCardsTitleLabel)
+        }
+    }
+    
+    func test_shouldShowOtherCardsDescriptionLabel_returnsCorrectBool() {
+        Self.walletDelegate?.updateMembershipCards(membershipCards: [])
+        switchCardStatus(status: .failed) {
+            XCTAssertFalse(Self.baseSut.shouldShowOtherCardsDescriptionLabel)
+        }
+        
+        switchCardStatus(status: .active) {
+            XCTAssertFalse(Self.baseSut.shouldShowOtherCardsDescriptionLabel)
+        }
+    }
+    
+    func test_shouldShowCardAddedLabel_returnsCorrectBool() {
+        switchCardStatus(status: .pending) {
+            XCTAssertTrue(Self.baseSut.shouldShowCardAddedLabel)
+        }
+        
+        switchCardStatus(status: .failed) {
+            XCTAssertFalse(Self.baseSut.shouldShowCardAddedLabel)
+        }
+    }
+    
+    func test_shouldShowAddedLoyaltyCardTableView_returnsCorrectBool() {
+        switchCardStatus(status: .active) {
+            Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
+            XCTAssertTrue(Self.baseSut.shouldShowAddedLoyaltyCardTableView)
+        }
+        
+        switchCardStatus(status: .failed) {
+            XCTAssertFalse(Self.baseSut.shouldShowAddedLoyaltyCardTableView)
+        }
+    }
+    
+    func test_pllMembershipCards_returnsMembershipCardArray() {
+        Self.walletDelegate?.updateMembershipCards(membershipCards: [])
+        XCTAssertEqual(Self.baseSut.pllMembershipCards, [])
 
-//            Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
-//            XCTAssertTrue(Self.baseSut.shouldShowOtherCardsTitleLabel)
+        Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
+        XCTAssertEqual(Self.baseSut.pllMembershipCards, [Self.membershipCard])
+    }
+    
+    func test_pllMembershipCardsCount_returnsCorrectValue() {
+        Self.walletDelegate?.updateMembershipCards(membershipCards: [])
+        XCTAssertEqual(Self.baseSut.pllMembershipCardsCount, 0)
+
+        Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
+        XCTAssertEqual(Self.baseSut.pllMembershipCardsCount, 1)
+    }
+    
+    func test_linkedMembershipCardIds_returnsCorrectIDsArray() {
+        XCTAssertEqual(Self.baseSut.linkedMembershipCardIds, ["300"])
+        
+        Self.basePaymentCardResponse.membershipCards = []
+        mapResponseToManagedObject(Self.basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
+            Self.paymentCard = paymentCard
+            XCTAssertEqual(Self.baseSut.linkedMembershipCardIds, [])
         }
     }
 }
