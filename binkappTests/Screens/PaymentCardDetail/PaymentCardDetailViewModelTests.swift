@@ -9,7 +9,22 @@
 import XCTest
 @testable import binkapp
 
-class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable {
+class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailInformationRowFactoryDelegate {
+    func cardDetailInformationRowFactory(_ factory: WalletCardDetailInformationRowFactory, shouldPerformActionForRowType informationRowType: CardDetailInformationRow.RowType) {
+        switch informationRowType {
+//        case .about:
+//            Self.informationRowActionResult = informationRowType.subtitle
+//        case .securityAndPrivacy:
+//            viewModel.toSecurityAndPrivacyScreen()
+//        case .deleteMembershipCard:
+//            viewModel.showDeleteConfirmationAlert()
+//        case .rewardsHistory:
+//            viewModel.toRewardsHistoryScreen()
+        default:
+            Self.informationRowActionResult = informationRowType.subtitle
+        }
+    }
+    
     static var baseMembershipCardResponse: MembershipCardModel!
     static var basePaymentCardResponse: PaymentCardModel!
     static let linkedResponse = LinkedCardResponse(id: 300, activeLink: true)
@@ -21,6 +36,8 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable {
     static let baseSut = PaymentCardDetailViewModel(paymentCard: paymentCard, informationRowFactory: WalletCardDetailInformationRowFactory())
     
     static var walletDelegate: WalletTestable?
+    
+    static var informationRowActionResult = ""
 
     override class func setUp() {
         super.setUp()
@@ -324,4 +341,43 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable {
         Self.walletDelegate?.updateMembershipCards(membershipCards: [])
         XCTAssertNil(Self.baseSut.statusForMembershipCard(atIndexPath: IndexPath(row: 0, section: 0)))
     }
+    
+    func test_informationRowForIndexPath_returnsCorrectRow_() {
+        switchCardStatus(status: .active) {
+            Self.baseSut.buildInformationRows()
+            XCTAssertEqual(Self.baseSut.informationRow(forIndexPath: IndexPath(row: 0, section: 0)), CardDetailInformationRow(type: .securityAndPrivacy, action: {}))
+            XCTAssertEqual(Self.baseSut.informationRow(forIndexPath: IndexPath(row: 1, section: 0)), CardDetailInformationRow(type: .deletePaymentCard, action: {}))
+        }
+        
+        switchCardStatus(status: .failed) {
+            Self.baseSut.buildInformationRows()
+            XCTAssertEqual(Self.baseSut.informationRow(forIndexPath: IndexPath(row: 0, section: 0)), CardDetailInformationRow(type: .securityAndPrivacy, action: {}))
+            XCTAssertEqual(Self.baseSut.informationRow(forIndexPath: IndexPath(row: 1, section: 0)), CardDetailInformationRow(type: .deletePaymentCard, action: {}))
+            XCTAssertEqual(Self.baseSut.informationRow(forIndexPath: IndexPath(row: 2, section: 0)), CardDetailInformationRow(type: .faqs, action: {}))
+        }
+        
+        switchCardStatus(status: .pending) {
+            Self.baseSut.buildInformationRows()
+            XCTAssertEqual(Self.baseSut.informationRow(forIndexPath: IndexPath(row: 0, section: 0)), CardDetailInformationRow(type: .securityAndPrivacy, action: {}))
+            XCTAssertEqual(Self.baseSut.informationRow(forIndexPath: IndexPath(row: 1, section: 0)), CardDetailInformationRow(type: .deletePaymentCard, action: {}))
+            XCTAssertEqual(Self.baseSut.informationRow(forIndexPath: IndexPath(row: 2, section: 0)), CardDetailInformationRow(type: .faqs, action: {}))
+        }
+        
+        switchCardStatus(status: .expired) {
+            Self.baseSut.buildInformationRows()
+            XCTAssertEqual(Self.baseSut.informationRow(forIndexPath: IndexPath(row: 0, section: 0)), CardDetailInformationRow(type: .securityAndPrivacy, action: {}))
+            XCTAssertEqual(Self.baseSut.informationRow(forIndexPath: IndexPath(row: 1, section: 0)), CardDetailInformationRow(type: .deletePaymentCard, action: {}))
+            XCTAssertEqual(Self.baseSut.informationRow(forIndexPath: IndexPath(row: 2, section: 0)), CardDetailInformationRow(type: .faqs, action: {}))
+        }
+    }
+    
+//    func test_performActionForInformationRowatIndexPath_performsCorrectAction() {
+//        switchCardStatus(status: .active) {
+//            Self.baseSut.buildInformationRows()
+//            
+//            Self.baseSut.performActionForInformationRow(atIndexPath: IndexPath(row: 0, section: 0))
+//            XCTAssertEqual(CardDetailInformationRow.RowType.securityAndPrivacy.subtitle, Self.informationRowActionResult)
+////            XCTAssertEqual(Self.baseSut.informationRow(forIndexPath: IndexPath(row: 1, section: 0)), CardDetailInformationRow(type: .deletePaymentCard, action: {}))
+//        }
+//    }
 }
