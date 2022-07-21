@@ -17,11 +17,14 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable {
     static var paymentCard: CD_PaymentCard!
 
     static let baseSut = PaymentCardDetailViewModel(paymentCard: paymentCard, informationRowFactory: WalletCardDetailInformationRowFactory())
+    
+    static var walletDelegate: WalletTestable?
 
     override class func setUp() {
         super.setUp()
         // Membership Plan
-        let plan = MembershipPlanModel(apiId: 500, status: nil, featureSet: nil, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+        let featureSet = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: nil, hasVouchers: nil)
+        let plan = MembershipPlanModel(apiId: 500, status: nil, featureSet: featureSet, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
         mapResponseToManagedObject(plan, managedObjectType: CD_MembershipPlan.self) { _ in }
         
         // Membership Card
@@ -35,13 +38,14 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable {
         let card = PaymentCardCardResponse(apiId: nil, firstSix: nil, lastFour: "1234", month: 30, year: 3000, country: nil, currencyCode: nil, nameOnCard: "Sean Williams", provider: nil, type: nil)
         
         let linkedResponse = LinkedCardResponse(id: 1, activeLink: true)
-//        let consents = PaymentCardAccountConsentsResponse(apiId: 0, type: 0, timestamp: <#T##Int?#>)
         
         basePaymentCardResponse = PaymentCardModel(apiId: 100, membershipCards: [linkedResponse], status: "active", card: card, account: PaymentCardAccountResponse(apiId: 0, verificationInProgress: nil, status: 0, consents: []))
         
         mapResponseToManagedObject(basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
             self.paymentCard = paymentCard
         }
+        
+        walletDelegate = Current.wallet
     }
     
     private func switchCardStatus(status: PaymentCardStatus, completion: @escaping EmptyCompletionBlock) {
@@ -150,7 +154,28 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable {
         }
     }
     
-//    func test_cardAddedDateString_returnsCorrectString() {
-//        XCTAssertEqual(Self.baseSut.cardAddedDateString, L10n.pcdActiveCardDescription)
-//    }
+    func test_paymentCard_didSet_buildsInformationRows() {
+        XCTAssertNotNil(Self.baseSut.paymentCard)
+        XCTAssertFalse(Self.baseSut.informationRows.isEmpty)
+    }
+    
+    func test_cardAddedDateString_returnsCorrectString() {
+        XCTAssertNil(Self.baseSut.cardAddedDateString)
+        
+        let consents = PaymentCardAccountConsentsResponse(apiId: 0, type: 0, timestamp: 98730947097989)
+        Self.basePaymentCardResponse.account?.consents = [consents]
+        mapResponseToManagedObject(Self.basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
+            Self.paymentCard = paymentCard
+            XCTAssertEqual(Self.baseSut.cardAddedDateString, L10n.pcdPendingCardAdded("02 March 3130629"))
+        }
+    }
+    
+    func test_otherCardsTitle_returnsCorrectString() {
+        XCTAssertEqual(Self.baseSut.otherCardsTitle, L10n.pcdOtherCardTitleNoCardsAdded)
+        
+        switchCardStatus(status: .active) {
+            Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
+            XCTAssertEqual(Self.baseSut.otherCardsTitle, L10n.pcdOtherCardTitleCardsAdded)
+        }
+    }
 }

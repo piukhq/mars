@@ -9,7 +9,15 @@
 import UIKit
 import WatchConnectivity
 
-class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
+protocol WalletTestable {
+    func updateMembershipCards(membershipCards: [CD_MembershipCard])
+}
+
+class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol, WalletTestable {
+    func updateMembershipCards(membershipCards: [CD_MembershipCard]) {
+        self.membershipCards = membershipCards
+    }
+    
     private enum FetchType {
         case localLaunch // Specifically used on launch to perform desired behaviour not needed at any other time
         case localReactive // Any local fetch other than on launch
