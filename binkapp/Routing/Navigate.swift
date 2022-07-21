@@ -112,7 +112,7 @@ struct ExternalUrlNavigationRequest: BaseNavigationRequest {
 
 class Navigate {
     static let transitionDuration: TimeInterval = 0.3
-    private let navigationHandler = BaseNavigationHandler()
+    let navigationHandler = BaseNavigationHandler()
     private var rootViewController: UIViewController?
     private var allowRequests = true
     
