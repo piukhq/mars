@@ -122,8 +122,16 @@ platform :ios do
 
     run_tests(
       workspace: "binkapp.xcworkspace",
+      code_coverage: true,
+      result_bundle: true
       device: "iPhone 12 Pro",
       scheme: "binkapp tests"
+    )
+
+    xcov(
+      workspace: "binkapp.xcworkspace",
+      scheme: "binkapp tests",
+      output_directory: "xcov_output"
     )
 
     build_app(
