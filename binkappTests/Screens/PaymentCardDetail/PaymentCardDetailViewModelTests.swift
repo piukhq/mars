@@ -17,10 +17,12 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
     
     static var baseMembershipCardResponse: MembershipCardModel!
     static var basePaymentCardResponse: PaymentCardModel!
+    static var baseMembershipPlan: MembershipPlanModel!
     static let linkedResponse = LinkedCardResponse(id: 300, activeLink: true)
 
     static var membershipCard: CD_MembershipCard!
     static var paymentCard: CD_PaymentCard!
+    static var membershipPlan: CD_MembershipPlan!
     static var membershipCardStatus: CD_MembershipCardStatus!
     static var walletCardDetailInformationRowFactory: WalletCardDetailInformationRowFactory!
 
@@ -34,8 +36,10 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         super.setUp()
         // Membership Plan
         let featureSet = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: nil, hasVouchers: nil)
-        let plan = MembershipPlanModel(apiId: 500, status: nil, featureSet: featureSet, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
-        mapResponseToManagedObject(plan, managedObjectType: CD_MembershipPlan.self) { _ in }
+        baseMembershipPlan = MembershipPlanModel(apiId: 500, status: nil, featureSet: featureSet, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+        mapResponseToManagedObject(baseMembershipPlan, managedObjectType: CD_MembershipPlan.self) { plan in
+            self.membershipPlan = plan
+        }
         
         // Membership Card
         let statusResponse = MembershipCardStatusModel(apiId: 0, state: .authorised, reasonCodes: nil)
@@ -68,6 +72,20 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
             Self.paymentCard = paymentCard
             completion()
         }
+    }
+    
+    private func updateWalletWithPllPlanNotAlreadyAddedToWallet(completion: @escaping (CD_MembershipPlan) -> Void) {
+        let featureSet = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: true, cardType: .link, linkingSupport: [.add], hasVouchers: nil)
+        let pllPlan = MembershipPlanModel(apiId: 20, status: nil, featureSet: featureSet, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+        mapResponseToManagedObject(pllPlan, managedObjectType: CD_MembershipPlan.self) { plan in
+            Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
+            Self.walletDelegate?.updateMembershipPlans(membershipPlans: [plan])
+            completion(plan)
+        }
+    }
+    
+    private func removePlansFromWallet() {
+        Self.walletDelegate?.updateMembershipPlans(membershipPlans: [])
     }
     
     func test_informationRows_returnsCorrectNumberOfRows_forCardStatus() {
@@ -243,7 +261,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
         
         switchCardStatus(status: .active) {
-            Self.walletDelegate?.updateMembershipPlans(membershipPlans: [])
+            self.removePlansFromWallet()
             XCTAssertFalse(Self.baseSut.shouldShowOtherCardsTitleLabel)
         }
     }
@@ -254,8 +272,13 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
             XCTAssertFalse(Self.baseSut.shouldShowOtherCardsDescriptionLabel)
         }
         
+        removePlansFromWallet()
         switchCardStatus(status: .active) {
             XCTAssertFalse(Self.baseSut.shouldShowOtherCardsDescriptionLabel)
+        }
+        
+        updateWalletWithPllPlanNotAlreadyAddedToWallet() { _ in
+            XCTAssertTrue(Self.baseSut.shouldShowOtherCardsDescriptionLabel)
         }
     }
     
@@ -281,14 +304,10 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
     }
     
     func test_shouldShowOtherCardsTableView_returnsCorrectBool() {
+        removePlansFromWallet()
         XCTAssertFalse(Self.baseSut.shouldShowOtherCardsTableView)
-
-        let featureSet = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: true, cardType: .link, linkingSupport: [.add], hasVouchers: nil)
-        let pllPlan = MembershipPlanModel(apiId: 20, status: nil, featureSet: featureSet, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
-        mapResponseToManagedObject(pllPlan, managedObjectType: CD_MembershipPlan.self) { plan in
-            Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
-            Self.walletDelegate?.updateMembershipPlans(membershipPlans: [plan])
-            
+        
+        updateWalletWithPllPlanNotAlreadyAddedToWallet { _ in
             self.switchCardStatus(status: .active) {
                 XCTAssertTrue(Self.baseSut.shouldShowOtherCardsTableView)
             }
@@ -321,6 +340,42 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
+    func test_pllMembershipPlans_returnsCorrectPlansArray() {
+        removePlansFromWallet()
+        XCTAssertNil(Self.baseSut.pllMembershipPlans)
+        
+        updateWalletWithPllPlanNotAlreadyAddedToWallet { _ in
+            XCTAssertNil(Self.baseSut.pllMembershipPlans)
+        }
+    }
+    
+    func test_pllPlansAddedToWallet_returnsCorrectPlansArray() {
+        XCTAssertNil(Self.baseSut.pllPlansAddedToWallet)
+        
+        Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
+        XCTAssertEqual(Self.baseSut.pllPlansAddedToWallet, [Self.membershipPlan])
+    }
+    
+    ///
+    
+    func test_pllPlansNotAddedToWalletCount_returnsCorrectValue() {
+        removePlansFromWallet()
+        XCTAssertEqual(Self.baseSut.pllPlansNotAddedToWalletCount, 0)
+        
+        updateWalletWithPllPlanNotAlreadyAddedToWallet { _ in
+            XCTAssertEqual(Self.baseSut.pllPlansNotAddedToWalletCount, 1)
+        }
+    }
+    
+    func test_pllPlanNotAddedToWallet_forIndexPath_returnsCorrectMembershipPlan() {
+        removePlansFromWallet()
+        XCTAssertNil(Self.baseSut.pllPlanNotAddedToWallet(forIndexPath: IndexPath(row: 0, section: 0)))
+        
+        updateWalletWithPllPlanNotAlreadyAddedToWallet { plan in
+            XCTAssertEqual(Self.baseSut.pllPlanNotAddedToWallet(forIndexPath: IndexPath(row: 0, section: 0)), plan)
+        }
+    }
+
     func test_pllMembershipCards_returnsMembershipCardArray() {
         Self.walletDelegate?.updateMembershipCards(membershipCards: [])
         XCTAssertEqual(Self.baseSut.pllMembershipCards, [])
