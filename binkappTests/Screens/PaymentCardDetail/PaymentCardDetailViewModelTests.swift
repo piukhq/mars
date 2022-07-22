@@ -243,6 +243,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
         
         switchCardStatus(status: .active) {
+            Self.walletDelegate?.updateMembershipPlans(membershipPlans: [])
             XCTAssertFalse(Self.baseSut.shouldShowOtherCardsTitleLabel)
         }
     }
@@ -276,6 +277,47 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         
         switchCardStatus(status: .failed) {
             XCTAssertFalse(Self.baseSut.shouldShowAddedLoyaltyCardTableView)
+        }
+    }
+    
+    func test_shouldShowOtherCardsTableView_returnsCorrectBool() {
+        XCTAssertFalse(Self.baseSut.shouldShowOtherCardsTableView)
+
+        let featureSet = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: true, cardType: .link, linkingSupport: [.add], hasVouchers: nil)
+        let pllPlan = MembershipPlanModel(apiId: 20, status: nil, featureSet: featureSet, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+        mapResponseToManagedObject(pllPlan, managedObjectType: CD_MembershipPlan.self) { plan in
+            Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
+            Self.walletDelegate?.updateMembershipPlans(membershipPlans: [plan])
+            
+            self.switchCardStatus(status: .active) {
+                XCTAssertTrue(Self.baseSut.shouldShowOtherCardsTableView)
+            }
+            
+            self.switchCardStatus(status: .pending) {
+                XCTAssertFalse(Self.baseSut.shouldShowOtherCardsTableView)
+            }
+        }
+    }
+    
+    func test_shouldShowInformationTableView_returnsTrue() {
+        XCTAssertTrue(Self.baseSut.shouldShowInformationTableView)
+    }
+    
+    func test_shouldShowSeparator_returnsCorrectBool() {
+        switchCardStatus(status: .active) {
+            XCTAssertFalse(Self.baseSut.shouldShowSeparator)
+        }
+        
+        switchCardStatus(status: .pending) {
+            XCTAssertTrue(Self.baseSut.shouldShowSeparator)
+        }
+        
+        switchCardStatus(status: .expired) {
+            XCTAssertTrue(Self.baseSut.shouldShowSeparator)
+        }
+        
+        switchCardStatus(status: .failed) {
+            XCTAssertTrue(Self.baseSut.shouldShowSeparator)
         }
     }
     

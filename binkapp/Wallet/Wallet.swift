@@ -11,6 +11,7 @@ import WatchConnectivity
 
 protocol WalletTestable {
     func updateMembershipCards(membershipCards: [CD_MembershipCard])
+    func updateMembershipPlans(membershipPlans: [CD_MembershipPlan])
 }
 
 class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
@@ -412,6 +413,10 @@ extension Wallet {
 }
 
 extension Wallet: WalletTestable {
+    func updateMembershipPlans(membershipPlans: [CD_MembershipPlan]) {
+        self.membershipPlans = membershipPlans
+    }
+    
     func updateMembershipCards(membershipCards: [CD_MembershipCard]) {
         self.membershipCards = membershipCards
     }
