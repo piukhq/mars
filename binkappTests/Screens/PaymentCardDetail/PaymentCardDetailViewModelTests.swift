@@ -11,18 +11,8 @@ import XCTest
 
 class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailInformationRowFactoryDelegate {
     func cardDetailInformationRowFactory(_ factory: WalletCardDetailInformationRowFactory, shouldPerformActionForRowType informationRowType: CardDetailInformationRow.RowType) {
-        switch informationRowType {
-//        case .about:
-//            Self.informationRowActionResult = informationRowType.subtitle
-//        case .securityAndPrivacy:
-//            viewModel.toSecurityAndPrivacyScreen()
-//        case .deleteMembershipCard:
-//            viewModel.showDeleteConfirmationAlert()
-//        case .rewardsHistory:
-//            viewModel.toRewardsHistoryScreen()
-        default:
-            Self.informationRowActionResult = informationRowType.subtitle
-        }
+        Self.informationRowActionResult = informationRowType.subtitle
+        print("CUNT: \(informationRowType.subtitle)")
     }
     
     static var baseMembershipCardResponse: MembershipCardModel!
@@ -32,8 +22,9 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
     static var membershipCard: CD_MembershipCard!
     static var paymentCard: CD_PaymentCard!
     static var membershipCardStatus: CD_MembershipCardStatus!
+    static var walletCardDetailInformationRowFactory: WalletCardDetailInformationRowFactory!
 
-    static let baseSut = PaymentCardDetailViewModel(paymentCard: paymentCard, informationRowFactory: WalletCardDetailInformationRowFactory())
+    static let baseSut = PaymentCardDetailViewModel(paymentCard: paymentCard, informationRowFactory: walletCardDetailInformationRowFactory)
     
     static var walletDelegate: WalletTestable?
     
@@ -68,6 +59,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
         
         walletDelegate = Current.wallet
+        walletCardDetailInformationRowFactory = WalletCardDetailInformationRowFactory()
     }
     
     private func switchCardStatus(status: PaymentCardStatus, completion: @escaping EmptyCompletionBlock) {
@@ -371,13 +363,54 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-//    func test_performActionForInformationRowatIndexPath_performsCorrectAction() {
-//        switchCardStatus(status: .active) {
-//            Self.baseSut.buildInformationRows()
-//            
-//            Self.baseSut.performActionForInformationRow(atIndexPath: IndexPath(row: 0, section: 0))
-//            XCTAssertEqual(CardDetailInformationRow.RowType.securityAndPrivacy.subtitle, Self.informationRowActionResult)
-////            XCTAssertEqual(Self.baseSut.informationRow(forIndexPath: IndexPath(row: 1, section: 0)), CardDetailInformationRow(type: .deletePaymentCard, action: {}))
-//        }
-//    }
+    func test_performActionForInformationRowatIndexPath_performsCorrectAction() {
+        Self.walletCardDetailInformationRowFactory.delegate = self
+        switchCardStatus(status: .active) {
+            Self.baseSut.buildInformationRows()
+
+            Self.baseSut.performActionForInformationRow(atIndexPath: IndexPath(row: 0, section: 0))
+            XCTAssertEqual(CardDetailInformationRow.RowType.securityAndPrivacy.subtitle, Self.informationRowActionResult)
+            Self.baseSut.performActionForInformationRow(atIndexPath: IndexPath(row: 1, section: 0))
+            XCTAssertEqual(CardDetailInformationRow.RowType.deletePaymentCard.subtitle, Self.informationRowActionResult)
+        }
+        
+        switchCardStatus(status: .failed) {
+            Self.baseSut.buildInformationRows()
+
+            Self.baseSut.performActionForInformationRow(atIndexPath: IndexPath(row: 0, section: 0))
+            XCTAssertEqual(CardDetailInformationRow.RowType.securityAndPrivacy.subtitle, Self.informationRowActionResult)
+            Self.baseSut.performActionForInformationRow(atIndexPath: IndexPath(row: 1, section: 0))
+            XCTAssertEqual(CardDetailInformationRow.RowType.deletePaymentCard.subtitle, Self.informationRowActionResult)
+            
+            Self.baseSut.performActionForInformationRow(atIndexPath: IndexPath(row: 2, section: 0))
+            _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for failed closure action to complete")], timeout: 1.0)
+            XCTAssertEqual(CardDetailInformationRow.RowType.faqs.subtitle, Self.informationRowActionResult)
+        }
+        
+        switchCardStatus(status: .pending) {
+            Self.baseSut.buildInformationRows()
+
+            Self.baseSut.performActionForInformationRow(atIndexPath: IndexPath(row: 0, section: 0))
+            XCTAssertEqual(CardDetailInformationRow.RowType.securityAndPrivacy.subtitle, Self.informationRowActionResult)
+            Self.baseSut.performActionForInformationRow(atIndexPath: IndexPath(row: 1, section: 0))
+            XCTAssertEqual(CardDetailInformationRow.RowType.deletePaymentCard.subtitle, Self.informationRowActionResult)
+            
+            Self.baseSut.performActionForInformationRow(atIndexPath: IndexPath(row: 2, section: 0))
+            _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for pending closure action to complete")], timeout: 1.0)
+            XCTAssertEqual(CardDetailInformationRow.RowType.faqs.subtitle, Self.informationRowActionResult)
+        }
+        
+        switchCardStatus(status: .expired) {
+            Self.baseSut.buildInformationRows()
+
+            Self.baseSut.performActionForInformationRow(atIndexPath: IndexPath(row: 0, section: 0))
+            XCTAssertEqual(CardDetailInformationRow.RowType.securityAndPrivacy.subtitle, Self.informationRowActionResult)
+            Self.baseSut.performActionForInformationRow(atIndexPath: IndexPath(row: 1, section: 0))
+            XCTAssertEqual(CardDetailInformationRow.RowType.deletePaymentCard.subtitle, Self.informationRowActionResult)
+            
+            Self.baseSut.performActionForInformationRow(atIndexPath: IndexPath(row: 2, section: 0))
+            _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for expired closure action to complete")], timeout: 1.0)
+            XCTAssertEqual(CardDetailInformationRow.RowType.faqs.subtitle, Self.informationRowActionResult)
+        }
+    }
 }
