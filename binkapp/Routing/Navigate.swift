@@ -115,6 +115,7 @@ class Navigate {
     let navigationHandler = BaseNavigationHandler()
     private var rootViewController: UIViewController?
     private var allowRequests = true
+    var currentViewController: UIViewController?
     
     private var tabBarController: MainTabBarViewController? {
         return rootViewController as? MainTabBarViewController
@@ -136,6 +137,7 @@ class Navigate {
     }
     
     func to(_ navigationRequest: BaseNavigationRequest) {
+        configureTestEnvironment(navigationRequest)
         guard allowRequests else { return }
 
         /// If we are attempting to close the shield screen, we should always continue.
@@ -171,6 +173,20 @@ class Navigate {
 
     func closeShieldView(completion: EmptyCompletionBlock? = nil) {
         to(CloseShieldViewNavigationRequest(completion: completion))
+    }
+    
+    private func configureTestEnvironment(_ navigationRequest: BaseNavigationRequest) {
+        if let pushRequest = navigationRequest as? PushNavigationRequest {
+            currentViewController = pushRequest.viewController
+        }
+        
+        if let modalRequest = navigationRequest as? ModalNavigationRequest {
+            currentViewController = modalRequest.viewController
+        }
+        
+        if let alertRequest = navigationRequest as? AlertNavigationRequest {
+            currentViewController = alertRequest.alertController
+        }
     }
 }
 

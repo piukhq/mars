@@ -9,6 +9,8 @@
 import XCTest
 @testable import binkapp
 
+// swiftlint:disable all
+
 class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailInformationRowFactoryDelegate {
     func cardDetailInformationRowFactory(_ factory: WalletCardDetailInformationRowFactory, shouldPerformActionForRowType informationRowType: CardDetailInformationRow.RowType) {
         Self.informationRowActionResult = informationRowType.subtitle
@@ -26,10 +28,12 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
     static var walletCardDetailInformationRowFactory: WalletCardDetailInformationRowFactory!
 
     static let baseSut = PaymentCardDetailViewModel(paymentCard: paymentCard, informationRowFactory: walletCardDetailInformationRowFactory)
-    
     static var walletDelegate: WalletTestable?
-    
     static var informationRowActionResult = ""
+    
+    var currentViewController: UIViewController {
+        return Current.navigate.currentViewController!
+    }
 
     override class func setUp() {
         super.setUp()
@@ -537,5 +541,20 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
             _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for expired closure action to complete")], timeout: 1.0)
             XCTAssertEqual(CardDetailInformationRow.RowType.faqs.subtitle, Self.informationRowActionResult)
         }
+    }
+    
+    func test_toFAQsScreen_navigatesToCorrectViewController() {
+        Self.baseSut.toFAQsScreen()
+        XCTAssertTrue(currentViewController.isKind(of: WebViewController.self))
+    }
+    
+    func test_toSecurityAndPrivacy_navigatesToCorrectViewController() {
+        Self.baseSut.toSecurityAndPrivacyScreen()
+        XCTAssertTrue(currentViewController.isKind(of: ReusableTemplateViewController.self))
+    }
+    
+    func test_showDeleteConfirmationAlert_navigatesToCorrectViewController() {
+        Self.baseSut.showDeleteConfirmationAlert()
+        XCTAssertTrue(currentViewController.isKind(of: BinkAlertController.self))
     }
 }
