@@ -9,9 +9,13 @@
 import XCTest
 @testable import binkapp
 
+// swiftlint:disable all
+
 class PLLScreenViewModelTests: XCTestCase, CoreDataTestable {
     // We have our base response model, that mimics what we would get from the API
     static var baseMembershipCardResponse: MembershipCardModel!
+    static var basePaymentCardResponse: PaymentCardModel!
+    static let linkedResponse = LinkedCardResponse(id: 300, activeLink: true)
 
     // We have our dependancy model, which is mapped to core data from our response models and injected into view models
     static var membershipCard: CD_MembershipCard!
@@ -19,6 +23,10 @@ class PLLScreenViewModelTests: XCTestCase, CoreDataTestable {
 
     // Our base system under test
     static let baseSut = PLLScreenViewModel(membershipCard: membershipCard, journey: .newCard)
+    
+    var currentViewController: UIViewController {
+        return Current.navigate.currentViewController!
+    }
 
     // We use the class func because it is only run once per test class
     // This reduces Core Data writes, and we only do more than one if we are mutating values
@@ -37,12 +45,7 @@ class PLLScreenViewModelTests: XCTestCase, CoreDataTestable {
         }
         
         // Payment Card
-        let linkedResponse = LinkedCardResponse(id: 1, activeLink: true)
-        let paymentCard = PaymentCardModel(apiId: 0, membershipCards: [linkedResponse], status: "active", card: nil, account: PaymentCardAccountResponse(apiId: 0, verificationInProgress: nil, status: 0, consents: []))
-        
-        mapResponseToManagedObject(paymentCard, managedObjectType: CD_PaymentCard.self) { paymentCard in
-            self.paymentCard = paymentCard
-        }
+        persistValidPaymentCard()
     }
     
     
@@ -53,6 +56,24 @@ class PLLScreenViewModelTests: XCTestCase, CoreDataTestable {
     private func removePaymentCardFromWallet() {
         Current.wallet.paymentCards = []
     }
+    
+    static private func persistValidPaymentCard() {
+        let card = PaymentCardCardResponse(apiId: 100, firstSix: nil, lastFour: "1234", month: 30, year: 3000, country: nil, currencyCode: nil, nameOnCard: "Sean Williams", provider: nil, type: nil)
+                
+        Self.basePaymentCardResponse = PaymentCardModel(apiId: 100, membershipCards: [Self.linkedResponse], status: "active", card: card, account: PaymentCardAccountResponse(apiId: 0, verificationInProgress: nil, status: 0, consents: []))
+        
+        mapResponseToManagedObject(Self.basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
+            Self.paymentCard = paymentCard
+        }
+    }
+    
+    private func switchCardStatus(status: PaymentCardStatus, completion: @escaping EmptyCompletionBlock) {
+        Self.basePaymentCardResponse.status = status.rawValue
+        mapResponseToManagedObject(Self.basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
+            Self.paymentCard = paymentCard
+            completion()
+        }
+    }
 
     // MARK: - Empty wallet
 
@@ -62,6 +83,11 @@ class PLLScreenViewModelTests: XCTestCase, CoreDataTestable {
 
     func test_pendingPaymentCards_returnsNil_whenNoneHaveBeenAdded() {
         XCTAssertTrue(Self.baseSut.pendingPaymentCards.isNilOrEmpty, "Pending payment cards is not nil or empty. There are \(Self.baseSut.pendingPaymentCards?.count ?? 0) pending payment cards.")
+        
+        addPaymentCardToWallet()
+        switchCardStatus(status: .pending) {
+            XCTAssertEqual(Self.baseSut.pendingPaymentCards?.count, 1)
+        }
     }
 
     func test_hasActivePaymentCards_returnsFalse_whenNoneHaveBeenAdded() {
@@ -97,8 +123,10 @@ class PLLScreenViewModelTests: XCTestCase, CoreDataTestable {
         XCTAssertEqual(Self.baseSut.primaryMessageText, "You have not added any payment cards yet.")
         
         addPaymentCardToWallet()
-        XCTAssertEqual(Self.baseSut.primaryMessageText, "The payment cards below will be linked to your . Simply pay with them to collect points.")
-        removePaymentCardFromWallet()
+        switchCardStatus(status: .active) {
+            XCTAssertEqual(Self.baseSut.primaryMessageText, "The payment cards below will be linked to your . Simply pay with them to collect points.")
+            self.removePaymentCardFromWallet()
+        }
     }
     
     func test_secondaryMessageText_isCorrect() {
@@ -127,5 +155,14 @@ class PLLScreenViewModelTests: XCTestCase, CoreDataTestable {
     
     func test_getMembershipCard_returnsCorrectCard() {
         XCTAssertEqual(Self.baseSut.getMembershipCard().id, "300")
+    }
+    
+    func test_linkedPaymentCards_returnsCorrectArray() {
+        XCTAssertEqual(Self.baseSut.linkedPaymentCards, [Self.paymentCard])
+    }
+    
+    func test_brandHeaderWasTapped_navigatesToCorrectViewController() {
+        Self.baseSut.brandHeaderWasTapped()
+        XCTAssertTrue(currentViewController.isKind(of: ReusableTemplateViewController.self))
     }
 }
