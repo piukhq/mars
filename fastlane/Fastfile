@@ -131,7 +131,7 @@ platform :ios do
     xcov(
       workspace: "binkapp.xcworkspace",
       scheme: "binkapp tests",
-      output_directory: "fastlane/xcov_output"
+      output_directory: "fastlane/xcov_report"
     )
 
     build_app(
