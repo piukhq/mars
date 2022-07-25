@@ -126,12 +126,13 @@ platform :ios do
       result_bundle: true,
       device: "iPhone 12 Pro",
       scheme: "binkapp tests"
+      output_directory: "fastlane/xcov_output"
     )
 
     xcov(
       workspace: "binkapp.xcworkspace",
       scheme: "binkapp tests",
-      output_directory: "fastlane/xcov_report"
+      output_directory: "fastlane/xcov_output"
     )
 
     build_app(
