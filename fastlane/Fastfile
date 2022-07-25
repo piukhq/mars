@@ -120,19 +120,23 @@ platform :ios do
 
     increment_build_number(build_number: options[:build_number])
 
+target =
     run_tests(
       workspace: "binkapp.xcworkspace",
       code_coverage: true,
       result_bundle: true,
       device: "iPhone 12 Pro",
       scheme: "binkapp tests",
-      output_directory: "fastlane/xcov_output"
+      output_directory: "test_output/" + "binkapp tests"
     )
+
+    xcresult_path = File.absolute_path(Dir["test_output/binkapp tests.xcresult"].first
 
     xcov(
       workspace: "binkapp.xcworkspace",
       scheme: "binkapp tests",
-      output_directory: "fastlane/xcov_output"
+      xccov_file_direct_path: xcresult_path,
+      output_directory: "test_output/binkapp tests/coverage")
     )
 
     build_app(
