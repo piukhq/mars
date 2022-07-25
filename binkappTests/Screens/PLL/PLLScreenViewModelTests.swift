@@ -165,4 +165,29 @@ class PLLScreenViewModelTests: XCTestCase, CoreDataTestable {
         Self.baseSut.brandHeaderWasTapped()
         XCTAssertTrue(currentViewController.isKind(of: ReusableTemplateViewController.self))
     }
+    
+    func test_displaySimplePopup_navigatesToCorrectViewController() {
+        Self.baseSut.displaySimplePopup(title: nil, message: nil) {}
+        XCTAssertTrue(currentViewController.isKind(of: BinkAlertController.self))
+    }
+    
+    func test_displayNoConnectivityPopup_navigatesToCorrectViewController() {
+        Self.baseSut.displayNoConnectivityPopup {}
+        XCTAssertTrue(currentViewController.isKind(of: BinkAlertController.self))
+    }
+    
+    func test_close_dismissesModal() {
+        Self.baseSut.close()
+        XCTAssertNil(Current.navigate.currentViewController)
+    }
+    
+    func test_toAddPaymentCardScreen_navigatesToCorrectViewController() {
+        Self.baseSut.toAddPaymentCardScreen()
+        XCTAssertTrue(currentViewController.isKind(of: AddPaymentCardViewController.self))
+    }
+    
+    func test_toFAQsScreen_navigatesToCorrectViewController() {
+        Self.baseSut.toFAQScreen()
+        XCTAssertTrue(currentViewController.isKind(of: WebViewController.self))
+    }
 }

@@ -187,6 +187,10 @@ class Navigate {
         if let alertRequest = navigationRequest as? AlertNavigationRequest {
             currentViewController = alertRequest.alertController
         }
+        
+        if let _ = navigationRequest as? CloseModalNavigationRequest {
+            currentViewController = nil
+        }
     }
 }
 
