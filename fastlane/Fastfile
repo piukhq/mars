@@ -130,7 +130,7 @@ target =
       output_directory: "test_output/" + "binkapp tests"
     )
 
-    xcresult_path = File.absolute_path(Dir["test_output/binkapp tests.xcresult"].first
+    xcresult_path = File.absolute_path(Dir["test_output/binkapp tests.xcresult"].first)
 
     xcov(
       workspace: "binkapp.xcworkspace",
