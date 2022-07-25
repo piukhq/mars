@@ -136,7 +136,7 @@ target =
       workspace: "binkapp.xcworkspace",
       scheme: "binkapp tests",
       xccov_file_direct_path: xcresult_path,
-      output_directory: "test_output/binkapp tests/coverage")
+      output_directory: "test_output/binkapp tests/coverage"
     )
 
     build_app(
