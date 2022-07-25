@@ -125,7 +125,7 @@ platform :ios do
       code_coverage: true,
       result_bundle: true,
       device: "iPhone 12 Pro",
-      scheme: "binkapp tests"
+      scheme: "binkapp tests",
       output_directory: "fastlane/xcov_output"
     )
 
