@@ -15,6 +15,8 @@ class AddOrJoinViewModelTests: XCTestCase, CoreDataTestable {
     static var membershipCardResponse: MembershipCardModel!
     static var membershipPlanResponse: MembershipPlanModel!
     static var cardResponse: CardModel!
+    static var featureSetResponse: FeatureSetModel!
+    static var planAccountResponse: MembershipPlanAccountModel!
     
     static var membershipCard: CD_MembershipCard!
     static var membershipPlan: CD_MembershipPlan!
@@ -26,10 +28,10 @@ class AddOrJoinViewModelTests: XCTestCase, CoreDataTestable {
 
     override class func setUp() {
         super.setUp()
-        let featureSet = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: nil, hasVouchers: nil)
+        featureSetResponse = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: nil, hasVouchers: nil)
         let enrolField = EnrolFieldModel(apiId: nil, column: nil, validation: nil, fieldDescription: nil, type: nil, choices: [], commonName: nil)
-        let planAccountModel = MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "Harvey Nichols", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: [enrolField])
-        membershipPlanResponse = MembershipPlanModel(apiId: 5, status: nil, featureSet: featureSet, images: nil, account: planAccountModel, balances: nil, dynamicContent: nil, hasVouchers: false, card: nil)
+        planAccountResponse = MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "Harvey Nichols", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: [enrolField])
+        membershipPlanResponse = MembershipPlanModel(apiId: 5, status: nil, featureSet: featureSetResponse, images: nil, account: planAccountResponse, balances: nil, dynamicContent: nil, hasVouchers: false, card: nil)
         
         cardResponse = CardModel(apiId: nil, barcode: "123456789", membershipId: "999 666", barcodeType: 0, colour: nil, secondaryColour: nil)
         membershipCardResponse = MembershipCardModel(apiId: nil, membershipPlan: 5, membershipTransactions: nil, status: nil, card: cardResponse, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
@@ -164,6 +166,31 @@ class AddOrJoinViewModelTests: XCTestCase, CoreDataTestable {
             Self.membershipPlan = plan
             Self.sut.didSelectAddNewCard()
             XCTAssertTrue(self.currentViewController.isKind(of: ReusableTemplateViewController.self))
+            
+            Self.membershipPlanResponse.featureSet = Self.featureSetResponse
+            self.mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { plan in
+                Self.membershipPlan = plan
+            }
         }
+    }
+    
+    func test_toNativeJoinUnavailable_navigatesToCorrectViewController_0() {
+        Self.sut.toNativeJoinUnavailable()
+        XCTAssertTrue(self.currentViewController.isKind(of: ReusableTemplateViewController.self))
+    }
+    
+    func test_toNativeJoinUnavailable_navigatesToCorrectViewController_1() {
+        Self.membershipPlanResponse.account = Self.planAccountResponse
+        Self.membershipPlanResponse.account?.planURL = "Hello I am a lovely URL"
+        self.mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { plan in
+            Self.membershipPlan = plan
+            Self.sut.toNativeJoinUnavailable()
+            XCTAssertTrue(self.currentViewController.isKind(of: ReusableTemplateViewController.self))
+        }
+    }
+    
+    func test_brandHeaderWasTapped_navigatesToCorrectViewController() {
+        Self.sut.brandHeaderWasTapped()
+        XCTAssertTrue(self.currentViewController.isKind(of: ReusableTemplateViewController.self))
     }
 }
