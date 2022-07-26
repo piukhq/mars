@@ -137,7 +137,7 @@ target =
       markdown_report: true
     )
 
-    coverage = sh("cat xcov_output/index.html | grep '\\d\\+.\\d\\+\\%' -o | head -1")
+    coverage = sh("cat xcov_output/report.md | grep -i \"Current coverage for Bink.app\"")
 
     puts coverage
 
