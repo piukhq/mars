@@ -47,6 +47,7 @@ class AddOrJoinViewModelTests: XCTestCase, CoreDataTestable {
         XCTAssertTrue(Self.sut.shouldShowAddCardButton)
         
         Self.membershipPlanResponse.hasVouchers = true
+        Self.membershipPlanResponse.featureSet?.linkingSupport = []
         mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { _ in
             XCTAssertFalse(Self.sut.shouldShowAddCardButton)
             
@@ -103,6 +104,66 @@ class AddOrJoinViewModelTests: XCTestCase, CoreDataTestable {
                 Self.sut.toAuthAndAddScreen()
                 XCTAssertTrue(self.currentViewController.isKind(of: ReusableTemplateViewController.self))
             }
+        }
+    }
+    
+    func test_didSelectAddNewCard_navigatesToCorrectViewController_0() {
+        Self.membershipPlanResponse.hasVouchers = true
+        self.mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { plan in
+            Self.membershipPlan = plan
+            Self.sut.didSelectAddNewCard()
+            XCTAssertTrue(self.currentViewController.isKind(of: ReusableTemplateViewController.self))
+        }
+    }
+    
+    func test_didSelectAddNewCard_navigatesToCorrectViewController_1() {
+        let featureSet = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: [.add], hasVouchers: nil)
+        Self.membershipPlanResponse.featureSet = featureSet
+        Self.membershipPlanResponse.hasVouchers = false
+        self.mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { plan in
+            Self.membershipPlan = plan
+            Self.sut.didSelectAddNewCard()
+            XCTAssertTrue(self.currentViewController.isKind(of: ReusableTemplateViewController.self))
+        }
+    }
+    
+    func test_didSelectAddNewCard_navigatesToCorrectViewController_2() {
+        Self.membershipPlanResponse.featureSet?.linkingSupport = [.enrol]
+        self.mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { plan in
+            Self.membershipPlan = plan
+            let sutNoMembershipCard = AddOrJoinViewModel(membershipPlan: Self.membershipPlan)
+            sutNoMembershipCard.didSelectAddNewCard()
+
+            if let authAndAddViewController = self.currentViewController as? AuthAndAddViewController {
+                XCTAssertEqual(authAndAddViewController.viewModel.formPurpose, .signUp)
+            } else {
+                XCTFail("Could not find AuthAndAddViewController")
+            }
+        }
+    }
+    
+    func test_didSelectAddNewCard_navigatesToCorrectViewController_3() {
+        let featureSet = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: [.enrol], hasVouchers: nil)
+        Self.membershipPlanResponse.featureSet = featureSet
+        Self.membershipPlanResponse.hasVouchers = false
+        self.mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { plan in
+            Self.membershipPlan = plan
+            Self.sut.didSelectAddNewCard()
+            
+            if let authAndAddViewController = self.currentViewController as? AuthAndAddViewController {
+                XCTAssertEqual(authAndAddViewController.viewModel.formPurpose, .signUpFailed)
+            } else {
+                XCTFail("Could not find AuthAndAddViewController")
+            }
+        }
+    }
+    
+    func test_didSelectAddNewCard_navigatesToCorrectViewController_4() {
+        Self.membershipPlanResponse.featureSet = nil
+        self.mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { plan in
+            Self.membershipPlan = plan
+            Self.sut.didSelectAddNewCard()
+            XCTAssertTrue(self.currentViewController.isKind(of: ReusableTemplateViewController.self))
         }
     }
 }
