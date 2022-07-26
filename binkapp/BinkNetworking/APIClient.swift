@@ -127,7 +127,6 @@ extension APIClient {
             }
             
             session.request(validatedRequest.requestUrl, method: request.method, headers: validatedRequest.headers).cacheResponse(using: ResponseCacher.doNotCache).response { [weak self] response in
-                
                 self?.handleResponse(response, endpoint: request.endpoint, expecting: responseType, isUserDriven: request.isUserDriven, completion: completion)
             }
         }

@@ -57,4 +57,12 @@ class MembershipPlanModelTests: XCTestCase {
         XCTAssertEqual(decodedResponse.card, nil)
         XCTAssertEqual(decodedResponse.account?.companyName, "Tesco")
     }
+    
+    func test_equatable_worksCorrectly() {
+        let plan1 = MembershipPlanModel(apiId: 500, status: nil, featureSet: nil, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+        let plan2 = MembershipPlanModel(apiId: 500, status: nil, featureSet: nil, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+
+        XCTAssertTrue(plan1 == plan2)
+        XCTAssertFalse(plan1 != plan2)
+    }
 }

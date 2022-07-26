@@ -9,6 +9,8 @@
 import XCTest
 @testable import binkapp
 
+// swiftlint:disable all
+
 class AddOrJoinViewModelTests: XCTestCase, CoreDataTestable {
     static var membershipCardResponse: MembershipCardModel!
     static var membershipPlanResponse: MembershipPlanModel!
@@ -17,6 +19,10 @@ class AddOrJoinViewModelTests: XCTestCase, CoreDataTestable {
     static var membershipCard: CD_MembershipCard!
     static var membershipPlan: CD_MembershipPlan!
     static var sut = AddOrJoinViewModel(membershipPlan: membershipPlan, membershipCard: membershipCard)
+    
+    var currentViewController: UIViewController {
+        return Current.navigate.currentViewController!
+    }
 
     override class func setUp() {
         super.setUp()
@@ -74,42 +80,29 @@ class AddOrJoinViewModelTests: XCTestCase, CoreDataTestable {
         XCTAssertEqual(Self.sut.getMembershipPlan(), Self.membershipPlan)
     }
     
-    func test_toAuthAndAddScreen_1() {
+    func test_toAuthAndAddScreen_navigatesToCorrectViewController() {
         Self.membershipPlanResponse.hasVouchers = false
         self.mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { _ in
             Self.sut.toAuthAndAddScreen()
-            if let navigationController = Current.navigate.navigationHandler.topViewController as? PortraitNavigationController {
-                XCTAssertTrue(navigationController.visibleViewController?.isKind(of: AuthAndAddViewController.self) == true)
-                
-                if let authAndAdd = navigationController.visibleViewController as? AuthAndAddViewController {
-                    XCTAssertEqual(authAndAdd.viewModel.formPurpose, .addFailed)
-                }
+            XCTAssertTrue(self.currentViewController.isKind(of: AuthAndAddViewController.self) == true)
+            
+            if let authAndAdd = self.currentViewController as? AuthAndAddViewController {
+                XCTAssertEqual(authAndAdd.viewModel.formPurpose, .addFailed)
+            }
+            
+            let sutNoMembershipCard = AddOrJoinViewModel(membershipPlan: Self.membershipPlan)
+            sutNoMembershipCard.toAuthAndAddScreen()
+            
+            if let authAndAddViewController = self.currentViewController as? AuthAndAddViewController {
+                XCTAssertEqual(authAndAddViewController.viewModel.formPurpose, .add)
+            }
+            
+            Self.membershipPlanResponse.hasVouchers = true
+            self.mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { plan in
+                Self.membershipPlan = plan
+                Self.sut.toAuthAndAddScreen()
+                XCTAssertTrue(self.currentViewController.isKind(of: ReusableTemplateViewController.self))
             }
         }
     }
-    
-//    func test_toAuthAndAddScreen_2() {
-////        Current.navigate.navigationHandler.navigationController?.viewControllers.remove(at: 1)
-//        Self.sut.membershipCard = nil
-//        self.mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { _ in
-//            Self.sut.toAuthAndAddScreen()
-//            if let navigationController = Current.navigate.navigationHandler.topViewController as? PortraitNavigationController {
-//                XCTAssertTrue(navigationController.visibleViewController?.isKind(of: AuthAndAddViewController.self) == true)
-//
-//                if let authAndAdd = navigationController.visibleViewController as? AuthAndAddViewController {
-//                    XCTAssertEqual(authAndAdd.viewModel.formPurpose, .add)
-//                }
-//            }
-//        }
-//    }
-//
-//    func test_toAuthAndAddScreen_3() {
-//        Self.membershipPlanResponse.hasVouchers = true
-//        self.mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { _ in
-//            Self.sut.toAuthAndAddScreen()
-//            if let navigationController = Current.navigate.navigationHandler.topViewController as? PortraitNavigationController {
-//                XCTAssertTrue(navigationController.visibleViewController?.isKind(of: ReusableTemplateViewController.self) == true)
-//            }
-//        }
-//    }
 }
