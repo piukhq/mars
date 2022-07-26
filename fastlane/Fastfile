@@ -132,14 +132,14 @@ target =
     xcov(
       workspace: "binkapp.xcworkspace",
       scheme: "binkapp tests",
-      output_directory: "xcov_output"
+      output_directory: "fastlane/xcov_output"
     )
 
     coverage = sh("cat xcov_output/index.html | grep '\\d\\+.\\d\\+\\%' -o | head -1")
 
     teams_bot(
         teams_url: "https://hellobink.webhook.office.com/webhookb2/bf220ac8-d509-474f-a568-148982784d19@a6e2367a-92ea-4e5a-b565-723830bcc095/IncomingWebhook/34097856b3e443519be3c77cfdd596ab/eec2dc71-9d13-4783-bb76-91e60ae9b1e9",
-        title: "Welcome from Fastlane",
+        title: "Test code coverage",
         text: "Teams test",
         activity_title: "Hey",
         activity_image: "",
