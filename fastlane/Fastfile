@@ -133,13 +133,18 @@ target =
       workspace: "binkapp.xcworkspace",
       scheme: "binkapp tests",
       output_directory: "fastlane/xcov_output",
-      json_report: true,
       markdown_report: true
     )
 
     coverage = sh("cat xcov_output/report.md | grep -i \"Current coverage for Bink.app\"")
 
-    puts coverage
+    teams_bot(
+      teams_url: "https://hellobink.webhook.office.com/webhookb2/bf220ac8-d509-474f-a568-148982784d19@a6e2367a-92ea-4e5a-b565-723830bcc095/IncomingWebhook/34097856b3e443519be3c77cfdd596ab/eec2dc71-9d13-4783-bb76-91e60ae9b1e9",
+      title: "Unit Tests code coverage",
+      text: coverage,
+      theme_color: "321244",
+      use_markdown: false
+    )
 
     build_app(
       workspace: "binkapp.xcworkspace",
