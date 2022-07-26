@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "fastlane", "2.187.0"
+gem "fastlane", "2.208.0"
 gem "xcov"
 gem "rest-client"
 
