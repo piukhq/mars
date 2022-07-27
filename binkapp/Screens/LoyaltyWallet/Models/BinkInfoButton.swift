@@ -15,8 +15,7 @@ class BinkInfoButton: UIButton {
         accessibilityIdentifier = "Bink info button"
         
         if imageView != nil {
-            imageEdgeInsets = LayoutHelper.BinkInfoButton.imageEdgeInsets
-            titleEdgeInsets = LayoutHelper.BinkInfoButton.titleEdgeInsets
+            configuration?.contentInsets = LayoutHelper.BinkInfoButton.contentInsets
         }
     }
 }

@@ -12,7 +12,7 @@ import UIKit
 
 extension UIDevice {
     var hasNotch: Bool {
-        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+        let window = UIApplication.shared.connectedScenes.flatMap { ($0 as? UIWindowScene)?.windows ?? [] }.first { $0.isKeyWindow }
         let bottom = window?.safeAreaInsets.bottom ?? 0
         return bottom > 0
     }
