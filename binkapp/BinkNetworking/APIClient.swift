@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import AlamofireImage
+import Mocker
 
 // swiftlint:disable force_try force_unwrapping identifier_name
 
@@ -73,6 +74,8 @@ final class APIClient {
     /// Only used for switching over to an API version. This isn't backed by user defaults and will reset.
     var overrideVersion: APIVersion?
     #endif
+    
+    var testResponeData: Decodable!
 
     private let successStatusRange = 200...299
     private let noResponseStatus = 204
@@ -85,17 +88,23 @@ final class APIClient {
     private let session: Session
 
     init() {
-        let url = EnvironmentType.production.rawValue
-        let evaluators = [
-            url:
-                PinnedCertificatesTrustEvaluator(certificates: [
-                    Certificates.bink, Certificates.binkOld
-                ])
-        ]
+        if UIApplication.isRunningUnitTests {
+            let configuration = URLSessionConfiguration.af.default
+            configuration.protocolClasses = [MockingURLProtocol.self] + (configuration.protocolClasses ?? [])
+            session = Session(configuration: configuration)
+        } else {
+            let url = EnvironmentType.production.rawValue
+            let evaluators = [
+                url:
+                    PinnedCertificatesTrustEvaluator(certificates: [
+                        Certificates.bink, Certificates.binkOld
+                    ])
+            ]
 
-        let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 10.0
-        session = Session(configuration: configuration, serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators))
+            let configuration = URLSessionConfiguration.default
+            configuration.timeoutIntervalForRequest = 10.0
+            session = Session(configuration: configuration, serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators))
+        }
     }
 }
 
@@ -257,6 +266,7 @@ private extension APIClient {
             } else if successStatusRange.contains(statusCode) {
                 // Successful response
                 let decodedResponse = try decoder.decode(responseType, from: data)
+                testResponeData = decodedResponse
                 completion?(.success(decodedResponse), networkResponseData)
                 return
             } else if clientErrorStatusRange.contains(statusCode) {

@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import Mocker
 @testable import binkapp
 
 // swiftlint:disable all
@@ -556,5 +557,59 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
     func test_showDeleteConfirmationAlert_navigatesToCorrectViewController() {
         Self.baseSut.showDeleteConfirmationAlert()
         XCTAssertTrue(currentViewController.isKind(of: BinkAlertController.self))
+    }
+    
+    func test_refreshPaymentCard_returnsSuccessfulUpdatedPaymentCard() {
+        let mockedPaymentCard = try! JSONEncoder().encode(Self.basePaymentCardResponse)
+        let endpoint = APIEndpoint.paymentCard(cardId: Self.basePaymentCardResponse.id)
+        let mock = Mock(url: URL(string: endpoint.urlString!)!, dataType: .json, statusCode: 200, data: [.get: mockedPaymentCard])
+        mock.register()
+        Self.baseSut.refreshPaymentCard {
+            if let paymentCardResponse = Current.apiClient.testResponeData as? Safe<PaymentCardModel> {
+                XCTAssertEqual(paymentCardResponse.value?.id, Self.baseSut.paymentCard.id)
+            } else {
+                XCTFail("Failed to cast payment card response")
+            }
+        }
+        
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 10.0)
+    }
+    
+    func test_toggleLinkForMembershipCard_correctlyTogglesLinkage_0() {
+        XCTAssertTrue(Self.baseSut.membershipCardIsLinked(Self.membershipCard))
+        let mockedPaymentCard = try! JSONEncoder().encode(Self.basePaymentCardResponse)
+        let endpoint = APIEndpoint.linkMembershipCardToPaymentCard(membershipCardId: Self.membershipCard.id, paymentCardId: Self.basePaymentCardResponse.id)
+        let mock = Mock(url: URL(string: endpoint.urlString!)!, dataType: .json, statusCode: 200, data: [.delete: mockedPaymentCard])
+        mock.register()
+        Self.baseSut.toggleLinkForMembershipCard(Self.membershipCard) {
+            let card = PaymentCardCardResponse(apiId: 100, firstSix: nil, lastFour: "1234", month: 30, year: 3000, country: nil, currencyCode: nil, nameOnCard: "Sean Williams", provider: nil, type: nil)
+            Self.basePaymentCardResponse = PaymentCardModel(apiId: 100, membershipCards: [], status: "active", card: card, account: PaymentCardAccountResponse(apiId: 0, verificationInProgress: nil, status: 0, consents: []))
+
+            self.mapResponseToManagedObject(Self.basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
+                Self.paymentCard = paymentCard
+                XCTAssertFalse(Self.baseSut.membershipCardIsLinked(Self.membershipCard))
+            }
+        }
+
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
+    }
+
+    func test_toggleLinkForMembershipCard_correctlyTogglesLinkage_1() {
+        XCTAssertFalse(Self.baseSut.membershipCardIsLinked(Self.membershipCard))
+        let mockedPaymentCard = try! JSONEncoder().encode(Self.basePaymentCardResponse)
+        let endpoint = APIEndpoint.linkMembershipCardToPaymentCard(membershipCardId: Self.membershipCard.id, paymentCardId: Self.basePaymentCardResponse.id)
+        let mock = Mock(url: URL(string: endpoint.urlString!)!, dataType: .json, statusCode: 200, data: [.patch: mockedPaymentCard])
+        mock.register()
+        Self.baseSut.toggleLinkForMembershipCard(Self.membershipCard) {
+            let card = PaymentCardCardResponse(apiId: 100, firstSix: nil, lastFour: "1234", month: 30, year: 3000, country: nil, currencyCode: nil, nameOnCard: "Sean Williams", provider: nil, type: nil)
+            Self.basePaymentCardResponse = PaymentCardModel(apiId: 100, membershipCards: [Self.linkedResponse], status: "active", card: card, account: PaymentCardAccountResponse(apiId: 0, verificationInProgress: nil, status: 0, consents: []))
+
+            self.mapResponseToManagedObject(Self.basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
+                Self.paymentCard = paymentCard
+                XCTAssertTrue(Self.baseSut.membershipCardIsLinked(Self.membershipCard))
+            }
+        }
+
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
     }
 }

@@ -391,6 +391,7 @@
 		CEE20923268E1E0E004D3759 /* AddCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE20922268E1E0E004D3759 /* AddCardView.swift */; };
 		CEE20925268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE20924268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift */; };
 		CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF389EA255D72E90063C718 /* DateExtensionTests.swift */; };
+		CEF3E5A928903BBF0082EBE0 /* Mocker in Frameworks */ = {isa = PBXBuildFile; productRef = CEF3E5A828903BBF0082EBE0 /* Mocker */; };
 		CEF837E925DA7AB10066C77E /* FeatureFlagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF837E825DA7AB10066C77E /* FeatureFlagsTableViewController.swift */; };
 		CEFAB4E9279ABD0A00D061A9 /* BarcodeViewNoBarcode.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFAB4E8279ABD0900D061A9 /* BarcodeViewNoBarcode.xib */; };
 		CEFAB4EB279AC10B00D061A9 /* BarcodeViewNoBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFAB4EA279AC10B00D061A9 /* BarcodeViewNoBarcode.swift */; };
@@ -1285,6 +1286,7 @@
 				7075383026DFAB2B00690965 /* JWTDecode in Frameworks */,
 				CEADBFDE2747CBC6008810A8 /* FirebaseRemoteConfig in Frameworks */,
 				7075382D26DFA96800690965 /* Disk in Frameworks */,
+				CEF3E5A928903BBF0082EBE0 /* Mocker in Frameworks */,
 				CEB8242927391F0500F5954D /* FirebaseAnalytics in Frameworks */,
 				7075381E26DFA26C00690965 /* Alamofire in Frameworks */,
 				7063B1EB270473EE00C5C633 /* FirebaseStorage in Frameworks */,
@@ -3192,6 +3194,7 @@
 				7063B1E8270473EE00C5C633 /* FirebaseAnalytics */,
 				7063B1EA270473EE00C5C633 /* FirebaseStorage */,
 				7063B1EC270473EE00C5C633 /* FirebaseRemoteConfig */,
+				CEF3E5A828903BBF0082EBE0 /* Mocker */,
 			);
 			productName = binkapp;
 			productReference = 5ECE046822CE5798001BA964 /* Bink α.app */;
@@ -3351,6 +3354,7 @@
 				7075382E26DFAB2B00690965 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
 				70A4FDA4271588AC00DA7FAA /* XCRemoteSwiftPackageReference "mixpanel-swift" */,
 				7063B1E7270473EE00C5C633 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				CEF3E5A728903BBE0082EBE0 /* XCRemoteSwiftPackageReference "Mocker" */,
 			);
 			productRefGroup = 5ECE046922CE5798001BA964 /* Products */;
 			projectDirPath = "";
@@ -4281,6 +4285,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -4350,6 +4355,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -4601,6 +4607,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -4754,6 +4761,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -6032,6 +6040,14 @@
 				minimumVersion = 3.2.3;
 			};
 		};
+		CEF3E5A728903BBE0082EBE0 /* XCRemoteSwiftPackageReference "Mocker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:WeTransfer/Mocker.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -6104,6 +6120,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CE85A1D926B05D95003B74CD /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		CEF3E5A828903BBF0082EBE0 /* Mocker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEF3E5A728903BBE0082EBE0 /* XCRemoteSwiftPackageReference "Mocker" */;
+			productName = Mocker;
 		};
 /* End XCSwiftPackageProductDependency section */
 
