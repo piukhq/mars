@@ -20,6 +20,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
     static var baseMembershipCardResponse: MembershipCardModel!
     static var basePaymentCardResponse: PaymentCardModel!
     static var baseMembershipPlan: MembershipPlanModel!
+    static var paymentCardCardResponse: PaymentCardCardResponse!
     static let linkedResponse = LinkedCardResponse(id: 300, activeLink: true)
 
     static var membershipCard: CD_MembershipCard!
@@ -65,9 +66,9 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
     }
     
     static private func persistValidPaymentCard() {
-        let card = PaymentCardCardResponse(apiId: 100, firstSix: nil, lastFour: "1234", month: 30, year: 3000, country: nil, currencyCode: nil, nameOnCard: "Sean Williams", provider: nil, type: nil)
+        paymentCardCardResponse = PaymentCardCardResponse(apiId: 100, firstSix: nil, lastFour: "1234", month: 30, year: 3000, country: nil, currencyCode: nil, nameOnCard: "Sean Williams", provider: nil, type: nil)
                 
-        Self.basePaymentCardResponse = PaymentCardModel(apiId: 100, membershipCards: [Self.linkedResponse], status: "active", card: card, account: PaymentCardAccountResponse(apiId: 0, verificationInProgress: nil, status: 0, consents: []))
+        Self.basePaymentCardResponse = PaymentCardModel(apiId: 100, membershipCards: [Self.linkedResponse], status: "active", card: paymentCardCardResponse, account: PaymentCardAccountResponse(apiId: 0, verificationInProgress: nil, status: 0, consents: []))
         
         mapResponseToManagedObject(Self.basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
             Self.paymentCard = paymentCard
@@ -100,7 +101,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         Self.walletDelegate?.updateMembershipCards(membershipCards: [])
     }
 
-    func test_informationRows_returnsCorrectNumberOfRows_forCardStatus() {
+    func test_0_informationRows_returnsCorrectNumberOfRows_forCardStatus() {
         switchCardStatus(status: .active) {
             Self.baseSut.buildInformationRows()
             XCTAssertEqual(Self.baseSut.informationRows.count, 2)
@@ -122,13 +123,13 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_paymentCardIsActive_returnsCorrectBool() {
+    func test_1_paymentCardIsActive_returnsCorrectBool() {
         switchCardStatus(status: .active) {
             XCTAssertTrue(Self.baseSut.paymentCardIsActive)
         }
     }
     
-    func test_paymentCardStatus_returnsCorrectBool() {
+    func test_2_paymentCardStatus_returnsCorrectBool() {
         switchCardStatus(status: .expired) {
             XCTAssertEqual(Self.baseSut.paymentCardStatus, .expired)
         }
@@ -146,15 +147,15 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_pendingRefreshInterval_isCorrect() {
+    func test_3_pendingRefreshInterval_isCorrect() {
         XCTAssertEqual(Self.baseSut.pendingRefreshInterval, 30.0)
     }
     
-    func test_paymentCardCellViewModel_initialisesViewModelCorrectly() {
+    func test_4_paymentCardCellViewModel_initialisesViewModelCorrectly() {
         XCTAssertEqual(Self.baseSut.paymentCardCellViewModel, PaymentCardCellViewModel(paymentCard: Self.paymentCard))
     }
     
-    func test_navigationViewTitleText_returnsCorrectTitle() {
+    func test_5_navigationViewTitleText_returnsCorrectTitle() {
         Self.persistValidPaymentCard()
         XCTAssertEqual(Self.baseSut.navigationViewTitleText, Self.paymentCard.card?.nameOnCard)
         
@@ -165,7 +166,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_navigationViewDetailText_returnsCorrectDigits() {
+    func test_6_navigationViewDetailText_returnsCorrectDigits() {
         Self.persistValidPaymentCard()
         XCTAssertEqual(Self.baseSut.navigationViewDetailText, "•••• \(Self.paymentCard.card?.lastFour ?? "")")
         
@@ -176,7 +177,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_addedCardsTitle_returnsCorrectTitleForStatus() {
+    func test_7_addedCardsTitle_returnsCorrectTitleForStatus() {
         switchCardStatus(status: .active) {
             XCTAssertEqual(Self.baseSut.addedCardsTitle, L10n.pcdActiveCardTitle)
         }
@@ -194,7 +195,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_addedCardsDescription_returnsCorrectTitleForStatus() {
+    func test_8_addedCardsDescription_returnsCorrectTitleForStatus() {
         switchCardStatus(status: .active) {
             XCTAssertEqual(Self.baseSut.addedCardsDescription, L10n.pcdActiveCardDescription)
         }
@@ -212,12 +213,12 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_paymentCard_didSet_buildsInformationRows() {
+    func test_9_paymentCard_didSet_buildsInformationRows() {
         XCTAssertNotNil(Self.baseSut.paymentCard)
         XCTAssertFalse(Self.baseSut.informationRows.isEmpty)
     }
     
-    func test_cardAddedDateString_returnsCorrectString() {
+    func test_10_cardAddedDateString_returnsCorrectString() {
         XCTAssertNil(Self.baseSut.cardAddedDateString)
         
         let consents = PaymentCardAccountConsentsResponse(apiId: 0, type: 0, timestamp: 98730947097989)
@@ -228,7 +229,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_otherCardsTitle_returnsCorrectString() {
+    func test_11_otherCardsTitle_returnsCorrectString() {
         Self.walletDelegate?.updateMembershipCards(membershipCards: [])
         XCTAssertEqual(Self.baseSut.otherCardsTitle, L10n.pcdOtherCardTitleNoCardsAdded)
         
@@ -238,7 +239,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_otherCardsDescription_returnsCorrectString() {
+    func test_12_otherCardsDescription_returnsCorrectString() {
         Self.walletDelegate?.updateMembershipCards(membershipCards: [])
         XCTAssertEqual(Self.baseSut.otherCardsDescription, L10n.pcdOtherCardDescriptionNoCardsAdded)
         
@@ -248,17 +249,18 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_shouldShowPaymentCardCell_returnsTrue() {
+    func test_13_shouldShowPaymentCardCell_returnsTrue() {
         XCTAssertTrue(Self.baseSut.shouldShowPaymentCardCell)
     }
     
-    func test_shouldShowAddedCardsTitleLabel_returnsCorrectBool() {
+    func test_14_shouldShowAddedCardsTitleLabel_returnsCorrectBool() {
         Self.walletDelegate?.updateMembershipCards(membershipCards: [])
         switchCardStatus(status: .failed) {
             XCTAssertTrue(Self.baseSut.shouldShowAddedCardsTitleLabel)
         }
         
         switchCardStatus(status: .active) {
+            Self.walletDelegate?.updateMembershipCards(membershipCards: [])
             XCTAssertFalse(Self.baseSut.shouldShowAddedCardsTitleLabel)
 
             Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
@@ -266,7 +268,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_shouldShowAddedCardsDescriptionLabel_returnsCorrectBool() {
+    func test_15_shouldShowAddedCardsDescriptionLabel_returnsCorrectBool() {
         Self.walletDelegate?.updateMembershipCards(membershipCards: [])
         switchCardStatus(status: .failed) {
             XCTAssertTrue(Self.baseSut.shouldShowAddedCardsDescriptionLabel)
@@ -280,7 +282,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_shouldShowOtherCardsTitleLabel_returnsCorrectBool() {
+    func test_16_shouldShowOtherCardsTitleLabel_returnsCorrectBool() {
         Self.walletDelegate?.updateMembershipCards(membershipCards: [])
         switchCardStatus(status: .failed) {
             XCTAssertFalse(Self.baseSut.shouldShowOtherCardsTitleLabel)
@@ -292,7 +294,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_shouldShowOtherCardsDescriptionLabel_returnsCorrectBool() {
+    func test_17_shouldShowOtherCardsDescriptionLabel_returnsCorrectBool() {
         Self.walletDelegate?.updateMembershipCards(membershipCards: [])
         switchCardStatus(status: .failed) {
             XCTAssertFalse(Self.baseSut.shouldShowOtherCardsDescriptionLabel)
@@ -308,7 +310,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_shouldShowCardAddedLabel_returnsCorrectBool() {
+    func test_18_shouldShowCardAddedLabel_returnsCorrectBool() {
         switchCardStatus(status: .pending) {
             XCTAssertTrue(Self.baseSut.shouldShowCardAddedLabel)
         }
@@ -318,7 +320,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_shouldShowAddedLoyaltyCardTableView_returnsCorrectBool() {
+    func test_19_shouldShowAddedLoyaltyCardTableView_returnsCorrectBool() {
         switchCardStatus(status: .active) {
             Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
             XCTAssertTrue(Self.baseSut.shouldShowAddedLoyaltyCardTableView)
@@ -329,7 +331,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_shouldShowOtherCardsTableView_returnsCorrectBool() {
+    func test_20_shouldShowOtherCardsTableView_returnsCorrectBool() {
         removePlansFromWallet()
         XCTAssertFalse(Self.baseSut.shouldShowOtherCardsTableView)
         
@@ -344,11 +346,11 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_shouldShowInformationTableView_returnsTrue() {
+    func test_21_shouldShowInformationTableView_returnsTrue() {
         XCTAssertTrue(Self.baseSut.shouldShowInformationTableView)
     }
     
-    func test_shouldShowSeparator_returnsCorrectBool() {
+    func test_22_shouldShowSeparator_returnsCorrectBool() {
         switchCardStatus(status: .active) {
             XCTAssertFalse(Self.baseSut.shouldShowSeparator)
         }
@@ -366,7 +368,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_pllMembershipPlans_returnsCorrectPlansArray() {
+    func test_23_pllMembershipPlans_returnsCorrectPlansArray() {
         removePlansFromWallet()
         XCTAssertEqual(Self.baseSut.pllMembershipPlans, [])
         
@@ -374,7 +376,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         XCTAssertEqual(Self.baseSut.pllMembershipPlans, [Self.membershipPlan])
     }
     
-    func test_pllPlansAddedToWallet_returnsCorrectPlansArray() {
+    func test_24_pllPlansAddedToWallet_returnsCorrectPlansArray() {
         removecardssFromWallet()
         XCTAssertEqual(Self.baseSut.pllPlansAddedToWallet, [])
         
@@ -382,7 +384,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         XCTAssertEqual(Self.baseSut.pllPlansAddedToWallet, [Self.membershipPlan])
     }
     
-    func test_pllPlansNotAddedToWallet_returnsCorrectPlansArray() {
+    func test_25_pllPlansNotAddedToWallet_returnsCorrectPlansArray() {
         removePlansFromWallet()
         XCTAssertEqual(Self.baseSut.pllPlansNotAddedToWallet, [])
         
@@ -391,7 +393,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_pllPlansNotAddedToWalletCount_returnsCorrectValue() {
+    func test_26_pllPlansNotAddedToWalletCount_returnsCorrectValue() {
         Self.walletDelegate?.setMembershipPlansToNil()
         XCTAssertEqual(Self.baseSut.pllPlansNotAddedToWalletCount, 0)
         
@@ -400,7 +402,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_pllPlanNotAddedToWallet_forIndexPath_returnsCorrectMembershipPlan() {
+    func test_27_pllPlanNotAddedToWallet_forIndexPath_returnsCorrectMembershipPlan() {
         removePlansFromWallet()
         XCTAssertNil(Self.baseSut.pllPlanNotAddedToWallet(forIndexPath: IndexPath(row: 0, section: 0)))
         
@@ -409,7 +411,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
 
-    func test_pllMembershipCards_returnsMembershipCardArray() {
+    func test_28_pllMembershipCards_returnsMembershipCardArray() {
         Self.walletDelegate?.updateMembershipCards(membershipCards: [])
         XCTAssertEqual(Self.baseSut.pllMembershipCards, [])
 
@@ -417,7 +419,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         XCTAssertEqual(Self.baseSut.pllMembershipCards, [Self.membershipCard])
     }
     
-    func test_pllMembershipCardsCount_returnsCorrectValue() {
+    func test_29_pllMembershipCardsCount_returnsCorrectValue() {
         Self.walletDelegate?.setMembershipCardsToNil()
         XCTAssertEqual(Self.baseSut.pllMembershipCardsCount, 0)
 
@@ -425,7 +427,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         XCTAssertEqual(Self.baseSut.pllMembershipCardsCount, 1)
     }
     
-    func test_linkedMembershipCardIds_returnsCorrectIDsArray() {
+    func test_30_linkedMembershipCardIds_returnsCorrectIDsArray() {
         XCTAssertEqual(Self.baseSut.linkedMembershipCardIds, ["300"])
         
         Self.basePaymentCardResponse.membershipCards = []
@@ -435,7 +437,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_membershipCardIsLinked_returnsCorrectBool() {
+    func test_31_membershipCardIsLinked_returnsCorrectBool() {
         Self.basePaymentCardResponse.membershipCards = [Self.linkedResponse]
         mapResponseToManagedObject(Self.basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { _ in
             XCTAssertTrue(Self.baseSut.membershipCardIsLinked(Self.membershipCard))
@@ -448,7 +450,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_membershipCardForIndexPath_returnsCorrectCard() {
+    func test_32_membershipCardForIndexPath_returnsCorrectCard() {
         Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
         XCTAssertEqual(Self.baseSut.membershipCard(forIndexPath: IndexPath(row: 0, section: 0)), Self.membershipCard)
         
@@ -456,7 +458,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         XCTAssertNil(Self.baseSut.membershipCard(forIndexPath: IndexPath(row: 0, section: 0)))
     }
     
-    func test_statusForMembershipCard_returnsCorrectStatus() {
+    func test_33_statusForMembershipCard_returnsCorrectStatus() {
         Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
         XCTAssertEqual(Self.baseSut.statusForMembershipCard(atIndexPath: IndexPath(row: 0, section: 0))?.status, Self.membershipCardStatus.status)
         
@@ -464,7 +466,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         XCTAssertNil(Self.baseSut.statusForMembershipCard(atIndexPath: IndexPath(row: 0, section: 0)))
     }
     
-    func test_informationRowForIndexPath_returnsCorrectRow_() {
+    func test_34_informationRowForIndexPath_returnsCorrectRow_() {
         switchCardStatus(status: .active) {
             Self.baseSut.buildInformationRows()
             XCTAssertEqual(Self.baseSut.informationRow(forIndexPath: IndexPath(row: 0, section: 0)), CardDetailInformationRow(type: .securityAndPrivacy, action: {}))
@@ -493,7 +495,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_performActionForInformationRowatIndexPath_performsCorrectAction() {
+    func test_35_performActionForInformationRowatIndexPath_performsCorrectAction() {
         Self.walletCardDetailInformationRowFactory.delegate = self
         switchCardStatus(status: .active) {
             Self.baseSut.buildInformationRows()
@@ -544,22 +546,22 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         }
     }
     
-    func test_toFAQsScreen_navigatesToCorrectViewController() {
+    func test_36_toFAQsScreen_navigatesToCorrectViewController() {
         Self.baseSut.toFAQsScreen()
         XCTAssertTrue(currentViewController.isKind(of: WebViewController.self))
     }
     
-    func test_toSecurityAndPrivacy_navigatesToCorrectViewController() {
+    func test_37_toSecurityAndPrivacy_navigatesToCorrectViewController() {
         Self.baseSut.toSecurityAndPrivacyScreen()
         XCTAssertTrue(currentViewController.isKind(of: ReusableTemplateViewController.self))
     }
     
-    func test_showDeleteConfirmationAlert_navigatesToCorrectViewController() {
+    func test_38_showDeleteConfirmationAlert_navigatesToCorrectViewController() {
         Self.baseSut.showDeleteConfirmationAlert()
         XCTAssertTrue(currentViewController.isKind(of: BinkAlertController.self))
     }
     
-    func test_refreshPaymentCard_returnsSuccessfulUpdatedPaymentCard() {
+    func test_39_refreshPaymentCard_returnsSuccessfulUpdatedPaymentCard() {
         let mockedPaymentCard = try! JSONEncoder().encode(Self.basePaymentCardResponse)
         let endpoint = APIEndpoint.paymentCard(cardId: Self.basePaymentCardResponse.id)
         let mock = Mock(url: URL(string: endpoint.urlString!)!, dataType: .json, statusCode: 200, data: [.get: mockedPaymentCard])
@@ -575,15 +577,14 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 10.0)
     }
     
-    func test_toggleLinkForMembershipCard_correctlyTogglesLinkage_0() {
+    func test_41_toggleLinkForMembershipCard_correctlyTogglesLinkage() {
         XCTAssertTrue(Self.baseSut.membershipCardIsLinked(Self.membershipCard))
         let mockedPaymentCard = try! JSONEncoder().encode(Self.basePaymentCardResponse)
         let endpoint = APIEndpoint.linkMembershipCardToPaymentCard(membershipCardId: Self.membershipCard.id, paymentCardId: Self.basePaymentCardResponse.id)
         let mock = Mock(url: URL(string: endpoint.urlString!)!, dataType: .json, statusCode: 200, data: [.delete: mockedPaymentCard])
         mock.register()
         Self.baseSut.toggleLinkForMembershipCard(Self.membershipCard) {
-            let card = PaymentCardCardResponse(apiId: 100, firstSix: nil, lastFour: "1234", month: 30, year: 3000, country: nil, currencyCode: nil, nameOnCard: "Sean Williams", provider: nil, type: nil)
-            Self.basePaymentCardResponse = PaymentCardModel(apiId: 100, membershipCards: [], status: "active", card: card, account: PaymentCardAccountResponse(apiId: 0, verificationInProgress: nil, status: 0, consents: []))
+            Self.basePaymentCardResponse = PaymentCardModel(apiId: 100, membershipCards: [], status: "active", card: Self.paymentCardCardResponse, account: PaymentCardAccountResponse(apiId: 0, verificationInProgress: nil, status: 0, consents: []))
 
             self.mapResponseToManagedObject(Self.basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
                 Self.paymentCard = paymentCard
@@ -594,15 +595,14 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
     }
 
-    func test_toggleLinkForMembershipCard_correctlyTogglesLinkage_1() {
+    func test_40_toggleLinkForMembershipCard_correctlyTogglesLinkage() {
         XCTAssertFalse(Self.baseSut.membershipCardIsLinked(Self.membershipCard))
         let mockedPaymentCard = try! JSONEncoder().encode(Self.basePaymentCardResponse)
         let endpoint = APIEndpoint.linkMembershipCardToPaymentCard(membershipCardId: Self.membershipCard.id, paymentCardId: Self.basePaymentCardResponse.id)
         let mock = Mock(url: URL(string: endpoint.urlString!)!, dataType: .json, statusCode: 200, data: [.patch: mockedPaymentCard])
         mock.register()
         Self.baseSut.toggleLinkForMembershipCard(Self.membershipCard) {
-            let card = PaymentCardCardResponse(apiId: 100, firstSix: nil, lastFour: "1234", month: 30, year: 3000, country: nil, currencyCode: nil, nameOnCard: "Sean Williams", provider: nil, type: nil)
-            Self.basePaymentCardResponse = PaymentCardModel(apiId: 100, membershipCards: [Self.linkedResponse], status: "active", card: card, account: PaymentCardAccountResponse(apiId: 0, verificationInProgress: nil, status: 0, consents: []))
+            Self.basePaymentCardResponse = PaymentCardModel(apiId: 100, membershipCards: [Self.linkedResponse], status: "active", card: Self.paymentCardCardResponse, account: PaymentCardAccountResponse(apiId: 0, verificationInProgress: nil, status: 0, consents: []))
 
             self.mapResponseToManagedObject(Self.basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
                 Self.paymentCard = paymentCard
