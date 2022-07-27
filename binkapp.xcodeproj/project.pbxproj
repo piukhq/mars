@@ -24,6 +24,8 @@
 		212F0C442876EB7E007F09CE /* CalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C432876EB7E007F09CE /* CalloutView.swift */; };
 		212F0C462876EC63007F09CE /* GeoLocationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */; };
 		21393EFB285A1E1C002C8E79 /* StringHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21393EFA285A1E1C002C8E79 /* StringHelperTests.swift */; };
+		21497EC82864A1880053A9EE /* OptionItemListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21497EC72864A1880053A9EE /* OptionItemListViewController.swift */; };
+		21497ECD2869BE2E0053A9EE /* SortStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21497ECC2869BE2E0053A9EE /* SortStateTests.swift */; };
 		214EC01F28732020000A3F73 /* GifLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC01E28732020000A3F73 /* GifLoader.swift */; };
 		214EC021287320FD000A3F73 /* place-marker.gif in Resources */ = {isa = PBXBuildFile; fileRef = 214EC020287320FD000A3F73 /* place-marker.gif */; };
 		214EC02628734B45000A3F73 /* GeoLocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02528734B45000A3F73 /* GeoLocationsViewController.swift */; };
@@ -679,6 +681,8 @@
 		212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationModelTests.swift; sourceTree = "<group>"; };
 		21393EFA285A1E1C002C8E79 /* StringHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHelperTests.swift; sourceTree = "<group>"; };
 		2144647F3F7FD0825EAA4342 /* Pods-binkapp-binkappUITests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp-binkappUITests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkapp-binkappUITests/Pods-binkapp-binkappUITests.app store (internal).xcconfig"; sourceTree = "<group>"; };
+		21497EC72864A1880053A9EE /* OptionItemListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionItemListViewController.swift; sourceTree = "<group>"; };
+		21497ECC2869BE2E0053A9EE /* SortStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortStateTests.swift; sourceTree = "<group>"; };
 		214EC01E28732020000A3F73 /* GifLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifLoader.swift; sourceTree = "<group>"; };
 		214EC020287320FD000A3F73 /* place-marker.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "place-marker.gif"; sourceTree = "<group>"; };
 		214EC02528734B45000A3F73 /* GeoLocationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationsViewController.swift; sourceTree = "<group>"; };
@@ -1319,6 +1323,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		21497EC62864A0CD0053A9EE /* Popup */ = {
+			isa = PBXGroup;
+			children = (
+				21497EC72864A1880053A9EE /* OptionItemListViewController.swift */,
+			);
+			path = Popup;
+			sourceTree = "<group>";
+		};
+		21497ECB2869BDF20053A9EE /* Loyalty */ = {
+			isa = PBXGroup;
+			children = (
+				21497ECC2869BE2E0053A9EE /* SortStateTests.swift */,
+			);
+			path = Loyalty;
+			sourceTree = "<group>";
+		};
 		214EC0272874313A000A3F73 /* GeoLocation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1832,6 +1852,7 @@
 		5ECE049F22CE57F5001BA964 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				21497EC62864A0CD0053A9EE /* Popup */,
 				214EC0272874313A000A3F73 /* GeoLocation */,
 				BD458B45236ED1240029A538 /* AccessForms */,
 				3CE24B272304014500B258C8 /* AddOrJoin */,
@@ -2645,6 +2666,7 @@
 		EF586FE12357A8DC000917B6 /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
+				21497ECB2869BDF20053A9EE /* Loyalty */,
 				CE3878CD25643C06006BAC11 /* Join Cards */,
 				EF586FE22357A8E3000917B6 /* Payment Card Wallet */,
 			);
@@ -3850,6 +3872,7 @@
 				EFEB5BF5237D9F6900E18743 /* PLRCellViewModel.swift in Sources */,
 				EFDEBDF72408279900CB755E /* SecureUtility.swift in Sources */,
 				B713662B2329374D008A0ED7 /* OfferTileView.swift in Sources */,
+				21497EC82864A1880053A9EE /* OptionItemListViewController.swift in Sources */,
 				70F7EC2125CAF932005DE935 /* LocalPointsCollectable.swift in Sources */,
 				EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */,
 				CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */,
@@ -4062,6 +4085,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21497ECD2869BE2E0053A9EE /* SortStateTests.swift in Sources */,
 				70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */,
 				70D6863E257152F300403448 /* DynamicActionsTests.swift in Sources */,
 				706157C8264A84AF0002701E /* AppVersionTests.swift in Sources */,

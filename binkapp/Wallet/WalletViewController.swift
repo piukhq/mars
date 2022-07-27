@@ -130,8 +130,9 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     private func configureNavigationItem() {
         let settingsIcon = Asset.settings.image.withRenderingMode(.alwaysOriginal)
         let settingsBarButton = UIBarButtonItem(image: settingsIcon, style: .plain, target: self, action: #selector(settingsButtonTapped))
+
         settingsBarButton.accessibilityIdentifier = "settings"
-        navigationItem.rightBarButtonItem = settingsBarButton
+        navigationItem.rightBarButtonItems = [settingsBarButton]
         
         var rightInset: CGFloat = 0
         switch UIDevice.current.width {

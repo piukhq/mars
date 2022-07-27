@@ -21,7 +21,16 @@ extension LayoutHelper {
         static let imageEdgeInsets = UIEdgeInsets(top: 8, left: 6, bottom: 7, right: 5)
         static let titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 3)
     }
-    
+
+    enum SortOrderLayout {
+        static let sourceRectHeightOffset: CGFloat = 6
+        static let cellHeight: CGFloat = 64
+        static let titleLabelTopOffset: CGFloat = 20
+        static let titleLabelHorizontalOffset: CGFloat = 34
+        static let lineSeparatorTopOffset: CGFloat = 4
+        static let lineSeparatorHeight: CGFloat = 1
+    }
+
     enum GeoLocationCallout {
         static let calloutHeight: CGFloat = 80.0
         static let calloutWidth: CGFloat = 340.0
