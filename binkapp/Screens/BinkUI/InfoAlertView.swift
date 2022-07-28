@@ -1,5 +1,5 @@
 //
-//  ResponseCodeVisualiser.swift
+//  InfoAlertView.swift
 //  binkapp
 //
 //  Created by Sean Williams on 20/10/2020.
@@ -7,14 +7,6 @@
 //
 
 import UIKit
-
-enum Snackbar: String, CaseIterable {
-    case short
-    case long
-    case action
-    case multiline
-    case input
-}
 
 enum ResponseCodeVisualizer {
     case success
@@ -24,9 +16,46 @@ enum ResponseCodeVisualizer {
 }
 
 class InfoAlertView: UIView {
-    enum AlertType {
-        case snackbar(Snackbar)
+    enum AlertType: Equatable {
+        enum Length {
+            case short
+            case long
+        }
+        
+        case snackbar(Length)
         case responseCodeVisualizer(ResponseCodeVisualizer)
+
+        var showOffset: CGFloat {
+            switch self {
+            case .snackbar:
+                return UIScreen.main.bounds.height - 100
+            case .responseCodeVisualizer:
+                return 50
+            }
+        }
+        
+        var hideOffset: CGFloat {
+            switch self {
+            case .snackbar:
+                return UIScreen.main.bounds.height + 100
+            case .responseCodeVisualizer:
+                return -50
+            }
+        }
+        
+        var timeInterval: Double {
+            switch self {
+            case .snackbar(let snackbarType):
+                switch snackbarType {
+                case .short:
+                    return 1.5
+                case .long:
+                    return 2.75
+                }
+            case .responseCodeVisualizer:
+                return 2.9
+            }
+        }
     }
     
     private let message: String
@@ -34,8 +63,8 @@ class InfoAlertView: UIView {
     private var timer: Timer?
     
     private lazy var textLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: self.bounds.origin.x + 10, y: self.bounds.origin.y, width: self.bounds.width - 20, height: self.bounds.height))
-        label.textAlignment = .center
+        let label = UILabel(frame: CGRect(x: self.bounds.origin.x + 20, y: self.bounds.origin.y, width: self.bounds.width - 40, height: self.bounds.height))
+        label.textAlignment = .left
         label.textColor = .white
         label.font = .alertText
         label.numberOfLines = 2
@@ -46,7 +75,15 @@ class InfoAlertView: UIView {
     init(message: String, type: AlertType, window: UIWindow) {
         self.message = message
         self.type = type
-        super.init(frame: CGRect(x: 25, y: 0, width: window.bounds.width - 50, height: 50))
+        
+        var originFrame: CGRect
+        switch type {
+        case .snackbar:
+            originFrame = CGRect(x: 25, y: window.bounds.height, width: window.bounds.width - 50, height: 50)
+        case .responseCodeVisualizer:
+            originFrame = CGRect(x: 25, y: 0, width: window.bounds.width - 50, height: 50)
+        }
+        super.init(frame: originFrame)
         configure()
     }
     
@@ -75,13 +112,13 @@ class InfoAlertView: UIView {
     func show() {
         update(message: message)
         UIView.animate(withDuration: 0.3) {
-            self.frame = CGRect(x: self.frame.origin.x, y: 50, width: self.frame.width, height: self.frame.height)
+            self.frame = CGRect(x: self.frame.origin.x, y: self.type.showOffset, width: self.frame.width, height: self.frame.height)
         }
     }
     
     private func hide() {
         UIView.animate(withDuration: 0.3, animations: {
-            self.frame = CGRect(x: self.frame.origin.x, y: -50, width: self.frame.width, height: self.frame.height)
+            self.frame = CGRect(x: self.frame.origin.x, y: self.type.hideOffset, width: self.frame.width, height: self.frame.height)
         }) { _ in
             self.removeFromSuperview()
         }
@@ -106,17 +143,17 @@ class InfoAlertView: UIView {
                 }
             case .snackbar(let snackbarType):
                 switch snackbarType {
-                case .short:
-                    self.backgroundColor = .black
-                case .long:
-                    self.backgroundColor = .systemPink
+//                case .short:
+//                    self.backgroundColor = .systemGray
+//                case .long:
+//                    self.backgroundColor = .systemPink
                 default:
-                    break
+                    self.backgroundColor = .black.lighter(by: 20)
                 }
             }
         })
         
-        timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: type.timeInterval, repeats: false) { _ in
             self.hide()
         }
     }

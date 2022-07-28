@@ -171,9 +171,26 @@ struct StepperDebugRow: View {
 
 @available(iOS 14.0, *)
 struct PickerDebugRow: View {
-    enum RowType: String {
-        case environment = "Select environment"
-        case snackbar = "Snackbars"
+    enum RowType {
+        enum SnackbarAction: String, CaseIterable {
+            case short
+            case long
+            case multiline
+            case action
+            case input
+        }
+        
+        case environment
+        case snackbar
+        
+        var title: String {
+            switch self {
+            case .environment:
+                return "Select environment"
+            case .snackbar:
+                return "Snackbars"
+            }
+        }
         
         var initialValue: String {
             switch self {
@@ -189,7 +206,7 @@ struct PickerDebugRow: View {
             case .environment:
                 return EnvironmentType.allCases.map { $0.rawValue }
             case .snackbar:
-                return Snackbar.allCases.map { $0.rawValue }
+                return SnackbarAction.allCases.map { $0.rawValue }
             }
         }
         
@@ -199,7 +216,23 @@ struct PickerDebugRow: View {
                 APIConstants.changeEnvironment(environment: EnvironmentType(rawValue: selection) ?? .dev)
                 NotificationCenter.default.post(name: .shouldLogout, object: nil)
             case .snackbar:
-                InfoAlertView.show(rawValue, type: .snackbar(Snackbar(rawValue: selection) ?? .short))
+                let snackbarAction = SnackbarAction(rawValue: selection)
+                
+                switch snackbarAction {
+                case .short:
+                    InfoAlertView.show("This is a short snackbar", type: .snackbar(.short))
+                case .long:
+                    InfoAlertView.show("This is a long snackbar", type: .snackbar(.long))
+                case .multiline:
+                    InfoAlertView.show("This is a snackbar with so much text, the label is like whuuuut?! I can't contain this much text yo, I'm gonna spill out", type: .snackbar(.short))
+                case .action:
+                    InfoAlertView.show("This is a snackbar with an action", type: .snackbar(.long))
+                case .input:
+                    /// TODO : - Show alert controller with textfield input, then use text for InfoAlertView message
+                    InfoAlertView.show("This is a snackbar which allows user input", type: .snackbar(.long))
+                case .none:
+                    break
+                }
             }
         }
     }
@@ -215,14 +248,14 @@ struct PickerDebugRow: View {
     
     var body: some View {
         HStack {
-            Text(type.rawValue)
+            Text(type.title)
                 .lineLimit(1)
                 .truncationMode(.tail)
                 .foregroundColor(Color(.binkGradientBlueRight))
 
             Spacer()
 
-            Picker(type.rawValue.capitalized, selection: $selection) {
+            Picker(type.title.capitalized, selection: $selection) {
                 ForEach(type.options, id: \.self) {
                     switch type {
                     case .environment:
