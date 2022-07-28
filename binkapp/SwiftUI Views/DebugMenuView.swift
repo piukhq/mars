@@ -28,6 +28,7 @@ struct DebugMenuView: View {
                 ToggleDebugRow(title: "Response code visualiser", defaultsKey: .responseCodeVisualiser)
                 ToggleDebugRow(title: "Apply in-app review rules", defaultsKey: .applyInAppReviewRules)
                 ToggleDebugRow(title: "Enable analytics", defaultsKey: .analyticsDebugMode)
+                PickerDebugRow(type: .snackbar)
                 
                 if hasUser {
                     ToggleDebugRow(title: "LPC debug mode", defaultsKey: .lpcDebugMode)
@@ -122,6 +123,7 @@ struct ToggleDebugRow: View {
         Toggle(isOn: $isEnabled) {
             Text(title)
                 .font(.body)
+                .foregroundColor(Color(.binkGradientBlueRight))
             if let subtitle = subtitle {
                 Text(subtitle)
                     .font(.subheadline)
@@ -169,11 +171,14 @@ struct StepperDebugRow: View {
 struct PickerDebugRow: View {
     enum RowType: String {
         case environment = "Select environment"
+        case snackbar = "Snackbars"
         
         var initialValue: String {
             switch self {
             case .environment:
                 return APIConstants.baseURLString
+            case .snackbar:
+                return "Snackbars"
             }
         }
         
@@ -181,6 +186,8 @@ struct PickerDebugRow: View {
             switch self {
             case .environment:
                 return EnvironmentType.allCases.map { $0.rawValue }
+            case .snackbar:
+                return ["Short", "Long", "Long + action", "Multiline", "User input"]
             }
         }
         
@@ -189,6 +196,8 @@ struct PickerDebugRow: View {
             case .environment:
                 APIConstants.changeEnvironment(environment: EnvironmentType(rawValue: selection) ?? .dev)
                 NotificationCenter.default.post(name: .shouldLogout, object: nil)
+            case .snackbar:
+                print(selection)
             }
         }
     }
@@ -204,23 +213,23 @@ struct PickerDebugRow: View {
     
     var body: some View {
         HStack {
+            Text(type.rawValue + " →")
+                .lineLimit(1)
+                .truncationMode(.tail)
+                .foregroundColor(Color(.binkGradientBlueRight))
+
+            Spacer()
+
             Picker(type.rawValue.capitalized, selection: $selection) {
                 ForEach(type.options, id: \.self) {
                     Text($0)
                 }
             }
             .pickerStyle(MenuPickerStyle())
-            .foregroundColor(Color(.binkGradientBlueRight))
+            .foregroundColor(.gray)
             .onChange(of: selection, perform: { value in
                 type.handleSelection(value)
             })
-            
-            Spacer()
-            
-            Text(selection)
-                .lineLimit(1)
-                .truncationMode(.tail)
-                .foregroundColor(.gray)
         }
     }
 }
