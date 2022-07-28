@@ -8,12 +8,25 @@
 
 import UIKit
 
-class DebugInfoAlertView: UIView {
+enum Snackbar: String, CaseIterable {
+    case short
+    case long
+    case action
+    case multiline
+    case input
+}
+
+enum ResponseCodeVisualizer {
+    case success
+    case warning
+    case failure
+    case info
+}
+
+class InfoAlertView: UIView {
     enum AlertType {
-        case success
-        case warning
-        case failure
-        case info
+        case snackbar(Snackbar)
+        case responseCodeVisualizer(ResponseCodeVisualizer)
     }
     
     private let message: String
@@ -41,14 +54,14 @@ class DebugInfoAlertView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    static func show(_ message: String, type: DebugInfoAlertView.AlertType) {
+    static func show(_ message: String, type: AlertType) {
         guard Configuration.isDebug() else { return }
         if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
-            if let statusCodeView = window.subviews.first(where: { $0.isKind(of: DebugInfoAlertView.self) }) as? DebugInfoAlertView {
+            if let statusCodeView = window.subviews.first(where: { $0.isKind(of: InfoAlertView.self) }) as? InfoAlertView {
                 statusCodeView.type = type
                 statusCodeView.update(message: message)
             } else {
-                let view = DebugInfoAlertView(message: message, type: type, window: window)
+                let view = InfoAlertView(message: message, type: type, window: window)
                 window.addSubview(view)
                 DispatchQueue.main.async {
                     view.show()
@@ -80,14 +93,26 @@ class DebugInfoAlertView: UIView {
             self.textLabel.text = message
             
             switch self.type {
-            case .success:
-                self.backgroundColor = .systemGreen
-            case .warning:
-                self.backgroundColor = .amberPending
-            case .failure:
-                self.backgroundColor = .systemRed
-            default:
-                self.backgroundColor = .grey10
+            case .responseCodeVisualizer(let infoType):
+                switch infoType {
+                case .success:
+                    self.backgroundColor = .systemGreen
+                case .warning:
+                    self.backgroundColor = .amberPending
+                case .failure:
+                    self.backgroundColor = .systemRed
+                default:
+                    self.backgroundColor = .grey10
+                }
+            case .snackbar(let snackbarType):
+                switch snackbarType {
+                case .short:
+                    self.backgroundColor = .black
+                case .long:
+                    self.backgroundColor = .systemPink
+                default:
+                    break
+                }
             }
         })
         

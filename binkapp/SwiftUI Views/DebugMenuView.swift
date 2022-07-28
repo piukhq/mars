@@ -28,12 +28,13 @@ struct DebugMenuView: View {
                 ToggleDebugRow(title: "Response code visualiser", defaultsKey: .responseCodeVisualiser)
                 ToggleDebugRow(title: "Apply in-app review rules", defaultsKey: .applyInAppReviewRules)
                 ToggleDebugRow(title: "Enable analytics", defaultsKey: .analyticsDebugMode)
-                PickerDebugRow(type: .snackbar)
                 
                 if hasUser {
                     ToggleDebugRow(title: "LPC debug mode", defaultsKey: .lpcDebugMode)
                     NavigationDebugRow(title: "Loyalty plan colour swatches", destination: SwatchView())
                 }
+                
+                PickerDebugRow(type: .snackbar)
             }
             .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
             
@@ -162,6 +163,7 @@ struct StepperDebugRow: View {
                 .onChange(of: stepperValue, perform: { value in
                     valueHandler(Int(value))
                 })
+                .foregroundColor(Color(.binkGradientBlueRight))
             Text("\(Int(stepperValue))")
         }
     }
@@ -178,7 +180,7 @@ struct PickerDebugRow: View {
             case .environment:
                 return APIConstants.baseURLString
             case .snackbar:
-                return "Snackbars"
+                return "Choose..."
             }
         }
         
@@ -187,7 +189,7 @@ struct PickerDebugRow: View {
             case .environment:
                 return EnvironmentType.allCases.map { $0.rawValue }
             case .snackbar:
-                return ["Short", "Long", "Long + action", "Multiline", "User input"]
+                return Snackbar.allCases.map { $0.rawValue }
             }
         }
         
@@ -197,7 +199,7 @@ struct PickerDebugRow: View {
                 APIConstants.changeEnvironment(environment: EnvironmentType(rawValue: selection) ?? .dev)
                 NotificationCenter.default.post(name: .shouldLogout, object: nil)
             case .snackbar:
-                print(selection)
+                InfoAlertView.show(rawValue, type: .snackbar(Snackbar(rawValue: selection) ?? .short))
             }
         }
     }
@@ -213,7 +215,7 @@ struct PickerDebugRow: View {
     
     var body: some View {
         HStack {
-            Text(type.rawValue + " →")
+            Text(type.rawValue)
                 .lineLimit(1)
                 .truncationMode(.tail)
                 .foregroundColor(Color(.binkGradientBlueRight))
@@ -222,7 +224,12 @@ struct PickerDebugRow: View {
 
             Picker(type.rawValue.capitalized, selection: $selection) {
                 ForEach(type.options, id: \.self) {
-                    Text($0)
+                    switch type {
+                    case .environment:
+                        Text($0)
+                    case .snackbar:
+                        Text($0.capitalized)
+                    }
                 }
             }
             .pickerStyle(MenuPickerStyle())
@@ -241,6 +248,7 @@ struct NavigationDebugRow<Destination: View>: View {
     
     var body: some View {
         NavigationLink(title, destination: destination)
+            .foregroundColor(Color(.binkGradientBlueRight))
     }
 }
 
