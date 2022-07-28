@@ -13,9 +13,5 @@ class BinkInfoButton: UIButton {
         
         semanticContentAttribute = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft ? .forceLeftToRight : .forceRightToLeft
         accessibilityIdentifier = "Bink info button"
-        
-        if imageView != nil {
-            configuration?.contentInsets = LayoutHelper.BinkInfoButton.contentInsets
-        }
     }
 }

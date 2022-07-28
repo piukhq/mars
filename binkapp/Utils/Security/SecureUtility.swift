@@ -20,9 +20,7 @@ enum SecureUtility {
             let encrypted = try clear.encrypted(with: publicKey, padding: .OAEP)
             return encrypted.base64String
         } catch let error {
-            if #available(iOS 14.0, *) {
-                BinkLogger.error(AppLoggerError.stringEncryption, value: error.localizedDescription)
-            }
+            BinkLogger.error(AppLoggerError.stringEncryption, value: error.localizedDescription)
 
             return nil
         }

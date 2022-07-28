@@ -59,9 +59,7 @@ struct QuickLaunchProvider: TimelineProvider {
                 let widgetContent = try decoder.decode(WidgetContent.self, from: codeData)
                 contents.append(widgetContent)
             } catch {
-                if #available(iOS 14.0, *) {
-                    BinkLogger.error(AppLoggerError.decodeWidgetContentsFromDiskFailure, value: error.localizedDescription)
-                }
+                BinkLogger.error(AppLoggerError.decodeWidgetContentsFromDiskFailure, value: error.localizedDescription)
             }
         }
         return contents

@@ -54,9 +54,7 @@ class MainTabBarViewController: UITabBarController {
 
     @objc func configureForCurrentTheme() {
         tabBar.standardAppearance = Current.themeManager.tabBarAppearance(for: traitCollection)
-        if #available(iOS 15.0, *) {
-            tabBar.scrollEdgeAppearance = Current.themeManager.tabBarAppearance(for: traitCollection)
-        }
+        tabBar.scrollEdgeAppearance = Current.themeManager.tabBarAppearance(for: traitCollection)
         tabBar.tintColor = Current.themeManager.color(for: .text)
         tabBar.setNeedsLayout()
     }
@@ -94,9 +92,7 @@ extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDe
     }
     
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
-        if #available(iOS 14.0, *) {
-            BinkLogger.infoPrivateHash(event: AppLoggerEvent.paymentCardScanned, value: creditCard.number)
-        }
+        BinkLogger.infoPrivateHash(event: AppLoggerEvent.paymentCardScanned, value: creditCard.number)
         BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
         let month = creditCard.expiryMonthInteger()
         let year = creditCard.expiryYearInteger()

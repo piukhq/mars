@@ -326,15 +326,7 @@ enum ViewControllerFactory {
     }
 
     static func makeDebugViewController() -> UIViewController {
-        if #available(iOS 14.0, *) {
-            return UIHostingController(rootView: DebugMenuView())
-        } else {
-            let debugMenuFactory = DebugMenuFactory()
-            let debugMenuViewModel = DebugMenuViewModel(debugMenuFactory: debugMenuFactory)
-            let debugMenuViewController = DebugMenuTableViewController(viewModel: debugMenuViewModel)
-            debugMenuFactory.delegate = debugMenuViewController
-            return debugMenuViewController
-        }
+        return UIHostingController(rootView: DebugMenuView())
     }
 
     static func makeJailbrokenViewController() -> JailbrokenViewController {

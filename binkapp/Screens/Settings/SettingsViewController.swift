@@ -179,9 +179,7 @@ extension SettingsViewController: UITableViewDelegate {
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
                 default:
-                    if #available(iOS 14.0, *) {
-                        BinkLogger.error(AppLoggerError.unsupportedViewController)
-                    }
+                    BinkLogger.error(AppLoggerError.unsupportedViewController)
                 }
             case let .pushToSwiftUIView(swiftUIView: swiftUIView):
                 switch swiftUIView {
@@ -190,11 +188,9 @@ extension SettingsViewController: UITableViewDelegate {
                     let navigationRequest = PushNavigationRequest(viewController: hostingViewController)
                     Current.navigate.to(navigationRequest)
                 case .featureFlags:
-                    if #available(iOS 14.0, *) {
-                        let viewController = UIHostingController(rootView: FeatureFlagsSwiftUIView(delegate: self))
-                        let navigationRequest = PushNavigationRequest(viewController: viewController)
-                        Current.navigate.to(navigationRequest)
-                    }
+                    let viewController = UIHostingController(rootView: FeatureFlagsSwiftUIView(delegate: self))
+                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
                 }
             case .pushToReusable(let screen):
                 switch screen {
