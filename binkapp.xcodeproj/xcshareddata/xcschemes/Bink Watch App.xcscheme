@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1320"
+   LastUpgradeVersion = "1340"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -54,8 +54,10 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.Carousel"
+         RemotePath = "/BinkWatch">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "70D8782A26E26DCD006778EA"
@@ -63,7 +65,7 @@
             BlueprintName = "Bink Watch App"
             ReferencedContainer = "container:binkapp.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "App Store"
@@ -71,8 +73,10 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.Carousel"
+         RemotePath = "/BinkWatch">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "70D8782A26E26DCD006778EA"
@@ -80,7 +84,16 @@
             BlueprintName = "Bink Watch App"
             ReferencedContainer = "container:binkapp.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "70D8782A26E26DCD006778EA"
+            BuildableName = "Bink Watch App.app"
+            BlueprintName = "Bink Watch App"
+            ReferencedContainer = "container:binkapp.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "App Store">
