@@ -100,7 +100,7 @@ class InfoAlertView: UIView {
         self.message = message
         self.type = type
         self.action = action
-        
+
         var originFrame: CGRect
         switch type {
         case .snackbar:
@@ -114,17 +114,34 @@ class InfoAlertView: UIView {
             button.setTitle(actionTitle, for: .normal)
             stackview.addArrangedSubview(button)
         }
-        configure()
+        self.textLabel.text = message
+        configureUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configure() {
+    private func configureUI() {
         layer.cornerRadius = 8
         layer.cornerCurve = .continuous
         addSubview(stackview)
+        
+        switch type {
+        case .responseCodeVisualizer(let infoType):
+            switch infoType {
+            case .success:
+                self.backgroundColor = .systemGreen
+            case .warning:
+                self.backgroundColor = .amberPending
+            case .failure:
+                self.backgroundColor = .systemRed
+            default:
+                self.backgroundColor = .grey10
+            }
+        case .snackbar:
+            self.backgroundColor = .black.lighter(by: 20)
+        }
     }
     
     @objc func performAction () {
@@ -134,15 +151,13 @@ class InfoAlertView: UIView {
     static func show(_ message: String, type: AlertType, actionTitle: String? = nil, buttonAction: BinkButtonAction? = nil) {
         guard Configuration.isDebug() else { return }
         if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
-            if let statusCodeView = window.subviews.first(where: { $0.isKind(of: InfoAlertView.self) }) as? InfoAlertView {
-                statusCodeView.type = type
-                statusCodeView.update(message: message)
-            } else {
-                let view = InfoAlertView(message: message, type: type, actionTitle: actionTitle, window: window, action: buttonAction)
-                window.addSubview(view)
-                DispatchQueue.main.async {
-                    view.show()
-                }
+            if let infoAlertView = window.subviews.first(where: { $0.isKind(of: InfoAlertView.self) }) as? InfoAlertView {
+                infoAlertView.hideLeft()
+            }
+            let view = InfoAlertView(message: message, type: type, actionTitle: actionTitle, window: window, action: buttonAction)
+            window.addSubview(view)
+            DispatchQueue.main.async {
+                view.show()
             }
         } else {
             fatalError("Couldn't get window")
@@ -150,7 +165,11 @@ class InfoAlertView: UIView {
     }
     
     func show() {
-        update(message: message)
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: type.timeInterval, repeats: false) { _ in
+            self.hide()
+        }
+        
         UIView.animate(withDuration: 0.3) {
             self.frame = CGRect(x: self.frame.origin.x, y: self.type.showOffset, width: self.frame.width, height: self.frame.height)
         }
@@ -164,30 +183,11 @@ class InfoAlertView: UIView {
         }
     }
     
-    func update(message: String) {
-        timer?.invalidate()
-        UIView.transition(with: textLabel, duration: 0.25, options: .transitionCrossDissolve, animations: {
-            self.textLabel.text = message
-            
-            switch self.type {
-            case .responseCodeVisualizer(let infoType):
-                switch infoType {
-                case .success:
-                    self.backgroundColor = .systemGreen
-                case .warning:
-                    self.backgroundColor = .amberPending
-                case .failure:
-                    self.backgroundColor = .systemRed
-                default:
-                    self.backgroundColor = .grey10
-                }
-            case .snackbar:
-                self.backgroundColor = .black.lighter(by: 20)
-            }
-        })
-        
-        timer = Timer.scheduledTimer(withTimeInterval: type.timeInterval, repeats: false) { _ in
-            self.hide()
+    private func hideLeft() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.frame = CGRect(x: -500, y: self.frame.origin.y, width: self.frame.width, height: self.frame.height)
+        }) { _ in
+            self.removeFromSuperview()
         }
     }
 }
