@@ -301,7 +301,7 @@
 		CE2CFE9125E3D48E00B1CB93 /* FeatureFlagsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2CFE8F25E3D48D00B1CB93 /* FeatureFlagsTableViewCell.xib */; };
 		CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE38784A2562EEDA006BAC11 /* BarcodeViewModelTests.swift */; };
 		CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */; };
-		CE3A5518253EE89A007989FE /* InfoAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A5517253EE89A007989FE /* InfoAlertView.swift */; };
+		CE3A5518253EE89A007989FE /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A5517253EE89A007989FE /* MessageView.swift */; };
 		CE3D31DC2649660C0072BD97 /* ScanLoyaltyCardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D31DA2649660C0072BD97 /* ScanLoyaltyCardButton.swift */; };
 		CE3D31DD2649660C0072BD97 /* ScanLoyaltyCardButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */; };
 		CE4A624925714EAE003271F6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* Sentry */; };
@@ -982,7 +982,7 @@
 		CE38784A2562EEDA006BAC11 /* BarcodeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewModelTests.swift; sourceTree = "<group>"; };
 		CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPromptTests.swift; sourceTree = "<group>"; };
 		CE387AA02565749D006BAC11 /* BrandHeaderViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandHeaderViewTests.swift; sourceTree = "<group>"; };
-		CE3A5517253EE89A007989FE /* InfoAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoAlertView.swift; sourceTree = "<group>"; };
+		CE3A5517253EE89A007989FE /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		CE3D31DA2649660C0072BD97 /* ScanLoyaltyCardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanLoyaltyCardButton.swift; sourceTree = "<group>"; };
 		CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanLoyaltyCardButton.xib; sourceTree = "<group>"; };
 		CE4A628025715519003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1701,7 +1701,7 @@
 				EF2E8823233A6FB000F678F3 /* Wallets */,
 				BDB0186A232D95EC00BFFA18 /* Form */,
 				3C36071D230FF01400AC76A3 /* BrandHeader */,
-				CE3A5517253EE89A007989FE /* InfoAlertView.swift */,
+				CE3A5517253EE89A007989FE /* MessageView.swift */,
 				3CFDB226230C38A700E75A14 /* BinkTextField.swift */,
 				3CFDB224230C382400E75A14 /* BinkGradientButton.swift */,
 				3CD4F14D230D35AE0075F63C /* BinkInfoButton.swift */,
@@ -3877,7 +3877,7 @@
 				EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */,
 				CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */,
 				EF6921762469A9290049875B /* DebugSecondaryPlanColorCell.swift in Sources */,
-				CE3A5518253EE89A007989FE /* InfoAlertView.swift in Sources */,
+				CE3A5518253EE89A007989FE /* MessageView.swift in Sources */,
 				3C794D8F23018DBA000A31FD /* BrowseBrandsViewModel.swift in Sources */,
 				EFD602EC243B9454003AC746 /* Animations.swift in Sources */,
 				BDB01869232D949A00BFFA18 /* AddPaymentCardViewController.swift in Sources */,

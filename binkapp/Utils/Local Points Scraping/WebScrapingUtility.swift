@@ -345,7 +345,7 @@ class WebScrapingUtility: NSObject {
         
         if let value = value {
             if Current.pointsScrapingManager.isDebugMode, let merchant = agent.merchant?.capitalized {
-                InfoAlertView.show("\(merchant) LPC - Retreived points balance", type: .responseCodeVisualizer(.success))
+                MessageView.show("\(merchant) LPC - Retreived points balance", type: .responseCodeVisualizer(.success))
             }
             delegate?.webScrapingUtility(self, didCompleteWithValue: value, item: item, withAgent: agent)
             
@@ -355,7 +355,7 @@ class WebScrapingUtility: NSObject {
         if let error = error {
             if Current.pointsScrapingManager.isDebugMode, let merchant = agent.merchant?.capitalized {
                 DispatchQueue.main.async {
-                    InfoAlertView.show("\(merchant) LPC - \(error.localizedDescription)", type: .responseCodeVisualizer(.failure))
+                    MessageView.show("\(merchant) LPC - \(error.localizedDescription)", type: .responseCodeVisualizer(.failure))
                 }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -459,7 +459,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
                         }
                         
                         if Current.pointsScrapingManager.isDebugMode, let merchant = agent.merchant?.capitalized {
-                            InfoAlertView.show("\(merchant) LPC - Attempted to log in", type: .responseCodeVisualizer(.success))
+                            MessageView.show("\(merchant) LPC - Attempted to log in", type: .responseCodeVisualizer(.success))
                         }
                     }
                     

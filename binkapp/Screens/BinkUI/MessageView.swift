@@ -15,8 +15,8 @@ enum ResponseCodeVisualizer {
     case info
 }
 
-class InfoAlertView: UIView {
-    enum AlertType: Equatable {
+class MessageView: UIView {
+    enum MessageType: Equatable {
         enum Length {
             case short
             case long
@@ -59,7 +59,7 @@ class InfoAlertView: UIView {
     }
     
     private let message: String
-    private var type: AlertType
+    private var type: MessageType
     private var timer: Timer?
     
     private lazy var textLabel: UILabel = {
@@ -96,7 +96,7 @@ class InfoAlertView: UIView {
     
     private let action: BinkButtonAction?
     
-    init(message: String, type: AlertType, actionTitle: String?, window: UIWindow, action: BinkButtonAction?) {
+    init(message: String, type: MessageType, actionTitle: String?, window: UIWindow, action: BinkButtonAction?) {
         self.message = message
         self.type = type
         self.action = action
@@ -123,7 +123,7 @@ class InfoAlertView: UIView {
     }
     
     private func configureUI() {
-        layer.cornerRadius = 8
+        layer.cornerRadius = 15
         layer.cornerCurve = .continuous
         addSubview(stackview)
         
@@ -148,23 +148,30 @@ class InfoAlertView: UIView {
         action?()
     }
     
-    static func show(_ message: String, type: AlertType, actionTitle: String? = nil, buttonAction: BinkButtonAction? = nil) {
+    static func show(_ message: String, type: MessageType, actionTitle: String? = nil, buttonAction: BinkButtonAction? = nil) {
         guard Configuration.isDebug() else { return }
         if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
-            if let infoAlertView = window.subviews.first(where: { $0.isKind(of: InfoAlertView.self) }) as? InfoAlertView {
-                infoAlertView.hideLeft()
-            }
-            let view = InfoAlertView(message: message, type: type, actionTitle: actionTitle, window: window, action: buttonAction)
-            window.addSubview(view)
-            DispatchQueue.main.async {
-                view.show()
+            if let infoAlertView = window.subviews.first(where: { $0.isKind(of: MessageView.self) }) as? MessageView {
+                infoAlertView.hideLeft() {
+                    configureMessageView(message, type: type, window: window, actionTitle: actionTitle, buttonAction: buttonAction)
+                }
+            } else {
+                configureMessageView(message, type: type, window: window, actionTitle: actionTitle, buttonAction: buttonAction)
             }
         } else {
             fatalError("Couldn't get window")
         }
     }
     
-    func show() {
+    static private func configureMessageView(_ message: String, type: MessageType, window: UIWindow, actionTitle: String? = nil, buttonAction: BinkButtonAction? = nil) {
+        let view = MessageView(message: message, type: type, actionTitle: actionTitle, window: window, action: buttonAction)
+        window.addSubview(view)
+        DispatchQueue.main.async {
+            view.show()
+        }
+    }
+    
+    private func show() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: type.timeInterval, repeats: false) { _ in
             self.hide()
@@ -183,11 +190,12 @@ class InfoAlertView: UIView {
         }
     }
     
-    private func hideLeft() {
-        UIView.animate(withDuration: 0.3, animations: {
+    private func hideLeft(completion: @escaping () -> Void) {
+        UIView.animate(withDuration: 0.2, animations: {
             self.frame = CGRect(x: -500, y: self.frame.origin.y, width: self.frame.width, height: self.frame.height)
         }) { _ in
             self.removeFromSuperview()
+            completion()
         }
     }
 }

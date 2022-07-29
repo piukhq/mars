@@ -220,18 +220,21 @@ struct PickerDebugRow: View {
                 
                 switch snackbarAction {
                 case .short:
-                    InfoAlertView.show("This is a short snackbar", type: .snackbar(.short))
+                    MessageView.show("This is a short snackbar", type: .snackbar(.short))
                 case .long:
-                    InfoAlertView.show("This is a long snackbar", type: .snackbar(.long))
+                    MessageView.show("This is a long snackbar", type: .snackbar(.long))
                 case .multiline:
-                    InfoAlertView.show("This is a snackbar with so much text, the label is like whuuuut?! I can't contain this much text yo, I'm gonna spill", type: .snackbar(.long))
+                    MessageView.show("This is a snackbar with so much text, the label is like whuuuut?! I can't contain this much text yo, I'm gonna spill", type: .snackbar(.long))
                 case .action:
-                    InfoAlertView.show("This is a snackbar with an action", type: .snackbar(.long), actionTitle: "Trigger Action") {
-                        InfoAlertView.show("Action Triggered", type: .snackbar(.short))
+                    MessageView.show("This is a snackbar with an action", type: .snackbar(.long), actionTitle: "Trigger Action") {
+                        MessageView.show("Action Triggered", type: .snackbar(.short))
                     }
-                case .input:
-                    /// TODO : - Show alert controller with textfield input, then use text for InfoAlertView message
-                    InfoAlertView.show("This is a snackbar which allows user input", type: .snackbar(.long))
+                case .input:                    
+                    let alert = ViewControllerFactory.makeAlertViewControllerWithTextfield(title: "Snackbar Message", message: "Enter a message to display on the snackbar", cancelButton: true) { message in
+                        MessageView.show(message, type: .snackbar(.long))
+                    }
+                    let alertRequest = AlertNavigationRequest(alertController: alert)
+                    Current.navigate.to(alertRequest)
                 case .none:
                     break
                 }
