@@ -73,10 +73,9 @@ class InfoAlertView: UIView {
         return label
     }()
     
-    private lazy var button: UIButton = {
+    private var button: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Action", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .buttonText
         button.widthAnchor.constraint(equalToConstant: 60).isActive = true
@@ -84,7 +83,7 @@ class InfoAlertView: UIView {
     }()
     
     private lazy var stackview: UIStackView = {
-        let stackview = UIStackView(arrangedSubviews: [textLabel, button])
+        let stackview = UIStackView(arrangedSubviews: [textLabel])
         stackview.frame = CGRect(x: self.bounds.origin.x + 20, y: self.bounds.origin.y, width: self.bounds.width - 40, height: self.bounds.height)
         stackview.axis = .horizontal
         stackview.distribution = .fill
@@ -92,7 +91,7 @@ class InfoAlertView: UIView {
         return stackview
     }()
     
-    init(message: String, type: AlertType, window: UIWindow) {
+    init(message: String, type: AlertType, actionTitle: String?, window: UIWindow) {
         self.message = message
         self.type = type
         
@@ -104,6 +103,11 @@ class InfoAlertView: UIView {
             originFrame = CGRect(x: 25, y: 0, width: window.bounds.width - 50, height: 70)
         }
         super.init(frame: originFrame)
+        
+        if let actionTitle = actionTitle {
+            button.setTitle(actionTitle, for: .normal)
+            stackview.addArrangedSubview(button)
+        }
         configure()
     }
     
@@ -117,14 +121,14 @@ class InfoAlertView: UIView {
         addSubview(stackview)
     }
     
-    static func show(_ message: String, type: AlertType) {
+    static func show(_ message: String, type: AlertType, actionTitle: String? = nil) {
         guard Configuration.isDebug() else { return }
         if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
             if let statusCodeView = window.subviews.first(where: { $0.isKind(of: InfoAlertView.self) }) as? InfoAlertView {
                 statusCodeView.type = type
                 statusCodeView.update(message: message)
             } else {
-                let view = InfoAlertView(message: message, type: type, window: window)
+                let view = InfoAlertView(message: message, type: type, actionTitle: actionTitle, window: window)
                 window.addSubview(view)
                 DispatchQueue.main.async {
                     view.show()
