@@ -73,12 +73,15 @@ class InfoAlertView: UIView {
         return label
     }()
     
-    private var button: UIButton = {
+    private lazy var button: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .buttonText
+        button.titleLabel?.numberOfLines = 2
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        button.addTarget(self, action: #selector(performAction), for: .touchUpInside)
         return button
     }()
     
@@ -91,9 +94,12 @@ class InfoAlertView: UIView {
         return stackview
     }()
     
-    init(message: String, type: AlertType, actionTitle: String?, window: UIWindow) {
+    private let action: BinkButtonAction?
+    
+    init(message: String, type: AlertType, actionTitle: String?, window: UIWindow, action: BinkButtonAction?) {
         self.message = message
         self.type = type
+        self.action = action
         
         var originFrame: CGRect
         switch type {
@@ -121,14 +127,18 @@ class InfoAlertView: UIView {
         addSubview(stackview)
     }
     
-    static func show(_ message: String, type: AlertType, actionTitle: String? = nil) {
+    @objc func performAction () {
+        action?()
+    }
+    
+    static func show(_ message: String, type: AlertType, actionTitle: String? = nil, buttonAction: BinkButtonAction? = nil) {
         guard Configuration.isDebug() else { return }
         if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
             if let statusCodeView = window.subviews.first(where: { $0.isKind(of: InfoAlertView.self) }) as? InfoAlertView {
                 statusCodeView.type = type
                 statusCodeView.update(message: message)
             } else {
-                let view = InfoAlertView(message: message, type: type, actionTitle: actionTitle, window: window)
+                let view = InfoAlertView(message: message, type: type, actionTitle: actionTitle, window: window, action: buttonAction)
                 window.addSubview(view)
                 DispatchQueue.main.async {
                     view.show()
@@ -171,20 +181,13 @@ class InfoAlertView: UIView {
                 default:
                     self.backgroundColor = .grey10
                 }
-            case .snackbar(let snackbarType):
-                switch snackbarType {
-//                case .short:
-//                    self.backgroundColor = .systemGray
-//                case .long:
-//                    self.backgroundColor = .systemPink
-                default:
-                    self.backgroundColor = .black.lighter(by: 20)
-                }
+            case .snackbar:
+                self.backgroundColor = .black.lighter(by: 20)
             }
         })
         
         timer = Timer.scheduledTimer(withTimeInterval: type.timeInterval, repeats: false) { _ in
-//            self.hide()
+            self.hide()
         }
     }
 }

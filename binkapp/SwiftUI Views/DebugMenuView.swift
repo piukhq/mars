@@ -226,7 +226,9 @@ struct PickerDebugRow: View {
                 case .multiline:
                     InfoAlertView.show("This is a snackbar with so much text, the label is like whuuuut?! I can't contain this much text yo, I'm gonna spill", type: .snackbar(.long))
                 case .action:
-                    InfoAlertView.show("This is a snackbar with an action", type: .snackbar(.long), actionTitle: "UNDO")
+                    InfoAlertView.show("This is a snackbar with an action", type: .snackbar(.long), actionTitle: "Trigger Action") {
+                        InfoAlertView.show("Action Triggered", type: .snackbar(.short))
+                    }
                 case .input:
                     /// TODO : - Show alert controller with textfield input, then use text for InfoAlertView message
                     InfoAlertView.show("This is a snackbar which allows user input", type: .snackbar(.long))
