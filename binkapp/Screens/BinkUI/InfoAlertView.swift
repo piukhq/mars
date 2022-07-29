@@ -68,7 +68,7 @@ class InfoAlertView: UIView {
         label.textColor = .white
         label.font = .alertText
         label.numberOfLines = 2
-        label.adjustsFontSizeToFitWidth = true
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
     
@@ -79,9 +79,9 @@ class InfoAlertView: UIView {
         var originFrame: CGRect
         switch type {
         case .snackbar:
-            originFrame = CGRect(x: 25, y: window.bounds.height, width: window.bounds.width - 50, height: 50)
+            originFrame = CGRect(x: 25, y: window.bounds.height, width: window.bounds.width - 50, height: 70)
         case .responseCodeVisualizer:
-            originFrame = CGRect(x: 25, y: 0, width: window.bounds.width - 50, height: 50)
+            originFrame = CGRect(x: 25, y: 0, width: window.bounds.width - 50, height: 70)
         }
         super.init(frame: originFrame)
         configure()
