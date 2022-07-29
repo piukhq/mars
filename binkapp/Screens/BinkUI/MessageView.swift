@@ -15,7 +15,7 @@ enum ResponseCodeVisualizer {
     case info
 }
 
-class MessageView: UIView {
+class MessageView: UIView, UIGestureRecognizerDelegate {
     enum MessageType: Equatable {
         enum Length {
             case short
@@ -142,6 +142,10 @@ class MessageView: UIView {
         case .snackbar:
             self.backgroundColor = .black.lighter(by: 20)
         }
+        
+        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: .handlePan)
+        gestureRecognizer.delegate = self
+        self.addGestureRecognizer(gestureRecognizer)
     }
     
     @objc func performAction () {
@@ -174,7 +178,7 @@ class MessageView: UIView {
     private func show() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: type.timeInterval, repeats: false) { _ in
-            self.hide()
+//            self.hide()
         }
         
         UIView.animate(withDuration: 0.3) {
@@ -198,4 +202,33 @@ class MessageView: UIView {
             completion()
         }
     }
+
+    @objc func handlePan(gesture: UIPanGestureRecognizer) {
+        guard let view = gesture.view else { return }
+        
+        let translationX = gesture.translation(in: view.superview).x * 1.3
+        print(translationX)
+        
+        // TODO: - Use Pan gesture instead
+        
+//        timer?.invalidate()
+//        var frame = self.frame
+//
+//        frame.origin.y += 100
+//
+//        UIView.animate(withDuration: 0.3) {
+//            self.frame = frame
+//        }
+        
+//        switch gesture.direction {
+//        case .down:
+//            print(gesture)
+//        default:
+//            break
+//        }
+    }
+}
+
+private extension Selector {
+    static let handlePan = #selector(MessageView.handlePan(gesture:))
 }
