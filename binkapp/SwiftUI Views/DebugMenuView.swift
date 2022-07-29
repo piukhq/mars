@@ -224,7 +224,7 @@ struct PickerDebugRow: View {
                 case .long:
                     InfoAlertView.show("This is a long snackbar", type: .snackbar(.long))
                 case .multiline:
-                    InfoAlertView.show("This is a snackbar with so much text, the label is like whuuuut?! I can't contain this much text yo, I'm gonna spill", type: .snackbar(.short))
+                    InfoAlertView.show("This is a snackbar with so much text, the label is like whuuuut?! I can't contain this much text yo, I'm gonna spill", type: .snackbar(.long))
                 case .action:
                     InfoAlertView.show("This is a snackbar with an action", type: .snackbar(.long))
                 case .input:
