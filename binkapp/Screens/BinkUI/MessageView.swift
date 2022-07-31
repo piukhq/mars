@@ -143,10 +143,14 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
             self.backgroundColor = .black.lighter(by: 20)
         }
         
-        let gestureRecognizer = UISwipeGestureRecognizer(target: self, action: .handlePan)
-        gestureRecognizer.delegate = self
-        gestureRecognizer.direction = .down
-        self.addGestureRecognizer(gestureRecognizer)
+        let downGestureRecognizer = UISwipeGestureRecognizer(target: self, action: .handleSwipe)
+        downGestureRecognizer.delegate = self
+        downGestureRecognizer.direction = .down
+        self.addGestureRecognizer(downGestureRecognizer)
+        let leftGestureRecognizer = UISwipeGestureRecognizer(target: self, action: .handleSwipe)
+        leftGestureRecognizer.delegate = self
+        leftGestureRecognizer.direction = .left
+        self.addGestureRecognizer(leftGestureRecognizer)
     }
     
     @objc func performAction () {
@@ -195,39 +199,23 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    private func hideLeft(completion: @escaping () -> Void) {
+    private func hideLeft(completion: (() -> Void)? = nil) {
         UIView.animate(withDuration: 0.2, animations: {
             self.frame = CGRect(x: -500, y: self.frame.origin.y, width: self.frame.width, height: self.frame.height)
         }) { _ in
             self.removeFromSuperview()
-            completion()
+            completion?()
         }
     }
 
-    @objc func handlePan(gesture: UISwipeGestureRecognizer) {
-//        guard let view = gesture.view else { return }
-        
-//        let translationY = gesture.translation(in: view.superview).y * 1.3
-//        print(translationY)
-        
-//        let snackbarPosition = (window?.bounds.height ?? 0) + self.type.showOffset
-//        view.frame = CGRect(x: 25, y: self.type.showOffset + translationY, width: view.frame.width, height: view.frame.height)
-        
-        // TODO: - Use Pan gesture instead
-        
+    @objc func handleSwipe(gesture: UISwipeGestureRecognizer) {
         timer?.invalidate()
-        hide()
-//        var frame = self.frame
-//
-//        frame.origin.y += 100
-//
-//        UIView.animate(withDuration: 0.12) {
-//            self.frame = frame
-//        }
-//
+
         switch gesture.direction {
         case .down:
-            print(gesture)
+            hide()
+        case .left:
+            hideLeft()
         default:
             break
         }
@@ -235,5 +223,5 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
 }
 
 private extension Selector {
-    static let handlePan = #selector(MessageView.handlePan(gesture:))
+    static let handleSwipe = #selector(MessageView.handleSwipe(gesture:))
 }
