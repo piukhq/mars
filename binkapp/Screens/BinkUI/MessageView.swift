@@ -143,8 +143,9 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
             self.backgroundColor = .black.lighter(by: 20)
         }
         
-        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: .handlePan)
+        let gestureRecognizer = UISwipeGestureRecognizer(target: self, action: .handlePan)
         gestureRecognizer.delegate = self
+        gestureRecognizer.direction = .down
         self.addGestureRecognizer(gestureRecognizer)
     }
     
@@ -178,7 +179,7 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
     private func show() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: type.timeInterval, repeats: false) { _ in
-//            self.hide()
+            self.hide()
         }
         
         UIView.animate(withDuration: 0.3) {
@@ -203,29 +204,33 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
         }
     }
 
-    @objc func handlePan(gesture: UIPanGestureRecognizer) {
-        guard let view = gesture.view else { return }
+    @objc func handlePan(gesture: UISwipeGestureRecognizer) {
+//        guard let view = gesture.view else { return }
         
-        let translationX = gesture.translation(in: view.superview).x * 1.3
-        print(translationX)
+//        let translationY = gesture.translation(in: view.superview).y * 1.3
+//        print(translationY)
+        
+//        let snackbarPosition = (window?.bounds.height ?? 0) + self.type.showOffset
+//        view.frame = CGRect(x: 25, y: self.type.showOffset + translationY, width: view.frame.width, height: view.frame.height)
         
         // TODO: - Use Pan gesture instead
         
-//        timer?.invalidate()
+        timer?.invalidate()
+        hide()
 //        var frame = self.frame
 //
 //        frame.origin.y += 100
 //
-//        UIView.animate(withDuration: 0.3) {
+//        UIView.animate(withDuration: 0.12) {
 //            self.frame = frame
 //        }
-        
-//        switch gesture.direction {
-//        case .down:
-//            print(gesture)
-//        default:
-//            break
-//        }
+//
+        switch gesture.direction {
+        case .down:
+            print(gesture)
+        default:
+            break
+        }
     }
 }
 
