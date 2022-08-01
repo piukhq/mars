@@ -12,7 +12,7 @@ import DeepDiff
 import SwiftUI
 
 final class ImageService {
-    typealias ImageCompletionHandler = (UIImage?) -> Void
+    typealias ImageCompletionHandler = (UIImage?, Bool) -> Void
 
     enum PathType {
         case membershipPlanIcon(plan: CD_MembershipPlan)
@@ -25,7 +25,7 @@ final class ImageService {
     /// Retrieve an image returned in a completion handler
     static func getImage(forPathType pathType: PathType, policy: StorageUtility.ExpiryPolicy = .week, userInterfaceStyle: UIUserInterfaceStyle? = nil, completion: @escaping (UIImage?) -> Void) {
         let imageService = ImageService()
-        imageService.retrieveImage(forPathType: pathType, policy: policy, userInterfaceStyle: userInterfaceStyle) { retrievedImage in
+        imageService.retrieveImage(forPathType: pathType, policy: policy, userInterfaceStyle: userInterfaceStyle) { retrievedImage, _ in
             completion(retrievedImage)
         }
     }
@@ -51,19 +51,19 @@ final class ImageService {
     }
     
     fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy, userInterfaceStyle: UIUserInterfaceStyle? = nil, completion: @escaping ImageCompletionHandler) {
-        guard let imagePath = path(forType: pathType, userInterfaceStyle: userInterfaceStyle) else { return completion(nil) }
+        guard let imagePath = path(forType: pathType, userInterfaceStyle: userInterfaceStyle) else { return completion(nil, false) }
 
         // Are we forcing a refresh?
         if !forceRefresh {
             // Is the image in memory?
             if let cachedImage = Cache.sharedImageCache.object(forKey: imagePath.toNSString()) {
-                completion(cachedImage)
+                completion(cachedImage, true)
                 return
             }
 
             // If not, is the image on disk?
             if let imageFromDisk = try? Disk.retrieve(imagePath, from: .caches, as: UIImage.self) {
-                completion(imageFromDisk)
+                completion(imageFromDisk, true)
 
                 // Promote the image to local memory
                 Cache.sharedImageCache.setObject(imageFromDisk, forKey: imagePath.toNSString())
@@ -119,7 +119,7 @@ final class ImageService {
         Current.apiClient.getImage(fromUrlString: path) { (result, _) in
             switch result {
             case .success(let image):
-                completion(image)
+                completion(image, false)
 
                 // Store the downloaded image to disk and fail silently
                 try? Disk.save(image, to: .caches, as: path)
@@ -131,7 +131,7 @@ final class ImageService {
                 let storedObject = StorageUtility.StoredObject(objectPath: path, storedDate: Date(), policy: policy)
                 StorageUtility.addStoredObject(storedObject)
             case .failure:
-                completion(nil)
+                completion(nil, false)
             }
         }
     }
@@ -142,9 +142,17 @@ extension UIImageView {
         image = placeholder
 
         let imageService = ImageService()
-        imageService.retrieveImage(forPathType: pathType, policy: policy, userInterfaceStyle: traitCollection.userInterfaceStyle) { [weak self] retrievedImage in
+        imageService.retrieveImage(forPathType: pathType, policy: policy, userInterfaceStyle: traitCollection.userInterfaceStyle) { [weak self] retrievedImage, cached in
             if let self = self, animated {
-                UIView.transition(with: self, duration: 0.3, options: .transitionCrossDissolve, animations: { self.image = retrievedImage }, completion: nil)
+                if cached {
+                    self.image = retrievedImage
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                        UIView.transition(with: self, duration: 1.3, options: .transitionCrossDissolve, animations: {
+                            self.image = retrievedImage
+                        }, completion: nil)
+                    }
+                }
             } else {
                 self?.image = retrievedImage
             }
