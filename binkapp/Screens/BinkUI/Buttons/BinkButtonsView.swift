@@ -102,9 +102,7 @@ extension BinkButtonsView {
     static let bottomPadding: CGFloat = 16
     static let buttonSpacing: CGFloat = 25
     static let bottomSafePadding: CGFloat = {
-        let window = UIApplication.shared.connectedScenes
-            .flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
-            .first { $0.isKeyWindow }
+        let window = UIApplication.shared.connectedScenes.flatMap { ($0 as? UIWindowScene)?.windows ?? [] }.first { $0.isKeyWindow }
         let safeAreaBottom = window?.safeAreaInsets.bottom ?? 0
         return bottomPadding + safeAreaBottom
     }()
