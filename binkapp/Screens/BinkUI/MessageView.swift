@@ -143,14 +143,9 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
             self.backgroundColor = .black.lighter(by: 20)
         }
         
-        let downGestureRecognizer = UISwipeGestureRecognizer(target: self, action: .handleSwipe)
-        downGestureRecognizer.delegate = self
-        downGestureRecognizer.direction = .down
-        self.addGestureRecognizer(downGestureRecognizer)
-        let leftGestureRecognizer = UISwipeGestureRecognizer(target: self, action: .handleSwipe)
-        leftGestureRecognizer.delegate = self
-        leftGestureRecognizer.direction = .left
-        self.addGestureRecognizer(leftGestureRecognizer)
+        configureGestureRecognizer(direction: .down)
+        configureGestureRecognizer(direction: .left)
+        configureGestureRecognizer(direction: .right)
     }
     
     @objc func performAction () {
@@ -161,7 +156,7 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
         guard Configuration.isDebug() else { return }
         if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
             if let infoAlertView = window.subviews.first(where: { $0.isKind(of: MessageView.self) }) as? MessageView {
-                infoAlertView.hideLeft() {
+                infoAlertView.hideSideways(direction: .left) {
                     configureMessageView(message, type: type, window: window, actionTitle: actionTitle, buttonAction: buttonAction)
                 }
             } else {
@@ -199,13 +194,21 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    private func hideLeft(completion: (() -> Void)? = nil) {
+    private func hideSideways(direction: UISwipeGestureRecognizer.Direction, completion: (() -> Void)? = nil) {
+        let xOffset: CGFloat = direction == .left ? -500 : 500
         UIView.animate(withDuration: 0.2, animations: {
-            self.frame = CGRect(x: -500, y: self.frame.origin.y, width: self.frame.width, height: self.frame.height)
+            self.frame = CGRect(x: xOffset, y: self.frame.origin.y, width: self.frame.width, height: self.frame.height)
         }) { _ in
             self.removeFromSuperview()
             completion?()
         }
+    }
+    
+    private func configureGestureRecognizer(direction: UISwipeGestureRecognizer.Direction) {
+        let gestureRecognizer = UISwipeGestureRecognizer(target: self, action: .handleSwipe)
+        gestureRecognizer.delegate = self
+        gestureRecognizer.direction = direction
+        self.addGestureRecognizer(gestureRecognizer)
     }
 
     @objc func handleSwipe(gesture: UISwipeGestureRecognizer) {
@@ -215,7 +218,9 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
         case .down:
             hide()
         case .left:
-            hideLeft()
+            hideSideways(direction: .left)
+        case .right:
+            hideSideways(direction: .right)
         default:
             break
         }
