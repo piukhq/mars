@@ -111,7 +111,8 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
         super.init(frame: originFrame)
         
         if let actionTitle = actionTitle {
-            button.setTitle(actionTitle, for: .normal)
+            button.setTitle(actionTitle.capitalized, for: .normal)
+            button.setTitleColor(.red, for: .normal)
             stackview.addArrangedSubview(button)
         }
         self.textLabel.text = message
@@ -143,6 +144,7 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
             self.backgroundColor = .black.lighter(by: 20)
         }
         
+        configureGestureRecognizer(direction: .up)
         configureGestureRecognizer(direction: .down)
         configureGestureRecognizer(direction: .left)
         configureGestureRecognizer(direction: .right)
@@ -215,12 +217,10 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
         timer?.invalidate()
 
         switch gesture.direction {
-        case .down:
+        case .down, .up:
             hide()
-        case .left:
-            hideSideways(direction: .left)
-        case .right:
-            hideSideways(direction: .right)
+        case .left, .right:
+            hideSideways(direction: gesture.direction)
         default:
             break
         }
