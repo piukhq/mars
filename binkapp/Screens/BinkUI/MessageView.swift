@@ -101,8 +101,8 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
     }
     
     private let message: String
-    var type: MessageType
-    private let messageButton: MessageButton?
+    let type: MessageType
+    let messageButton: MessageButton?
     private var timer: Timer?
     
     private lazy var textLabel: UILabel = {
