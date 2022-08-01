@@ -282,7 +282,7 @@ struct PickerDebugRow: View {
                 }
             }
             .pickerStyle(MenuPickerStyle())
-            .foregroundColor(.gray)
+            .accentColor(Color(UIColor.binkPurple))
             .onChange(of: selection, perform: { value in
                 type.handleSelection(value)
             })
