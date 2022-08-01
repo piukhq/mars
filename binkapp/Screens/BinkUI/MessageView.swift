@@ -58,8 +58,29 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
+    struct MessageButton {
+        enum ButtonType {
+            case success
+            case error
+        }
+        
+        let title: String
+        let type: ButtonType
+        let action: EmptyCompletionBlock
+        
+        var textColor: UIColor {
+            switch type {
+            case .success:
+                return .greenOk
+            case .error:
+                return .binkDynamicRed
+            }
+        }
+    }
+    
     private let message: String
     private var type: MessageType
+    private let messageButton: MessageButton?
     private var timer: Timer?
     
     private lazy var textLabel: UILabel = {
@@ -94,12 +115,11 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
         return stackview
     }()
     
-    private let action: BinkButtonAction?
     
-    init(message: String, type: MessageType, actionTitle: String?, window: UIWindow, action: BinkButtonAction?) {
+    init(message: String, type: MessageType, window: UIWindow, button: MessageButton? = nil) {
         self.message = message
         self.type = type
-        self.action = action
+        self.messageButton = button
 
         var originFrame: CGRect
         switch type {
@@ -110,11 +130,12 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
         }
         super.init(frame: originFrame)
         
-        if let actionTitle = actionTitle {
-            button.setTitle(actionTitle.capitalized, for: .normal)
-            button.setTitleColor(.red, for: .normal)
-            stackview.addArrangedSubview(button)
+        if let button = button {
+            self.button.setTitle(button.title.capitalized, for: .normal)
+            self.button.setTitleColor(button.textColor, for: .normal)
+            stackview.addArrangedSubview(self.button)
         }
+
         self.textLabel.text = message
         configureUI()
     }
@@ -151,26 +172,26 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
     }
     
     @objc func performAction () {
-        action?()
+        messageButton?.action()
     }
     
-    static func show(_ message: String, type: MessageType, actionTitle: String? = nil, buttonAction: BinkButtonAction? = nil) {
+    static func show(_ message: String, type: MessageType, button: MessageButton? = nil) {
         guard Configuration.isDebug() else { return }
         if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
             if let infoAlertView = window.subviews.first(where: { $0.isKind(of: MessageView.self) }) as? MessageView {
                 infoAlertView.hideSideways(direction: .left) {
-                    configureMessageView(message, type: type, window: window, actionTitle: actionTitle, buttonAction: buttonAction)
+                    configureMessageView(message, type: type, window: window, button: button)
                 }
             } else {
-                configureMessageView(message, type: type, window: window, actionTitle: actionTitle, buttonAction: buttonAction)
+                configureMessageView(message, type: type, window: window, button: button)
             }
         } else {
             fatalError("Couldn't get window")
         }
     }
     
-    static private func configureMessageView(_ message: String, type: MessageType, window: UIWindow, actionTitle: String? = nil, buttonAction: BinkButtonAction? = nil) {
-        let view = MessageView(message: message, type: type, actionTitle: actionTitle, window: window, action: buttonAction)
+    static private func configureMessageView(_ message: String, type: MessageType, window: UIWindow, button: MessageButton? = nil) {
+        let view = MessageView(message: message, type: type, window: window, button: button)
         window.addSubview(view)
         DispatchQueue.main.async {
             view.show()

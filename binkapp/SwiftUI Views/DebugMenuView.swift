@@ -226,10 +226,21 @@ struct PickerDebugRow: View {
                 case .multiline:
                     MessageView.show("This is a snackbar with so much text, the label is like whuuuut?! I can't contain this much text yo, I'm gonna spill", type: .snackbar(.long))
                 case .action:
-                    MessageView.show("This is a snackbar with an action", type: .snackbar(.long), actionTitle: "Trigger Action") {
-                        MessageView.show("Action Triggered", type: .snackbar(.short))
+                    let alert = ViewControllerFactory.makeTwoButtonAlertViewController(title: "Choose Action Type", message: nil, primaryButtonTitle: "Success", secondaryButtonTitle: "Error") {
+                        let button = MessageView.MessageButton(title: "UNDO", type: .success) {
+                            MessageView.show("Success Action Triggered", type: .snackbar(.short))
+                        }
+                        MessageView.show("This is a snackbar with an action", type: .snackbar(.long), button: button)
+                    } secondaryButtonCompletion: {
+                        let button = MessageView.MessageButton(title: "UNDO", type: .error) {
+                            MessageView.show("Error Action Triggered", type: .snackbar(.short))
+                        }
+                        MessageView.show("This is a snackbar with an action", type: .snackbar(.long), button: button)
                     }
-                case .input:                    
+
+                    let alertRequest = AlertNavigationRequest(alertController: alert)
+                    Current.navigate.to(alertRequest)
+                case .input:
                     let alert = ViewControllerFactory.makeAlertViewControllerWithTextfield(title: "Snackbar Message", message: "Enter a message to display on the snackbar", cancelButton: true) { message in
                         MessageView.show(message, type: .snackbar(.long))
                     }
