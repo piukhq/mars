@@ -241,7 +241,7 @@ struct PickerDebugRow: View {
                     let alertRequest = AlertNavigationRequest(alertController: alert)
                     Current.navigate.to(alertRequest)
                 case .input:
-                    let alert = ViewControllerFactory.makeAlertViewControllerWithTextfield(title: "Snackbar Message", message: "Enter a message to display on the snackbar", cancelButton: true) { message in
+                    let alert = ViewControllerFactory.makeAlertViewControllerWithTextfield(title: "Snackbar Message", message: "Enter a message to display on the snackbar", cancelButton: true, keyboardType: .default) { message in
                         MessageView.show(message, type: .snackbar(.long))
                     }
                     let alertRequest = AlertNavigationRequest(alertController: alert)

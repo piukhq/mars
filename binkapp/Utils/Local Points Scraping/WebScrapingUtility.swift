@@ -231,7 +231,7 @@ class WebScrapingUtility: NSObject {
         
         if agent?.merchant == "nectar" {
             guard !isPresentingUserInput, userInputValue == nil else { return }
-            let vc = ViewControllerFactory.makeAlertViewControllerWithTextfield(title: L10n.lpcNectarUserInputAlertTitle, message: L10n.lpcNectarUserInputAlertBody, cancelButton: true) { authCode in
+            let vc = ViewControllerFactory.makeAlertViewControllerWithTextfield(title: L10n.lpcNectarUserInputAlertTitle, message: L10n.lpcNectarUserInputAlertBody, cancelButton: true, keyboardType: .numberPad) { authCode in
                 self.userInputValue = authCode
                 self.idleRetryCount = 0
             } cancelActionHandler: {
