@@ -209,7 +209,6 @@
 		B7136629232690F7008A0ED7 /* PLLScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7136628232690F7008A0ED7 /* PLLScreenViewModel.swift */; };
 		B713662B2329374D008A0ED7 /* OfferTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B713662A2329374D008A0ED7 /* OfferTileView.swift */; };
 		B71D51F92343692000BB3406 /* OfferTileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71D51F82343692000BB3406 /* OfferTileView.xib */; };
-		B726333F230586CC00951037 /* MembershipPlanModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B726333E230586CC00951037 /* MembershipPlanModel.swift */; };
 		B72633412305883D00951037 /* MembershipPlanAccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72633402305883D00951037 /* MembershipPlanAccountModel.swift */; };
 		B72633432305899200951037 /* AddFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72633422305899200951037 /* AddFieldModel.swift */; };
 		B7263345230589C300951037 /* AuthoriseFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7263344230589C300951037 /* AuthoriseFieldModel.swift */; };
@@ -336,6 +335,14 @@
 		CE85A1DB26B05D95003B74CD /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CE85A1DA26B05D95003B74CD /* Lottie */; };
 		CE85A20126B15436003B74CD /* success.json in Resources */ = {isa = PBXBuildFile; fileRef = CE85A20026B15436003B74CD /* success.json */; };
 		CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */; };
+		CE971A28287EE138001D7E1C /* DebugMenuFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A27287EE138001D7E1C /* DebugMenuFactoryTests.swift */; };
+		CE971A2A287EFDB4001D7E1C /* DebugMenuViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A29287EFDB4001D7E1C /* DebugMenuViewModelTests.swift */; };
+		CE971A2C28802AEC001D7E1C /* PaymentCardDetailLoyaltyCardStatusCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A2B28802AEB001D7E1C /* PaymentCardDetailLoyaltyCardStatusCellViewModelTests.swift */; };
+		CE971A3128806953001D7E1C /* MembershipPlanModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B726333E230586CC00951037 /* MembershipPlanModel.swift */; };
+		CE971A3328806968001D7E1C /* MembershipPlanModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A2E28806270001D7E1C /* MembershipPlanModelTests.swift */; };
+		CE971A3528807FBB001D7E1C /* BinkInfoButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A3428807FBB001D7E1C /* BinkInfoButtonTests.swift */; };
+		CE971A3728817A41001D7E1C /* AddOrJoinViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A3628817A40001D7E1C /* AddOrJoinViewModelTests.swift */; };
+		CE971A3A2881AE1D001D7E1C /* PaymentCardDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE971A392881AE1D001D7E1C /* PaymentCardDetailViewModelTests.swift */; };
 		CE990E13261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */; };
 		CEA0E1E1274E35DE00CC2FC6 /* RecommendedVersionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E1E0274E35DE00CC2FC6 /* RecommendedVersionUtil.swift */; };
 		CEA0E1E3274E9CAD00CC2FC6 /* AutofillFormInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA0E1E2274E9CAD00CC2FC6 /* AutofillFormInputCell.swift */; };
@@ -386,6 +393,7 @@
 		CEE20923268E1E0E004D3759 /* AddCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE20922268E1E0E004D3759 /* AddCardView.swift */; };
 		CEE20925268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE20924268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift */; };
 		CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF389EA255D72E90063C718 /* DateExtensionTests.swift */; };
+		CEF3E5A928903BBF0082EBE0 /* Mocker in Frameworks */ = {isa = PBXBuildFile; productRef = CEF3E5A828903BBF0082EBE0 /* Mocker */; };
 		CEF837E925DA7AB10066C77E /* FeatureFlagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF837E825DA7AB10066C77E /* FeatureFlagsTableViewController.swift */; };
 		CEFAB4E9279ABD0A00D061A9 /* BarcodeViewNoBarcode.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFAB4E8279ABD0900D061A9 /* BarcodeViewNoBarcode.xib */; };
 		CEFAB4EB279AC10B00D061A9 /* BarcodeViewNoBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFAB4EA279AC10B00D061A9 /* BarcodeViewNoBarcode.swift */; };
@@ -1015,6 +1023,13 @@
 		CE85A1D726B0096A003B74CD /* UniversalLinkUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalLinkUtility.swift; sourceTree = "<group>"; };
 		CE85A20026B15436003B74CD /* success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = success.json; sourceTree = "<group>"; };
 		CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkCopyableLabel.swift; sourceTree = "<group>"; };
+		CE971A27287EE138001D7E1C /* DebugMenuFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugMenuFactoryTests.swift; sourceTree = "<group>"; };
+		CE971A29287EFDB4001D7E1C /* DebugMenuViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewModelTests.swift; sourceTree = "<group>"; };
+		CE971A2B28802AEB001D7E1C /* PaymentCardDetailLoyaltyCardStatusCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailLoyaltyCardStatusCellViewModelTests.swift; sourceTree = "<group>"; };
+		CE971A2E28806270001D7E1C /* MembershipPlanModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipPlanModelTests.swift; sourceTree = "<group>"; };
+		CE971A3428807FBB001D7E1C /* BinkInfoButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkInfoButtonTests.swift; sourceTree = "<group>"; };
+		CE971A3628817A40001D7E1C /* AddOrJoinViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrJoinViewModelTests.swift; sourceTree = "<group>"; };
+		CE971A392881AE1D001D7E1C /* PaymentCardDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailViewModelTests.swift; sourceTree = "<group>"; };
 		CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_1_LoyaltyCards.swift; sourceTree = "<group>"; };
 		CEA0E1E0274E35DE00CC2FC6 /* RecommendedVersionUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendedVersionUtil.swift; path = "binkapp/Utils/Remote Config/RecommendedVersionUtil.swift"; sourceTree = SOURCE_ROOT; };
 		CEA0E1E2274E9CAD00CC2FC6 /* AutofillFormInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillFormInputCell.swift; sourceTree = "<group>"; };
@@ -1275,6 +1290,7 @@
 				7075383026DFAB2B00690965 /* JWTDecode in Frameworks */,
 				CEADBFDE2747CBC6008810A8 /* FirebaseRemoteConfig in Frameworks */,
 				7075382D26DFA96800690965 /* Disk in Frameworks */,
+				CEF3E5A928903BBF0082EBE0 /* Mocker in Frameworks */,
 				CEB8242927391F0500F5954D /* FirebaseAnalytics in Frameworks */,
 				7075381E26DFA26C00690965 /* Alamofire in Frameworks */,
 				7063B1EB270473EE00C5C633 /* FirebaseStorage in Frameworks */,
@@ -1828,6 +1844,7 @@
 				EF586FE12357A8DC000917B6 /* Wallet */,
 				EF758E1123225F6D000D26A9 /* SwiftDatabase */,
 				EF485578231E5A3600FC9E5F /* Screens */,
+				CE971A26287EE138001D7E1C /* Debug */,
 				5ECE048322CE579B001BA964 /* binkappTests.swift */,
 				5ECE048522CE579B001BA964 /* Info.plist */,
 			);
@@ -2426,6 +2443,7 @@
 			isa = PBXGroup;
 			children = (
 				CE387AA02565749D006BAC11 /* BrandHeaderViewTests.swift */,
+				CE971A3428807FBB001D7E1C /* BinkInfoButtonTests.swift */,
 				70A61D15263095060073A08A /* BinkModuleViewModelTests.swift */,
 			);
 			path = BinkUI;
@@ -2469,6 +2487,33 @@
 				CE02D5172726EE3F008B9BFA /* Paperplane.json */,
 			);
 			path = Animations;
+			sourceTree = "<group>";
+		};
+		CE971A26287EE138001D7E1C /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				CE971A27287EE138001D7E1C /* DebugMenuFactoryTests.swift */,
+				CE971A29287EFDB4001D7E1C /* DebugMenuViewModelTests.swift */,
+			);
+			name = Debug;
+			path = Screens/Debug;
+			sourceTree = "<group>";
+		};
+		CE971A2D28802B1A001D7E1C /* PaymentCardDetail */ = {
+			isa = PBXGroup;
+			children = (
+				CE971A2B28802AEB001D7E1C /* PaymentCardDetailLoyaltyCardStatusCellViewModelTests.swift */,
+				CE971A392881AE1D001D7E1C /* PaymentCardDetailViewModelTests.swift */,
+			);
+			path = PaymentCardDetail;
+			sourceTree = "<group>";
+		};
+		CE971A3828817A53001D7E1C /* AddOrJoin */ = {
+			isa = PBXGroup;
+			children = (
+				CE971A3628817A40001D7E1C /* AddOrJoinViewModelTests.swift */,
+			);
+			path = AddOrJoin;
 			sourceTree = "<group>";
 		};
 		CEA16EC926249D6700D449E1 /* Barcode Views */ = {
@@ -2635,6 +2680,8 @@
 				CE3878492562EEB3006BAC11 /* Barcode */,
 				3CDDEFFB243C75490009BD0B /* Settings */,
 				3CEE1699244054DE00933859 /* Browse Brands */,
+				CE971A2D28802B1A001D7E1C /* PaymentCardDetail */,
+				CE971A3828817A53001D7E1C /* AddOrJoin */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -2844,6 +2891,7 @@
 			isa = PBXGroup;
 			children = (
 				EF8B701123587BE3006CE3DD /* MembershipCardBalanceModelTests.swift */,
+				CE971A2E28806270001D7E1C /* MembershipPlanModelTests.swift */,
 				212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */,
 			);
 			path = Models;
@@ -3168,6 +3216,7 @@
 				7063B1E8270473EE00C5C633 /* FirebaseAnalytics */,
 				7063B1EA270473EE00C5C633 /* FirebaseStorage */,
 				7063B1EC270473EE00C5C633 /* FirebaseRemoteConfig */,
+				CEF3E5A828903BBF0082EBE0 /* Mocker */,
 			);
 			productName = binkapp;
 			productReference = 5ECE046822CE5798001BA964 /* Bink α.app */;
@@ -3327,6 +3376,7 @@
 				7075382E26DFAB2B00690965 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
 				70A4FDA4271588AC00DA7FAA /* XCRemoteSwiftPackageReference "mixpanel-swift" */,
 				7063B1E7270473EE00C5C633 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				CEF3E5A728903BBE0082EBE0 /* XCRemoteSwiftPackageReference "Mocker" */,
 			);
 			productRefGroup = 5ECE046922CE5798001BA964 /* Products */;
 			projectDirPath = "";
@@ -3767,7 +3817,6 @@
 				EFA5F72F2379A7C70027AB80 /* _CD_App.swift in Sources */,
 				3C9B1A2923854C040078A1EC /* PreferencesRepository.swift in Sources */,
 				B726334B23058A5C00951037 /* FeatureSetModel.swift in Sources */,
-				B726333F230586CC00951037 /* MembershipPlanModel.swift in Sources */,
 				EF7F6E6323E4296C00352DCF /* StorageUtilityMock.swift in Sources */,
 				EFA5F7432379A7C70027AB80 /* CD_PaymentCardAccount.swift in Sources */,
 				EFA81015240405070000D21D /* JailbrokenViewController.swift in Sources */,
@@ -3791,6 +3840,7 @@
 				CEE209142684653A004D3759 /* WidgetContent.swift in Sources */,
 				CEA16EC526249C6300D449E1 /* BarcodeView.swift in Sources */,
 				EF59A1312448B769001B60B8 /* APIErrorResponses.swift in Sources */,
+				CE971A3128806953001D7E1C /* MembershipPlanModel.swift in Sources */,
 				EFEB5BF7237DCA5A00E18743 /* PLRAccumulatorCell.swift in Sources */,
 				7061054125B8555600A16DA5 /* Styling.swift in Sources */,
 				EFA5F7272379A7C70027AB80 /* _CD_ReasonCode.swift in Sources */,
@@ -4089,6 +4139,8 @@
 				70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */,
 				70D6863E257152F300403448 /* DynamicActionsTests.swift in Sources */,
 				706157C8264A84AF0002701E /* AppVersionTests.swift in Sources */,
+				CE971A2A287EFDB4001D7E1C /* DebugMenuViewModelTests.swift in Sources */,
+				CE971A3528807FBB001D7E1C /* BinkInfoButtonTests.swift in Sources */,
 				CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */,
 				21393EFB285A1E1C002C8E79 /* StringHelperTests.swift in Sources */,
 				EF7F6E6123E4288C00352DCF /* StorageUtilityTests.swift in Sources */,
@@ -4096,14 +4148,19 @@
 				3CEE169B2440550D00933859 /* BrowseBrandsViewModelTests.swift in Sources */,
 				212F0C462876EC63007F09CE /* GeoLocationModelTests.swift in Sources */,
 				3CFD913022F1BA8200F25AF1 /* (null) in Sources */,
+				CE971A3A2881AE1D001D7E1C /* PaymentCardDetailViewModelTests.swift in Sources */,
+				CE971A3728817A41001D7E1C /* AddOrJoinViewModelTests.swift in Sources */,
 				EF758E1523225F95000D26A9 /* TestDatabase.xcdatamodeld in Sources */,
 				CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */,
 				70E8E37B2566DE430027A244 /* PLLScreenViewModelTests.swift in Sources */,
 				CEFB742325668A5100896DE5 /* BrandHeaderViewTests.swift in Sources */,
 				EF586FE52357A90C000917B6 /* PaymentCardCellViewModelTests.swift in Sources */,
+				CE971A28287EE138001D7E1C /* DebugMenuFactoryTests.swift in Sources */,
+				CE971A2C28802AEC001D7E1C /* PaymentCardDetailLoyaltyCardStatusCellViewModelTests.swift in Sources */,
 				DB4D8EAD2440864C0085595D /* SettingsViewModelTests.swift in Sources */,
 				70A61D16263095060073A08A /* BinkModuleViewModelTests.swift in Sources */,
 				CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */,
+				CE971A3328806968001D7E1C /* MembershipPlanModelTests.swift in Sources */,
 				EF8B701223587BE3006CE3DD /* MembershipCardBalanceModelTests.swift in Sources */,
 				CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */,
 				EF758E1623225F95000D26A9 /* DatabaseTests.swift in Sources */,
@@ -4252,6 +4309,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_TESTING_SEARCH_PATHS = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -4321,6 +4379,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_TESTING_SEARCH_PATHS = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -4360,6 +4419,7 @@
 				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -4398,6 +4458,7 @@
 				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -4439,6 +4500,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				INFOPLIST_FILE = binkappTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4465,6 +4527,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				INFOPLIST_FILE = binkappTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4489,6 +4552,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				INFOPLIST_FILE = binkappUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4514,6 +4578,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				INFOPLIST_FILE = binkappUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4572,6 +4637,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_TESTING_SEARCH_PATHS = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -4609,6 +4675,7 @@
 				DEBUG = "";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -4643,6 +4710,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				INFOPLIST_FILE = binkappTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4667,6 +4735,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				INFOPLIST_FILE = binkappUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4725,6 +4794,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_TESTING_SEARCH_PATHS = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -4762,6 +4832,7 @@
 				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -4795,6 +4866,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				INFOPLIST_FILE = binkappTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4819,6 +4891,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				INFOPLIST_FILE = binkappUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6003,6 +6076,14 @@
 				minimumVersion = 3.2.3;
 			};
 		};
+		CEF3E5A728903BBE0082EBE0 /* XCRemoteSwiftPackageReference "Mocker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:WeTransfer/Mocker.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -6075,6 +6156,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CE85A1D926B05D95003B74CD /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		CEF3E5A828903BBF0082EBE0 /* Mocker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEF3E5A728903BBE0082EBE0 /* XCRemoteSwiftPackageReference "Mocker" */;
+			productName = Mocker;
 		};
 /* End XCSwiftPackageProductDependency section */
 

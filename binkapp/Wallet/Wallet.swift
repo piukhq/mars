@@ -9,6 +9,13 @@
 import UIKit
 import WatchConnectivity
 
+protocol WalletTestable {
+    func updateMembershipCards(membershipCards: [CD_MembershipCard])
+    func updateMembershipPlans(membershipPlans: [CD_MembershipPlan])
+    func setMembershipPlansToNil()
+    func setMembershipCardsToNil()
+}
+
 class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
     private enum FetchType {
         case localLaunch // Specifically used on launch to perform desired behaviour not needed at any other time
@@ -25,7 +32,7 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
             WidgetController().writeContentsToDisk(membershipCards: membershipCards)
         }
     }
-    private(set) var paymentCards: [CD_PaymentCard]?
+    var paymentCards: [CD_PaymentCard]?
 
     private var hasLaunched = false
 
@@ -404,5 +411,23 @@ extension Wallet {
             localOrder = cards.compactMap { $0.id }
             walletDataSource = cards
         }
+    }
+}
+
+extension Wallet: WalletTestable {
+    func setMembershipPlansToNil() {
+        self.membershipPlans = nil
+    }
+    
+    func setMembershipCardsToNil() {
+        self.membershipCards = nil
+    }
+    
+    func updateMembershipPlans(membershipPlans: [CD_MembershipPlan]) {
+        self.membershipPlans = membershipPlans
+    }
+    
+    func updateMembershipCards(membershipCards: [CD_MembershipCard]) {
+        self.membershipCards = membershipCards
     }
 }

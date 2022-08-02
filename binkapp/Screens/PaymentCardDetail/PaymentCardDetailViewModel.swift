@@ -11,7 +11,7 @@ import Foundation
 class PaymentCardDetailViewModel {
     typealias EmptyCompletionBlock = () -> Void
 
-    private var paymentCard: CD_PaymentCard {
+    var paymentCard: CD_PaymentCard {
         didSet {
             buildInformationRows()
         }
@@ -241,7 +241,7 @@ class PaymentCardDetailViewModel {
     }
 
     // MARK: Information rows
-    private func buildInformationRows() {
+    func buildInformationRows() {
         informationRows = informationRowFactory.makePaymentInformationRows(for: paymentCardStatus)
     }
 
