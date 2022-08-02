@@ -16,15 +16,13 @@ class RecommendedVersionUtil {
         
         if let name = components.first {
             if let number = Int(name.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()) {
-                // Is above Iphone6 or above iPod 7th Gen?
-                let minimumVersionNumber = 7
-                if number > minimumVersionNumber {
-                    return true
-                }
+                // Is above Iphone6 or above iPod 6th Gen?
+                let unsupportedVersionNumber = 7
+                return number > unsupportedVersionNumber ? true : false
             }
         }
         
-        return false
+        return true
     }
     
     func promptRecommendedUpdateIfNecessary() {
