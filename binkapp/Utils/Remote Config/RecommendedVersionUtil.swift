@@ -11,7 +11,26 @@ import UIKit
 class RecommendedVersionUtil {
     private var canShowRecommendedUpdatePrompt = true
     
+    func doesDeviceMeetRequirements() -> Bool {
+        let components = UIDevice.current.modelName.components(separatedBy: ",")
+        
+        if let name = components.first {
+            if let number = Int(name.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()) {
+                // Is above Iphone6 or above iPod 7th Gen?
+                let minimumVersionNumber = 7
+                if number > minimumVersionNumber {
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
+    
     func promptRecommendedUpdateIfNecessary() {
+        ///  Don't show if the device is not iOS15 compatible
+        if !doesDeviceMeetRequirements() { return }
+        
         /// Don't show prompt if running UI tests
         if UIApplication.isRunningUITests { return }
         

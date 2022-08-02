@@ -29,6 +29,18 @@ extension UIDevice {
         }
     }
     
+    // RS - Will always return in the format, for example, iPhone12,3 or iPod7,1
+    var modelName: String {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        let machineMirror = Mirror(reflecting: systemInfo.machine)
+        let identifier = machineMirror.children.reduce("") { identifier, element in
+            guard let value = element.value as? Int8, value != 0 else { return identifier }
+            return identifier + String(UnicodeScalar(UInt8(value)))
+        }
+        return identifier
+    }
+    
     enum ScreenSize: String {
         case iPhone4Size = "iPhone 4 or iPhone 4S"
         case iPhone5Size = "iPhone 5, iPhone 5s, iPhone 5c"
