@@ -75,7 +75,7 @@ final class APIClient {
     var overrideVersion: APIVersion?
     #endif
     
-    var testResponeData: Decodable!
+    var testResponseData: Decodable!
 
     private let successStatusRange = 200...299
     private let noResponseStatus = 204
@@ -266,7 +266,7 @@ private extension APIClient {
             } else if successStatusRange.contains(statusCode) {
                 // Successful response
                 let decodedResponse = try decoder.decode(responseType, from: data)
-                testResponeData = decodedResponse
+                testResponseData = decodedResponse
                 completion?(.success(decodedResponse), networkResponseData)
                 return
             } else if clientErrorStatusRange.contains(statusCode) {

@@ -195,7 +195,7 @@ class PLLScreenViewModelTests: XCTestCase, CoreDataTestable {
     }
     
     func test_40_toggleLinkForMembershipCard_correctlyTogglesLinkage() {
-        Current.apiClient.testResponeData = nil
+        Current.apiClient.testResponseData = nil
         let mockedPaymentCard = try! JSONEncoder().encode(Self.basePaymentCardResponse)
         let endpoint = APIEndpoint.linkMembershipCardToPaymentCard(membershipCardId: Self.membershipCard.id, paymentCardId: Self.basePaymentCardResponse.id)
         let mock = Mock(url: URL(string: endpoint.urlString!)!, dataType: .json, statusCode: 200, data: [.delete: mockedPaymentCard])
@@ -205,11 +205,11 @@ class PLLScreenViewModelTests: XCTestCase, CoreDataTestable {
         Self.baseSut.toggleLinkForMembershipCards { success in }
         _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 10.0)
 
-        XCTAssertNotNil(Current.apiClient.testResponeData)
+        XCTAssertNotNil(Current.apiClient.testResponseData)
     }
     
     func test_41_toggleLinkForMembershipCard_correctlyTogglesLinkage() {
-        Current.apiClient.testResponeData = nil
+        Current.apiClient.testResponseData = nil
         let newPaymentCard = PaymentCardModel(apiId: 800, membershipCards: [], status: nil, card: nil, account: nil)
         let mockedPaymentCard = try! JSONEncoder().encode(Self.basePaymentCardResponse)
         let endpoint = APIEndpoint.linkMembershipCardToPaymentCard(membershipCardId: Self.membershipCard.id, paymentCardId: newPaymentCard.id)
@@ -221,7 +221,7 @@ class PLLScreenViewModelTests: XCTestCase, CoreDataTestable {
             Self.baseSut.toggleLinkForMembershipCards { _ in }
             _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 10.0)
 
-            XCTAssertNotNil(Current.apiClient.testResponeData)
+            XCTAssertNotNil(Current.apiClient.testResponseData)
             Self.baseSut.addCardToChangedCardsArray(card: newPaymentCard)
         }
     }
