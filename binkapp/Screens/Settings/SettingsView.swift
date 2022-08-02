@@ -23,6 +23,24 @@ struct SettingsView: View {
                 .listSectionSeparator(.hidden)
                 .listRowSeparator(.hidden)
             }
+            
+            Spacer()
+                .frame(height: 40)
+                .listSectionSeparator(.hidden)
+            
+            HStack {
+                Spacer()
+                VStack(alignment: .center) {
+                    Text(Current.userManager.currentEmailAddress ?? "SeanWilliams@gmail.com") /// Remove test strng <<<<<<<<<<<<<<<<<<<<<<<<<
+                        .font(.custom(UIFont.navbarHeaderLine2.fontName, size: UIFont.navbarHeaderLine2.pointSize))
+                        .foregroundColor(Color(UIColor.systemGray))
+                    Text("Bink v\(Bundle.shortVersionNumber ?? "") \(Bundle.bundleVersion ?? "")")
+                        .font(.custom(UIFont.navbarHeaderLine2.fontName, size: UIFont.navbarHeaderLine2.pointSize))
+                        .foregroundColor(Color(UIColor.systemGray))
+                }
+                Spacer()
+            }
+            .listSectionSeparator(.hidden)
         }
         .listStyle(.plain)
         .navigationBarTitle("Settings")
