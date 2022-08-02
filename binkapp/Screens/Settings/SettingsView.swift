@@ -15,22 +15,31 @@ struct SettingsView: View {
         List {
             ForEach(0...(viewModel.sectionsCount - 1), id: \.self) { index in
                 let section = viewModel.sections[index]
-                Section(header:
-                            Text(section.title)
-                    .font(.custom(UIFont.headline.fontName, size: UIFont.headline.pointSize))
-                    .foregroundColor(Color(Current.themeManager.color(for: .text)))
-                ) {
+                Section(header: SettingsHeaderView(title: section.title)) {
                     ForEach(section.rows) { row in
                         SettingsRowView(rowData: row)
                     }
                 }
+                .listSectionSeparator(.hidden)
             }
         }
         .listStyle(.plain)
-//        .listSectionSeparator(.hidden)
+        .listSectionSeparator(.hidden)
+        .listSectionSeparatorTint(.red)
         .navigationBarTitle("Settings")
     }
 }
+
+struct SettingsHeaderView: View {
+    var title: String
+
+    var body: some View {
+        Text(title)
+            .font(.custom(UIFont.headline.fontName, size: UIFont.headline.pointSize))
+            .foregroundColor(Color(Current.themeManager.color(for: .text)))
+    }
+}
+
 
 struct SettingsRowView: View {
     var rowData: SettingsRow

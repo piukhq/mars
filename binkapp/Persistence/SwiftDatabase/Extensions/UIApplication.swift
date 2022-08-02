@@ -18,7 +18,7 @@ public extension UIApplication {
     }
     
     static let bottomSafeArea: CGFloat = {
-        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+        let window = UIApplication.shared.connectedScenes.flatMap { ($0 as? UIWindowScene)?.windows ?? [] }.first { $0.isKeyWindow }
         return window?.safeAreaInsets.bottom ?? 0
     }()
 }
