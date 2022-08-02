@@ -21,11 +21,10 @@ struct SettingsView: View {
                     }
                 }
                 .listSectionSeparator(.hidden)
+                .listRowSeparator(.hidden)
             }
         }
         .listStyle(.plain)
-        .listSectionSeparator(.hidden)
-        .listSectionSeparatorTint(.red)
         .navigationBarTitle("Settings")
     }
 }
@@ -45,15 +44,27 @@ struct SettingsRowView: View {
     var rowData: SettingsRow
 
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(rowData.title)
-                .font(.custom(UIFont.subtitle.fontName, size: UIFont.subtitle.pointSize))
-            if let subtitle = rowData.subtitle {
-                Text(subtitle)
-                    .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
+        VStack {
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(rowData.title)
+                        .font(.custom(UIFont.subtitle.fontName, size: UIFont.subtitle.pointSize))
+                    if let subtitle = rowData.subtitle {
+                        Text(subtitle)
+                            .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
+                    }
+                }
+                .frame(height: 70)
+                
+                Spacer()
+                
+                Image(uiImage: Asset.iconsChevronRight.image)
             }
+            
+            Rectangle()
+                .frame(height: 1)
+                .foregroundColor(Color(Current.themeManager.color(for: .divider)))
         }
-        .frame(height: 70)
     }
 }
 
