@@ -188,7 +188,6 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
         }
         
         configureGestureRecognizer(direction: .up)
-        configureGestureRecognizer(direction: .down)
         configureGestureRecognizer(direction: .left)
         configureGestureRecognizer(direction: .right)
     }
@@ -260,7 +259,7 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
         timer?.invalidate()
 
         switch gesture.direction {
-        case .down, .up:
+        case .up:
             hide()
         case .left, .right:
             hideSideways(direction: gesture.direction)
