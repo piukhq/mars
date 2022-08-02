@@ -567,7 +567,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         let mock = Mock(url: URL(string: endpoint.urlString!)!, dataType: .json, statusCode: 200, data: [.get: mockedPaymentCard])
         mock.register()
         Self.baseSut.refreshPaymentCard {
-            if let paymentCardResponse = Current.apiClient.testResponeData as? Safe<PaymentCardModel> {
+            if let paymentCardResponse = Current.apiClient.testResponseData as? Safe<PaymentCardModel> {
                 XCTAssertEqual(paymentCardResponse.value?.id, Self.baseSut.paymentCard.id)
             } else {
                 XCTFail("Failed to cast payment card response")
