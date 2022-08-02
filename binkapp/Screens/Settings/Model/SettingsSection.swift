@@ -8,12 +8,13 @@
 
 import UIKit
 
-struct SettingsSection {
+struct SettingsSection: Identifiable {
+    var id = UUID()
     let title: String
     var rows: [SettingsRow]
 }
 
-struct SettingsRow {
+struct SettingsRow: Identifiable {
     typealias VoidClosure = () -> Void
     
     enum RowType: String {
@@ -99,6 +100,7 @@ struct SettingsRow {
         return type.title
     }
     
+    let id = UUID()
     let subtitle: String?
     let action: RowAction
     let actionRequired: Bool

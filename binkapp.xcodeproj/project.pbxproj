@@ -288,6 +288,7 @@
 		CE02D51F27293F14008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D51D27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift */; };
 		CE02D52027293F14008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D51D27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift */; };
 		CE02D52727298807008B9BFA /* WatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE02D52627298806008B9BFA /* WatchController.swift */; };
+		CE05229528993791001D8B52 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05229428993791001D8B52 /* SettingsView.swift */; };
 		CE07917A25ADB4A4009FE8BA /* LoyaltyWalletAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07917925ADB4A3009FE8BA /* LoyaltyWalletAnimator.swift */; };
 		CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */; };
 		CE0C24792678EDE500CB7150 /* WhoWeAreSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */; };
@@ -967,6 +968,7 @@
 		CE02D51D27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+BinkApp+WidgetApp+WatchApp.swift"; sourceTree = "<group>"; };
 		CE02D52227294A95008B9BFA /* Font+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 		CE02D52627298806008B9BFA /* WatchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchController.swift; sourceTree = "<group>"; };
+		CE05229428993791001D8B52 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		CE07917925ADB4A3009FE8BA /* LoyaltyWalletAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletAnimator.swift; sourceTree = "<group>"; };
 		CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardDetailViewModelTests.swift; sourceTree = "<group>"; };
 		CE0AE2DD2542DB81000CDB86 /* binkapp - 23-10-20 - Card secondary colour.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 23-10-20 - Card secondary colour.xcdatamodel"; sourceTree = "<group>"; };
@@ -2304,6 +2306,7 @@
 				3C9B1A1F23854B820078A1EC /* Preferences */,
 				BD99D2E02354943900823FC4 /* View */,
 				BD99D2D7234FDF2C00823FC4 /* SettingsViewController.swift */,
+				CE05229428993791001D8B52 /* SettingsView.swift */,
 				BD99D2D9234FDF6F00823FC4 /* SettingsViewModel.swift */,
 				BD99D2DB235091AA00823FC4 /* SettingsFactory.swift */,
 				BD99D2DD2350E3EA00823FC4 /* Model */,
@@ -3912,6 +3915,7 @@
 				EFA5F7242379A7C70027AB80 /* _CD_RegistrationField.swift in Sources */,
 				EFA5F73C2379A7C70027AB80 /* CD_PaymentCardCard.swift in Sources */,
 				70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */,
+				CE05229528993791001D8B52 /* SettingsView.swift in Sources */,
 				CEFAB4EB279AC10B00D061A9 /* BarcodeViewNoBarcode.swift in Sources */,
 				EFA5F71F2379A7C70027AB80 /* _CD_MembershipCardBalance.swift in Sources */,
 				EFA5F7142379A7C70027AB80 /* _CD_AuthoriseField.swift in Sources */,
