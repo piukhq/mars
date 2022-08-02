@@ -53,6 +53,12 @@ final class ImageService {
     fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy, userInterfaceStyle: UIUserInterfaceStyle? = nil, completion: @escaping ImageCompletionHandler) {
         guard let imagePath = path(forType: pathType, userInterfaceStyle: userInterfaceStyle) else { return completion(nil, false) }
 
+        //debug feature
+        if Current.userDefaults.bool(forDefaultsKey: .alwaysDownloadImages) {
+            downloadImage(forPath: imagePath, withPolicy: policy, completion: completion)
+            return
+        }
+        
         // Are we forcing a refresh?
         if !forceRefresh {
             // Is the image in memory?

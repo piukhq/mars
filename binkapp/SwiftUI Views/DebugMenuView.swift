@@ -28,6 +28,7 @@ struct DebugMenuView: View {
                 ToggleDebugRow(title: "Response code visualiser", defaultsKey: .responseCodeVisualiser)
                 ToggleDebugRow(title: "Apply in-app review rules", defaultsKey: .applyInAppReviewRules)
                 ToggleDebugRow(title: "Enable analytics", defaultsKey: .analyticsDebugMode)
+                ToggleDebugRow(title: "Always download images", defaultsKey: .alwaysDownloadImages)
                 
                 if hasUser {
                     ToggleDebugRow(title: "LPC debug mode", defaultsKey: .lpcDebugMode)
