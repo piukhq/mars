@@ -89,35 +89,79 @@ struct SettingsRowView: View {
     var showSeparator: Bool
 
     var body: some View {
-        VStack {
-            HStack {
-                VStack(alignment: .leading) {
-                    Text(rowData.title)
-                        .font(.custom(UIFont.subtitle.fontName, size: UIFont.subtitle.pointSize))
-                    if let subtitle = rowData.subtitle {
-                        Text(subtitle)
-                            .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
-                            .foregroundColor(Color(Current.themeManager.color(for: .text)))
-                    }
+        Button {
+            switch rowData.action {
+            case .customAction(let action):
+                action()
+            case .pushToSwiftUIView(swiftUIView: let swiftUIView):
+                switch swiftUIView {
+                case .whoWeAre:
+                    let hostingViewController = UIHostingController(rootView: WhoWeAreSwiftUIView())
+                    let navigationRequest = PushNavigationRequest(viewController: hostingViewController)
+                    Current.navigate.to(navigationRequest)
+                case .featureFlags:
+//                    let viewController = UIHostingController(rootView: FeatureFlagsSwiftUIView(delegate: self))
+//                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+//                    Current.navigate.to(navigationRequest)
+                    break
+                case .debug:
+                    let viewController = ViewControllerFactory.makeDebugViewController()
+                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
                 }
-                .frame(height: Constants.rowHeight)
-                
-                Spacer()
-                
-                if rowData.actionRequired {
-                    Circle()
-                        .frame(width: Constants.actionRequiredIndicatorHeight, height: Constants.actionRequiredIndicatorHeight, alignment: .center)
-                        .foregroundColor(Color(uiColor: .systemRed))
-                        .padding(.trailing, Constants.padding)
-                }
-                
-                Image(uiImage: Asset.iconsChevronRight.image)
+//            case .pushToReusable(screen: let screen):
+//                <#code#>
+            case .logout:
+                let alert = BinkAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .alert)
+                alert.addAction(
+                    UIAlertAction(title: "Log out", style: .default, handler: { _ in
+                        NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                    })
+                )
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
+//            case .launchSupport(service: let service):
+//                <#code#>
+            case .delete:
+                break
+//                viewModel.handleRowActionForAccountDeletion(loadingCompleteViewController: self)
+            default:
+                break
             }
-            
-            if showSeparator {
-                Rectangle()
-                    .frame(height: Constants.separatorHeight)
-                    .foregroundColor(Color(Current.themeManager.color(for: .divider)))
+        } label: {
+            VStack {
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(rowData.title)
+                            .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                            .font(.custom(UIFont.subtitle.fontName, size: UIFont.subtitle.pointSize))
+                        if let subtitle = rowData.subtitle {
+                            Text(subtitle)
+                                .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
+                                .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                        }
+                    }
+                    .frame(height: Constants.rowHeight)
+                    
+                    Spacer()
+                    
+                    if rowData.actionRequired {
+                        Circle()
+                            .frame(width: Constants.actionRequiredIndicatorHeight, height: Constants.actionRequiredIndicatorHeight, alignment: .center)
+                            .foregroundColor(Color(uiColor: .systemRed))
+                            .padding(.trailing, Constants.padding)
+                    }
+                    
+                    Image(uiImage: Asset.iconsChevronRight.image)
+                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                }
+                
+                if showSeparator {
+                    Rectangle()
+                        .frame(height: Constants.separatorHeight)
+                        .foregroundColor(Color(Current.themeManager.color(for: .divider)))
+                }
             }
         }
     }

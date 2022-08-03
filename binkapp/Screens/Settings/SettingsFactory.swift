@@ -25,7 +25,7 @@ struct SettingsFactory {
                 SettingsRow(
                     type: .debug,
                     subtitle: L10n.settingsSectionDebugSubtitle,
-                    action: .pushToViewController(viewController: DebugMenuTableViewController.self),
+                    action: .pushToSwiftUIView(swiftUIView: .debug),
                     actionRequired: rowsWithActionRequired?.contains(.debug) ?? false
                 )
             ])

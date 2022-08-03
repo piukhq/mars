@@ -96,6 +96,7 @@ struct SettingsRow: Identifiable, Equatable {
     enum SwiftUIView {
         case whoWeAre
         case featureFlags
+        case debug
     }
     
     let type: RowType

@@ -191,6 +191,8 @@ extension SettingsViewController: UITableViewDelegate {
                     let viewController = UIHostingController(rootView: FeatureFlagsSwiftUIView(delegate: self))
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
+                case .debug:
+                    break
                 }
             case .pushToReusable(let screen):
                 switch screen {
