@@ -14,7 +14,11 @@ struct SettingsSection: Identifiable {
     var rows: [SettingsRow]
 }
 
-struct SettingsRow: Identifiable {
+struct SettingsRow: Identifiable, Equatable {
+    static func == (lhs: SettingsRow, rhs: SettingsRow) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     typealias VoidClosure = () -> Void
     
     enum RowType: String {

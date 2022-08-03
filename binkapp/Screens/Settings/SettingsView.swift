@@ -17,7 +17,7 @@ struct SettingsView: View {
                 let section = viewModel.sections[index]
                 Section(header: SettingsHeaderView(title: section.title)) {
                     ForEach(section.rows) { row in
-                        SettingsRowView(rowData: row)
+                        SettingsRowView(rowData: row, showSeparator: viewModel.shouldShowSeparator(section: section, row: row))
                     }
                 }
                 .listSectionSeparator(.hidden)
@@ -60,6 +60,7 @@ struct SettingsHeaderView: View {
 
 struct SettingsRowView: View {
     var rowData: SettingsRow
+    var showSeparator: Bool
 
     var body: some View {
         VStack {
@@ -79,9 +80,11 @@ struct SettingsRowView: View {
                 Image(uiImage: Asset.iconsChevronRight.image)
             }
             
-            Rectangle()
-                .frame(height: 1)
-                .foregroundColor(Color(Current.themeManager.color(for: .divider)))
+            if showSeparator {
+                Rectangle()
+                    .frame(height: 1)
+                    .foregroundColor(Color(Current.themeManager.color(for: .divider)))
+            }
         }
     }
 }

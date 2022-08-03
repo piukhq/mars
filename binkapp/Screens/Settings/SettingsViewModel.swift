@@ -54,6 +54,13 @@ class SettingsViewModel: UserServiceProtocol {
         Current.navigate.to(navigationRequest)
     }
     
+    func shouldShowSeparator(section: SettingsSection, row: SettingsRow) -> Bool {
+        if let rowIndex = section.rows.firstIndex(of: row) {
+            return (rowIndex + 1) < section.rows.count
+        }
+        return false
+    }
+    
     func handleRowActionForAccountDeletion(loadingCompleteViewController: UIViewController) {
         let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: L10n.settingsDeleteAccountActionTitle, message: L10n.settingsDeleteAccountActionSubtitle, okActionTitle: L10n.deleteActionTitle, cancelButton: true) {
             let navigationRequest = ModalNavigationRequest(viewController: LoadingScreen(), fullScreen: true, embedInNavigationController: false, animated: false, transition: .crossDissolve, dragToDismiss: false, hideCloseButton: true)
