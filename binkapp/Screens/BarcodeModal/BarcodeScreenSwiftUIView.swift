@@ -35,6 +35,8 @@ struct BarcodeScreenSwiftUIView: View {
     @ObservedObject var viewModel: BarcodeViewModel
     @Environment(\.colorScheme) var colorScheme
     
+    @State var alwaysShowBarcode = false
+    
     init(viewModel: BarcodeViewModel) {
         self.viewModel = viewModel
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = Current.themeManager.color(for: .text)
@@ -45,7 +47,7 @@ struct BarcodeScreenSwiftUIView: View {
             ScrollView {
                 VStack {
                     /// Barcode image
-                    BarcodeImageView(viewModel: viewModel)
+                    BarcodeImageView(viewModel: viewModel, alwaysShowBarCode: alwaysShowBarcode)
                     
                     /// Description label
                     TextStackView(text: viewModel.descriptionText, font: .custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
@@ -60,8 +62,52 @@ struct BarcodeScreenSwiftUIView: View {
                     /// Barcode number
                     if viewModel.shouldShowbarcodeNumber {
                         TextStackView(text: L10n.barcodeTitle, font: .custom(UIFont.headline.fontName, size: Constants.titleFontSize))
-                        HighVisibilityLabelView(text: viewModel.barcodeNumber)
+                         HighVisibilityLabelView(text: viewModel.barcodeNumber)
                             .frame(height: viewModel.heightForHighVisView(text: viewModel.barcodeNumber))
+                    }
+                    
+                    if !viewModel.isBarcodeAvailable {
+                        if !alwaysShowBarcode {
+                            Spacer(minLength: 40)
+                            /// show always
+                            Button(action: {
+                                alwaysShowBarcode.toggle()
+                            }) {
+                                VStack {
+                                    HStack {
+                                        Text(L10n.showBarcodeTitle)
+                                            .foregroundColor(.white)
+                                            .font(.nunitoBold(22))
+      
+                                        Spacer()
+                                        
+                                        Image(systemName: "barcode")
+                                            .foregroundColor(.white)
+                                            .font(.title)
+                                    }
+                                    .padding()
+                                    .padding(.bottom, -10)
+                                  
+                                    HStack {
+                                        Text(L10n.showBarcodeBody)
+                                            .padding()
+                                            .padding(.top, -26)
+                                            .foregroundColor(.white)
+                                            .lineLimit(5)
+                                            .minimumScaleFactor(0.5)
+                                            .multilineTextAlignment(.leading)
+                                            .font(.nunitoSans(12))
+                                    }
+                                }
+                            }
+                            .background(
+                                ZStack {
+                                    Color(Current.themeManager.color(for: .viewBackground))
+                                    LinearGradient(gradient: Gradient(colors: [Color(.binkGradientBlueRight), Color(.binkGradientBlueLeft)]), startPoint: .leading, endPoint: .trailing)
+                                        .opacity(1)
+                                })
+                            .cornerRadius(20)
+                        }
                     }
                 }
                 .padding(.horizontal, Constants.horizontalInset)
@@ -99,9 +145,10 @@ struct BarcodeScreenSwiftUIView: View {
     
     struct BarcodeImageView: View {
         @ObservedObject var viewModel: BarcodeViewModel
+        var alwaysShowBarCode: Bool
         
         var body: some View {
-            if let barcodeImage = viewModel.barcodeImage(withSize: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)) {
+            if let barcodeImage = viewModel.barcodeImage(withSize: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width), alwaysShowBarCode: alwaysShowBarCode) {
                 Image(uiImage: barcodeImage)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -141,7 +188,6 @@ struct BarcodeScreenSwiftUIView_Previews: PreviewProvider {
         BarcodeScreenSwiftUIView(viewModel: BarcodeViewModel(membershipCard: CD_MembershipCard()))
     }
 }
-
 
 enum BarcodeScreenIssue: String {
     case membershipNumberIncorrect = "Membership number incorrect"

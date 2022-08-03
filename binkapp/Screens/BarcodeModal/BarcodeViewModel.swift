@@ -79,7 +79,7 @@ class BarcodeViewModel: ObservableObject {
     lazy var reportIssueButton: BinkButtonSwiftUIView = {
         return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.barcodeReportIssueButtonTitle), enabled: true, buttonTapped: { [weak self] in
             self?.showingReportIssueOptions = true
-        }, type: .gradient)
+        }, type: .plain)
     }()
 
     
@@ -159,8 +159,8 @@ class BarcodeViewModel: ObservableObject {
     
     // MARK: - Functions
 
-    func barcodeImage(withSize size: CGSize, drawInContainer: Bool = true) -> UIImage? {
-        guard let barcodeString = membershipCard.card?.barcode else { return nil }
+    func barcodeImage(withSize size: CGSize, drawInContainer: Bool = true, alwaysShowBarCode: Bool = false) -> UIImage? {
+        guard let barcodeString = !alwaysShowBarCode ? membershipCard.card?.barcode : self.cardNumber else { return nil }
         
         let writer = ZXMultiFormatWriter()
         let encodeHints = ZXEncodeHints()
