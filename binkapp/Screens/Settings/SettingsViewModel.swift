@@ -61,7 +61,7 @@ class SettingsViewModel: UserServiceProtocol {
         return false
     }
     
-    func handleRowActionForAccountDeletion(loadingCompleteViewController: UIViewController) {
+    func handleRowActionForAccountDeletion() {
         let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: L10n.settingsDeleteAccountActionTitle, message: L10n.settingsDeleteAccountActionSubtitle, okActionTitle: L10n.deleteActionTitle, cancelButton: true) {
             let navigationRequest = ModalNavigationRequest(viewController: LoadingScreen(), fullScreen: true, embedInNavigationController: false, animated: false, transition: .crossDissolve, dragToDismiss: false, hideCloseButton: true)
             Current.navigate.to(navigationRequest)

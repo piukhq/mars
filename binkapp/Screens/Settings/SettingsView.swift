@@ -87,6 +87,12 @@ struct SettingsRowView: View {
     
     var rowData: SettingsRow
     var showSeparator: Bool
+    
+    func navigate<Content: View>(to view: Content) {
+        let hostingViewController = UIHostingController(rootView: view)
+        let navigationRequest = PushNavigationRequest(viewController: hostingViewController)
+        Current.navigate.to(navigationRequest)
+    }
 
     var body: some View {
         Button {
@@ -96,18 +102,11 @@ struct SettingsRowView: View {
             case .pushToSwiftUIView(swiftUIView: let swiftUIView):
                 switch swiftUIView {
                 case .whoWeAre:
-                    let hostingViewController = UIHostingController(rootView: WhoWeAreSwiftUIView())
-                    let navigationRequest = PushNavigationRequest(viewController: hostingViewController)
-                    Current.navigate.to(navigationRequest)
+                    navigate(to: WhoWeAreSwiftUIView())
                 case .featureFlags:
-//                    let viewController = UIHostingController(rootView: FeatureFlagsSwiftUIView(delegate: self))
-//                    let navigationRequest = PushNavigationRequest(viewController: viewController)
-//                    Current.navigate.to(navigationRequest)
-                    break
+                    navigate(to: FeatureFlagsSwiftUIView()) /// <<<<<<<<<<< Do we need delegate to refresh settings list after feature flags have updated
                 case .debug:
-                    let viewController = ViewControllerFactory.makeDebugViewController()
-                    let navigationRequest = PushNavigationRequest(viewController: viewController)
-                    Current.navigate.to(navigationRequest)
+                    navigate(to: DebugMenuView())
                 }
 //            case .pushToReusable(screen: let screen):
 //                <#code#>
@@ -121,11 +120,16 @@ struct SettingsRowView: View {
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
                 let navigationRequest = AlertNavigationRequest(alertController: alert)
                 Current.navigate.to(navigationRequest)
-//            case .launchSupport(service: let service):
-//                <#code#>
+            case .launchSupport(service: let service):
+                switch service {
+                case .faq:
+                    BinkSupportUtility.launchFAQs()
+                case .contactUs:
+                    BinkSupportUtility.launchContactSupport()
+                }
             case .delete:
                 break
-//                viewModel.handleRowActionForAccountDeletion(loadingCompleteViewController: self)
+//                viewModel.handleRowActionForAccountDeletion()
             default:
                 break
             }
