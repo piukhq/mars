@@ -9,6 +9,11 @@
 import SwiftUI
 
 struct SettingsView: View {
+    private enum Constants {
+        static let padding: CGFloat = 25.0
+        static let footerPadding: CGFloat = 40.0
+    }
+    
     let viewModel: SettingsViewModel
     
     var body: some View {
@@ -26,12 +31,12 @@ struct SettingsView: View {
                     
                     Spacer()
                         .background(Color.red)
-                        .frame(height: 40)
+                        .frame(height: Constants.footerPadding)
                         .foregroundColor(.purple)
                 }
                 
                 Spacer()
-                    .frame(height: 25)
+                    .frame(height: Constants.padding)
                     .listSectionSeparator(.hidden)
                 
                 HStack {
@@ -48,10 +53,11 @@ struct SettingsView: View {
                 }
                 .listSectionSeparator(.hidden)
             }
-            .padding(.horizontal, 25)
-            .padding(.top, 25)
+            .padding(.horizontal, Constants.padding)
+            .padding(.top, Constants.padding)
         }
         .navigationTitle("Settings")
+        .background(Color(Current.themeManager.color(for: .viewBackground)))
     }
 }
 
@@ -62,8 +68,8 @@ struct SettingsHeaderView: View {
         HStack {
             Text(title)
                 .font(.custom(UIFont.headline.fontName, size: UIFont.headline.pointSize))
-                .foregroundColor(Color(Current.themeManager.color(for: .text)))
-            
+                .foregroundColor(Color(UIColor.binkBlueTitleText))
+
             Spacer()
         }
         .frame(height: 30)
@@ -72,6 +78,13 @@ struct SettingsHeaderView: View {
 
 
 struct SettingsRowView: View {
+    private enum Constants {
+        static let rowHeight: CGFloat = 70
+        static let separatorHeight: CGFloat = 1.0
+        static let actionRequiredIndicatorHeight: CGFloat = 10
+        static let padding: CGFloat = 20.0
+    }
+    
     var rowData: SettingsRow
     var showSeparator: Bool
 
@@ -84,18 +97,26 @@ struct SettingsRowView: View {
                     if let subtitle = rowData.subtitle {
                         Text(subtitle)
                             .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
+                            .foregroundColor(Color(Current.themeManager.color(for: .text)))
                     }
                 }
-                .frame(height: 70)
+                .frame(height: Constants.rowHeight)
                 
                 Spacer()
+                
+                if rowData.actionRequired {
+                    Circle()
+                        .frame(width: Constants.actionRequiredIndicatorHeight, height: Constants.actionRequiredIndicatorHeight, alignment: .center)
+                        .foregroundColor(Color(uiColor: .systemRed))
+                        .padding(.trailing, Constants.padding)
+                }
                 
                 Image(uiImage: Asset.iconsChevronRight.image)
             }
             
             if showSeparator {
                 Rectangle()
-                    .frame(height: 1)
+                    .frame(height: Constants.separatorHeight)
                     .foregroundColor(Color(Current.themeManager.color(for: .divider)))
             }
         }
