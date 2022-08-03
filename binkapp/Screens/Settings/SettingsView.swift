@@ -12,38 +12,46 @@ struct SettingsView: View {
     let viewModel: SettingsViewModel
     
     var body: some View {
-        List {
-            ForEach(0...(viewModel.sectionsCount - 1), id: \.self) { index in
-                let section = viewModel.sections[index]
-                Section(header: SettingsHeaderView(title: section.title)) {
-                    ForEach(section.rows) { row in
-                        SettingsRowView(rowData: row, showSeparator: viewModel.shouldShowSeparator(section: section, row: row))
+        ScrollView {
+            VStack {
+                ForEach(0...(viewModel.sectionsCount - 1), id: \.self) { index in
+                    let section = viewModel.sections[index]
+                    Section(header: SettingsHeaderView(title: section.title)) {
+                        ForEach(section.rows) { row in
+                            SettingsRowView(rowData: row, showSeparator: viewModel.shouldShowSeparator(section: section, row: row))
+                        }
                     }
+                    .listSectionSeparator(.hidden)
+                    .listRowSeparator(.hidden)
+                    
+                    Spacer()
+                        .background(Color.red)
+                        .frame(height: 40)
+                        .foregroundColor(.purple)
+                }
+                
+                Spacer()
+                    .frame(height: 25)
+                    .listSectionSeparator(.hidden)
+                
+                HStack {
+                    Spacer()
+                    VStack(alignment: .center) {
+                        Text(Current.userManager.currentEmailAddress ?? "@gmail.com") /// Remove test strng <<<<<<<<<<<<<<<<<<<<<<<<<
+                            .font(.custom(UIFont.navbarHeaderLine2.fontName, size: UIFont.navbarHeaderLine2.pointSize))
+                            .foregroundColor(Color(UIColor.systemGray))
+                        Text("Bink v\(Bundle.shortVersionNumber ?? "") \(Bundle.bundleVersion ?? "")")
+                            .font(.custom(UIFont.navbarHeaderLine2.fontName, size: UIFont.navbarHeaderLine2.pointSize))
+                            .foregroundColor(Color(UIColor.systemGray))
+                    }
+                    Spacer()
                 }
                 .listSectionSeparator(.hidden)
-                .listRowSeparator(.hidden)
             }
-            
-            Spacer()
-                .frame(height: 40)
-                .listSectionSeparator(.hidden)
-            
-            HStack {
-                Spacer()
-                VStack(alignment: .center) {
-                    Text(Current.userManager.currentEmailAddress ?? "SeanWilliams@gmail.com") /// Remove test strng <<<<<<<<<<<<<<<<<<<<<<<<<
-                        .font(.custom(UIFont.navbarHeaderLine2.fontName, size: UIFont.navbarHeaderLine2.pointSize))
-                        .foregroundColor(Color(UIColor.systemGray))
-                    Text("Bink v\(Bundle.shortVersionNumber ?? "") \(Bundle.bundleVersion ?? "")")
-                        .font(.custom(UIFont.navbarHeaderLine2.fontName, size: UIFont.navbarHeaderLine2.pointSize))
-                        .foregroundColor(Color(UIColor.systemGray))
-                }
-                Spacer()
-            }
-            .listSectionSeparator(.hidden)
+            .padding(.horizontal, 25)
+            .padding(.top, 25)
         }
-        .listStyle(.plain)
-        .navigationBarTitle("Settings")
+        .navigationTitle("Settings")
     }
 }
 
@@ -51,9 +59,14 @@ struct SettingsHeaderView: View {
     var title: String
 
     var body: some View {
-        Text(title)
-            .font(.custom(UIFont.headline.fontName, size: UIFont.headline.pointSize))
-            .foregroundColor(Color(Current.themeManager.color(for: .text)))
+        HStack {
+            Text(title)
+                .font(.custom(UIFont.headline.fontName, size: UIFont.headline.pointSize))
+                .foregroundColor(Color(Current.themeManager.color(for: .text)))
+            
+            Spacer()
+        }
+        .frame(height: 30)
     }
 }
 
