@@ -29,26 +29,26 @@ class MessageViewTests: XCTestCase {
     func test_hideOffset_returnsCorrectValue() {
         MessageView.show("", type: .snackbar(.short))
         getKeyWindow()
-        XCTAssertEqual(sut.type.hideOffset, window.bounds.height + 100)
+        XCTAssertEqual(sut.getType().hideOffset, window.bounds.height + 100)
         
         sut.removeFromSuperview()
         
         MessageView.show("", type: .responseCodeVisualizer(.success))
         getKeyWindow()
-        XCTAssertEqual(sut.type.hideOffset, -50)
+        XCTAssertEqual(sut.getType().hideOffset, -50)
         sut.removeFromSuperview()
     }
     
     func test_textColor_returnsCorrectColor() {
-        MessageView.show("", type: .snackbar(.short), button: MessageView.MessageButton(title: "", type: .success, action: {}))
+        MessageView.show("", type: .snackbar(.short), button: MessageButton(title: "", type: .success, action: {}))
         getKeyWindow()
-        XCTAssertEqual(sut.messageButton?.textColor, .greenOk)
+        XCTAssertEqual(sut.getMessageButton()?.textColor, .greenOk)
         
         sut.removeFromSuperview()
         
-        MessageView.show("", type: .snackbar(.short), button: MessageView.MessageButton(title: "", type: .error, action: {}))
+        MessageView.show("", type: .snackbar(.short), button: MessageButton(title: "", type: .error, action: {}))
         getKeyWindow()
-        XCTAssertEqual(sut.messageButton?.textColor, .binkDynamicRed)
+        XCTAssertEqual(sut.getMessageButton()?.textColor, .binkDynamicRed)
         sut.removeFromSuperview()
     }
     

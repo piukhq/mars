@@ -15,96 +15,12 @@ enum ResponseCodeVisualizer {
     case info
 }
 
+protocol MessageViewTestable {
+    func getType() -> MessageType
+    func getMessageButton() -> MessageButton?
+}
+
 class MessageView: UIView, UIGestureRecognizerDelegate {
-    enum Constants {
-        enum Snackbar {
-            static let showOffset: CGFloat = UIScreen.main.bounds.height - 100
-            static let hideOffset: CGFloat = UIScreen.main.bounds.height + 100
-        }
-        
-        enum ResponseCodeVisualizer {
-            static let showOffset: CGFloat = 50
-            static let hideOffset: CGFloat = -50
-        }
-
-        static let timeIntervalShort: CGFloat = 1.5
-        static let timeIntervalLong: CGFloat = 2.75
-        static let buttonWidth: CGFloat = 60
-        static let stackviewSpacing: CGFloat = 15
-        static let stackviewPadding: CGFloat = 20
-        static let xPosition: CGFloat = 25
-        static let height: CGFloat = 70
-        static let cornerRadius: CGFloat = 15
-        static let hideLeftOffset: CGFloat = -500
-        static let hideRightOffset: CGFloat = 500
-    }
-    enum MessageType: Equatable {
-        enum Length {
-            case short
-            case long
-        }
-        
-        case snackbar(Length)
-        case responseCodeVisualizer(ResponseCodeVisualizer)
-
-        var showOffset: CGFloat {
-            switch self {
-            case .snackbar:
-                return Constants.Snackbar.showOffset
-            case .responseCodeVisualizer:
-                return Constants.ResponseCodeVisualizer.showOffset
-            }
-        }
-        
-        var hideOffset: CGFloat {
-            switch self {
-            case .snackbar:
-                return Constants.Snackbar.hideOffset
-            case .responseCodeVisualizer:
-                return Constants.ResponseCodeVisualizer.hideOffset
-            }
-        }
-        
-        var timeInterval: Double {
-            switch self {
-            case .snackbar(let snackbarType):
-                switch snackbarType {
-                case .short:
-                    return Constants.timeIntervalShort
-                case .long:
-                    return Constants.timeIntervalLong
-                }
-            case .responseCodeVisualizer:
-                return Constants.timeIntervalLong
-            }
-        }
-    }
-    
-    struct MessageButton {
-        enum ButtonType {
-            case success
-            case error
-        }
-        
-        let title: String
-        let type: ButtonType
-        let action: EmptyCompletionBlock
-        
-        var textColor: UIColor {
-            switch type {
-            case .success:
-                return .greenOk
-            case .error:
-                return .binkDynamicRed
-            }
-        }
-    }
-    
-    private var timer: Timer?
-    private let message: String
-    let type: MessageType
-    let messageButton: MessageButton?
-    
     private lazy var textLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
@@ -123,20 +39,24 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
         button.titleLabel?.font = .buttonText
         button.titleLabel?.numberOfLines = 2
         button.titleLabel?.adjustsFontSizeToFitWidth = true
-        button.widthAnchor.constraint(equalToConstant: Constants.buttonWidth).isActive = true
+        button.widthAnchor.constraint(equalToConstant: MessageViewConstants.buttonWidth).isActive = true
         button.addTarget(self, action: #selector(performAction), for: .touchUpInside)
         return button
     }()
     
     private lazy var stackview: UIStackView = {
         let stackview = UIStackView(arrangedSubviews: [textLabel])
-        stackview.frame = CGRect(x: self.bounds.origin.x + Constants.stackviewPadding, y: self.bounds.origin.y, width: self.bounds.width - (Constants.stackviewPadding * 2), height: self.bounds.height)
+        stackview.frame = CGRect(x: self.bounds.origin.x + MessageViewConstants.stackviewPadding, y: self.bounds.origin.y, width: self.bounds.width - (MessageViewConstants.stackviewPadding * 2), height: self.bounds.height)
         stackview.axis = .horizontal
         stackview.distribution = .fill
-        stackview.spacing = Constants.stackviewSpacing
+        stackview.spacing = MessageViewConstants.stackviewSpacing
         return stackview
     }()
     
+    private var timer: Timer?
+    private let message: String
+    private let type: MessageType
+    private let messageButton: MessageButton?
     
     init(message: String, type: MessageType, window: UIWindow, button: MessageButton? = nil) {
         self.message = message
@@ -146,10 +66,11 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
         var originFrame: CGRect
         switch type {
         case .snackbar:
-            originFrame = CGRect(x: Constants.xPosition, y: window.bounds.height, width: window.bounds.width - (Constants.xPosition * 2), height: Constants.height)
+            originFrame = CGRect(x: MessageViewConstants.xPosition, y: window.bounds.height, width: window.bounds.width - (MessageViewConstants.xPosition * 2), height: MessageViewConstants.height)
         case .responseCodeVisualizer:
-            originFrame = CGRect(x: Constants.xPosition, y: 0, width: window.bounds.width - (Constants.xPosition * 2), height: Constants.height)
+            originFrame = CGRect(x: MessageViewConstants.xPosition, y: 0, width: window.bounds.width - (MessageViewConstants.xPosition * 2), height: MessageViewConstants.height)
         }
+        
         super.init(frame: originFrame)
         
         if let button = button {
@@ -167,7 +88,7 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
     }
     
     private func configureUI() {
-        layer.cornerRadius = Constants.cornerRadius
+        layer.cornerRadius = MessageViewConstants.cornerRadius
         layer.cornerCurve = .continuous
         addSubview(stackview)
         
@@ -239,7 +160,7 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
     }
     
     private func hideSideways(direction: UISwipeGestureRecognizer.Direction, completion: (() -> Void)? = nil) {
-        let xOffset: CGFloat = direction == .left ? Constants.hideLeftOffset : Constants.hideRightOffset
+        let xOffset: CGFloat = direction == .left ? MessageViewConstants.hideLeftOffset : MessageViewConstants.hideRightOffset
         UIView.animate(withDuration: 0.2, animations: {
             self.frame = CGRect(x: xOffset, y: self.frame.origin.y, width: self.frame.width, height: self.frame.height)
         }) { _ in
@@ -267,6 +188,101 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
             break
         }
     }
+}
+
+extension MessageView: MessageViewTestable {
+    func getMessageButton() -> MessageButton? {
+        return messageButton
+    }
+    
+    func getType() -> MessageType {
+        return type
+    }
+}
+
+struct MessageButton {
+    enum ButtonType {
+        case success
+        case error
+    }
+    
+    let title: String
+    let type: ButtonType
+    let action: EmptyCompletionBlock
+    
+    var textColor: UIColor {
+        switch type {
+        case .success:
+            return .greenOk
+        case .error:
+            return .binkDynamicRed
+        }
+    }
+}
+
+enum MessageType: Equatable {
+    enum Length {
+        case short
+        case long
+    }
+    
+    case snackbar(Length)
+    case responseCodeVisualizer(ResponseCodeVisualizer)
+
+    var showOffset: CGFloat {
+        switch self {
+        case .snackbar:
+            return MessageViewConstants.Snackbar.showOffset
+        case .responseCodeVisualizer:
+            return MessageViewConstants.ResponseCodeVisualizer.showOffset
+        }
+    }
+    
+    var hideOffset: CGFloat {
+        switch self {
+        case .snackbar:
+            return MessageViewConstants.Snackbar.hideOffset
+        case .responseCodeVisualizer:
+            return MessageViewConstants.ResponseCodeVisualizer.hideOffset
+        }
+    }
+    
+    var timeInterval: Double {
+        switch self {
+        case .snackbar(let snackbarType):
+            switch snackbarType {
+            case .short:
+                return MessageViewConstants.timeIntervalShort
+            case .long:
+                return MessageViewConstants.timeIntervalLong
+            }
+        case .responseCodeVisualizer:
+            return MessageViewConstants.timeIntervalLong
+        }
+    }
+}
+
+private enum MessageViewConstants {
+    enum Snackbar {
+        static let showOffset: CGFloat = UIScreen.main.bounds.height - 100
+        static let hideOffset: CGFloat = UIScreen.main.bounds.height + 100
+    }
+    
+    enum ResponseCodeVisualizer {
+        static let showOffset: CGFloat = 50
+        static let hideOffset: CGFloat = -50
+    }
+
+    static let timeIntervalShort: CGFloat = 1.5
+    static let timeIntervalLong: CGFloat = 2.75
+    static let buttonWidth: CGFloat = 60
+    static let stackviewSpacing: CGFloat = 15
+    static let stackviewPadding: CGFloat = 20
+    static let xPosition: CGFloat = 25
+    static let height: CGFloat = 70
+    static let cornerRadius: CGFloat = 15
+    static let hideLeftOffset: CGFloat = -500
+    static let hideRightOffset: CGFloat = 500
 }
 
 private extension Selector {

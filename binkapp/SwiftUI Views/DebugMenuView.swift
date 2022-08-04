@@ -227,12 +227,12 @@ struct PickerDebugRow: View {
                     MessageView.show("This is a snackbar with so much text, the label is like whuuuut?! I can't contain this much text yo, I'm gonna spill", type: .snackbar(.long))
                 case .action:
                     let alert = ViewControllerFactory.makeTwoButtonAlertViewController(title: "Choose Action Type", message: nil, primaryButtonTitle: "Success", secondaryButtonTitle: "Error") {
-                        let button = MessageView.MessageButton(title: "UNDO", type: .success) {
+                        let button = MessageButton(title: "UNDO", type: .success) {
                             MessageView.show("Success Action Triggered", type: .snackbar(.short))
                         }
                         MessageView.show("This is a snackbar with an action", type: .snackbar(.long), button: button)
                     } secondaryButtonCompletion: {
-                        let button = MessageView.MessageButton(title: "UNDO", type: .error) {
+                        let button = MessageButton(title: "UNDO", type: .error) {
                             MessageView.show("Error Action Triggered", type: .snackbar(.short))
                         }
                         MessageView.show("This is a snackbar with an action", type: .snackbar(.long), button: button)
