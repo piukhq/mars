@@ -6,9 +6,15 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
+import SwiftUI
 import UIKit
 
 class SettingsViewModel: UserServiceProtocol {
+    private enum Constants {
+        static let privacyPolicyUrl = "https://bink.com/privacy-policy/"
+        static let termsAndConditionsUrl = "https://bink.com/terms-and-conditions/"
+    }
+    
     private let factory: SettingsFactory
     
     init(rowsWithActionRequired: [SettingsRow.RowType]?) {
@@ -89,6 +95,62 @@ class SettingsViewModel: UserServiceProtocol {
             }
         }
         let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
+    }
+    
+    func handleRowAction(for row: SettingsRow) {
+        switch row.action {
+        case .customAction(let action):
+            action()
+        case .pushToSwiftUIView(let swiftUIView):
+            switch swiftUIView {
+            case .whoWeAre:
+                navigate(to: WhoWeAreSwiftUIView())
+            case .featureFlags:
+                navigate(to: FeatureFlagsSwiftUIView()) /// <<<<<<<<<<< Do we need delegate to refresh settings list after feature flags have updated
+            case .debug:
+                navigate(to: DebugMenuView())
+            }
+        case .pushToReusable(screen: let screen):
+            switch screen {
+            case .securityAndPrivacy:
+                break
+//                toSecurityAndPrivacyVC()
+            case .howItWorks:
+                break
+//                toHowItWorksVC()
+            case .privacyPolicy:
+                openWebView(url: Constants.privacyPolicyUrl)
+            case .termsAndConditions:
+                openWebView(url: Constants.termsAndConditionsUrl)
+            }
+        case .logout:
+            let alert = BinkAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .alert)
+            alert.addAction(
+                UIAlertAction(title: "Log out", style: .default, handler: { _ in
+                    NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                })
+            )
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            let navigationRequest = AlertNavigationRequest(alertController: alert)
+            Current.navigate.to(navigationRequest)
+        case .launchSupport(service: let service):
+            switch service {
+            case .faq:
+                BinkSupportUtility.launchFAQs()
+            case .contactUs:
+                BinkSupportUtility.launchContactSupport()
+            }
+        case .delete:
+                handleRowActionForAccountDeletion()
+        default:
+            break
+        }
+    }
+    
+    private func navigate<Content: View>(to view: Content) {
+        let hostingViewController = UIHostingController(rootView: view)
+        let navigationRequest = PushNavigationRequest(viewController: hostingViewController)
         Current.navigate.to(navigationRequest)
     }
 }

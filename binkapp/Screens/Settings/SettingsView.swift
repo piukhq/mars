@@ -23,7 +23,7 @@ struct SettingsView: View {
                     let section = viewModel.sections[index]
                     Section(header: SettingsHeaderView(title: section.title)) {
                         ForEach(section.rows) { row in
-                            SettingsRowView(rowData: row, showSeparator: viewModel.shouldShowSeparator(section: section, row: row))
+                            SettingsRowView(rowData: row, viewModel: viewModel, showSeparator: viewModel.shouldShowSeparator(section: section, row: row))
                         }
                     }
                     .listSectionSeparator(.hidden)
@@ -86,53 +86,12 @@ struct SettingsRowView: View {
     }
     
     var rowData: SettingsRow
+    var viewModel: SettingsViewModel
     var showSeparator: Bool
     
-    func navigate<Content: View>(to view: Content) {
-        let hostingViewController = UIHostingController(rootView: view)
-        let navigationRequest = PushNavigationRequest(viewController: hostingViewController)
-        Current.navigate.to(navigationRequest)
-    }
-
     var body: some View {
         Button {
-            switch rowData.action {
-            case .customAction(let action):
-                action()
-            case .pushToSwiftUIView(swiftUIView: let swiftUIView):
-                switch swiftUIView {
-                case .whoWeAre:
-                    navigate(to: WhoWeAreSwiftUIView())
-                case .featureFlags:
-                    navigate(to: FeatureFlagsSwiftUIView()) /// <<<<<<<<<<< Do we need delegate to refresh settings list after feature flags have updated
-                case .debug:
-                    navigate(to: DebugMenuView())
-                }
-//            case .pushToReusable(screen: let screen):
-//                <#code#>
-            case .logout:
-                let alert = BinkAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .alert)
-                alert.addAction(
-                    UIAlertAction(title: "Log out", style: .default, handler: { _ in
-                        NotificationCenter.default.post(name: .shouldLogout, object: nil)
-                    })
-                )
-                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-                let navigationRequest = AlertNavigationRequest(alertController: alert)
-                Current.navigate.to(navigationRequest)
-            case .launchSupport(service: let service):
-                switch service {
-                case .faq:
-                    BinkSupportUtility.launchFAQs()
-                case .contactUs:
-                    BinkSupportUtility.launchContactSupport()
-                }
-            case .delete:
-                break
-//                viewModel.handleRowActionForAccountDeletion()
-            default:
-                break
-            }
+            viewModel.handleRowAction(for: rowData)
         } label: {
             VStack {
                 HStack {

@@ -205,18 +205,19 @@ extension SettingsViewController: UITableViewDelegate {
                 case .termsAndConditions:
                     presentWebView(url: Constants.termsAndConditionsUrl)
                 }
-            case .logout:
-                let alert = BinkAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .alert)
-                alert.addAction(
-                    UIAlertAction(title: "Log out", style: .default, handler: { _ in
-                        NotificationCenter.default.post(name: .shouldLogout, object: nil)
-                    })
-                )
-                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-                let navigationRequest = AlertNavigationRequest(alertController: alert)
-                Current.navigate.to(navigationRequest)
-            case .delete:
-                viewModel.handleRowActionForAccountDeletion(loadingCompleteViewController: self)
+//            case .logout:
+//                let alert = BinkAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .alert)
+//                alert.addAction(
+//                    UIAlertAction(title: "Log out", style: .default, handler: { _ in
+//                        NotificationCenter.default.post(name: .shouldLogout, object: nil)
+//                    })
+//                )
+//                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+//                let navigationRequest = AlertNavigationRequest(alertController: alert)
+//                Current.navigate.to(navigationRequest)
+            default:
+                break
+//                viewModel.handleRowActionForAccountDeletion(loadingCompleteViewController: self)
             }
         }
     }
