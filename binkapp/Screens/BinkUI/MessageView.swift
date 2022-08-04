@@ -194,7 +194,7 @@ extension MessageView: MessageViewTestable {
     func getMessageButton() -> MessageButton? {
         return messageButton
     }
-    
+
     func getType() -> MessageType {
         return type
     }
