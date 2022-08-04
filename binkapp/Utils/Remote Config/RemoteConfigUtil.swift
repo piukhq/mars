@@ -50,15 +50,11 @@ class RemoteConfigUtil {
             guard let self = self else { return }
             if status == .success {
                 self.remoteConfig.activate { (_, _) in
-                    if #available(iOS 14.0, *) {
-                        BinkLogger.info(event: AppLoggerEvent.fetchedRemoteConfig)
-                    }
+                    BinkLogger.info(event: AppLoggerEvent.fetchedRemoteConfig)
                     completion?(true)
                 }
             } else {
-                if #available(iOS 14.0, *) {
-                    BinkLogger.error(AppLoggerError.remoteConfigFetchFailure, value: error?.localizedDescription)
-                }
+                BinkLogger.error(AppLoggerError.remoteConfigFetchFailure, value: error?.localizedDescription)
                 completion?(false)
             }
         }

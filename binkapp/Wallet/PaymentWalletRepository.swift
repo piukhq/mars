@@ -18,10 +18,8 @@ class PaymentWalletRepository: WalletServiceProtocol {
         deletePaymentCard(paymentCard) { (success, _, responseData) in
             guard success else {
                 BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseFail(card: trackableCard, responseData: responseData))
-                if #available(iOS 14.0, *) {
-                    BinkLogger.errorPrivate(PaymentCardLoggerError.deletePaymentCardFailure, value: paymentCard.id)
-                    BinkLogger.error(PaymentCardLoggerError.deletePaymentCardFailure, value: responseData?.urlResponse?.statusCode.description)
-                }
+                BinkLogger.errorPrivate(PaymentCardLoggerError.deletePaymentCardFailure, value: paymentCard.id)
+                BinkLogger.error(PaymentCardLoggerError.deletePaymentCardFailure, value: responseData?.urlResponse?.statusCode.description)
                 return
             }
             BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseSuccess(card: trackableCard))
@@ -77,15 +75,11 @@ class PaymentWalletRepository: WalletServiceProtocol {
         getSpreedlyToken(withRequest: spreedlyRequest) { result in
             switch result {
             case .success(let response):
-                if #available(iOS 14.0, *) {
-                    let paymentMethod = response.transaction?.paymentMethod
-                    BinkLogger.infoPrivateHash(event: PaymentCardLoggerEvent.spreedlyTokenResponseSuccess, value: paymentMethod?.lastFour)
-                }
+                let paymentMethod = response.transaction?.paymentMethod
+                BinkLogger.infoPrivateHash(event: PaymentCardLoggerEvent.spreedlyTokenResponseSuccess, value: paymentMethod?.lastFour)
                 onSuccess(response)
             case .failure(let error):
-                if #available(iOS 14.0, *) {
-                    BinkLogger.error(PaymentCardLoggerError.spreedlyTokenResponseFailure, value: error.localizedDescription)
-                }
+                BinkLogger.error(PaymentCardLoggerError.spreedlyTokenResponseFailure, value: error.localizedDescription)
                 onError(error)
             }
         }
@@ -129,9 +123,7 @@ class PaymentWalletRepository: WalletServiceProtocol {
                 }
             case .failure(let error):
                 BinkAnalytics.track(CardAccountAnalyticsEvent.addPaymentCardResponseFail(request: paymentCard, responseData: responseData))
-                if #available(iOS 14.0, *) {
-                    BinkLogger.error(PaymentCardLoggerError.addPaymentCardFailure, value: responseData?.urlResponse?.statusCode.description)
-                }
+                BinkLogger.error(PaymentCardLoggerError.addPaymentCardFailure, value: responseData?.urlResponse?.statusCode.description)
                 onError(error)
             }
         }
