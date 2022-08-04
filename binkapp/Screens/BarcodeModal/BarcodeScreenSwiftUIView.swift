@@ -17,6 +17,50 @@ struct RemoteImage: View {
     }
 }
 
+struct ShowAnywayButtonSwiftUIView: View {
+    @ObservedObject var viewModel: BarcodeViewModel
+    
+    var body: some View {
+        Button(action: {
+            viewModel.setShowBarcodeAlwaysPreference()
+        }) {
+            VStack {
+                HStack {
+                    Text(L10n.showBarcodeTitle)
+                        .foregroundColor(.white)
+                        .font(.nunitoBold(22))
+
+                    Spacer()
+                    
+                    Image(systemName: "barcode")
+                        .foregroundColor(.white)
+                        .font(.title)
+                }
+                .padding()
+                .padding(.bottom, -10)
+              
+                HStack {
+                    Text(L10n.showBarcodeBody)
+                        .padding()
+                        .padding(.top, -26)
+                        .foregroundColor(.white)
+                        .lineLimit(5)
+                        .minimumScaleFactor(0.5)
+                        .multilineTextAlignment(.leading)
+                        .font(.nunitoSans(12))
+                }
+            }
+        }
+        .background(
+            ZStack {
+                Color(Current.themeManager.color(for: .viewBackground))
+                LinearGradient(gradient: Gradient(colors: [Color(.binkGradientBlueRight), Color(.binkGradientBlueLeft)]), startPoint: .leading, endPoint: .trailing)
+                    .opacity(1)
+            })
+        .cornerRadius(20)
+    }
+}
+
 struct BarcodeScreenSwiftUIView: View {
     enum Constants {
         static let largeSpace: CGFloat = 20
@@ -35,8 +79,6 @@ struct BarcodeScreenSwiftUIView: View {
     @ObservedObject var viewModel: BarcodeViewModel
     @Environment(\.colorScheme) var colorScheme
     
-    @State var alwaysShowBarcode = false
-    
     init(viewModel: BarcodeViewModel) {
         self.viewModel = viewModel
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = Current.themeManager.color(for: .text)
@@ -47,7 +89,7 @@ struct BarcodeScreenSwiftUIView: View {
             ScrollView {
                 VStack {
                     /// Barcode image
-                    BarcodeImageView(viewModel: viewModel, alwaysShowBarCode: alwaysShowBarcode)
+                    BarcodeImageView(viewModel: viewModel, alwaysShowBarCode: viewModel.alwaysShowBarcode)
                     
                     /// Description label
                     TextStackView(text: viewModel.descriptionText, font: .custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
@@ -67,46 +109,10 @@ struct BarcodeScreenSwiftUIView: View {
                     }
                     
                     if !viewModel.isBarcodeAvailable {
-                        if !alwaysShowBarcode {
+                        if !viewModel.alwaysShowBarcode {
                             Spacer(minLength: 40)
                             /// show always
-                            Button(action: {
-                                alwaysShowBarcode.toggle()
-                            }) {
-                                VStack {
-                                    HStack {
-                                        Text(L10n.showBarcodeTitle)
-                                            .foregroundColor(.white)
-                                            .font(.nunitoBold(22))
-      
-                                        Spacer()
-                                        
-                                        Image(systemName: "barcode")
-                                            .foregroundColor(.white)
-                                            .font(.title)
-                                    }
-                                    .padding()
-                                    .padding(.bottom, -10)
-                                  
-                                    HStack {
-                                        Text(L10n.showBarcodeBody)
-                                            .padding()
-                                            .padding(.top, -26)
-                                            .foregroundColor(.white)
-                                            .lineLimit(5)
-                                            .minimumScaleFactor(0.5)
-                                            .multilineTextAlignment(.leading)
-                                            .font(.nunitoSans(12))
-                                    }
-                                }
-                            }
-                            .background(
-                                ZStack {
-                                    Color(Current.themeManager.color(for: .viewBackground))
-                                    LinearGradient(gradient: Gradient(colors: [Color(.binkGradientBlueRight), Color(.binkGradientBlueLeft)]), startPoint: .leading, endPoint: .trailing)
-                                        .opacity(1)
-                                })
-                            .cornerRadius(20)
+                            ShowAnywayButtonSwiftUIView(viewModel: viewModel)
                         }
                     }
                 }

@@ -138,6 +138,10 @@ extension PreferencesViewController: CheckboxViewDelegate {
             if let _ = dictionary[AutofillUtil.slug] {
                 Current.userDefaults.set(Bool(value), forDefaultsKey: .rememberMyDetails)
             }
+            if columnName == "show-barcode-always" {
+                MixpanelUtility.setUserProperty(.showBarcodeAlways(Bool(value) ?? false))
+                Current.userDefaults.set(Bool(value), forDefaultsKey: .showBarcodeAlways)
+            }
         }) { [weak self] _ in
             checkboxView.reset()
             self?.errorLabel.text = L10n.preferencesUpdateFail

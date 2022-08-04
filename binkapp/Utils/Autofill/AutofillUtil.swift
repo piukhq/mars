@@ -43,9 +43,13 @@ class AutofillUtil: UserServiceProtocol {
         getPreferences { result in
             switch result {
             case .success(let preferences):
-                let value = preferences.first(where: { $0.slug == AutofillUtil.slug })?.value
-                let checked: Bool = value == "1"
+                var value = preferences.first(where: { $0.slug == AutofillUtil.slug })?.value
+                var checked: Bool = value == "1"
                 Current.userDefaults.set(checked, forDefaultsKey: .rememberMyDetails)
+                
+                value = preferences.first(where: { $0.slug == "show-barcode-always" })?.value
+                checked = value == "1"
+                Current.userDefaults.set(checked, forDefaultsKey: .showBarcodeAlways)
             case .failure:
                 break
             }

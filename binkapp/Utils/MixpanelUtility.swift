@@ -177,6 +177,7 @@ enum MixpanelUserProperty {
     case loyaltyCards
     case lastEngaged(Int)
     case loyaltyCardsSortOrder(String)
+    case showBarcodeAlways(Bool)
     
     var identifer: String {
         switch self {
@@ -198,6 +199,8 @@ enum MixpanelUserProperty {
             return "Last engaged"
         case .loyaltyCardsSortOrder:
             return "Wallet Sort Setting"
+        case .showBarcodeAlways:
+            return "Show Barcode Always"
         }
     }
     
@@ -206,6 +209,8 @@ enum MixpanelUserProperty {
         case.appleWatchInstalled(let isInstalled):
             return [identifer: isInstalled]
         case.loyaltyCardsSortOrder(let value):
+            return [identifer: value]
+        case.showBarcodeAlways(let value):
             return [identifer: value]
         default:
             return ["": ""]

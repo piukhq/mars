@@ -76,6 +76,8 @@ class BarcodeViewModel: ObservableObject {
         }
     }
     
+    @Published var alwaysShowBarcode = false
+    
     lazy var reportIssueButton: BinkButtonSwiftUIView = {
         return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.barcodeReportIssueButtonTitle), enabled: true, buttonTapped: { [weak self] in
             self?.showingReportIssueOptions = true
@@ -146,6 +148,7 @@ class BarcodeViewModel: ObservableObject {
 
     init(membershipCard: CD_MembershipCard) {
         self.membershipCard = membershipCard
+        self.setShouldAlwaysDisplayBarCode()
     }
     
     var barcodeIsMoreSquareThanRectangle: Bool {
@@ -160,7 +163,7 @@ class BarcodeViewModel: ObservableObject {
     // MARK: - Functions
 
     func barcodeImage(withSize size: CGSize, drawInContainer: Bool = true, alwaysShowBarCode: Bool = false) -> UIImage? {
-        guard let barcodeString = !alwaysShowBarCode ? membershipCard.card?.barcode : self.cardNumber else { return nil }
+        guard let barcodeString = alwaysShowBarCode ? (membershipCard.card?.barcode ?? self.cardNumber) : membershipCard.card?.barcode else { return nil }
         
         let writer = ZXMultiFormatWriter()
         let encodeHints = ZXEncodeHints()
@@ -219,6 +222,29 @@ class BarcodeViewModel: ObservableObject {
         let boxWidth = widthOfStackView / 8
         let boxHeight = boxWidth * 1.8
         return boxHeight * CGFloat(rowCount)
+    }
+    
+    private func setShouldAlwaysDisplayBarCode() {
+        if Current.userDefaults.value(forDefaultsKey: .showBarcodeAlways) == nil {
+            alwaysShowBarcode = false
+            return
+        }
+        
+        alwaysShowBarcode = Current.userDefaults.bool(forDefaultsKey: .showBarcodeAlways)
+    }
+    
+    func setShowBarcodeAlwaysPreference() {
+        let preferencesRepository = PreferencesRepository()
+        let checkedState = "1"
+        let dictionary = ["show-barcode-always": checkedState]
+        
+        preferencesRepository.putPreferences(preferences: dictionary) {
+            // display snack bar
+            MixpanelUtility.setUserProperty(.showBarcodeAlways(true))
+            Current.userDefaults.set(true, forDefaultsKey: .showBarcodeAlways)
+            self.setShouldAlwaysDisplayBarCode()
+        } onError: { _ in
+        }
     }
 }
 
