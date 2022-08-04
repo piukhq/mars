@@ -333,6 +333,7 @@
 		CE73F9AE2600B64E00D53BCF /* HeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE73F9AC2600B64E00D53BCF /* HeaderTableViewCell.xib */; };
 		CE822D8227B1322B00916C74 /* binkOld.der in Resources */ = {isa = PBXBuildFile; fileRef = CE822D8127B1321A00916C74 /* binkOld.der */; };
 		CE834A38289AD5E50046B024 /* ReusableTemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE834A37289AD5E50046B024 /* ReusableTemplateView.swift */; };
+		CE834A3D289C23430046B024 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE834A3C289C23430046B024 /* PreferencesView.swift */; };
 		CE85A1D226A5DB43003B74CD /* EmailClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D126A5DB43003B74CD /* EmailClient.swift */; };
 		CE85A1D626A6CD97003B74CD /* LoginSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D526A6CD97003B74CD /* LoginSuccessViewController.swift */; };
 		CE85A1DB26B05D95003B74CD /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CE85A1DA26B05D95003B74CD /* Lottie */; };
@@ -1014,6 +1015,7 @@
 		CE73F9AC2600B64E00D53BCF /* HeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderTableViewCell.xib; sourceTree = "<group>"; };
 		CE822D8127B1321A00916C74 /* binkOld.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = binkOld.der; sourceTree = "<group>"; };
 		CE834A37289AD5E50046B024 /* ReusableTemplateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableTemplateView.swift; sourceTree = "<group>"; };
+		CE834A3C289C23430046B024 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		CE85A1D126A5DB43003B74CD /* EmailClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailClient.swift; sourceTree = "<group>"; };
 		CE85A1D526A6CD97003B74CD /* LoginSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSuccessViewController.swift; sourceTree = "<group>"; };
 		CE85A1D726B0096A003B74CD /* UniversalLinkUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalLinkUtility.swift; sourceTree = "<group>"; };
@@ -1560,6 +1562,7 @@
 			children = (
 				3C93975C2386A2E00063C0B3 /* PreferencesModel.swift */,
 				3C9B1A2823854C040078A1EC /* PreferencesRepository.swift */,
+				CE834A3C289C23430046B024 /* PreferencesView.swift */,
 				3C9B1A2623854BF60078A1EC /* PreferencesViewModel.swift */,
 				3C9B1A2023854B9D0078A1EC /* PreferencesViewController.swift */,
 				3C9B1A2123854B9D0078A1EC /* PreferencesViewController.xib */,
@@ -3828,6 +3831,7 @@
 				CE27A0DA25DA990E00C58412 /* OnboardingCardCollectionViewCell.swift in Sources */,
 				B726334923058A1E00951037 /* EnrolFieldModel.swift in Sources */,
 				EF46E288235E01DD00BA2CAF /* BinkPillButton.swift in Sources */,
+				CE834A3D289C23430046B024 /* PreferencesView.swift in Sources */,
 				BDB01882232E93A100BFFA18 /* FormMultipleChoiceInput.swift in Sources */,
 				CEAB2D73266671C5006A0F43 /* HTMLParsingUtil.swift in Sources */,
 				CE52E16326F0FE0E00CAFBBF /* Font+Extension.swift in Sources */,

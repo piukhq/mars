@@ -119,7 +119,7 @@ class SettingsViewModel: UserServiceProtocol {
             case .termsAndConditions:
                 openWebView(url: Constants.termsAndConditionsUrl)
             case .preferences:
-                break
+                navigate(to: PreferencesView(viewModel: PreferencesViewModel()))
             }
         case .logout:
             let alert = BinkAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .alert)
