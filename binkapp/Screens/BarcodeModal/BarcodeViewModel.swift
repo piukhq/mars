@@ -224,7 +224,7 @@ class BarcodeViewModel: ObservableObject {
         return boxHeight * CGFloat(rowCount)
     }
     
-    private func setShouldAlwaysDisplayBarCode() {
+    func setShouldAlwaysDisplayBarCode() {
         if Current.userDefaults.value(forDefaultsKey: .showBarcodeAlways) == nil {
             alwaysShowBarcode = false
             return
@@ -233,17 +233,18 @@ class BarcodeViewModel: ObservableObject {
         alwaysShowBarcode = Current.userDefaults.bool(forDefaultsKey: .showBarcodeAlways)
     }
     
-    func setShowBarcodeAlwaysPreference() {
-        let preferencesRepository = PreferencesRepository()
-        let checkedState = "1"
-        let dictionary = ["show-barcode-always": checkedState]
-        
-        preferencesRepository.putPreferences(preferences: dictionary) {
-            // display snack bar
-            MixpanelUtility.setUserProperty(.showBarcodeAlways(true))
-            Current.userDefaults.set(true, forDefaultsKey: .showBarcodeAlways)
-            self.setShouldAlwaysDisplayBarCode()
-        } onError: { _ in
+    func setShowBarcodeAlwaysPreference(preferencesRepository: PreferencesProtocol?) {
+        if let preferences = preferencesRepository {
+            let checkedState = "1"
+            let dictionary = [L10n.alwaysShowBarcodePreference: checkedState]
+            
+            preferences.putPreferences(preferences: dictionary) {
+                // display snack bar
+                MixpanelUtility.setUserProperty(.showBarcodeAlways(true))
+                Current.userDefaults.set(true, forDefaultsKey: .showBarcodeAlways)
+                self.setShouldAlwaysDisplayBarCode()
+            } onError: { _ in
+            }
         }
     }
 }

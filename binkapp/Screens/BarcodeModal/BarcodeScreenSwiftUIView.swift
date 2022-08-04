@@ -18,17 +18,26 @@ struct RemoteImage: View {
 }
 
 struct ShowAnywayButtonSwiftUIView: View {
+    enum Constants {
+        static let showingBarcodeBottomPaddingOffset: CGFloat = -10
+        static let descriptionTopPaddingOffset: CGFloat = -26
+        static let textScaleFactor: CGFloat = 0.5
+        static let lineLimit: Int = 5
+        static let showingBarcodeTextSize: CGFloat = 22.0
+        static let descriptionTextSize: CGFloat = 12.0
+    }
+    
     @ObservedObject var viewModel: BarcodeViewModel
     
     var body: some View {
         Button(action: {
-            viewModel.setShowBarcodeAlwaysPreference()
+            viewModel.setShowBarcodeAlwaysPreference(preferencesRepository: PreferencesRepository())
         }) {
             VStack {
                 HStack {
                     Text(L10n.showBarcodeTitle)
                         .foregroundColor(.white)
-                        .font(.nunitoBold(22))
+                        .font(.nunitoBold(Constants.showingBarcodeTextSize))
 
                     Spacer()
                     
@@ -37,17 +46,17 @@ struct ShowAnywayButtonSwiftUIView: View {
                         .font(.title)
                 }
                 .padding()
-                .padding(.bottom, -10)
-              
+                .padding(.bottom, Constants.showingBarcodeBottomPaddingOffset)
+                
                 HStack {
                     Text(L10n.showBarcodeBody)
                         .padding()
-                        .padding(.top, -26)
+                        .padding(.top, Constants.descriptionTopPaddingOffset)
                         .foregroundColor(.white)
-                        .lineLimit(5)
-                        .minimumScaleFactor(0.5)
+                        .lineLimit(Constants.lineLimit)
+                        .minimumScaleFactor(Constants.textScaleFactor)
                         .multilineTextAlignment(.leading)
-                        .font(.nunitoSans(12))
+                        .font(.nunitoSans(Constants.descriptionTextSize))
                 }
             }
         }
