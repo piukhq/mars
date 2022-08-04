@@ -38,7 +38,7 @@ class SettingsViewController: BinkViewController {
     }()
 
 
-    /// Zendesk view controllers malform our navigation bar. This flag tells our view controller to reconfigure for the current theme next time it comes into view.
+    /// Zendesk view controllers malform our navigation bar. This flag tells our view controller to reconfigure for the current theme next time it comes into view. 
     private var navigationBarRequiresThemeUpdate = false
     
     // MARK: - View Lifecycle
