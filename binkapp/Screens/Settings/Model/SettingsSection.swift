@@ -72,7 +72,6 @@ struct SettingsRow: Identifiable, Equatable {
     }
     
     enum RowAction {
-        case pushToViewController(viewController: UIViewController.Type)
         case navigate(to: DestinationView)
         case logout
         case customAction(action: VoidClosure)
@@ -93,6 +92,7 @@ struct SettingsRow: Identifiable, Equatable {
         case whoWeAre
         case featureFlags
         case debug
+        case preferences
     }
     
     let type: RowType

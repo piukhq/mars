@@ -118,6 +118,8 @@ class SettingsViewModel: UserServiceProtocol {
                 openWebView(url: Constants.privacyPolicyUrl)
             case .termsAndConditions:
                 openWebView(url: Constants.termsAndConditionsUrl)
+            case .preferences:
+                break
             }
         case .logout:
             let alert = BinkAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .alert)
@@ -138,8 +140,6 @@ class SettingsViewModel: UserServiceProtocol {
             }
         case .delete:
                 handleRowActionForAccountDeletion()
-        default:
-            break
         }
     }
     

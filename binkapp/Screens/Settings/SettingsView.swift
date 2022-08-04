@@ -53,11 +53,11 @@ struct SettingsView: View {
                 }
                 .listSectionSeparator(.hidden)
             }
-            .padding(.horizontal, Constants.padding)
-            .padding(.top, Constants.padding)
+            .padding(Constants.padding)
         }
         .navigationTitle("Settings")
         .background(Color(Current.themeManager.color(for: .viewBackground)))
+        .edgesIgnoringSafeArea(.bottom)
     }
 }
 

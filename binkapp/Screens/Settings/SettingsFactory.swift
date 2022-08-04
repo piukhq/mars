@@ -38,7 +38,7 @@ struct SettingsFactory {
         let accountSection = SettingsSection(title: L10n.settingsSectionAccountTitle, rows: [
             SettingsRow(
                 type: .preferences,
-                action: .pushToViewController(viewController: PreferencesViewController.self),
+                action: .navigate(to: .preferences),
                 actionRequired: rowsWithActionRequired?.contains(.preferences) ?? false
             ),
             SettingsRow(

@@ -161,26 +161,26 @@ extension SettingsViewController: UITableViewDelegate {
                 case .contactUs:
                     BinkSupportUtility.launchContactSupport()
                 }
-            case let .pushToViewController(viewController: viewControllerType):
-                switch viewControllerType {
-                case is SettingsViewController.Type:
-                    let vc = SettingsViewController(viewModel: viewModel)
-                    present(vc, animated: true)
-                case is DebugMenuTableViewController.Type:
-                    let viewController = ViewControllerFactory.makeDebugViewController()
-                    let navigationRequest = PushNavigationRequest(viewController: viewController)
-                    Current.navigate.to(navigationRequest)
-                case is PreferencesViewController.Type:
-                    let viewController = PreferencesViewController(viewModel: PreferencesViewModel())
-                    let navigationRequest = PushNavigationRequest(viewController: viewController)
-                    Current.navigate.to(navigationRequest)
-                case is FeatureFlagsTableViewController.Type:
-                    let viewController = FeatureFlagsTableViewController(viewModel: FeatureFlagsViewModel(), delegate: self)
-                    let navigationRequest = PushNavigationRequest(viewController: viewController)
-                    Current.navigate.to(navigationRequest)
-                default:
-                    BinkLogger.error(AppLoggerError.unsupportedViewController)
-                }
+//            case let .pushToViewController(viewController: viewControllerType):
+//                switch viewControllerType {
+//                case is SettingsViewController.Type:
+//                    let vc = SettingsViewController(viewModel: viewModel)
+//                    present(vc, animated: true)
+//                case is DebugMenuTableViewController.Type:
+//                    let viewController = ViewControllerFactory.makeDebugViewController()
+//                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+//                    Current.navigate.to(navigationRequest)
+//                case is PreferencesViewController.Type:
+//                    let viewController = PreferencesViewController(viewModel: PreferencesViewModel())
+//                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+//                    Current.navigate.to(navigationRequest)
+//                case is FeatureFlagsTableViewController.Type:
+//                    let viewController = FeatureFlagsTableViewController(viewModel: FeatureFlagsViewModel(), delegate: self)
+//                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+//                    Current.navigate.to(navigationRequest)
+//                default:
+//                    BinkLogger.error(AppLoggerError.unsupportedViewController)
+//                }
 //            case let .pushToSwiftUIView(swiftUIView: swiftUIView):
 //                switch swiftUIView {
 //                case .whoWeAre:
