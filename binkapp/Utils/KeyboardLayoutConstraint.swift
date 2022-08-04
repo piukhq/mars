@@ -11,7 +11,7 @@ import UIKit
 public class KeyboardLayoutConstraint: NSLayoutConstraint {
     private var offset: CGFloat = 0
     private var keyboardVisibleHeight: CGFloat = 0
-    private let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+    private let window = UIApplication.shared.connectedScenes.flatMap { ($0 as? UIWindowScene)?.windows ?? [] }.first { $0.isKeyWindow }
     
     override public func awakeFromNib() {
         super.awakeFromNib()

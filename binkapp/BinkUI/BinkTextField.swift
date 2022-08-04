@@ -16,14 +16,10 @@ class BinkTextField: UITextField {
         layer.cornerRadius = bounds.height / 2
         layer.backgroundColor = Current.themeManager.color(for: .walletCardBackground).cgColor
 
-        if #available(iOS 14, *) {
-            layer.borderWidth = 1.0
-            layer.borderColor = Current.themeManager.color(for: .walletCardBackground).cgColor
-            layer.masksToBounds = false
-            layer.applyDefaultBinkShadow()
-        } else {
-            clipsToBounds = true
-        }
+        layer.borderWidth = 1.0
+        layer.borderColor = Current.themeManager.color(for: .walletCardBackground).cgColor
+        layer.masksToBounds = false
+        layer.applyDefaultBinkShadow()
                 
         textColor = Current.themeManager.color(for: .text)
         tintColor = Current.themeManager.color(for: .text)

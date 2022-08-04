@@ -28,11 +28,9 @@ class WidgetController {
     }
     
     func reloadWidget(type: WidgetType) {
-        if #available(iOS 14.0, *) {
-            switch type {
-            case .quickLaunch:
-                WidgetCenter.shared.reloadTimelines(ofKind: type.identifier)
-            }
+        switch type {
+        case .quickLaunch:
+            WidgetCenter.shared.reloadTimelines(ofKind: type.identifier)
         }
     }
     
@@ -41,10 +39,8 @@ class WidgetController {
         guard let urlPath = url.host?.removingPercentEncoding else { return }
         self.urlPath = urlPath
         
-        if #available(iOS 14.0, *) {
-            let widgetType = WidgetType(rawValue: url.scheme ?? "")
-            BinkAnalytics.track(WidgetAnalyticsEvent.widgetLaunch(urlPath: urlPath, widgetType: widgetType))
-        }
+        let widgetType = WidgetType(rawValue: url.scheme ?? "")
+        BinkAnalytics.track(WidgetAnalyticsEvent.widgetLaunch(urlPath: urlPath, widgetType: widgetType))
      
         switch type {
         case .quickLaunch:
@@ -148,9 +144,7 @@ class WidgetController {
                     try dataToSave.write(to: archiveURL)
                     self.reloadWidget(type: .quickLaunch)
                 } catch {
-                    if #available(iOS 14.0, *) {
-                        BinkLogger.error(AppLoggerError.encodeWidgetContentsToDiskFailure, value: error.localizedDescription)
-                    }
+                    BinkLogger.error(AppLoggerError.encodeWidgetContentsToDiskFailure, value: error.localizedDescription)
                     return
                 }
             }

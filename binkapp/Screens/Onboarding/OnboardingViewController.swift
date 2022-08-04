@@ -273,9 +273,7 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate, ASAuthori
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        if #available(iOS 14.0, *) {
-            BinkLogger.error(UserLoggerError.appleSignIn, value: error.localizedDescription)
-        }
+        BinkLogger.error(UserLoggerError.appleSignIn, value: error.localizedDescription)
     }
     
     // TODO: // Move to user service in future ticket. All login type requests should reuse the same code where possible

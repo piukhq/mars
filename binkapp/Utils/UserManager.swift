@@ -76,9 +76,7 @@ class UserManager {
         do {
             try token = keychain.getString(key)
         } catch {
-            if #available(iOS 14.0, *) {
-                BinkLogger.error(AppLoggerError.retrieveKeychainValueFromKey, value: error.localizedDescription)
-            }
+            BinkLogger.error(AppLoggerError.retrieveKeychainValueFromKey, value: error.localizedDescription)
         }
         
         return token
@@ -90,9 +88,7 @@ class UserManager {
             try setEmail(with: response)
             UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(true, forDefaultsKey: .hasCurrentUser)
         } catch {
-            if #available(iOS 14.0, *) {
-                BinkLogger.error(UserLoggerError.setNewUser, value: error.localizedDescription)
-            }
+            BinkLogger.error(UserLoggerError.setNewUser, value: error.localizedDescription)
         }
     }
     

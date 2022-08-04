@@ -30,11 +30,7 @@ struct HighVisibilityLabelView: View {
                 Button {
                     UIPasteboard.general.string = text
                 } label: {
-                    if #available(iOS 14.0, *) {
-                        Label(L10n.barcodeCopyLabel, systemImage: "doc.on.doc")
-                    } else {
-                        Text(L10n.barcodeCopyLabel)
-                    }
+                    Label(L10n.barcodeCopyLabel, systemImage: "doc.on.doc")
                 }
             }
         }
