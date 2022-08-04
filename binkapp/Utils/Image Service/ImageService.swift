@@ -153,11 +153,9 @@ extension UIImageView {
                 if cached {
                     self.image = retrievedImage
                 } else {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                        UIView.transition(with: self, duration: 1.3, options: .transitionCrossDissolve, animations: {
-                            self.image = retrievedImage
-                        }, completion: nil)
-                    }
+                    UIView.transition(with: self, duration: 1.5, options: .transitionCrossDissolve, animations: {
+                        self.image = retrievedImage
+                    }, completion: nil)
                 }
             } else {
                 self?.image = retrievedImage
