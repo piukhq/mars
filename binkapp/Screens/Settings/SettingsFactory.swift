@@ -25,7 +25,7 @@ struct SettingsFactory {
                 SettingsRow(
                     type: .debug,
                     subtitle: L10n.settingsSectionDebugSubtitle,
-                    action: .pushToSwiftUIView(swiftUIView: .debug),
+                    action: .navigate(to: .debug),
                     actionRequired: rowsWithActionRequired?.contains(.debug) ?? false
                 )
             ])
@@ -137,18 +137,18 @@ struct SettingsFactory {
             SettingsRow(
                 type: .securityAndPrivacy,
                 subtitle: L10n.settingsRowSecuritySubtitle,
-                action: .pushToReusable(screen: .securityAndPrivacy),
+                action: .navigate(to: .securityAndPrivacy),
                 actionRequired: rowsWithActionRequired?.contains(.securityAndPrivacy) ?? false
             ),
             SettingsRow(
                 type: .howItWorks,
                 subtitle: L10n.settingsRowHowitworksSubtitle,
-                action: .pushToReusable(screen: .howItWorks),
+                action: .navigate(to: .howItWorks),
                 actionRequired: rowsWithActionRequired?.contains(.howItWorks) ?? false
             ),
             SettingsRow(
                 type: .whoWeAre,
-                action: .pushToSwiftUIView(swiftUIView: .whoWeAre),
+                action: .navigate(to: .whoWeAre),
                 actionRequired: rowsWithActionRequired?.contains(.whoWeAre) ?? false
             )
         ])
@@ -160,12 +160,12 @@ struct SettingsFactory {
         let legalSection = SettingsSection(title: L10n.settingsSectionLegalTitle, rows: [
             SettingsRow(
                 type: .privacyPolicy,
-                action: .pushToReusable(screen: .privacyPolicy),
+                action: .navigate(to: .privacyPolicy),
                 actionRequired: rowsWithActionRequired?.contains(.privacyPolicy) ?? false
             ),
             SettingsRow(
                 type: .termsAndConditions,
-                action: .pushToReusable(screen: .termsAndConditions),
+                action: .navigate(to: .termsAndConditions),
                 actionRequired: rowsWithActionRequired?.contains(.termsAndConditions) ?? false
             )
         ])
@@ -175,7 +175,7 @@ struct SettingsFactory {
         // MARK: - Beta
         let action: SettingsRow.RowAction
         
-        action = .pushToSwiftUIView(swiftUIView: .featureFlags)
+        action = .navigate(to: .featureFlags)
         
         let betaSection = SettingsSection(title: L10n.settingsSectionBetaTitle, rows: [
             SettingsRow(

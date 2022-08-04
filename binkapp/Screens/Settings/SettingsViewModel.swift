@@ -102,23 +102,18 @@ class SettingsViewModel: UserServiceProtocol {
         switch row.action {
         case .customAction(let action):
             action()
-        case .pushToSwiftUIView(let swiftUIView):
-            switch swiftUIView {
+        case .navigate(let destination):
+            switch destination {
             case .whoWeAre:
                 navigate(to: WhoWeAreSwiftUIView())
             case .featureFlags:
                 navigate(to: FeatureFlagsSwiftUIView()) /// <<<<<<<<<<< Do we need delegate to refresh settings list after feature flags have updated
             case .debug:
                 navigate(to: DebugMenuView())
-            }
-        case .pushToReusable(screen: let screen):
-            switch screen {
             case .securityAndPrivacy:
-                break
-//                toSecurityAndPrivacyVC()
+                navigate(to: ReusableTemplateView(title: L10n.securityAndPrivacyTitle, description: L10n.securityAndPrivacyDescription))
             case .howItWorks:
-                break
-//                toHowItWorksVC()
+                navigate(to: ReusableTemplateView(title: L10n.howItWorksTitle, description: L10n.howItWorksDescription))
             case .privacyPolicy:
                 openWebView(url: Constants.privacyPolicyUrl)
             case .termsAndConditions:

@@ -73,19 +73,11 @@ struct SettingsRow: Identifiable, Equatable {
     
     enum RowAction {
         case pushToViewController(viewController: UIViewController.Type)
-        case pushToSwiftUIView(swiftUIView: SwiftUIView)
-        case pushToReusable(screen: ReusableScreen)
+        case navigate(to: DestinationView)
         case logout
         case customAction(action: VoidClosure)
         case launchSupport(service: SupportService)
         case delete
-    }
-    
-    enum ReusableScreen {
-        case securityAndPrivacy
-        case howItWorks
-        case privacyPolicy
-        case termsAndConditions
     }
 
     enum SupportService {
@@ -93,7 +85,11 @@ struct SettingsRow: Identifiable, Equatable {
         case contactUs
     }
     
-    enum SwiftUIView {
+    enum DestinationView {
+        case securityAndPrivacy
+        case howItWorks
+        case privacyPolicy
+        case termsAndConditions
         case whoWeAre
         case featureFlags
         case debug

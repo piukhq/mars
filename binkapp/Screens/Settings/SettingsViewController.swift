@@ -181,30 +181,30 @@ extension SettingsViewController: UITableViewDelegate {
                 default:
                     BinkLogger.error(AppLoggerError.unsupportedViewController)
                 }
-            case let .pushToSwiftUIView(swiftUIView: swiftUIView):
-                switch swiftUIView {
-                case .whoWeAre:
-                    let hostingViewController = UIHostingController(rootView: WhoWeAreSwiftUIView())
-                    let navigationRequest = PushNavigationRequest(viewController: hostingViewController)
-                    Current.navigate.to(navigationRequest)
-                case .featureFlags:
-                    let viewController = UIHostingController(rootView: FeatureFlagsSwiftUIView(delegate: self))
-                    let navigationRequest = PushNavigationRequest(viewController: viewController)
-                    Current.navigate.to(navigationRequest)
-                case .debug:
-                    break
-                }
-            case .pushToReusable(let screen):
-                switch screen {
-                case .securityAndPrivacy:
-                    toSecurityAndPrivacyVC()
-                case .howItWorks:
-                    toHowItWorksVC()
-                case .privacyPolicy:
-                    presentWebView(url: Constants.privacyPolicyUrl)
-                case .termsAndConditions:
-                    presentWebView(url: Constants.termsAndConditionsUrl)
-                }
+//            case let .pushToSwiftUIView(swiftUIView: swiftUIView):
+//                switch swiftUIView {
+//                case .whoWeAre:
+//                    let hostingViewController = UIHostingController(rootView: WhoWeAreSwiftUIView())
+//                    let navigationRequest = PushNavigationRequest(viewController: hostingViewController)
+//                    Current.navigate.to(navigationRequest)
+//                case .featureFlags:
+//                    let viewController = UIHostingController(rootView: FeatureFlagsSwiftUIView(delegate: self))
+//                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+//                    Current.navigate.to(navigationRequest)
+//                case .debug:
+//                    break
+//                }
+//            case .pushToReusable(let screen):
+//                switch screen {
+//                case .securityAndPrivacy:
+//                    toSecurityAndPrivacyVC()
+//                case .howItWorks:
+//                    toHowItWorksVC()
+//                case .privacyPolicy:
+//                    presentWebView(url: Constants.privacyPolicyUrl)
+//                case .termsAndConditions:
+//                    presentWebView(url: Constants.termsAndConditionsUrl)
+//                }
 //            case .logout:
 //                let alert = BinkAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .alert)
 //                alert.addAction(

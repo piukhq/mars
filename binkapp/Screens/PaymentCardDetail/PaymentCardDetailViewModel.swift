@@ -6,7 +6,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
 class PaymentCardDetailViewModel {
     typealias EmptyCompletionBlock = () -> Void
@@ -254,11 +254,8 @@ class PaymentCardDetailViewModel {
     }
 
     func toSecurityAndPrivacyScreen() {
-        let title: String = L10n.securityAndPrivacyTitle
-        let description: String = L10n.securityAndPrivacyDescription
-        let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
-        let viewController = ViewControllerFactory.makeSecurityAndPrivacyViewController(configuration: configuration)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        let hostingViewController = UIHostingController(rootView: ReusableTemplateView(title: L10n.securityAndPrivacyTitle, description: L10n.securityAndPrivacyDescription))
+        let navigationRequest = ModalNavigationRequest(viewController: hostingViewController)
         Current.navigate.to(navigationRequest)
     }
     

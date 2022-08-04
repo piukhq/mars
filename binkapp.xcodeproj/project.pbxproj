@@ -1995,7 +1995,7 @@
 			children = (
 				701E2C492677567E003F903B /* DebugMenuView.swift */,
 				CE518D8727E4818200A36E90 /* HighVisibilityLabelView.swift */,
-				CE834A37289AD5E50046B024 /* ReusableTemplateView.swift */,
+				CE834A39289BE0540046B024 /* ReusableTemplateSwiftUIView */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -2466,6 +2466,14 @@
 				CEE20926268E1E76004D3759 /* QuickLaunch */,
 			);
 			path = BinkWidget;
+			sourceTree = "<group>";
+		};
+		CE834A39289BE0540046B024 /* ReusableTemplateSwiftUIView */ = {
+			isa = PBXGroup;
+			children = (
+				CE834A37289AD5E50046B024 /* ReusableTemplateView.swift */,
+			);
+			path = ReusableTemplateSwiftUIView;
 			sourceTree = "<group>";
 		};
 		CE85A1FF26B1535B003B74CD /* Animations */ = {
