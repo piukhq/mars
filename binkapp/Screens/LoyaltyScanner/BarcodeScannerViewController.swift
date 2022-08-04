@@ -273,9 +273,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
             try device.lockForConfiguration()
         } catch let error {
             // TODO: Handle error
-            if #available(iOS 14.0, *) {
-                BinkLogger.error(AppLoggerError.lockDeviceForAVCaptureConfig, value: error.localizedDescription)
-            }
+            BinkLogger.error(AppLoggerError.lockDeviceForAVCaptureConfig, value: error.localizedDescription)
         }
 
         if device.isFocusModeSupported(.continuousAutoFocus) {
@@ -344,9 +342,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
                 return
             }
             
-            if #available(iOS 14.0, *) {
-                BinkLogger.infoPrivateHash(event: AppLoggerEvent.barcodeScanned, value: "ID: \(plan.id ?? "") - \(barcode)")
-            }
+            BinkLogger.infoPrivateHash(event: AppLoggerEvent.barcodeScanned, value: "ID: \(plan.id ?? "") - \(barcode)")
             
             self.passDataToBarcodeScannerDelegate(barcode: barcode, membershipPlan: plan)
         }
@@ -360,9 +356,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
                 if self.canPresentScanError {
                     self.canPresentScanError = false
                     DispatchQueue.main.async {
-                        if #available(iOS 14.0, *) {
-                            BinkLogger.error(AppLoggerError.barcodeScanningFailure, value: planFromForm.account?.companyName)
-                        }
+                        BinkLogger.error(AppLoggerError.barcodeScanningFailure, value: planFromForm.account?.companyName)
                         HapticFeedbackUtil.giveFeedback(forType: .notification(type: .error))
                         self.showError(barcodeDetected: true)
                     }

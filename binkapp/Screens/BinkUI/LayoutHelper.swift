@@ -17,11 +17,6 @@ extension LayoutHelper {
         return navigationBar?.frame.height ?? 0
     }
 
-    enum BinkInfoButton {
-        static let imageEdgeInsets = UIEdgeInsets(top: 8, left: 6, bottom: 7, right: 5)
-        static let titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 3)
-    }
-
     enum SortOrderLayout {
         static let sourceRectHeightOffset: CGFloat = 6
         static let cellHeight: CGFloat = 64

@@ -40,9 +40,7 @@ class PreferencesViewModel {
         repository.putPreferences(preferences: preferences, onSuccess: {
             onSuccess()
         }) { error in
-            if #available(iOS 14.0, *) {
-                BinkLogger.error(UserLoggerError.updatePreferences, value: error.localizedDescription)
-            }
+            BinkLogger.error(UserLoggerError.updatePreferences, value: error.localizedDescription)
             onError(error)
         }
     }
