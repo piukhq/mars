@@ -113,7 +113,7 @@ struct BarcodeScreenSwiftUIView: View {
                     /// Barcode number
                     if viewModel.shouldShowbarcodeNumber {
                         TextStackView(text: L10n.barcodeTitle, font: .custom(UIFont.headline.fontName, size: Constants.titleFontSize))
-                         HighVisibilityLabelView(text: viewModel.barcodeNumber)
+                        HighVisibilityLabelView(text: viewModel.barcodeNumber)
                             .frame(height: viewModel.heightForHighVisView(text: viewModel.barcodeNumber))
                     }
                     
