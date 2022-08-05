@@ -8,15 +8,24 @@
 
 import SwiftUI
 
+protocol CheckboxSwiftUIViewDelegate: NSObjectProtocol {
+    func checkboxView(_ checkboxView: CheckboxSwiftUIView, value: String, fieldType: FormField.ColumnKind)
+}
+
+extension CheckboxSwiftUIViewDelegate {
+    func checkboxView(_ checkboxView: CheckboxSwiftUIView, value: String, fieldType: FormField.ColumnKind) {}
+}
+
 struct CheckboxSwiftUIView: View {
     typealias CheckValidity = () -> Void
 
+    @ObservedObject private var viewModel: CheckboxSwiftUIViewViewModel
     @State var checkboxText: String
     @State var checkedState = false
 
     var attributedText: AttributedString?
     var hideCheckbox: Bool
-    var columnKind: FormField.ColumnKind
+    var columnKind: FormField.ColumnKind?
     var optional: Bool
     var columnName: String?
     var url: URL?
@@ -26,6 +35,8 @@ struct CheckboxSwiftUIView: View {
         return checkedState ? "1" : "0"
     }
     
+    weak var delegate: CheckboxSwiftUIViewDelegate?
+
 //    var isValid: Bool {
 //        if hideCheckbox {
 //            return true
@@ -33,14 +44,16 @@ struct CheckboxSwiftUIView: View {
 //        return optional ? true : viewModel.checkedState
 //    }
     
-    init (checkedState: Bool, text: String? = nil, attributedText: AttributedString? = nil, columnName: String?, columnKind: FormField.ColumnKind, url: URL? = nil, optional: Bool = false, hideCheckbox: Bool = false, checkValidity: @escaping CheckValidity) {
+    init (checkedState: Bool, text: String? = nil, attributedText: AttributedString? = nil, columnName: String?, columnKind: FormField.ColumnKind?, url: URL? = nil, delegate: CheckboxSwiftUIViewDelegate? = nil, optional: Bool = false, hideCheckbox: Bool = false, membershipPlan: CD_MembershipPlan? = nil, checkValidity: @escaping CheckValidity) {
         _checkedState = State(initialValue: checkedState)
         self._checkboxText = State(initialValue: text ?? "")
         self.columnName = columnName
         self.columnKind = columnKind
         self.url = url
+        self.delegate = delegate
         self.optional = optional
         self.hideCheckbox = hideCheckbox
+        self.viewModel = CheckboxSwiftUIViewViewModel(membershipPlan: membershipPlan)
         self.checkValidity = checkValidity
         
         guard let safeUrl = url, let attributedText = attributedText, let columnName = columnName else {
@@ -67,6 +80,8 @@ struct CheckboxSwiftUIView: View {
                 VStack {
                     Button(action: {
                         checkedState.toggle()
+                        guard let columnType = columnKind else { return }
+                        delegate?.checkboxView(self, value: String(checkedState), fieldType: columnType)
                         checkValidity()
                     }, label: {
                         ZStack {
@@ -94,6 +109,12 @@ struct CheckboxSwiftUIView: View {
             Spacer()
         }
         .padding(.bottom, columnName == L10n.tandcsLink ? 20 : 0)
+    }
+    
+    /// Should only be used when the API call triggered by the delegate method fails, and we need to revert the state
+    func reset() {
+        checkedState.toggle()
+//        configureCheckboxButton(forState: checkedState)
     }
 }
 

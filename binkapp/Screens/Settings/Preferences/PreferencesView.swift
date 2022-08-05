@@ -26,7 +26,7 @@ struct PreferencesView: View {
                     ForEach(viewModel.preferences, id: \.slug) { preference in
                         let checked: Bool = preference.value == "1"
                         let attributedString = preference.slug == "marketing-bink" ? AttributedString(L10n.preferencesMarketingCheckbox) : AttributedString(preference.label ?? "")
-                        CheckboxSwiftUIView(checkedState: checked, attributedText: attributedString, columnName: preference.slug, columnKind: .add, checkValidity: {})
+                        CheckboxSwiftUIView(checkedState: checked, attributedText: attributedString, columnName: preference.slug, columnKind: .add, delegate: viewModel, checkValidity: {})
 //                        if preference.slug == AutofillUtil.slug {
 //                            Current.userDefaults.set(checked, forDefaultsKey: .rememberMyDetails)
 //                        }
@@ -45,8 +45,8 @@ struct PreferencesView: View {
                     }
                     .padding(.bottom, 15)
 
-                    if viewModel.showErrorText {
-                        Text(L10n.preferencesRetrieveFail)
+                    if let errorText = viewModel.errorText {
+                        Text(errorText)
                             .foregroundColor(.red)
                             .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
                     }

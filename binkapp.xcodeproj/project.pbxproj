@@ -335,6 +335,7 @@
 		CE834A38289AD5E50046B024 /* ReusableTemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE834A37289AD5E50046B024 /* ReusableTemplateView.swift */; };
 		CE834A3D289C23430046B024 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE834A3C289C23430046B024 /* PreferencesView.swift */; };
 		CE834A3F289D1DF60046B024 /* CheckboxSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE834A3E289D1DF60046B024 /* CheckboxSwiftUIView.swift */; };
+		CE834A41289D6FAC0046B024 /* CheckboxSwiftUIViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE834A40289D6FAB0046B024 /* CheckboxSwiftUIViewViewModel.swift */; };
 		CE85A1D226A5DB43003B74CD /* EmailClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D126A5DB43003B74CD /* EmailClient.swift */; };
 		CE85A1D626A6CD97003B74CD /* LoginSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D526A6CD97003B74CD /* LoginSuccessViewController.swift */; };
 		CE85A1DB26B05D95003B74CD /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CE85A1DA26B05D95003B74CD /* Lottie */; };
@@ -1018,6 +1019,7 @@
 		CE834A37289AD5E50046B024 /* ReusableTemplateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableTemplateView.swift; sourceTree = "<group>"; };
 		CE834A3C289C23430046B024 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		CE834A3E289D1DF60046B024 /* CheckboxSwiftUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckboxSwiftUIView.swift; sourceTree = "<group>"; };
+		CE834A40289D6FAB0046B024 /* CheckboxSwiftUIViewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckboxSwiftUIViewViewModel.swift; sourceTree = "<group>"; };
 		CE85A1D126A5DB43003B74CD /* EmailClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailClient.swift; sourceTree = "<group>"; };
 		CE85A1D526A6CD97003B74CD /* LoginSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSuccessViewController.swift; sourceTree = "<group>"; };
 		CE85A1D726B0096A003B74CD /* UniversalLinkUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalLinkUtility.swift; sourceTree = "<group>"; };
@@ -1726,7 +1728,7 @@
 				70E39805256E8F4F009AD8CB /* BinkViewController.swift */,
 				CEA9057D25C81994000F69E1 /* BinkAlertController.swift */,
 				CE539DAD25E80C1100BDA5EF /* BinkTableViewController.swift */,
-				CE834A3E289D1DF60046B024 /* CheckboxSwiftUIView.swift */,
+				CE834A42289D6FBF0046B024 /* CheckboxViews */,
 			);
 			name = BinkUI;
 			path = Screens/BinkUI;
@@ -2480,6 +2482,15 @@
 				CE834A37289AD5E50046B024 /* ReusableTemplateView.swift */,
 			);
 			path = ReusableTemplateSwiftUIView;
+			sourceTree = "<group>";
+		};
+		CE834A42289D6FBF0046B024 /* CheckboxViews */ = {
+			isa = PBXGroup;
+			children = (
+				CE834A3E289D1DF60046B024 /* CheckboxSwiftUIView.swift */,
+				CE834A40289D6FAB0046B024 /* CheckboxSwiftUIViewViewModel.swift */,
+			);
+			path = CheckboxViews;
 			sourceTree = "<group>";
 		};
 		CE85A1FF26B1535B003B74CD /* Animations */ = {
@@ -3941,6 +3952,7 @@
 				70F7EC2625CAF950005DE935 /* WebScrapingUtilityError.swift in Sources */,
 				706D203C24D85B76004BCCF3 /* (null) in Sources */,
 				3CB81C13231E74220075D3AC /* ImageTypeEnum.swift in Sources */,
+				CE834A41289D6FAC0046B024 /* CheckboxSwiftUIViewViewModel.swift in Sources */,
 				EFEB5BF9237E062500E18743 /* PLRStampsCell.swift in Sources */,
 				3C2C90F623190A8700D112E3 /* KeyboardLayoutConstraint.swift in Sources */,
 				EF8BF1F6233E60AE00D2E5F3 /* Cache.swift in Sources */,

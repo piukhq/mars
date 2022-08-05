@@ -13,8 +13,8 @@ import UIKit
 //    func didReceivePreferences()
 //}
 
-class PreferencesViewModel: ObservableObject {
-    @Published var showErrorText = false
+class PreferencesViewModel: NSObject, ObservableObject, CheckboxSwiftUIViewDelegate {
+    @Published var errorText: String?
     @Published var preferences: [PreferencesModel] = []
     
     private let repository = PreferencesRepository()
@@ -49,7 +49,7 @@ class PreferencesViewModel: ObservableObject {
         repository.getPreferences(onSuccess: { (preferences) in
             self.preferences = preferences
         }) { _ in
-            self.showErrorText = true
+            self.errorText = L10n.preferencesRetrieveFail
         }
     }
     
@@ -79,5 +79,35 @@ class PreferencesViewModel: ObservableObject {
         
         let navigationRequest = AlertNavigationRequest(alertController: alert)
         Current.navigate.to(navigationRequest)
+    }
+    
+    func checkboxView(_ checkboxView: CheckboxSwiftUIView, value: String, fieldType: FormField.ColumnKind) {
+        guard Current.apiClient.networkIsReachable else {
+            presentNoConnectivityPopup()
+            checkboxView.reset()
+            return
+        }
+        guard let columnName = checkboxView.columnName else { return }
+        
+        let checkboxState = value == "true" ? "1" : "0"
+        let dictionary = ["columnName": checkboxState]
+        
+        if columnName == AutofillUtil.slug && value == "false" {
+            let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: L10n.preferencesClearCredentialsTitle, message: L10n.preferencesClearCredentialsBody, cancelButton: true) { [weak self] in
+                self?.clearStoredCredentials()
+            }
+            let navigationRequest = AlertNavigationRequest(alertController: alert)
+            Current.navigate.to(navigationRequest)
+        }
+
+        putPreferences(preferences: dictionary, onSuccess: { [weak self] in
+            self?.errorText = nil
+            if let _ = dictionary[AutofillUtil.slug] {
+                Current.userDefaults.set(Bool(value), forDefaultsKey: .rememberMyDetails)
+            }
+        }) { [weak self] _ in
+            checkboxView.reset()
+            self?.errorText = L10n.preferencesUpdateFail
+        }
     }
 }
