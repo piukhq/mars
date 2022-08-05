@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol PreferencesDelegate: AnyObject {
     func didReceivePreferences()
@@ -23,6 +24,26 @@ class PreferencesViewModel {
         }
     }
     
+    var descriptionText: AttributedString {
+        var attributedString = AttributedString(L10n.preferencesScreenDescription)
+        attributedString.font = .bodyTextLarge
+        if let rewardsRange = attributedString.range(of: L10n.preferencesPromptHighlightRewards) {
+            attributedString[rewardsRange].font = .subtitle
+        }
+        
+        addFontAttributeToRange(attributedString: &attributedString, in: L10n.preferencesPromptHighlightRewards)
+        addFontAttributeToRange(attributedString: &attributedString, in: L10n.preferencesPromptHighlightOffers)
+        addFontAttributeToRange(attributedString: &attributedString, in: L10n.preferencesPromptHighlightUpdates)
+
+        return attributedString
+    }
+    
+    private func addFontAttributeToRange(attributedString: inout AttributedString, in range: String) {
+        if let range = attributedString.range(of: range) {
+            attributedString[range].font = .subtitle
+        }
+    }
+
     func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping () -> Void) {
         guard repository.networkIsReachable else {
             presentNoConnectivityPopup()

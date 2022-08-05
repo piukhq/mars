@@ -21,7 +21,7 @@ struct PreferencesView: View {
                         .foregroundColor(Color(Current.themeManager.color(for: .text)))
                         .font(.custom(UIFont.headline.fontName, size: UIFont.headline.pointSize))
 
-                    Text("description")
+                    Text(viewModel.descriptionText)
                         .foregroundColor(Color(Current.themeManager.color(for: .text)))
                         .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
                     
