@@ -239,8 +239,11 @@ class BarcodeViewModel: ObservableObject {
             let dictionary = [L10n.alwaysShowBarcodePreference: checkedState]
             
             preferences.putPreferences(preferences: dictionary) {
-                MessageView.show(L10n.preferencesUpdated, type: .snackbar(.short))
-                MixpanelUtility.setUserProperty(.showBarcodeAlways(true))
+                if !UIApplication.isRunningUnitTests {
+                    MessageView.show(L10n.preferencesUpdated, type: .snackbar(.short))
+                    MixpanelUtility.setUserProperty(.showBarcodeAlways(true))
+                }
+                
                 Current.userDefaults.set(true, forDefaultsKey: .showBarcodeAlways)
                 self.setShouldAlwaysDisplayBarCode()
             } onError: { _ in
