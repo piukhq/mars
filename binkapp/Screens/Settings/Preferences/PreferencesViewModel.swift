@@ -9,20 +9,17 @@
 import Foundation
 import UIKit
 
-protocol PreferencesDelegate: AnyObject {
-    func didReceivePreferences()
-}
+//protocol PreferencesDelegate: AnyObject {
+//    func didReceivePreferences()
+//}
 
-class PreferencesViewModel {
+class PreferencesViewModel: ObservableObject {
+    @Published var showErrorText = false
+    @Published var preferences: [PreferencesModel] = []
+    
     private let repository = PreferencesRepository()
     
-    weak var delegate: PreferencesDelegate?
-    
-    var preferences: [PreferencesModel] = [] {
-        didSet {
-            delegate?.didReceivePreferences()
-        }
-    }
+//    weak var delegate: PreferencesDelegate?
     
     var descriptionText: AttributedString {
         var attributedString = AttributedString(L10n.preferencesScreenDescription)
@@ -44,16 +41,15 @@ class PreferencesViewModel {
         }
     }
 
-    func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping () -> Void) {
+    func getPreferences() {
         guard repository.networkIsReachable else {
             presentNoConnectivityPopup()
             return
         }
         repository.getPreferences(onSuccess: { (preferences) in
             self.preferences = preferences
-            onSuccess(preferences)
         }) { _ in
-            onError()
+            self.showErrorText = true
         }
     }
     

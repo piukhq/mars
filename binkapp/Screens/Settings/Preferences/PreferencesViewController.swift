@@ -69,12 +69,12 @@ class PreferencesViewController: BinkViewController {
         
         descriptionLabel.attributedText = attributedString
         
-        viewModel.getPreferences(onSuccess: { [weak self] (preferences) in
-            self?.createCheckboxes(preferences: preferences)
-        }) { [weak self] in
-            self?.errorLabel.text = L10n.preferencesRetrieveFail
-            self?.errorLabel.isHidden = false
-        }
+//        viewModel.getPreferences(onSuccess: { [weak self] (preferences) in
+//            self?.createCheckboxes(preferences: preferences)
+//        }) { [weak self] in
+//            self?.errorLabel.text = L10n.preferencesRetrieveFail
+//            self?.errorLabel.isHidden = false
+//        }
     }
     
     private func createCheckboxes(preferences: [PreferencesModel]) {
