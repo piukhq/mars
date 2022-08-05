@@ -119,7 +119,7 @@ struct BarcodeScreenSwiftUIView: View {
                     
                     if !viewModel.isBarcodeAvailable {
                         if !viewModel.alwaysShowBarcode {
-                            Spacer(minLength: 40)
+                            Spacer(minLength: 30)
                             /// show always
                             ShowAnywayButtonSwiftUIView(viewModel: viewModel)
                         }
