@@ -27,6 +27,18 @@ struct PreferencesView: View {
                     
                     Spacer()
                         .frame(height: 30)
+                    
+                    Button {
+                        viewModel.clearStoredCredentials()
+                    } label: {
+                        Text(L10n.preferencesClearCredentialsTitle)
+                            .font(.custom(UIFont.linkUnderlined.fontName, size: UIFont.linkUnderlined.pointSize))
+                            .foregroundColor(Color(UIColor.blueAccent))
+                            .underline()
+                    }
+                    .padding(.bottom, 15)
+
+                    
                     Text(errorText)
                         .foregroundColor(.red)
                         .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
