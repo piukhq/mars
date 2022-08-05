@@ -140,7 +140,6 @@ class BarcodeViewModelTests: XCTestCase, CoreDataTestable {
 
 class MockPreferencesRepository: PreferencesProtocol {
     func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping (BinkError?) -> Void) {
-        
     }
     
     func putPreferences(preferences: [String: String], onSuccess: @escaping () -> Void, onError: @escaping (BinkError) -> Void) {

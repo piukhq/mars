@@ -668,6 +668,8 @@ internal enum L10n {
   internal static let preferencesScreenDescription = L10n.tr("Localizable", "preferences_screen_description")
   /// We can't update your preferences at the moment. Please try again later.
   internal static let preferencesUpdateFail = L10n.tr("Localizable", "preferences_update_fail")
+  /// Preferences Updated
+  internal static let preferencesUpdated = L10n.tr("Localizable", "preferences_updated")
   /// Press for directions
   internal static let pressForDirections = L10n.tr("Localizable", "press_for_directions")
   /// Privacy Policy
