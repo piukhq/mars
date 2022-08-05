@@ -49,7 +49,7 @@ struct ShowAnywayButtonSwiftUIView: View {
                 .padding(.bottom, Constants.showingBarcodeBottomPaddingOffset)
                 
                 HStack {
-                    Text(L10n.showBarcodeBody)
+                    Text(.init(L10n.showBarcodeBody))
                         .padding()
                         .padding(.top, Constants.descriptionTopPaddingOffset)
                         .foregroundColor(.white)

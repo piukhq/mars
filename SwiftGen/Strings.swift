@@ -810,7 +810,7 @@ internal enum L10n {
   internal static let settingsWhoWeAreTitle = L10n.tr("Localizable", "settings_who_we_are_title")
   /// For some brands, we do not automatically display a barcode if you add your loyalty card manually (without scanning). This is because we cannot guarantee it will work in store.
   /// 
-  /// Press here to show barcode anyway
+  /// **Press here** to show barcode anyway
   internal static let showBarcodeBody = L10n.tr("Localizable", "show_barcode_body")
   /// Showing Barcode
   internal static let showBarcodeTitle = L10n.tr("Localizable", "show_barcode_title")
