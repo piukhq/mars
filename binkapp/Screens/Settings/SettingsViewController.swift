@@ -222,13 +222,13 @@ extension SettingsViewController: UITableViewDelegate {
         }
     }
 }
-
-extension SettingsViewController: FeatureFlagsViewControllerDelegate {
-    func featureFlagsViewDidDismiss() {
-        tableView.reloadData()
-    }
-    
-    func featureFlagsViewControllerDidDismiss(_ featureFlagsViewController: FeatureFlagsTableViewController) {
-        tableView.reloadData()
-    }
-}
+//
+//extension SettingsViewController: FeatureFlagsViewControllerDelegate {
+//    func featureFlagsViewDidDismiss() {
+//        tableView.reloadData()
+//    }
+//    
+//    func featureFlagsViewControllerDidDismiss(_ featureFlagsViewController: FeatureFlagsTableViewController) {
+//        tableView.reloadData()
+//    }
+//}

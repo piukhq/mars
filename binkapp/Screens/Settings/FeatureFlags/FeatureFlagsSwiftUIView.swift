@@ -10,13 +10,10 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct FeatureFlagsSwiftUIView: View {
-    private let features = Current.featureManager.features ?? []
-    private weak var delegate: FeatureFlagsViewControllerDelegate?
-    
     @ObservedObject private var themeManager = Current.themeManager
-    
-    init(delegate: FeatureFlagsViewControllerDelegate? = nil) {
-        self.delegate = delegate
+    private let features = Current.featureManager.features ?? []
+        
+    init() {
         UITableView.appearance().backgroundColor = .clear
     }
     
@@ -33,9 +30,6 @@ struct FeatureFlagsSwiftUIView: View {
         .background(Color(themeManager.color(for: .insetGroupedTableBackground)))
         .ignoresSafeArea(.all, edges: .bottom)
         .navigationTitle("Feature Flags")
-        .onDisappear {
-            delegate?.featureFlagsViewDidDismiss()
-        }
     }
 }
 

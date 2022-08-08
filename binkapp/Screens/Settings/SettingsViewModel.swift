@@ -6,25 +6,28 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
+import Combine
 import SwiftUI
 import UIKit
 
-class SettingsViewModel: UserServiceProtocol {
+class SettingsViewModel: ObservableObject, UserServiceProtocol {
     private enum Constants {
         static let privacyPolicyUrl = "https://bink.com/privacy-policy/"
         static let termsAndConditionsUrl = "https://bink.com/terms-and-conditions/"
     }
     
-    private let factory: SettingsFactory
+    @Published var sections: [SettingsSection]
+    private var featureSubscriber: AnyCancellable?
     
     init(rowsWithActionRequired: [SettingsRow.RowType]?) {
-        factory = SettingsFactory(rowsWithActionRequired: rowsWithActionRequired)
+        let factory = SettingsFactory(rowsWithActionRequired: rowsWithActionRequired)
+        sections = factory.sectionData()
+        
+        featureSubscriber = Current.featureManager.$featuresDidUpdate.sink(receiveValue: { [weak self] _ in
+            self?.sections = factory.sectionData()
+        })
     }
-    
-    var sections: [SettingsSection] {
-        return factory.sectionData()
-    }
-    
+        
     var title: String {
         return L10n.settingsTitle
     }
@@ -139,7 +142,7 @@ class SettingsViewModel: UserServiceProtocol {
                 BinkSupportUtility.launchContactSupport()
             }
         case .delete:
-                handleRowActionForAccountDeletion()
+            handleRowActionForAccountDeletion()
         }
     }
     

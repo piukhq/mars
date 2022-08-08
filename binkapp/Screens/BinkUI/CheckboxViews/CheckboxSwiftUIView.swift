@@ -17,7 +17,7 @@ struct CheckboxSwiftUIView: View {
             viewModel.checkedState.toggle()
             checkboxSelected()
         }, label: {
-            HStack(alignment: .top, spacing: 10) {
+            HStack(alignment: .center, spacing: 10) {
                 if !viewModel.hideCheckbox {
                     ZStack {
                         RoundedRectangle(cornerRadius: 4, style: .continuous)

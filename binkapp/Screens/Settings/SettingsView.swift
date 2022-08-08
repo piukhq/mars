@@ -14,7 +14,7 @@ struct SettingsView: View {
         static let footerPadding: CGFloat = 40.0
     }
     
-    let viewModel: SettingsViewModel
+    @ObservedObject var viewModel: SettingsViewModel
     
     var body: some View {
         ScrollView {
