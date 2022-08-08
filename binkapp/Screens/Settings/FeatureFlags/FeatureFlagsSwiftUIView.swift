@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct FeatureFlagsSwiftUIView: View {
     @ObservedObject private var themeManager = Current.themeManager
     private let features = Current.featureManager.features ?? []
@@ -33,7 +32,6 @@ struct FeatureFlagsSwiftUIView: View {
     }
 }
 
-@available(iOS 14.0, *)
 struct FeatureFlagCell: View {
     private var feature: BetaFeature
 
@@ -61,7 +59,6 @@ struct FeatureFlagCell: View {
     }
 }
 
-@available(iOS 14.0, *)
 struct FeatureFlagsSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
         FeatureFlagsSwiftUIView()
