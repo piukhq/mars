@@ -9,17 +9,12 @@
 import Foundation
 import UIKit
 
-//protocol PreferencesDelegate: AnyObject {
-//    func didReceivePreferences()
-//}
-
-class PreferencesViewModel: NSObject, ObservableObject, CheckboxSwiftUIViewDelegate {
+class PreferencesViewModel: NSObject, ObservableObject {
     @Published var errorText: String?
     @Published var preferences: [PreferencesModel] = []
-    
+    @Published var checkboxViewModels: [CheckboxViewModel] = []
+
     private let repository = PreferencesRepository()
-    
-//    weak var delegate: PreferencesDelegate?
     
     var descriptionText: AttributedString {
         var attributedString = AttributedString(L10n.preferencesScreenDescription)
@@ -46,8 +41,17 @@ class PreferencesViewModel: NSObject, ObservableObject, CheckboxSwiftUIViewDeleg
             presentNoConnectivityPopup()
             return
         }
-        repository.getPreferences(onSuccess: { (preferences) in
-            self.preferences = preferences
+        repository.getPreferences(onSuccess: { preferences in
+            preferences.forEach { preference in
+                let checked: Bool = preference.value == "1"
+                let attributedString = preference.slug == "marketing-bink" ? AttributedString(L10n.preferencesMarketingCheckbox) : AttributedString(preference.label ?? "")
+                let viewModel = CheckboxViewModel(checkedState: checked, attributedText: attributedString, columnName: preference.slug, columnKind: .add)
+                self.checkboxViewModels.append(viewModel)
+                
+                if preference.slug == AutofillUtil.slug {
+                    Current.userDefaults.set(checked, forDefaultsKey: .rememberMyDetails)
+                }
+            }
         }) { _ in
             self.errorText = L10n.preferencesRetrieveFail
         }
@@ -81,18 +85,18 @@ class PreferencesViewModel: NSObject, ObservableObject, CheckboxSwiftUIViewDeleg
         Current.navigate.to(navigationRequest)
     }
     
-    func checkboxView(_ checkboxView: CheckboxSwiftUIView, value: String, fieldType: FormField.ColumnKind) {
+    func checkboxViewWasToggled(_ checkboxViewModel: CheckboxViewModel) {
         guard Current.apiClient.networkIsReachable else {
             presentNoConnectivityPopup()
-            checkboxView.reset()
+            checkboxViewModel.reset()
             return
         }
-        guard let columnName = checkboxView.columnName else { return }
-        
-        let checkboxState = value == "true" ? "1" : "0"
-        let dictionary = ["columnName": checkboxState]
-        
-        if columnName == AutofillUtil.slug && value == "false" {
+        guard let columnName = checkboxViewModel.columnName else { return }
+
+        let checkboxState = checkboxViewModel.checkedState ? "1" : "0"
+        let dictionary = [columnName: checkboxState]
+
+        if columnName == AutofillUtil.slug && checkboxViewModel.checkedState == false {
             let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: L10n.preferencesClearCredentialsTitle, message: L10n.preferencesClearCredentialsBody, cancelButton: true) { [weak self] in
                 self?.clearStoredCredentials()
             }
@@ -103,10 +107,10 @@ class PreferencesViewModel: NSObject, ObservableObject, CheckboxSwiftUIViewDeleg
         putPreferences(preferences: dictionary, onSuccess: { [weak self] in
             self?.errorText = nil
             if let _ = dictionary[AutofillUtil.slug] {
-                Current.userDefaults.set(Bool(value), forDefaultsKey: .rememberMyDetails)
+                Current.userDefaults.set(checkboxViewModel.checkedState, forDefaultsKey: .rememberMyDetails)
             }
         }) { [weak self] _ in
-            checkboxView.reset()
+            checkboxViewModel.reset()
             self?.errorText = L10n.preferencesUpdateFail
         }
     }
