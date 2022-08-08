@@ -10,40 +10,40 @@ import SwiftUI
 
 struct CheckboxSwiftUIView: View {
     @ObservedObject var viewModel: CheckboxViewModel
+    var checkboxSelected: () -> Void
 
-    var body: some View {
-        HStack(alignment: .top, spacing: 10) {
-            if !viewModel.hideCheckbox {
-                VStack {
-                    Button(action: {
-                        viewModel.buttonTapped = true
-                        viewModel.checkedState.toggle()
-                    }, label: {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 4, style: .continuous)
-                                .fill(viewModel.checkedState ? Color.black : Color((.systemGray.lighter() ?? .systemGray)))
-                                .frame(width: 22, height: 22)
-                            
-                            if viewModel.checkedState {
-                                Image(Asset.checkmark.name)
-                                    .resizable()
-                                    .frame(width: 15, height: 15, alignment: .center)
-                                    .foregroundColor(.white)
-                            } else {
-                                RoundedRectangle(cornerRadius: 2.7, style: .continuous)
-                                    .fill(Color.white)
-                                    .frame(width: 18, height: 18)
-                            }
+    var body: some View {    
+        Button(action: {
+            viewModel.checkedState.toggle()
+            checkboxSelected()
+        }, label: {
+            HStack(alignment: .top, spacing: 10) {
+                if !viewModel.hideCheckbox {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 4, style: .continuous)
+                            .fill(viewModel.checkedState ? Color.black : Color((.systemGray.lighter() ?? .systemGray)))
+                            .frame(width: 22, height: 22)
+                        
+                        if viewModel.checkedState {
+                            Image(Asset.checkmark.name)
+                                .resizable()
+                                .frame(width: 15, height: 15, alignment: .center)
+                                .foregroundColor(.white)
+                        } else {
+                            RoundedRectangle(cornerRadius: 2.7, style: .continuous)
+                                .fill(Color.white)
+                                .frame(width: 18, height: 18)
                         }
-                    })
+                    }
                 }
+                
+                Text(viewModel.attributedText ?? AttributedString(viewModel.checkboxText))
+                    .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
+                    .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                    .multilineTextAlignment(.leading)
+                Spacer()
             }
-            Text(viewModel.attributedText ?? AttributedString(viewModel.checkboxText))
-                .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
-//            TextWithAttributedString(attributedText: attributedText ?? NSAttributedString(string: checkboxText), url: $viewModel.url)
-            Spacer()
-        }
-        .padding(.bottom, viewModel.columnName == L10n.tandcsLink ? 20 : 0)
+        })
     }
 }
 
@@ -51,9 +51,9 @@ struct CheckboxSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             let viewModel = CheckboxViewModel(checkedState: true, text: "Check this box to receive money off promotion, special offers and information on latest deals and more from Iceland by email", columnName: nil, columnKind: .planDocument, url: URL(string: ""), optional: false, hideCheckbox: false)
-            CheckboxSwiftUIView(viewModel: viewModel)
-//            CheckboxSwiftUIView(checkedState: false, text: "I accept the Retailer terms and conditions", columnName: "Retailer terms and conditions", columnKind: .planDocument, url: URL(string: "www.apple.com"), optional: false, hideCheckbox: false, checkValidity: {})
-//            CheckboxSwiftUIView(checkedState: true, text: "I accept the Iceland privacy policy", columnName: "Iceland privacy policy", columnKind: .planDocument, url: URL(string: "www.apple.com"), optional: false, hideCheckbox: false, checkValidity: {})
+            CheckboxSwiftUIView(viewModel: viewModel, checkboxSelected: {})
+            let viewModel2 = CheckboxViewModel(checkedState: false, text: "I accept the Retailer terms and conditions", columnName: "Retailer terms and conditions", columnKind: .planDocument, url: URL(string: "www.apple.com"), optional: false, hideCheckbox: false)
+            CheckboxSwiftUIView(viewModel: viewModel2, checkboxSelected: {})
         }
     }
 }

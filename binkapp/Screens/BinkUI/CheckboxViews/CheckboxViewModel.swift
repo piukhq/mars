@@ -11,7 +11,6 @@ import SwiftUI
 class CheckboxViewModel: ObservableObject, Identifiable {
     @Published var checkboxText: String
     @Published var checkedState = false
-    @Published var buttonTapped = false
 
     var attributedText: AttributedString?
     var hideCheckbox: Bool

@@ -22,17 +22,17 @@ struct PreferencesView: View {
                     Text(viewModel.descriptionText)
                         .foregroundColor(Color(Current.themeManager.color(for: .text)))
                         .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
+                        .padding(.bottom, 15)
                     
                     ForEach(viewModel.checkboxViewModels, id: \.columnName) { viewModel in
-                        CheckboxSwiftUIView(viewModel: viewModel)
-                            .onReceive(viewModel.$buttonTapped) { tapped in
-                                guard tapped else { return }
-                                self.viewModel.checkboxViewWasToggled(viewModel)
-                            }
+                        CheckboxSwiftUIView(viewModel: viewModel) {
+                            self.viewModel.checkboxViewWasToggled(viewModel)
+                        }
+                        .padding(.bottom, 15)
                     }
                     
                     Spacer()
-                        .frame(height: 30)
+                        .frame(height: 20)
                     
                     Button {
                         viewModel.clearStoredCredentials()
@@ -60,7 +60,7 @@ struct PreferencesView: View {
             }
         }
         .background(Color(Current.themeManager.color(for: .viewBackground)))
-    }    
+    }
 }
 
 struct PreferencesView_Previews: PreviewProvider {
