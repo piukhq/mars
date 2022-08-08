@@ -336,6 +336,7 @@
 		CE834A3D289C23430046B024 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE834A3C289C23430046B024 /* PreferencesView.swift */; };
 		CE834A3F289D1DF60046B024 /* CheckboxSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE834A3E289D1DF60046B024 /* CheckboxSwiftUIView.swift */; };
 		CE834A41289D6FAC0046B024 /* CheckboxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE834A40289D6FAB0046B024 /* CheckboxViewModel.swift */; };
+		CE834A4428A150640046B024 /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE834A4328A150630046B024 /* ViewModifiers.swift */; };
 		CE85A1D226A5DB43003B74CD /* EmailClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D126A5DB43003B74CD /* EmailClient.swift */; };
 		CE85A1D626A6CD97003B74CD /* LoginSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D526A6CD97003B74CD /* LoginSuccessViewController.swift */; };
 		CE85A1DB26B05D95003B74CD /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = CE85A1DA26B05D95003B74CD /* Lottie */; };
@@ -1020,6 +1021,7 @@
 		CE834A3C289C23430046B024 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		CE834A3E289D1DF60046B024 /* CheckboxSwiftUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckboxSwiftUIView.swift; sourceTree = "<group>"; };
 		CE834A40289D6FAB0046B024 /* CheckboxViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckboxViewModel.swift; sourceTree = "<group>"; };
+		CE834A4328A150630046B024 /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
 		CE85A1D126A5DB43003B74CD /* EmailClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailClient.swift; sourceTree = "<group>"; };
 		CE85A1D526A6CD97003B74CD /* LoginSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSuccessViewController.swift; sourceTree = "<group>"; };
 		CE85A1D726B0096A003B74CD /* UniversalLinkUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalLinkUtility.swift; sourceTree = "<group>"; };
@@ -2004,6 +2006,7 @@
 				701E2C492677567E003F903B /* DebugMenuView.swift */,
 				CE518D8727E4818200A36E90 /* HighVisibilityLabelView.swift */,
 				CE834A39289BE0540046B024 /* ReusableTemplateSwiftUIView */,
+				CE834A4328A150630046B024 /* ViewModifiers.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -3935,6 +3938,7 @@
 				3CF054CE22FD7DC80069E98A /* UIView+Extension.swift in Sources */,
 				EF7B65D6232FDB8A0025D167 /* FieldChoice.swift in Sources */,
 				EFA5F7552379AAB20027AB80 /* _CD_VoucherBurn.swift in Sources */,
+				CE834A4428A150640046B024 /* ViewModifiers.swift in Sources */,
 				70EB83882644410A00DD8935 /* LoginController.swift in Sources */,
 				EFBDB103237B1468002D7898 /* CALayerExtension.swift in Sources */,
 				EFA5F7212379A7C70027AB80 /* _CD_FieldChoice.swift in Sources */,

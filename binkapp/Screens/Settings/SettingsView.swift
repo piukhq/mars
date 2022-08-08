@@ -42,11 +42,11 @@ struct SettingsView: View {
                 HStack {
                     Spacer()
                     VStack(alignment: .center) {
-                        Text(Current.userManager.currentEmailAddress ?? "@gmail.com") /// Remove test strng <<<<<<<<<<<<<<<<<<<<<<<<<
-                            .font(.custom(UIFont.navbarHeaderLine2.fontName, size: UIFont.navbarHeaderLine2.pointSize))
+                        Text(Current.userManager.currentEmailAddress ?? "") /// Remove test strng <<<<<<<<<<<<<<<<<<<<<<<<<
+                            .uiFont(.navbarHeaderLine2)
                             .foregroundColor(Color(UIColor.systemGray))
                         Text("Bink v\(Bundle.shortVersionNumber ?? "") \(Bundle.bundleVersion ?? "")")
-                            .font(.custom(UIFont.navbarHeaderLine2.fontName, size: UIFont.navbarHeaderLine2.pointSize))
+                            .uiFont(.navbarHeaderLine2)
                             .foregroundColor(Color(UIColor.systemGray))
                     }
                     Spacer()
@@ -67,7 +67,7 @@ struct SettingsHeaderView: View {
     var body: some View {
         HStack {
             Text(title)
-                .font(.custom(UIFont.headline.fontName, size: UIFont.headline.pointSize))
+                .uiFont(.headline)
                 .foregroundColor(Color(UIColor.binkBlueTitleText))
 
             Spacer()
@@ -98,10 +98,10 @@ struct SettingsRowView: View {
                     VStack(alignment: .leading) {
                         Text(rowData.title)
                             .foregroundColor(Color(Current.themeManager.color(for: .text)))
-                            .font(.custom(UIFont.subtitle.fontName, size: UIFont.subtitle.pointSize))
+                            .uiFont(.subtitle)
                         if let subtitle = rowData.subtitle {
                             Text(subtitle)
-                                .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
+                                .uiFont(.bodyTextLarge)
                                 .foregroundColor(Color(Current.themeManager.color(for: .text)))
                         }
                     }

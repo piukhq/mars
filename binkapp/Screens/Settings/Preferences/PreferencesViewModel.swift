@@ -16,6 +16,11 @@ class PreferencesViewModel: NSObject, ObservableObject {
 
     private let repository = PreferencesRepository()
     
+    override init() {
+        super.init()
+        getPreferences()
+    }
+    
     var descriptionText: AttributedString {
         var attributedString = AttributedString(L10n.preferencesScreenDescription)
         attributedString.font = .bodyTextLarge

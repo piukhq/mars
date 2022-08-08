@@ -12,7 +12,7 @@ struct CheckboxSwiftUIView: View {
     @ObservedObject var viewModel: CheckboxViewModel
     var checkboxSelected: () -> Void
 
-    var body: some View {    
+    var body: some View {
         Button(action: {
             viewModel.checkedState.toggle()
             checkboxSelected()
@@ -38,7 +38,7 @@ struct CheckboxSwiftUIView: View {
                 }
                 
                 Text(viewModel.attributedText ?? AttributedString(viewModel.checkboxText))
-                    .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
+                    .uiFont(.bodyTextSmall)
                     .foregroundColor(Color(Current.themeManager.color(for: .text)))
                     .multilineTextAlignment(.leading)
                 Spacer()

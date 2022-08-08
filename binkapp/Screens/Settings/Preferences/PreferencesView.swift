@@ -17,11 +17,11 @@ struct PreferencesView: View {
                 VStack(alignment: .leading) {
                     Text(L10n.settingsRowPreferencesTitle)
                         .foregroundColor(Color(Current.themeManager.color(for: .text)))
-                        .font(.custom(UIFont.headline.fontName, size: UIFont.headline.pointSize))
+                        .uiFont(.headline)
 
                     Text(viewModel.descriptionText)
                         .foregroundColor(Color(Current.themeManager.color(for: .text)))
-                        .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
+                        .uiFont(.bodyTextLarge)
                         .padding(.bottom, 15)
                     
                     ForEach(viewModel.checkboxViewModels, id: \.columnName) { viewModel in
@@ -38,23 +38,20 @@ struct PreferencesView: View {
                         viewModel.clearStoredCredentials()
                     } label: {
                         Text(L10n.preferencesClearCredentialsTitle)
-                            .font(.custom(UIFont.linkUnderlined.fontName, size: UIFont.linkUnderlined.pointSize))
-                            .foregroundColor(Color(UIColor.blueAccent))
                             .underline()
+                            .uiFont(.linkUnderlined)
+                            .foregroundColor(Color(UIColor.blueAccent))
                     }
                     .padding(.bottom, 15)
 
                     if let errorText = viewModel.errorText {
                         Text(errorText)
                             .foregroundColor(.red)
-                            .font(.custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize))
+                            .uiFont(.bodyTextSmall)
                     }
                 }
                 .padding(.horizontal, 25)
                 .padding(.top, 20)
-                .onAppear {
-                    viewModel.getPreferences()
-                }
                 
                 Spacer()
             }

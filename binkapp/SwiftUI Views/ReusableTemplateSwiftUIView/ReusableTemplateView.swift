@@ -17,14 +17,14 @@ struct ReusableTemplateView: View {
             VStack(alignment: .leading) {
                 Text(title)
                     .foregroundColor(Color(Current.themeManager.color(for: .text)))
-                    .font(.custom(UIFont.headline.fontName, size: UIFont.headline.pointSize))
+                    .uiFont(.headline)
 
                 Text(description)
                     .foregroundColor(Color(Current.themeManager.color(for: .text)))
-                    .font(.custom(UIFont.bodyTextLarge.fontName, size: UIFont.bodyTextLarge.pointSize))
+                    .uiFont(.bodyTextLarge)
             }
             .padding(.horizontal, 25)
-            .padding(.top, 20)
+            .padding(.top, 10)
         }
         .background(Color(Current.themeManager.color(for: .viewBackground)))
     }
