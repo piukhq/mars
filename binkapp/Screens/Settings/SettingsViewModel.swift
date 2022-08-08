@@ -110,7 +110,7 @@ class SettingsViewModel: ObservableObject, UserServiceProtocol {
             case .whoWeAre:
                 navigate(to: WhoWeAreSwiftUIView())
             case .featureFlags:
-                navigate(to: FeatureFlagsSwiftUIView()) /// <<<<<<<<<<< Do we need delegate to refresh settings list after feature flags have updated
+                navigate(to: FeatureFlagsSwiftUIView())
             case .debug:
                 navigate(to: DebugMenuView())
             case .securityAndPrivacy:
