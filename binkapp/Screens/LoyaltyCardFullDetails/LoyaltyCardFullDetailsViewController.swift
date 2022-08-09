@@ -105,6 +105,56 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         return stackView
     }()
     
+    private lazy var locationView: UIView = {
+        let view = UIView()
+        view.isUserInteractionEnabled = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
+        view.layer.cornerRadius = Constants.cornerRadius
+        view.clipsToBounds = false
+        view.layer.applyDefaultBinkShadow()
+        let gestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(showMapLocations))
+        view.addGestureRecognizer(gestureRecogniser)
+        return view
+    }()
+    
+    private lazy var locationImage: UIImageView = {
+        // RS = using a gif at the moment. This asset might not be final
+        let image = UIImage.gifImageWithName("place-marker")
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = Constants.cornerRadius
+        imageView.clipsToBounds = true
+        imageView.animationImages = image?.images
+        imageView.animationRepeatCount = 1
+        imageView.animationDuration = 2.5
+        imageView.image = image?.images?.last
+        imageView.tintColor = Current.themeManager.color(for: .walletCardBackground)
+        imageView.startAnimating()
+        return imageView
+    }()
+    
+    private lazy var showLocationsText: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = L10n.showTescoLocations
+        label.font = .navBar
+        label.textAlignment = .left
+        label.textColor = Current.themeManager.color(for: .text)
+        return label
+    }()
+    
+    private lazy var nearestStoresText: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = L10n.findNearestStore
+        label.textAlignment = .left
+        label.font = .bodyTextLarge
+        label.textColor = Current.themeManager.color(for: .text)
+        return label
+    }()
+    
     lazy var separator: UIView = {
         let separator = UIView()
         separator.translatesAutoresizingMaskIntoConstraints = false
@@ -291,6 +341,34 @@ private extension LoyaltyCardFullDetailsViewController {
             ])
         }
         
+        if viewModel.shouldDisplayLocationOption {
+            // Build locations
+            stackScrollView.add(arrangedSubview: locationView)
+            stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: locationView)
+            
+            locationView.addSubview(locationImage)
+            locationView.addSubview(showLocationsText)
+            locationView.addSubview(nearestStoresText)
+            NSLayoutConstraint.activate([
+                locationView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
+                locationView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
+                locationView.heightAnchor.constraint(equalToConstant: LayoutHelper.GeoLocationCallout.locationViewHeight),
+                
+                showLocationsText.rightAnchor.constraint(equalTo: locationView.rightAnchor, constant: -LayoutHelper.GeoLocationCallout.locationsTextRightOffset),
+                showLocationsText.topAnchor.constraint(equalTo: locationView.topAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextTopOffset),
+                showLocationsText.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextLeftOffset),
+
+                nearestStoresText.rightAnchor.constraint(equalTo: locationView.rightAnchor, constant: -LayoutHelper.GeoLocationCallout.nearestStoresTextRightOffset),
+                nearestStoresText.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.nearestStoresTextBottomOffset),
+                nearestStoresText.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextLeftOffset),
+                
+                locationImage.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset),
+                locationImage.topAnchor.constraint(equalTo: locationView.topAnchor, constant: LayoutHelper.GeoLocationCallout.locationImageVerticalOffset),
+                locationImage.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageVerticalOffset),
+                locationImage.rightAnchor.constraint(equalTo: nearestStoresText.leftAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset)
+            ])
+        }
+        
         stackScrollView.add(arrangedSubview: separator)
         stackScrollView.add(arrangedSubview: informationTableView)
         
@@ -439,6 +517,10 @@ private extension LoyaltyCardFullDetailsViewController {
     
     @objc func showBarcodeButtonPressed() {
         viewModel.toBarcodeModel()
+    }
+    
+    @objc func showMapLocations() {
+        viewModel.toGeoLocations()
     }
     
     private func setPadding(animated: Bool = true) {

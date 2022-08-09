@@ -21,7 +21,17 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		212F0C442876EB7E007F09CE /* CalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C432876EB7E007F09CE /* CalloutView.swift */; };
+		212F0C462876EC63007F09CE /* GeoLocationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */; };
 		21393EFB285A1E1C002C8E79 /* StringHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21393EFA285A1E1C002C8E79 /* StringHelperTests.swift */; };
+		21497EC82864A1880053A9EE /* OptionItemListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21497EC72864A1880053A9EE /* OptionItemListViewController.swift */; };
+		21497ECD2869BE2E0053A9EE /* SortStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21497ECC2869BE2E0053A9EE /* SortStateTests.swift */; };
+		214EC01F28732020000A3F73 /* GifLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC01E28732020000A3F73 /* GifLoader.swift */; };
+		214EC021287320FD000A3F73 /* place-marker.gif in Resources */ = {isa = PBXBuildFile; fileRef = 214EC020287320FD000A3F73 /* place-marker.gif */; };
+		214EC02628734B45000A3F73 /* GeoLocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02528734B45000A3F73 /* GeoLocationsViewController.swift */; };
+		214EC02928743165000A3F73 /* GeoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02828743165000A3F73 /* GeoModel.swift */; };
+		214EC02E28743883000A3F73 /* GeoLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02D28743883000A3F73 /* GeoLocationViewModel.swift */; };
+		21CE710C2872F2C3003EC968 /* tesco-locations.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 21CE710B2872F2C2003EC968 /* tesco-locations.geojson */; };
 		3C05A9DC2327CD3D00620583 /* AppDelegate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DB2327CD3D00620583 /* AppDelegate+Extension.swift */; };
 		3C05A9DE2327CE6300620583 /* PaymentCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DD2327CE6300620583 /* PaymentCardModel.swift */; };
 		3C05A9E02327D35100620583 /* PortraitNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DF2327D35100620583 /* PortraitNavigationController.swift */; };
@@ -667,8 +677,18 @@
 
 /* Begin PBXFileReference section */
 		0578BBF342AD2E4F349D1822 /* Pods_binkappUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		212F0C432876EB7E007F09CE /* CalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalloutView.swift; sourceTree = "<group>"; };
+		212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationModelTests.swift; sourceTree = "<group>"; };
 		21393EFA285A1E1C002C8E79 /* StringHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHelperTests.swift; sourceTree = "<group>"; };
 		2144647F3F7FD0825EAA4342 /* Pods-binkapp-binkappUITests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp-binkappUITests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkapp-binkappUITests/Pods-binkapp-binkappUITests.app store (internal).xcconfig"; sourceTree = "<group>"; };
+		21497EC72864A1880053A9EE /* OptionItemListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionItemListViewController.swift; sourceTree = "<group>"; };
+		21497ECC2869BE2E0053A9EE /* SortStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortStateTests.swift; sourceTree = "<group>"; };
+		214EC01E28732020000A3F73 /* GifLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifLoader.swift; sourceTree = "<group>"; };
+		214EC020287320FD000A3F73 /* place-marker.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "place-marker.gif"; sourceTree = "<group>"; };
+		214EC02528734B45000A3F73 /* GeoLocationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationsViewController.swift; sourceTree = "<group>"; };
+		214EC02828743165000A3F73 /* GeoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoModel.swift; sourceTree = "<group>"; };
+		214EC02D28743883000A3F73 /* GeoLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationViewModel.swift; sourceTree = "<group>"; };
+		21CE710B2872F2C2003EC968 /* tesco-locations.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "tesco-locations.geojson"; sourceTree = "<group>"; };
 		2211289D0FB0F1A14BC9E957 /* Pods-binkapp.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.beta.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.beta.xcconfig"; sourceTree = "<group>"; };
 		26F00637A9D94FD020319165 /* Pods-binkappUITests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.app store (internal).xcconfig"; sourceTree = "<group>"; };
 		352CBEDF33DDEB7B603C909B /* Pods_binkappTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1303,6 +1323,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		21497EC62864A0CD0053A9EE /* Popup */ = {
+			isa = PBXGroup;
+			children = (
+				21497EC72864A1880053A9EE /* OptionItemListViewController.swift */,
+			);
+			path = Popup;
+			sourceTree = "<group>";
+		};
+		21497ECB2869BDF20053A9EE /* Loyalty */ = {
+			isa = PBXGroup;
+			children = (
+				21497ECC2869BE2E0053A9EE /* SortStateTests.swift */,
+			);
+			path = Loyalty;
+			sourceTree = "<group>";
+		};
+		214EC0272874313A000A3F73 /* GeoLocation */ = {
+			isa = PBXGroup;
+			children = (
+				214EC02528734B45000A3F73 /* GeoLocationsViewController.swift */,
+				214EC02828743165000A3F73 /* GeoModel.swift */,
+				214EC02D28743883000A3F73 /* GeoLocationViewModel.swift */,
+				212F0C432876EB7E007F09CE /* CalloutView.swift */,
+			);
+			path = GeoLocation;
+			sourceTree = "<group>";
+		};
 		3C0EEE7722FC64F9006FAE5E /* BarcodeModal */ = {
 			isa = PBXGroup;
 			children = (
@@ -1640,6 +1687,7 @@
 				EF4B46612344A73D009A3651 /* HapticFeedbackUtil.swift */,
 				BD458B3F236C987F0029A538 /* UserManager.swift */,
 				CE65ED972840D8F70043E7B8 /* BinkSupportUtility.swift */,
+				214EC01E28732020000A3F73 /* GifLoader.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1804,6 +1852,8 @@
 		5ECE049F22CE57F5001BA964 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				21497EC62864A0CD0053A9EE /* Popup */,
+				214EC0272874313A000A3F73 /* GeoLocation */,
 				BD458B45236ED1240029A538 /* AccessForms */,
 				3CE24B272304014500B258C8 /* AddOrJoin */,
 				BDB01867232D948000BFFA18 /* AddPaymentCard */,
@@ -2616,6 +2666,7 @@
 		EF586FE12357A8DC000917B6 /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
+				21497ECB2869BDF20053A9EE /* Loyalty */,
 				CE3878CD25643C06006BAC11 /* Join Cards */,
 				EF586FE22357A8E3000917B6 /* Payment Card Wallet */,
 			);
@@ -2793,6 +2844,7 @@
 			isa = PBXGroup;
 			children = (
 				EF8B701123587BE3006CE3DD /* MembershipCardBalanceModelTests.swift */,
+				212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2981,6 +3033,8 @@
 		EFCB2C182329368D0060F73B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				214EC020287320FD000A3F73 /* place-marker.gif */,
+				21CE710B2872F2C2003EC968 /* tesco-locations.geojson */,
 				CE85A1FF26B1535B003B74CD /* Animations */,
 				EF99B024240E74860046D41E /* devPublicKey.der */,
 				EF5229B72423FC4E004AC972 /* stagingPublicKey.der */,
@@ -3319,6 +3373,7 @@
 				3CD3493C22F99E1D000C1F4D /* NunitoSans-Bold.ttf in Resources */,
 				3C794D8D23018C25000A31FD /* BrowseBrandsViewController.xib in Resources */,
 				EF5229B82423FC4E004AC972 /* stagingPublicKey.der in Resources */,
+				21CE710C2872F2C3003EC968 /* tesco-locations.geojson in Resources */,
 				B7FE19BB234391B000F2D6A0 /* PaymentCardCell.xib in Resources */,
 				CE822D8227B1322B00916C74 /* binkOld.der in Resources */,
 				5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */,
@@ -3326,6 +3381,7 @@
 				3C9B1A2323854B9D0078A1EC /* PreferencesViewController.xib in Resources */,
 				3CD3493822F99E1D000C1F4D /* NunitoSans-Regular.ttf in Resources */,
 				3C360721230FF03B00AC76A3 /* BrandHeaderView.xib in Resources */,
+				214EC021287320FD000A3F73 /* place-marker.gif in Resources */,
 				3CD3493922F99E1D000C1F4D /* NunitoSans-SemiBoldItalic.ttf in Resources */,
 				EFEF54A9246EB52900A630F3 /* PLRStampViewCell.xib in Resources */,
 				EFF59F25234DEE8E00CF3992 /* DetailNavigationTitleView.xib in Resources */,
@@ -3766,6 +3822,7 @@
 				3CEABFCA2316AB42009B1122 /* MembershipTransaction.swift in Sources */,
 				B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */,
 				BD9E4CD823740A7500C6F098 /* PreferenceChangeResponse.swift in Sources */,
+				214EC01F28732020000A3F73 /* GifLoader.swift in Sources */,
 				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
 				EF758E0F23225F45000D26A9 /* NSManagedObjectContext.swift in Sources */,
 				3C8BBC292326541D00363349 /* NotificationNameExtension.swift in Sources */,
@@ -3815,6 +3872,7 @@
 				EFEB5BF5237D9F6900E18743 /* PLRCellViewModel.swift in Sources */,
 				EFDEBDF72408279900CB755E /* SecureUtility.swift in Sources */,
 				B713662B2329374D008A0ED7 /* OfferTileView.swift in Sources */,
+				21497EC82864A1880053A9EE /* OptionItemListViewController.swift in Sources */,
 				70F7EC2125CAF932005DE935 /* LocalPointsCollectable.swift in Sources */,
 				EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */,
 				CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */,
@@ -3947,6 +4005,7 @@
 				EFA5F70E2379A7C70027AB80 /* CD_ReasonCode.swift in Sources */,
 				EF335C892350D2C600D49223 /* WalletCard.swift in Sources */,
 				3CD2CBBF2346059100862A5A /* EnrolFieldPostModel.swift in Sources */,
+				212F0C442876EB7E007F09CE /* CalloutView.swift in Sources */,
 				CE539DAE25E80C1100BDA5EF /* BinkTableViewController.swift in Sources */,
 				3C4BE8C8233B590100EC4BF6 /* ReusableModalViewModel.swift in Sources */,
 				EF480C1B2355F9470060B7C1 /* WalletViewController.swift in Sources */,
@@ -3991,6 +4050,8 @@
 				CE1015252722A63F0000A838 /* VisionImageDetectionUtility.swift in Sources */,
 				BDB01870232D99D200BFFA18 /* FormField.swift in Sources */,
 				B76659992320F68D00B327BE /* HyperlinkAlertController.swift in Sources */,
+				214EC02928743165000A3F73 /* GeoModel.swift in Sources */,
+				214EC02628734B45000A3F73 /* GeoLocationsViewController.swift in Sources */,
 				EFA5F7322379A7C70027AB80 /* _CD_MembershipCardStatus.swift in Sources */,
 				3C48E7E6232A5E6700ADE410 /* DateExtension.swift in Sources */,
 				EFA5F73D2379A7C70027AB80 /* _CD_MembershipPlanImage.swift in Sources */,
@@ -4007,6 +4068,7 @@
 				EFA5F7332379A7C70027AB80 /* CD_AuthoriseField.swift in Sources */,
 				70FD1DB2262D8E59003C0DA0 /* BinkModuleType.swift in Sources */,
 				CE6DE55F267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift in Sources */,
+				214EC02E28743883000A3F73 /* GeoLocationViewModel.swift in Sources */,
 				EFA5F7252379A7C70027AB80 /* CD_Card.swift in Sources */,
 				EFA5F7402379A7C70027AB80 /* _CD_PaymentCardCard.swift in Sources */,
 				70CA2F05256E79D1008E0A81 /* DynamicActionModel.swift in Sources */,
@@ -4023,6 +4085,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21497ECD2869BE2E0053A9EE /* SortStateTests.swift in Sources */,
 				70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */,
 				70D6863E257152F300403448 /* DynamicActionsTests.swift in Sources */,
 				706157C8264A84AF0002701E /* AppVersionTests.swift in Sources */,
@@ -4031,6 +4094,7 @@
 				EF7F6E6123E4288C00352DCF /* StorageUtilityTests.swift in Sources */,
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
 				3CEE169B2440550D00933859 /* BrowseBrandsViewModelTests.swift in Sources */,
+				212F0C462876EC63007F09CE /* GeoLocationModelTests.swift in Sources */,
 				3CFD913022F1BA8200F25AF1 /* (null) in Sources */,
 				EF758E1523225F95000D26A9 /* TestDatabase.xcdatamodeld in Sources */,
 				CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */,
@@ -4292,7 +4356,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development: Greg Gormley (83RWG25XKA)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
@@ -4307,7 +4371,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.22;
+				MARKETING_VERSION = 2.3.23;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink α";
@@ -4330,7 +4394,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
@@ -4353,7 +4417,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.22;
+				MARKETING_VERSION = 2.3.23;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink β";
@@ -4541,7 +4605,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG = "";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
@@ -4557,7 +4621,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.22;
+				MARKETING_VERSION = 2.3.23;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = Bink;
@@ -4694,7 +4758,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
@@ -4709,7 +4773,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.22;
+				MARKETING_VERSION = 2.3.23;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink β";
@@ -4812,7 +4876,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4839,7 +4903,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.22;
+				MARKETING_VERSION = 2.3.23;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -4897,7 +4961,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -4918,7 +4982,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.22;
+				MARKETING_VERSION = 2.3.23;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch;
@@ -4976,7 +5040,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -4998,7 +5062,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.22;
+				MARKETING_VERSION = 2.3.23;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watch;
@@ -5056,7 +5120,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -5077,7 +5141,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.22;
+				MARKETING_VERSION = 2.3.23;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch;
@@ -5134,7 +5198,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -5163,7 +5227,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.22;
+				MARKETING_VERSION = 2.3.23;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -5218,7 +5282,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -5241,7 +5305,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.22;
+				MARKETING_VERSION = 2.3.23;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch.extension;
@@ -5296,7 +5360,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -5320,7 +5384,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.22;
+				MARKETING_VERSION = 2.3.23;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watch.extension;
@@ -5375,7 +5439,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -5398,7 +5462,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.22;
+				MARKETING_VERSION = 2.3.23;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch.extension;
@@ -5454,7 +5518,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development: Greg Gormley (83RWG25XKA)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -5481,7 +5545,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.22;
+				MARKETING_VERSION = 2.3.23;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -5536,7 +5600,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -5557,7 +5621,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.22;
+				MARKETING_VERSION = 2.3.23;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.widget;
@@ -5612,7 +5676,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -5633,7 +5697,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.22;
+				MARKETING_VERSION = 2.3.23;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.widget;
@@ -5688,7 +5752,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -5709,7 +5773,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.22;
+				MARKETING_VERSION = 2.3.23;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.widget;
