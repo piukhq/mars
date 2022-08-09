@@ -175,11 +175,7 @@ struct SettingsFactory {
         // MARK: - Beta
         let action: SettingsRow.RowAction
         
-        if #available(iOS 14.0, *) {
-            action = .pushToSwiftUIView(swiftUIView: .featureFlags)
-        } else {
-            action = .pushToViewController(viewController: FeatureFlagsTableViewController.self)
-        }
+        action = .pushToSwiftUIView(swiftUIView: .featureFlags)
         
         let betaSection = SettingsSection(title: L10n.settingsSectionBetaTitle, rows: [
             SettingsRow(

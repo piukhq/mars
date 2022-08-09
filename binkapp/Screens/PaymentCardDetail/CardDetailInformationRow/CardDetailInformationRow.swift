@@ -8,7 +8,11 @@
 
 import Foundation
 
-struct CardDetailInformationRow {
+struct CardDetailInformationRow: Equatable {
+    static func == (lhs: CardDetailInformationRow, rhs: CardDetailInformationRow) -> Bool {
+        return lhs.type.subtitle == rhs.type.subtitle
+    }
+    
     var type: RowType
     var action: () -> Void
 

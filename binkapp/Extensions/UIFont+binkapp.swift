@@ -54,7 +54,7 @@ extension UIFont {
     }
 
     class var alertText: UIFont {
-        return UIFont(name: "NunitoSans-ExtraBold", size: 17.0) ?? UIFont()
+        return UIFont(name: "NunitoSans-SemiBold", size: 17.0) ?? UIFont()
     }
     
     class var textFieldLabel: UIFont {
