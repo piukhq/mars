@@ -21,7 +21,7 @@ struct ShowAnywayButtonSwiftUIView: View {
     enum Constants {
         static let showingBarcodeBottomPaddingOffset: CGFloat = -10
         static let descriptionTopPaddingOffset: CGFloat = -26
-        static let textScaleFactor: CGFloat = 0.5
+        static let textScaleFactor: CGFloat = 0.01
         static let lineLimit: Int = 5
         static let showingBarcodeTextSize: CGFloat = 22.0
         static let descriptionTextSize: CGFloat = 12.0
@@ -53,10 +53,10 @@ struct ShowAnywayButtonSwiftUIView: View {
                         .padding()
                         .padding(.top, Constants.descriptionTopPaddingOffset)
                         .foregroundColor(.white)
-                        .lineLimit(Constants.lineLimit)
-                        .minimumScaleFactor(Constants.textScaleFactor)
-                        .multilineTextAlignment(.leading)
                         .font(.nunitoSans(Constants.descriptionTextSize))
+                        .minimumScaleFactor(Constants.textScaleFactor)
+                        .lineLimit(Constants.lineLimit)
+                        .multilineTextAlignment(.leading)
                 }
             }
         }
@@ -117,12 +117,10 @@ struct BarcodeScreenSwiftUIView: View {
                             .frame(height: viewModel.heightForHighVisView(text: viewModel.barcodeNumber))
                     }
                     
-                    if !viewModel.isBarcodeAvailable {
-                        if !viewModel.alwaysShowBarcode {
-                            Spacer(minLength: 30)
-                            /// show always
-                            ShowAnywayButtonSwiftUIView(viewModel: viewModel)
-                        }
+                    if !viewModel.isBarcodeAvailable && !viewModel.alwaysShowBarcode {
+                        Spacer(minLength: 30)
+                        /// show always
+                        ShowAnywayButtonSwiftUIView(viewModel: viewModel)
                     }
                 }
                 .padding(.horizontal, Constants.horizontalInset)

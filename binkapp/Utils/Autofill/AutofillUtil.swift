@@ -38,21 +38,4 @@ class AutofillUtil: UserServiceProtocol {
     static func clearKeychain() throws {
         try keychain.remove(keychainKey)
     }
-    
-    func configureUserPreferenceFromAPI() {
-        getPreferences { result in
-            switch result {
-            case .success(let preferences):
-                var value = preferences.first(where: { $0.slug == AutofillUtil.slug })?.value
-                var checked: Bool = value == "1"
-                Current.userDefaults.set(checked, forDefaultsKey: .rememberMyDetails)
-                
-                value = preferences.first(where: { $0.slug == L10n.alwaysShowBarcodePreference })?.value
-                checked = value == "1"
-                Current.userDefaults.set(checked, forDefaultsKey: .showBarcodeAlways)
-            case .failure:
-                break
-            }
-        }
-    }
 }
