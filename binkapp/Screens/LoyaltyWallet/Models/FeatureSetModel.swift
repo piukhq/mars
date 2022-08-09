@@ -15,7 +15,7 @@ struct FeatureSetModel: Codable {
     let digitalOnly: Bool?
     var hasPoints: Bool?
     var cardType: CD_FeatureSet.PlanCardType?
-    let linkingSupport: [LinkingSupportType]?
+    var linkingSupport: [LinkingSupportType]?
     let hasVouchers: Bool?
     
     enum CodingKeys: String, CodingKey {

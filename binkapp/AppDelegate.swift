@@ -52,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         // Device storage
         StorageUtility.start()
         
-        // Remote config
+        // Remote config 
         Current.remoteConfig.configure()
 
         // Start points scraping manager

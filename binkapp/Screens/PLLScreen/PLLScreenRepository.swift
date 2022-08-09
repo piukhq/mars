@@ -40,7 +40,6 @@ class PLLScreenRepository: WalletServiceProtocol {
                 }
             }
         }
-                
         group.notify(queue: .main) { [weak self] in
             self?.saveChanges(
                 toAdd: idsToAdd,

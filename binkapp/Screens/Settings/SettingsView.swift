@@ -42,7 +42,7 @@ struct SettingsView: View {
                 HStack {
                     Spacer()
                     VStack(alignment: .center) {
-                        Text(Current.userManager.currentEmailAddress ?? "") /// Remove test strng <<<<<<<<<<<<<<<<<<<<<<<<<
+                        Text(Current.userManager.currentEmailAddress ?? "")
                             .uiFont(.navbarHeaderLine2)
                             .foregroundColor(Color(UIColor.systemGray))
                         Text("Bink v\(Bundle.shortVersionNumber ?? "") \(Bundle.bundleVersion ?? "")")

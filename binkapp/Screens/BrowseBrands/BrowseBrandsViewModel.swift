@@ -43,7 +43,8 @@ class BrowseBrandsViewModel {
             let plans = context.fetchAll(CD_MembershipPlan.self)
             self.membershipPlans = plans.sorted(by: { (firstPlan, secondPlan) -> Bool in
                 (firstPlan.account?.companyName?.lowercased() ?? "") < (secondPlan.account?.companyName?.lowercased() ?? "")
-            }).filter { $0.isPlanListable }
+            })
+            .filter { $0.isPlanListable }
             self.selectedFilters = self.mapFilters(fromPlans: self.membershipPlans)
         }
     }

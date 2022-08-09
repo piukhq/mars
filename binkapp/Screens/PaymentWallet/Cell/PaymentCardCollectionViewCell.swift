@@ -308,7 +308,7 @@ extension PaymentCardCollectionViewCell {
         guard let view = gestureRecognizer.view else { return }
         
         let translationX = startingOffset + gestureRecognizer.translation(in: view.superview).x * 1.3
-        
+
         if gestureRecognizer.state == .began {
             // Save the view's original position.
             swipeMode = .unset

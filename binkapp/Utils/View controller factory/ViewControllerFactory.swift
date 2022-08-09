@@ -305,11 +305,14 @@ enum ViewControllerFactory {
         return WebViewController(urlString: urlString)
     }
     
-    static func makeAlertViewControllerWithTextfield(title: String?, message: String?, cancelButton: Bool?, okActionHandler: @escaping (String) -> Void, cancelActionHandler: EmptyCompletionBlock? = nil ) -> BinkAlertController {
+    static func makeAlertViewControllerWithTextfield(title: String?, message: String?, cancelButton: Bool?, keyboardType: UIKeyboardType, okActionHandler: @escaping (String) -> Void, cancelActionHandler: EmptyCompletionBlock? = nil ) -> BinkAlertController {
         let alert = BinkAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addTextField { textfield in
-            textfield.textContentType = .oneTimeCode
-            textfield.keyboardType = .numberPad
+            textfield.keyboardType = keyboardType
+            
+            if keyboardType == .numberPad {
+                textfield.textContentType = .oneTimeCode
+            }
         }
         alert.addAction(UIAlertAction(title: L10n.ok, style: .default, handler: { _ in
             okActionHandler(alert.textFields?[0].text ?? "")
