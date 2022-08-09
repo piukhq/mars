@@ -12,7 +12,7 @@ struct MembershipPlanAccountModel: Codable {
     let apiId: Int?
     var planName: String?
     let planNameCard: String?
-    let planURL: String?
+    var planURL: String?
     var companyName: String?
     let category: String?
     let planSummary: String?

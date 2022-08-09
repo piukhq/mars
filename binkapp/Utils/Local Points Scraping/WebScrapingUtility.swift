@@ -231,7 +231,7 @@ class WebScrapingUtility: NSObject {
         
         if agent?.merchant == "nectar" {
             guard !isPresentingUserInput, userInputValue == nil else { return }
-            let vc = ViewControllerFactory.makeAlertViewControllerWithTextfield(title: L10n.lpcNectarUserInputAlertTitle, message: L10n.lpcNectarUserInputAlertBody, cancelButton: true) { authCode in
+            let vc = ViewControllerFactory.makeAlertViewControllerWithTextfield(title: L10n.lpcNectarUserInputAlertTitle, message: L10n.lpcNectarUserInputAlertBody, cancelButton: true, keyboardType: .numberPad) { authCode in
                 self.userInputValue = authCode
                 self.idleRetryCount = 0
             } cancelActionHandler: {
@@ -345,7 +345,7 @@ class WebScrapingUtility: NSObject {
         
         if let value = value {
             if Current.pointsScrapingManager.isDebugMode, let merchant = agent.merchant?.capitalized {
-                DebugInfoAlertView.show("\(merchant) LPC - Retreived points balance", type: .success)
+                MessageView.show("\(merchant) LPC - Retreived points balance", type: .responseCodeVisualizer(.success))
             }
             delegate?.webScrapingUtility(self, didCompleteWithValue: value, item: item, withAgent: agent)
             
@@ -355,7 +355,7 @@ class WebScrapingUtility: NSObject {
         if let error = error {
             if Current.pointsScrapingManager.isDebugMode, let merchant = agent.merchant?.capitalized {
                 DispatchQueue.main.async {
-                    DebugInfoAlertView.show("\(merchant) LPC - \(error.localizedDescription)", type: .failure)
+                    MessageView.show("\(merchant) LPC - \(error.localizedDescription)", type: .responseCodeVisualizer(.failure))
                 }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -459,7 +459,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
                         }
                         
                         if Current.pointsScrapingManager.isDebugMode, let merchant = agent.merchant?.capitalized {
-                            DebugInfoAlertView.show("\(merchant) LPC - Attempted to log in", type: .success)
+                            MessageView.show("\(merchant) LPC - Attempted to log in", type: .responseCodeVisualizer(.success))
                         }
                     }
                     

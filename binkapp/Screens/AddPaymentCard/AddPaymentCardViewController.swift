@@ -246,9 +246,7 @@ extension AddPaymentCardViewController: ScanDelegate {
     }
 
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
-        if #available(iOS 14.0, *) {
-            BinkLogger.infoPrivateHash(event: AppLoggerEvent.paymentCardScanned, value: creditCard.number)
-        }
+        BinkLogger.infoPrivateHash(event: AppLoggerEvent.paymentCardScanned, value: creditCard.number)
         BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
         let month = creditCard.expiryMonthInteger() ?? viewModel.paymentCard.month
         let year = creditCard.expiryYearInteger() ?? viewModel.paymentCard.year

@@ -15,6 +15,7 @@
 			dependencies = (
 			);
 			name = SwiftGen;
+			productName = SwiftGen;
 		};
 		52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */ = {
 			isa = PBXAggregateTarget;
@@ -24,6 +25,7 @@
 			dependencies = (
 			);
 			name = SwiftLint;
+			productName = SwiftLint;
 		};
 /* End PBXAggregateTarget section */
 
@@ -808,7 +810,7 @@
 		10489D8D41AEDD6B556BA24E91A25B72 /* ZXAztecReader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXAztecReader.m; path = ZXingObjC/aztec/ZXAztecReader.m; sourceTree = "<group>"; };
 		109C1EEC885BDF8C9778646111A567E1 /* ZXDataMatrixSymbolInfo144.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXDataMatrixSymbolInfo144.m; path = ZXingObjC/datamatrix/encoder/ZXDataMatrixSymbolInfo144.m; sourceTree = "<group>"; };
 		10BC41DABC0D29DEDC0A567EB96A73A6 /* ZXISBNParsedResult.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXISBNParsedResult.m; path = ZXingObjC/client/result/ZXISBNParsedResult.m; sourceTree = "<group>"; };
-		11167BFECA96CC277333C20F99C0E743 /* Keys.podspec.json */ = {isa = PBXFileReference; includeInIndex = 1; path = Keys.podspec.json; sourceTree = "<group>"; };
+		11167BFECA96CC277333C20F99C0E743 /* Keys.podspec.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; path = Keys.podspec.json; sourceTree = "<group>"; };
 		116029C455D621A444E177269B0726D1 /* CardScan-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CardScan-prefix.pch"; sourceTree = "<group>"; };
 		1161B681D5F878182F758532F732C83A /* PostDetectionAlgorithm.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PostDetectionAlgorithm.swift; path = CardScan/Classes/PostDetectionAlgorithm.swift; sourceTree = "<group>"; };
 		11D2F4FB70245D1DB979F8FB6F28A12E /* ZXISBNParsedResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXISBNParsedResult.h; path = ZXingObjC/client/result/ZXISBNParsedResult.h; sourceTree = "<group>"; };
@@ -1079,7 +1081,7 @@
 		7AC94133862977F66D4403E77B07E611 /* ZXDetectorResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXDetectorResult.h; path = ZXingObjC/common/ZXDetectorResult.h; sourceTree = "<group>"; };
 		7AD299B03F175BD54F9F9032F25E4884 /* Pods-binkapp.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-binkapp.modulemap"; sourceTree = "<group>"; };
 		7C403A06508DA66BE7CA8303635E7FF4 /* ZXAztecCode.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXAztecCode.h; path = ZXingObjC/aztec/encoder/ZXAztecCode.h; sourceTree = "<group>"; };
-		7D3FC138F27002350A43066F3237A80A /* SSDOcr.mlmodelc */ = {isa = PBXFileReference; includeInIndex = 1; name = SSDOcr.mlmodelc; path = CardScan/Assets/SSDOcr.mlmodelc; sourceTree = "<group>"; };
+		7D3FC138F27002350A43066F3237A80A /* SSDOcr.mlmodelc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper; name = SSDOcr.mlmodelc; path = CardScan/Assets/SSDOcr.mlmodelc; sourceTree = "<group>"; };
 		7DBEC049B7C50F2A152E33F58BF2591E /* ZXDataMatrixEncoderContext.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXDataMatrixEncoderContext.h; path = ZXingObjC/datamatrix/encoder/ZXDataMatrixEncoderContext.h; sourceTree = "<group>"; };
 		7DFA853E02205CFED5F5247F687963D0 /* ZXAztecState.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXAztecState.m; path = ZXingObjC/aztec/encoder/ZXAztecState.m; sourceTree = "<group>"; };
 		7E214CD1233243797F5FF5488C4986C2 /* ZXAztecReader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXAztecReader.h; path = ZXingObjC/aztec/ZXAztecReader.h; sourceTree = "<group>"; };
@@ -1165,7 +1167,7 @@
 		9C70BA6356D39BE50C3BABB8074A94AE /* ZXSMSParsedResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXSMSParsedResult.h; path = ZXingObjC/client/result/ZXSMSParsedResult.h; sourceTree = "<group>"; };
 		9CBF5D4B8F563BAFC0D123ED0F8886BE /* ZXAbstractDoCoMoResultParser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXAbstractDoCoMoResultParser.h; path = ZXingObjC/client/result/ZXAbstractDoCoMoResultParser.h; sourceTree = "<group>"; };
 		9D894E000BF36462F97EA266016CB285 /* CGRectExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CGRectExtension.swift; path = CardScan/Classes/CGRectExtension.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9EAD4D24CB3BCEBC4784A3D7E7C2E043 /* ZXUPCAReader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXUPCAReader.h; path = ZXingObjC/oned/ZXUPCAReader.h; sourceTree = "<group>"; };
 		9EB094FC71E42359154B927768334021 /* SwiftyRSAError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyRSAError.swift; path = Source/SwiftyRSAError.swift; sourceTree = "<group>"; };
 		9EBF04F1B0142DD5F3D27793D87E68C9 /* Pods-binkappTests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-binkappTests"; path = Pods_binkappTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1262,7 +1264,7 @@
 		C68EED84010AD1364E4E68ECBE5D9C4E /* ZXRSSExpandedGeneralAppIdDecoder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXRSSExpandedGeneralAppIdDecoder.h; path = ZXingObjC/oned/rss/expanded/decoders/ZXRSSExpandedGeneralAppIdDecoder.h; sourceTree = "<group>"; };
 		C691A6EF639F86AA61161D3EF6BA6FAC /* ZXByteArray.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXByteArray.h; path = ZXingObjC/common/ZXByteArray.h; sourceTree = "<group>"; };
 		C6A83C6BEFCD27DFDA7D8ED118814FA7 /* ZXPDF417ErrorCorrection.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXPDF417ErrorCorrection.m; path = ZXingObjC/pdf417/encoder/ZXPDF417ErrorCorrection.m; sourceTree = "<group>"; };
-		C73CE0DF349AFD81E5D498E812A0A422 /* Config */ = {isa = PBXFileReference; includeInIndex = 1; name = Config; path = CardScan/Assets/Config; sourceTree = "<group>"; };
+		C73CE0DF349AFD81E5D498E812A0A422 /* Config */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = Config; path = CardScan/Assets/Config; sourceTree = "<group>"; };
 		C74EBC9F52F6CD1C9141EFA05D10641A /* ZXRSSExpandedReader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXRSSExpandedReader.h; path = ZXingObjC/oned/rss/expanded/ZXRSSExpandedReader.h; sourceTree = "<group>"; };
 		C7EE7A64D79E9A72835C0BB5A908842F /* Keys-library-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "Keys-library-dummy.m"; path = "../Keys-library/Keys-library-dummy.m"; sourceTree = "<group>"; };
 		C8136114734E2FF352BFFA00515F607D /* ZXQRCodeAlignmentPattern.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXQRCodeAlignmentPattern.m; path = ZXingObjC/qrcode/detector/ZXQRCodeAlignmentPattern.m; sourceTree = "<group>"; };
@@ -1515,7 +1517,6 @@
 				0A5742BD611DFCA410E35FD5762F46B8 /* All */,
 				748F52FBF645BB4C69FDE6473210FCD1 /* Support Files */,
 			);
-			name = ZXingObjC;
 			path = ZXingObjC;
 			sourceTree = "<group>";
 		};
@@ -2017,7 +2018,6 @@
 				17DA406B16E492E2A4B4AB8D77A14C13 /* DTTJailbreakDetection.m */,
 				373E829285F21B8992B23CB8890B23B2 /* Support Files */,
 			);
-			name = DTTJailbreakDetection;
 			path = DTTJailbreakDetection;
 			sourceTree = "<group>";
 		};
@@ -2057,7 +2057,6 @@
 				00426A321A8970A043DDDE01E7B71C37 /* ObjC */,
 				6E871A2742D5ACBA83C8887F1AC50E8D /* Support Files */,
 			);
-			name = SwiftyRSA;
 			path = SwiftyRSA;
 			sourceTree = "<group>";
 		};
@@ -2170,7 +2169,6 @@
 			children = (
 				4C13396EE82B6ABA1CEF51BECEB0C87B /* Support Files */,
 			);
-			name = SwiftLint;
 			path = SwiftLint;
 			sourceTree = "<group>";
 		};
@@ -2179,7 +2177,6 @@
 			children = (
 				40D7B397B33BD23B296A5B043D6A6E25 /* Support Files */,
 			);
-			name = SwiftGen;
 			path = SwiftGen;
 			sourceTree = "<group>";
 		};
@@ -2348,7 +2345,6 @@
 				BCE9C414741D6F831DE4C19204BFDB9A /* Core */,
 				223320B61434EA13F21E6652B39C344C /* Support Files */,
 			);
-			name = CardScan;
 			path = CardScan;
 			sourceTree = "<group>";
 		};

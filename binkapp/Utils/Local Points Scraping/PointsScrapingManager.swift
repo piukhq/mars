@@ -450,9 +450,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
 
 extension PointsScrapingManager: WebScrapingUtilityDelegate {
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, item: QueuedItem, withAgent agent: LocalPointsCollectable) {
-        if #available(iOS 14.0, *) {
-            BinkLogger.infoPrivateHash(event: WalletLoggerEvent.pointsScrapingSuccess, value: item.card.id)
-        }
+        BinkLogger.infoPrivateHash(event: WalletLoggerEvent.pointsScrapingSuccess, value: item.card.id)
         transitionToAuthorized(pointsValue: value, item: item, agent: agent)
     }
     
@@ -473,9 +471,7 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
             BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionInternalFailure(membershipCard: item.card, error: error))
         }
         
-        if #available(iOS 14.0, *) {
-            BinkLogger.error(WalletLoggerError.pointsScrapingFailure, value: error.message)
-        }
+        BinkLogger.error(WalletLoggerError.pointsScrapingFailure, value: error.message)
         
         MixpanelUtility.track(.localPointsCollectionFailure(brandName: item.card.membershipPlan?.account?.companyName ?? "Unknown", reason: error.message, underlyingError: error.underlyingError))
         

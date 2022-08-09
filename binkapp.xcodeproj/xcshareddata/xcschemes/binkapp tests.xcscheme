@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1120"
+   LastUpgradeVersion = "1340"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -52,11 +52,11 @@
       </MacroExpansion>
       <TestPlans>
          <TestPlanReference
-            reference = "container:critical-behaviour.xctestplan"
-            default = "YES">
+            reference = "container:critical-behaviour.xctestplan">
          </TestPlanReference>
          <TestPlanReference
-            reference = "container:nightly.xctestplan">
+            reference = "container:nightly.xctestplan"
+            default = "YES">
          </TestPlanReference>
       </TestPlans>
       <Testables>
