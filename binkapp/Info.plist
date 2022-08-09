@@ -84,10 +84,10 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>We need your camera to scan loyalty and payment cards. It will not be used for other purposes.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need your camera to scan loyalty and payment cards. It will not be used for other purposes.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Bink will use your location to help you find your nearest stores.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need your camera to scan loyalty and payment cards. It will not be used for other purposes.</string>
 	<key>SECRET</key>
 	<string>$(SECRET)</string>
 	<key>UIAppFonts</key>
