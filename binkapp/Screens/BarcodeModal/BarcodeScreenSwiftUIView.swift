@@ -24,7 +24,7 @@ struct ShowAnywayButtonSwiftUIView: View {
         static let textScaleFactor: CGFloat = 0.01
         static let lineLimit: Int = 5
         static let showingBarcodeTextSize: CGFloat = 22.0
-        static let descriptionTextSize: CGFloat = 12.0
+        static let descriptionTextSize: CGFloat = 22.0
     }
     
     @ObservedObject var viewModel: BarcodeViewModel
