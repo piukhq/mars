@@ -260,14 +260,12 @@
 		BDB0186E232D98C000BFFA18 /* FormDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB0186D232D98C000BFFA18 /* FormDataSource.swift */; };
 		BDB01870232D99D200BFFA18 /* FormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB0186F232D99D200BFFA18 /* FormField.swift */; };
 		BDB01872232D9E7900BFFA18 /* FormCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01871232D9E7900BFFA18 /* FormCollectionViewCell.swift */; };
-		BDB01876232E125C00BFFA18 /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01875232E125C00BFFA18 /* ReusableView.swift */; };
 		BDB0187C232E1B5900BFFA18 /* PaymentCardCreateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB0187B232E1B5900BFFA18 /* PaymentCardCreateModel.swift */; };
 		BDB0187E232E1FC800BFFA18 /* PaymentCardType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB0187D232E1FC800BFFA18 /* PaymentCardType.swift */; };
 		BDB01882232E93A100BFFA18 /* FormMultipleChoiceInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01881232E93A100BFFA18 /* FormMultipleChoiceInput.swift */; };
 		BDB01884232EB14A00BFFA18 /* StackScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01883232EB14A00BFFA18 /* StackScrollView.swift */; };
 		BDBAA1BA235E1BBB00087E12 /* SettingsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBAA1B9235E1BBB00087E12 /* SettingsTableViewHeader.swift */; };
 		BDD9C83C233BE493003CD616 /* MembershipPlanImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9C83B233BE493003CD616 /* MembershipPlanImageModel.swift */; };
-		BDD9C8A7233D07D1003CD616 /* UICollectionViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9C8A6233D07D1003CD616 /* UICollectionViewExtension.swift */; };
 		BDFAA07B23E243EF00949271 /* LCDPlaceholderGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFAA07A23E243EF00949271 /* LCDPlaceholderGenerator.swift */; };
 		BDFAA07D23E24DC600949271 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFAA07C23E24DC600949271 /* UIImage+Extension.swift */; };
 		C6812158579C0CBB400A495C /* Pods_binkapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF7651BEBD7E19F9F7391DE /* Pods_binkapp.framework */; };
@@ -941,7 +939,6 @@
 		BDB0186D232D98C000BFFA18 /* FormDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDataSource.swift; sourceTree = "<group>"; };
 		BDB0186F232D99D200BFFA18 /* FormField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormField.swift; sourceTree = "<group>"; };
 		BDB01871232D9E7900BFFA18 /* FormCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormCollectionViewCell.swift; sourceTree = "<group>"; };
-		BDB01875232E125C00BFFA18 /* ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
 		BDB0187B232E1B5900BFFA18 /* PaymentCardCreateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCreateModel.swift; sourceTree = "<group>"; };
 		BDB0187D232E1FC800BFFA18 /* PaymentCardType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardType.swift; sourceTree = "<group>"; };
 		BDB01881232E93A100BFFA18 /* FormMultipleChoiceInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormMultipleChoiceInput.swift; sourceTree = "<group>"; };
@@ -949,7 +946,6 @@
 		BDBAA1B9235E1BBB00087E12 /* SettingsTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewHeader.swift; sourceTree = "<group>"; };
 		BDD9C83B233BE493003CD616 /* MembershipPlanImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipPlanImageModel.swift; sourceTree = "<group>"; };
 		BDD9C8A4233C0476003CD616 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BDD9C8A6233D07D1003CD616 /* UICollectionViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtension.swift; sourceTree = "<group>"; };
 		BDFAA07A23E243EF00949271 /* LCDPlaceholderGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCDPlaceholderGenerator.swift; sourceTree = "<group>"; };
 		BDFAA07C23E24DC600949271 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		CE02D5122726BEA0008B9BFA /* CheckYourInboxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckYourInboxViewController.swift; sourceTree = "<group>"; };
@@ -2208,7 +2204,6 @@
 				B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */,
 				B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */,
 				BD1E7289232AB91C002CC85E /* UIAlertController+Extension.swift */,
-				BDD9C8A6233D07D1003CD616 /* UICollectionViewExtension.swift */,
 				3CCC46C822FC6EB7008476E3 /* UIColor+binkapp.swift */,
 				CE02D51D27293F13008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift */,
 				EF9E9BD123C73BA1002FF18E /* UIDeviceExtension.swift */,
@@ -2636,7 +2631,6 @@
 			isa = PBXGroup;
 			children = (
 				EF2E881223351A6000F678F3 /* CoreDataRepositoryProtocol.swift */,
-				BDB01875232E125C00BFFA18 /* ReusableView.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -3736,7 +3730,6 @@
 				706D204224D97104004BCCF3 /* AnalyticsEvent.swift in Sources */,
 				BD9FB6B0233761C400E5559A /* UILayoutPriority+Extension.swift in Sources */,
 				EFA5F73B2379A7C70027AB80 /* CD_App.swift in Sources */,
-				BDB01876232E125C00BFFA18 /* ReusableView.swift in Sources */,
 				EFA5F72A2379A7C70027AB80 /* CD_Voucher.swift in Sources */,
 				EFA5F71A2379A7C70027AB80 /* CD_BaseObject.swift in Sources */,
 				CE85A1D626A6CD97003B74CD /* LoginSuccessViewController.swift in Sources */,
@@ -3781,7 +3774,6 @@
 				CE0C24792678EDE500CB7150 /* WhoWeAreSwiftUIView.swift in Sources */,
 				EF54911C2371CB3300FE17BE /* PaymentCardDetailTableViewCell.swift in Sources */,
 				EFA5F7352379A7C70027AB80 /* CD_MembershipCardAmount.swift in Sources */,
-				BDD9C8A7233D07D1003CD616 /* UICollectionViewExtension.swift in Sources */,
 				EFA5F72F2379A7C70027AB80 /* _CD_App.swift in Sources */,
 				3C9B1A2923854C040078A1EC /* PreferencesRepository.swift in Sources */,
 				B726334B23058A5C00951037 /* FeatureSetModel.swift in Sources */,
@@ -5956,7 +5948,7 @@
 			repositoryURL = "git@github.com:TickedActor/CoreUtilsPackage.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.4.3;
+				minimumVersion = 1.4.4;
 			};
 		};
 		7063B1E7270473EE00C5C633 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
