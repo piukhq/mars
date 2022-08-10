@@ -528,5 +528,4 @@
 
 "show_barcode_title" = "Showing Barcode";
 "show_barcode_body" = "For some brands, we do not automatically display a barcode\nif you add your loyalty card manually (without scanning). This\nis because we cannot guarantee it will work in store.\n\n**Press here** to show barcode anyway";
-"always_show_barcode_preference" = "show-barcode-always";
 "preferences_updated" = "Preferences Updated";

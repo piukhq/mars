@@ -17,7 +17,7 @@ struct RemoteImage: View {
     }
 }
 
-struct ShowAnywayButtonSwiftUIView: View {
+struct ShowBarcodeAnywayButtonView: View {
     enum Constants {
         static let showingBarcodeBottomPaddingOffset: CGFloat = -10
         static let descriptionTopPaddingOffset: CGFloat = -26
@@ -120,7 +120,7 @@ struct BarcodeScreenSwiftUIView: View {
                     if !viewModel.isBarcodeAvailable && !viewModel.alwaysShowBarcode {
                         Spacer(minLength: 30)
                         /// show always
-                        ShowAnywayButtonSwiftUIView(viewModel: viewModel)
+                        ShowBarcodeAnywayButtonView(viewModel: viewModel)
                     }
                 }
                 .padding(.horizontal, Constants.horizontalInset)

@@ -68,6 +68,7 @@ class BarcodeViewModel: ObservableObject {
     let membershipCard: CD_MembershipCard
     var imageType: MerchantImageType = .hero
     var barcodeUse: BarcodeUse = .loyaltyCard
+    static let alwaysShowBarcodePreferencesSlug = "show-barcode-always"
 
     @Published var merchantImage: Image?
     @Published var showingReportIssueOptions = false {
@@ -236,7 +237,7 @@ class BarcodeViewModel: ObservableObject {
     func setShowBarcodeAlwaysPreference(preferencesRepository: PreferencesProtocol?) {
         if let preferences = preferencesRepository {
             let checkedState = "1"
-            let dictionary = [L10n.alwaysShowBarcodePreference: checkedState]
+            let dictionary = [BarcodeViewModel.alwaysShowBarcodePreferencesSlug: checkedState]
             
             preferences.putPreferences(preferences: dictionary) {
                 if !UIApplication.isRunningUnitTests {

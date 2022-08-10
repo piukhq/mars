@@ -82,8 +82,6 @@ internal enum L10n {
   internal static let alertViewChangingSortBody = L10n.tr("Localizable", "alert_view_changing_sort_body")
   /// All
   internal static let allTitle = L10n.tr("Localizable", "all_title")
-  /// show-barcode-always
-  internal static let alwaysShowBarcodePreference = L10n.tr("Localizable", "always_show_barcode_preference")
   /// Please enter your %@ credentials below to add this card to your wallet.
   internal static func authScreenDescription(_ p1: Any) -> String {
     return L10n.tr("Localizable", "auth_screen_description", String(describing: p1))

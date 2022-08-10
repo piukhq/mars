@@ -59,7 +59,7 @@ class PreferencesViewModel: UserServiceProtocol {
                 var checked: Bool = value == "1"
                 Current.userDefaults.set(checked, forDefaultsKey: .rememberMyDetails)
                 
-                value = preferences.first(where: { $0.slug == L10n.alwaysShowBarcodePreference })?.value
+                value = preferences.first(where: { $0.slug == BarcodeViewModel.alwaysShowBarcodePreferencesSlug })?.value
                 checked = value == "1"
                 Current.userDefaults.set(checked, forDefaultsKey: .showBarcodeAlways)
             case .failure:
