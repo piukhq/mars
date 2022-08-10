@@ -50,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "git@github.com:TickedActor/CoreUtilsPackage.git",
       "state" : {
-        "revision" : "0a64fd72b9e0a7565a13214293cd016577a4b811",
-        "version" : "1.4.2"
+        "revision" : "f6e2473392774273b650116c504bcbcaa9259e01",
+        "version" : "1.4.3"
       }
     },
     {
