@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreUtils
 
 protocol BrowseBrandsViewModelDelegate: AnyObject {
     func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan])

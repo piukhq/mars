@@ -46,6 +46,15 @@
       }
     },
     {
+      "identity" : "coreutilspackage",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:TickedActor/CoreUtilsPackage.git",
+      "state" : {
+        "revision" : "0a64fd72b9e0a7565a13214293cd016577a4b811",
+        "version" : "1.4.2"
+      }
+    },
+    {
       "identity" : "deepdiff",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onmyway133/DeepDiff.git",

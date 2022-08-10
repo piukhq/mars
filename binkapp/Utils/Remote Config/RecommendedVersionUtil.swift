@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreUtils
 
 class RecommendedVersionUtil {
     private var canShowRecommendedUpdatePrompt = true
