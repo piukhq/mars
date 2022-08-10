@@ -391,7 +391,6 @@
 		CEFB742325668A5100896DE5 /* BrandHeaderViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE387AA02565749D006BAC11 /* BrandHeaderViewTests.swift */; };
 		DB088545234FD8A30041A67A /* PLLScreenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB088544234FD8A30041A67A /* PLLScreenRepository.swift */; };
 		DB4D8EAD2440864C0085595D /* SettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4D8EAC2440864C0085595D /* SettingsViewModelTests.swift */; };
-		DBA6CB4F237C94CD000313D4 /* UIViewController+binkapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA6CB4E237C94CD000313D4 /* UIViewController+binkapp.swift */; };
 		DBE54851240D514B00EDEE90 /* FilterBrandsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE5484F240D514B00EDEE90 /* FilterBrandsCollectionViewCell.swift */; };
 		DBE54852240D514B00EDEE90 /* FilterBrandsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBE54850240D514B00EDEE90 /* FilterBrandsCollectionViewCell.xib */; };
 		EF1110542354D4BE009A4438 /* WalletCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1110532354D4BE009A4438 /* WalletCardCollectionViewCell.swift */; };
@@ -1051,7 +1050,6 @@
 		CEFAB4EA279AC10B00D061A9 /* BarcodeViewNoBarcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewNoBarcode.swift; sourceTree = "<group>"; };
 		DB088544234FD8A30041A67A /* PLLScreenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenRepository.swift; sourceTree = "<group>"; };
 		DB4D8EAC2440864C0085595D /* SettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModelTests.swift; sourceTree = "<group>"; };
-		DBA6CB4E237C94CD000313D4 /* UIViewController+binkapp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+binkapp.swift"; sourceTree = "<group>"; };
 		DBE5484F240D514B00EDEE90 /* FilterBrandsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBrandsCollectionViewCell.swift; sourceTree = "<group>"; };
 		DBE54850240D514B00EDEE90 /* FilterBrandsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterBrandsCollectionViewCell.xib; sourceTree = "<group>"; };
 		E1297D555E8425E2924D95B2 /* Pods-binkapp-binkappUITests.alpha.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp-binkappUITests.alpha.xcconfig"; path = "Target Support Files/Pods-binkapp-binkappUITests/Pods-binkapp-binkappUITests.alpha.xcconfig"; sourceTree = "<group>"; };
@@ -2213,7 +2211,6 @@
 				EFA5F6BF237429D30027AB80 /* UITableViewCellExtension.swift */,
 				EF39C1DE231E9F2900A0BBC0 /* UITableViewExtension.swift */,
 				3CF054CD22FD7DC80069E98A /* UIView+Extension.swift */,
-				DBA6CB4E237C94CD000313D4 /* UIViewController+binkapp.swift */,
 				EF94AF0C23D9F04700AAA039 /* DictionaryExtension.swift */,
 				BDFAA07C23E24DC600949271 /* UIImage+Extension.swift */,
 				EFD602F0243E11B2003AC746 /* UINavigationControllerExtension.swift */,
@@ -4050,7 +4047,6 @@
 				EFA5F7112379A7C70027AB80 /* CD_MembershipPlanAccount.swift in Sources */,
 				EFB055A623F453C400D64F86 /* PLRStampView.swift in Sources */,
 				3CFDB227230C38A700E75A14 /* BinkTextField.swift in Sources */,
-				DBA6CB4F237C94CD000313D4 /* UIViewController+binkapp.swift in Sources */,
 				BD475E7123A2AED80071302A /* CD_PlanDocumentDisplay.swift in Sources */,
 				EF480C21235754C20060B7C1 /* WalletPromptFactory.swift in Sources */,
 				CE1015252722A63F0000A838 /* VisionImageDetectionUtility.swift in Sources */,
@@ -5948,7 +5944,7 @@
 			repositoryURL = "git@github.com:TickedActor/CoreUtilsPackage.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.4.4;
+				minimumVersion = 1.4.7;
 			};
 		};
 		7063B1E7270473EE00C5C633 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
