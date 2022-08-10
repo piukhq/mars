@@ -44,8 +44,9 @@ class TransactionView: CustomView {
         if transactionValue < 0 {
             let value = abs(transactionValue)
             valueLabel.text = "-" + String(format: text, addDecimals ? Float(value) : value)
-            valueLabel.textColor = .black
+            valueLabel.textColor = Current.themeManager.color(for: .text)
             imageView.image = Asset.down.image
+            imageView.tintColor = Current.themeManager.color(for: .text)
         } else if transactionValue > 0 {
             valueLabel.text = "+" + String(format: text, addDecimals ? Float(transactionValue) : transactionValue)
             valueLabel.textColor = .greenOk
