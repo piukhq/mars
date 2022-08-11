@@ -256,9 +256,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         informationTableView.separatorColor = Current.themeManager.color(for: .divider)
         informationTableView.reloadData()
         titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
-        
-        guard let plan = viewModel.membershipCard.membershipPlan else { return }
-        configureBrandHeader(with: plan)
 
         let plrVoucherCells = stackScrollView.arrangedSubviews.filter { $0.isKind(of: PLRBaseCollectionViewCell.self) }
         if let voucherCells = plrVoucherCells as? [PLRBaseCollectionViewCell], let vouchers = viewModel.vouchers {

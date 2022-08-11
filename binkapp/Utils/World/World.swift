@@ -79,8 +79,9 @@ extension UserDefaults: BinkUserDefaults {
         case rememberMyDetails
         case membershipCardsSortType
         case hasMembershipOrderChanged
+        case alwaysDownloadImages
         case showBarcodeAlways
-        
+
         var keyValue: String {
             switch self {
             case .hasLaunchedWallet:
@@ -127,6 +128,8 @@ extension UserDefaults: BinkUserDefaults {
                 return "membershipCardsSortType"
             case .hasMembershipOrderChanged:
                 return "hasMembershipOrderChanged"
+            case .alwaysDownloadImages:
+                return "alwaysDownloadImages"
             case .showBarcodeAlways:
                 return "showBarcodeAlways"
             }
