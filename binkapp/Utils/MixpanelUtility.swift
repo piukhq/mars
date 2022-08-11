@@ -200,7 +200,7 @@ enum MixpanelUserProperty {
         case .loyaltyCardsSortOrder:
             return "Wallet Sort Setting"
         case .showBarcodeAlways:
-            return "Show Barcode Always"
+            return "Show barcode always"
         }
     }
     
