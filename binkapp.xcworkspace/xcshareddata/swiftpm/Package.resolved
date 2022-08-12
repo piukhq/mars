@@ -46,15 +46,6 @@
       }
     },
     {
-      "identity" : "coreutilspackage",
-      "kind" : "remoteSourceControl",
-      "location" : "git@github.com:TickedActor/CoreUtilsPackage.git",
-      "state" : {
-        "revision" : "6d6d260e12c6b84aee11b9085ab85182f0dcea12",
-        "version" : "1.4.7"
-      }
-    },
-    {
       "identity" : "deepdiff",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onmyway133/DeepDiff.git",
@@ -124,6 +115,15 @@
       "state" : {
         "revision" : "bc6a19702ac76ac4e488b68148710eb815f9bc56",
         "version" : "1.7.0"
+      }
+    },
+    {
+      "identity" : "ios-core",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:binkhq/ios-core.git",
+      "state" : {
+        "revision" : "dc4b842f59e6f351b0567f8f92cd35bea85a7f54",
+        "version" : "1.0.0"
       }
     },
     {

@@ -9,6 +9,7 @@
 import CardScan
 import UIKit
 import Keys
+import BinkCore
 
 class AddPaymentCardViewController: BaseFormViewController {
     private let viewModel: AddPaymentCardViewModel

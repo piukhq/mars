@@ -30,7 +30,7 @@
 		214EC02628734B45000A3F73 /* GeoLocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02528734B45000A3F73 /* GeoLocationsViewController.swift */; };
 		214EC02928743165000A3F73 /* GeoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02828743165000A3F73 /* GeoModel.swift */; };
 		214EC02E28743883000A3F73 /* GeoLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02D28743883000A3F73 /* GeoLocationViewModel.swift */; };
-		216B62FB28A3AE2C00B10030 /* CoreUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 216B62FA28A3AE2C00B10030 /* CoreUtils */; };
+		215BC59228A54AD100DB1377 /* BinkCore in Frameworks */ = {isa = PBXBuildFile; productRef = 215BC59128A54AD100DB1377 /* BinkCore */; };
 		21CE710C2872F2C3003EC968 /* tesco-locations.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 21CE710B2872F2C2003EC968 /* tesco-locations.geojson */; };
 		3C05A9DC2327CD3D00620583 /* AppDelegate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DB2327CD3D00620583 /* AppDelegate+Extension.swift */; };
 		3C05A9DE2327CE6300620583 /* PaymentCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DD2327CE6300620583 /* PaymentCardModel.swift */; };
@@ -1265,9 +1265,9 @@
 				96F22E002507C5AC0009951B /* Sentry in Frameworks */,
 				C6812158579C0CBB400A495C /* Pods_binkapp.framework in Frameworks */,
 				7075383026DFAB2B00690965 /* JWTDecode in Frameworks */,
-				216B62FB28A3AE2C00B10030 /* CoreUtils in Frameworks */,
 				CEADBFDE2747CBC6008810A8 /* FirebaseRemoteConfig in Frameworks */,
 				7075382D26DFA96800690965 /* Disk in Frameworks */,
+				215BC59228A54AD100DB1377 /* BinkCore in Frameworks */,
 				CEF3E5A928903BBF0082EBE0 /* Mocker in Frameworks */,
 				CEB8242927391F0500F5954D /* FirebaseAnalytics in Frameworks */,
 				7075381E26DFA26C00690965 /* Alamofire in Frameworks */,
@@ -3175,7 +3175,7 @@
 				7063B1EA270473EE00C5C633 /* FirebaseStorage */,
 				7063B1EC270473EE00C5C633 /* FirebaseRemoteConfig */,
 				CEF3E5A828903BBF0082EBE0 /* Mocker */,
-				216B62FA28A3AE2C00B10030 /* CoreUtils */,
+				215BC59128A54AD100DB1377 /* BinkCore */,
 			);
 			productName = binkapp;
 			productReference = 5ECE046822CE5798001BA964 /* Bink α.app */;
@@ -3336,7 +3336,7 @@
 				70A4FDA4271588AC00DA7FAA /* XCRemoteSwiftPackageReference "mixpanel-swift" */,
 				7063B1E7270473EE00C5C633 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				CEF3E5A728903BBE0082EBE0 /* XCRemoteSwiftPackageReference "Mocker" */,
-				216B62F928A3AE2C00B10030 /* XCRemoteSwiftPackageReference "CoreUtilsPackage" */,
+				215BC59028A54AD100DB1377 /* XCRemoteSwiftPackageReference "ios-core" */,
 			);
 			productRefGroup = 5ECE046922CE5798001BA964 /* Products */;
 			projectDirPath = "";
@@ -5939,12 +5939,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		216B62F928A3AE2C00B10030 /* XCRemoteSwiftPackageReference "CoreUtilsPackage" */ = {
+		215BC59028A54AD100DB1377 /* XCRemoteSwiftPackageReference "ios-core" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:TickedActor/CoreUtilsPackage.git";
+			repositoryURL = "git@github.com:binkhq/ios-core.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.4.7;
+				minimumVersion = 1.0.0;
 			};
 		};
 		7063B1E7270473EE00C5C633 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
@@ -6046,10 +6046,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		216B62FA28A3AE2C00B10030 /* CoreUtils */ = {
+		215BC59128A54AD100DB1377 /* BinkCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 216B62F928A3AE2C00B10030 /* XCRemoteSwiftPackageReference "CoreUtilsPackage" */;
-			productName = CoreUtils;
+			package = 215BC59028A54AD100DB1377 /* XCRemoteSwiftPackageReference "ios-core" */;
+			productName = BinkCore;
 		};
 		7063B1E8270473EE00C5C633 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
