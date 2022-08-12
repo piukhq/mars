@@ -11,7 +11,7 @@ class BarcodeViewWide: BarcodeView {
         cardNumberLabel.text = viewModel.barcodeViewModel.cardNumber
         
         if let plan = viewModel.membershipCard.membershipPlan {
-            iconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
+            iconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan), animated: true)
         }
         
         if let barcodeImage = viewModel.barcodeViewModel.barcodeImage(withSize: barcodeImageView.frame.size) {
