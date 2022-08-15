@@ -103,7 +103,7 @@ final class APIClient {
 
             let configuration = URLSessionConfiguration.default
             configuration.timeoutIntervalForRequest = 10.0
-            session = Session(configuration: configuration, serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators))
+            session = Session(configuration: configuration, serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators), eventMonitors: [BinkNetworkingLogger()])
         }
     }
 }
@@ -138,6 +138,7 @@ extension APIClient {
             session.request(validatedRequest.requestUrl, method: request.method, headers: validatedRequest.headers).cacheResponse(using: ResponseCacher.doNotCache).response { [weak self] response in
                 self?.handleResponse(response, endpoint: request.endpoint, expecting: responseType, isUserDriven: request.isUserDriven, completion: completion)
             }
+            .debugLog()
         }
     }
 
@@ -153,7 +154,7 @@ extension APIClient {
             }
             session.request(validatedRequest.requestUrl, method: request.method, parameters: body, encoder: JSONParameterEncoder.default, headers: validatedRequest.headers).cacheResponse(using: ResponseCacher.doNotCache).response { [weak self] response in
                 self?.handleResponse(response, endpoint: request.endpoint, expecting: responseType, isUserDriven: request.isUserDriven, completion: completion)
-            }
+            }.debugLog()
         }
     }
 
@@ -169,7 +170,7 @@ extension APIClient {
             }
             session.request(validatedRequest.requestUrl, method: request.method, parameters: body, encoding: JSONEncoding.default, headers: validatedRequest.headers).cacheResponse(using: ResponseCacher.doNotCache).response { [weak self] response in
                 self?.noResponseHandler(response: response, endpoint: request.endpoint, isUserDriven: request.isUserDriven, completion: completion)
-            }
+            }.debugLog()
         }
     }
 
