@@ -115,8 +115,8 @@ class UserManager {
             
             MixpanelUtility.setUserIdentity(userId: userId)
         }
-        
-        AutofillUtil().configureUserPreferenceFromAPI()
+
+        PreferencesViewModel().configureUserPreferenceFromAPI()
     }
     
     private func setToken(with response: LoginResponse) throws {
