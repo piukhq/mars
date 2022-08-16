@@ -34,38 +34,25 @@ class BinkNetworkingLogger: EventMonitor {
         print("\(requestBody)")
         
         //: - Response
+        guard let response = response.response, let data = request.data else { return }
         let elapsedTime = metrics.taskInterval.duration
-        
-        guard let response = response.response else { return }
-
         let statusCode = "\(response.statusCode)"
         let responseTime = "[\(String(format: "%.04f", elapsedTime)) s]"
+        let responseBody = String(data: data, encoding: .utf8) ?? "Failed to parse data"
         print("SW:⚡️ HTTP Status Code: \(response.statusCode)")
         print("SW:⚡️ Response Time: [\(String(format: "%.04f", elapsedTime)) s]")
         
-        guard let data = request.data else { return }
-        var responseBody = ""
-
-        do {
-            let jsonObject = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
-            let prettyData = try JSONSerialization.data(withJSONObject: jsonObject, options: .withoutEscapingSlashes)
-
-            if let prettyString = String(data: prettyData, encoding: .utf8) {
-                responseBody = prettyString
-                print("SW:⚡️ Response Body: \(prettyString)")
-            }
-        } catch {
-            if let errorString = String(data: data, encoding: .utf8) {
-                responseBody = errorString
-                print("SW:⚡️ Response Body: \(errorString)")
-            }
-        }
-
-        logDivider()
+        let log = BinkNetworkingLog(endpoint: endpoint, baseURL: baseURL, requestBody: requestBody, httpStatusCode: statusCode, responseTime: responseTime, responseBody: "responseBody")
         
-        let log = BinkNetworkingLog(endpoint: endpoint, baseURL: baseURL, requestBody: requestBody, httpStatusCode: statusCode, responseTime: responseTime, responseBody: responseBody)
-        logs.append(log)
+        if logs.count == 20 {
+            logs.removeFirst()
+            logs.append(log)
+        } else {
+            logs.append(log)
+        }
+        
         saveLogs()
+        print("SW: \(logs.count)")
     }
     
     private func saveLogs() {
@@ -88,12 +75,21 @@ class BinkNetworkingLogger: EventMonitor {
 }
 
 struct BinkNetworkingLog: Codable {
-    let endpoint: String
-    let baseURL: String
-    let requestBody: String
-    let httpStatusCode: String
-    let responseTime: String
-    let responseBody: String
+    var endpoint: String
+    var baseURL: String
+    var requestBody: String
+    var httpStatusCode: String
+    var responseTime: String
+    var responseBody: String
+    
+    enum CodingKeys: String, CodingKey {
+        case endpoint = "Endpoint"
+        case baseURL = "Base URL"
+        case requestBody = "Request Body"
+        case httpStatusCode = "HTTP Status Code"
+        case responseTime = "Response Time"
+        case responseBody = "Response Body"
+    }
 }
 
 struct BinkLog: Codable {
