@@ -79,9 +79,9 @@ class BinkNetworkingLogger: EventMonitor {
         self.logs = logs
     }
     
-    private func networkLogsFilePath() -> URL? {
+    func networkLogsFilePath() -> URL? {
         let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-        return documents?.appendingPathComponent("/networkLogs.nal")
+        return documents?.appendingPathComponent("/networkLogs.txt")
     }
 }
 

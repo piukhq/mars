@@ -8,6 +8,20 @@
 
 import SwiftUI
 
+struct ActivityViewController: UIViewControllerRepresentable {
+    var activityItems: [Any]
+    var applicationActivities: [UIActivity]? = nil
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) {}
+
+}
+
+
 @available(iOS 14.0, *)
 struct DebugMenuView: View {
     private let hasUser = Current.userManager.hasCurrentUser
@@ -82,22 +96,24 @@ struct DebugRow: View {
         case token = "Current Token"
         case exportNetworkActivity = "Export Recent Network Activity"
         
-        func action() {
-            switch self {
-            case .forceCrash:
-                SentryService.forceCrash()
-            case .token:
-                UIPasteboard.general.string = Current.userManager.currentToken
-                MessageView.show("Copied to clipboard", type: .snackbar(.short))
-            case .exportNetworkActivity:
-                break
-            }
-        }
+//        func action(presentintActivity: Binding<Bool>) {
+//            switch self {
+//            case .forceCrash:
+//                SentryService.forceCrash()
+//            case .token:
+//                UIPasteboard.general.string = Current.userManager.currentToken
+//                MessageView.show("Copied to clipboard", type: .snackbar(.short))
+//            case .exportNetworkActivity:
+//                presentActivitySheet = true
+//            }
+//        }
     }
     
     let rowType: RowType
     let subtitle: String?
     let destructive: Bool
+    
+    @State private var presentActivitySheet = false
     
     init(rowType: RowType, subtitle: String? = nil, destructive: Bool = false) {
         self.rowType = rowType
@@ -106,7 +122,17 @@ struct DebugRow: View {
     }
     
     var body: some View {
-        Button(action: rowType.action, label: {
+        Button {
+            switch rowType {
+            case .forceCrash:
+                SentryService.forceCrash()
+            case .token:
+                UIPasteboard.general.string = Current.userManager.currentToken
+                MessageView.show("Copied to clipboard", type: .snackbar(.short))
+            case .exportNetworkActivity:
+                presentActivitySheet = true
+            }
+        } label: {
             VStack(alignment: .leading, spacing: 5) {
                 Text(rowType.rawValue)
                     .foregroundColor(destructive ? .red : Color(.binkGradientBlueRight))
@@ -117,7 +143,30 @@ struct DebugRow: View {
                 }
             }
             .padding([.top, .bottom], 10)
-        })
+        }
+        .sheet(isPresented: $presentActivitySheet) {
+            if let url = BinkNetworkingLogger().networkLogsFilePath() {
+                ActivityViewController(activityItems: ["Export of the 20 most recent API requests and responses", url])
+            }
+        }
+
+//        Button(action: rowType.action(presentintActivity: $presentActivitySheet), label: {
+//            VStack(alignment: .leading, spacing: 5) {
+//                Text(rowType.rawValue)
+//                    .foregroundColor(destructive ? .red : Color(.binkGradientBlueRight))
+//                if let subtitle = subtitle {
+//                    Text(subtitle)
+//                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
+//                        .font(.callout)
+//                }
+//            }
+//            .padding([.top, .bottom], 10)
+//        })
+//        .sheet(isPresented: $presentActivitySheet) {
+//            if let url = BinkNetworkingLogger().networkLogsFilePath() {
+//                ActivityViewController(activityItems: ["Export of the 20 most recent API requests and responses", url])
+//            }
+//        }
     }
 }
 
