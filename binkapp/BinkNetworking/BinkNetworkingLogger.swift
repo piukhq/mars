@@ -12,6 +12,10 @@ import Alamofire
 class BinkNetworkingLogger: EventMonitor {
     private var logs: [BinkNetworkingLog] = []
     private var binkLog: BinkLog!
+    
+    init() {
+        readLogsFromDisk()
+    }
 
     func request(_ request: DataRequest, didParseResponse response: DataResponse<Data?, AFError>) {
         guard
@@ -24,7 +28,7 @@ class BinkNetworkingLogger: EventMonitor {
                 return
         }
         
-        //: - Request
+        // - Request
         let requestBodyFormatted = urlRequest.urlRequest.flatMap { $0.httpBody.map { String(decoding: $0, as: UTF8.self) } } ?? "None"
         let endpoint = "\(httpMethod) '\(requestURL.absoluteString)'"
         let baseURL = "\(APIConstants.baseURLString)"
@@ -33,7 +37,7 @@ class BinkNetworkingLogger: EventMonitor {
         print("\(APIConstants.baseURLString)")
         print("\(requestBody)")
         
-        //: - Response
+        // - Response
         guard let response = response.response, let data = request.data else { return }
         let elapsedTime = metrics.taskInterval.duration
         let statusCode = "\(response.statusCode)"
@@ -58,10 +62,8 @@ class BinkNetworkingLogger: EventMonitor {
     private func saveLogs() {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
-        guard let encoded = try? encoder.encode(logs) else { return }
-        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-        guard let path = documents?.appendingPathComponent("/networkLogs.nal") else { return }
-        
+        guard let encoded = try? encoder.encode(logs), let path = networkLogsFilePath() else { return }
+
         do {
             try encoded.write(to: path, options: .atomicWrite)
         } catch {
@@ -69,8 +71,17 @@ class BinkNetworkingLogger: EventMonitor {
         }
     }
     
-    private func logDivider() {
-        print("SW: --------------------- \n")
+    private func readLogsFromDisk() {
+        guard
+            let path = networkLogsFilePath(), let data = try? Data(contentsOf: path),
+            let logs = try? JSONDecoder().decode([BinkNetworkingLog].self, from: data)
+        else { return }
+        self.logs = logs
+    }
+    
+    private func networkLogsFilePath() -> URL? {
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        return documents?.appendingPathComponent("/networkLogs.nal")
     }
 }
 
