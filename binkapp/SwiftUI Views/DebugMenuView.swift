@@ -36,6 +36,7 @@ struct DebugMenuView: View {
                 }
                 
                 PickerDebugRow(type: .snackbar)
+                DebugRow(rowType: .exportNetworkActivity, destructive: false)
             }
             .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
             
@@ -79,6 +80,7 @@ struct DebugRow: View {
     enum RowType: String {
         case forceCrash = "Force crash"
         case token = "Current Token"
+        case exportNetworkActivity = "Export Recent Network Activity"
         
         func action() {
             switch self {
@@ -87,6 +89,8 @@ struct DebugRow: View {
             case .token:
                 UIPasteboard.general.string = Current.userManager.currentToken
                 MessageView.show("Copied to clipboard", type: .snackbar(.short))
+            case .exportNetworkActivity:
+                break
             }
         }
     }
