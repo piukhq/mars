@@ -24,7 +24,31 @@ class BinkNetworkingLogger: EventMonitor {
 //        debugPrint("SW: \(message)")
         
         log = BinkNetworkingLog(endpoint: endpointString, baseURL: APIConstants.baseURLString, body: body)
-        debugPrint("SW: \(log)")
+//        debugPrint("SW: \(log)")
+    }
+    
+    func request(_ request: DataRequest, didParseResponse response: DataResponse<Data?, AFError>) {
+        guard
+            let task = request.task,
+            let request = task.originalRequest,
+            let httpMethod = request.httpMethod,
+            let requestURL = request.url
+            else {
+                return
+        }
+        
+        let body = request.urlRequest.flatMap { $0.httpBody.map { String(decoding: $0, as: UTF8.self) } } ?? "None"
+
+        print("SW:⚡️ \(httpMethod) '\(requestURL.absoluteString)':")
+        print("SW:⚡️ Base URL: \(APIConstants.baseURLString)")
+        print("SW:⚡️ Request Body: \(body)")
+        logDivider()
+
+//        debugPrint("SW:⚡️ Response Received: \(response.debugDescription)")
+    }
+    
+    private func logDivider() {
+        print("---------------------")
     }
 }
 
