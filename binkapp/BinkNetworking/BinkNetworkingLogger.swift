@@ -12,55 +12,74 @@ import Alamofire
 class BinkNetworkingLogger: EventMonitor {
     private var log: BinkNetworkingLog!
     
-    func requestDidResume(_ request: Request) {
-        let body = request.request.flatMap { $0.httpBody.map { String(decoding: $0, as: UTF8.self) } } ?? "None"
-        let message = """
-        ⚡️ Request Started: \(request)
-        ⚡️ Body Data: \(body)
-        ⚡️ Base URL: \(APIConstants.baseURLString)
-        """
-
-        let endpointString = "Request Started: \(request)"
-//        debugPrint("SW: \(message)")
-        
-        log = BinkNetworkingLog(endpoint: endpointString, baseURL: APIConstants.baseURLString, body: body)
-//        debugPrint("SW: \(log)")
-    }
+//    func requestDidResume(_ request: Request) {
+//        let body = request.request.flatMap { $0.httpBody.map { String(decoding: $0, as: UTF8.self) } } ?? "None"
+//        let message = """
+//        ⚡️ Request Started: \(request)
+//        ⚡️ Body Data: \(body)
+//        ⚡️ Base URL: \(APIConstants.baseURLString)
+//        """
+//
+//        let endpointString = "Request Started: \(request)"
+////        debugPrint("SW: \(message)")
+//
+//        log = BinkNetworkingLog(endpoint: endpointString, baseURL: APIConstants.baseURLString, body: body)
+////        debugPrint("SW: \(log)")
+//    }
     
     func request(_ request: DataRequest, didParseResponse response: DataResponse<Data?, AFError>) {
         guard
             let task = request.task,
-            let request = task.originalRequest,
-            let httpMethod = request.httpMethod,
-            let requestURL = request.url
+            let urlRequest = task.originalRequest,
+            let httpMethod = urlRequest.httpMethod,
+            let requestURL = urlRequest.url,
+            let metrics = request.metrics
             else {
                 return
         }
         
-        let body = request.urlRequest.flatMap { $0.httpBody.map { String(decoding: $0, as: UTF8.self) } } ?? "None"
-
-        print("SW:⚡️ \(httpMethod) '\(requestURL.absoluteString)':")
+        //: - Request
+        let requestBody = urlRequest.urlRequest.flatMap { $0.httpBody.map { String(decoding: $0, as: UTF8.self) } } ?? "None"
+        print("SW:⚡️ \(httpMethod) '\(requestURL.absoluteString)'")
         print("SW:⚡️ Base URL: \(APIConstants.baseURLString)")
-        print("SW:⚡️ Request Body: \(body)")
-        logDivider()
+        print("SW:⚡️ Request Body: \(requestBody)")
+        
+        
+        //: - Response
+        let elapsedTime = metrics.taskInterval.duration
+        
+        guard let response = response.response else { return }
 
-//        debugPrint("SW:⚡️ Response Received: \(response.debugDescription)")
+        if let error = task.error {
+            print("SW:⚡️ [Error] \(httpMethod) '\(requestURL.absoluteString)' [\(String(format: "%.04f", elapsedTime)) s]:")
+            print(error)
+        } else {
+            print("SW:⚡️ HTTP Status Code: \(response.statusCode)")
+            print("SW:⚡️ Response Time: [\(String(format: "%.04f", elapsedTime)) s]")
+            
+            guard let data = request.data else { return }
+            
+            do {
+                let jsonObject = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
+                let prettyData = try JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted)
+                
+                if let prettyString = String(data: prettyData, encoding: .utf8) {
+                    print("SW:⚡️ Response Body: \(prettyString)")
+                }
+            } catch {
+                if let errorString = String(data: data, encoding: .utf8) {
+                    print("SW:⚡️ Response Body: \(errorString)")
+                }
+            }
+        }
+        
+        logDivider()
     }
     
     private func logDivider() {
-        print("---------------------")
+        print("SW: --------------------- \n")
     }
 }
-
-extension Request {
-    public func debugLog() -> Self {
-    #if DEBUG
-//       debugPrint("SW: \(self)")
-    #endif
-    return self
-    }
-}
-
 
 struct BinkNetworkingLog {
     let endpoint: String
