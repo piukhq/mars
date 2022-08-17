@@ -120,7 +120,7 @@ struct DebugRow: View {
         }
         .sheet(isPresented: $presentActivitySheet) {
             if let url = BinkNetworkingLogger().networkLogsFilePath() {
-                ActivityViewController(activityItems: ["Export the 20 most recent API requests and responses", url])
+                ActivityViewController(activityItemMetadata: LinkMetadataManager(title: "Export recent API requests and responses", url: url))
             }
         }
     }

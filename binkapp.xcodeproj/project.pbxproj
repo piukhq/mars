@@ -307,6 +307,7 @@
 		CE51291628AAAC1200F85039 /* BinkNetworkingLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51291528AAAC1200F85039 /* BinkNetworkingLogger.swift */; };
 		CE51291828ACCA6700F85039 /* ActivityViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51291728ACCA6600F85039 /* ActivityViewControllerRepresentable.swift */; };
 		CE51291B28AD0ED200F85039 /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51291A28AD0ED100F85039 /* AnyCodable.swift */; };
+		CE51291F28AD43F400F85039 /* AppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE51291E28AD43F400F85039 /* AppIcon.png */; };
 		CE518D8827E4818200A36E90 /* HighVisibilityLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE518D8727E4818200A36E90 /* HighVisibilityLabelView.swift */; };
 		CE518D8A27E8C8E000A36E90 /* BarcodeScreenSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE518D8927E8C8DF00A36E90 /* BarcodeScreenSwiftUIView.swift */; };
 		CE518D8E27EA1C8200A36E90 /* BinkButtonSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE518D8D27EA1C8100A36E90 /* BinkButtonSwiftUIView.swift */; };
@@ -1002,6 +1003,7 @@
 		CE51291528AAAC1200F85039 /* BinkNetworkingLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkNetworkingLogger.swift; sourceTree = "<group>"; };
 		CE51291728ACCA6600F85039 /* ActivityViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewControllerRepresentable.swift; sourceTree = "<group>"; };
 		CE51291A28AD0ED100F85039 /* AnyCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyCodable.swift; sourceTree = "<group>"; };
+		CE51291E28AD43F400F85039 /* AppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon.png; sourceTree = "<group>"; };
 		CE518D8727E4818200A36E90 /* HighVisibilityLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighVisibilityLabelView.swift; sourceTree = "<group>"; };
 		CE518D8927E8C8DF00A36E90 /* BarcodeScreenSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScreenSwiftUIView.swift; sourceTree = "<group>"; };
 		CE518D8D27EA1C8100A36E90 /* BinkButtonSwiftUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinkButtonSwiftUIView.swift; sourceTree = "<group>"; };
@@ -3101,6 +3103,7 @@
 		EFCB2C182329368D0060F73B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE51291E28AD43F400F85039 /* AppIcon.png */,
 				214EC020287320FD000A3F73 /* place-marker.gif */,
 				21CE710B2872F2C2003EC968 /* tesco-locations.geojson */,
 				CE85A1FF26B1535B003B74CD /* Animations */,
@@ -3444,6 +3447,7 @@
 				3C794D8D23018C25000A31FD /* BrowseBrandsViewController.xib in Resources */,
 				EF5229B82423FC4E004AC972 /* stagingPublicKey.der in Resources */,
 				21CE710C2872F2C3003EC968 /* tesco-locations.geojson in Resources */,
+				CE51291F28AD43F400F85039 /* AppIcon.png in Resources */,
 				B7FE19BB234391B000F2D6A0 /* PaymentCardCell.xib in Resources */,
 				CE822D8227B1322B00916C74 /* binkOld.der in Resources */,
 				5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */,
