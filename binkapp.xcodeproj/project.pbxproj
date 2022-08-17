@@ -26,6 +26,11 @@
 		21393EFB285A1E1C002C8E79 /* StringHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21393EFA285A1E1C002C8E79 /* StringHelperTests.swift */; };
 		21497EC82864A1880053A9EE /* OptionItemListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21497EC72864A1880053A9EE /* OptionItemListViewController.swift */; };
 		21497ECD2869BE2E0053A9EE /* SortStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21497ECC2869BE2E0053A9EE /* SortStateTests.swift */; };
+		214DCF5128AD201900308531 /* NSNumberExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214DCF5028AD201900308531 /* NSNumberExtensionTests.swift */; };
+		214DCF5328AD25C500308531 /* TimeIntervalExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214DCF5228AD25C500308531 /* TimeIntervalExtensionTests.swift */; };
+		214DCF5528AD2C5100308531 /* UIColorExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214DCF5428AD2C5100308531 /* UIColorExtensionTests.swift */; };
+		214DCF5928AD409E00308531 /* RemoteConfigFileModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214DCF5828AD409E00308531 /* RemoteConfigFileModelTests.swift */; };
+		214DCF5C28AD4FA000308531 /* GeoLocationsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214DCF5B28AD4FA000308531 /* GeoLocationsViewModelTests.swift */; };
 		214EC01F28732020000A3F73 /* GifLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC01E28732020000A3F73 /* GifLoader.swift */; };
 		214EC021287320FD000A3F73 /* place-marker.gif in Resources */ = {isa = PBXBuildFile; fileRef = 214EC020287320FD000A3F73 /* place-marker.gif */; };
 		214EC02628734B45000A3F73 /* GeoLocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02528734B45000A3F73 /* GeoLocationsViewController.swift */; };
@@ -692,6 +697,11 @@
 		2144647F3F7FD0825EAA4342 /* Pods-binkapp-binkappUITests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp-binkappUITests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkapp-binkappUITests/Pods-binkapp-binkappUITests.app store (internal).xcconfig"; sourceTree = "<group>"; };
 		21497EC72864A1880053A9EE /* OptionItemListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionItemListViewController.swift; sourceTree = "<group>"; };
 		21497ECC2869BE2E0053A9EE /* SortStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortStateTests.swift; sourceTree = "<group>"; };
+		214DCF5028AD201900308531 /* NSNumberExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNumberExtensionTests.swift; sourceTree = "<group>"; };
+		214DCF5228AD25C500308531 /* TimeIntervalExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtensionTests.swift; sourceTree = "<group>"; };
+		214DCF5428AD2C5100308531 /* UIColorExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensionTests.swift; sourceTree = "<group>"; };
+		214DCF5828AD409E00308531 /* RemoteConfigFileModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigFileModelTests.swift; sourceTree = "<group>"; };
+		214DCF5B28AD4FA000308531 /* GeoLocationsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationsViewModelTests.swift; sourceTree = "<group>"; };
 		214EC01E28732020000A3F73 /* GifLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifLoader.swift; sourceTree = "<group>"; };
 		214EC020287320FD000A3F73 /* place-marker.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "place-marker.gif"; sourceTree = "<group>"; };
 		214EC02528734B45000A3F73 /* GeoLocationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationsViewController.swift; sourceTree = "<group>"; };
@@ -1355,6 +1365,14 @@
 				21497ECC2869BE2E0053A9EE /* SortStateTests.swift */,
 			);
 			path = Loyalty;
+			sourceTree = "<group>";
+		};
+		214DCF5A28AD4F4200308531 /* GeoLocations */ = {
+			isa = PBXGroup;
+			children = (
+				214DCF5B28AD4FA000308531 /* GeoLocationsViewModelTests.swift */,
+			);
+			path = GeoLocations;
 			sourceTree = "<group>";
 		};
 		214EC0272874313A000A3F73 /* GeoLocation */ = {
@@ -2566,6 +2584,9 @@
 			isa = PBXGroup;
 			children = (
 				CEF389EA255D72E90063C718 /* DateExtensionTests.swift */,
+				214DCF5028AD201900308531 /* NSNumberExtensionTests.swift */,
+				214DCF5228AD25C500308531 /* TimeIntervalExtensionTests.swift */,
+				214DCF5428AD2C5100308531 /* UIColorExtensionTests.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2678,6 +2699,7 @@
 		EF485578231E5A3600FC9E5F /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				214DCF5A28AD4F4200308531 /* GeoLocations */,
 				70E8E3792566DE310027A244 /* PLL */,
 				CE085D5D255EA17D003966ED /* PLR */,
 				CE3878492562EEB3006BAC11 /* Barcode */,
@@ -2896,6 +2918,7 @@
 				EF8B701123587BE3006CE3DD /* MembershipCardBalanceModelTests.swift */,
 				CE971A2E28806270001D7E1C /* MembershipPlanModelTests.swift */,
 				212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */,
+				214DCF5828AD409E00308531 /* RemoteConfigFileModelTests.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4142,6 +4165,8 @@
 				70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */,
 				70D6863E257152F300403448 /* DynamicActionsTests.swift in Sources */,
 				706157C8264A84AF0002701E /* AppVersionTests.swift in Sources */,
+				214DCF5528AD2C5100308531 /* UIColorExtensionTests.swift in Sources */,
+				214DCF5928AD409E00308531 /* RemoteConfigFileModelTests.swift in Sources */,
 				CE971A2A287EFDB4001D7E1C /* DebugMenuViewModelTests.swift in Sources */,
 				CE971A3528807FBB001D7E1C /* BinkInfoButtonTests.swift in Sources */,
 				CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */,
@@ -4151,6 +4176,7 @@
 				3CEE169B2440550D00933859 /* BrowseBrandsViewModelTests.swift in Sources */,
 				212F0C462876EC63007F09CE /* GeoLocationModelTests.swift in Sources */,
 				3CFD913022F1BA8200F25AF1 /* (null) in Sources */,
+				214DCF5128AD201900308531 /* NSNumberExtensionTests.swift in Sources */,
 				CE971A3A2881AE1D001D7E1C /* PaymentCardDetailViewModelTests.swift in Sources */,
 				CE971A3728817A41001D7E1C /* AddOrJoinViewModelTests.swift in Sources */,
 				EF758E1523225F95000D26A9 /* TestDatabase.xcdatamodeld in Sources */,
@@ -4164,9 +4190,11 @@
 				70A61D16263095060073A08A /* BinkModuleViewModelTests.swift in Sources */,
 				CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */,
 				CE971A3328806968001D7E1C /* MembershipPlanModelTests.swift in Sources */,
+				214DCF5C28AD4FA000308531 /* GeoLocationsViewModelTests.swift in Sources */,
 				EF8B701223587BE3006CE3DD /* MembershipCardBalanceModelTests.swift in Sources */,
 				CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */,
 				CE8058222897EF86002AB70F /* MessageViewTests.swift in Sources */,
+				214DCF5328AD25C500308531 /* TimeIntervalExtensionTests.swift in Sources */,
 				EF758E1623225F95000D26A9 /* DatabaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4277,7 +4305,7 @@
 			baseConfigurationReference = BD3CB9432328573C005C37AE /* Dev.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				API_BASE_URL = api.dev.gb.bink.com;
+				API_BASE_URL = api.staging.gb.bink.com;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -4414,7 +4442,7 @@
 			baseConfigurationReference = E708C17C8E9A69A07732E058 /* Pods-binkapp.alpha.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				API_BASE_URL = api.dev.gb.bink.com;
+				API_BASE_URL = api.staging.gb.bink.com;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Alpha";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
