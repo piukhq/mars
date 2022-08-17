@@ -305,6 +305,7 @@
 		CE3D31DD2649660C0072BD97 /* ScanLoyaltyCardButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */; };
 		CE4A624925714EAE003271F6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* Sentry */; };
 		CE51291628AAAC1200F85039 /* BinkNetworkingLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51291528AAAC1200F85039 /* BinkNetworkingLogger.swift */; };
+		CE51291828ACCA6700F85039 /* ActivityViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51291728ACCA6600F85039 /* ActivityViewControllerRepresentable.swift */; };
 		CE518D8827E4818200A36E90 /* HighVisibilityLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE518D8727E4818200A36E90 /* HighVisibilityLabelView.swift */; };
 		CE518D8A27E8C8E000A36E90 /* BarcodeScreenSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE518D8927E8C8DF00A36E90 /* BarcodeScreenSwiftUIView.swift */; };
 		CE518D8E27EA1C8200A36E90 /* BinkButtonSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE518D8D27EA1C8100A36E90 /* BinkButtonSwiftUIView.swift */; };
@@ -998,6 +999,7 @@
 		CE4A628025715519003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A6285257155AE003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE51291528AAAC1200F85039 /* BinkNetworkingLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkNetworkingLogger.swift; sourceTree = "<group>"; };
+		CE51291728ACCA6600F85039 /* ActivityViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewControllerRepresentable.swift; sourceTree = "<group>"; };
 		CE518D8727E4818200A36E90 /* HighVisibilityLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighVisibilityLabelView.swift; sourceTree = "<group>"; };
 		CE518D8927E8C8DF00A36E90 /* BarcodeScreenSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScreenSwiftUIView.swift; sourceTree = "<group>"; };
 		CE518D8D27EA1C8100A36E90 /* BinkButtonSwiftUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinkButtonSwiftUIView.swift; sourceTree = "<group>"; };
@@ -2012,6 +2014,7 @@
 			isa = PBXGroup;
 			children = (
 				701E2C492677567E003F903B /* DebugMenuView.swift */,
+				CE51291928ACCADB00F85039 /* UIKit Wrappers */,
 				CE518D8727E4818200A36E90 /* HighVisibilityLabelView.swift */,
 			);
 			path = "SwiftUI Views";
@@ -2453,6 +2456,14 @@
 				CE8058212897EF86002AB70F /* MessageViewTests.swift */,
 			);
 			path = BinkUI;
+			sourceTree = "<group>";
+		};
+		CE51291928ACCADB00F85039 /* UIKit Wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				CE51291728ACCA6600F85039 /* ActivityViewControllerRepresentable.swift */,
+			);
+			path = "UIKit Wrappers";
 			sourceTree = "<group>";
 		};
 		CE52E16126F0FDD700CAFBBF /* SwiftUIExtensions */ = {
@@ -3785,6 +3796,7 @@
 				BD458B3C236B5B710029A538 /* LoginResponse.swift in Sources */,
 				3C119BA12315332B0015CE91 /* LoyaltyPlanView.swift in Sources */,
 				CE73F9AD2600B64E00D53BCF /* HeaderTableViewCell.swift in Sources */,
+				CE51291828ACCA6700F85039 /* ActivityViewControllerRepresentable.swift in Sources */,
 				EF2E881323351A6000F678F3 /* CoreDataRepositoryProtocol.swift in Sources */,
 				EFA5F70F2379A7C70027AB80 /* CD_MembershipPlanImage.swift in Sources */,
 				EF94AF1423E05B5D00AAA039 /* ImageService.swift in Sources */,
