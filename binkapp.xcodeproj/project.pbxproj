@@ -306,6 +306,7 @@
 		CE4A624925714EAE003271F6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* Sentry */; };
 		CE51291628AAAC1200F85039 /* BinkNetworkingLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51291528AAAC1200F85039 /* BinkNetworkingLogger.swift */; };
 		CE51291828ACCA6700F85039 /* ActivityViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51291728ACCA6600F85039 /* ActivityViewControllerRepresentable.swift */; };
+		CE51291B28AD0ED200F85039 /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51291A28AD0ED100F85039 /* AnyCodable.swift */; };
 		CE518D8827E4818200A36E90 /* HighVisibilityLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE518D8727E4818200A36E90 /* HighVisibilityLabelView.swift */; };
 		CE518D8A27E8C8E000A36E90 /* BarcodeScreenSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE518D8927E8C8DF00A36E90 /* BarcodeScreenSwiftUIView.swift */; };
 		CE518D8E27EA1C8200A36E90 /* BinkButtonSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE518D8D27EA1C8100A36E90 /* BinkButtonSwiftUIView.swift */; };
@@ -1000,6 +1001,7 @@
 		CE4A6285257155AE003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE51291528AAAC1200F85039 /* BinkNetworkingLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkNetworkingLogger.swift; sourceTree = "<group>"; };
 		CE51291728ACCA6600F85039 /* ActivityViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewControllerRepresentable.swift; sourceTree = "<group>"; };
+		CE51291A28AD0ED100F85039 /* AnyCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyCodable.swift; sourceTree = "<group>"; };
 		CE518D8727E4818200A36E90 /* HighVisibilityLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighVisibilityLabelView.swift; sourceTree = "<group>"; };
 		CE518D8927E8C8DF00A36E90 /* BarcodeScreenSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScreenSwiftUIView.swift; sourceTree = "<group>"; };
 		CE518D8D27EA1C8100A36E90 /* BinkButtonSwiftUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinkButtonSwiftUIView.swift; sourceTree = "<group>"; };
@@ -1473,6 +1475,7 @@
 			isa = PBXGroup;
 			children = (
 				EF59A1302448B769001B60B8 /* APIErrorResponses.swift */,
+				CE51291A28AD0ED100F85039 /* AnyCodable.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -3953,6 +3956,7 @@
 				3C873FFA22F073CF00FA3031 /* LoyaltyWalletViewModel.swift in Sources */,
 				3CD802822391314900D26888 /* ForgotPasswordRepository.swift in Sources */,
 				70E31A8124E56B3B005A30D2 /* UserService.swift in Sources */,
+				CE51291B28AD0ED200F85039 /* AnyCodable.swift in Sources */,
 				70CE8967258A807E00078ADA /* BinkButton.swift in Sources */,
 				EF59A12824473589001B60B8 /* APIClient.swift in Sources */,
 				B7E2EC0822E5ED6600BB201A /* String+Encrypting.swift in Sources */,
