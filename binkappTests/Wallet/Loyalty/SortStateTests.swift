@@ -9,6 +9,8 @@
 import XCTest
 @testable import binkapp
 
+// swiftlint:disable all
+
 class SortStateTests: XCTestCase {
     func test_sortStateIsNewest() throws {
         let loyaltyModel = LoyaltyWalletViewModel()
@@ -24,5 +26,12 @@ class SortStateTests: XCTestCase {
         let type = loyaltyModel.getCurrentMembershipCardsSortType()?.rawValue
         
         XCTAssertEqual(type, "Custom")
+    }
+    
+    func test_something() throws {
+        let loyaltyModel = LoyaltyWalletViewModel()
+        loyaltyModel.setupWalletPrompts()
+        
+        XCTAssertTrue(!loyaltyModel.walletPrompts!.isEmpty)
     }
 }

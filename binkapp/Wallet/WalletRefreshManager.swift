@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class WalletRefreshManager {
     enum RefreshInterval: TimeInterval {
@@ -56,7 +57,7 @@ class WalletRefreshManager {
             accountsRefreshTimer.invalidate()
             canRefreshAccounts = false
         }
-        accountsRefreshTimer = Timer.scheduledTimer(timeInterval: RefreshInterval.twoMinutes.rawValue, target: self, selector: #selector(handleAccountsRefreshTimerTrigger), userInfo: nil, repeats: false)
+        accountsRefreshTimer = Timer.scheduledTimer(timeInterval: UIApplication.isRunningUnitTests ? 0.5 : RefreshInterval.twoMinutes.rawValue, target: self, selector: #selector(handleAccountsRefreshTimerTrigger), userInfo: nil, repeats: false)
     }
     
     /// This should only be called on background launch
@@ -65,7 +66,7 @@ class WalletRefreshManager {
             plansRefreshTimer.invalidate()
             canRefreshPlans = false
         }
-        plansRefreshTimer = Timer.scheduledTimer(timeInterval: RefreshInterval.oneHour.rawValue, target: self, selector: #selector(handlePlansRefreshTimerTrigger), userInfo: nil, repeats: false)
+        plansRefreshTimer = Timer.scheduledTimer(timeInterval: UIApplication.isRunningUnitTests ? 0.5 : RefreshInterval.oneHour.rawValue, target: self, selector: #selector(handlePlansRefreshTimerTrigger), userInfo: nil, repeats: false)
     }
     
     @objc private func handleAccountsRefreshTimerTrigger() {

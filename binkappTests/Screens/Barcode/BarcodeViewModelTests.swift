@@ -19,7 +19,7 @@ class BarcodeViewModelTests: XCTestCase, CoreDataTestable {
 
     override class func setUp() {
         super.setUp()
-        let planAccountModel = MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "Harvey Nichols", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
+        let planAccountModel = MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: "666", planURL: nil, companyName: "Harvey Nichols", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
         membershipPlanResponse = MembershipPlanModel(apiId: 5, status: nil, featureSet: nil, images: nil, account: planAccountModel, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
         
         cardResponse = CardModel(apiId: nil, barcode: "123456789", membershipId: "999 666", barcodeType: 0, colour: nil, secondaryColour: nil)
@@ -46,6 +46,52 @@ class BarcodeViewModelTests: XCTestCase, CoreDataTestable {
 
     func test_title_is_correct() {
         XCTAssertEqual(Self.sut.title, "Harvey Nichols")
+    }
+    
+    func test_description_is_correct_loyalty() {
+        Self.membershipCardResponse.card?.barcode = nil
+        mapMembershipCard()
+        Self.sut.barcodeUse = .loyaltyCard
+        XCTAssertEqual(Self.sut.descriptionText, "Share this number in-store just like you would a physical loyalty card.")
+    }
+    
+    func test_description_is_correct_coupon() {
+        Self.sut.barcodeUse = .coupon
+        XCTAssertEqual(Self.sut.descriptionText, "Scan this barcode at the store, just like you would a physical coupon. Bear in mind that some store scanners cannot read from screens.")
+    }
+    
+    func test_memberShipNumberTitle_is_correct() {
+        XCTAssertEqual(Self.sut.membershipNumberTitle, "666 Number")
+    }
+    
+    func test_barcodeMatchesMembershipNumber() {
+        Self.membershipCardResponse.card?.barcode = "999 666"
+        mapMembershipCard()
+        XCTAssertEqual(Self.sut.barcodeMatchesMembershipNumber, true)
+    }
+    
+    func test_barcodeDoesNotMatcheMembershipNumber() {
+        Self.membershipCardResponse.card?.barcode = "123456789"
+        mapMembershipCard()
+        XCTAssertEqual(Self.sut.barcodeMatchesMembershipNumber, false)
+    }
+    
+    func test_shouldShowbarcodeNumber() {
+        Self.membershipCardResponse.card?.barcode = "123456789"
+        mapMembershipCard()
+        XCTAssertEqual(Self.sut.shouldShowbarcodeNumber, true)
+    }
+    
+    func test_barcodeShouldBeMoreSquare() {
+        Self.membershipCardResponse.card?.barcode = "123456789"
+        mapMembershipCard()
+        XCTAssertEqual(Self.sut.barcodeIsMoreSquareThanRectangle, true)
+    }
+    
+    func test_heightForHighVisView() {
+        let height = Self.sut.heightForHighVisView(text: "123456789")
+        print(height)
+        XCTAssertTrue(height == 153.0)
     }
     
     func test_isBarcodeAvailable() {

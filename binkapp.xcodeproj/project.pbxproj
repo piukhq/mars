@@ -31,11 +31,15 @@
 		214DCF5528AD2C5100308531 /* UIColorExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214DCF5428AD2C5100308531 /* UIColorExtensionTests.swift */; };
 		214DCF5928AD409E00308531 /* RemoteConfigFileModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214DCF5828AD409E00308531 /* RemoteConfigFileModelTests.swift */; };
 		214DCF5C28AD4FA000308531 /* GeoLocationsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214DCF5B28AD4FA000308531 /* GeoLocationsViewModelTests.swift */; };
+		214DCF5F28AE399100308531 /* WalletRefreshManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214DCF5E28AE399100308531 /* WalletRefreshManagerTests.swift */; };
+		214DCF6128AE597700308531 /* MagicLinkRequestModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214DCF6028AE597700308531 /* MagicLinkRequestModelTests.swift */; };
+		214DCF6328AE5C8800308531 /* EncodableExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214DCF6228AE5C8800308531 /* EncodableExtensionTests.swift */; };
 		214EC01F28732020000A3F73 /* GifLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC01E28732020000A3F73 /* GifLoader.swift */; };
 		214EC021287320FD000A3F73 /* place-marker.gif in Resources */ = {isa = PBXBuildFile; fileRef = 214EC020287320FD000A3F73 /* place-marker.gif */; };
 		214EC02628734B45000A3F73 /* GeoLocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02528734B45000A3F73 /* GeoLocationsViewController.swift */; };
 		214EC02928743165000A3F73 /* GeoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02828743165000A3F73 /* GeoModel.swift */; };
 		214EC02E28743883000A3F73 /* GeoLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02D28743883000A3F73 /* GeoLocationViewModel.swift */; };
+		216B999C28AE902000A67A14 /* FloatExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216B999B28AE902000A67A14 /* FloatExtensionTests.swift */; };
 		21CE710C2872F2C3003EC968 /* tesco-locations.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 21CE710B2872F2C2003EC968 /* tesco-locations.geojson */; };
 		3C05A9DC2327CD3D00620583 /* AppDelegate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DB2327CD3D00620583 /* AppDelegate+Extension.swift */; };
 		3C05A9DE2327CE6300620583 /* PaymentCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DD2327CE6300620583 /* PaymentCardModel.swift */; };
@@ -702,11 +706,15 @@
 		214DCF5428AD2C5100308531 /* UIColorExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensionTests.swift; sourceTree = "<group>"; };
 		214DCF5828AD409E00308531 /* RemoteConfigFileModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigFileModelTests.swift; sourceTree = "<group>"; };
 		214DCF5B28AD4FA000308531 /* GeoLocationsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationsViewModelTests.swift; sourceTree = "<group>"; };
+		214DCF5E28AE399100308531 /* WalletRefreshManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletRefreshManagerTests.swift; sourceTree = "<group>"; };
+		214DCF6028AE597700308531 /* MagicLinkRequestModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkRequestModelTests.swift; sourceTree = "<group>"; };
+		214DCF6228AE5C8800308531 /* EncodableExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodableExtensionTests.swift; sourceTree = "<group>"; };
 		214EC01E28732020000A3F73 /* GifLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifLoader.swift; sourceTree = "<group>"; };
 		214EC020287320FD000A3F73 /* place-marker.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "place-marker.gif"; sourceTree = "<group>"; };
 		214EC02528734B45000A3F73 /* GeoLocationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationsViewController.swift; sourceTree = "<group>"; };
 		214EC02828743165000A3F73 /* GeoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoModel.swift; sourceTree = "<group>"; };
 		214EC02D28743883000A3F73 /* GeoLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationViewModel.swift; sourceTree = "<group>"; };
+		216B999B28AE902000A67A14 /* FloatExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtensionTests.swift; sourceTree = "<group>"; };
 		21CE710B2872F2C2003EC968 /* tesco-locations.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "tesco-locations.geojson"; sourceTree = "<group>"; };
 		2211289D0FB0F1A14BC9E957 /* Pods-binkapp.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.beta.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.beta.xcconfig"; sourceTree = "<group>"; };
 		26F00637A9D94FD020319165 /* Pods-binkappUITests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.app store (internal).xcconfig"; sourceTree = "<group>"; };
@@ -1373,6 +1381,14 @@
 				214DCF5B28AD4FA000308531 /* GeoLocationsViewModelTests.swift */,
 			);
 			path = GeoLocations;
+			sourceTree = "<group>";
+		};
+		214DCF5D28AE396900308531 /* RefreshManager */ = {
+			isa = PBXGroup;
+			children = (
+				214DCF5E28AE399100308531 /* WalletRefreshManagerTests.swift */,
+			);
+			path = RefreshManager;
 			sourceTree = "<group>";
 		};
 		214EC0272874313A000A3F73 /* GeoLocation */ = {
@@ -2587,6 +2603,8 @@
 				214DCF5028AD201900308531 /* NSNumberExtensionTests.swift */,
 				214DCF5228AD25C500308531 /* TimeIntervalExtensionTests.swift */,
 				214DCF5428AD2C5100308531 /* UIColorExtensionTests.swift */,
+				214DCF6228AE5C8800308531 /* EncodableExtensionTests.swift */,
+				216B999B28AE902000A67A14 /* FloatExtensionTests.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2738,6 +2756,7 @@
 		EF586FE12357A8DC000917B6 /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
+				214DCF5D28AE396900308531 /* RefreshManager */,
 				21497ECB2869BDF20053A9EE /* Loyalty */,
 				CE3878CD25643C06006BAC11 /* Join Cards */,
 				EF586FE22357A8E3000917B6 /* Payment Card Wallet */,
@@ -2919,6 +2938,7 @@
 				CE971A2E28806270001D7E1C /* MembershipPlanModelTests.swift */,
 				212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */,
 				214DCF5828AD409E00308531 /* RemoteConfigFileModelTests.swift */,
+				214DCF6028AE597700308531 /* MagicLinkRequestModelTests.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4164,6 +4184,7 @@
 				21497ECD2869BE2E0053A9EE /* SortStateTests.swift in Sources */,
 				70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */,
 				70D6863E257152F300403448 /* DynamicActionsTests.swift in Sources */,
+				214DCF6328AE5C8800308531 /* EncodableExtensionTests.swift in Sources */,
 				706157C8264A84AF0002701E /* AppVersionTests.swift in Sources */,
 				214DCF5528AD2C5100308531 /* UIColorExtensionTests.swift in Sources */,
 				214DCF5928AD409E00308531 /* RemoteConfigFileModelTests.swift in Sources */,
@@ -4171,6 +4192,7 @@
 				CE971A3528807FBB001D7E1C /* BinkInfoButtonTests.swift in Sources */,
 				CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */,
 				21393EFB285A1E1C002C8E79 /* StringHelperTests.swift in Sources */,
+				214DCF5F28AE399100308531 /* WalletRefreshManagerTests.swift in Sources */,
 				EF7F6E6123E4288C00352DCF /* StorageUtilityTests.swift in Sources */,
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
 				3CEE169B2440550D00933859 /* BrowseBrandsViewModelTests.swift in Sources */,
@@ -4188,12 +4210,14 @@
 				CE971A2C28802AEC001D7E1C /* PaymentCardDetailLoyaltyCardStatusCellViewModelTests.swift in Sources */,
 				DB4D8EAD2440864C0085595D /* SettingsViewModelTests.swift in Sources */,
 				70A61D16263095060073A08A /* BinkModuleViewModelTests.swift in Sources */,
+				214DCF6128AE597700308531 /* MagicLinkRequestModelTests.swift in Sources */,
 				CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */,
 				CE971A3328806968001D7E1C /* MembershipPlanModelTests.swift in Sources */,
 				214DCF5C28AD4FA000308531 /* GeoLocationsViewModelTests.swift in Sources */,
 				EF8B701223587BE3006CE3DD /* MembershipCardBalanceModelTests.swift in Sources */,
 				CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */,
 				CE8058222897EF86002AB70F /* MessageViewTests.swift in Sources */,
+				216B999C28AE902000A67A14 /* FloatExtensionTests.swift in Sources */,
 				214DCF5328AD25C500308531 /* TimeIntervalExtensionTests.swift in Sources */,
 				EF758E1623225F95000D26A9 /* DatabaseTests.swift in Sources */,
 			);
