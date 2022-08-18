@@ -25,6 +25,14 @@ class CustomAnnotation: NSObject, MKAnnotation {
 }
 
 class CalloutView: UIView {
+    private lazy var textStack: UIStackView = {
+        let stackview = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
+        stackview.translatesAutoresizingMaskIntoConstraints = false
+        stackview.axis = .vertical
+        addSubview(stackview)
+        return stackview
+    }()
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .alertText
@@ -46,6 +54,7 @@ class CalloutView: UIView {
         view.image = annotation.image
         view.contentMode = .scaleAspectFit
         view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -65,34 +74,20 @@ class CalloutView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: LayoutHelper.GeoLocationCallout.calloutHeight).isActive = true
         widthAnchor.constraint(equalToConstant: LayoutHelper.GeoLocationCallout.calloutWidth).isActive = true
-        
-        setupTitle()
-        setupSubtitle()
-        setupImageView()
+        configureLayout()
     }
     
-    private func setupTitle() {
-        addSubview(titleLabel)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: LayoutHelper.GeoLocationCallout.titleLabelTopOffset).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: LayoutHelper.GeoLocationCallout.titleLabelLeadingOffset).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-    }
-    
-    private func setupSubtitle() {
-        addSubview(subtitleLabel)
-        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: LayoutHelper.GeoLocationCallout.subtitleLabelTopOffset).isActive = true
-        subtitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: LayoutHelper.GeoLocationCallout.titleLabelLeadingOffset).isActive = true
-        subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-    }
-    
-    private func setupImageView() {
+    private func configureLayout() {
         addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.leftAnchor.constraint(equalTo: leftAnchor, constant: LayoutHelper.GeoLocationCallout.imageViewOffset).isActive = true
-        imageView.topAnchor.constraint(equalTo: topAnchor, constant: LayoutHelper.GeoLocationCallout.imageViewOffset).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.imageViewOffset).isActive = true
-        imageView.rightAnchor.constraint(equalTo: titleLabel.leftAnchor, constant: -LayoutHelper.GeoLocationCallout.imageViewOffset).isActive = true
+        NSLayoutConstraint.activate([
+            imageView.leftAnchor.constraint(equalTo: leftAnchor, constant: LayoutHelper.GeoLocationCallout.padding),
+            imageView.topAnchor.constraint(equalTo: topAnchor, constant: LayoutHelper.GeoLocationCallout.padding),
+            imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.padding),
+            imageView.widthAnchor.constraint(equalToConstant: 40),
+            textStack.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: (LayoutHelper.GeoLocationCallout.padding * 2)),
+            textStack.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+            textStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 15),
+            textStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 15)
+        ])
     }
 }
