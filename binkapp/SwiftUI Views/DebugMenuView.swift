@@ -88,6 +88,7 @@ struct DebugRow: View {
     let destructive: Bool
     
     @State private var presentActivitySheet = false
+    @State private var buttonTapped = false
     
     init(rowType: RowType, subtitle: String? = nil, destructive: Bool = false) {
         self.rowType = rowType
@@ -96,7 +97,31 @@ struct DebugRow: View {
     }
     
     var body: some View {
-        Button {
+        HStack {
+            VStack(alignment: .leading, spacing: 5) {
+                Text(rowType.rawValue)
+                    .foregroundColor(destructive ? .red : buttonTapped ? Color(.binkGradientBlueRight.lighter() ?? .grey10) : Color(.binkGradientBlueRight))
+                if let subtitle = subtitle {
+                    Text(subtitle)
+                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                        .font(.callout)
+                }
+            }
+            .padding([.top, .bottom], 10)
+            .sheet(isPresented: $presentActivitySheet) {
+                if let url = BinkNetworkingLogger().networkLogsFilePath() {
+                    ActivityViewController(activityItemMetadata: LinkMetadataManager(title: "Export recent API requests and responses", url: url))
+                }
+            }
+            
+            Spacer()
+        }
+        .background(content: {
+            Color(Current.themeManager.color(for: .walletCardBackground))
+        })
+        .onTapGesture {
+            buttonTapped = true
+            
             switch rowType {
             case .forceCrash:
                 SentryService.forceCrash()
@@ -106,21 +131,9 @@ struct DebugRow: View {
             case .exportNetworkActivity:
                 presentActivitySheet = true
             }
-        } label: {
-            VStack(alignment: .leading, spacing: 5) {
-                Text(rowType.rawValue)
-                    .foregroundColor(destructive ? .red : Color(.binkGradientBlueRight))
-                if let subtitle = subtitle {
-                    Text(subtitle)
-                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
-                        .font(.callout)
-                }
-            }
-            .padding([.top, .bottom], 10)
-        }
-        .sheet(isPresented: $presentActivitySheet) {
-            if let url = BinkNetworkingLogger().networkLogsFilePath() {
-                ActivityViewController(activityItemMetadata: LinkMetadataManager(title: "Export recent API requests and responses", url: url))
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                buttonTapped = false
             }
         }
     }
