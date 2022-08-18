@@ -25,7 +25,7 @@ class GeoLocationViewModel: ObservableObject {
                 location: (feature.properties.locationName ?? "") + " - " + (feature.properties.city ?? ""),
                 coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon),
                 image: UIImage(named: Asset.locationArrow.name),
-                openHours: feature.properties.openHours)
+                openHours: configureOpenHours(openHours: feature.properties.openHours))
             return annotation
         }
     }
@@ -50,6 +50,19 @@ class GeoLocationViewModel: ObservableObject {
         }
         
         return nil
+    }
+
+    private func configureOpenHours(openHours: String?) -> String {
+        guard let openHours = openHours?.data(using: .utf8) else { return "" }
+
+        do {
+            let openHoursDict = try JSONDecoder().decode(OpenHours.self, from: openHours)
+            print(openHoursDict.Mon)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        return "ASS"
     }
     
     func parseGeoJson() {

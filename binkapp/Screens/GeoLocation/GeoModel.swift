@@ -24,6 +24,16 @@ struct Geometry: Codable {
     let coordinates: [Double]
 }
 
+struct OpenHours: Codable {
+    let Mon: [[String]]
+    let Tue: [[String]]
+    let Wed: [[String]]
+    let Thu: [[String]]
+    let Fri: [[String]]
+    let Sat: [[String]]
+    let Sun: [[String]]
+}
+
 struct Properties: Codable {
     let locationName: String?
     let latitude: String?
