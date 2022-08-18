@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PreferencesViewModel: NSObject, ObservableObject {
+class PreferencesViewModel: NSObject, ObservableObject, UserServiceProtocol {
     @Published var errorText: String?
     @Published var preferences: [PreferencesModel] = []
     @Published var checkboxViewModels: [CheckboxViewModel] = []
@@ -117,6 +117,23 @@ class PreferencesViewModel: NSObject, ObservableObject {
         }) { [weak self] _ in
             checkboxViewModel.reset()
             self?.errorText = L10n.preferencesUpdateFail
+        }
+    }
+    
+    func configureUserPreferenceFromAPI() {
+        getPreferences { result in
+            switch result {
+            case .success(let preferences):
+                var value = preferences.first(where: { $0.slug == AutofillUtil.slug })?.value
+                var checked: Bool = value == "1"
+                Current.userDefaults.set(checked, forDefaultsKey: .rememberMyDetails)
+                
+                value = preferences.first(where: { $0.slug == BarcodeViewModel.alwaysShowBarcodePreferencesSlug })?.value
+                checked = value == "1"
+                Current.userDefaults.set(checked, forDefaultsKey: .showBarcodeAlways)
+            case .failure:
+                break
+            }
         }
     }
 }

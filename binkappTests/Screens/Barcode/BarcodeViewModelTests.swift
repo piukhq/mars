@@ -120,4 +120,29 @@ class BarcodeViewModelTests: XCTestCase, CoreDataTestable {
         mapMembershipCard()
         XCTAssertNil(Self.sut.barcodeImage(withSize: size))
     }
+    
+    func test_setShouldAlwaysDisplayBarCode() {
+        Current.userDefaults.set(false, forDefaultsKey: .showBarcodeAlways)
+        Self.sut.setShouldAlwaysDisplayBarCode()
+        XCTAssertEqual(Self.sut.alwaysShowBarcode, false)
+        
+        Current.userDefaults.set(true, forDefaultsKey: .showBarcodeAlways)
+        Self.sut.setShouldAlwaysDisplayBarCode()
+        XCTAssertEqual(Self.sut.alwaysShowBarcode, true)
+    }
+    
+    func test_setShowBarcodeAlwaysPreference() {
+        Current.userDefaults.set(false, forDefaultsKey: .showBarcodeAlways)
+        Self.sut.setShowBarcodeAlwaysPreference(preferencesRepository: MockPreferencesRepository())
+        XCTAssertEqual(Self.sut.alwaysShowBarcode, true)
+    }
+}
+
+class MockPreferencesRepository: PreferencesProtocol {
+    func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping (BinkError?) -> Void) {
+    }
+    
+    func putPreferences(preferences: [String: String], onSuccess: @escaping () -> Void, onError: @escaping (BinkError) -> Void) {
+        onSuccess()
+    }
 }

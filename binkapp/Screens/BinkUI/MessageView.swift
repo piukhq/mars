@@ -119,7 +119,7 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
     
     static func show(_ message: String, type: MessageType, button: MessageButton? = nil) {
         guard Configuration.isDebug() else { return }
-        if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
+        if let window = UIApplication.shared.connectedScenes.flatMap({ ($0 as? UIWindowScene)?.windows ?? [] }).first(where: { $0.isKeyWindow }) {
             if let messageView = window.subviews.first(where: { $0.isKind(of: MessageView.self) }) as? MessageView {
                 messageView.hideSideways(direction: .left) {
                     configureMessageView(message, type: type, window: window, button: button)

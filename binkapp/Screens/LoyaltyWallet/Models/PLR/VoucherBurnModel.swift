@@ -9,17 +9,13 @@
 import Foundation
 import CoreData
 
-enum VoucherBurnType: String, Codable {
-    case voucher
-}
-
 struct VoucherBurnModel: Codable {
     var apiId: Int?
     var currency: String?
     var prefix: String?
     var suffix: String?
     var value: Double?
-    var type: VoucherBurnType?
+    var type: String?
 
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
@@ -37,7 +33,7 @@ extension VoucherBurnModel: CoreDataMappable, CoreDataIDMappable {
         update(cdObject, \.currency, with: currency, delta: delta)
         update(cdObject, \.prefix, with: prefix, delta: delta)
         update(cdObject, \.suffix, with: suffix, delta: delta)
-        update(cdObject, \.type, with: type?.rawValue, delta: delta)
+        update(cdObject, \.type, with: type, delta: delta)
         
         // Value is optional, and we need it to be nil where there is no response from the API
         if let value = value {
