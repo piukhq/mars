@@ -24,7 +24,8 @@ class GeoLocationViewModel: ObservableObject {
             let annotation = CustomAnnotation(
                 location: (feature.properties.locationName ?? "") + " - " + (feature.properties.city ?? ""),
                 coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon),
-                image: UIImage(named: Asset.locationArrow.name))
+                image: UIImage(named: Asset.locationArrow.name),
+                openHours: feature.properties.openHours)
             return annotation
         }
     }

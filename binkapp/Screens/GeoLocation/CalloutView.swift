@@ -14,11 +14,13 @@ class CustomAnnotation: NSObject, MKAnnotation {
     let location: String?
     let coordinate: CLLocationCoordinate2D
     let image: UIImage?
+    let openHours: String?
     
-    init(location: String?, coordinate: CLLocationCoordinate2D, image: UIImage?) {
+    init(location: String?, coordinate: CLLocationCoordinate2D, image: UIImage?, openHours: String?) {
         self.location = location
         self.coordinate = coordinate
         self.image = image
+        self.openHours = openHours
         
         super.init()
     }
@@ -26,7 +28,7 @@ class CustomAnnotation: NSObject, MKAnnotation {
 
 class CalloutView: UIView {
     private lazy var textStack: UIStackView = {
-        let stackview = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
+        let stackview = UIStackView(arrangedSubviews: [titleLabel, openingHoursLabel, subtitleLabel])
         stackview.translatesAutoresizingMaskIntoConstraints = false
         stackview.axis = .vertical
         stackview.distribution = .fill
@@ -39,6 +41,14 @@ class CalloutView: UIView {
         label.font = .alertText
         label.text = annotation.location
         label.textColor = Current.themeManager.color(for: .text)
+        return label
+    }()
+    
+    private lazy var openingHoursLabel: UILabel = {
+        let label = UILabel()
+        label.font = .alertText
+        label.text = annotation.openHours
+        label.textColor = .orange
         return label
     }()
     
