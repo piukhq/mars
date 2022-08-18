@@ -132,10 +132,6 @@ enum ViewControllerFactory {
         return makeReusableTemplateViewController(configuration: configuration, floatingButtons: true)
     }
     
-    static func makeSecurityAndPrivacyViewController(configuration: ReusableModalConfiguration, floatingButtons: Bool = true) -> ReusableTemplateViewController {
-        return makeReusableTemplateViewController(configuration: configuration, floatingButtons: floatingButtons)
-    }
-    
     static func makeTransactionsViewController(membershipCard: CD_MembershipCard) -> TransactionsViewController {
         let viewModel = TransactionsViewModel(membershipCard: membershipCard)
         return TransactionsViewController(viewModel: viewModel)
@@ -153,9 +149,9 @@ enum ViewControllerFactory {
     
     // MARK: - Wallets
     
-    static func makeSettingsViewController(rowsWithActionRequired: [SettingsRow.RowType]?) -> SettingsViewController {
+    static func makeSettingsViewController(rowsWithActionRequired: [SettingsRow.RowType]?) -> UIViewController {
         let viewModel = SettingsViewModel(rowsWithActionRequired: rowsWithActionRequired)
-        return SettingsViewController(viewModel: viewModel)
+        return UIHostingController(rootView: SettingsView(viewModel: viewModel))
     }
 
     // MARK: - Onboarding
