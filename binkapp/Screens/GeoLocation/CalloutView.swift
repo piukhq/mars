@@ -29,6 +29,7 @@ class CalloutView: UIView {
         let stackview = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
         stackview.translatesAutoresizingMaskIntoConstraints = false
         stackview.axis = .vertical
+        stackview.distribution = .fill
         addSubview(stackview)
         return stackview
     }()
@@ -63,21 +64,17 @@ class CalloutView: UIView {
     init(annotation: CustomAnnotation) {
         self.annotation = annotation
         super.init(frame: .zero)
-        setupView()
+        configureLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupView() {
+    private func configureLayout() {
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: LayoutHelper.GeoLocationCallout.calloutHeight).isActive = true
         widthAnchor.constraint(equalToConstant: LayoutHelper.GeoLocationCallout.calloutWidth).isActive = true
-        configureLayout()
-    }
-    
-    private func configureLayout() {
         addSubview(imageView)
         NSLayoutConstraint.activate([
             imageView.leftAnchor.constraint(equalTo: leftAnchor, constant: LayoutHelper.GeoLocationCallout.padding),
@@ -85,7 +82,7 @@ class CalloutView: UIView {
             imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.padding),
             imageView.widthAnchor.constraint(equalToConstant: 40),
             textStack.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: (LayoutHelper.GeoLocationCallout.padding * 2)),
-            textStack.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+            textStack.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             textStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 15),
             textStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 15)
         ])
