@@ -27,11 +27,4 @@ class SortStateTests: XCTestCase {
         
         XCTAssertEqual(type, "Custom")
     }
-    
-    func test_something() throws {
-        let loyaltyModel = LoyaltyWalletViewModel()
-        loyaltyModel.setupWalletPrompts()
-        
-        XCTAssertTrue(!loyaltyModel.walletPrompts!.isEmpty)
-    }
 }
