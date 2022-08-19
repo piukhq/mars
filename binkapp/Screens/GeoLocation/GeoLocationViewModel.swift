@@ -61,10 +61,27 @@ class GeoLocationViewModel: ObservableObject {
                 let dayHours = hoursDict[today] ?? [[]]
                 let array = Array(dayHours.joined())
                 
-                guard !array.isEmpty else { return "Closed" }
-                let openingHour = String(array[0])
-                let closingHour = String(array[1])
-                return openingHour + " - " + closingHour
+                guard !array.isEmpty else {
+                    
+                    // TODO: - Get tomorrows opening hour
+                    return "Closed - Opens at ..."
+                }
+                
+                let openingHourDigit = array[0].dropLast(3)
+                let closingHourDigit = array[1].dropLast(3)
+                guard let openingHour = Int(openingHourDigit), let closingHour = Int(closingHourDigit) else { return "" }
+
+                // Check if current time is before closing time
+                let calender = Calendar.current
+                let hour = calender.component(.hour, from: Date())
+                let minute = calender.component(.minute, from: Date())
+                
+                if hour >= openingHour && hour < closingHour {
+                    return "Open - Closes at \(array[1])"
+                }
+                
+                
+//                return openingHour + " - " + closingHour
             }
         } catch {
             print(String(describing: error))
