@@ -24,14 +24,53 @@ struct Geometry: Codable {
     let coordinates: [Double]
 }
 
+//typealias OpeningHours = [[String]]
+
 struct OpenHours: Codable {
-    let Mon: [[String]]
-    let Tue: [[String]]
-    let Wed: [[String]]
-    let Thu: [[String]]
-    let Fri: [[String]]
-    let Sat: [[String]]
-    let Sun: [[String]]
+    let mon: [[String]]
+    let tue: [[String]]
+    let wed: [[String]]
+    let thu: [[String]]
+    let fri: [[String]]
+    let sat: [[String]]
+    let sun: [[String]]
+    
+    enum CodingKeys: String, CodingKey {
+        case mon = "Mon"
+        case tue = "Tue"
+        case wed = "Wed"
+        case thu = "Thu"
+        case fri = "Fri"
+        case sat = "Sat"
+        case sun = "Sun"
+    }
+    
+    func hours(from decoder: Decoder) throws {
+//            let values = try decoder.container(keyedBy: CodingKeys.self)
+//
+//            points = try values.decodeIfPresent([Points].self, forKey: .points)
+        }
+    
+    func openingTime(hours: [[String]]) -> String {
+        let hoursArray = Array(hours.joined())
+        return hoursArray.first ?? ""
+    }
+}
+
+struct OpenCloseTimes: Codable {
+    let hours: [[String]]
+    
+    var flattenedHours: [String] {
+        return Array(hours.joined())
+    }
+    
+    var openTime: String {
+        return flattenedHours.first ?? ""
+    }
+    
+    var closingTime: String {
+        return flattenedHours[1]
+    }
 }
 
 struct Properties: Codable {

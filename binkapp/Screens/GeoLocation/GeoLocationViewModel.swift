@@ -53,17 +53,26 @@ class GeoLocationViewModel: ObservableObject {
     }
 
     private func configureOpenHours(openHours: String?) -> String {
-        guard let openHours = openHours?.data(using: .utf8) else { return "" }
-
+        guard let data = openHours?.data(using: .utf8) else { return "" }
         do {
-            let openHoursDict = try JSONDecoder().decode(OpenHours.self, from: openHours)
-            print(openHoursDict.Mon)
+            let openHours = try JSONDecoder().decode(OpenHours.self, from: data)
+            if let hoursDict = openHours.dictionary as? [String: [[String]]] {
+                let dayHours = hoursDict["Mon"] ?? [[]]
+                let array = Array(dayHours.joined())
+                
+                guard !array.isEmpty else { return "Closed" }
+                let openingHour = String(array[0])
+                let closingHour = String(array[1])
+                return openingHour + " - " + closingHour
+            }
         } catch {
-            print(error.localizedDescription)
+            print(String(describing: error))
         }
         
-        return "ASS"
+        return ""
     }
+    
+
     
     func parseGeoJson() {
         if let jsonData = getGeoLocationData() {
