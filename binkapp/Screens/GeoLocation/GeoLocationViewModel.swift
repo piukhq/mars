@@ -57,7 +57,8 @@ class GeoLocationViewModel: ObservableObject {
         do {
             let openHours = try JSONDecoder().decode(OpenHours.self, from: data)
             if let hoursDict = openHours.dictionary as? [String: [[String]]] {
-                let dayHours = hoursDict["Mon"] ?? [[]]
+                let today = Date.today().string
+                let dayHours = hoursDict[today] ?? [[]]
                 let array = Array(dayHours.joined())
                 
                 guard !array.isEmpty else { return "Closed" }
@@ -71,8 +72,6 @@ class GeoLocationViewModel: ObservableObject {
         
         return ""
     }
-    
-
     
     func parseGeoJson() {
         if let jsonData = getGeoLocationData() {

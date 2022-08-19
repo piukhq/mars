@@ -15,6 +15,35 @@ enum DateFormat: String {
     case dayShortMonthYear24HourSecond = "dd MMM yyyy HH:mm:ss"
 }
 
+enum Weekday: Int {
+    case sun
+    case mon
+    case tue
+    case wed
+    case thu
+    case fri
+    case sat
+    
+    var string: String {
+        switch self {
+        case .mon:
+            return "Mon"
+        case .tue:
+            return "Tue"
+        case .wed:
+            return "wed"
+        case .thu:
+            return "Thu"
+        case .fri:
+            return "Fri"
+        case .sat:
+            return "Sat"
+        case .sun:
+            return "Sun"
+        }
+    }
+}
+
 extension Date {
     func timeAgoString(short: Bool = false) -> String? {
         let interval = Calendar.current.dateComponents([.day, .hour, .minute], from: self, to: Date())
@@ -115,5 +144,10 @@ extension Date {
     static func hasElapsed(minutes: Int, since date: Date) -> Bool {
         let elapsed = Int(Date().timeIntervalSince(date))
         return elapsed >= Date.numberOfSecondsIn(minutes: minutes)
+    }
+    
+    static func today() -> Weekday {
+        let weekday = Calendar.current.dateComponents([.weekday], from: .now).weekday ?? 0
+        return Weekday(rawValue: weekday - 1) ?? .mon
     }
 }

@@ -24,8 +24,6 @@ struct Geometry: Codable {
     let coordinates: [Double]
 }
 
-//typealias OpeningHours = [[String]]
-
 struct OpenHours: Codable {
     let mon: [[String]]
     let tue: [[String]]
@@ -44,13 +42,7 @@ struct OpenHours: Codable {
         case sat = "Sat"
         case sun = "Sun"
     }
-    
-    func hours(from decoder: Decoder) throws {
-//            let values = try decoder.container(keyedBy: CodingKeys.self)
-//
-//            points = try values.decodeIfPresent([Points].self, forKey: .points)
-        }
-    
+
     func openingTime(hours: [[String]]) -> String {
         let hoursArray = Array(hours.joined())
         return hoursArray.first ?? ""
