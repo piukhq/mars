@@ -18,19 +18,6 @@ class NetworkRequestTests: XCTestCase {
         logoutResponse = LogoutResponse(loggedOut: true)
     }
     
-//    func test_network_me() throws {
-//        Current.apiClient.testResponseData = nil
-//        let mocked = try! JSONEncoder().encode(Self.logoutResponse)
-//        let mock = Mock(url: URL(string: APIEndpoint.logout.urlString!)!, dataType: .json, statusCode: 200, data: [.post: mocked])
-//        mock.register()
-//
-//        Current.rootStateMachine.handleLogout()
-//
-//        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 3.0)
-//
-//        XCTAssertNotNil(Current.apiClient.testResponseData)
-//    }
-    
     func test_netWorkLogout() throws {
         Current.apiClient.testResponseData = nil
         let mocked = try! JSONEncoder().encode(Self.logoutResponse)
@@ -48,24 +35,29 @@ class NetworkRequestTests: XCTestCase {
         Current.apiClient.testResponseData = nil
         let mock = Mock(url: URL(string: APIEndpoint.magicLinks.urlString!)!, dataType: .json, statusCode: 200, data: [.post: Data()])
         mock.register()
-
-        Current.rootStateMachine.requestMagicLink(email: "butters.is.grounded@gmail.com"){s,a in}
+        var completed = false
+        Current.rootStateMachine.requestMagicLink(email: "butters.is.grounded@gmail.com") { (success, _) in
+            completed = success
+        }
 
         _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 3.0)
 
-        XCTAssertNil(Current.apiClient.testResponseData)
+        XCTAssertTrue(completed)
     }
     
     func test_network_requestForgotPassword() throws {
         Current.apiClient.testResponseData = nil
         let mock = Mock(url: URL(string: APIEndpoint.forgotPassword.urlString!)!, dataType: .json, statusCode: 200, data: [.post: Data()])
         mock.register()
-
-        Current.rootStateMachine.submitForgotPasswordRequest(forEmailAddress: "something@mail.com"){s,a in}
+        var completed = false
+        Current.rootStateMachine.submitForgotPasswordRequest(forEmailAddress: "something@mail.com") { (success, _) in
+            completed = success
+        }
 
         _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 3.0)
 
-        XCTAssertNil(Current.apiClient.testResponseData)
+        //XCTAssertNil(Current.apiClient.testResponseData)
+        XCTAssertTrue(completed)
     }
 
 

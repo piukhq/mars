@@ -28,6 +28,7 @@
 		2126212228B271C200939609 /* FontExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126212128B271C200939609 /* FontExtensionTests.swift */; };
 		2126212428B274C300939609 /* VoucherModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126212328B274C300939609 /* VoucherModelTests.swift */; };
 		2126212728B2794E00939609 /* OnboardingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126212628B2794E00939609 /* OnboardingViewModelTests.swift */; };
+		2126212A28B3751400939609 /* ViewControllerFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126212928B3751400939609 /* ViewControllerFactoryTests.swift */; };
 		212F0C442876EB7E007F09CE /* CalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C432876EB7E007F09CE /* CalloutView.swift */; };
 		212F0C462876EC63007F09CE /* GeoLocationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */; };
 		21393EFB285A1E1C002C8E79 /* StringHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21393EFA285A1E1C002C8E79 /* StringHelperTests.swift */; };
@@ -48,6 +49,7 @@
 		214EC02E28743883000A3F73 /* GeoLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02D28743883000A3F73 /* GeoLocationViewModel.swift */; };
 		216B999C28AE902000A67A14 /* FloatExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216B999B28AE902000A67A14 /* FloatExtensionTests.swift */; };
 		21CE710C2872F2C3003EC968 /* tesco-locations.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 21CE710B2872F2C2003EC968 /* tesco-locations.geojson */; };
+		21E5E2E728B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E5E2E628B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift */; };
 		3C05A9DC2327CD3D00620583 /* AppDelegate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DB2327CD3D00620583 /* AppDelegate+Extension.swift */; };
 		3C05A9DE2327CE6300620583 /* PaymentCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DD2327CE6300620583 /* PaymentCardModel.swift */; };
 		3C05A9E02327D35100620583 /* PortraitNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DF2327D35100620583 /* PortraitNavigationController.swift */; };
@@ -709,6 +711,7 @@
 		2126212128B271C200939609 /* FontExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtensionTests.swift; sourceTree = "<group>"; };
 		2126212328B274C300939609 /* VoucherModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoucherModelTests.swift; sourceTree = "<group>"; };
 		2126212628B2794E00939609 /* OnboardingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModelTests.swift; sourceTree = "<group>"; };
+		2126212928B3751400939609 /* ViewControllerFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactoryTests.swift; sourceTree = "<group>"; };
 		212F0C432876EB7E007F09CE /* CalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalloutView.swift; sourceTree = "<group>"; };
 		212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationModelTests.swift; sourceTree = "<group>"; };
 		21393EFA285A1E1C002C8E79 /* StringHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHelperTests.swift; sourceTree = "<group>"; };
@@ -730,6 +733,7 @@
 		214EC02D28743883000A3F73 /* GeoLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationViewModel.swift; sourceTree = "<group>"; };
 		216B999B28AE902000A67A14 /* FloatExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtensionTests.swift; sourceTree = "<group>"; };
 		21CE710B2872F2C2003EC968 /* tesco-locations.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "tesco-locations.geojson"; sourceTree = "<group>"; };
+		21E5E2E628B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		2211289D0FB0F1A14BC9E957 /* Pods-binkapp.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.beta.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.beta.xcconfig"; sourceTree = "<group>"; };
 		26F00637A9D94FD020319165 /* Pods-binkappUITests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.app store (internal).xcconfig"; sourceTree = "<group>"; };
 		352CBEDF33DDEB7B603C909B /* Pods_binkappTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1397,6 +1401,14 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		2126212828B374FD00939609 /* ViewControllerFactory */ = {
+			isa = PBXGroup;
+			children = (
+				2126212928B3751400939609 /* ViewControllerFactoryTests.swift */,
+			);
+			path = ViewControllerFactory;
+			sourceTree = "<group>";
+		};
 		21497EC62864A0CD0053A9EE /* Popup */ = {
 			isa = PBXGroup;
 			children = (
@@ -1438,6 +1450,14 @@
 				212F0C432876EB7E007F09CE /* CalloutView.swift */,
 			);
 			path = GeoLocation;
+			sourceTree = "<group>";
+		};
+		21E5E2E528B38C9D00594DC3 /* LoyaltyCardDetails */ = {
+			isa = PBXGroup;
+			children = (
+				21E5E2E628B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift */,
+			);
+			path = LoyaltyCardDetails;
 			sourceTree = "<group>";
 		};
 		3C0EEE7722FC64F9006FAE5E /* BarcodeModal */ = {
@@ -2757,6 +2777,8 @@
 		EF485578231E5A3600FC9E5F /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				21E5E2E528B38C9D00594DC3 /* LoyaltyCardDetails */,
+				2126212828B374FD00939609 /* ViewControllerFactory */,
 				2126212528B2793600939609 /* Onboarding */,
 				2126211E28AFE7E100939609 /* LCDPlaceHolderGenerator */,
 				214DCF5A28AD4F4200308531 /* GeoLocations */,
@@ -4263,6 +4285,7 @@
 				214DCF6128AE597700308531 /* MagicLinkRequestModelTests.swift in Sources */,
 				CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */,
 				CE971A3328806968001D7E1C /* MembershipPlanModelTests.swift in Sources */,
+				21E5E2E728B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift in Sources */,
 				214DCF5C28AD4FA000308531 /* GeoLocationsViewModelTests.swift in Sources */,
 				EF8B701223587BE3006CE3DD /* MembershipCardBalanceModelTests.swift in Sources */,
 				2126211928AFB4B900939609 /* NetworkRequestTests.swift in Sources */,
@@ -4272,6 +4295,7 @@
 				214DCF5328AD25C500308531 /* TimeIntervalExtensionTests.swift in Sources */,
 				EF758E1623225F95000D26A9 /* DatabaseTests.swift in Sources */,
 				2126212728B2794E00939609 /* OnboardingViewModelTests.swift in Sources */,
+				2126212A28B3751400939609 /* ViewControllerFactoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
