@@ -21,12 +21,8 @@ class GeoLocationViewModel: ObservableObject {
     var annotations: [CustomAnnotation] {
         features.compactMap { feature in
             guard let lat = feature.geometry.coordinates[safe: 1], let lon = feature.geometry.coordinates[safe: 0] else { return nil }
-            let annotation = CustomAnnotation(
-                location: (feature.properties.locationName ?? "") + " - " + (feature.properties.city ?? ""),
-                coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon),
-                image: UIImage(named: Asset.locationArrow.name),
-                openHours: configureOpenHours(openHours: feature.properties.openHours))
-            return annotation
+            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            return CustomAnnotation(coordinate: coordinate, feature: feature)
         }
     }
     
@@ -50,43 +46,6 @@ class GeoLocationViewModel: ObservableObject {
         }
         
         return nil
-    }
-
-    private func configureOpenHours(openHours: String?) -> String {
-        guard let data = openHours?.data(using: .utf8) else { return "" }
-        do {
-            let openHours = try JSONDecoder().decode(OpenHours.self, from: data)
-            if let hoursDict = openHours.dictionary as? [String: [[String]]] {
-                let today = Date.today().string
-                let dayHours = hoursDict[today] ?? [[]]
-                let openingHoursArray = Array(dayHours.joined())
-                
-                guard !openingHoursArray.isEmpty else {
-                    // TODO: - Get tomorrows opening hour
-                    return "Closed - Opens at ..."
-                }
-                
-                let openingHourWithMinutes = openingHoursArray[0]
-                let closingHourWithMinutes = openingHoursArray[1]
-                guard let openingHour = Int(openingHourWithMinutes.dropLast(3)), let closingHour = Int(closingHourWithMinutes.dropLast(3)) else { return "" }
-
-                // Check if current time is before closing time
-                var currentHour = Calendar.current.component(.hour, from: Date())
-//                let currentMinute = Calendar.current.component(.minute, from: Date())
-                currentHour = 23
-                if currentHour == (closingHour - 1) {
-                    return "Closing Soon - Closes at \(closingHourWithMinutes)"
-                } else if currentHour >= openingHour && currentHour < closingHour {
-                    return "Open - Closes at \(closingHourWithMinutes)"
-                } else {
-                    return "Closed - Opens at \(openingHourWithMinutes)"
-                }
-            }
-        } catch {
-            print(String(describing: error))
-        }
-        
-        return ""
     }
     
     func parseGeoJson() {

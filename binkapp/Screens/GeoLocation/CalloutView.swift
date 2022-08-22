@@ -11,18 +11,67 @@ import UIKit
 import MapKit
 
 class CustomAnnotation: NSObject, MKAnnotation {
-    let location: String?
+    let feature: Feature
     let coordinate: CLLocationCoordinate2D
-    let image: UIImage?
-    let openHours: String?
+    let image = UIImage(named: Asset.locationArrow.name)
+    var openingHoursColor: UIColor?
     
-    init(location: String?, coordinate: CLLocationCoordinate2D, image: UIImage?, openHours: String?) {
-        self.location = location
+    init(coordinate: CLLocationCoordinate2D, feature: Feature) {
         self.coordinate = coordinate
-        self.image = image
-        self.openHours = openHours
-        
+        self.feature = feature
         super.init()
+    }
+    
+    var location: String {
+        return (feature.properties.locationName ?? "") + " - " + (feature.properties.city ?? "")
+    }
+    
+    var openHours: String {
+        return configureOpenHours(openHours: feature.properties.openHours)
+    }
+    
+    private func configureOpenHours(openHours: String?) -> String {
+        guard let data = openHours?.data(using: .utf8) else { return "" }
+        do {
+            let openHours = try JSONDecoder().decode(OpenHours.self, from: data)
+            if let hoursDict = openHours.dictionary as? [String: [[String]]] {
+                let today = Date.today().string
+                let dayHours = hoursDict[today] ?? [[]]
+                let openingHoursArray = Array(dayHours.joined())
+                
+                guard !openingHoursArray.isEmpty else {
+                    // TODO: - Get next days opening hour
+                    return "Closed - Opens at ..."
+                }
+                
+                var openingHourWithMinutes = openingHoursArray[0]
+                let closingHourWithMinutes = openingHoursArray[1]
+                guard let openingHour = Int(openingHourWithMinutes.dropLast(3)), let closingHour = Int(closingHourWithMinutes.dropLast(3)) else { return "" }
+
+                if openingHourWithMinutes.count == 4 {
+                    openingHourWithMinutes.insert("0", at: openingHourWithMinutes.startIndex)
+                }
+                
+                // Check if current time is before closing time
+                var currentHour = Calendar.current.component(.hour, from: Date())
+//                let currentMinute = Calendar.current.component(.minute, from: Date())
+                currentHour = 23
+                if currentHour == (closingHour - 1) {
+                    openingHoursColor = .systemOrange
+                    return "Closing Soon - Closes at \(closingHourWithMinutes)"
+                } else if currentHour >= openingHour && currentHour < closingHour {
+                    openingHoursColor = .systemGreen
+                    return "Open - Closes at \(closingHourWithMinutes)"
+                } else {
+                    openingHoursColor = .systemRed
+                    return "Closed - Opens at \(openingHourWithMinutes)" // WRONG - get tomorrows opening hours <<<<<<<<<<<<<<<<<<<<<<
+                }
+            }
+        } catch {
+            print(String(describing: error))
+        }
+        
+        return ""
     }
 }
 
@@ -48,7 +97,7 @@ class CalloutView: UIView {
         let label = UILabel()
         label.font = .alertText
         label.text = annotation.openHours
-        label.textColor = .orange
+        label.textColor = annotation.openingHoursColor
         return label
     }()
     
