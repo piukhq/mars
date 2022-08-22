@@ -119,11 +119,11 @@ extension Date {
 
     static func today() -> Int {
         let weekday = Calendar.current.dateComponents([.weekday], from: .now).weekday ?? 0
-        return weekday - 1
+        return weekday
     }
     
     static func tomorrow() -> Int {
-        let weekday = Calendar.current.dateComponents([.weekday], from: .now + 86400).weekday ?? 0
-        return weekday - 1
+        let weekday = Calendar.current.dateComponents([.weekday], from: .now + (86400)).weekday ?? 0
+        return weekday
     }
 }

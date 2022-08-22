@@ -44,18 +44,51 @@ struct OpenHours: Codable {
     }
     
     var weeklyHours: [[String]] {
-        return [sun, mon, tue, wed, thu, fri, sat, sun].map { Array($0.joined()) }
+        /// Beginning on Sat to match Int value returned from Date weekday components
+        return [sat, sun, mon, tue, wed, thu, fri, sat, sun].map { Array($0.joined()) }
     }
     
     func openingHours(for day: Int) -> OpeningTimes? {
         guard !weeklyHours[day].isEmpty else { return nil }
-        return OpeningTimes(opening: weeklyHours[day][0], closing: weeklyHours[day][1])
+        return OpeningTimes(opening: weeklyHours[day][0], closing: weeklyHours[day][1], day: day)
+    }
+    
+    func openingTimesForNextOpenDay(from day: Int) -> OpeningTimes? {
+        for dayIndex in day..<(weeklyHours.count - 1) {
+            if let openingTimes = openingHours(for: dayIndex) {
+                return openingTimes
+            }
+        }
+        
+        return nil
     }
 }
 
 struct OpeningTimes {
     let opening: String
     let closing: String
+    let day: Int
+    
+    var dayString: String {
+        switch day {
+        case 1:
+            return "Sunday"
+        case 2:
+            return "Monday"
+        case 3:
+            return "Tuesday"
+        case 4:
+            return "Wednesday"
+        case 5:
+            return "Thursday"
+        case 6:
+            return "Friday"
+        case 7:
+            return "Saturday"
+        default:
+            return ""
+        }
+    }
 }
 
 struct Properties: Codable {

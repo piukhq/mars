@@ -32,40 +32,48 @@ class CustomAnnotation: NSObject, MKAnnotation {
     
     private func configureOpenHours(openHours: String?) -> String {
         guard let data = openHours?.data(using: .utf8) else { return "" }
+        let dayoffset = -1
+        
         do {
             let weeklyOpeningHours = try JSONDecoder().decode(OpenHours.self, from: data)
-            guard let todaysOpeningHours = weeklyOpeningHours.openingHours(for: Date.today()) else {
-                // TODO: - Get next days opening hour
-                return "Closed - Opens at ..."
+            guard let todaysOpeningHours = weeklyOpeningHours.openingHours(for: Date.today() + dayoffset) else {
+                openingHoursColor = .systemRed
+                if let nextOpeningTimes = weeklyOpeningHours.openingTimesForNextOpenDay(from: Date.today() + dayoffset) {
+                    let nextOpenDayIsTomorrow = nextOpeningTimes.day == Date.tomorrow() + dayoffset
+                    let dayString = nextOpenDayIsTomorrow ? "" : " on \(nextOpeningTimes.dayString)"
+                    let string = "Closed - Opens at \(nextOpeningTimes.opening)\(dayString)"
+                    
+                    return string
+                }
+                return ""
             }
             
-            let tomorrowsOpeningHours = weeklyOpeningHours.openingHours(for: Date.tomorrow())
+            guard let openingHour = Int(todaysOpeningHours.opening.dropLast(3)), let closingHour = Int(todaysOpeningHours.closing.dropLast(3)) else { return "" }
 
-//                        
-//            // Find next open day's hours
-//            if tomorrowsOpeningHours.isEmpty {
-//                for dailyOpeningHours in weeklyOpeningHours.weeklyHours {
-//                    
-//                }
-//            }
+            let tomorrowsOpeningHours = weeklyOpeningHours.openingHours(for: Date.today() + 1)
+            
+            // Find next open day's hours
+            if tomorrowsOpeningHours == nil {
+                print("SW-- Tomorrow is shut")
+            }
             
             var tomorrowsOpeningTime = tomorrowsOpeningHours?.opening ?? ""
-            let todaysClosingTime = todaysOpeningHours.closing
-            guard let openingHour = Int(todaysOpeningHours.opening.dropLast(3)), let closingHour = Int(todaysClosingTime.dropLast(3)) else { return "" }
-
             if tomorrowsOpeningTime.count == 4 {
                 tomorrowsOpeningTime.insert("0", at: tomorrowsOpeningTime.startIndex)
             }
             
             // Check if current time is before closing time
             var currentHour = Calendar.current.component(.hour, from: Date())
-            currentHour = 23
+//            currentHour = 23
             if currentHour == (closingHour - 1) {
                 openingHoursColor = .systemOrange
-                return "Closing Soon - Closes at \(todaysClosingTime)"
+                return "Closing Soon - Closes at \(todaysOpeningHours.closing)"
             } else if currentHour >= openingHour && currentHour < closingHour {
                 openingHoursColor = .systemGreen
-                return "Open - Closes at \(todaysClosingTime)"
+                return "Open - Closes at \(todaysOpeningHours.closing)"
+            } else if currentHour < openingHour {
+                openingHoursColor = .systemRed
+                return "Closed - Opens at \(todaysOpeningHours.opening)"
             } else {
                 openingHoursColor = .systemRed
                 return "Closed - Opens at \(tomorrowsOpeningTime)"
