@@ -42,27 +42,20 @@ struct OpenHours: Codable {
         case sat = "Sat"
         case sun = "Sun"
     }
-
-    func openingTime(hours: [[String]]) -> String {
-        let hoursArray = Array(hours.joined())
-        return hoursArray.first ?? ""
+    
+    var weeklyHours: [[String]] {
+        return [sun, mon, tue, wed, thu, fri, sat, sun].map { Array($0.joined()) }
+    }
+    
+    func openingHours(for day: Int) -> OpeningTimes? {
+        guard !weeklyHours[day].isEmpty else { return nil }
+        return OpeningTimes(opening: weeklyHours[day][0], closing: weeklyHours[day][1])
     }
 }
 
-struct OpenCloseTimes: Codable {
-    let hours: [[String]]
-    
-    var flattenedHours: [String] {
-        return Array(hours.joined())
-    }
-    
-    var openTime: String {
-        return flattenedHours.first ?? ""
-    }
-    
-    var closingTime: String {
-        return flattenedHours[1]
-    }
+struct OpeningTimes {
+    let opening: String
+    let closing: String
 }
 
 struct Properties: Codable {
