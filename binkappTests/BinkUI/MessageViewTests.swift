@@ -14,7 +14,7 @@ class MessageViewTests: XCTestCase {
     var window: UIWindow!
     
     private func getKeyWindow() {
-        if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
+        if let window = UIApplication.shared.connectedScenes.flatMap({ ($0 as? UIWindowScene)?.windows ?? [] }).first(where: { $0.isKeyWindow }) {
             if let messageView = window.subviews.first(where: { $0.isKind(of: MessageView.self) }) as? MessageView {
                 sut = messageView
                 self.window = window
