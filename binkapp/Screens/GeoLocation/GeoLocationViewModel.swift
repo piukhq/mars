@@ -59,29 +59,28 @@ class GeoLocationViewModel: ObservableObject {
             if let hoursDict = openHours.dictionary as? [String: [[String]]] {
                 let today = Date.today().string
                 let dayHours = hoursDict[today] ?? [[]]
-                let array = Array(dayHours.joined())
+                let openingHoursArray = Array(dayHours.joined())
                 
-                guard !array.isEmpty else {
-                    
+                guard !openingHoursArray.isEmpty else {
                     // TODO: - Get tomorrows opening hour
                     return "Closed - Opens at ..."
                 }
                 
-                let openingHourDigit = array[0].dropLast(3)
-                let closingHourDigit = array[1].dropLast(3)
-                guard let openingHour = Int(openingHourDigit), let closingHour = Int(closingHourDigit) else { return "" }
+                let openingHourWithMinutes = openingHoursArray[0]
+                let closingHourWithMinutes = openingHoursArray[1]
+                guard let openingHour = Int(openingHourWithMinutes.dropLast(3)), let closingHour = Int(closingHourWithMinutes.dropLast(3)) else { return "" }
 
                 // Check if current time is before closing time
-                let calender = Calendar.current
-                let hour = calender.component(.hour, from: Date())
-                let minute = calender.component(.minute, from: Date())
-                
-                if hour >= openingHour && hour < closingHour {
-                    return "Open - Closes at \(array[1])"
+                var currentHour = Calendar.current.component(.hour, from: Date())
+//                let currentMinute = Calendar.current.component(.minute, from: Date())
+                currentHour = 23
+                if currentHour == (closingHour - 1) {
+                    return "Closing Soon - Closes at \(closingHourWithMinutes)"
+                } else if currentHour >= openingHour && currentHour < closingHour {
+                    return "Open - Closes at \(closingHourWithMinutes)"
+                } else {
+                    return "Closed - Opens at \(openingHourWithMinutes)"
                 }
-                
-                
-//                return openingHour + " - " + closingHour
             }
         } catch {
             print(String(describing: error))
