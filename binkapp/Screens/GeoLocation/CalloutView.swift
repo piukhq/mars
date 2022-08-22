@@ -32,7 +32,7 @@ class CustomAnnotation: NSObject, MKAnnotation {
     
     private func configureOpenHours(openHours: String?) -> String {
         guard let data = openHours?.data(using: .utf8) else { return "" }
-        let dayoffset = -1
+        let dayoffset = 0
         
         do {
             let weeklyOpeningHours = try JSONDecoder().decode(OpenHours.self, from: data)
@@ -41,15 +41,12 @@ class CustomAnnotation: NSObject, MKAnnotation {
                 if let nextOpeningTimes = weeklyOpeningHours.openingTimesForNextOpenDay(from: Date.today() + dayoffset) {
                     let nextOpenDayIsTomorrow = nextOpeningTimes.day == Date.tomorrow() + dayoffset
                     let dayString = nextOpenDayIsTomorrow ? "" : " on \(nextOpeningTimes.dayString)"
-                    let string = "Closed - Opens at \(nextOpeningTimes.opening)\(dayString)"
-                    
-                    return string
+                    return "Closed - Opens at \(nextOpeningTimes.opening)\(dayString)"
                 }
                 return ""
             }
             
             guard let openingHour = Int(todaysOpeningHours.opening.dropLast(3)), let closingHour = Int(todaysOpeningHours.closing.dropLast(3)) else { return "" }
-
             let tomorrowsOpeningHours = weeklyOpeningHours.openingHours(for: Date.today() + 1)
             
             // Find next open day's hours
@@ -98,7 +95,7 @@ class CalloutView: UIView {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .alertText
+        label.font = .calloutViewTitle
         label.text = annotation.location
         label.textColor = Current.themeManager.color(for: .text)
         return label
@@ -106,7 +103,7 @@ class CalloutView: UIView {
     
     private lazy var openingHoursLabel: UILabel = {
         let label = UILabel()
-        label.font = .alertText
+        label.font = .calloutViewOpeningHours
         label.text = annotation.openHours
         label.textColor = annotation.openingHoursColor
         return label
@@ -114,7 +111,7 @@ class CalloutView: UIView {
     
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .navbarHeaderLine2
+        label.font = .calloutViewSubtitle
         label.textColor = Current.themeManager.color(for: .text)
         label.text = L10n.pressForDirections
         return label
@@ -152,7 +149,7 @@ class CalloutView: UIView {
             imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.padding),
             imageView.widthAnchor.constraint(equalToConstant: 40),
             textStack.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: (LayoutHelper.GeoLocationCallout.padding * 2)),
-            textStack.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            textStack.topAnchor.constraint(equalTo: topAnchor, constant: 0),
             textStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 15),
             textStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 15)
         ])
