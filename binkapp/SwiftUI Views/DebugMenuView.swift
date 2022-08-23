@@ -57,6 +57,11 @@ struct DebugMenuView: View {
                     }
                 }
                 .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
+                
+                Section(footer: Text("Tap to copy to clipboard")) {
+                    DebugRow(rowType: .token, subtitle: Current.userManager.currentToken, destructive: false)
+                }
+                .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
             }
             
             Section(footer: Text("This will immediately crash the application.")) {
@@ -73,11 +78,15 @@ struct DebugMenuView: View {
 struct DebugRow: View {
     enum RowType: String {
         case forceCrash = "Force crash"
+        case token = "Current Token"
         
         func action() {
             switch self {
             case .forceCrash:
                 SentryService.forceCrash()
+            case .token:
+                UIPasteboard.general.string = Current.userManager.currentToken
+                MessageView.show("Copied to clipboard", type: .snackbar(.short))
             }
         }
     }
@@ -96,12 +105,14 @@ struct DebugRow: View {
         Button(action: rowType.action, label: {
             VStack(alignment: .leading, spacing: 5) {
                 Text(rowType.rawValue)
-                    .foregroundColor(destructive ? .red : .black)
+                    .foregroundColor(destructive ? .red : Color(.binkGradientBlueRight))
                 if let subtitle = subtitle {
                     Text(subtitle)
-                        .font(.subheadline)
+                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                        .font(.callout)
                 }
             }
+            .padding([.top, .bottom], 10)
         })
     }
 }
