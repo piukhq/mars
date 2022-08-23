@@ -116,14 +116,4 @@ extension Date {
         let elapsed = Int(Date().timeIntervalSince(date))
         return elapsed >= Date.numberOfSecondsIn(minutes: minutes)
     }
-
-    static func today() -> Int {
-        let weekday = Calendar.current.dateComponents([.weekday], from: .now).weekday ?? 0
-        return weekday
-    }
-    
-    static func tomorrow() -> Int {
-        let weekday = Calendar.current.dateComponents([.weekday], from: .now + (86400)).weekday ?? 0
-        return weekday
-    }
 }

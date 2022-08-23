@@ -36,8 +36,8 @@ class CustomAnnotation: NSObject, MKAnnotation {
         
         do {
             let weeklyOpeningHours = try JSONDecoder().decode(OpenHours.self, from: data)
-            guard let todaysOpeningHours = weeklyOpeningHours.openingHours(for: Date.today() + dayoffset) else {
-                return configureNextOpenTimes(openHours: weeklyOpeningHours, from: Date.today())
+            guard let todaysOpeningHours = weeklyOpeningHours.openingHours(for: Current.dateManager.today() + dayoffset) else {
+                return configureNextOpenTimes(openHours: weeklyOpeningHours, from: Current.dateManager.today())
             }
             guard let openingHour = Int(todaysOpeningHours.opening.dropLast(3)), let closingHour = Int(todaysOpeningHours.closing.dropLast(3)) else { return "" }
             let currentHour = Current.dateManager.currentHour
@@ -52,7 +52,7 @@ class CustomAnnotation: NSObject, MKAnnotation {
                 openingHoursColor = .systemRed
                 return "Closed - Opens at \(todaysOpeningHours.opening)"
             } else {
-                return configureNextOpenTimes(openHours: weeklyOpeningHours, from: Date.tomorrow())
+                return configureNextOpenTimes(openHours: weeklyOpeningHours, from: Current.dateManager.tomorrow())
             }
         } catch {
             print(String(describing: error))
@@ -67,7 +67,7 @@ class CustomAnnotation: NSObject, MKAnnotation {
             if nextOpeningTimes.opening.count == 4 {
                 nextOpeningTimes.opening.insert("0", at: nextOpeningTimes.opening.startIndex)
             }
-            let nextOpenDayIsTomorrow = nextOpeningTimes.day == Date.tomorrow()
+            let nextOpenDayIsTomorrow = nextOpeningTimes.day == Current.dateManager.tomorrow()
             let dayString = nextOpenDayIsTomorrow ? "" : " on \(nextOpeningTimes.dayString)"
             return "Closed - Opens at \(nextOpeningTimes.opening)\(dayString)"
         }
@@ -90,6 +90,8 @@ class CalloutView: UIView {
         label.font = .calloutViewTitle
         label.text = annotation.location
         label.textColor = Current.themeManager.color(for: .text)
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         return label
     }()
     
@@ -139,11 +141,11 @@ class CalloutView: UIView {
             imageView.leftAnchor.constraint(equalTo: leftAnchor, constant: LayoutHelper.GeoLocationCallout.padding),
             imageView.topAnchor.constraint(equalTo: topAnchor, constant: LayoutHelper.GeoLocationCallout.padding),
             imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.padding),
-            imageView.widthAnchor.constraint(equalToConstant: 40),
+            imageView.widthAnchor.constraint(equalToConstant: LayoutHelper.GeoLocationCallout.imageWidth),
             textStack.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: (LayoutHelper.GeoLocationCallout.padding * 2)),
-            textStack.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-            textStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 15),
-            textStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 15)
+            textStack.topAnchor.constraint(equalTo: topAnchor),
+            textStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
+            textStack.rightAnchor.constraint(equalTo: rightAnchor, constant: -LayoutHelper.GeoLocationCallout.padding)
         ])
     }
 }

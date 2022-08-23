@@ -27,4 +27,12 @@ class DateManager {
     func reset() {
         currentDate = Date.now
     }
+    
+    func today() -> Int {
+        return Calendar.current.dateComponents([.weekday], from: currentDate).weekday ?? 0
+    }
+    
+    func tomorrow() -> Int {
+        return today() + 1
+    }
 }
