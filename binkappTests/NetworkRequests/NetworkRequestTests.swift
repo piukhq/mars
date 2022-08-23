@@ -56,7 +56,6 @@ class NetworkRequestTests: XCTestCase {
 
         _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 3.0)
 
-        //XCTAssertNil(Current.apiClient.testResponseData)
         XCTAssertTrue(completed)
     }
 

@@ -94,11 +94,6 @@ class LoyaltyCardFullDetailsViewModelTests: XCTestCase, CoreDataTestable {
         XCTAssertEqual(Self.model.brandName, "Tesco")
     }
     
-//    func test_ShouldDisplayLocationIfTesco() throws {
-//        Self.model.membershipCard.membershipPlan = Self.membershipPlan
-//        XCTAssertTrue(Self.model.shouldDisplayLocationOption)
-//    }
-    
     func test_pointsValueText() throws {
         Self.baseMembershipCardResponse.status?.state = .failed
         mapMembershipCard()
@@ -148,31 +143,6 @@ class LoyaltyCardFullDetailsViewModelTests: XCTestCase, CoreDataTestable {
         Self.model.membershipCard.membershipPlan = Self.membershipPlan
         XCTAssertTrue(Self.model.shouldShowBarcode == false)
     }
-    
-//    func test_barcodeButtonTitle_qr() throws {
-//        Self.cardModel.barcodeType = 1
-//        Self.cardModel.barcode = nil
-//        Self.baseMembershipCardResponse.card = Self.cardModel
-//        mapMembershipCard()
-//        Self.model.membershipCard.membershipPlan = Self.membershipPlan
-//        XCTAssertEqual(Self.model.barcodeButtonTitle, L10n.detailsHeaderShowQrCode)
-//    }
-//
-//    func test_barcodeButtonTitle_aztec() throws {
-//        Self.cardModel.barcodeType = 2
-//        Self.cardModel.barcode = nil
-//        mapMembershipCard()
-//        Self.model.membershipCard.membershipPlan = Self.membershipPlan
-//        XCTAssertEqual(Self.model.barcodeButtonTitle, L10n.detailsHeaderShowAztecCode)
-//    }
-//
-//    func test_barcodeButtonTitle_other() throws {
-//        Self.cardModel.barcodeType = 3
-//        Self.cardModel.barcode = nil
-//        mapMembershipCard()
-//        Self.model.membershipCard.membershipPlan = Self.membershipPlan
-//        XCTAssertEqual(Self.model.barcodeButtonTitle, L10n.detailsHeaderShowBarcode)
-//    }
     
     func test_toBarcodeModel_shouldnavigateToCorrectVC() throws {
         Self.model.toBarcodeModel()

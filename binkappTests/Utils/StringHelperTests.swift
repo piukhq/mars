@@ -21,22 +21,22 @@ class StringHelperTests: XCTestCase {
     func testString_textShouldSlice() throws {
         let testString = "12345678"
         let headerString = testString.slice(from: "2", to: "6")
-        
+
         XCTAssertEqual(headerString, "345")
     }
-    
+
     func testString_shouldSplitString() throws {
         let testString = "12345678"
         let headerString = testString.splitStringIntoArray(elementLength: 4)
-        
+
         XCTAssertEqual(headerString[0], "1234")
         XCTAssertEqual(headerString[1], "5678")
     }
-    
+
     func testString_correctTimeFormat() throws {
         let date = 1536080100
         let dateRedeemedString = String.fromTimestamp((date as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "Date: ")
-        
+
         XCTAssertEqual("Date: 04 Sep 2018 17:55:00", dateRedeemedString)
     }
 }

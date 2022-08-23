@@ -29,6 +29,7 @@
 		2126212428B274C300939609 /* VoucherModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126212328B274C300939609 /* VoucherModelTests.swift */; };
 		2126212728B2794E00939609 /* OnboardingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126212628B2794E00939609 /* OnboardingViewModelTests.swift */; };
 		2126212A28B3751400939609 /* ViewControllerFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126212928B3751400939609 /* ViewControllerFactoryTests.swift */; };
+		2126377728B3E2FD00C795D6 /* BarcodeViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126377628B3E2FD00C795D6 /* BarcodeViewTests.swift */; };
 		212F0C442876EB7E007F09CE /* CalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C432876EB7E007F09CE /* CalloutView.swift */; };
 		212F0C462876EC63007F09CE /* GeoLocationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */; };
 		21393EFB285A1E1C002C8E79 /* StringHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21393EFA285A1E1C002C8E79 /* StringHelperTests.swift */; };
@@ -48,6 +49,10 @@
 		214EC02928743165000A3F73 /* GeoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02828743165000A3F73 /* GeoModel.swift */; };
 		214EC02E28743883000A3F73 /* GeoLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02D28743883000A3F73 /* GeoLocationViewModel.swift */; };
 		216B999C28AE902000A67A14 /* FloatExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216B999B28AE902000A67A14 /* FloatExtensionTests.swift */; };
+		217288EF28B4BF5200258EBA /* AccountPostModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288EE28B4BF5200258EBA /* AccountPostModelTests.swift */; };
+		217288F228B4D62100258EBA /* AddPaymentCardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288F128B4D62100258EBA /* AddPaymentCardViewModelTests.swift */; };
+		217288F528B4E63A00258EBA /* MainTabBarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288F428B4E63A00258EBA /* MainTabBarViewModelTests.swift */; };
+		217288F828B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288F728B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift */; };
 		21CE710C2872F2C3003EC968 /* tesco-locations.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 21CE710B2872F2C2003EC968 /* tesco-locations.geojson */; };
 		21E5E2E728B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E5E2E628B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift */; };
 		3C05A9DC2327CD3D00620583 /* AppDelegate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DB2327CD3D00620583 /* AppDelegate+Extension.swift */; };
@@ -712,6 +717,7 @@
 		2126212328B274C300939609 /* VoucherModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoucherModelTests.swift; sourceTree = "<group>"; };
 		2126212628B2794E00939609 /* OnboardingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModelTests.swift; sourceTree = "<group>"; };
 		2126212928B3751400939609 /* ViewControllerFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactoryTests.swift; sourceTree = "<group>"; };
+		2126377628B3E2FD00C795D6 /* BarcodeViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewTests.swift; sourceTree = "<group>"; };
 		212F0C432876EB7E007F09CE /* CalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalloutView.swift; sourceTree = "<group>"; };
 		212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationModelTests.swift; sourceTree = "<group>"; };
 		21393EFA285A1E1C002C8E79 /* StringHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHelperTests.swift; sourceTree = "<group>"; };
@@ -732,6 +738,10 @@
 		214EC02828743165000A3F73 /* GeoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoModel.swift; sourceTree = "<group>"; };
 		214EC02D28743883000A3F73 /* GeoLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationViewModel.swift; sourceTree = "<group>"; };
 		216B999B28AE902000A67A14 /* FloatExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtensionTests.swift; sourceTree = "<group>"; };
+		217288EE28B4BF5200258EBA /* AccountPostModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPostModelTests.swift; sourceTree = "<group>"; };
+		217288F128B4D62100258EBA /* AddPaymentCardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentCardViewModelTests.swift; sourceTree = "<group>"; };
+		217288F428B4E63A00258EBA /* MainTabBarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewModelTests.swift; sourceTree = "<group>"; };
+		217288F728B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift; sourceTree = "<group>"; };
 		21CE710B2872F2C2003EC968 /* tesco-locations.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "tesco-locations.geojson"; sourceTree = "<group>"; };
 		21E5E2E628B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		2211289D0FB0F1A14BC9E957 /* Pods-binkapp.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.beta.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.beta.xcconfig"; sourceTree = "<group>"; };
@@ -1409,6 +1419,14 @@
 			path = ViewControllerFactory;
 			sourceTree = "<group>";
 		};
+		2126377528B3E2C200C795D6 /* BarcodeView */ = {
+			isa = PBXGroup;
+			children = (
+				2126377628B3E2FD00C795D6 /* BarcodeViewTests.swift */,
+			);
+			path = BarcodeView;
+			sourceTree = "<group>";
+		};
 		21497EC62864A0CD0053A9EE /* Popup */ = {
 			isa = PBXGroup;
 			children = (
@@ -1450,6 +1468,30 @@
 				212F0C432876EB7E007F09CE /* CalloutView.swift */,
 			);
 			path = GeoLocation;
+			sourceTree = "<group>";
+		};
+		217288F028B4D60800258EBA /* AddPaymentCard */ = {
+			isa = PBXGroup;
+			children = (
+				217288F128B4D62100258EBA /* AddPaymentCardViewModelTests.swift */,
+			);
+			path = AddPaymentCard;
+			sourceTree = "<group>";
+		};
+		217288F328B4E62600258EBA /* MainTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				217288F428B4E63A00258EBA /* MainTabBarViewModelTests.swift */,
+			);
+			path = MainTabBar;
+			sourceTree = "<group>";
+		};
+		217288F628B5009500258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				217288F728B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift */,
+			);
+			path = PaymentCardDetailAddLoyaltyCardCellViewModel;
 			sourceTree = "<group>";
 		};
 		21E5E2E528B38C9D00594DC3 /* LoyaltyCardDetails */ = {
@@ -2777,6 +2819,10 @@
 		EF485578231E5A3600FC9E5F /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				217288F628B5009500258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModel */,
+				217288F328B4E62600258EBA /* MainTabBar */,
+				217288F028B4D60800258EBA /* AddPaymentCard */,
+				2126377528B3E2C200C795D6 /* BarcodeView */,
 				21E5E2E528B38C9D00594DC3 /* LoyaltyCardDetails */,
 				2126212828B374FD00939609 /* ViewControllerFactory */,
 				2126212528B2793600939609 /* Onboarding */,
@@ -3006,6 +3052,7 @@
 				2126211A28AFD68E00939609 /* LoginResponseTests.swift */,
 				2126211C28AFD9A900939609 /* PaymentCardCreateModelTests.swift */,
 				2126212328B274C300939609 /* VoucherModelTests.swift */,
+				217288EE28B4BF5200258EBA /* AccountPostModelTests.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4258,6 +4305,7 @@
 				214DCF5928AD409E00308531 /* RemoteConfigFileModelTests.swift in Sources */,
 				CE971A2A287EFDB4001D7E1C /* DebugMenuViewModelTests.swift in Sources */,
 				CE971A3528807FBB001D7E1C /* BinkInfoButtonTests.swift in Sources */,
+				2126377728B3E2FD00C795D6 /* BarcodeViewTests.swift in Sources */,
 				CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */,
 				21393EFB285A1E1C002C8E79 /* StringHelperTests.swift in Sources */,
 				2126212028AFE80900939609 /* LCDPlaceHolderGeneratorTests.swift in Sources */,
@@ -4277,8 +4325,10 @@
 				CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */,
 				70E8E37B2566DE430027A244 /* PLLScreenViewModelTests.swift in Sources */,
 				CEFB742325668A5100896DE5 /* BrandHeaderViewTests.swift in Sources */,
+				217288F228B4D62100258EBA /* AddPaymentCardViewModelTests.swift in Sources */,
 				EF586FE52357A90C000917B6 /* PaymentCardCellViewModelTests.swift in Sources */,
 				CE971A28287EE138001D7E1C /* DebugMenuFactoryTests.swift in Sources */,
+				217288F528B4E63A00258EBA /* MainTabBarViewModelTests.swift in Sources */,
 				CE971A2C28802AEC001D7E1C /* PaymentCardDetailLoyaltyCardStatusCellViewModelTests.swift in Sources */,
 				DB4D8EAD2440864C0085595D /* SettingsViewModelTests.swift in Sources */,
 				70A61D16263095060073A08A /* BinkModuleViewModelTests.swift in Sources */,
@@ -4289,11 +4339,13 @@
 				214DCF5C28AD4FA000308531 /* GeoLocationsViewModelTests.swift in Sources */,
 				EF8B701223587BE3006CE3DD /* MembershipCardBalanceModelTests.swift in Sources */,
 				2126211928AFB4B900939609 /* NetworkRequestTests.swift in Sources */,
+				217288F828B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift in Sources */,
 				CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */,
 				CE8058222897EF86002AB70F /* MessageViewTests.swift in Sources */,
 				216B999C28AE902000A67A14 /* FloatExtensionTests.swift in Sources */,
 				214DCF5328AD25C500308531 /* TimeIntervalExtensionTests.swift in Sources */,
 				EF758E1623225F95000D26A9 /* DatabaseTests.swift in Sources */,
+				217288EF28B4BF5200258EBA /* AccountPostModelTests.swift in Sources */,
 				2126212728B2794E00939609 /* OnboardingViewModelTests.swift in Sources */,
 				2126212A28B3751400939609 /* ViewControllerFactoryTests.swift in Sources */,
 			);

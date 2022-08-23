@@ -36,7 +36,7 @@ class PaymentCardCreateModelTests: XCTestCase {
         XCTAssertNotNil(decodedResponse)
     }
     
-    func test_preficIsCorrect() throws {
+    func test_prefixIsCorrect() throws {
         XCTAssertTrue(Self.model.cardType!.redactedPrefix == "••••   ••••   ••••   ")
     }
     
