@@ -39,6 +39,12 @@ struct DebugMenuView: View {
             }
             .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
             
+            Section(header: Text("Date Manager")) {
+                DatePickerRow()
+                DebugRow(rowType: .resetDate)
+            }
+            .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
+            
             if hasUser {
                 Section(header: Text("Wallet modifiers"), footer: Text("Mock the number of plans shown in the loyalty wallet prompts. App must be relaunched to reset these.")) {
                     StepperDebugRow(label: "Link prompt count", value: Current.wallet.linkPromptDebugCellCount ?? 0) { value in
@@ -69,15 +75,33 @@ struct DebugMenuView: View {
     }
 }
 
+struct DatePickerRow: View {
+    @State private var date = Current.dateManager.currentDate
+    
+    var body: some View {
+        DatePicker("Adjust device date", selection: $date)
+            .foregroundColor(Color(.binkGradientBlueRight))
+            .datePickerStyle(.compact)
+            .onChange(of: date) { newDate in
+                let day = Calendar.current.dateComponents([.weekday], from: newDate)
+                print(day)
+                Current.dateManager.adjustDate(newDate)
+            }
+    }
+}
+
 @available(iOS 14.0, *)
 struct DebugRow: View {
     enum RowType: String {
         case forceCrash = "Force crash"
+        case resetDate = "Reset"
         
         func action() {
             switch self {
             case .forceCrash:
                 SentryService.forceCrash()
+            case .resetDate:
+                Current.dateManager.reset()
             }
         }
     }

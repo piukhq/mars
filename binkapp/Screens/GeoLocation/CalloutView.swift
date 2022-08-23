@@ -40,8 +40,8 @@ class CustomAnnotation: NSObject, MKAnnotation {
                 return configureNextOpenTimes(openHours: weeklyOpeningHours, from: Date.today())
             }
             guard let openingHour = Int(todaysOpeningHours.opening.dropLast(3)), let closingHour = Int(todaysOpeningHours.closing.dropLast(3)) else { return "" }
-            var currentHour = Calendar.current.component(.hour, from: Date())
-//            currentHour = 23
+            let currentHour = Current.dateManager.currentHour
+            
             if currentHour == (closingHour - 1) {
                 openingHoursColor = .systemOrange
                 return "Closing Soon - Closes at \(todaysOpeningHours.closing)"

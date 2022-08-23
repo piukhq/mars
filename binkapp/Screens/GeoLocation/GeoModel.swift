@@ -65,7 +65,7 @@ struct OpenHours: Codable {
 }
 
 struct OpeningTimes {
-    var opening: String    
+    var opening: String
     let closing: String
     let day: Int
     
