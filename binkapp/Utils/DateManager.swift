@@ -34,7 +34,7 @@ class DateManager: ObservableObject {
     }
     
     func tomorrow() -> Int {
-        return today() + 1
+        return Calendar.current.dateComponents([.weekday], from: currentDate + 86400).weekday ?? 0
     }
     
     func dayOfTheWeek(id: Int?) -> String {

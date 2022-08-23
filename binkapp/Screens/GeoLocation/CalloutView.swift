@@ -27,30 +27,29 @@ class CustomAnnotation: NSObject, MKAnnotation {
     }
     
     var openHours: String {
-        return configureOpenHours(openHours: feature.properties.openHours)
+        return configureOpeningHours(feature.properties.openHours)
     }
     
-    private func configureOpenHours(openHours: String?) -> String {
+    private func configureOpeningHours(_ openHours: String?) -> String {
         guard let data = openHours?.data(using: .utf8) else { return "" }
-        let dayoffset = 0
         
         do {
             let weeklyOpeningHours = try JSONDecoder().decode(OpenHours.self, from: data)
-            guard let todaysOpeningHours = weeklyOpeningHours.openingHours(for: Current.dateManager.today() + dayoffset) else {
+            guard let todaysOpeningTimes = weeklyOpeningHours.openingTimes(for: Current.dateManager.today()) else {
                 return configureNextOpenTimes(openHours: weeklyOpeningHours, from: Current.dateManager.today())
             }
-            guard let openingHour = Int(todaysOpeningHours.opening.dropLast(3)), let closingHour = Int(todaysOpeningHours.closing.dropLast(3)) else { return "" }
+            guard let openingHour = Int(todaysOpeningTimes.opening.dropLast(3)), let closingHour = Int(todaysOpeningTimes.closing.dropLast(3)) else { return "" }
             let currentHour = Current.dateManager.currentHour
             
             if currentHour == (closingHour - 1) {
                 openingHoursColor = .systemOrange
-                return "Closing Soon - Closes at \(todaysOpeningHours.closing)"
+                return "Closing Soon - Closes at \(todaysOpeningTimes.closing)"
             } else if currentHour >= openingHour && currentHour < closingHour {
                 openingHoursColor = .systemGreen
-                return "Open - Closes at \(todaysOpeningHours.closing)"
+                return "Open - Closes at \(todaysOpeningTimes.closing)"
             } else if currentHour < openingHour {
                 openingHoursColor = .systemRed
-                return "Closed - Opens at \(todaysOpeningHours.opening)"
+                return "Closed - Opens at \(todaysOpeningTimes.opening)"
             } else {
                 return configureNextOpenTimes(openHours: weeklyOpeningHours, from: Current.dateManager.tomorrow())
             }
@@ -71,6 +70,7 @@ class CustomAnnotation: NSObject, MKAnnotation {
             let dayString = nextOpenDayIsTomorrow ? "" : " on \(nextOpeningTimes.dayString)"
             return "Closed - Opens at \(nextOpeningTimes.opening)\(dayString)"
         }
+        
         return ""
     }
 }

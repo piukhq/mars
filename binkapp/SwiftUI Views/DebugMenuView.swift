@@ -75,16 +75,6 @@ struct DebugMenuView: View {
     }
 }
 
-struct DatePickerRow: View {
-    @ObservedObject private var dateManager = Current.dateManager
-    
-    var body: some View {
-        DatePicker("Adjust device date", selection: $dateManager.currentDate)
-            .foregroundColor(Color(.binkGradientBlueRight))
-            .datePickerStyle(.compact)
-    }
-}
-
 @available(iOS 14.0, *)
 struct DebugRow: View {
     enum RowType: String {
@@ -348,6 +338,16 @@ struct SwatchView: View {
             }
         }
         .navigationTitle("Secondary plan colours")
+    }
+}
+
+struct DatePickerRow: View {
+    @ObservedObject private var dateManager = Current.dateManager
+    
+    var body: some View {
+        DatePicker("Adjust device date", selection: $dateManager.currentDate)
+            .foregroundColor(Color(.binkGradientBlueRight))
+            .datePickerStyle(.compact)
     }
 }
 
