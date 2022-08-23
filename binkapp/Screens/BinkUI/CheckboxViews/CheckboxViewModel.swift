@@ -12,12 +12,12 @@ class CheckboxViewModel: ObservableObject, Identifiable {
     @Published var checkboxText: String
     @Published var checkedState = false
 
-    var attributedText: AttributedString?
-    var hideCheckbox: Bool
-    var columnKind: FormField.ColumnKind?
-    var optional: Bool
-    var columnName: String?
-    var url: URL?
+    private(set) var attributedText: AttributedString?
+    private(set) var hideCheckbox: Bool
+    private(set) var columnKind: FormField.ColumnKind?
+    private(set) var optional: Bool
+    private(set) var columnName: String?
+    private(set) var url: URL?
 
     init (checkedState: Bool, text: String? = nil, attributedText: AttributedString? = nil, columnName: String?, columnKind: FormField.ColumnKind?, url: URL? = nil, optional: Bool = false, hideCheckbox: Bool = false) {
         self.checkedState = checkedState
