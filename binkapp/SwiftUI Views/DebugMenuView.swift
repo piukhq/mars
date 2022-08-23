@@ -76,17 +76,12 @@ struct DebugMenuView: View {
 }
 
 struct DatePickerRow: View {
-    @State private var date = Current.dateManager.currentDate
+    @ObservedObject private var dateManager = Current.dateManager
     
     var body: some View {
-        DatePicker("Adjust device date", selection: $date)
+        DatePicker("Adjust device date", selection: $dateManager.currentDate)
             .foregroundColor(Color(.binkGradientBlueRight))
             .datePickerStyle(.compact)
-            .onChange(of: date) { newDate in
-                let day = Calendar.current.dateComponents([.weekday], from: newDate)
-                print(day)
-                Current.dateManager.adjustDate(newDate)
-            }
     }
 }
 
@@ -120,7 +115,7 @@ struct DebugRow: View {
         Button(action: rowType.action, label: {
             VStack(alignment: .leading, spacing: 5) {
                 Text(rowType.rawValue)
-                    .foregroundColor(destructive ? .red : .black)
+                    .foregroundColor(destructive ? .red : Color(.binkGradientBlueRight))
                 if let subtitle = subtitle {
                     Text(subtitle)
                         .font(.subheadline)

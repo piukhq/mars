@@ -8,11 +8,12 @@
 
 import Foundation
 
-class DateManager {
-    var currentDate = Date.now {
+class DateManager: ObservableObject {
+    @Published var currentDate = Date.now {
         didSet {
-            print(currentDate.formatted())
-            MessageView.show(currentDate.formatted(), type: .snackbar(.long))
+            let day = Calendar.current.dateComponents([.weekday], from: currentDate).weekday
+            let fullFormatedDate = dayOfTheWeek(id: day) + " " + currentDate.formatted()
+            MessageView.show(fullFormatedDate, type: .snackbar(.long))
         }
     }
     
@@ -34,5 +35,26 @@ class DateManager {
     
     func tomorrow() -> Int {
         return today() + 1
+    }
+    
+    func dayOfTheWeek(id: Int?) -> String {
+        switch id {
+        case 1:
+            return "Sunday"
+        case 2:
+            return "Monday"
+        case 3:
+            return "Tuesday"
+        case 4:
+            return "Wednesday"
+        case 5:
+            return "Thursday"
+        case 6:
+            return "Friday"
+        case 7:
+            return "Saturday"
+        default:
+            return ""
+        }
     }
 }
