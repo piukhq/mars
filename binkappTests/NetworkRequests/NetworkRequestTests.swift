@@ -18,7 +18,7 @@ class NetworkRequestTests: XCTestCase {
         logoutResponse = LogoutResponse(loggedOut: true)
     }
     
-    func test_netWorkLogout() throws {
+    func test_networkLogout() throws {
         Current.apiClient.testResponseData = nil
         let mocked = try! JSONEncoder().encode(Self.logoutResponse)
         let mock = Mock(url: URL(string: APIEndpoint.logout.urlString!)!, dataType: .json, statusCode: 200, data: [.post: mocked])
