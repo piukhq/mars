@@ -26,7 +26,7 @@ class NetworkRequestTests: XCTestCase {
 
         Current.rootStateMachine.handleLogout()
 
-        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 3.0)
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
 
         XCTAssertNotNil(Current.apiClient.testResponseData)
     }
@@ -40,7 +40,7 @@ class NetworkRequestTests: XCTestCase {
             completed = success
         }
 
-        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 3.0)
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
 
         XCTAssertTrue(completed)
     }
@@ -54,7 +54,7 @@ class NetworkRequestTests: XCTestCase {
             completed = success
         }
 
-        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 3.0)
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
 
         XCTAssertTrue(completed)
     }

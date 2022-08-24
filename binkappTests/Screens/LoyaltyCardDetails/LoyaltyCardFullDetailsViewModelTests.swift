@@ -241,7 +241,7 @@ class LoyaltyCardFullDetailsViewModelTests: XCTestCase, CoreDataTestable {
     
     func test_goToScreenForState_toSecurityAndPrivacyScreen_shouldnavigateToCorrectVC() throws {
         Self.model.toSecurityAndPrivacyScreen()
-        XCTAssertTrue(currentViewController.isKind(of: ReusableTemplateViewController.self))
+        XCTAssertTrue(currentViewController.isKind(of: UIHostingController<ReusableTemplateView>.self))
     }
     
     func test_goToScreenForState_toVoucherDetailScreen_shouldnavigateToCorrectVC() throws {

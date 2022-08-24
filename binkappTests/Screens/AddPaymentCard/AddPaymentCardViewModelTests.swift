@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import SwiftUI
 import CardScan
 @testable import binkapp
 
@@ -61,7 +62,7 @@ class AddPaymentCardViewModelTests: XCTestCase {
     
     func test_toPrivacyAndSecurity_shouldNavigate() throws {
         Self.model.toPrivacyAndSecurity()
-        XCTAssertTrue(currentViewController.isKind(of: ReusableTemplateViewController.self))
+        XCTAssertTrue(currentViewController.isKind(of: UIHostingController<ReusableTemplateView>.self))
     }
     
     func test_alertError_shouldNavigate() throws {
