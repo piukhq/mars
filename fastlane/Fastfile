@@ -131,7 +131,9 @@ target =
       workspace: "binkapp.xcworkspace",
       scheme: "binkapp tests",
       output_directory: "fastlane/xcov_output",
-      markdown_report: true
+      markdown_report: true,
+      xccov_file_direct_path: ENV['BITRISE_XCRESULT_PATH'],
+      include_targets: "Bink.app"
     )
 
     build_app(
