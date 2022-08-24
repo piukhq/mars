@@ -53,6 +53,7 @@
 		217288F228B4D62100258EBA /* AddPaymentCardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288F128B4D62100258EBA /* AddPaymentCardViewModelTests.swift */; };
 		217288F528B4E63A00258EBA /* MainTabBarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288F428B4E63A00258EBA /* MainTabBarViewModelTests.swift */; };
 		217288F828B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288F728B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift */; };
+		217288FA28B50D3700258EBA /* PLRCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288F928B50D3700258EBA /* PLRCellViewModelTests.swift */; };
 		21CE710C2872F2C3003EC968 /* tesco-locations.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 21CE710B2872F2C2003EC968 /* tesco-locations.geojson */; };
 		21E5E2E728B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E5E2E628B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift */; };
 		3C05A9DC2327CD3D00620583 /* AppDelegate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DB2327CD3D00620583 /* AppDelegate+Extension.swift */; };
@@ -742,6 +743,7 @@
 		217288F128B4D62100258EBA /* AddPaymentCardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentCardViewModelTests.swift; sourceTree = "<group>"; };
 		217288F428B4E63A00258EBA /* MainTabBarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewModelTests.swift; sourceTree = "<group>"; };
 		217288F728B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift; sourceTree = "<group>"; };
+		217288F928B50D3700258EBA /* PLRCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRCellViewModelTests.swift; sourceTree = "<group>"; };
 		21CE710B2872F2C2003EC968 /* tesco-locations.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "tesco-locations.geojson"; sourceTree = "<group>"; };
 		21E5E2E628B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		2211289D0FB0F1A14BC9E957 /* Pods-binkapp.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.beta.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.beta.xcconfig"; sourceTree = "<group>"; };
@@ -2529,6 +2531,7 @@
 			isa = PBXGroup;
 			children = (
 				CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */,
+				217288F928B50D3700258EBA /* PLRCellViewModelTests.swift */,
 			);
 			path = PLR;
 			sourceTree = "<group>";
@@ -4306,6 +4309,7 @@
 				CE971A2A287EFDB4001D7E1C /* DebugMenuViewModelTests.swift in Sources */,
 				CE971A3528807FBB001D7E1C /* BinkInfoButtonTests.swift in Sources */,
 				2126377728B3E2FD00C795D6 /* BarcodeViewTests.swift in Sources */,
+				217288FA28B50D3700258EBA /* PLRCellViewModelTests.swift in Sources */,
 				CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */,
 				21393EFB285A1E1C002C8E79 /* StringHelperTests.swift in Sources */,
 				2126212028AFE80900939609 /* LCDPlaceHolderGeneratorTests.swift in Sources */,

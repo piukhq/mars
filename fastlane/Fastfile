@@ -127,6 +127,13 @@ target =
       scheme: "binkapp tests"
     )
 
+    xcov(
+      workspace: "binkapp.xcworkspace",
+      scheme: "binkapp tests",
+      output_directory: "fastlane/xcov_output",
+      markdown_report: true
+    )
+
     build_app(
       workspace: "binkapp.xcworkspace",
       scheme: "binkapp app store (internal)"
