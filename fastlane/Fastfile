@@ -231,6 +231,8 @@ target =
       in_house: false
     )
 
+    increment_build_number(build_number: options[:build_number])
+
     run_tests(
       workspace: "binkapp.xcworkspace",
       device: "iPhone 12 Pro",
