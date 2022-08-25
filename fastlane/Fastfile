@@ -162,8 +162,7 @@ target =
       workspace: "binkapp.xcworkspace",
       scheme: "binkapp tests",
       output_directory: "fastlane/xcov_output",
-      markdown_report: true,
-      include_targets: "Bink.app"
+      markdown_report: true
     )
 
     coverage = sh("cat xcov_output/report.md | grep -i \"Current coverage for Bink.app\"")
