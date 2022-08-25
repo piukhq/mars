@@ -12,10 +12,10 @@ import XCTest
 // swiftlint:disable all
 
 class EncodableExtensionTests: XCTestCase {
-    func testExample() throws {
-        let dic = try! MagicLinkRequestModel(email: "email@email.com").asDictionary()
+    func test_modelIsEncoded_asDictionary() throws {
+        let dictionary = try! MagicLinkRequestModel(email: "email@email.com").asDictionary()
         
-        XCTAssertEqual(dic["email"] as! String, "email@email.com")
-        XCTAssertEqual(dic["locale"] as! String, "en_GB")
+        XCTAssertEqual(dictionary["email"] as! String, "email@email.com")
+        XCTAssertEqual(dictionary["locale"] as! String, "en_GB")
     }
 }
