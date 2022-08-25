@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import BinkCore
 
 class RecommendedVersionUtil {
     private var canShowRecommendedUpdatePrompt = true
