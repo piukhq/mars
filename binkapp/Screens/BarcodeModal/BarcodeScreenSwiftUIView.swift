@@ -117,13 +117,11 @@ struct BarcodeScreenSwiftUIView: View {
                             .frame(height: viewModel.heightForHighVisView(text: viewModel.barcodeNumber))
                     }
                     
-                    // TODO: - Uncomment once CR for user preference has processed
-                    
-//                    if !viewModel.isBarcodeAvailable && !viewModel.alwaysShowBarcode {
-//                        Spacer(minLength: 30)
-//                        /// show always
-//                        ShowBarcodeAnywayButtonView(viewModel: viewModel)
-//                    }
+                    if !viewModel.isBarcodeAvailable && !viewModel.alwaysShowBarcode {
+                        Spacer(minLength: 30)
+                        /// show always
+                        ShowBarcodeAnywayButtonView(viewModel: viewModel)
+                    }
                 }
                 .padding(.horizontal, Constants.horizontalInset)
                 .padding(.top, Constants.smallSpace)
