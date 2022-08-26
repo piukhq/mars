@@ -10,7 +10,7 @@ import XCTest
 @testable import binkapp
 
 class WalletRefreshManagerTests: XCTestCase {
-    func test_TimeIntervalRawValues() throws {
+    func test_timeIntervalRawValues() throws {
         XCTAssertTrue(WalletRefreshManager.RefreshInterval.twoMinutes.readableValue == "two minutes")
         XCTAssertTrue(WalletRefreshManager.RefreshInterval.oneHour.readableValue == "one hour")
         XCTAssertTrue(WalletRefreshManager.RefreshInterval.twoHours.readableValue == "two hours")
@@ -18,13 +18,13 @@ class WalletRefreshManagerTests: XCTestCase {
         XCTAssertTrue(WalletRefreshManager.RefreshInterval.threeDays.readableValue == "three days")
     }
     
-    func test_RefreshManagerShouldBeActive() throws {
+    func test_refreshManagerShouldBeActive() throws {
         let refreshManager = WalletRefreshManager()
         refreshManager.start()
         XCTAssertTrue(refreshManager.isActive == true)
     }
     
-    func test_RefreshManagerCanResetAccounts() throws {
+    func test_refreshManagerCanResetAccounts() throws {
         let refreshManager = WalletRefreshManager()
         refreshManager.start()
  
@@ -37,7 +37,7 @@ class WalletRefreshManagerTests: XCTestCase {
         }
     }
     
-    func test_RefreshManagerCanRefreshPlans() throws {
+    func test_refreshManagerCanRefreshPlans() throws {
         let refreshManager = WalletRefreshManager()
         refreshManager.start()
         

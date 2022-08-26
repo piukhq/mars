@@ -122,7 +122,7 @@ class LoyaltyCardFullDetailsViewModelTests: XCTestCase, CoreDataTestable {
         XCTAssertEqual(Self.model.pointsValueText, "£500 ")
     }
     
-    func test_aspectRationWhenLink() throws {
+    func test_aspectRatioWhenLink() throws {
         Self.model.membershipCard.membershipPlan = Self.membershipPlan
         XCTAssertEqual(Self.model.brandHeaderAspectRatio, 25 / 41)
     }
@@ -137,7 +137,7 @@ class LoyaltyCardFullDetailsViewModelTests: XCTestCase, CoreDataTestable {
         XCTAssertTrue(Self.model.shouldShowBarcodeButton)
     }
     
-    func test_ShouldShowBarCode() throws {
+    func test_shouldShowBarCode() throws {
         Self.model.membershipCard.membershipPlan = Self.membershipPlan
         XCTAssertTrue(Self.model.shouldShowBarcode == false)
     }

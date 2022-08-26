@@ -33,7 +33,7 @@ class PaymentCardDetailAddLoyaltyCardCellViewModelTest: XCTestCase, CoreDataTest
         model = PaymentCardDetailAddLoyaltyCardCellViewModel(membershipPlan: membershipPlan)
     }
     
-    func test_memberShipPlanIsValid() throws {
+    func test_membershipPlanIsValid() throws {
         XCTAssertNotNil(Self.model.membershipPlan)
     }
     
