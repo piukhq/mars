@@ -8,6 +8,7 @@
 
 import XCTest
 import Mocker
+import SwiftUI
 @testable import binkapp
 
 // swiftlint:disable all
@@ -553,7 +554,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
     
     func test_37_toSecurityAndPrivacy_navigatesToCorrectViewController() {
         Self.baseSut.toSecurityAndPrivacyScreen()
-        XCTAssertTrue(currentViewController.isKind(of: ReusableTemplateViewController.self))
+        XCTAssertTrue(currentViewController.isKind(of: UIHostingController(rootView: ReusableTemplateView(title: L10n.securityAndPrivacyTitle, description: L10n.securityAndPrivacyDescription)).classForCoder))
     }
     
     func test_38_showDeleteConfirmationAlert_navigatesToCorrectViewController() {

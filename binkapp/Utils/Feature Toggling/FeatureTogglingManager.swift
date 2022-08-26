@@ -12,7 +12,9 @@ struct BetaUser: Codable {
     let uid: String
 }
 
-final class FeatureTogglingManager {
+final class FeatureTogglingManager: ObservableObject {
+    @Published var featuresDidUpdate = false
+    
     var features: [BetaFeature]? {
         return Current.remoteConfig.configFile?.beta?.features
     }
@@ -49,6 +51,7 @@ final class FeatureTogglingManager {
         }
         
         feature.storeToUserDefaults(enabled)
+        featuresDidUpdate = true
     }
     
     func setupFeatures() {
