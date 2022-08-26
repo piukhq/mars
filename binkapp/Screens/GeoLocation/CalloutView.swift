@@ -63,7 +63,7 @@ class CustomAnnotation: NSObject, MKAnnotation {
     private func configureNextOpenTimes(openHours: OpenHours, from day: Int) -> String {
         openingHoursColor = .systemRed
         if var nextOpeningTimes = openHours.openingTimesForNextOpenDay(from: day) {
-            if nextOpeningTimes.opening.count == 4 {
+            if nextOpeningTimes.opening.count == 4 { /// If the opening time string has 4 characters, we know it must be missing the first zero (e.g. 7:24)
                 nextOpeningTimes.opening.insert("0", at: nextOpeningTimes.opening.startIndex)
             }
             let nextOpenDayIsTomorrow = nextOpeningTimes.day == Current.dateManager.tomorrow()

@@ -9,6 +9,10 @@
 import Foundation
 
 class DateManager: ObservableObject {
+    enum Constants {
+        static let oneDay: Double = 86400
+    }
+    
     @Published var currentDate = Date.now {
         didSet {
             let day = Calendar.current.dateComponents([.weekday], from: currentDate).weekday
@@ -34,7 +38,7 @@ class DateManager: ObservableObject {
     }
     
     func tomorrow() -> Int {
-        return Calendar.current.dateComponents([.weekday], from: currentDate + 86400).weekday ?? 0
+        return Calendar.current.dateComponents([.weekday], from: currentDate + Constants.oneDay).weekday ?? 0
     }
     
     func dayOfTheWeek(id: Int?) -> String {
