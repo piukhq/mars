@@ -53,7 +53,7 @@ final class ImageService {
     fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy, userInterfaceStyle: UIUserInterfaceStyle? = nil, completion: @escaping ImageCompletionHandler) {
         guard let imagePath = path(forType: pathType, userInterfaceStyle: userInterfaceStyle) else { return completion(nil, false) }
 
-        //debug feature
+        // Debug feature
         if Current.userDefaults.bool(forDefaultsKey: .alwaysDownloadImages) {
             downloadImage(forPath: imagePath, withPolicy: policy, completion: completion)
             return

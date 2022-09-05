@@ -118,6 +118,15 @@
       }
     },
     {
+      "identity" : "ios-core",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:binkhq/ios-core.git",
+      "state" : {
+        "revision" : "dc4b842f59e6f351b0567f8f92cd35bea85a7f54",
+        "version" : "1.0.0"
+      }
+    },
+    {
       "identity" : "jwtdecode.swift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/auth0/JWTDecode.swift.git",
