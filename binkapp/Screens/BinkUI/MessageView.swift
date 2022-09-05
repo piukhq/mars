@@ -87,6 +87,15 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private static func shouldShowMessage(_ type: MessageType) -> Bool {
+        switch type {
+        case .responseCodeVisualizer:
+            return Configuration.isDebug()
+        case .snackbar:
+            return true
+        }
+    }
+    
     private func configureUI() {
         layer.cornerRadius = MessageViewConstants.cornerRadius
         layer.cornerCurve = .continuous
@@ -118,7 +127,7 @@ class MessageView: UIView, UIGestureRecognizerDelegate {
     }
     
     static func show(_ message: String, type: MessageType, button: MessageButton? = nil) {
-        guard Configuration.isDebug() else { return }
+        guard shouldShowMessage(type) else { return }
         if let window = UIApplication.shared.connectedScenes.flatMap({ ($0 as? UIWindowScene)?.windows ?? [] }).first(where: { $0.isKeyWindow }) {
             if let messageView = window.subviews.first(where: { $0.isKind(of: MessageView.self) }) as? MessageView {
                 messageView.hideSideways(direction: .left) {

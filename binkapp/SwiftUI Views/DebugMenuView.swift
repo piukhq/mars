@@ -36,6 +36,7 @@ struct DebugMenuView: View {
                 }
                 
                 PickerDebugRow(type: .snackbar)
+                DebugRow(rowType: .exportNetworkActivity, destructive: false)
             }
             .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
             
@@ -86,23 +87,15 @@ struct DebugRow: View {
         case forceCrash = "Force crash"
         case resetDate = "Reset"
         case token = "Current Token"
-        
-        func action() {
-            switch self {
-            case .forceCrash:
-                SentryService.forceCrash()
-            case .resetDate:
-                Current.dateManager.reset()
-            case .token:
-                UIPasteboard.general.string = Current.userManager.currentToken
-                MessageView.show("Copied to clipboard", type: .snackbar(.short))
-            }
-        }
+        case exportNetworkActivity = "Export Recent Network Activity"
     }
     
     let rowType: RowType
     let subtitle: String?
     let destructive: Bool
+    
+    @State private var presentActivitySheet = false
+    @State private var buttonTapped = false
     
     init(rowType: RowType, subtitle: String? = nil, destructive: Bool = false) {
         self.rowType = rowType
@@ -111,10 +104,10 @@ struct DebugRow: View {
     }
     
     var body: some View {
-        Button(action: rowType.action, label: {
+        HStack {
             VStack(alignment: .leading, spacing: 5) {
                 Text(rowType.rawValue)
-                    .foregroundColor(destructive ? .red : Color(.binkGradientBlueRight))
+                    .foregroundColor(destructive ? .red : buttonTapped ? Color(.binkGradientBlueRight.lighter() ?? .grey10) : Color(.binkGradientBlueRight))
                 if let subtitle = subtitle {
                     Text(subtitle)
                         .foregroundColor(Color(Current.themeManager.color(for: .text)))
@@ -122,7 +115,36 @@ struct DebugRow: View {
                 }
             }
             .padding([.top, .bottom], 10)
+            .sheet(isPresented: $presentActivitySheet) {
+                if let url = BinkNetworkingLogger().networkLogsFilePath() {
+                    ActivityViewController(activityItemMetadata: LinkMetadataManager(title: "Export recent API requests and responses", url: url))
+                }
+            }
+            
+            Spacer()
+        }
+        .background(content: {
+            Color(Current.themeManager.color(for: .walletCardBackground))
         })
+        .onTapGesture {
+            buttonTapped = true
+            
+            switch rowType {
+            case .forceCrash:
+                SentryService.forceCrash()
+            case .resetDate:
+                Current.dateManager.reset()
+            case .token:
+                UIPasteboard.general.string = Current.userManager.currentToken
+                MessageView.show("Copied to clipboard", type: .snackbar(.short))
+            case .exportNetworkActivity:
+                presentActivitySheet = true
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                buttonTapped = false
+            }
+        }
     }
 }
 
