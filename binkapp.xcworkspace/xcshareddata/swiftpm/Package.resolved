@@ -163,6 +163,15 @@
       }
     },
     {
+      "identity" : "mocker",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:WeTransfer/Mocker.git",
+      "state" : {
+        "revision" : "e7165fb0378193c6784f1d46a9ab2b6184c384fa",
+        "version" : "2.7.0"
+      }
+    },
+    {
       "identity" : "nanopb",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/nanopb.git",

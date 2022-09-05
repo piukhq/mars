@@ -11,7 +11,7 @@ import Foundation
 class PaymentCardDetailViewModel {
     typealias EmptyCompletionBlock = () -> Void
 
-    private var paymentCard: CD_PaymentCard {
+    var paymentCard: CD_PaymentCard {
         didSet {
             buildInformationRows()
         }
@@ -241,7 +241,7 @@ class PaymentCardDetailViewModel {
     }
 
     // MARK: Information rows
-    private func buildInformationRows() {
+    func buildInformationRows() {
         informationRows = informationRowFactory.makePaymentInformationRows(for: paymentCardStatus)
     }
 
@@ -276,9 +276,7 @@ class PaymentCardDetailViewModel {
                 return
             }
             self.repository.delete(self.paymentCard) {
-                if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(event: PaymentCardLoggerEvent.paymentCardDeleted, value: self.paymentCard.id)
-                }
+                BinkLogger.infoPrivateHash(event: PaymentCardLoggerEvent.paymentCardDeleted, value: self.paymentCard.id)
                 Current.wallet.refreshLocal()
                 Current.navigate.back()
             }

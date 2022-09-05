@@ -12,7 +12,7 @@ import UIKit
 
 extension UIDevice {
     var hasNotch: Bool {
-        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+        let window = UIApplication.shared.connectedScenes.flatMap { ($0 as? UIWindowScene)?.windows ?? [] }.first { $0.isKeyWindow }
         let bottom = window?.safeAreaInsets.bottom ?? 0
         return bottom > 0
     }
@@ -27,6 +27,18 @@ extension UIDevice {
         default:
             return false
         }
+    }
+    
+    // RS - Will always return in the format, for example, iPhone12,3 or iPod7,1
+    var modelName: String {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        let machineMirror = Mirror(reflecting: systemInfo.machine)
+        let identifier = machineMirror.children.reduce("") { identifier, element in
+            guard let value = element.value as? Int8, value != 0 else { return identifier }
+            return identifier + String(UnicodeScalar(UInt8(value)))
+        }
+        return identifier
     }
     
     enum ScreenSize: String {

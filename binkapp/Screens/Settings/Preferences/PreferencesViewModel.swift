@@ -12,7 +12,7 @@ protocol PreferencesDelegate: AnyObject {
     func didReceivePreferences()
 }
 
-class PreferencesViewModel {
+class PreferencesViewModel: UserServiceProtocol {
     private let repository = PreferencesRepository()
     
     weak var delegate: PreferencesDelegate?
@@ -40,9 +40,7 @@ class PreferencesViewModel {
         repository.putPreferences(preferences: preferences, onSuccess: {
             onSuccess()
         }) { error in
-            if #available(iOS 14.0, *) {
-                BinkLogger.error(UserLoggerError.updatePreferences, value: error.localizedDescription)
-            }
+            BinkLogger.error(UserLoggerError.updatePreferences, value: error.localizedDescription)
             onError(error)
         }
     }
@@ -51,5 +49,22 @@ class PreferencesViewModel {
         let alert = ViewControllerFactory.makeNoConnectivityAlertController()
         let navigationRequest = AlertNavigationRequest(alertController: alert)
         Current.navigate.to(navigationRequest)
+    }
+    
+    func configureUserPreferenceFromAPI() {
+        getPreferences { result in
+            switch result {
+            case .success(let preferences):
+                var value = preferences.first(where: { $0.slug == AutofillUtil.slug })?.value
+                var checked: Bool = value == "1"
+                Current.userDefaults.set(checked, forDefaultsKey: .rememberMyDetails)
+                
+                value = preferences.first(where: { $0.slug == BarcodeViewModel.alwaysShowBarcodePreferencesSlug })?.value
+                checked = value == "1"
+                Current.userDefaults.set(checked, forDefaultsKey: .showBarcodeAlways)
+            case .failure:
+                break
+            }
+        }
     }
 }
