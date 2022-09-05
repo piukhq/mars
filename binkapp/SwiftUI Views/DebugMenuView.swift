@@ -40,6 +40,12 @@ struct DebugMenuView: View {
             }
             .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
             
+            Section(header: Text("Date Manager")) {
+                DatePickerRow()
+                DebugRow(rowType: .resetDate)
+            }
+            .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
+            
             if hasUser {
                 Section(header: Text("Wallet modifiers"), footer: Text("Mock the number of plans shown in the loyalty wallet prompts. App must be relaunched to reset these.")) {
                     StepperDebugRow(label: "Link prompt count", value: Current.wallet.linkPromptDebugCellCount ?? 0) { value in
@@ -79,6 +85,7 @@ struct DebugMenuView: View {
 struct DebugRow: View {
     enum RowType: String {
         case forceCrash = "Force crash"
+        case resetDate = "Reset"
         case token = "Current Token"
         case exportNetworkActivity = "Export Recent Network Activity"
     }
@@ -125,6 +132,8 @@ struct DebugRow: View {
             switch rowType {
             case .forceCrash:
                 SentryService.forceCrash()
+            case .resetDate:
+                Current.dateManager.reset()
             case .token:
                 UIPasteboard.general.string = Current.userManager.currentToken
                 MessageView.show("Copied to clipboard", type: .snackbar(.short))
@@ -362,6 +371,16 @@ struct SwatchView: View {
             }
         }
         .navigationTitle("Secondary plan colours")
+    }
+}
+
+struct DatePickerRow: View {
+    @ObservedObject private var dateManager = Current.dateManager
+    
+    var body: some View {
+        DatePicker("Adjust device date", selection: $dateManager.currentDate)
+            .foregroundColor(Color(.binkGradientBlueRight))
+            .datePickerStyle(.compact)
     }
 }
 
