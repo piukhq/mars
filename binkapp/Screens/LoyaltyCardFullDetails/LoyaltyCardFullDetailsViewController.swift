@@ -9,6 +9,7 @@ import UIKit
 
 protocol LoyaltyCardFullDetailsModalDelegate: AnyObject {
     func refreshUI()
+    func refreshModules()
 }
 
 class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable {
@@ -615,9 +616,11 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
 // MARK: - Modal Delegate
 
 extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDelegate {
-    func refreshUI() {
+    func refreshModules() {
         configureModules()
-
+    }
+    
+    func refreshUI() {
         Current.wallet.reload { [weak self] in
             guard let self = self else { return }
             if let updatedMembershipCard = Current.wallet.membershipCards?.first(where: { $0.id == self.viewModel.membershipCard.id }) {
