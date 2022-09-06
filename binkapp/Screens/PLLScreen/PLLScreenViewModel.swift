@@ -142,8 +142,10 @@ class PLLScreenViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func close() {
-        delegate?.modalWillDismiss()
+    func close(refreshLCD: Bool = false) {
+        if refreshLCD {
+            delegate?.refreshUI()
+        }
         Current.navigate.close()
     }
     

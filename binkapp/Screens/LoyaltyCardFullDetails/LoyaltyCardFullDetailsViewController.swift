@@ -8,7 +8,7 @@
 import UIKit
 
 protocol LoyaltyCardFullDetailsModalDelegate: AnyObject {
-    func modalWillDismiss()
+    func refreshUI()
 }
 
 class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable {
@@ -615,7 +615,7 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
 // MARK: - Modal Delegate
 
 extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDelegate {
-    func modalWillDismiss() {
+    func refreshUI() {
         configureModules()
 
         Current.wallet.reload { [weak self] in
