@@ -491,6 +491,12 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     func configurePLRCells() {
+        stackScrollView.arrangedSubviews.forEach { subview in
+            if subview.isKind(of: PLRBaseCollectionViewCell.self) {
+                stackScrollView.remove(arrangedSubview: subview)
+            }
+        }
+        
         if viewModel.shouldShowPLR {
             if let vouchers = viewModel.vouchers {
                 for voucher in vouchers {
