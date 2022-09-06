@@ -9,6 +9,8 @@
 import XCTest
 @testable import binkapp
 
+// swiftlint:disable all
+
 class SortStateTests: XCTestCase {
     func test_sortStateIsNewest() throws {
         let loyaltyModel = LoyaltyWalletViewModel()
