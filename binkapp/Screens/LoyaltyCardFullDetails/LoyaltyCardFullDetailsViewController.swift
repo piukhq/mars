@@ -623,6 +623,7 @@ extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDeleg
             if let updatedMembershipCard = Current.wallet.membershipCards?.first(where: { $0.id == self.viewModel.membershipCard.id }) {
                 self.viewModel.membershipCard = updatedMembershipCard
                 self.configureShowBarcodeButton(insertAt: 2)
+                self.stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: self.showBarcodeButton)
                 self.configureModules()
                 self.configurePLRCells()
             }
