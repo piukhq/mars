@@ -311,12 +311,7 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.headerToBarcodeButtonPadding, after: brandHeader)
         stackScrollView.add(arrangedSubview: brandHeaderBarcodeButtonPadding)
         
-        if viewModel.shouldShowBarcodeButton {
-            showBarcodeButton.setTitle(viewModel.barcodeButtonTitle, for: .normal)
-            stackScrollView.add(arrangedSubview: showBarcodeButton)
-            let gestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(showBarcodeButtonPressed))
-            brandHeader.addGestureRecognizer(gestureRecogniser)
-        }
+        configureShowBarcodeButton()
         
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: showBarcodeButton)
         stackScrollView.add(arrangedSubview: modulesStackView)
@@ -423,6 +418,19 @@ private extension LoyaltyCardFullDetailsViewController {
         barcode.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
         barcode.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
         barcode.layoutIfNeeded()
+    }
+    
+    private func configureShowBarcodeButton(insertAt index: Int? = nil) {
+        if viewModel.shouldShowBarcodeButton {
+            showBarcodeButton.setTitle(viewModel.barcodeButtonTitle, for: .normal)
+            if let index = index {
+                stackScrollView.insert(arrangedSubview: showBarcodeButton, atIndex: index)
+            } else {
+                stackScrollView.add(arrangedSubview: showBarcodeButton)
+            }
+            let gestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(showBarcodeButtonPressed))
+            brandHeader.addGestureRecognizer(gestureRecogniser)
+        }
     }
     
     private func setupCellForType<T: PLRBaseCollectionViewCell>(_ cellType: T.Type, voucher: CD_Voucher) {
@@ -614,6 +622,7 @@ extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDeleg
             guard let self = self else { return }
             if let updatedMembershipCard = Current.wallet.membershipCards?.first(where: { $0.id == self.viewModel.membershipCard.id }) {
                 self.viewModel.membershipCard = updatedMembershipCard
+                self.configureShowBarcodeButton(insertAt: 2)
                 self.configureModules()
                 self.configurePLRCells()
             }
