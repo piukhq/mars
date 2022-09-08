@@ -8,7 +8,8 @@
 import UIKit
 
 protocol LoyaltyCardFullDetailsModalDelegate: AnyObject {
-    func modalWillDismiss()
+    func refreshUI()
+    func refreshModules()
 }
 
 class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable {
@@ -311,12 +312,7 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.headerToBarcodeButtonPadding, after: brandHeader)
         stackScrollView.add(arrangedSubview: brandHeaderBarcodeButtonPadding)
         
-        if viewModel.shouldShowBarcodeButton {
-            showBarcodeButton.setTitle(viewModel.barcodeButtonTitle, for: .normal)
-            stackScrollView.add(arrangedSubview: showBarcodeButton)
-            let gestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(showBarcodeButtonPressed))
-            brandHeader.addGestureRecognizer(gestureRecogniser)
-        }
+        configureShowBarcodeButton()
         
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: showBarcodeButton)
         stackScrollView.add(arrangedSubview: modulesStackView)
@@ -425,6 +421,19 @@ private extension LoyaltyCardFullDetailsViewController {
         barcode.layoutIfNeeded()
     }
     
+    private func configureShowBarcodeButton(insertAt index: Int? = nil) {
+        if viewModel.shouldShowBarcodeButton {
+            showBarcodeButton.setTitle(viewModel.barcodeButtonTitle, for: .normal)
+            if let index = index {
+                stackScrollView.insert(arrangedSubview: showBarcodeButton, atIndex: index)
+            } else {
+                stackScrollView.add(arrangedSubview: showBarcodeButton)
+            }
+            let gestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(showBarcodeButtonPressed))
+            brandHeader.addGestureRecognizer(gestureRecogniser)
+        }
+    }
+    
     private func setupCellForType<T: PLRBaseCollectionViewCell>(_ cellType: T.Type, voucher: CD_Voucher) {
         let cell = PLRBaseCollectionViewCell.nibForCellType(cellType)
         let cellViewModel = PLRCellViewModel(voucher: voucher)
@@ -491,6 +500,12 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     func configurePLRCells() {
+        stackScrollView.arrangedSubviews.forEach { subview in
+            if subview.isKind(of: PLRBaseCollectionViewCell.self) {
+                stackScrollView.remove(arrangedSubview: subview)
+            }
+        }
+        
         if viewModel.shouldShowPLR {
             if let vouchers = viewModel.vouchers {
                 for voucher in vouchers {
@@ -601,13 +616,17 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
 // MARK: - Modal Delegate
 
 extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDelegate {
-    func modalWillDismiss() {
+    func refreshModules() {
         configureModules()
-
+    }
+    
+    func refreshUI() {
         Current.wallet.reload { [weak self] in
             guard let self = self else { return }
             if let updatedMembershipCard = Current.wallet.membershipCards?.first(where: { $0.id == self.viewModel.membershipCard.id }) {
                 self.viewModel.membershipCard = updatedMembershipCard
+                self.configureShowBarcodeButton(insertAt: 2)
+                self.stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: self.showBarcodeButton)
                 self.configureModules()
                 self.configurePLRCells()
             }
