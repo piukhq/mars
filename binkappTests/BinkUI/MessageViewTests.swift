@@ -42,13 +42,24 @@ class MessageViewTests: XCTestCase {
     func test_textColor_returnsCorrectColor() {
         MessageView.show("", type: .snackbar(.long), button: MessageButton(title: "", type: .success, action: {}))
         getKeyWindow()
-        XCTAssertEqual(sut.getMessageButton()?.textColor, .greenOk)
+        
+        if let button = sut.getMessageButton() {
+            XCTAssertEqual(button.textColor, .greenOk)
+        } else {
+            XCTFail("GreenOK: Message button is nil")
+        }
         
         sut.removeFromSuperview()
         
         MessageView.show("", type: .snackbar(.long), button: MessageButton(title: "", type: .error, action: {}))
         getKeyWindow()
-        XCTAssertEqual(sut.getMessageButton()?.textColor, .binkDynamicRed)
+        
+        if let button = sut.getMessageButton() {
+            XCTAssertEqual(button.textColor, .binkDynamicRed)
+        } else {
+            XCTFail("Red: Message button is nil")
+        }
+        
         sut.removeFromSuperview()
     }
     
@@ -63,6 +74,8 @@ class MessageViewTests: XCTestCase {
         } else {
             XCTFail("Delay interrupted")
         }
+        
+        sut.removeFromSuperview()
     }
     
     func test_hideSideways_correctlyAdjustsViewPosition() {
@@ -77,5 +90,7 @@ class MessageViewTests: XCTestCase {
         } else {
             XCTFail("Delay interrupted")
         }
+        
+        sut.removeFromSuperview()
     }
 }
