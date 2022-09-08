@@ -40,13 +40,13 @@ class MessageViewTests: XCTestCase {
     }
     
     func test_textColor_returnsCorrectColor() {
-        MessageView.show("", type: .snackbar(.short), button: MessageButton(title: "", type: .success, action: {}))
+        MessageView.show("", type: .snackbar(.long), button: MessageButton(title: "", type: .success, action: {}))
         getKeyWindow()
         XCTAssertEqual(sut.getMessageButton()?.textColor, .greenOk)
         
         sut.removeFromSuperview()
         
-        MessageView.show("", type: .snackbar(.short), button: MessageButton(title: "", type: .error, action: {}))
+        MessageView.show("", type: .snackbar(.long), button: MessageButton(title: "", type: .error, action: {}))
         getKeyWindow()
         XCTAssertEqual(sut.getMessageButton()?.textColor, .binkDynamicRed)
         sut.removeFromSuperview()
