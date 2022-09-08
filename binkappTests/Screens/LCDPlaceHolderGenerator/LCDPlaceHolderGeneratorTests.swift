@@ -11,7 +11,7 @@ import UIKit
 
 @testable import binkapp
 
-class LCDPlaceHolderGeneratorTests: XCTestCase {   
+class LCDPlaceHolderGeneratorTests: XCTestCase {
     func test_Example() throws {
         let image = LCDPlaceholderGenerator.generate(with: "#008233", planName: "place holder", destSize: CGSize(width: 100, height: 100), font: .textFieldLabel)
         
