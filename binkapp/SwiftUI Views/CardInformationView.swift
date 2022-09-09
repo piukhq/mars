@@ -9,20 +9,27 @@
 import SwiftUI
 
 struct CardInformationView: View {
+    private enum Constants {
+        static let separatorHeight: CGFloat = 1.0
+        static let actionRequiredIndicatorHeight: CGFloat = 10
+        static let padding: CGFloat = 30.0
+    }
     var informationRows: [CardDetailInformationRow]
     
     var body: some View {
         VStack(spacing: 0) {
             ForEach(0..<informationRows.count) { index in
-                CardDetailInfoTableView(rowData: informationRows[index], showSeparator: showSeparator(index: index))
-                Rectangle()
-                    .frame(height: 1)
-                    .foregroundColor(Color(Current.themeManager.color(for: .divider)))
+                CardDetailInfoTableView(rowData: informationRows[index])
+                
+                if showSeparator(index: index) {
+                    Rectangle()
+                        .frame(height: Constants.separatorHeight)
+                        .foregroundColor(Color(Current.themeManager.color(for: .divider)))
+                }
             }
         }
         .background(Color(Current.themeManager.color(for: .viewBackground)))
-        .padding(.horizontal, 30)
-//        .padding(.vertical, 10)
+        .padding(.horizontal, Constants.padding)
     }
     
     private func showSeparator(index: Int) -> Bool {
@@ -43,13 +50,10 @@ struct CardInformationView_Previews: PreviewProvider {
 struct CardDetailInfoTableView: View {
     private enum Constants {
         static let rowHeight: CGFloat = 70
-        static let separatorHeight: CGFloat = 1.0
-        static let actionRequiredIndicatorHeight: CGFloat = 10
-        static let padding: CGFloat = 20.0
+        static let padding: CGFloat = 10.0
     }
     
     var rowData: CardDetailInformationRow
-    var showSeparator: Bool
     
     var body: some View {
         Button {
@@ -74,18 +78,8 @@ struct CardDetailInfoTableView: View {
                     Image(uiImage: Asset.iconsChevronRight.image)
                         .foregroundColor(Color(Current.themeManager.color(for: .text)))
                 }
-                .padding(.vertical, 10)
-                
-//                if showSeparator {
-//                    Rectangle()
-//                        .frame(height: Constants.separatorHeight)
-//                        .foregroundColor(Color(Current.themeManager.color(for: .divider)))
-////                        .padding(.bottom, 10)
-//                }
+                .padding(.vertical, Constants.padding)
             }
-//            .background(Color.purple)
-
-//            .background(Color(Current.themeManager.color(for: .viewBackground)))
         }
     }
 }
