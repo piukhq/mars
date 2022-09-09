@@ -163,17 +163,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         return separator
     }()
     
-    lazy var informationTableView: NestedTableView = {
-        let tableView = NestedTableView(frame: .zero, style: .plain)
-        tableView.backgroundColor = .clear
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(CardDetailInfoTableViewCell.self, asNib: true)
-        tableView.separatorInset = LayoutHelper.LoyaltyCardDetail.informationTableSeparatorInset
-        return tableView
-    }()
-    
     private lazy var cardInformationView: UIView = {
         let rowData = CardInformationView(informationRows: viewModel.informationRows)
         let view = UIHostingController(rootView: rowData).view!
@@ -263,8 +252,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         navigationController?.setNavigationBarVisibility(navigationBarShouldBeVisible, animated: true)
         showBarcodeButton.setTitleColor(Current.themeManager.color(for: .text), for: .normal)
         separator.backgroundColor = Current.themeManager.color(for: .divider)
-        informationTableView.separatorColor = Current.themeManager.color(for: .divider)
-        informationTableView.reloadData()
         titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
 
         let plrVoucherCells = stackScrollView.arrangedSubviews.filter { $0.isKind(of: PLRBaseCollectionViewCell.self) }
@@ -281,35 +268,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     }
 }
 
-// MARK: - Table view
-
-extension LoyaltyCardFullDetailsViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.informationRows.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: CardDetailInfoTableViewCell = tableView.dequeue(indexPath: indexPath)
-        
-        let informationRow = viewModel.informationRow(forIndexPath: indexPath)
-        cell.configureWithInformationRow(informationRow)
-        
-        if tableView.cellAtIndexPathIsLastInSection(indexPath) {
-            cell.hideSeparator()
-        }
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.performActionForInformationRow(atIndexPath: indexPath)
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return LayoutHelper.PaymentCardDetail.informationRowCellHeight
-    }
-}
 
 // MARK: - Private methods
 

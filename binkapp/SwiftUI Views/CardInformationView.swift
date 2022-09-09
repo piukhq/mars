@@ -14,6 +14,8 @@ struct CardInformationView: View {
         static let actionRequiredIndicatorHeight: CGFloat = 10
         static let padding: CGFloat = 30.0
     }
+    
+    @ObservedObject var themeManager = Current.themeManager
     var informationRows: [CardDetailInformationRow]
     
     var body: some View {
@@ -24,7 +26,7 @@ struct CardInformationView: View {
                 if showSeparator(index: index) {
                     Rectangle()
                         .frame(height: Constants.separatorHeight)
-                        .foregroundColor(Color(Current.themeManager.color(for: .divider)))
+                        .foregroundColor(Color(themeManager.color(for: .divider)))
                 }
             }
         }
@@ -53,6 +55,7 @@ struct CardDetailInfoTableView: View {
         static let padding: CGFloat = 10.0
     }
     
+    @ObservedObject var themeManager = Current.themeManager
     var rowData: CardDetailInformationRow
     
     var body: some View {
@@ -63,12 +66,12 @@ struct CardDetailInfoTableView: View {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(rowData.type.title)
-                            .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                            .foregroundColor(Color(themeManager.color(for: .text)))
                             .uiFont(.subtitle)
                         if let subtitle = rowData.type.subtitle {
                             Text(subtitle)
                                 .uiFont(.bodyTextLarge)
-                                .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                                .foregroundColor(Color(themeManager.color(for: .text)))
                         }
                     }
                     .frame(height: Constants.rowHeight)
@@ -76,7 +79,7 @@ struct CardDetailInfoTableView: View {
                     Spacer()
                     
                     Image(uiImage: Asset.iconsChevronRight.image)
-                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                        .foregroundColor(Color(themeManager.color(for: .text)))
                 }
                 .padding(.vertical, Constants.padding)
             }
