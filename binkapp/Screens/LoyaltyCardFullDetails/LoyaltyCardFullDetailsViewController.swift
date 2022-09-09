@@ -5,6 +5,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
+import SwiftUI
 import UIKit
 
 protocol LoyaltyCardFullDetailsModalDelegate: AnyObject {
@@ -172,6 +173,14 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         tableView.separatorInset = LayoutHelper.LoyaltyCardDetail.informationTableSeparatorInset
         return tableView
     }()
+    
+    private lazy var cardInformationView: UIView = {
+        let rowData = CardInformationView(informationRows: viewModel.informationRows)
+        let view = UIHostingController(rootView: rowData).view!
+        view.backgroundColor = .clear
+        return view
+    }()
+
     
     let viewModel: LoyaltyCardFullDetailsViewModel
     var navigationBarShouldBeVisible = false
@@ -363,7 +372,7 @@ private extension LoyaltyCardFullDetailsViewController {
         }
         
         stackScrollView.add(arrangedSubview: separator)
-        stackScrollView.add(arrangedSubview: informationTableView)
+        stackScrollView.add(arrangedSubview: cardInformationView)
         
         configureLayout()
         
@@ -462,7 +471,7 @@ private extension LoyaltyCardFullDetailsViewController {
             modulesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
             separator.heightAnchor.constraint(equalToConstant: CGFloat.onePointScaled()),
             separator.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            cardInformationView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             brandHeaderImageView.heightAnchor.constraint(equalTo: brandHeader.heightAnchor),
             brandHeaderImageView.widthAnchor.constraint(equalTo: brandHeader.widthAnchor)
         ])
