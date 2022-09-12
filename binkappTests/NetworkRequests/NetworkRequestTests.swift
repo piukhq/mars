@@ -12,10 +12,107 @@ import Mocker
 
 // swiftlint:disable all
 
-class NetworkRequestTests: XCTestCase {
+class NetworkRequestTests: XCTestCase, UserServiceProtocol {
     static var logoutResponse: LogoutResponse!
+    static var loginResponse: LoginResponse!
     override class func setUp() {
         logoutResponse = LogoutResponse(loggedOut: true)
+        loginResponse = LoginResponse(apiKey: "apiKey", userEmail: "ricksanchez@email.com", uid: "turkey-chicken-beef", accessToken: "accessToken")
+    }
+    
+    func test_login() throws {
+        Current.apiClient.testResponseData = nil
+        let loginRequest = LoginRequest(email: "ricksanchez@email.com", password: "testpass")
+        
+        let mocked = try! JSONEncoder().encode(Self.loginResponse)
+        let mock = Mock(url: URL(string: APIEndpoint.login.urlString!)!, dataType: .json, statusCode: 200, data: [.post: mocked])
+        mock.register()
+        
+//        let mockService = Mock(url: URL(string: APIEndpoint.service.urlString!)!, dataType: .json, statusCode: 200, data: [.post: Data()])
+//        mockService.register()
+        
+        login(request: loginRequest) {result in
+            switch result {
+            case .success(let response):
+                XCTAssertEqual(response.apiKey, "apiKey")
+                XCTAssertEqual(response.userEmail, "ricksanchez@email.com")
+                XCTAssertEqual(response.uid, "turkey-chicken-beef")
+            case .failure:
+                XCTFail()
+            }
+        }
+        
+//        Current.loginController.login(with: loginRequest) { error in
+//            if error != nil {
+//                print("all good")
+//            }
+//        }
+        
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
+        
+        //XCTAssertNotNil(Current.apiClient.testResponseData)
+    }
+    
+    func test_loginWithApple() throws {
+        Current.apiClient.testResponseData = nil
+        let appleLoginRequest = SignInWithAppleRequest(authorizationCode: "code")
+        let mocked = try! JSONEncoder().encode(Self.loginResponse)
+        let mock = Mock(url: URL(string: APIEndpoint.apple.urlString!)!, dataType: .json, statusCode: 200, data: [.post: mocked])
+        mock.register()
+        
+        authWithApple(request: appleLoginRequest) {result in
+            switch result {
+            case .success(let response):
+                XCTAssertEqual(response.apiKey, "apiKey")
+                XCTAssertEqual(response.userEmail, "ricksanchez@email.com")
+                XCTAssertEqual(response.uid, "turkey-chicken-beef")
+            case .failure:
+                XCTFail()
+            }
+        }
+        
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
+    }
+    
+    func test_renewToken() throws {
+        let currentToken = "pizza"
+        let mocked = try! JSONEncoder().encode(Self.loginResponse)
+        let mock = Mock(url: URL(string: APIEndpoint.renew.urlString!)!, dataType: .json, statusCode: 200, data: [.post: mocked])
+        mock.register()
+        
+        renewToken(currentToken) { result in
+            switch result {
+            case .success(let response):
+                XCTAssertEqual(response.accessToken, "accessToken")
+            case .failure:
+                XCTFail()
+            }
+        }
+        
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
+    }
+    
+    func test_userProfile() throws {
+        let userProfileResponse = UserProfileResponse(uid: "turkey-chicken-beef", firstName: "Rick", lastName: "Morty", email: "ricksanchez@email.com")
+        let mocked = try! JSONEncoder().encode(userProfileResponse)
+        let mock = Mock(url: URL(string: APIEndpoint.me.urlString!)!, dataType: .json, statusCode: 200, data: [.get: mocked])
+        mock.register()
+        
+        getUserProfile { result in
+            switch result {
+            case .success(let response):
+                XCTAssertEqual(response.uid, "turkey-chicken-beef")
+                XCTAssertEqual(response.email, "ricksanchez@email.com")
+            case .failure:
+                XCTFail()
+            }
+        }
+                       
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
+    }
+    
+    func test_updateUserProfile() throws {
+        
     }
     
     func test_networkLogout() throws {
@@ -58,6 +155,4 @@ class NetworkRequestTests: XCTestCase {
 
         XCTAssertTrue(completed)
     }
-
-
 }
