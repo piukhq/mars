@@ -5,7 +5,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
 fileprivate enum Constants {
     static let searchIconLeftPadding = 12
@@ -290,12 +290,20 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
         guard let membershipPlan = viewModel.getMembershipPlan(for: indexPath) else { return cell }
         
         if let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
-            cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists, indexPath: indexPath)
+            let brandViewModel = BrandTableViewModel(title: brandName, plan: membershipPlan, brandExists: brandExists, userInterfaceStyle: traitCollection.userInterfaceStyle) { [weak self] in
+                self?.viewModel.toAddOrJoinScreen(membershipPlan: membershipPlan)
+            }
+            let brandTableRowView = BrandTableRowView(viewModel: brandViewModel)
+            let hostingController = UIHostingController(rootView: brandTableRowView)
+            addChild(hostingController)
+            cell.configure(hostingController: hostingController)
+            hostingController.didMove(toParent: self)
         }
         
         if tableView.cellAtIndexPathIsLastInSection(indexPath) {
             cell.hideSeparatorView()
         }
+
         return cell
     }
     
@@ -308,12 +316,6 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.backgroundColor = .clear
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let membershipPlan = viewModel.getMembershipPlan(for: indexPath) else { return }
-        viewModel.toAddOrJoinScreen(membershipPlan: membershipPlan)
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

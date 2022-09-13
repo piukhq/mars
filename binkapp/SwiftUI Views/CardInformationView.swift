@@ -29,7 +29,7 @@ struct CardInformationView: View {
     var body: some View {
         VStack(spacing: 0) {
             ForEach(0..<viewModel.informationRows.count) { index in
-                CardDetailInfoTableView(rowData: viewModel.informationRows[index])
+                CardInformationRowView(rowData: viewModel.informationRows[index])
                 
                 if showSeparator(index: index) {
                     Rectangle()
@@ -51,13 +51,13 @@ struct CardInformationView_Previews: PreviewProvider {
     static private var paymentRows = WalletCardDetailInformationRowFactory().makePaymentInformationRows(for: .active)
     static var previews: some View {
         VStack {
-//            CardInformationView(viewModel: PaymentCardDetailViewModel(paymentCard: <#T##CD_PaymentCard#>, informationRowFactory: <#T##WalletCardDetailInformationRowFactory#>))
+            CardInformationView(viewModel: CardInformationViewModel(informationRows: paymentRows))
         }
         .padding()
     }
 }
 
-struct CardDetailInfoTableView: View {
+struct CardInformationRowView: View {
     private enum Constants {
         static let rowHeight: CGFloat = 70
         static let padding: CGFloat = 10.0

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class BrandTableViewCell: UITableViewCell {
     @IBOutlet private weak var logoImageView: UIImageView!
@@ -38,7 +39,6 @@ class BrandTableViewCell: UITableViewCell {
                 self?.logoImageView.image = image
             }
         }
-        backgroundColor = Current.themeManager.color(for: .viewBackground)
         
         disclosureIndicatorImageView.tintColor = Current.themeManager.color(for: .text)
         separatorView.backgroundColor = Current.themeManager.color(for: .divider)
@@ -55,6 +55,27 @@ class BrandTableViewCell: UITableViewCell {
 
         existingBrandIcon.isHidden = !brandExists
         existingBrandIcon.tintColor = Current.themeManager.color(for: .text)
+        
+        logoImageView.isHidden = true
+        labelsStackView.isHidden = true
+        brandLabel.isHidden = true
+        descriptionLabel.isHidden = true
+        existingBrandIcon.isHidden = true
+        separatorView.isHidden = true
+        disclosureIndicatorImageView.isHidden = true
+    }
+    
+    func configure(hostingController: UIHostingController<BrandTableRowView>) {
+        addSubview(hostingController.view)
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            hostingController.view.topAnchor.constraint(equalTo: self.topAnchor),
+            hostingController.view.leftAnchor.constraint(equalTo: self.leftAnchor),
+            self.bottomAnchor.constraint(equalTo: hostingController.view.bottomAnchor),
+            self.rightAnchor.constraint(equalTo: hostingController.view.rightAnchor)
+        ])
+        
+        backgroundColor = Current.themeManager.color(for: .viewBackground)
     }
     
     func hideSeparatorView() {
