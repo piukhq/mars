@@ -16,17 +16,17 @@ class PaymentCardDetailViewModel {
             buildInformationRows()
         }
     }
+    
+    @Published var cardInformationViewModel: CardInformationViewModel
     private let repository = PaymentCardDetailRepository()
     private let informationRowFactory: WalletCardDetailInformationRowFactory
 
     init(paymentCard: CD_PaymentCard, informationRowFactory: WalletCardDetailInformationRowFactory) {
         self.paymentCard = paymentCard
         self.informationRowFactory = informationRowFactory
-        buildInformationRows()
+        self.cardInformationViewModel = CardInformationViewModel(informationRows: informationRowFactory.makePaymentInformationRows(for: paymentCard.paymentCardStatus))
     }
-
-    var informationRows: [CardDetailInformationRow] = []
-
+    
     var paymentCardStatus: PaymentCardStatus {
         return paymentCard.paymentCardStatus
     }
@@ -242,16 +242,16 @@ class PaymentCardDetailViewModel {
 
     // MARK: Information rows
     func buildInformationRows() {
-        informationRows = informationRowFactory.makePaymentInformationRows(for: paymentCardStatus)
+        cardInformationViewModel.informationRows = informationRowFactory.makePaymentInformationRows(for: paymentCardStatus)
     }
 
-    func informationRow(forIndexPath indexPath: IndexPath) -> CardDetailInformationRow {
-        return informationRows[indexPath.row]
-    }
-
-    func performActionForInformationRow(atIndexPath indexPath: IndexPath) {
-        informationRows[safe: indexPath.row]?.action()
-    }
+//    func informationRow(forIndexPath indexPath: IndexPath) -> CardDetailInformationRow {
+//        return informationRows[indexPath.row]
+//    }
+//
+//    func performActionForInformationRow(atIndexPath indexPath: IndexPath) {
+//        informationRows[safe: indexPath.row]?.action()
+//    }
 
     func toSecurityAndPrivacyScreen() {
         let hostingViewController = UIHostingController(rootView: ReusableTemplateView(title: L10n.securityAndPrivacyTitle, description: L10n.securityAndPrivacyDescription))

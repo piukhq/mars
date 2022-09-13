@@ -14,6 +14,8 @@ class LoyaltyCardFullDetailsViewModel {
     private let repository = LoyaltyCardFullDetailsRepository()
     private let informationRowFactory: WalletCardDetailInformationRowFactory
     
+    var informationRows: [CardDetailInformationRow]
+    
     var paymentCards: [CD_PaymentCard]? {
         return Current.wallet.paymentCards
     }
@@ -36,6 +38,7 @@ class LoyaltyCardFullDetailsViewModel {
         self.informationRowFactory = informationRowFactory
         self.barcodeViewModel = BarcodeViewModel(membershipCard: membershipCard)
         self.animated = animated
+        self.informationRows = informationRowFactory.makeLoyaltyInformationRows(membershipCard: membershipCard)
     }
     
     var brandName: String {
@@ -293,21 +296,7 @@ class LoyaltyCardFullDetailsViewModel {
     }
 }
 
-// MARK: Information rows
-
 extension LoyaltyCardFullDetailsViewModel {
-    var informationRows: [CardDetailInformationRow] {
-        return informationRowFactory.makeLoyaltyInformationRows(membershipCard: membershipCard)
-    }
-    
-    func informationRow(forIndexPath indexPath: IndexPath) -> CardDetailInformationRow {
-        return informationRows[indexPath.row]
-    }
-    
-    func performActionForInformationRow(atIndexPath indexPath: IndexPath) {
-        informationRows[indexPath.row].action()
-    }
-    
     func showDeleteConfirmationAlert() {
         guard membershipCard.status?.status != .pending else {
             let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.alertViewCannotDeleteCardTitle, message: L10n.alertViewCannotDeleteCardBody)

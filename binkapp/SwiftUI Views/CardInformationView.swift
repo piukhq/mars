@@ -8,6 +8,14 @@
 
 import SwiftUI
 
+class CardInformationViewModel: ObservableObject {
+    @Published var informationRows: [CardDetailInformationRow]
+    
+    init(informationRows: [CardDetailInformationRow]) {
+        self.informationRows = informationRows
+    }
+}
+
 struct CardInformationView: View {
     private enum Constants {
         static let separatorHeight: CGFloat = 1.0
@@ -16,12 +24,12 @@ struct CardInformationView: View {
     }
     
     @ObservedObject var themeManager = Current.themeManager
-    var informationRows: [CardDetailInformationRow]
+    @ObservedObject var viewModel: CardInformationViewModel
     
     var body: some View {
         VStack(spacing: 0) {
-            ForEach(0..<informationRows.count) { index in
-                CardDetailInfoTableView(rowData: informationRows[index])
+            ForEach(0..<viewModel.informationRows.count) { index in
+                CardDetailInfoTableView(rowData: viewModel.informationRows[index])
                 
                 if showSeparator(index: index) {
                     Rectangle()
@@ -35,7 +43,7 @@ struct CardInformationView: View {
     }
     
     private func showSeparator(index: Int) -> Bool {
-        return index == (informationRows.count - 1) ? false : true
+        return index == (viewModel.informationRows.count - 1) ? false : true
     }
 }
 
@@ -43,7 +51,7 @@ struct CardInformationView_Previews: PreviewProvider {
     static private var paymentRows = WalletCardDetailInformationRowFactory().makePaymentInformationRows(for: .active)
     static var previews: some View {
         VStack {
-            CardInformationView(informationRows: paymentRows)
+//            CardInformationView(viewModel: PaymentCardDetailViewModel(paymentCard: <#T##CD_PaymentCard#>, informationRowFactory: <#T##WalletCardDetailInformationRowFactory#>))
         }
         .padding()
     }

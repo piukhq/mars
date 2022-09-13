@@ -5,8 +5,9 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
+// swiftlint:disable force_unwrapping
+
 import SwiftUI
-import UIKit
 
 protocol LoyaltyCardFullDetailsModalDelegate: AnyObject {
     func refreshUI()
@@ -164,14 +165,14 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     }()
     
     private lazy var cardInformationView: UIView = {
-        let rowData = CardInformationView(informationRows: viewModel.informationRows)
+        let rowData = CardInformationView(viewModel: CardInformationViewModel(informationRows: viewModel.informationRows))
         let view = UIHostingController(rootView: rowData).view!
         view.backgroundColor = .clear
         return view
     }()
 
     
-    let viewModel: LoyaltyCardFullDetailsViewModel
+    var viewModel: LoyaltyCardFullDetailsViewModel
     var navigationBarShouldBeVisible = false
     private var previousOffset = 0.0
     private var topConstraint: NSLayoutConstraint?
