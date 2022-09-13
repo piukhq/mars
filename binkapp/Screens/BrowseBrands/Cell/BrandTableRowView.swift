@@ -32,9 +32,15 @@ struct BrandTableRowView: View {
                 VStack {
                     HStack {
                         VStack(alignment: .leading) {
-                            Text(viewModel.title)
-                                .foregroundColor(Color(themeManager.color(for: .text)))
-                                .uiFont(.subtitle)
+                            HStack {
+                                Text(viewModel.title)
+                                    .foregroundColor(Color(themeManager.color(for: .text)))
+                                    .uiFont(.subtitle)
+                                if viewModel.brandExists {
+                                    Image(Asset.existingSchemeIcon.name)
+                                        .frame(width: 23, height: 16)
+                                }
+                            }
                             if let subtitle = viewModel.subtitle {
                                 Text(subtitle)
                                     .uiFont(.bodyTextSmall)
