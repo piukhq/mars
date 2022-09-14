@@ -61,15 +61,15 @@ class BrowseBrandsViewController: BinkViewController {
         return height + Constants.filterViewHeightPadding
     }
     
-//    private lazy var browseBrandsListView: UIHostingController<BrowseBrandsListView> = {
-//        let listView = BrowseBrandsListView(viewModel: viewModel)
-//        let hostingController = UIHostingController(rootView: listView)
-//        addChild(hostingController)
-//        view.addSubview(hostingController.view)
-//        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
-//        hostingController.didMove(toParent: self)
-//        return hostingController
-//    }()
+    private lazy var browseBrandsListView: UIHostingController<BrowseBrandsListView> = {
+        let listView = BrowseBrandsListView(viewModel: viewModel)
+        let hostingController = UIHostingController(rootView: listView)
+        addChild(hostingController)
+        view.addSubview(hostingController.view)
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        hostingController.didMove(toParent: self)
+        return hostingController
+    }()
     
     let viewModel: BrowseBrandsViewModel
     private var selectedFilters: [String]
@@ -90,14 +90,14 @@ class BrowseBrandsViewController: BinkViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(BrandTableViewCell.self, asNib: true)
-        tableView.register(HeaderTableViewCell.self, asNib: true)
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.contentInset = Constants.contentInset
-        tableView.isHidden = true
+//        tableView.register(BrandTableViewCell.self, asNib: true)
+//        tableView.register(HeaderTableViewCell.self, asNib: true)
+//        tableView.delegate = self
+//        tableView.dataSource = self
+//        tableView.contentInset = Constants.contentInset
+//        tableView.isHidden = true
         searchTextField.delegate = self
-        viewModel.delegate = self
+//        viewModel.delegate = self
         
         noMatchesLabel.font = UIFont.bodyTextLarge
         noMatchesLabel.text = L10n.noMatches
@@ -108,11 +108,11 @@ class BrowseBrandsViewController: BinkViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
         
-        let listView = BrowseBrandsListView(viewModel: viewModel)
-        let browseBrandsListView = UIHostingController(rootView: listView)
-        addChild(browseBrandsListView)
-        view.addSubview(browseBrandsListView.view)
-        browseBrandsListView.view.translatesAutoresizingMaskIntoConstraints = false
+//        let listView = BrowseBrandsListView(viewModel: viewModel)
+//        let browseBrandsListView = UIHostingController(rootView: listView)
+//        addChild(browseBrandsListView)
+//        view.addSubview(browseBrandsListView.view)
+//        browseBrandsListView.view.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             browseBrandsListView.view.topAnchor.constraint(equalTo: topStackView.bottomAnchor),
@@ -121,7 +121,7 @@ class BrowseBrandsViewController: BinkViewController {
             view.rightAnchor.constraint(equalTo: browseBrandsListView.view.rightAnchor)
         ])
         
-        browseBrandsListView.didMove(toParent: self)
+//        browseBrandsListView.didMove(toParent: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -277,7 +277,7 @@ class BrowseBrandsViewController: BinkViewController {
     }
     
     private func switchTableWithNoMatchesLabel() {
-        tableView.isHidden = viewModel.shouldShowNoResultsLabel
+        browseBrandsListView.view.isHidden = viewModel.shouldShowNoResultsLabel
         noMatchesLabelTopConstraint.constant = filtersVisible ? filterViewHeight : 0.0
         noMatchesLabel.isHidden = !viewModel.shouldShowNoResultsLabel
     }
@@ -301,50 +301,50 @@ class BrowseBrandsViewController: BinkViewController {
     }
 }
 
-extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.numberOfSections()
-    }
+//extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource {
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return viewModel.numberOfSections()
+//    }
+//
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return viewModel.getNumberOfRowsFor(section: section)
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell: BrandTableViewCell = tableView.dequeue(indexPath: indexPath)
+//
+//        guard let membershipPlan = viewModel.getMembershipPlan(for: indexPath) else { return cell }
+//
+//        if let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
+//            let showSeparator = tableView.cellAtIndexPathIsLastInSection(indexPath) ? false : true
+//            let brandViewModel = BrandTableViewModel(title: brandName, plan: membershipPlan, brandExists: brandExists, userInterfaceStyle: traitCollection.userInterfaceStyle, showSeparator: showSeparator) { [weak self] in
+//                self?.viewModel.toAddOrJoinScreen(membershipPlan: membershipPlan)
+//            }
+//            let brandTableRowView = BrandTableRowView(viewModel: brandViewModel)
+//            let hostingController = UIHostingController(rootView: brandTableRowView)
+////            addChild(hostingController)
+//            cell.configure(hostingController: hostingController)
+////            hostingController.didMove(toParent: self)
+//        }
+//
+//        if tableView.cellAtIndexPathIsLastInSection(indexPath) {
+//            cell.hideSeparatorView()
+//        }
+//
+//        return cell
+//    }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.getNumberOfRowsFor(section: section)
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: BrandTableViewCell = tableView.dequeue(indexPath: indexPath)
-        
-        guard let membershipPlan = viewModel.getMembershipPlan(for: indexPath) else { return cell }
-        
-        if let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
-            let showSeparator = tableView.cellAtIndexPathIsLastInSection(indexPath) ? false : true
-            let brandViewModel = BrandTableViewModel(title: brandName, plan: membershipPlan, brandExists: brandExists, userInterfaceStyle: traitCollection.userInterfaceStyle, showSeparator: showSeparator) { [weak self] in
-                self?.viewModel.toAddOrJoinScreen(membershipPlan: membershipPlan)
-            }
-            let brandTableRowView = BrandTableRowView(viewModel: brandViewModel)
-            let hostingController = UIHostingController(rootView: brandTableRowView)
-//            addChild(hostingController)
-            cell.configure(hostingController: hostingController)
-//            hostingController.didMove(toParent: self) 
-        }
-        
-        if tableView.cellAtIndexPathIsLastInSection(indexPath) {
-            cell.hideSeparatorView()
-        }
-
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderTableViewCell") as? HeaderTableViewCell else { return nil }
-        headerCell.configure(section: section, viewModel: viewModel)
-        headerCell.scanLoyaltyCardButton.delegate = self
-        return headerCell
-    }
-
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        view.backgroundColor = .clear
-    }
-}
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        guard let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderTableViewCell") as? HeaderTableViewCell else { return nil }
+//        headerCell.configure(section: section, viewModel: viewModel)
+//        headerCell.scanLoyaltyCardButton.delegate = self
+//        return headerCell
+//    }
+//
+//    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+//        view.backgroundColor = .clear
+//    }
+//}
 
 extension BrowseBrandsViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -374,11 +374,11 @@ extension BrowseBrandsViewController: UITextFieldDelegate {
     }
 }
 
-extension BrowseBrandsViewController: BrowseBrandsViewModelDelegate {
-    func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan]) {
-        tableView.reloadData()
-    }
-}
+//extension BrowseBrandsViewController: BrowseBrandsViewModelDelegate {
+//    func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan]) {
+//        tableView.reloadData()
+//    }
+//}
 
 extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

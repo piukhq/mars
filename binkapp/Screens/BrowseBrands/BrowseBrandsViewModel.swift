@@ -7,9 +7,9 @@
 
 import UIKit
 
-protocol BrowseBrandsViewModelDelegate: AnyObject {
-    func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan])
-}
+//protocol BrowseBrandsViewModelDelegate: AnyObject {
+//    func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan])
+//}
 
 class BrowseBrandsViewModel: ObservableObject {
     private var membershipPlans: [CD_MembershipPlan] = []
@@ -27,7 +27,7 @@ class BrowseBrandsViewModel: ObservableObject {
 //        return getStoreMembershipPlans()
 //    }
     
-    weak var delegate: BrowseBrandsViewModelDelegate?
+//    weak var delegate: BrowseBrandsViewModelDelegate?
     var shouldShowNoResultsLabel: Bool {
         return filteredPlans.isEmpty
     }
@@ -191,7 +191,8 @@ class BrowseBrandsViewModel: ObservableObject {
                 }
             }
         }
-        delegate?.browseBrandsViewModel(self, didUpdateFilteredData: filteredPlans)
+        self.configureSections()
+//        delegate?.browseBrandsViewModel(self, didUpdateFilteredData: filteredPlans)
     }
     
     func toAddOrJoinScreen(membershipPlan: CD_MembershipPlan) {
