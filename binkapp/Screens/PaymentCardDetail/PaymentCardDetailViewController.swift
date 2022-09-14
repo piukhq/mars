@@ -96,8 +96,8 @@ class PaymentCardDetailViewController: BinkViewController {
     }()
     
     private lazy var cardInformationView: UIView = {
-        let rowData = CardInformationView(viewModel: viewModel.cardInformationViewModel)
-        let view = UIHostingController(rootView: rowData).view!
+        let cardInformationView = CardInformationView(viewModel: viewModel.cardInformationViewModel)
+        let view = UIHostingController(rootView: cardInformationView).view!
         view.backgroundColor = .clear
         return view
     }()

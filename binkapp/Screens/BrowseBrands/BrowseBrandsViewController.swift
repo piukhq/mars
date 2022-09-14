@@ -61,6 +61,13 @@ class BrowseBrandsViewController: BinkViewController {
         return height + Constants.filterViewHeightPadding
     }
     
+    private lazy var browseBrandsListView: UIHostingController<BrowseBrandsListView> = {
+        let listView = BrowseBrandsListView(viewModel: viewModel)
+        let hostingController = UIHostingController(rootView: listView)
+        addChild(hostingController)
+        return hostingController
+    }()
+    
     let viewModel: BrowseBrandsViewModel
     private var selectedFilters: [String]
     private var didLayoutSubviews = false
@@ -85,6 +92,7 @@ class BrowseBrandsViewController: BinkViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.contentInset = Constants.contentInset
+        tableView.isHidden = true
         searchTextField.delegate = self
         viewModel.delegate = self
         
@@ -96,6 +104,21 @@ class BrowseBrandsViewController: BinkViewController {
                 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
+        
+        let listView = BrowseBrandsListView(viewModel: viewModel)
+        let browseBrandsListView = UIHostingController(rootView: listView)
+        addChild(browseBrandsListView)
+        view.addSubview(browseBrandsListView.view)
+        browseBrandsListView.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            browseBrandsListView.view.topAnchor.constraint(equalTo: topStackView.bottomAnchor),
+            browseBrandsListView.view.leftAnchor.constraint(equalTo: view.leftAnchor),
+            browseBrandsListView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            view.rightAnchor.constraint(equalTo: browseBrandsListView.view.rightAnchor)
+        ])
+        
+        browseBrandsListView.didMove(toParent: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -290,14 +313,15 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
         guard let membershipPlan = viewModel.getMembershipPlan(for: indexPath) else { return cell }
         
         if let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
-            let brandViewModel = BrandTableViewModel(title: brandName, plan: membershipPlan, brandExists: brandExists, userInterfaceStyle: traitCollection.userInterfaceStyle) { [weak self] in
+            let showSeparator = tableView.cellAtIndexPathIsLastInSection(indexPath) ? false : true
+            let brandViewModel = BrandTableViewModel(title: brandName, plan: membershipPlan, brandExists: brandExists, userInterfaceStyle: traitCollection.userInterfaceStyle, showSeparator: showSeparator) { [weak self] in
                 self?.viewModel.toAddOrJoinScreen(membershipPlan: membershipPlan)
             }
             let brandTableRowView = BrandTableRowView(viewModel: brandViewModel)
             let hostingController = UIHostingController(rootView: brandTableRowView)
-            addChild(hostingController)
+//            addChild(hostingController)
             cell.configure(hostingController: hostingController)
-            hostingController.didMove(toParent: self)
+//            hostingController.didMove(toParent: self) 
         }
         
         if tableView.cellAtIndexPathIsLastInSection(indexPath) {

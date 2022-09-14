@@ -314,6 +314,7 @@
 		CE3D31DD2649660C0072BD97 /* ScanLoyaltyCardButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */; };
 		CE3EA70E28CB5FAA00EFEDA9 /* CardInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3EA70D28CB5FAA00EFEDA9 /* CardInformationView.swift */; };
 		CE3EA71028D07BFB00EFEDA9 /* BrandTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3EA70F28D07BFA00EFEDA9 /* BrandTableRowView.swift */; };
+		CE3EA71228D0F6F100EFEDA9 /* BrowseBrandsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3EA71128D0F6F100EFEDA9 /* BrowseBrandsListView.swift */; };
 		CE4A624925714EAE003271F6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* Sentry */; };
 		CE51291628AAAC1200F85039 /* BinkNetworkingLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51291528AAAC1200F85039 /* BinkNetworkingLogger.swift */; };
 		CE51291828ACCA6700F85039 /* ActivityViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51291728ACCA6600F85039 /* ActivityViewControllerRepresentable.swift */; };
@@ -1020,6 +1021,7 @@
 		CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanLoyaltyCardButton.xib; sourceTree = "<group>"; };
 		CE3EA70D28CB5FAA00EFEDA9 /* CardInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardInformationView.swift; sourceTree = "<group>"; };
 		CE3EA70F28D07BFA00EFEDA9 /* BrandTableRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandTableRowView.swift; sourceTree = "<group>"; };
+		CE3EA71128D0F6F100EFEDA9 /* BrowseBrandsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseBrandsListView.swift; sourceTree = "<group>"; };
 		CE4A628025715519003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A6285257155AE003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE51291528AAAC1200F85039 /* BinkNetworkingLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkNetworkingLogger.swift; sourceTree = "<group>"; };
@@ -1686,6 +1688,7 @@
 				3C794D9223019B68000A31FD /* Cell */,
 				3C794D8E23018DBA000A31FD /* BrowseBrandsViewModel.swift */,
 				3C794D8A23018C25000A31FD /* BrowseBrandsViewController.swift */,
+				CE3EA71128D0F6F100EFEDA9 /* BrowseBrandsListView.swift */,
 				3C794D8B23018C25000A31FD /* BrowseBrandsViewController.xib */,
 			);
 			path = BrowseBrands;
@@ -4025,6 +4028,7 @@
 				EF485574231D72A700FC9E5F /* DebugMenuViewModel.swift in Sources */,
 				EFA5F7152379A7C70027AB80 /* _CD_Tier.swift in Sources */,
 				CE85A1D226A5DB43003B74CD /* EmailClient.swift in Sources */,
+				CE3EA71228D0F6F100EFEDA9 /* BrowseBrandsListView.swift in Sources */,
 				EF59A12F24474572001B60B8 /* NetworkingError.swift in Sources */,
 				EFA5F71D2379A7C70027AB80 /* CD_Tier.swift in Sources */,
 				3C2C90FF23193F6700D112E3 /* AccountPostModel.swift in Sources */,

@@ -12,60 +12,64 @@ struct BrandTableRowView: View {
     private enum Constants {
         static let rowHeight: CGFloat = 70
         static let padding: CGFloat = 10.0
+        static let separatorHeight: CGFloat = 1.0
     }
     
     @ObservedObject var themeManager = Current.themeManager
     @ObservedObject var viewModel: BrandTableViewModel
 
     var body: some View {
-        Button {
-            viewModel.action()
-        } label: {
-            HStack(spacing: 15) {
-                if let image = viewModel.image {
-                    Image(uiImage: image)
-                        .resizable()
-                        .frame(width: 64, height: 64)
-                        .cornerRadius(LayoutHelper.iconCornerRadius)
-                }
-                
-                VStack {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Text(viewModel.title)
-                                    .foregroundColor(Color(themeManager.color(for: .text)))
-                                    .uiFont(.subtitle)
-                                if viewModel.brandExists {
-                                    Image(Asset.existingSchemeIcon.name)
-                                        .frame(width: 23, height: 16)
+        VStack(spacing: 0) {
+            Button {
+                viewModel.action()
+            } label: {
+                HStack(spacing: 15) {
+                    if let image = viewModel.image {
+                        Image(uiImage: image)
+                            .resizable()
+                            .frame(width: 64, height: 64)
+                            .cornerRadius(LayoutHelper.iconCornerRadius)
+                    }
+                    
+                    VStack {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    Text(viewModel.title)
+                                        .foregroundColor(Color(themeManager.color(for: .text)))
+                                        .uiFont(.subtitle)
+                                    if viewModel.brandExists {
+                                        Image(Asset.existingSchemeIcon.name)
+                                            .frame(width: 23, height: 16)
+                                    }
+                                }
+                                if let subtitle = viewModel.subtitle {
+                                    Text(subtitle)
+                                        .uiFont(.bodyTextSmall)
+                                        .foregroundColor(Color(themeManager.color(for: .text)))
                                 }
                             }
-                            if let subtitle = viewModel.subtitle {
-                                Text(subtitle)
-                                    .uiFont(.bodyTextSmall)
-                                    .foregroundColor(Color(themeManager.color(for: .text)))
-                            }
+                            .frame(height: Constants.rowHeight)
+                            
+                            Spacer()
+                            
+                            Image(uiImage: Asset.iconsChevronRight.image)
+                                .foregroundColor(Color(themeManager.color(for: .text)))
                         }
-                        .frame(height: Constants.rowHeight)
-                        
-                        Spacer()
-                        
-                        Image(uiImage: Asset.iconsChevronRight.image)
-                            .foregroundColor(Color(themeManager.color(for: .text)))
+                        .padding(.vertical, Constants.padding)
                     }
-                    .padding(.vertical, Constants.padding)
                 }
             }
+            .padding(.horizontal, 25)
+            .background(Color(Current.themeManager.color(for: .viewBackground)))
+            
+//            if viewModel.showSeparator {
+//                Rectangle()
+//                    .frame(height: Constants.separatorHeight)
+//                    .foregroundColor(Color(themeManager.color(for: .divider)))
+//                    .padding(.horizontal, 25)
+//            }
         }
-        .padding(.horizontal, 25)
-        .background(Color(Current.themeManager.color(for: .viewBackground)))
-        
-        //        if showSeparator(index: index) {
-        //            Rectangle()
-        //                .frame(height: Constants.separatorHeight)
-        //                .foregroundColor(Color(themeManager.color(for: .divider)))
-        //        }
     }
 }
 
@@ -79,17 +83,18 @@ class BrandTableViewModel: ObservableObject {
     let title: String
     let plan: CD_MembershipPlan
     let brandExists: Bool
-    let userInterfaceStyle: UIUserInterfaceStyle
-//    var showSeparator
+    let userInterfaceStyle: UIUserInterfaceStyle?
+    var showSeparator: Bool
     let action: () -> Void
     
     @Published var image: UIImage?
 
-    init(title: String, plan: CD_MembershipPlan, brandExists: Bool, userInterfaceStyle: UIUserInterfaceStyle, action: @escaping () -> Void) {
+    init(title: String, plan: CD_MembershipPlan, brandExists: Bool, userInterfaceStyle: UIUserInterfaceStyle? = nil, showSeparator: Bool, action: @escaping () -> Void) {
         self.title = title
         self.plan = plan
         self.brandExists = brandExists
         self.userInterfaceStyle = userInterfaceStyle
+        self.showSeparator = showSeparator
         self.action = action
         getImage()
     }
@@ -100,9 +105,7 @@ class BrandTableViewModel: ObservableObject {
     
     func getImage() {
         ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), userInterfaceStyle: userInterfaceStyle) { [weak self] image in
-//            if self?.tag == indexPath.hashValue {
-                self?.image = image
-//            }
+            self?.image = image
         }
     }
 }
