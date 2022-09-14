@@ -96,15 +96,7 @@ class BrowseBrandsViewController: BinkViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tableView.register(BrandTableViewCell.self, asNib: true)
-//        tableView.register(HeaderTableViewCell.self, asNib: true)
-//        tableView.delegate = self
-//        tableView.dataSource = self
-//        tableView.contentInset = Constants.contentInset
-//        tableView.isHidden = true
         searchTextField.delegate = self
-//        viewModel.delegate = self
-        
         noMatchesLabel.font = UIFont.bodyTextLarge
         noMatchesLabel.text = L10n.noMatches
         
@@ -285,9 +277,8 @@ class BrowseBrandsViewController: BinkViewController {
             /// If there are no pll or see membership plans, section adjusted by -1 so that the correct section is scrolled to
             section -= 1
         }
-        
-        let indexPath = IndexPath(row: NSNotFound, section: section)
-        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+
+        viewModel.scrollToSection = section
         sectionToScrollTo = nil
     }
     

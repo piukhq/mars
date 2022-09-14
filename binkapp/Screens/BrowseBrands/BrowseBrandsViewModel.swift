@@ -14,6 +14,7 @@ import UIKit
 class BrowseBrandsViewModel: ObservableObject {
     private var membershipPlans: [CD_MembershipPlan] = []
     @Published var sections: [[CD_MembershipPlan]] = [[]]
+    @Published var scrollToSection: Int = 0
     
 //    var pllPlans: [CD_MembershipPlan] {
 //        return getPllMembershipPlans()

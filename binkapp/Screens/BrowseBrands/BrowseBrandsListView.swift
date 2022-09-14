@@ -19,34 +19,42 @@ struct BrowseBrandsListView: View {
     @ObservedObject var viewModel: BrowseBrandsViewModel
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 0) {
-                ForEach(viewModel.sections, id: \.self) { sectionData in
-                    Section(header: SettingsHeaderView(title: "BELLO")) {
-                        ForEach(0..<sectionData.count) { index in
-                            let membershipPlan = sectionData[index]
-                            if let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
-                                let brandViewModel = BrandTableViewModel(title: brandName, plan: membershipPlan, brandExists: brandExists, showSeparator: true) {
-                                    viewModel.toAddOrJoinScreen(membershipPlan: membershipPlan)
-                                }
-                                VStack(spacing: 0) {
-                                    BrandTableRowView(viewModel: brandViewModel)
-                                    
-                                    if shouldShowSeparator(index: index, rowsInsection: sectionData.count) {
-                                        Rectangle()
-                                            .frame(height: Constants.separatorHeight)
-                                            .foregroundColor(Color(themeManager.color(for: .divider)))
-                                            .padding(.horizontal, 25)
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(spacing: 0) {
+                    ForEach(0..<viewModel.sections.count, id: \.self) { sectionIndex in
+                        let sectionData = viewModel.sections[sectionIndex]
+                        Section(header: SettingsHeaderView(title: "BELLO").id(sectionIndex)) {
+                            ForEach(0..<sectionData.count) { index in
+                                let membershipPlan = sectionData[index]
+                                if let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
+                                    let brandViewModel = BrandTableViewModel(title: brandName, plan: membershipPlan, brandExists: brandExists, showSeparator: true) {
+                                        viewModel.toAddOrJoinScreen(membershipPlan: membershipPlan)
+                                    }
+                                    VStack(spacing: 0) {
+                                        BrandTableRowView(viewModel: brandViewModel)
+                                        
+                                        if shouldShowSeparator(index: index, rowsInsection: sectionData.count) {
+                                            Rectangle()
+                                                .frame(height: Constants.separatorHeight)
+                                                .foregroundColor(Color(themeManager.color(for: .divider)))
+                                                .padding(.horizontal, 25)
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
+                .background(Color(Current.themeManager.color(for: .viewBackground)))
             }
             .background(Color(Current.themeManager.color(for: .viewBackground)))
+            .onReceive(viewModel.$scrollToSection) { section in
+                withAnimation {
+                    proxy.scrollTo(section, anchor: .top)
+                }
+            }
         }
-        .background(Color(Current.themeManager.color(for: .viewBackground)))
     }
     
     private func shouldShowSeparator(index: Int, rowsInsection: Int) -> Bool {
