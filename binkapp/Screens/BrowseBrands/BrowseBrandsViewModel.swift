@@ -182,7 +182,6 @@ class BrowseBrandsViewModel: ObservableObject {
             }
         }
         self.configureSections()
-//        delegate?.browseBrandsViewModel(self, didUpdateFilteredData: filteredPlans)
     }
     
     func toAddOrJoinScreen(membershipPlan: CD_MembershipPlan) {
