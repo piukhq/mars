@@ -24,15 +24,15 @@ struct BrowseBrandsListView: View {
                 VStack(spacing: 0) {
                     ForEach(0..<viewModel.sections.count, id: \.self) { sectionIndex in
                         let sectionData = viewModel.sections[sectionIndex]
-                        Section(header: SettingsHeaderView(title: "BELLO").id(sectionIndex)) {
+                        Section(header: BrowseBrandsHeaderView(viewModel: viewModel, section: sectionIndex).id(sectionIndex)) {
                             ForEach(0..<sectionData.count) { index in
                                 let membershipPlan = sectionData[index]
                                 if let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
-                                    let brandViewModel = BrandTableViewModel(title: brandName, plan: membershipPlan, brandExists: brandExists, showSeparator: true) {
+                                    let brandViewModel = BrowseBrandsListRowViewModel(title: brandName, plan: membershipPlan, brandExists: brandExists, showSeparator: true) {
                                         viewModel.toAddOrJoinScreen(membershipPlan: membershipPlan)
                                     }
                                     VStack(spacing: 0) {
-                                        BrandTableRowView(viewModel: brandViewModel)
+                                        BrowseBrandsListRowView(viewModel: brandViewModel)
                                         
                                         if shouldShowSeparator(index: index, rowsInsection: sectionData.count) {
                                             Rectangle()

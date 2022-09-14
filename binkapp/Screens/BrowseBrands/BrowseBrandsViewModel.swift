@@ -5,7 +5,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
 //protocol BrowseBrandsViewModelDelegate: AnyObject {
 //    func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan])
@@ -96,7 +96,7 @@ class BrowseBrandsViewModel: ObservableObject {
         }
     }
     
-    func getSectionDescriptionText(section: Int) -> NSMutableAttributedString? {
+    func getSectionDescriptionText(section: Int) -> AttributedString {
         var descriptionText: String
         switch section {
         case 0:
@@ -106,16 +106,22 @@ class BrowseBrandsViewModel: ObservableObject {
         case 2:
             descriptionText = L10n.storeDescription
         default:
-            return nil
+            descriptionText = ""
         }
         
-        let attributedText = NSMutableAttributedString(string: descriptionText, attributes: [.font: UIFont.bodyTextLarge])
+        var attributedText = AttributedString(descriptionText)
+        attributedText.font = .bodyTextLarge
+        attributedText.foregroundColor = Color(Current.themeManager.color(for: .text))
         
         if section == 0 && !getPllMembershipPlans().isEmpty {
-            let automaticallyRange = NSString(string: attributedText.string).range(of: L10n.pllDescriptionHighlightAutomatically)
-            attributedText.addAttributes([.font: UIFont.bodyTextBold], range: automaticallyRange)
+            if let range = attributedText.range(of: L10n.pllDescriptionHighlightAutomatically) {
+                var container = AttributeContainer()
+                container.font = .bodyTextBold
+                attributedText[range].mergeAttributes(container)
+                return attributedText
+            }
         }
-        
+
         return attributedText
     }
     

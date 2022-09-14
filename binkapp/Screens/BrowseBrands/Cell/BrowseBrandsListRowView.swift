@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct BrandTableRowView: View {
+struct BrowseBrandsListRowView: View {
     private enum Constants {
         static let rowHeight: CGFloat = 70
         static let padding: CGFloat = 10.0
@@ -16,7 +16,7 @@ struct BrandTableRowView: View {
     }
     
     @ObservedObject var themeManager = Current.themeManager
-    @ObservedObject var viewModel: BrandTableViewModel
+    @ObservedObject var viewModel: BrowseBrandsListRowViewModel
 
     var body: some View {
         VStack(spacing: 0) {
@@ -62,13 +62,6 @@ struct BrandTableRowView: View {
             }
             .padding(.horizontal, 25)
             .background(Color(Current.themeManager.color(for: .viewBackground)))
-            
-//            if viewModel.showSeparator {
-//                Rectangle()
-//                    .frame(height: Constants.separatorHeight)
-//                    .foregroundColor(Color(themeManager.color(for: .divider)))
-//                    .padding(.horizontal, 25)
-//            }
         }
     }
 }
@@ -79,7 +72,7 @@ struct BrandTableRowView: View {
 //    }
 //}
 
-class BrandTableViewModel: ObservableObject {
+class BrowseBrandsListRowViewModel: ObservableObject {
     let title: String
     let plan: CD_MembershipPlan
     let brandExists: Bool

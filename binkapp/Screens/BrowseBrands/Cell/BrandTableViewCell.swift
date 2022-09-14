@@ -60,7 +60,7 @@ class BrandTableViewCell: UITableViewCell {
 //        disclosureIndicatorImageView.isHidden = true
 //    }
 //
-    func configure(hostingController: UIHostingController<BrandTableRowView>) {
+    func configure(hostingController: UIHostingController<BrowseBrandsListRowView>) {
 //        addSubview(hostingController.view)
         labelsStackView.addArrangedSubview(hostingController.view)
 //        hostingController.view.translatesAutoresizingMaskIntoConstraints = false

@@ -327,7 +327,7 @@ class BrowseBrandsViewController: BinkViewController {
 //        headerCell.scanLoyaltyCardButton.delegate = self
 //        return headerCell
 //    }
-//
+////
 //    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
 //        view.backgroundColor = .clear
 //    }
