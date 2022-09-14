@@ -7,28 +7,11 @@
 
 import SwiftUI
 
-//protocol BrowseBrandsViewModelDelegate: AnyObject {
-//    func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan])
-//}
-
 class BrowseBrandsViewModel: ObservableObject {
     private var membershipPlans: [CD_MembershipPlan] = []
     @Published var sections: [[CD_MembershipPlan]] = [[]]
     @Published var scrollToSection: Int = 0
-    
-//    var pllPlans: [CD_MembershipPlan] {
-//        return getPllMembershipPlans()
-//    }
-//
-//    var seePlans: [CD_MembershipPlan] {
-//        return getSeeMembershipPlans()
-//    }
-//
-//    var storePlans: [CD_MembershipPlan] {
-//        return getStoreMembershipPlans()
-//    }
-    
-//    weak var delegate: BrowseBrandsViewModelDelegate?
+
     var shouldShowNoResultsLabel: Bool {
         return filteredPlans.isEmpty
     }

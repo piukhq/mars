@@ -24,22 +24,24 @@ struct BrowseBrandsListView: View {
                 VStack(spacing: 0) {
                     ForEach(0..<viewModel.sections.count, id: \.self) { sectionIndex in
                         let sectionData = viewModel.sections[sectionIndex]
-                        Section(header: BrowseBrandsHeaderView(viewModel: viewModel, section: sectionIndex).id(sectionIndex)) {
-                            ForEach(0..<sectionData.count) { index in
-                                let membershipPlan = sectionData[index]
-                                if let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
-                                    let brandViewModel = BrowseBrandsListRowViewModel(title: brandName, plan: membershipPlan, brandExists: brandExists, showSeparator: true) {
-                                        viewModel.toAddOrJoinScreen(membershipPlan: membershipPlan)
-                                    }
-                                    VStack(spacing: 0) {
-                                        BrowseBrandsListRowView(viewModel: brandViewModel)
-                                        
-                                        if shouldShowSeparator(index: index, rowsInsection: sectionData.count) {
-                                            Rectangle()
-                                                .frame(height: Constants.separatorHeight)
-                                                .foregroundColor(Color(themeManager.color(for: .divider)))
-                                                .padding(.horizontal, 25)
-                                        }
+                        if !sectionData.isEmpty {
+                            BrowseBrandsHeaderView(viewModel: viewModel, section: sectionIndex).id(sectionIndex)
+                        }
+                        
+                        ForEach(0..<sectionData.count, id: \.self) { index in
+                            if let membershipPlan = sectionData[safe: index], let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
+                                let brandViewModel = BrowseBrandsListRowViewModel(title: brandName, plan: membershipPlan, brandExists: brandExists, showSeparator: true) {
+                                    viewModel.toAddOrJoinScreen(membershipPlan: membershipPlan)
+                                }
+                                
+                                VStack(spacing: 0) {
+                                    BrowseBrandsListRowView(viewModel: brandViewModel)
+                                    
+                                    if shouldShowSeparator(index: index, rowsInsection: sectionData.count) {
+                                        Rectangle()
+                                            .frame(height: Constants.separatorHeight)
+                                            .foregroundColor(Color(themeManager.color(for: .divider)))
+                                            .padding(.horizontal, 25)
                                     }
                                 }
                             }
@@ -61,9 +63,3 @@ struct BrowseBrandsListView: View {
         return index == (rowsInsection - 1) ? false : true
     }
 }
-
-//struct BrowseBrandsListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        BrowseBrandsListView()
-//    }
-//}
