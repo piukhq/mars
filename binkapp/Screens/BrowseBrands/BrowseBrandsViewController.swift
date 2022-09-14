@@ -61,12 +61,15 @@ class BrowseBrandsViewController: BinkViewController {
         return height + Constants.filterViewHeightPadding
     }
     
-    private lazy var browseBrandsListView: UIHostingController<BrowseBrandsListView> = {
-        let listView = BrowseBrandsListView(viewModel: viewModel)
-        let hostingController = UIHostingController(rootView: listView)
-        addChild(hostingController)
-        return hostingController
-    }()
+//    private lazy var browseBrandsListView: UIHostingController<BrowseBrandsListView> = {
+//        let listView = BrowseBrandsListView(viewModel: viewModel)
+//        let hostingController = UIHostingController(rootView: listView)
+//        addChild(hostingController)
+//        view.addSubview(hostingController.view)
+//        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+//        hostingController.didMove(toParent: self)
+//        return hostingController
+//    }()
     
     let viewModel: BrowseBrandsViewModel
     private var selectedFilters: [String]

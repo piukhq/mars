@@ -20,44 +20,38 @@ struct BrowseBrandsListView: View {
     
     var body: some View {
         ScrollView {
-            VStack {
-                ForEach(viewModel.sections, id: \.self) { section in
-//                    let section = viewModel.sections[index]
+            VStack(spacing: 0) {
+                ForEach(viewModel.sections, id: \.self) { sectionData in
                     Section(header: SettingsHeaderView(title: "BELLO")) {
-                        ForEach(section, id: \.self) { membershipPlan in
+                        ForEach(0..<sectionData.count) { index in
+                            let membershipPlan = sectionData[index]
                             if let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
-//                                let showSeparator = tableView.cellAtIndexPathIsLastInSection(indexPath) ? false : true
                                 let brandViewModel = BrandTableViewModel(title: brandName, plan: membershipPlan, brandExists: brandExists, showSeparator: true) {
                                     viewModel.toAddOrJoinScreen(membershipPlan: membershipPlan)
                                 }
-                                BrandTableRowView(viewModel: brandViewModel)
+                                VStack(spacing: 0) {
+                                    BrandTableRowView(viewModel: brandViewModel)
+                                    
+                                    if shouldShowSeparator(index: index, rowsInsection: sectionData.count) {
+                                        Rectangle()
+                                            .frame(height: Constants.separatorHeight)
+                                            .foregroundColor(Color(themeManager.color(for: .divider)))
+                                            .padding(.horizontal, 25)
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
-            .background(Color.green)
+            .background(Color(Current.themeManager.color(for: .viewBackground)))
         }
-        .background(Color.purple)
-        
-//        VStack(spacing: 0) {
-//            ForEach(0..<viewModel.informationRows.count) { index in
-//                CardInformationRowView(rowData: viewModel.informationRows[index])
-//
-//                if showSeparator(index: index) {
-//                    Rectangle()
-//                        .frame(height: Constants.separatorHeight)
-//                        .foregroundColor(Color(themeManager.color(for: .divider)))
-//                }
-//            }
-//        }
-//        .background(Color(Current.themeManager.color(for: .viewBackground)))
-//        .padding(.horizontal, Constants.padding)
+        .background(Color(Current.themeManager.color(for: .viewBackground)))
     }
     
-//    private func showSeparator(index: Int) -> Bool {
-//        return index == (viewModel.informationRows.count - 1) ? false : true
-//    }
+    private func shouldShowSeparator(index: Int, rowsInsection: Int) -> Bool {
+        return index == (rowsInsection - 1) ? false : true
+    }
 }
 
 //struct BrowseBrandsListView_Previews: PreviewProvider {
