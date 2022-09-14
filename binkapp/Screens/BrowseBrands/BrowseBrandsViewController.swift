@@ -71,6 +71,12 @@ class BrowseBrandsViewController: BinkViewController {
         return hostingController
     }()
     
+    private lazy var listViewTopConstraint: NSLayoutConstraint = {
+        let constraint = browseBrandsListView.view.topAnchor.constraint(equalTo: topStackView.bottomAnchor)
+        constraint.isActive = true
+        return constraint
+    }()
+    
     let viewModel: BrowseBrandsViewModel
     private var selectedFilters: [String]
     private var didLayoutSubviews = false
@@ -108,20 +114,12 @@ class BrowseBrandsViewController: BinkViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
         
-//        let listView = BrowseBrandsListView(viewModel: viewModel)
-//        let browseBrandsListView = UIHostingController(rootView: listView)
-//        addChild(browseBrandsListView)
-//        view.addSubview(browseBrandsListView.view)
-//        browseBrandsListView.view.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
-            browseBrandsListView.view.topAnchor.constraint(equalTo: topStackView.bottomAnchor),
             browseBrandsListView.view.leftAnchor.constraint(equalTo: view.leftAnchor),
             browseBrandsListView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            view.rightAnchor.constraint(equalTo: browseBrandsListView.view.rightAnchor)
+            view.rightAnchor.constraint(equalTo: browseBrandsListView.view.rightAnchor),
+            listViewTopConstraint
         ])
-        
-//        browseBrandsListView.didMove(toParent: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -243,12 +241,11 @@ class BrowseBrandsViewController: BinkViewController {
         }
 
         let frame = self.collectionView.frame
+        listViewTopConstraint.constant = 0
         UIView.animate(withDuration: 0.3, animations: {
             self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: 0)
-            self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY + self.filterViewHeight)
             self.view.layoutIfNeeded()
         }) { [weak self] _ in
-            self?.tableView.contentInset.top = 0.0
             self?.filtersButton?.isEnabled = true
             self?.filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
         }
@@ -262,15 +259,14 @@ class BrowseBrandsViewController: BinkViewController {
         filtersButton?.isEnabled = false
         filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .disabled)
         let frame = self.collectionView.frame
+        listViewTopConstraint.constant = filterViewHeight
         UIView.animate(withDuration: 0.3, animations: {
             self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: self.view.frame.width - (Constants.marginPadding * 2), height: self.filterViewHeight)
-            self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY - self.filterViewHeight)
             UIView.performWithoutAnimation {
                 self.collectionView.performBatchUpdates(nil, completion: nil)
             }
             self.view.layoutIfNeeded()
         }) { [weak self] _ in
-            self?.tableView.contentInset.top = self?.filterViewHeight ?? 0.0
             self?.filtersButton?.isEnabled = true
             self?.filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
         }
