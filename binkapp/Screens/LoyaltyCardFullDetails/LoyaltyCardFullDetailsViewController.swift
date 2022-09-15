@@ -108,6 +108,9 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     
     private lazy var locationView: UIView = {
         let view = UIView()
+        view.isHidden = true
+        view.layer.opacity = 0
+        view.transform = CGAffineTransform(scaleX: 0, y: 0)
         view.isUserInteractionEnabled = true
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
@@ -132,7 +135,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         imageView.animationDuration = 2.5
         imageView.image = image?.images?.last
         imageView.tintColor = Current.themeManager.color(for: .walletCardBackground)
-        imageView.startAnimating()
+        //imageView.startAnimating()
         return imageView
     }()
     
@@ -200,6 +203,26 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         super.viewDidLoad()
         configureUI()
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidUpdate, object: nil)
+        
+        viewModel.fetchGeoData(completion: { hasImage, animated in
+            if hasImage {
+                if animated {
+                    self.locationView.isHidden = false
+                    UIView.animate(withDuration: 0.8) {
+                        self.locationView.layer.opacity = 1.0
+                        self.locationView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                        self.locationImage.startAnimating()
+                    }
+                } else {
+                    self.locationView.isHidden = false
+                    self.locationView.layer.opacity = 1.0
+                    self.locationView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                    self.locationImage.startAnimating()
+                }
+            }
+        })
     }
     
     @objc private func handlePointsScrapingUpdate() {
@@ -334,7 +357,7 @@ private extension LoyaltyCardFullDetailsViewController {
             ])
         }
         
-        if viewModel.shouldDisplayLocationOption {
+        //if viewModel.shouldDisplayLocationOption {
             // Build locations
             stackScrollView.add(arrangedSubview: locationView)
             stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: locationView)
@@ -360,7 +383,7 @@ private extension LoyaltyCardFullDetailsViewController {
                 locationImage.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageVerticalOffset),
                 locationImage.rightAnchor.constraint(equalTo: nearestStoresText.leftAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset)
             ])
-        }
+        //}
         
         stackScrollView.add(arrangedSubview: separator)
         stackScrollView.add(arrangedSubview: informationTableView)

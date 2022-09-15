@@ -35,6 +35,10 @@ class GeoLocationViewModel: ObservableObject {
     }
     
     private func getGeoLocationData() -> Data? {
+        if let cachedGeoData = Cache.geoLocationsDataCache.object(forKey: "\(companyName.lowercased()).geojson".toNSString()) {
+            return cachedGeoData as Data
+        }
+        
         // RS - loading from the bundle for now. In the future this will eventually coming down through firebase and will be different per company
         if let filePath = Bundle.main.path(forResource: "tesco-locations", ofType: "geojson") {
             do {

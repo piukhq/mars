@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import FirebaseStorage
 
 class LoyaltyCardFullDetailsViewModel {
     typealias EmptyCompletionBlock = () -> Void
@@ -43,10 +44,10 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     var shouldDisplayLocationOption: Bool {
-        // RS - For now we only want to display the locations option only when a Tesco LC is tapped
         if let companyName = membershipCard.membershipPlan?.account?.companyName {
-            let isTesco = companyName.contains("Tesco")
-            return isTesco && Current.featureManager.isFeatureEnabled(.tescoLocations)
+            if let _ = Cache.geoLocationsDataCache.object(forKey: "\(companyName.lowercased()).geojson".toNSString()) {
+                return Current.featureManager.isFeatureEnabled(.tescoLocations)
+            }
         }
         
         return false
@@ -126,6 +127,27 @@ class LoyaltyCardFullDetailsViewModel {
     }
         
     // MARK: - Public methods
+    
+    func fetchGeoData(completion: @escaping (Bool, Bool) -> Void) {
+        if let companyName = membershipCard.membershipPlan?.account?.companyName {
+            if let _ = Cache.geoLocationsDataCache.object(forKey: "\(companyName.lowercased()).geojson".toNSString()) {
+                completion(true, false)
+                return
+            }
+            
+            let storage = Storage.storage()
+            let pathReference = storage.reference(withPath: "locations/\(companyName.lowercased()).geojson")
+            
+            pathReference.getData(maxSize: 4 * 1024 * 1024) { data, _ in
+                guard let data = data else {
+                    completion(false, false)
+                    return
+                }
+                Cache.geoLocationsDataCache.setObject(data as NSData, forKey: "\(companyName.lowercased()).geojson".toNSString())
+                completion(true, true)
+            }
+        }
+    }
     
     func toBarcodeModel() {
         let viewController = ViewControllerFactory.makeBarcodeViewController(membershipCard: membershipCard)

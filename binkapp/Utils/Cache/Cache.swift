@@ -11,7 +11,8 @@ import UIKit
 
 enum Cache {
     static let sharedImageCache = NSCache<NSString, UIImage>()
-
+    static let geoLocationsDataCache = NSCache<NSString, NSData>()
+    
     static func clearAll() {
         Cache.sharedImageCache.removeAllObjects()
     }
