@@ -10,6 +10,8 @@ import SwiftUI
 import Lottie
 
 struct ScanLoyaltyCardButtonView: View {
+    var viewModel = ScanLoyaltyCardButtonViewModel()
+    
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10.0)
@@ -33,8 +35,80 @@ struct ScanLoyaltyCardButtonView: View {
             .padding()
         }
         .frame(maxWidth: 1800, maxHeight: 88)
+        .onTapGesture {
+            viewModel.handleButtonTap()
+        }
     }
 }
+
+class ScanLoyaltyCardButtonViewModel: NSObject, BarcodeScannerViewControllerDelegate {
+    private let visionUtility = VisionImageDetectionUtility()
+
+    func handleButtonTap() {
+        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(hideNavigationBar: false, delegate: self)
+        PermissionsUtility.launchLoyaltyScanner(viewController) {
+            let navigationRequest = PushNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        } addFromPhotoLibraryAction: { [weak self] in
+            guard let self = self else { return }
+//            self.delegate?.addPhotoFromLibraryButtonWasTapped(self)
+            
+            // TEST >>>>>>>>
+            func addPhotoFromLibraryButtonWasTapped(_ scanLoyaltyCardButton: ScanLoyaltyCardButton) {
+                let picker = UIImagePickerController()
+                picker.allowsEditing = true
+                picker.delegate = self
+                let navigationRequest = ModalNavigationRequest(viewController: picker, embedInNavigationController: false)
+                Current.navigate.to(navigationRequest)
+            }
+        }
+    }
+    
+    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
+        let prefilledValues = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
+        let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, existingMembershipCard: nil, prefilledFormValues: [prefilledValues])
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+    }
+    
+    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
+        Current.navigate.back()
+    }
+    
+    private func showError() {
+        // TEST
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: L10n.loyaltyScannerFailedToDetectBarcode)
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
+        
+    }
+}
+
+extension ScanLoyaltyCardButtonViewModel: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        guard let image = info[.editedImage] as? UIImage else { return }
+        visionUtility.createVisionRequest(image: image) { [weak self] barcode in
+            guard let barcode = barcode else {
+                Current.navigate.close(animated: true) { [weak self] in
+                    self?.showError()
+                }
+                return
+            }
+
+            Current.wallet.identifyMembershipPlanForBarcode(barcode) { membershipPlan in
+                guard let membershipPlan = membershipPlan else { return }
+                Current.navigate.close(animated: true) {
+                    let prefilledValues = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
+                    let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, existingMembershipCard: nil, prefilledFormValues: [prefilledValues])
+                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
+                    HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
+                }
+            }
+        }
+    }
+}
+
 
 struct ScanLoyaltyCardButtonView_Previews: PreviewProvider {
     static var previews: some View {

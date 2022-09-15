@@ -14,13 +14,19 @@ struct BrowseBrandsHeaderView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
+            if section == 0 {
+                ScanLoyaltyCardButtonView()
+                    .padding(.bottom, 10)
+            }
+            
             Text(viewModel.getSectionTitleText(section: section))
                 .uiFont(.headline)
                 .foregroundColor(Color(Current.themeManager.color(for: .text)))
             Text(viewModel.getSectionDescriptionText(section: section))
         }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 25)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.horizontal, 25)
+        .padding(.vertical, 20)
     }
 }
 
