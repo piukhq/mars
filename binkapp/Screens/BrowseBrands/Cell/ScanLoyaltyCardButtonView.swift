@@ -14,7 +14,7 @@ struct ScanLoyaltyCardButtonView: View {
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 10.0)
+            RoundedRectangle(cornerRadius: 10.0, style: .continuous)
                 .fill(LinearGradient(gradient: Gradient(colors: [Color(.binkGradientBlueRight), Color(.binkGradientBlueLeft)]), startPoint: .leading, endPoint: .trailing))
             HStack(spacing: 15) {
                 Image(uiImage: Asset.scanQuick.image)

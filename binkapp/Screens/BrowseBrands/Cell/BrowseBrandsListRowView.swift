@@ -29,11 +29,14 @@ struct BrowseBrandsListRowView: View {
                             .resizable()
                             .frame(width: 64, height: 64)
                             .cornerRadius(LayoutHelper.iconCornerRadius)
+                    } else {
+                        RoundedRectangle(cornerRadius: LayoutHelper.iconCornerRadius, style: .continuous)
+                            .frame(width: 64, height: 64)
                     }
                     
                     VStack {
                         HStack {
-                            VStack(alignment: .leading) {
+                            VStack(alignment: .leading, spacing: 5) {
                                 HStack {
                                     Text(viewModel.title)
                                         .foregroundColor(Color(themeManager.color(for: .text)))
