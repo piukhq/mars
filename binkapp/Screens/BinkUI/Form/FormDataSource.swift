@@ -66,7 +66,7 @@ class FormDataSource: NSObject {
     private var visibleFields: [FormField] {
         return fields.filter { !$0.hidden }
     }
-    private(set) var checkboxes: [CheckboxView] = []
+    private(set) var checkboxes: [CheckboxViewModel] = []
     private var cellTextFields: [Int: UITextField] = [:]
     private var selectedCheckboxIndex = 0
     weak var delegate: MultiDelegate?
@@ -217,9 +217,9 @@ extension FormDataSource {
         if case .addFromScanner = formPurpose {
             model.account?.formattedAddFields(omitting: [.cardNumber])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
-                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .add, delegate: self)
+                    var attributedString = AttributedString(field.fieldDescription ?? "")
+                    attributedString.font = .bodyTextSmall
+                    let checkbox = CheckboxViewModel(checkedState: false, attributedText: attributedString, columnName: field.column, columnKind: .add)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -247,9 +247,9 @@ extension FormDataSource {
         if formPurpose == .add || formPurpose == .addFailed || formPurpose == .ghostCard {
             model.account?.formattedAddFields(omitting: [.barcode])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
-                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .add, delegate: self)
+                    var attributedString = AttributedString(field.fieldDescription ?? "")
+                    attributedString.font = .bodyTextSmall
+                    let checkbox = CheckboxViewModel(checkedState: false, attributedText: attributedString, columnName: field.column, columnKind: .add)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -277,9 +277,9 @@ extension FormDataSource {
         if case .addFromScanner = formPurpose {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
-                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .auth, delegate: self)
+                    var attributedString = AttributedString(field.fieldDescription ?? "")
+                    attributedString.font = .bodyTextSmall
+                    let checkbox = CheckboxViewModel(checkedState: false, attributedText: attributedString, columnName: field.column, columnKind: .auth)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -329,9 +329,9 @@ extension FormDataSource {
         } else if formPurpose != .signUp && formPurpose != .signUpFailed && formPurpose != .ghostCard && formPurpose != .patchGhostCard {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
-                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .auth, delegate: self)
+                    var attributedString = AttributedString(field.fieldDescription ?? "")
+                    attributedString.font = .bodyTextSmall
+                    let checkbox = CheckboxViewModel(checkedState: false, attributedText: attributedString, columnName: field.column, columnKind: .auth)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -382,9 +382,9 @@ extension FormDataSource {
         if formPurpose == .signUp || formPurpose == .signUpFailed {
             model.account?.formattedEnrolFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
-                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .enrol, delegate: self)
+                    var attributedString = AttributedString(field.fieldDescription ?? "")
+                    attributedString.font = .bodyTextSmall
+                    let checkbox = CheckboxViewModel(checkedState: false, attributedText: attributedString, columnName: field.column, columnKind: .enrol)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -405,18 +405,18 @@ extension FormDataSource {
             }
             
             let checkedState = Current.userDefaults.bool(forDefaultsKey: .rememberMyDetails)
-            let checkbox = CheckboxView(checked: checkedState)
-            let title = NSMutableAttributedString(string: "Remember my details", attributes: [.font: UIFont.bodyTextSmall])
-            checkbox.configure(title: title, columnName: "remember-my-details", columnKind: .userPreference, delegate: self, optional: true)
+            var attributedString = AttributedString("Remember my details")
+            attributedString.font = .bodyTextSmall
+            let checkbox = CheckboxViewModel(checkedState: checkedState, attributedText: attributedString, columnName: "remember-my-details", columnKind: .userPreference, optional: true)
             checkboxes.append(checkbox)
         }
         
         if formPurpose == .ghostCard || formPurpose == .patchGhostCard {
             model.account?.formattedRegistrationFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
-                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .register, delegate: self)
+                    var attributedString = AttributedString(field.fieldDescription ?? "")
+                    attributedString.font = .bodyTextSmall
+                    let checkbox = CheckboxViewModel(checkedState: false, attributedText: attributedString, columnName: field.column, columnKind: .register)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -440,26 +440,20 @@ extension FormDataSource {
         checkboxes.append(contentsOf: getPlanDocumentsCheckboxes(journey: formPurpose.planDocumentDisplayMatching, membershipPlan: model))
     }
     
-    private func getPlanDocumentsCheckboxes(journey: PlanDocumentDisplayModel, membershipPlan: CD_MembershipPlan) -> [CheckboxView] {
-        var checkboxes: [CheckboxView] = []
+    private func getPlanDocumentsCheckboxes(journey: PlanDocumentDisplayModel, membershipPlan: CD_MembershipPlan) -> [CheckboxViewModel] {
+        var checkboxes: [CheckboxViewModel] = []
         
         membershipPlan.account?.formattedPlanDocuments?.forEach { field in
             let displayFields = field.formattedDisplay
             
             guard displayFields.contains(where: { $0.value == journey.rawValue }) else { return }
             
-            let checkbox = CheckboxView(checked: false)
-            
             let url = URL(string: field.url ?? "")
             let fieldText = (field.documentDescription ?? "") + " " + (field.name ?? "")
-            let attributedString = NSMutableAttributedString(string: fieldText, attributes: [.font: UIFont.bodyTextSmall])
-            
-            if field.checkbox?.boolValue == true {
-                checkbox.configure(title: attributedString, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: self)
-            } else {
-                // If we don't want a checkbox, we don't need a delegate for it, so we will hide the checkbox by checking if we have a delegate or not
-                checkbox.configure(title: attributedString, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: self, hideCheckbox: true)
-            }
+            var attributedString = AttributedString(fieldText)
+            attributedString.font = .bodyTextSmall
+            let hideCheckbox = (field.checkbox?.boolValue ?? false) ? false : true
+            let checkbox = CheckboxViewModel(checkedState: false, attributedText: attributedString, columnName: field.name ?? "", columnKind: .planDocument, url: url, hideCheckbox: hideCheckbox)
             checkboxes.append(checkbox)
         }
         
@@ -581,18 +575,18 @@ extension FormDataSource {
         let marketingCheckbox = CheckboxView(checked: false)
         marketingCheckbox.configure(title: attributedMarketing, columnName: "marketing-bink", columnKind: .userPreference, delegate: self, optional: true)
         
-        if accessForm == .termsAndConditions {
-            checkboxes.append(termsAndConditions)
-            checkboxes.append(marketingCheckbox)
-        }
-        
-        if accessForm == .magicLink {
-            checkboxes.append(termsAndConditions)
-        }
-        
-        if accessForm == .success {
-            checkboxes.append(marketingCheckbox)
-        }
+//        if accessForm == .termsAndConditions {
+//            checkboxes.append(termsAndConditions)
+//            checkboxes.append(marketingCheckbox)
+//        }
+//        
+//        if accessForm == .magicLink {
+//            checkboxes.append(termsAndConditions)
+//        }
+//        
+//        if accessForm == .success {
+//            checkboxes.append(marketingCheckbox)
+//        }
     }
     
     private func hyperlinkString(_ text: String, hyperlink: String) -> NSAttributedString {

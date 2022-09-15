@@ -11,6 +11,7 @@ import SwiftUI
 struct CheckboxSwiftUIView: View {
     @ObservedObject var viewModel: CheckboxViewModel
     var checkboxSelected: () -> Void
+    var didTapOnURL: ((URL) -> Void)?
 
     var body: some View {
         Button(action: {
@@ -41,19 +42,25 @@ struct CheckboxSwiftUIView: View {
                     .uiFont(.bodyTextSmall)
                     .foregroundColor(Color(Current.themeManager.color(for: .text)))
                     .multilineTextAlignment(.leading)
+                    .environment(\.openURL, OpenURLAction { url in
+                        print(url)
+                        didTapOnURL?(url)
+                        return .handled
+                    })
                 Spacer()
             }
         })
+        .background(Color(Current.themeManager.color(for: .viewBackground)))
     }
 }
 
-struct CheckboxSwiftUIView_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            let viewModel = CheckboxViewModel(checkedState: true, text: "Check this box to receive money off promotion, special offers and information on latest deals and more from Iceland by email", columnName: nil, columnKind: .planDocument, url: URL(string: ""), optional: false, hideCheckbox: false)
-            CheckboxSwiftUIView(viewModel: viewModel, checkboxSelected: {})
-            let viewModel2 = CheckboxViewModel(checkedState: false, text: "I accept the Retailer terms and conditions", columnName: "Retailer terms and conditions", columnKind: .planDocument, url: URL(string: "www.apple.com"), optional: false, hideCheckbox: false)
-            CheckboxSwiftUIView(viewModel: viewModel2, checkboxSelected: {})
-        }
-    }
-}
+//struct CheckboxSwiftUIView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        VStack {
+//            let viewModel = CheckboxViewModel(checkedState: true, text: "Check this box to receive money off promotion, special offers and information on latest deals and more from Iceland by email", columnName: nil, columnKind: .planDocument, url: URL(string: ""), optional: false, hideCheckbox: false)
+//            CheckboxSwiftUIView(viewModel: viewModel, checkboxSelected: {})
+//            let viewModel2 = CheckboxViewModel(checkedState: false, text: "I accept the Retailer terms and conditions", columnName: "Retailer terms and conditions", columnKind: .planDocument, url: URL(string: "www.apple.com"), optional: false, hideCheckbox: false)
+//            CheckboxSwiftUIView(viewModel: viewModel2, checkboxSelected: {})
+//        }
+//    }
+//}

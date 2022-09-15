@@ -6,7 +6,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
 protocol Form {
     func formValidityUpdated(fullFormIsValid: Bool)
@@ -19,7 +19,7 @@ class BaseFormViewController: BinkViewController, Form {
         static let normalCellHeight: CGFloat = 84.0
         static let horizontalInset: CGFloat = 25.0
         static let bottomInset: CGFloat = 150.0
-        static let postCollectionViewPadding: CGFloat = 15.0
+        static let postCollectionViewPadding: CGFloat = 25.0
         static let preCollectionViewPadding: CGFloat = 10.0
         static let offsetPadding: CGFloat = 30.0
     }
@@ -38,7 +38,7 @@ class BaseFormViewController: BinkViewController, Form {
     }()
     
     lazy var stackScrollView: StackScrollView = {
-        let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [titleLabel, descriptionLabel, textView, collectionView], adjustForKeyboard: true)
+        let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [titleLabel, descriptionLabel, textView, collectionView, checkboxStackView], adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .clear
         stackView.margin = UIEdgeInsets(top: 0, left: Constants.horizontalInset, bottom: 0, right: Constants.horizontalInset)
@@ -77,6 +77,16 @@ class BaseFormViewController: BinkViewController, Form {
         textView.textContainerInset = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: -5)
         textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
         return textView
+    }()
+    
+    private var checkboxStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.distribution = .fill
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.backgroundColor = .clear
+        stackView.spacing = 20
+        stackView.axis = .vertical
+        return stackView
     }()
     
     private lazy var layout: UICollectionViewFlowLayout = {
@@ -151,13 +161,24 @@ class BaseFormViewController: BinkViewController, Form {
     }
     
     private func configureCheckboxes() {
-        for subview in stackScrollView.arrangedSubviews {
-            if subview.isKind(of: CheckboxView.self) {
+        for subview in checkboxStackView.arrangedSubviews {
+            if subview.isKind(of: UIHostingController<CheckboxSwiftUIView>.self) {
                 subview.removeFromSuperview()
             }
         }
         guard !dataSource.checkboxes.isEmpty else { return }
-        stackScrollView.add(arrangedSubviews: dataSource.checkboxes)
+//        stackScrollView.add(arrangedSubviews: dataSource.checkboxes)
+        
+        for viewModel in dataSource.checkboxes {
+            let checkbox = CheckboxSwiftUIView(viewModel: viewModel) {
+                self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
+            } didTapOnURL: { url in
+                self.checkboxView(didTapOn: url)
+            }
+
+            let hostingController = UIHostingController(rootView: checkbox)
+            checkboxStackView.addArrangedSubview(hostingController.view)
+        }
     }
     
     @objc func handleKeyboardWillShow(_ notification: Notification) {
@@ -187,7 +208,7 @@ class BaseFormViewController: BinkViewController, Form {
     
     /// This method is designed to be overriden for updating UI elements in response to validity
     func formValidityUpdated(fullFormIsValid: Bool) {}
-    func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {}
+    func checkboxView(didTapOn URL: URL) {}
 }
 
 extension BaseFormViewController: UICollectionViewDelegate {
