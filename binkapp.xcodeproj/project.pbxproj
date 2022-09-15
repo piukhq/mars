@@ -316,6 +316,7 @@
 		CE3EA71028D07BFB00EFEDA9 /* BrowseBrandsListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3EA70F28D07BFA00EFEDA9 /* BrowseBrandsListRowView.swift */; };
 		CE3EA71228D0F6F100EFEDA9 /* BrowseBrandsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3EA71128D0F6F100EFEDA9 /* BrowseBrandsListView.swift */; };
 		CE3EA71428D1E07200EFEDA9 /* BrowseBrandsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3EA71328D1E07200EFEDA9 /* BrowseBrandsHeaderView.swift */; };
+		CE3EA71628D22FB300EFEDA9 /* ScanLoyaltyCardButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3EA71528D22FB200EFEDA9 /* ScanLoyaltyCardButtonView.swift */; };
 		CE4A624925714EAE003271F6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* Sentry */; };
 		CE51291628AAAC1200F85039 /* BinkNetworkingLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51291528AAAC1200F85039 /* BinkNetworkingLogger.swift */; };
 		CE51291828ACCA6700F85039 /* ActivityViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51291728ACCA6600F85039 /* ActivityViewControllerRepresentable.swift */; };
@@ -1024,6 +1025,7 @@
 		CE3EA70F28D07BFA00EFEDA9 /* BrowseBrandsListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseBrandsListRowView.swift; sourceTree = "<group>"; };
 		CE3EA71128D0F6F100EFEDA9 /* BrowseBrandsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseBrandsListView.swift; sourceTree = "<group>"; };
 		CE3EA71328D1E07200EFEDA9 /* BrowseBrandsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseBrandsHeaderView.swift; sourceTree = "<group>"; };
+		CE3EA71528D22FB200EFEDA9 /* ScanLoyaltyCardButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanLoyaltyCardButtonView.swift; sourceTree = "<group>"; };
 		CE4A628025715519003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A6285257155AE003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE51291528AAAC1200F85039 /* BinkNetworkingLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkNetworkingLogger.swift; sourceTree = "<group>"; };
@@ -1628,6 +1630,7 @@
 				CE73F9AB2600B64E00D53BCF /* HeaderTableViewCell.swift */,
 				CE73F9AC2600B64E00D53BCF /* HeaderTableViewCell.xib */,
 				CE3D31DA2649660C0072BD97 /* ScanLoyaltyCardButton.swift */,
+				CE3EA71528D22FB200EFEDA9 /* ScanLoyaltyCardButtonView.swift */,
 				CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */,
 			);
 			path = Cell;
@@ -4142,6 +4145,7 @@
 				EF9E9BD223C73BA1002FF18E /* UIDeviceExtension.swift in Sources */,
 				B7D577B3231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift in Sources */,
 				CE3EA71428D1E07200EFEDA9 /* BrowseBrandsHeaderView.swift in Sources */,
+				CE3EA71628D22FB300EFEDA9 /* ScanLoyaltyCardButtonView.swift in Sources */,
 				EFD602F1243E11B2003AC746 /* UINavigationControllerExtension.swift in Sources */,
 				70E3984E256FE7BA009AD8CB /* DynamicActionViewController.swift in Sources */,
 				EF8BF1FD2341480800D2E5F3 /* PaymentCardAccountConsentsResponse.swift in Sources */,

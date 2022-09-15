@@ -25,7 +25,7 @@ class ScanLoyaltyCardButton: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         titleLabel.text = L10n.scanButtonTitle
-        subtitleLabel.text = L10n.scanUttonSubtitle
+        subtitleLabel.text = L10n.scanButtonSubtitle
         iconImageView.image = Asset.scanQuick.image
         CAGradientLayer.makeGradient(for: gradientView, firstColor: .binkGradientBlueRight, secondColor: .binkGradientBlueLeft, startPoint: CGPoint(x: 1.0, y: 0.0))
 
