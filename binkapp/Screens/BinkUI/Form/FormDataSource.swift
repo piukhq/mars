@@ -6,7 +6,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
 protocol FormDataSourceDelegate: NSObjectProtocol {
     func formDataSource(_ dataSource: FormDataSource, changed value: String?, for field: FormField)
@@ -140,7 +140,6 @@ extension FormDataSource {
             forcedValue: model.fullPan,
             fieldCommonName: .cardNumber
         )
-        
         
         let monthData = Calendar.current.monthSymbols.enumerated().compactMap { index, _ in
             FormPickerData(String(format: "%02d", index + 1), backingData: index + 1)
@@ -549,44 +548,38 @@ extension FormDataSource {
             fields.append(bundleIDField)
         }
         
-        let attributedTCs = NSMutableAttributedString(string: L10n.tandcsTitle + "\n" + L10n.tandcsDescription, attributes: [.font: UIFont.bodyTextSmall])
-        let baseTCs = NSString(string: attributedTCs.string)
-        let tcsRange = baseTCs.range(of: L10n.tandcsLink)
-        let privacyPolicyRange = baseTCs.range(of: L10n.ppolicyLink)
-        attributedTCs.addAttributes([.link: "https://bink.com/terms-and-conditions/"], range: tcsRange)
-        attributedTCs.addAttributes([.link: "https://bink.com/privacy-policy/"], range: privacyPolicyRange)
+        var attributedTCs = AttributedString(L10n.tandcsTitle + "\n" + L10n.tandcsDescription)
+        attributedTCs.font = .bodyTextSmall
         
-        let termsAndConditions = CheckboxView(checked: false)
-        termsAndConditions.accessibilityIdentifier = "Terms and conditions"
-        termsAndConditions.configure(title: attributedTCs, columnName: L10n.tandcsLink, columnKind: .none, delegate: self)
+        if let tcsRange = attributedTCs.range(of: L10n.tandcsLink), let privacyPolicyRange = attributedTCs.range(of: L10n.ppolicyLink) {
+            var container = AttributeContainer()
+            container.link = URL(string: "https://bink.com/terms-and-conditions/")
+            container.foregroundColor = Color(UIColor.blueAccent)
+            container.underlineStyle = .single
+            attributedTCs[tcsRange].mergeAttributes(container)
+            container.link = URL(string: "https://bink.com/privacy-policy/")
+            attributedTCs[privacyPolicyRange].mergeAttributes(container)
+            let checkbox = CheckboxViewModel(checkedState: false, attributedText: attributedTCs, columnName: L10n.tandcsLink, columnKind: FormField.ColumnKind.none)
+            if accessForm == .termsAndConditions || accessForm == .magicLink {
+                checkboxes.append(checkbox)
+            }
+        }
         
-        let attributedMarketing = NSMutableAttributedString(string: L10n.marketingTitle + "\n" + L10n.preferencesPrompt, attributes: [.font: UIFont.bodyTextSmall])
-        let baseMarketing = NSString(string: attributedMarketing.string)
-        let rewardsRange = baseMarketing.range(of: L10n.preferencesPromptHighlightRewards)
-        let offersRange = baseMarketing.range(of: L10n.preferencesPromptHighlightOffers)
-        let updatesRange = baseMarketing.range(of: L10n.preferencesPromptHighlightUpdates)
+        var attributedMarketing = AttributedString(L10n.marketingTitle + "\n" + L10n.preferencesPrompt)
+        attributedMarketing.font = .bodyTextSmall
         
-        let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 14.0) ?? UIFont()]
-        
-        attributedMarketing.addAttributes(attributes, range: rewardsRange)
-        attributedMarketing.addAttributes(attributes, range: offersRange)
-        attributedMarketing.addAttributes(attributes, range: updatesRange)
-        
-        let marketingCheckbox = CheckboxView(checked: false)
-        marketingCheckbox.configure(title: attributedMarketing, columnName: "marketing-bink", columnKind: .userPreference, delegate: self, optional: true)
-        
-//        if accessForm == .termsAndConditions {
-//            checkboxes.append(termsAndConditions)
-//            checkboxes.append(marketingCheckbox)
-//        }
-//        
-//        if accessForm == .magicLink {
-//            checkboxes.append(termsAndConditions)
-//        }
-//        
-//        if accessForm == .success {
-//            checkboxes.append(marketingCheckbox)
-//        }
+        if let rewardsRange = attributedMarketing.range(of: L10n.preferencesPromptHighlightRewards),
+            let offersRange = attributedMarketing.range(of: L10n.preferencesPromptHighlightOffers),
+            let updatesRange = attributedMarketing.range(of: L10n.preferencesPromptHighlightUpdates) {
+            var container = AttributeContainer()
+            container.font = .nunitoExtraBold(14)
+            [rewardsRange, offersRange, updatesRange].forEach { attributedMarketing[$0].mergeAttributes(container) }
+            
+            let checkbox = CheckboxViewModel(checkedState: false, attributedText: attributedMarketing, columnName: "marketing-bink", columnKind: .userPreference, optional: true)
+            if accessForm == .termsAndConditions || accessForm == .success {
+                checkboxes.append(checkbox)
+            }
+        }
     }
     
     private func hyperlinkString(_ text: String, hyperlink: String) -> NSAttributedString {

@@ -161,13 +161,8 @@ class BaseFormViewController: BinkViewController, Form {
     }
     
     private func configureCheckboxes() {
-        for subview in checkboxStackView.arrangedSubviews {
-            if subview.isKind(of: UIHostingController<CheckboxSwiftUIView>.self) {
-                subview.removeFromSuperview()
-            }
-        }
+        checkboxStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         guard !dataSource.checkboxes.isEmpty else { return }
-//        stackScrollView.add(arrangedSubviews: dataSource.checkboxes)
         
         for viewModel in dataSource.checkboxes {
             let checkbox = CheckboxSwiftUIView(viewModel: viewModel) {
