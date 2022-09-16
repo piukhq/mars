@@ -141,7 +141,7 @@ class AuthAndAddViewModel {
         return membershipPlan
     }
 
-    func addMembershipCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, completion: @escaping () -> Void) throws {
+    func addMembershipCard(with formFields: [FormField], checkboxes: [CheckboxViewModel]? = nil, completion: @escaping () -> Void) throws {
         guard formPurpose != .ghostCard, formPurpose != .patchGhostCard else {
             try addGhostCard(with: formFields, checkboxes: checkboxes, existingMembershipCard: existingMembershipCard)
             return
@@ -201,7 +201,7 @@ class AuthAndAddViewModel {
         })
     }
     
-    private func setUserPreference(checkbox: CheckboxView) {
+    private func setUserPreference(checkbox: CheckboxViewModel) {
         guard let columnName = checkbox.columnName else { return }
         let preferencesRepository = PreferencesRepository()
         let checkedState: Bool = checkbox.value == "1"
@@ -247,7 +247,7 @@ class AuthAndAddViewModel {
         return currentFormFieldValuesDictionary
     }
     
-    private func addGhostCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, existingMembershipCard: CD_MembershipCard?) throws {
+    private func addGhostCard(with formFields: [FormField], checkboxes: [CheckboxViewModel]? = nil, existingMembershipCard: CD_MembershipCard?) throws {
         // Setup with both
         populateCard(with: formFields, checkboxes: checkboxes, columnKind: .add)
         populateCard(with: formFields, checkboxes: checkboxes, columnKind: .register)
@@ -287,7 +287,7 @@ class AuthAndAddViewModel {
         }
     }
     
-    private func populateCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, columnKind: FormField.ColumnKind) {
+    private func populateCard(with formFields: [FormField], checkboxes: [CheckboxViewModel]? = nil, columnKind: FormField.ColumnKind) {
         formFields.forEach {
             if $0.columnKind == columnKind {
                 addFieldToCard(formField: $0)
@@ -359,7 +359,7 @@ class AuthAndAddViewModel {
         }
     }
     
-    func addCheckboxToCard(checkbox: CheckboxView) {
+    func addCheckboxToCard(checkbox: CheckboxViewModel) {
         switch checkbox.columnKind {
         case .add:
             let addFieldsArray = membershipCardPostModel?.account?.addFields
