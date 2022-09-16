@@ -92,6 +92,11 @@ class LoyaltyCardFullDetailsViewModelTests: XCTestCase, CoreDataTestable {
         XCTAssertEqual(Self.model.brandName, "Tesco")
     }
     
+    func test_brandNameForGeoData() throws {
+        Self.model.membershipCard.membershipPlan = Self.membershipPlan
+        XCTAssertEqual(Self.model.brandNameForGeoData, "tesco")
+    }
+    
     func test_pointsValueText() throws {
         Self.baseMembershipCardResponse.status?.state = .failed
         mapMembershipCard()

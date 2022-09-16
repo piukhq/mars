@@ -123,7 +123,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     }()
     
     private lazy var locationImage: UIImageView = {
-        // RS = using a gif at the moment. This asset might not be final
         let image = UIImage.gifImageWithName("place-marker")
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -135,7 +134,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         imageView.animationDuration = 2.5
         imageView.image = image?.images?.last
         imageView.tintColor = Current.themeManager.color(for: .walletCardBackground)
-        //imageView.startAnimating()
         return imageView
     }()
     
@@ -204,25 +202,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         configureUI()
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidUpdate, object: nil)
         
-        viewModel.fetchGeoData(completion: { hasImage, animated in
-            if hasImage {
-                if animated {
-                    self.locationView.isHidden = false
-                    UIView.animate(withDuration: 0.8) {
-                        self.locationView.layer.opacity = 1.0
-                        self.locationView.transform = CGAffineTransform(scaleX: 1, y: 1)
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-                        self.locationImage.startAnimating()
-                    }
-                } else {
-                    self.locationView.isHidden = false
-                    self.locationView.layer.opacity = 1.0
-                    self.locationView.transform = CGAffineTransform(scaleX: 1, y: 1)
-                    self.locationImage.startAnimating()
-                }
-            }
-        })
+        fetchGeoData()
     }
     
     @objc private func handlePointsScrapingUpdate() {
@@ -357,33 +337,31 @@ private extension LoyaltyCardFullDetailsViewController {
             ])
         }
         
-        //if viewModel.shouldDisplayLocationOption {
-            // Build locations
-            stackScrollView.add(arrangedSubview: locationView)
-            stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: locationView)
+        // Build locations
+        stackScrollView.add(arrangedSubview: locationView)
+        stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: locationView)
+        
+        locationView.addSubview(locationImage)
+        locationView.addSubview(showLocationsText)
+        locationView.addSubview(nearestStoresText)
+        NSLayoutConstraint.activate([
+            locationView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
+            locationView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
+            locationView.heightAnchor.constraint(equalToConstant: LayoutHelper.GeoLocationCallout.locationViewHeight),
             
-            locationView.addSubview(locationImage)
-            locationView.addSubview(showLocationsText)
-            locationView.addSubview(nearestStoresText)
-            NSLayoutConstraint.activate([
-                locationView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
-                locationView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
-                locationView.heightAnchor.constraint(equalToConstant: LayoutHelper.GeoLocationCallout.locationViewHeight),
-                
-                showLocationsText.rightAnchor.constraint(equalTo: locationView.rightAnchor, constant: -LayoutHelper.GeoLocationCallout.locationsTextRightOffset),
-                showLocationsText.topAnchor.constraint(equalTo: locationView.topAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextTopOffset),
-                showLocationsText.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextLeftOffset),
-
-                nearestStoresText.rightAnchor.constraint(equalTo: locationView.rightAnchor, constant: -LayoutHelper.GeoLocationCallout.nearestStoresTextRightOffset),
-                nearestStoresText.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.nearestStoresTextBottomOffset),
-                nearestStoresText.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextLeftOffset),
-                
-                locationImage.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset),
-                locationImage.topAnchor.constraint(equalTo: locationView.topAnchor, constant: LayoutHelper.GeoLocationCallout.locationImageVerticalOffset),
-                locationImage.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageVerticalOffset),
-                locationImage.rightAnchor.constraint(equalTo: nearestStoresText.leftAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset)
-            ])
-        //}
+            showLocationsText.rightAnchor.constraint(equalTo: locationView.rightAnchor, constant: -LayoutHelper.GeoLocationCallout.locationsTextRightOffset),
+            showLocationsText.topAnchor.constraint(equalTo: locationView.topAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextTopOffset),
+            showLocationsText.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextLeftOffset),
+            
+            nearestStoresText.rightAnchor.constraint(equalTo: locationView.rightAnchor, constant: -LayoutHelper.GeoLocationCallout.nearestStoresTextRightOffset),
+            nearestStoresText.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.nearestStoresTextBottomOffset),
+            nearestStoresText.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextLeftOffset),
+            
+            locationImage.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset),
+            locationImage.topAnchor.constraint(equalTo: locationView.topAnchor, constant: LayoutHelper.GeoLocationCallout.locationImageVerticalOffset),
+            locationImage.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageVerticalOffset),
+            locationImage.rightAnchor.constraint(equalTo: nearestStoresText.leftAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset)
+        ])
         
         stackScrollView.add(arrangedSubview: separator)
         stackScrollView.add(arrangedSubview: informationTableView)
@@ -654,6 +632,32 @@ extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDeleg
                 self.configurePLRCells()
             }
         }
+    }
+}
+
+// MARK: - Fetch geo data - update UI
+
+extension LoyaltyCardFullDetailsViewController {
+    func fetchGeoData() {
+        viewModel.fetchGeoData(completion: { hasData, animated in
+            if hasData {
+                if animated {
+                    self.locationView.isHidden = false
+                    UIView.animate(withDuration: 0.8) {
+                        self.locationView.layer.opacity = 1.0
+                        self.locationView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                        self.locationImage.startAnimating()
+                    }
+                } else {
+                    self.locationView.isHidden = false
+                    self.locationView.layer.opacity = 1.0
+                    self.locationView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                    self.locationImage.startAnimating()
+                }
+            }
+        })
     }
 }
 

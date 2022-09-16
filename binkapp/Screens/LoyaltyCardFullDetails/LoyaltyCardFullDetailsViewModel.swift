@@ -43,14 +43,9 @@ class LoyaltyCardFullDetailsViewModel {
         return membershipCard.membershipPlan?.account?.companyName ?? ""
     }
     
-    var shouldDisplayLocationOption: Bool {
-        if let companyName = membershipCard.membershipPlan?.account?.companyName {
-            if let _ = Cache.geoLocationsDataCache.object(forKey: "\(companyName.lowercased()).geojson".toNSString()) {
-                return Current.featureManager.isFeatureEnabled(.tescoLocations)
-            }
-        }
-        
-        return false
+    var brandNameForGeoData: String {
+        let formatted = membershipCard.membershipPlan?.account?.companyName?.replacingOccurrences(of: " ", with: "-")
+        return formatted?.lowercased() ?? ""
     }
     
     var balance: CD_MembershipCardBalance? {
@@ -129,22 +124,26 @@ class LoyaltyCardFullDetailsViewModel {
     // MARK: - Public methods
     
     func fetchGeoData(completion: @escaping (Bool, Bool) -> Void) {
-        if let companyName = membershipCard.membershipPlan?.account?.companyName {
-            if let _ = Cache.geoLocationsDataCache.object(forKey: "\(companyName.lowercased()).geojson".toNSString()) {
-                completion(true, false)
-                return
-            }
-            
-            let storage = Storage.storage()
-            let pathReference = storage.reference(withPath: "locations/\(companyName.lowercased()).geojson")
-            
-            pathReference.getData(maxSize: 4 * 1024 * 1024) { data, _ in
-                guard let data = data else {
-                    completion(false, false)
+        if Current.featureManager.isFeatureEnabled(.tescoLocations) {
+            let companyName = brandNameForGeoData
+            if !companyName.isBlank {
+                let fileName = "\(companyName).geojson"
+                if let _ = Cache.geoLocationsDataCache.object(forKey: fileName.toNSString()) {
+                    completion(true, false)
                     return
                 }
-                Cache.geoLocationsDataCache.setObject(data as NSData, forKey: "\(companyName.lowercased()).geojson".toNSString())
-                completion(true, true)
+                
+                let storage = Storage.storage()
+                let pathReference = storage.reference(withPath: "locations/\(fileName)")
+                
+                pathReference.getData(maxSize: 4 * 1024 * 1024) { data, _ in
+                    guard let data = data else {
+                        completion(false, false)
+                        return
+                    }
+                    Cache.geoLocationsDataCache.setObject(data as NSData, forKey: fileName.toNSString())
+                    completion(true, true)
+                }
             }
         }
     }
