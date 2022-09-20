@@ -232,7 +232,6 @@ class AuthAndAddViewModel {
             }
         }
         
-        print("AUTOFILL: \(autofillDictionary)")
         AutofillUtil.save(autofillDictionary)
     }
     
