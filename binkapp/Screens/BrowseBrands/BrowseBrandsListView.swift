@@ -7,12 +7,19 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct BrowseBrandsListView: View {
     private enum Constants {
         static let separatorHeight: CGFloat = 1.0
         static let actionRequiredIndicatorHeight: CGFloat = 10
         static let padding: CGFloat = 30.0
+    }
+    
+    enum SectionID: String {
+        case pll
+        case see
+        case store
     }
     
     @ObservedObject var themeManager = Current.themeManager
@@ -25,7 +32,7 @@ struct BrowseBrandsListView: View {
                     ForEach(0..<viewModel.sections.count, id: \.self) { sectionIndex in
                         let sectionData = viewModel.sections[sectionIndex]
                         if !sectionData.isEmpty {
-                            BrowseBrandsHeaderView(viewModel: viewModel, section: sectionIndex).id(sectionIndex)
+                            BrowseBrandsHeaderView(viewModel: viewModel, section: sectionIndex).id(idForSection(sectionIndex))
                         }
                         
                         ForEach(0..<sectionData.count, id: \.self) { index in
@@ -39,8 +46,8 @@ struct BrowseBrandsListView: View {
                                     
                                     if shouldShowSeparator(index: index, rowsInsection: sectionData.count) {
                                         Rectangle()
+                                            .fill(Color(themeManager.color(for: .divider)))
                                             .frame(height: Constants.separatorHeight)
-                                            .foregroundColor(Color(themeManager.color(for: .divider)))
                                             .padding(.horizontal, 25)
                                     }
                                 }
@@ -53,9 +60,22 @@ struct BrowseBrandsListView: View {
             .background(Color(Current.themeManager.color(for: .viewBackground)))
             .onReceive(viewModel.$scrollToSection) { section in
                 withAnimation {
-                    proxy.scrollTo(section, anchor: .top)
+                    proxy.scrollTo(idForSection(section), anchor: .top)
                 }
             }
+        }
+    }
+
+    private func idForSection(_ id: Int) -> SectionID {
+        switch id {
+        case 0:
+            return .pll
+        case 1:
+            return .see
+        case 2:
+            return .store
+        default:
+            return .pll
         }
     }
     
