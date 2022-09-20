@@ -339,6 +339,7 @@
 		CE6DE56D2681E82C0063A3A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE6DE56C2681E82C0063A3A9 /* Assets.xcassets */; };
 		CE6DE5712681E82C0063A3A9 /* BinkWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = CE6DE5642681E8280063A3A9 /* BinkWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CE6DE57D268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6DE57C268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift */; };
+		CE7B3EB428DA144900601FB1 /* ScanLoyaltyCardButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7B3EB328DA144900601FB1 /* ScanLoyaltyCardButtonViewModel.swift */; };
 		CE8058222897EF86002AB70F /* MessageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8058212897EF86002AB70F /* MessageViewTests.swift */; };
 		CE822D8227B1322B00916C74 /* binkOld.der in Resources */ = {isa = PBXBuildFile; fileRef = CE822D8127B1321A00916C74 /* binkOld.der */; };
 		CE834A38289AD5E50046B024 /* ReusableTemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE834A37289AD5E50046B024 /* ReusableTemplateView.swift */; };
@@ -1037,6 +1038,7 @@
 		CE6DE56C2681E82C0063A3A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE6DE56E2681E82C0063A3A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE6DE57C268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnauthenticatedSwiftUIView.swift; sourceTree = "<group>"; };
+		CE7B3EB328DA144900601FB1 /* ScanLoyaltyCardButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanLoyaltyCardButtonViewModel.swift; sourceTree = "<group>"; };
 		CE8058212897EF86002AB70F /* MessageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewTests.swift; sourceTree = "<group>"; };
 		CE822D8127B1321A00916C74 /* binkOld.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = binkOld.der; sourceTree = "<group>"; };
 		CE834A37289AD5E50046B024 /* ReusableTemplateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableTemplateView.swift; sourceTree = "<group>"; };
@@ -1609,6 +1611,7 @@
 				DBE5484F240D514B00EDEE90 /* FilterBrandsCollectionViewCell.swift */,
 				DBE54850240D514B00EDEE90 /* FilterBrandsCollectionViewCell.xib */,
 				CE3EA71528D22FB200EFEDA9 /* ScanLoyaltyCardButtonView.swift */,
+				CE7B3EB328DA144900601FB1 /* ScanLoyaltyCardButtonViewModel.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -3911,6 +3914,7 @@
 				EFF59F23234DEE7500CF3992 /* DetailNavigationTitleView.swift in Sources */,
 				EFEB5BF1237C7BA300E18743 /* PLRRewardDetailViewModel.swift in Sources */,
 				EF48556E231D6E4000FC9E5F /* DebugMenuFactory.swift in Sources */,
+				CE7B3EB428DA144900601FB1 /* ScanLoyaltyCardButtonViewModel.swift in Sources */,
 				BD9FB6B82338120700E5559A /* TransactionsViewModel.swift in Sources */,
 				70E39806256E8F4F009AD8CB /* BinkViewController.swift in Sources */,
 				EF8BF1F9234147E000D2E5F3 /* LinkedCardResponse.swift in Sources */,

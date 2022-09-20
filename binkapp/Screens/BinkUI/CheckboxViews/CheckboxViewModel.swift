@@ -34,7 +34,7 @@ class CheckboxViewModel: ObservableObject, Identifiable {
         }
         
         var string = attributedText
-        string.font = .custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize)
+        string.font = .bodyTextSmall
 
         if let urlRange = string.range(of: columnName) {
             var container = AttributeContainer()
