@@ -49,18 +49,12 @@ class ScanLoyaltyCardButtonViewModel: NSObject, BarcodeScannerViewControllerDele
         PermissionsUtility.launchLoyaltyScanner(viewController) {
             let navigationRequest = PushNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
-        } addFromPhotoLibraryAction: { [weak self] in
-            guard let self = self else { return }
-//            self.delegate?.addPhotoFromLibraryButtonWasTapped(self)
-            
-            // TEST >>>>>>>>
-            func addPhotoFromLibraryButtonWasTapped(_ scanLoyaltyCardButton: ScanLoyaltyCardButton) {
-                let picker = UIImagePickerController()
-                picker.allowsEditing = true
-                picker.delegate = self
-                let navigationRequest = ModalNavigationRequest(viewController: picker, embedInNavigationController: false)
-                Current.navigate.to(navigationRequest)
-            }
+        } addFromPhotoLibraryAction: {
+            let picker = UIImagePickerController()
+            picker.allowsEditing = true
+            picker.delegate = self
+            let navigationRequest = ModalNavigationRequest(viewController: picker, embedInNavigationController: false)
+            Current.navigate.to(navigationRequest)
         }
     }
     
@@ -76,11 +70,9 @@ class ScanLoyaltyCardButtonViewModel: NSObject, BarcodeScannerViewControllerDele
     }
     
     private func showError() {
-        // TEST
         let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: L10n.loyaltyScannerFailedToDetectBarcode)
         let navigationRequest = AlertNavigationRequest(alertController: alert)
         Current.navigate.to(navigationRequest)
-        
     }
 }
 
@@ -96,7 +88,10 @@ extension ScanLoyaltyCardButtonViewModel: UIImagePickerControllerDelegate, UINav
             }
 
             Current.wallet.identifyMembershipPlanForBarcode(barcode) { membershipPlan in
-                guard let membershipPlan = membershipPlan else { return }
+                guard let membershipPlan = membershipPlan else {
+                    self?.showError()
+                    return
+                }
                 Current.navigate.close(animated: true) {
                     let prefilledValues = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
                     let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, existingMembershipCard: nil, prefilledFormValues: [prefilledValues])
