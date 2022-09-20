@@ -108,7 +108,7 @@
 		2113D43B37EDA455E4647F2A085ACA2B /* ZXDataMatrixX12Encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 58F8608D67F46A4E31ED815359BC9EA0 /* ZXDataMatrixX12Encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		211C5CCBD22057239E297B9C1A1CBE87 /* ZXGeoParsedResult.m in Sources */ = {isa = PBXBuildFile; fileRef = A67B1601FA4CF9BB6D0DFCF9BD967AAE /* ZXGeoParsedResult.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		22042F1E8449F7FE0E70DD01244FC671 /* ZXingObjC-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C596DD169F238A5F035984DBC31D8FD1 /* ZXingObjC-dummy.m */; };
-		221E8DCFF25E3270D9DBBE37E2D94C73 /* CardScan-CardScan in Resources */ = {isa = PBXBuildFile; fileRef = 0BBC9538B38236B253752CC3B1CD0DF0 /* CardScan-CardScan */; };
+		221E8DCFF25E3270D9DBBE37E2D94C73 /* CardScan.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0BBC9538B38236B253752CC3B1CD0DF0 /* CardScan.bundle */; };
 		22A3967514CAB030FE2F769FF1D5076A /* ZXCodaBarWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 40771C36EB8BBA94DC3864137FDC4523 /* ZXCodaBarWriter.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		22BD9EE1895A591E2BC8B0869955D181 /* ZXPDF417BarcodeMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C8FF356057DAA298648EED7A309E76 /* ZXPDF417BarcodeMetadata.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		22C6993FA44E786A5AC500881CA657F4 /* NonNameWords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BBC640B9D53CAF6E89AF451C3A7064 /* NonNameWords.swift */; };
@@ -791,7 +791,7 @@
 		09DF990E9DB8A2AFFB14C868157E6753 /* ZXQRCodeMultiReader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXQRCodeMultiReader.m; path = ZXingObjC/qrcode/multi/ZXQRCodeMultiReader.m; sourceTree = "<group>"; };
 		0B08CDDF1815ED3B110F711FD4335DC2 /* SwiftyRSA-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyRSA-dummy.m"; sourceTree = "<group>"; };
 		0BA86D13EA64B49FFC72B3C70F0214E5 /* ZXPDF417HighLevelEncoder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXPDF417HighLevelEncoder.h; path = ZXingObjC/pdf417/encoder/ZXPDF417HighLevelEncoder.h; sourceTree = "<group>"; };
-		0BBC9538B38236B253752CC3B1CD0DF0 /* CardScan-CardScan */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "CardScan-CardScan"; path = CardScan.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		0BBC9538B38236B253752CC3B1CD0DF0 /* CardScan.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardScan.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BF23193DF4C5302967223DF2EF67711 /* ZXByQuadrantReader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXByQuadrantReader.m; path = ZXingObjC/multi/ZXByQuadrantReader.m; sourceTree = "<group>"; };
 		0BFC7EBE71B8B2C8654E8EC75EDD8F58 /* Torch.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Torch.swift; path = CardScan/Classes/Torch.swift; sourceTree = "<group>"; };
 		0C7BFDDC51FC7E56CE5D6ACDDF8B9333 /* DTTJailbreakDetection */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = DTTJailbreakDetection; path = DTTJailbreakDetection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2025,7 +2025,7 @@
 			isa = PBXGroup;
 			children = (
 				704FD45B9A3CEB394F814C7DA9401DB5 /* CardScan */,
-				0BBC9538B38236B253752CC3B1CD0DF0 /* CardScan-CardScan */,
+				0BBC9538B38236B253752CC3B1CD0DF0 /* CardScan.bundle */,
 				0C7BFDDC51FC7E56CE5D6ACDDF8B9333 /* DTTJailbreakDetection */,
 				B62CED338872EF536910A466267352B5 /* Keys-framework */,
 				D4B5FC1A8F44103C20C834E5CAAEC363 /* Keys-library */,
@@ -2873,7 +2873,7 @@
 			);
 			name = "CardScan-CardScan";
 			productName = CardScan;
-			productReference = 0BBC9538B38236B253752CC3B1CD0DF0 /* CardScan-CardScan */;
+			productReference = 0BBC9538B38236B253752CC3B1CD0DF0 /* CardScan.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		FBDE307EEE6EFAED12F501BC7E7652AA /* Keys-library */ = {
@@ -2989,7 +2989,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				221E8DCFF25E3270D9DBBE37E2D94C73 /* CardScan-CardScan in Resources */,
+				221E8DCFF25E3270D9DBBE37E2D94C73 /* CardScan.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3553,6 +3553,7 @@
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/CardScan";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = HC34M8YE55;
 				IBSC_MODULE = CardScan;
 				INFOPLIST_FILE = "Target Support Files/CardScan/ResourceBundle-CardScan-CardScan-Info.plist";
 				PRODUCT_NAME = CardScan;
@@ -3570,6 +3571,7 @@
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/CardScan";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = HC34M8YE55;
 				IBSC_MODULE = CardScan;
 				INFOPLIST_FILE = "Target Support Files/CardScan/ResourceBundle-CardScan-CardScan-Info.plist";
 				PRODUCT_NAME = CardScan;
@@ -3626,6 +3628,7 @@
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/CardScan";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = HC34M8YE55;
 				IBSC_MODULE = CardScan;
 				INFOPLIST_FILE = "Target Support Files/CardScan/ResourceBundle-CardScan-CardScan-Info.plist";
 				PRODUCT_NAME = CardScan;
@@ -4932,6 +4935,7 @@
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/CardScan";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = HC34M8YE55;
 				IBSC_MODULE = CardScan;
 				INFOPLIST_FILE = "Target Support Files/CardScan/ResourceBundle-CardScan-CardScan-Info.plist";
 				PRODUCT_NAME = CardScan;
@@ -5384,6 +5388,7 @@
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/CardScan";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = HC34M8YE55;
 				IBSC_MODULE = CardScan;
 				INFOPLIST_FILE = "Target Support Files/CardScan/ResourceBundle-CardScan-CardScan-Info.plist";
 				PRODUCT_NAME = CardScan;
@@ -5869,6 +5874,7 @@
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/CardScan";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = HC34M8YE55;
 				IBSC_MODULE = CardScan;
 				INFOPLIST_FILE = "Target Support Files/CardScan/ResourceBundle-CardScan-CardScan-Info.plist";
 				PRODUCT_NAME = CardScan;

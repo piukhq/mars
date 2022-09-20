@@ -13,7 +13,6 @@ protocol FormDataSourceDelegate: NSObjectProtocol {
     func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField)
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField)
-    func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView)
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool
     func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource)
     func formDataSourceShouldRefresh(_ dataSource: FormDataSource)
@@ -27,7 +26,6 @@ extension FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, changed value: String?, for field: FormField) {}
     func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField) {}
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField) {}
-    func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView) {}
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool {
         return false
     }
@@ -53,7 +51,7 @@ class FormDataSource: NSObject {
         var value: String?
     }
     
-    typealias MultiDelegate = FormDataSourceDelegate & CheckboxViewDelegate & FormCollectionViewCellDelegate
+    typealias MultiDelegate = FormDataSourceDelegate & FormCollectionViewCellDelegate
     
     private enum Constants {
         static let expiryYearsInTheFuture = 50
@@ -588,17 +586,6 @@ extension FormDataSource {
         attributed.addAttributes([.underlineStyle: NSUnderlineStyle.single.rawValue, .foregroundColor: UIColor.blueAccent, .font: UIFont.checkboxText], range: NSMakeRange(countMinusHyperlinkString, hyperlink.count))
         
         return attributed
-    }
-}
-
-extension FormDataSource: CheckboxViewDelegate {
-    func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {
-        delegate?.checkboxView(checkboxView, didCompleteWithColumn: column, value: value, fieldType: fieldType)
-        delegate?.formDataSource(self, checkboxUpdated: checkboxView)
-    }
-    
-    func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
-        delegate?.checkboxView(checkboxView, didTapOn: URL)
     }
 }
 
