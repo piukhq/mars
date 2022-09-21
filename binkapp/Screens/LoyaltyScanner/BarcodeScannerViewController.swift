@@ -229,18 +229,12 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
                     .code128,
                     .pdf417,
                     .interleaved2of5,
-                    .code128
+                    .dataMatrix,
+                    .aztec
                 ]
             } else {
                 captureOutput.metadataObjectTypes = [
-                    .qr,
-                    .code128,
-                    .aztec,
-                    .pdf417,
-                    .ean13,
-                    .dataMatrix,
-                    .interleaved2of5,
-                    .code39
+                    .qr
                 ]
             }
         }
@@ -272,30 +266,16 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
             if session.canAddOutput(captureOutput) {
                 session.addOutput(captureOutput)
                 captureOutput.setMetadataObjectsDelegate(self, queue: schemeScanningQueue)
-                
-                if isIos16 {
-                    captureOutput.metadataObjectTypes = [
-                        .ean13,
-                        .ean8,
-                        .upce,
-                        .code39,
-                        .code39Mod43,
-                        .code93,
-                        .code128,
-                        .pdf417
-                    ]
-                } else {
-                    captureOutput.metadataObjectTypes = [
-                        .qr,
-                        .code128,
-                        .aztec,
-                        .pdf417,
-                        .ean13,
-                        .dataMatrix,
-                        .interleaved2of5,
-                        .code39
-                    ]
-                }
+                captureOutput.metadataObjectTypes = [
+                    .ean13,
+                    .ean8,
+                    .upce,
+                    .code39,
+                    .code39Mod43,
+                    .code93,
+                    .code128,
+                    .pdf417
+                ]
             }
         }
 
