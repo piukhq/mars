@@ -245,14 +245,6 @@ class PaymentCardDetailViewModel {
         cardInformationViewModel.informationRows = informationRowFactory.makePaymentInformationRows(for: paymentCardStatus)
     }
 
-//    func informationRow(forIndexPath indexPath: IndexPath) -> CardDetailInformationRow {
-//        return informationRows[indexPath.row]
-//    }
-//
-//    func performActionForInformationRow(atIndexPath indexPath: IndexPath) {
-//        informationRows[safe: indexPath.row]?.action()
-//    }
-
     func toSecurityAndPrivacyScreen() {
         let hostingViewController = UIHostingController(rootView: ReusableTemplateView(title: L10n.securityAndPrivacyTitle, description: L10n.securityAndPrivacyDescription))
         let navigationRequest = ModalNavigationRequest(viewController: hostingViewController)
