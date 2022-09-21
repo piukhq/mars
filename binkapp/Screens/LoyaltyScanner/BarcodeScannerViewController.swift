@@ -59,7 +59,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
 
     private var session = AVCaptureSession()
     private var captureOutput: AVCaptureMetadataOutput?
-    private var fallbackCaptureOutput: AVCaptureMetadataOutput?
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     private var previewView = UIView()
     private let schemeScanningQueue = DispatchQueue(label: "com.bink.wallet.scanning.loyalty.scheme.queue")
@@ -130,7 +129,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //NotificationCenter.default.addObserver(self, selector: #selector(reset), name: Notification.Name("scan"), object: nil)
         
         view.addSubview(previewView)
 
@@ -231,7 +229,8 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
                     .code39Mod43,
                     .code93,
                     .code128,
-                    .pdf417
+                    .pdf417,
+                    .interleaved2of5
                 ]
             } else {
                 captureOutput.metadataObjectTypes = [
@@ -245,7 +244,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
                     .code39
                 ]
             }
-
         }
     }
     
@@ -256,7 +254,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         guard let input = try? AVCaptureDeviceInput(device: backCamera) else { return }
         performCaptureChecksForDevice(backCamera)
         captureOutput = AVCaptureMetadataOutput()
-        fallbackCaptureOutput = AVCaptureMetadataOutput()
 
         if session.canAddInput(input) {
             session.addInput(input)
@@ -326,7 +323,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     
     private func scheduleTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: Constants.timerInterval, repeats: true, block: { [weak self] _ in
-            
             self?.reset()
             
 //            self?.timeouts += 1
