@@ -207,8 +207,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     
     @objc private func reset() {
         isIos16.toggle()
-        //self.stopScanning()
-        //self.startScanning()
         
         schemeScanningQueue.async { [weak self] in
             guard let outputs = self?.session.outputs else { return }
@@ -230,7 +228,8 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
                     .code93,
                     .code128,
                     .pdf417,
-                    .interleaved2of5
+                    .interleaved2of5,
+                    .code128
                 ]
             } else {
                 captureOutput.metadataObjectTypes = [
@@ -324,14 +323,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private func scheduleTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: Constants.timerInterval, repeats: true, block: { [weak self] _ in
             self?.reset()
-            
-//            self?.timeouts += 1
-//            if self?.timeouts ?? 0 < 3 {
-//                self?.reset()
-//            } else {
-//                self?.widgetView.timeout()
-//                self?.timeouts = 0
-//            }
+            //self?.widgetView.timeout()
         })
     }
 
