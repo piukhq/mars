@@ -28,7 +28,7 @@ struct CardInformationView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            ForEach(0..<viewModel.informationRows.count) { index in
+            ForEach(0..<viewModel.informationRows.count, id: \.self) { index in
                 CardInformationRowView(rowData: viewModel.informationRows[index])
                 
                 if showSeparator(index: index) {

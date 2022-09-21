@@ -58,6 +58,8 @@ class LoyaltyCardFullDetailsViewModelTests: XCTestCase, CoreDataTestable {
         
         mapResponseToManagedObject(baseMembershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
             self.membershipCard = membershipCard
+            self.mapMembershipPlan()
+            self.membershipCard.membershipPlan = self.membershipPlan
         }
         
         let factory = WalletCardDetailInformationRowFactory()
@@ -70,7 +72,7 @@ class LoyaltyCardFullDetailsViewModelTests: XCTestCase, CoreDataTestable {
         }
     }
     
-    private func mapMembershipPlan() {
+    private class func mapMembershipPlan() {
         mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { plan in
             Self.membershipPlan = plan
         }
@@ -103,7 +105,7 @@ class LoyaltyCardFullDetailsViewModelTests: XCTestCase, CoreDataTestable {
         Self.featureSetResponse = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: nil, hasVouchers: true)
         Self.membershipPlanResponse.hasVouchers = true
         Self.membershipPlanResponse.featureSet = Self.featureSetResponse
-        mapMembershipPlan()
+        Self.mapMembershipPlan()
         Self.baseMembershipCardResponse.status?.state = .authorised
         mapMembershipCard()
         Self.model.membershipCard.membershipPlan = Self.membershipPlan
@@ -114,7 +116,7 @@ class LoyaltyCardFullDetailsViewModelTests: XCTestCase, CoreDataTestable {
         Self.featureSetResponse = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: nil, hasVouchers: false)
         Self.membershipPlanResponse.hasVouchers = false
         Self.membershipPlanResponse.featureSet = Self.featureSetResponse
-        mapMembershipPlan()
+        Self.mapMembershipPlan()
 
         Self.baseMembershipCardResponse.status?.state = .authorised
         mapMembershipCard()
