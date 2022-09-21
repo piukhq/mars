@@ -51,7 +51,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         static let widgetViewLeftRightPadding: CGFloat = 25
         static let widgetViewHeight: CGFloat = 100
         static let closeButtonSize = CGSize(width: 44, height: 44)
-        static let timerInterval: TimeInterval = 5.0
+        static let timerInterval: TimeInterval = 3.0
         static let scanErrorThreshold: TimeInterval = 1.0
     }
 
@@ -59,6 +59,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
 
     private var session = AVCaptureSession()
     private var captureOutput: AVCaptureMetadataOutput?
+    private var fallbackCaptureOutput: AVCaptureMetadataOutput?
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     private var previewView = UIView()
     private let schemeScanningQueue = DispatchQueue(label: "com.bink.wallet.scanning.loyalty.scheme.queue")
@@ -69,6 +70,8 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private var shouldAllowScanning = true
     private var captureSource: BarcodeCaptureSource
     private let visionUtility = VisionImageDetectionUtility()
+    
+    private var isIos16 = true
 
     private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .regular))
@@ -127,6 +130,8 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //NotificationCenter.default.addObserver(self, selector: #selector(reset), name: Notification.Name("scan"), object: nil)
+        
         view.addSubview(previewView)
 
         // BLUR AND MASK
@@ -202,6 +207,48 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         widgetView.configure()
     }
     
+    @objc private func reset() {
+        isIos16.toggle()
+        //self.stopScanning()
+        //self.startScanning()
+        
+        schemeScanningQueue.async { [weak self] in
+            guard let outputs = self?.session.outputs else { return }
+            for output in outputs {
+                self?.session.removeOutput(output)
+            }
+            
+            guard let captureOutput = self?.captureOutput else { return }
+
+            self?.session.addOutput(captureOutput)
+            
+            if self!.isIos16 {
+                captureOutput.metadataObjectTypes = [
+                    .ean13,
+                    .ean8,
+                    .upce,
+                    .code39,
+                    .code39Mod43,
+                    .code93,
+                    .code128,
+                    .pdf417
+                ]
+            } else {
+                captureOutput.metadataObjectTypes = [
+                    .qr,
+                    .code128,
+                    .aztec,
+                    .pdf417,
+                    .ean13,
+                    .dataMatrix,
+                    .interleaved2of5,
+                    .code39
+                ]
+            }
+
+        }
+    }
+    
     private func startScanning() {
         viewModel.isScanning = true
         session.sessionPreset = .high
@@ -209,6 +256,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         guard let input = try? AVCaptureDeviceInput(device: backCamera) else { return }
         performCaptureChecksForDevice(backCamera)
         captureOutput = AVCaptureMetadataOutput()
+        fallbackCaptureOutput = AVCaptureMetadataOutput()
 
         if session.canAddInput(input) {
             session.addInput(input)
@@ -228,21 +276,35 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
             if session.canAddOutput(captureOutput) {
                 session.addOutput(captureOutput)
                 captureOutput.setMetadataObjectsDelegate(self, queue: schemeScanningQueue)
-                captureOutput.metadataObjectTypes = [
-                    .qr,
-                    .code128,
-                    .aztec,
-                    .pdf417,
-                    .ean13,
-                    .dataMatrix,
-                    .interleaved2of5,
-                    .code39
-                ]
+                
+                if isIos16 {
+                    captureOutput.metadataObjectTypes = [
+                        .ean13,
+                        .ean8,
+                        .upce,
+                        .code39,
+                        .code39Mod43,
+                        .code93,
+                        .code128,
+                        .pdf417
+                    ]
+                } else {
+                    captureOutput.metadataObjectTypes = [
+                        .qr,
+                        .code128,
+                        .aztec,
+                        .pdf417,
+                        .ean13,
+                        .dataMatrix,
+                        .interleaved2of5,
+                        .code39
+                    ]
+                }
             }
         }
 
-        if !session.isRunning {
-            session.startRunning()
+        if !self.session.isRunning {
+            self.session.startRunning()
         }
 
         captureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
@@ -263,8 +325,17 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     }
     
     private func scheduleTimer() {
-        timer = Timer.scheduledTimer(withTimeInterval: Constants.timerInterval, repeats: false, block: { [weak self] _ in
-            self?.widgetView.timeout()
+        timer = Timer.scheduledTimer(withTimeInterval: Constants.timerInterval, repeats: true, block: { [weak self] _ in
+            
+            self?.reset()
+            
+//            self?.timeouts += 1
+//            if self?.timeouts ?? 0 < 3 {
+//                self?.reset()
+//            } else {
+//                self?.widgetView.timeout()
+//                self?.timeouts = 0
+//            }
         })
     }
 
