@@ -299,7 +299,8 @@ class PaymentCardDetailViewModel {
                     completion()
                     return
                 }
-                let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: error.message, completion: completion)
+                let message = !error.message.isEmpty ? error.message : L10n.paymentCardLinkFailAlertMessage
+                let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: message, completion: completion)
                 Current.navigate.to(AlertNavigationRequest(alertController: alert))
             }
         } else {

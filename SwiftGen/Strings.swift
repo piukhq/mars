@@ -433,6 +433,8 @@ internal enum L10n {
   internal static let paymentCardExpiredAlertMessage = L10n.tr("Localizable", "payment_card_expired_alert_message")
   /// This payment card has expired
   internal static let paymentCardExpiredAlertTitle = L10n.tr("Localizable", "payment_card_expired_alert_title")
+  /// Unable to adjust link at this time, if the problem persists please contact support
+  internal static let paymentCardLinkFailAlertMessage = L10n.tr("Localizable", "payment_card_link_fail_alert_message")
   /// Position your card in the frame so the card number is visible
   internal static let paymentScannerExplainerText = L10n.tr("Localizable", "payment_scanner_explainer_text")
   /// You can also type in the card details yourself

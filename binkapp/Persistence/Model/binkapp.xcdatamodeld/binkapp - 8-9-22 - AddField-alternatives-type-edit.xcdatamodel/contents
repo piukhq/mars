@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="CD_AddField" representedClassName="CD_AddField" parentEntity="CD_BaseObject" syncable="YES">
-        <attribute name="alternatives" optional="YES" attributeType="Transformable"/>
+        <attribute name="alternatives" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
         <attribute name="column" optional="YES" attributeType="String"/>
         <attribute name="commonName" optional="YES" attributeType="String"/>
         <attribute name="fieldDescription" optional="YES" attributeType="String"/>
@@ -267,7 +267,7 @@
         <relationship name="voucher" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Voucher" inverseName="earn" inverseEntity="CD_Voucher"/>
     </entity>
     <elements>
-        <element name="CD_AddField" positionX="-9" positionY="117" width="128" height="178"/>
+        <element name="CD_AddField" positionX="-9" positionY="117" width="128" height="164"/>
         <element name="CD_App" positionX="0" positionY="126" width="128" height="88"/>
         <element name="CD_AuthoriseField" positionX="9" positionY="135" width="128" height="163"/>
         <element name="CD_Balance" positionX="18" positionY="144" width="128" height="118"/>
