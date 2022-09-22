@@ -816,8 +816,8 @@ internal enum L10n {
   internal static let showBarcodeBody = L10n.tr("Localizable", "show_barcode_body")
   /// Showing Barcode
   internal static let showBarcodeTitle = L10n.tr("Localizable", "show_barcode_title")
-  /// Show Tesco Locations
-  internal static let showTescoLocations = L10n.tr("Localizable", "show_tesco_locations")
+  /// Show Locations
+  internal static let showLocations = L10n.tr("Localizable", "show_locations")
   /// Sign up
   internal static let signUpButtonTitle = L10n.tr("Localizable", "sign_up_button_title")
   /// Sign up failed

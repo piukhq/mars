@@ -140,7 +140,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     private lazy var showLocationsText: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = L10n.showTescoLocations
+        label.text = L10n.showLocations
         label.font = .navBar
         label.textAlignment = .left
         label.textColor = Current.themeManager.color(for: .text)
@@ -639,23 +639,23 @@ extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDeleg
 
 extension LoyaltyCardFullDetailsViewController {
     func fetchGeoData() {
-        viewModel.fetchGeoData(completion: { hasData, animated in
-            if hasData {
-                if animated {
-                    self.locationView.isHidden = false
-                    UIView.animate(withDuration: 0.8) {
-                        self.locationView.layer.opacity = 1.0
-                        self.locationView.transform = CGAffineTransform(scaleX: 1, y: 1)
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-                        self.locationImage.startAnimating()
-                    }
-                } else {
-                    self.locationView.isHidden = false
+        viewModel.fetchGeoData(completion: { geoDataIsAvailable, animated in
+            guard geoDataIsAvailable == true else { return }
+            
+            if animated {
+                self.locationView.isHidden = false
+                UIView.animate(withDuration: 0.8) {
                     self.locationView.layer.opacity = 1.0
                     self.locationView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                     self.locationImage.startAnimating()
                 }
+            } else {
+                self.locationView.isHidden = false
+                self.locationView.layer.opacity = 1.0
+                self.locationView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                self.locationImage.startAnimating()
             }
         })
     }

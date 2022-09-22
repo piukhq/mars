@@ -10,7 +10,7 @@ import Foundation
 
 enum FeatureType: String, Codable {
     case themes
-    case tescoLocations = "tesco_locations"
+    case locations
     case unknown
     
     init(from decoder: Decoder) throws {
