@@ -17,9 +17,28 @@ extension LayoutHelper {
         return navigationBar?.frame.height ?? 0
     }
 
-    enum BinkInfoButton {
-        static let imageEdgeInsets = UIEdgeInsets(top: 8, left: 6, bottom: 7, right: 5)
-        static let titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 3)
+    enum SortOrderLayout {
+        static let sourceRectHeightOffset: CGFloat = 6
+        static let cellHeight: CGFloat = 64
+        static let titleLabelTopOffset: CGFloat = 20
+        static let titleLabelHorizontalOffset: CGFloat = 34
+        static let lineSeparatorTopOffset: CGFloat = 4
+        static let lineSeparatorHeight: CGFloat = 1
+    }
+
+    enum GeoLocationCallout {
+        static let calloutHeight: CGFloat = 80.0
+        static let calloutWidth: CGFloat = 340.0
+        static let padding: CGFloat = 15
+        static let imageWidth: CGFloat = 40
+        static let locationsTextTopOffset: CGFloat = 24
+        static let locationsTextRightOffset: CGFloat = 8
+        static let locationsTextLeftOffset: CGFloat = 84
+        static let nearestStoresTextRightOffset: CGFloat = 8
+        static let nearestStoresTextBottomOffset: CGFloat = 24
+        static let locationImageVerticalOffset: CGFloat = 24
+        static let locationImageHorizontalOffset: CGFloat = 2
+        static let locationViewHeight: CGFloat = 100
     }
 
     enum WalletDimensions {

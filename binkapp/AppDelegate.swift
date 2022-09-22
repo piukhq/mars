@@ -52,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         // Device storage
         StorageUtility.start()
         
-        // Remote config
+        // Remote config 
         Current.remoteConfig.configure()
 
         // Start points scraping manager
@@ -90,17 +90,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        if #available(iOS 14.0, *) {
-            BinkLogger.info(event: AppLoggerEvent.appEnteredForeground)
-        }
+        BinkLogger.info(event: AppLoggerEvent.appEnteredForeground)
         Current.wallet.refreshMembershipPlansIfNecessary()
         InAppReviewUtility.recordAppLaunch()
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        if #available(iOS 14.0, *) {
-            BinkLogger.info(event: AppLoggerEvent.appEnteredBackground)
-        }
+        BinkLogger.info(event: AppLoggerEvent.appEnteredBackground)
         Current.wallet.handleAppDidEnterBackground()
     }
     

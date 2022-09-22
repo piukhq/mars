@@ -13,7 +13,7 @@ class BarcodeViewNoBarcode: BarcodeView {
         cardNumberLabel.text = viewModel.barcodeViewModel.cardNumber
         
         if let plan = viewModel.membershipCard.membershipPlan {
-            iconImageView.setImage(forPathType: .membershipPlanAlternativeHero(plan: plan))
+            iconImageView.setImage(forPathType: .membershipPlanAlternativeHero(plan: plan), animated: true)
         }
     }
     

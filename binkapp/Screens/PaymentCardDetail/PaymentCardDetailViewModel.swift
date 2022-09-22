@@ -6,12 +6,12 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
 class PaymentCardDetailViewModel {
     typealias EmptyCompletionBlock = () -> Void
 
-    private var paymentCard: CD_PaymentCard {
+    var paymentCard: CD_PaymentCard {
         didSet {
             buildInformationRows()
         }
@@ -241,7 +241,7 @@ class PaymentCardDetailViewModel {
     }
 
     // MARK: Information rows
-    private func buildInformationRows() {
+    func buildInformationRows() {
         informationRows = informationRowFactory.makePaymentInformationRows(for: paymentCardStatus)
     }
 
@@ -254,11 +254,8 @@ class PaymentCardDetailViewModel {
     }
 
     func toSecurityAndPrivacyScreen() {
-        let title: String = L10n.securityAndPrivacyTitle
-        let description: String = L10n.securityAndPrivacyDescription
-        let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
-        let viewController = ViewControllerFactory.makeSecurityAndPrivacyViewController(configuration: configuration)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        let hostingViewController = UIHostingController(rootView: ReusableTemplateView(title: L10n.securityAndPrivacyTitle, description: L10n.securityAndPrivacyDescription))
+        let navigationRequest = ModalNavigationRequest(viewController: hostingViewController)
         Current.navigate.to(navigationRequest)
     }
     
@@ -276,9 +273,7 @@ class PaymentCardDetailViewModel {
                 return
             }
             self.repository.delete(self.paymentCard) {
-                if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(event: PaymentCardLoggerEvent.paymentCardDeleted, value: self.paymentCard.id)
-                }
+                BinkLogger.infoPrivateHash(event: PaymentCardLoggerEvent.paymentCardDeleted, value: self.paymentCard.id)
                 Current.wallet.refreshLocal()
                 Current.navigate.back()
             }
@@ -312,7 +307,8 @@ class PaymentCardDetailViewModel {
                     completion()
                     return
                 }
-                let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: error.message, completion: completion)
+                let message = !error.message.isEmpty ? error.message : L10n.paymentCardLinkFailAlertMessage
+                let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: message, completion: completion)
                 Current.navigate.to(AlertNavigationRequest(alertController: alert))
             }
         } else {

@@ -285,11 +285,9 @@ class FormCollectionViewCell: UICollectionViewCell {
             datePicker.datePickerMode = .date
             datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
 
-            if #available(iOS 14.0, *) {
-                datePicker.preferredDatePickerStyle = .inline
-                datePicker.backgroundColor = Current.themeManager.color(for: .viewBackground)
-                datePicker.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 400)
-            }
+            datePicker.preferredDatePickerStyle = .inline
+            datePicker.backgroundColor = Current.themeManager.color(for: .viewBackground)
+            datePicker.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 400)
 
             textField.inputView = datePicker
             pickerSelectedChoice = datePicker.date.getFormattedString(format: .dayShortMonthYearWithSlash)

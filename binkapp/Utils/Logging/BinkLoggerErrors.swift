@@ -86,6 +86,7 @@ enum UserLoggerError: String, BinkLoggerProtocol {
     case userRegistrationFailure = "Failed to register user"
     case userLoginFailure = "Failed to login"
     case createServiceFailure = "Failed to create service"
+    case deleteServiceFailure = "Failed to delete service"
     case fetchPreferencesFailure = "Failed to fetch preferences"
     case setPreferencesFailure = "Failed to set preferences"
     case renewTokenFailure = "Failed to renew token"

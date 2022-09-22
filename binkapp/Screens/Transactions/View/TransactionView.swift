@@ -22,7 +22,7 @@ class TransactionView: CustomView {
     }
     
     func configure(with transaction: CD_MembershipTransaction) {
-        let transactionValue = transaction.formattedAmounts?.first?.value?.intValue ?? 0
+        let transactionValue = transaction.formattedAmounts?.first?.value?.floatValue ?? 0
         let timestamp = transaction.timestamp?.doubleValue ?? 0.0
         let timestampDate = Date(timeIntervalSince1970: timestamp)
         if let transactionDescription = transaction.transactionDescription {
@@ -40,12 +40,13 @@ class TransactionView: CustomView {
         setValueLabel(text: "\(prefix)%.02f", transactionValue: transactionValue, addDecimals: true)
     }
       
-    func setValueLabel(text: String, transactionValue: Int, addDecimals: Bool) {
+    func setValueLabel(text: String, transactionValue: Float, addDecimals: Bool) {
         if transactionValue < 0 {
             let value = abs(transactionValue)
             valueLabel.text = "-" + String(format: text, addDecimals ? Float(value) : value)
-            valueLabel.textColor = .black
+            valueLabel.textColor = Current.themeManager.color(for: .text)
             imageView.image = Asset.down.image
+            imageView.tintColor = Current.themeManager.color(for: .text)
         } else if transactionValue > 0 {
             valueLabel.text = "+" + String(format: text, addDecimals ? Float(transactionValue) : transactionValue)
             valueLabel.textColor = .greenOk

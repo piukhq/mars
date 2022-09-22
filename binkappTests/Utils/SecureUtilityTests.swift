@@ -16,4 +16,11 @@ class SecureUtilityTests: XCTestCase {
         let actualHash = stringToHash.sha512
         XCTAssertEqual(expectedHash, actualHash)
     }
+    
+    func test_sha256() {
+        let stringToHash = "This is a sha256 hashing test"
+        let expectedHash = "dcff1b1e8a679f80462e76029e107b97a56f221e9b53f783697a56a7369f016b"
+        let actualHash = stringToHash.sha256
+        XCTAssertEqual(expectedHash, actualHash)
+    }
 }

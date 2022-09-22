@@ -15,6 +15,7 @@
 			dependencies = (
 			);
 			name = SwiftGen;
+			productName = SwiftGen;
 		};
 		52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */ = {
 			isa = PBXAggregateTarget;
@@ -24,6 +25,7 @@
 			dependencies = (
 			);
 			name = SwiftLint;
+			productName = SwiftLint;
 		};
 /* End PBXAggregateTarget section */
 
@@ -106,7 +108,7 @@
 		2113D43B37EDA455E4647F2A085ACA2B /* ZXDataMatrixX12Encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 58F8608D67F46A4E31ED815359BC9EA0 /* ZXDataMatrixX12Encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		211C5CCBD22057239E297B9C1A1CBE87 /* ZXGeoParsedResult.m in Sources */ = {isa = PBXBuildFile; fileRef = A67B1601FA4CF9BB6D0DFCF9BD967AAE /* ZXGeoParsedResult.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		22042F1E8449F7FE0E70DD01244FC671 /* ZXingObjC-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C596DD169F238A5F035984DBC31D8FD1 /* ZXingObjC-dummy.m */; };
-		221E8DCFF25E3270D9DBBE37E2D94C73 /* CardScan-CardScan in Resources */ = {isa = PBXBuildFile; fileRef = 0BBC9538B38236B253752CC3B1CD0DF0 /* CardScan-CardScan */; };
+		221E8DCFF25E3270D9DBBE37E2D94C73 /* CardScan.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0BBC9538B38236B253752CC3B1CD0DF0 /* CardScan.bundle */; };
 		22A3967514CAB030FE2F769FF1D5076A /* ZXCodaBarWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 40771C36EB8BBA94DC3864137FDC4523 /* ZXCodaBarWriter.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		22BD9EE1895A591E2BC8B0869955D181 /* ZXPDF417BarcodeMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C8FF356057DAA298648EED7A309E76 /* ZXPDF417BarcodeMetadata.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		22C6993FA44E786A5AC500881CA657F4 /* NonNameWords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BBC640B9D53CAF6E89AF451C3A7064 /* NonNameWords.swift */; };
@@ -789,7 +791,7 @@
 		09DF990E9DB8A2AFFB14C868157E6753 /* ZXQRCodeMultiReader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXQRCodeMultiReader.m; path = ZXingObjC/qrcode/multi/ZXQRCodeMultiReader.m; sourceTree = "<group>"; };
 		0B08CDDF1815ED3B110F711FD4335DC2 /* SwiftyRSA-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyRSA-dummy.m"; sourceTree = "<group>"; };
 		0BA86D13EA64B49FFC72B3C70F0214E5 /* ZXPDF417HighLevelEncoder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXPDF417HighLevelEncoder.h; path = ZXingObjC/pdf417/encoder/ZXPDF417HighLevelEncoder.h; sourceTree = "<group>"; };
-		0BBC9538B38236B253752CC3B1CD0DF0 /* CardScan-CardScan */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "CardScan-CardScan"; path = CardScan.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		0BBC9538B38236B253752CC3B1CD0DF0 /* CardScan.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardScan.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BF23193DF4C5302967223DF2EF67711 /* ZXByQuadrantReader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXByQuadrantReader.m; path = ZXingObjC/multi/ZXByQuadrantReader.m; sourceTree = "<group>"; };
 		0BFC7EBE71B8B2C8654E8EC75EDD8F58 /* Torch.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Torch.swift; path = CardScan/Classes/Torch.swift; sourceTree = "<group>"; };
 		0C7BFDDC51FC7E56CE5D6ACDDF8B9333 /* DTTJailbreakDetection */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = DTTJailbreakDetection; path = DTTJailbreakDetection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -808,7 +810,7 @@
 		10489D8D41AEDD6B556BA24E91A25B72 /* ZXAztecReader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXAztecReader.m; path = ZXingObjC/aztec/ZXAztecReader.m; sourceTree = "<group>"; };
 		109C1EEC885BDF8C9778646111A567E1 /* ZXDataMatrixSymbolInfo144.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXDataMatrixSymbolInfo144.m; path = ZXingObjC/datamatrix/encoder/ZXDataMatrixSymbolInfo144.m; sourceTree = "<group>"; };
 		10BC41DABC0D29DEDC0A567EB96A73A6 /* ZXISBNParsedResult.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXISBNParsedResult.m; path = ZXingObjC/client/result/ZXISBNParsedResult.m; sourceTree = "<group>"; };
-		11167BFECA96CC277333C20F99C0E743 /* Keys.podspec.json */ = {isa = PBXFileReference; includeInIndex = 1; path = Keys.podspec.json; sourceTree = "<group>"; };
+		11167BFECA96CC277333C20F99C0E743 /* Keys.podspec.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; path = Keys.podspec.json; sourceTree = "<group>"; };
 		116029C455D621A444E177269B0726D1 /* CardScan-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CardScan-prefix.pch"; sourceTree = "<group>"; };
 		1161B681D5F878182F758532F732C83A /* PostDetectionAlgorithm.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PostDetectionAlgorithm.swift; path = CardScan/Classes/PostDetectionAlgorithm.swift; sourceTree = "<group>"; };
 		11D2F4FB70245D1DB979F8FB6F28A12E /* ZXISBNParsedResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXISBNParsedResult.h; path = ZXingObjC/client/result/ZXISBNParsedResult.h; sourceTree = "<group>"; };
@@ -1079,7 +1081,7 @@
 		7AC94133862977F66D4403E77B07E611 /* ZXDetectorResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXDetectorResult.h; path = ZXingObjC/common/ZXDetectorResult.h; sourceTree = "<group>"; };
 		7AD299B03F175BD54F9F9032F25E4884 /* Pods-binkapp.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-binkapp.modulemap"; sourceTree = "<group>"; };
 		7C403A06508DA66BE7CA8303635E7FF4 /* ZXAztecCode.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXAztecCode.h; path = ZXingObjC/aztec/encoder/ZXAztecCode.h; sourceTree = "<group>"; };
-		7D3FC138F27002350A43066F3237A80A /* SSDOcr.mlmodelc */ = {isa = PBXFileReference; includeInIndex = 1; name = SSDOcr.mlmodelc; path = CardScan/Assets/SSDOcr.mlmodelc; sourceTree = "<group>"; };
+		7D3FC138F27002350A43066F3237A80A /* SSDOcr.mlmodelc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper; name = SSDOcr.mlmodelc; path = CardScan/Assets/SSDOcr.mlmodelc; sourceTree = "<group>"; };
 		7DBEC049B7C50F2A152E33F58BF2591E /* ZXDataMatrixEncoderContext.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXDataMatrixEncoderContext.h; path = ZXingObjC/datamatrix/encoder/ZXDataMatrixEncoderContext.h; sourceTree = "<group>"; };
 		7DFA853E02205CFED5F5247F687963D0 /* ZXAztecState.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXAztecState.m; path = ZXingObjC/aztec/encoder/ZXAztecState.m; sourceTree = "<group>"; };
 		7E214CD1233243797F5FF5488C4986C2 /* ZXAztecReader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXAztecReader.h; path = ZXingObjC/aztec/ZXAztecReader.h; sourceTree = "<group>"; };
@@ -1165,7 +1167,7 @@
 		9C70BA6356D39BE50C3BABB8074A94AE /* ZXSMSParsedResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXSMSParsedResult.h; path = ZXingObjC/client/result/ZXSMSParsedResult.h; sourceTree = "<group>"; };
 		9CBF5D4B8F563BAFC0D123ED0F8886BE /* ZXAbstractDoCoMoResultParser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXAbstractDoCoMoResultParser.h; path = ZXingObjC/client/result/ZXAbstractDoCoMoResultParser.h; sourceTree = "<group>"; };
 		9D894E000BF36462F97EA266016CB285 /* CGRectExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CGRectExtension.swift; path = CardScan/Classes/CGRectExtension.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9EAD4D24CB3BCEBC4784A3D7E7C2E043 /* ZXUPCAReader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXUPCAReader.h; path = ZXingObjC/oned/ZXUPCAReader.h; sourceTree = "<group>"; };
 		9EB094FC71E42359154B927768334021 /* SwiftyRSAError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyRSAError.swift; path = Source/SwiftyRSAError.swift; sourceTree = "<group>"; };
 		9EBF04F1B0142DD5F3D27793D87E68C9 /* Pods-binkappTests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-binkappTests"; path = Pods_binkappTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1262,7 +1264,7 @@
 		C68EED84010AD1364E4E68ECBE5D9C4E /* ZXRSSExpandedGeneralAppIdDecoder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXRSSExpandedGeneralAppIdDecoder.h; path = ZXingObjC/oned/rss/expanded/decoders/ZXRSSExpandedGeneralAppIdDecoder.h; sourceTree = "<group>"; };
 		C691A6EF639F86AA61161D3EF6BA6FAC /* ZXByteArray.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXByteArray.h; path = ZXingObjC/common/ZXByteArray.h; sourceTree = "<group>"; };
 		C6A83C6BEFCD27DFDA7D8ED118814FA7 /* ZXPDF417ErrorCorrection.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXPDF417ErrorCorrection.m; path = ZXingObjC/pdf417/encoder/ZXPDF417ErrorCorrection.m; sourceTree = "<group>"; };
-		C73CE0DF349AFD81E5D498E812A0A422 /* Config */ = {isa = PBXFileReference; includeInIndex = 1; name = Config; path = CardScan/Assets/Config; sourceTree = "<group>"; };
+		C73CE0DF349AFD81E5D498E812A0A422 /* Config */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = Config; path = CardScan/Assets/Config; sourceTree = "<group>"; };
 		C74EBC9F52F6CD1C9141EFA05D10641A /* ZXRSSExpandedReader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXRSSExpandedReader.h; path = ZXingObjC/oned/rss/expanded/ZXRSSExpandedReader.h; sourceTree = "<group>"; };
 		C7EE7A64D79E9A72835C0BB5A908842F /* Keys-library-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "Keys-library-dummy.m"; path = "../Keys-library/Keys-library-dummy.m"; sourceTree = "<group>"; };
 		C8136114734E2FF352BFFA00515F607D /* ZXQRCodeAlignmentPattern.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXQRCodeAlignmentPattern.m; path = ZXingObjC/qrcode/detector/ZXQRCodeAlignmentPattern.m; sourceTree = "<group>"; };
@@ -1515,7 +1517,6 @@
 				0A5742BD611DFCA410E35FD5762F46B8 /* All */,
 				748F52FBF645BB4C69FDE6473210FCD1 /* Support Files */,
 			);
-			name = ZXingObjC;
 			path = ZXingObjC;
 			sourceTree = "<group>";
 		};
@@ -2017,7 +2018,6 @@
 				17DA406B16E492E2A4B4AB8D77A14C13 /* DTTJailbreakDetection.m */,
 				373E829285F21B8992B23CB8890B23B2 /* Support Files */,
 			);
-			name = DTTJailbreakDetection;
 			path = DTTJailbreakDetection;
 			sourceTree = "<group>";
 		};
@@ -2025,7 +2025,7 @@
 			isa = PBXGroup;
 			children = (
 				704FD45B9A3CEB394F814C7DA9401DB5 /* CardScan */,
-				0BBC9538B38236B253752CC3B1CD0DF0 /* CardScan-CardScan */,
+				0BBC9538B38236B253752CC3B1CD0DF0 /* CardScan.bundle */,
 				0C7BFDDC51FC7E56CE5D6ACDDF8B9333 /* DTTJailbreakDetection */,
 				B62CED338872EF536910A466267352B5 /* Keys-framework */,
 				D4B5FC1A8F44103C20C834E5CAAEC363 /* Keys-library */,
@@ -2057,7 +2057,6 @@
 				00426A321A8970A043DDDE01E7B71C37 /* ObjC */,
 				6E871A2742D5ACBA83C8887F1AC50E8D /* Support Files */,
 			);
-			name = SwiftyRSA;
 			path = SwiftyRSA;
 			sourceTree = "<group>";
 		};
@@ -2170,7 +2169,6 @@
 			children = (
 				4C13396EE82B6ABA1CEF51BECEB0C87B /* Support Files */,
 			);
-			name = SwiftLint;
 			path = SwiftLint;
 			sourceTree = "<group>";
 		};
@@ -2179,7 +2177,6 @@
 			children = (
 				40D7B397B33BD23B296A5B043D6A6E25 /* Support Files */,
 			);
-			name = SwiftGen;
 			path = SwiftGen;
 			sourceTree = "<group>";
 		};
@@ -2348,7 +2345,6 @@
 				BCE9C414741D6F831DE4C19204BFDB9A /* Core */,
 				223320B61434EA13F21E6652B39C344C /* Support Files */,
 			);
-			name = CardScan;
 			path = CardScan;
 			sourceTree = "<group>";
 		};
@@ -2877,7 +2873,7 @@
 			);
 			name = "CardScan-CardScan";
 			productName = CardScan;
-			productReference = 0BBC9538B38236B253752CC3B1CD0DF0 /* CardScan-CardScan */;
+			productReference = 0BBC9538B38236B253752CC3B1CD0DF0 /* CardScan.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		FBDE307EEE6EFAED12F501BC7E7652AA /* Keys-library */ = {
@@ -2993,7 +2989,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				221E8DCFF25E3270D9DBBE37E2D94C73 /* CardScan-CardScan in Resources */,
+				221E8DCFF25E3270D9DBBE37E2D94C73 /* CardScan.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3557,6 +3553,7 @@
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/CardScan";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = HC34M8YE55;
 				IBSC_MODULE = CardScan;
 				INFOPLIST_FILE = "Target Support Files/CardScan/ResourceBundle-CardScan-CardScan-Info.plist";
 				PRODUCT_NAME = CardScan;
@@ -3574,6 +3571,7 @@
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/CardScan";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = HC34M8YE55;
 				IBSC_MODULE = CardScan;
 				INFOPLIST_FILE = "Target Support Files/CardScan/ResourceBundle-CardScan-CardScan-Info.plist";
 				PRODUCT_NAME = CardScan;
@@ -3630,6 +3628,7 @@
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/CardScan";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = HC34M8YE55;
 				IBSC_MODULE = CardScan;
 				INFOPLIST_FILE = "Target Support Files/CardScan/ResourceBundle-CardScan-CardScan-Info.plist";
 				PRODUCT_NAME = CardScan;
@@ -4936,6 +4935,7 @@
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/CardScan";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = HC34M8YE55;
 				IBSC_MODULE = CardScan;
 				INFOPLIST_FILE = "Target Support Files/CardScan/ResourceBundle-CardScan-CardScan-Info.plist";
 				PRODUCT_NAME = CardScan;
@@ -5388,6 +5388,7 @@
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/CardScan";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = HC34M8YE55;
 				IBSC_MODULE = CardScan;
 				INFOPLIST_FILE = "Target Support Files/CardScan/ResourceBundle-CardScan-CardScan-Info.plist";
 				PRODUCT_NAME = CardScan;
@@ -5873,6 +5874,7 @@
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/CardScan";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = HC34M8YE55;
 				IBSC_MODULE = CardScan;
 				INFOPLIST_FILE = "Target Support Files/CardScan/ResourceBundle-CardScan-CardScan-Info.plist";
 				PRODUCT_NAME = CardScan;

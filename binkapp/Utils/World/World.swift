@@ -25,6 +25,7 @@ class World {
     lazy var featureManager = FeatureTogglingManager()
     lazy var themeManager = ThemeManager()
     lazy var watchController = WatchController()
+    lazy var dateManager = DateManager()
 
     var onboardingTrackingId: String? // Stored to provide a consistent id from start to finish of onboarding, reset upon a new journey
     var inAppReviewableJourney: Any? // We cast this to the correct type using generics when we need to
@@ -77,7 +78,11 @@ extension UserDefaults: BinkUserDefaults {
         case installedWidgetIds
         case analyticsDebugMode
         case rememberMyDetails
-        
+        case membershipCardsSortType
+        case hasMembershipOrderChanged
+        case alwaysDownloadImages
+        case showBarcodeAlways
+
         var keyValue: String {
             switch self {
             case .hasLaunchedWallet:
@@ -120,6 +125,14 @@ extension UserDefaults: BinkUserDefaults {
                 return "analyticsDebugMode"
             case .rememberMyDetails:
                 return "rememberMyDetails"
+            case .membershipCardsSortType:
+                return "membershipCardsSortType"
+            case .hasMembershipOrderChanged:
+                return "hasMembershipOrderChanged"
+            case .alwaysDownloadImages:
+                return "alwaysDownloadImages"
+            case .showBarcodeAlways:
+                return "showBarcodeAlways"
             }
         }
     }

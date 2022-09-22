@@ -85,6 +85,11 @@ enum ViewControllerFactory {
         return UIHostingController(rootView: BarcodeScreenSwiftUIView(viewModel: viewModel))
     }
     
+    static func makeGeoLocationsViewController(companyName: String) -> GeoLocationsViewController {
+        let viewModel = GeoLocationViewModel(companyName: companyName)
+        return GeoLocationsViewController(viewModel: viewModel)
+    }
+    
     static func makeVoucherDetailViewController(voucher: CD_Voucher, plan: CD_MembershipPlan) -> PLRRewardDetailViewController {
         let viewModel = PLRRewardDetailViewModel(voucher: voucher, plan: plan)
         return PLRRewardDetailViewController(viewModel: viewModel)
@@ -127,10 +132,6 @@ enum ViewControllerFactory {
         return makeReusableTemplateViewController(configuration: configuration, floatingButtons: true)
     }
     
-    static func makeSecurityAndPrivacyViewController(configuration: ReusableModalConfiguration, floatingButtons: Bool = true) -> ReusableTemplateViewController {
-        return makeReusableTemplateViewController(configuration: configuration, floatingButtons: floatingButtons)
-    }
-    
     static func makeTransactionsViewController(membershipCard: CD_MembershipCard) -> TransactionsViewController {
         let viewModel = TransactionsViewModel(membershipCard: membershipCard)
         return TransactionsViewController(viewModel: viewModel)
@@ -148,9 +149,9 @@ enum ViewControllerFactory {
     
     // MARK: - Wallets
     
-    static func makeSettingsViewController(rowsWithActionRequired: [SettingsRow.RowType]?) -> SettingsViewController {
+    static func makeSettingsViewController(rowsWithActionRequired: [SettingsRow.RowType]?) -> UIViewController {
         let viewModel = SettingsViewModel(rowsWithActionRequired: rowsWithActionRequired)
-        return SettingsViewController(viewModel: viewModel)
+        return UIHostingController(rootView: SettingsView(viewModel: viewModel))
     }
 
     // MARK: - Onboarding
@@ -253,13 +254,26 @@ enum ViewControllerFactory {
         return alert
     }
     
-    static func makeOkCancelAlertViewController(title: String?, message: String?, cancelButton: Bool? = nil, completion: EmptyCompletionBlock? = nil) -> BinkAlertController {
+    static func makeOkCancelAlertViewController(title: String?, message: String?, okActionTitle: String? = nil, cancelButton: Bool? = nil, completion: EmptyCompletionBlock? = nil) -> BinkAlertController {
         let alert = BinkAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: L10n.ok, style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: okActionTitle ?? L10n.ok, style: .default, handler: { _ in
             completion?()
         }))
         
         alert.addAction(UIAlertAction(title: L10n.cancel, style: .cancel))
+        return alert
+    }
+    
+    static func makeTwoButtonAlertViewController(title: String?, message: String?, primaryButtonTitle: String, secondaryButtonTitle: String, primaryButtonCompletion: @escaping EmptyCompletionBlock, secondaryButtonCompletion: @escaping EmptyCompletionBlock) -> BinkAlertController {
+        let alert = BinkAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: primaryButtonTitle, style: .default, handler: { _ in
+            primaryButtonCompletion()
+        }))
+        
+        alert.addAction(UIAlertAction(title: secondaryButtonTitle, style: .default, handler: { _ in
+            secondaryButtonCompletion()
+        }))
+
         return alert
     }
     
@@ -291,11 +305,14 @@ enum ViewControllerFactory {
         return WebViewController(urlString: urlString)
     }
     
-    static func makeAlertViewControllerWithTextfield(title: String?, message: String?, cancelButton: Bool? = nil, okActionHandler: @escaping (String) -> Void, cancelActionHandler: EmptyCompletionBlock? = nil ) -> BinkAlertController {
+    static func makeAlertViewControllerWithTextfield(title: String?, message: String?, cancelButton: Bool?, keyboardType: UIKeyboardType, okActionHandler: @escaping (String) -> Void, cancelActionHandler: EmptyCompletionBlock? = nil ) -> BinkAlertController {
         let alert = BinkAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addTextField { textfield in
-            textfield.textContentType = .oneTimeCode
-            textfield.keyboardType = .numberPad
+            textfield.keyboardType = keyboardType
+            
+            if keyboardType == .numberPad {
+                textfield.textContentType = .oneTimeCode
+            }
         }
         alert.addAction(UIAlertAction(title: L10n.ok, style: .default, handler: { _ in
             okActionHandler(alert.textFields?[0].text ?? "")
@@ -308,15 +325,7 @@ enum ViewControllerFactory {
     }
 
     static func makeDebugViewController() -> UIViewController {
-        if #available(iOS 14.0, *) {
-            return UIHostingController(rootView: DebugMenuView())
-        } else {
-            let debugMenuFactory = DebugMenuFactory()
-            let debugMenuViewModel = DebugMenuViewModel(debugMenuFactory: debugMenuFactory)
-            let debugMenuViewController = DebugMenuTableViewController(viewModel: debugMenuViewModel)
-            debugMenuFactory.delegate = debugMenuViewController
-            return debugMenuViewController
-        }
+        return UIHostingController(rootView: DebugMenuView())
     }
 
     static func makeJailbrokenViewController() -> JailbrokenViewController {

@@ -68,6 +68,7 @@ class BarcodeViewModel: ObservableObject {
     let membershipCard: CD_MembershipCard
     var imageType: MerchantImageType = .hero
     var barcodeUse: BarcodeUse = .loyaltyCard
+    static let alwaysShowBarcodePreferencesSlug = "show-barcode-always"
 
     @Published var merchantImage: Image?
     @Published var showingReportIssueOptions = false {
@@ -76,14 +77,16 @@ class BarcodeViewModel: ObservableObject {
         }
     }
     
+    @Published var alwaysShowBarcode = false
+    
     lazy var reportIssueButton: BinkButtonSwiftUIView = {
         return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.barcodeReportIssueButtonTitle), enabled: true, buttonTapped: { [weak self] in
             self?.showingReportIssueOptions = true
-        }, type: .gradient)
+        }, type: .plain)
     }()
 
     
-    // MARK: Computed properties
+    // MARK: - Computed properties
 
     var barcodeImageIsRenderable: Bool {
         return barcodeImage(withSize: CGSize(width: 100, height: 100)) != nil
@@ -104,6 +107,10 @@ class BarcodeViewModel: ObservableObject {
         case .coupon:
             return L10n.barcodeCouponDescription
         }
+    }
+    
+    var membershipNumberTitle: String {
+        return L10n.barcodeMembershipNumberTitle(membershipCard.membershipPlan?.account?.planNameCard ?? "")
     }
     
     var isBarcodeAvailable: Bool {
@@ -142,6 +149,7 @@ class BarcodeViewModel: ObservableObject {
 
     init(membershipCard: CD_MembershipCard) {
         self.membershipCard = membershipCard
+        self.setShouldAlwaysDisplayBarCode()
     }
     
     var barcodeIsMoreSquareThanRectangle: Bool {
@@ -153,10 +161,10 @@ class BarcodeViewModel: ObservableObject {
     }
     
     
-    // MARK: Functions
+    // MARK: - Functions
 
-    func barcodeImage(withSize size: CGSize, drawInContainer: Bool = true) -> UIImage? {
-        guard let barcodeString = membershipCard.card?.barcode else { return nil }
+    func barcodeImage(withSize size: CGSize, drawInContainer: Bool = true, alwaysShowBarCode: Bool = false) -> UIImage? {
+        guard let barcodeString = alwaysShowBarCode ? (membershipCard.card?.barcode ?? self.cardNumber) : membershipCard.card?.barcode else { return nil }
         
         let writer = ZXMultiFormatWriter()
         let encodeHints = ZXEncodeHints()
@@ -215,6 +223,33 @@ class BarcodeViewModel: ObservableObject {
         let boxWidth = widthOfStackView / 8
         let boxHeight = boxWidth * 1.8
         return boxHeight * CGFloat(rowCount)
+    }
+    
+    func setShouldAlwaysDisplayBarCode() {
+        if Current.userDefaults.value(forDefaultsKey: .showBarcodeAlways) == nil {
+            alwaysShowBarcode = false
+            return
+        }
+        
+        alwaysShowBarcode = Current.userDefaults.bool(forDefaultsKey: .showBarcodeAlways)
+    }
+    
+    func setShowBarcodeAlwaysPreference(preferencesRepository: PreferencesProtocol?) {
+        if let preferences = preferencesRepository {
+            let checkedState = "1"
+            let dictionary = [BarcodeViewModel.alwaysShowBarcodePreferencesSlug: checkedState]
+            
+            preferences.putPreferences(preferences: dictionary) {
+                if !UIApplication.isRunningUnitTests {
+                    MessageView.show(L10n.preferencesUpdated, type: .snackbar(.short))
+                    MixpanelUtility.setUserProperty(.showBarcodeAlways(true))
+                }
+                
+                Current.userDefaults.set(true, forDefaultsKey: .showBarcodeAlways)
+                self.setShouldAlwaysDisplayBarCode()
+            } onError: { _ in
+            }
+        }
     }
 }
 

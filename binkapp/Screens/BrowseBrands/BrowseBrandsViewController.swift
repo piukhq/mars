@@ -174,18 +174,6 @@ class BrowseBrandsViewController: BinkViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
-        
-        if #available(iOS 14, *) {} else {
-            /// iOS 13
-            view.addSubview(textfieldShadowLayer)
-            NSLayoutConstraint.activate([
-                textfieldShadowLayer.leadingAnchor.constraint(equalTo: searchTextField.leadingAnchor),
-                textfieldShadowLayer.topAnchor.constraint(equalTo: searchTextField.topAnchor),
-                textfieldShadowLayer.heightAnchor.constraint(equalTo: searchTextField.heightAnchor),
-                textfieldShadowLayer.widthAnchor.constraint(equalTo: searchTextField.widthAnchor)
-            ])
-            view.sendSubviewToBack(textfieldShadowLayer)
-        }
     }
     
     @objc private func dismissKeyboard() {

@@ -8,7 +8,8 @@
 import UIKit
 
 protocol LoyaltyCardFullDetailsModalDelegate: AnyObject {
-    func modalWillDismiss()
+    func refreshUI()
+    func refreshModules()
 }
 
 class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable {
@@ -103,6 +104,56 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         stackView.axis = .vertical
         stackView.spacing = Constants.stackViewSpacing
         return stackView
+    }()
+    
+    private lazy var locationView: UIView = {
+        let view = UIView()
+        view.isUserInteractionEnabled = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
+        view.layer.cornerRadius = Constants.cornerRadius
+        view.clipsToBounds = false
+        view.layer.applyDefaultBinkShadow()
+        let gestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(showMapLocations))
+        view.addGestureRecognizer(gestureRecogniser)
+        return view
+    }()
+    
+    private lazy var locationImage: UIImageView = {
+        // RS = using a gif at the moment. This asset might not be final
+        let image = UIImage.gifImageWithName("place-marker")
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = Constants.cornerRadius
+        imageView.clipsToBounds = true
+        imageView.animationImages = image?.images
+        imageView.animationRepeatCount = 1
+        imageView.animationDuration = 2.5
+        imageView.image = image?.images?.last
+        imageView.tintColor = Current.themeManager.color(for: .walletCardBackground)
+        imageView.startAnimating()
+        return imageView
+    }()
+    
+    private lazy var showLocationsText: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = L10n.showTescoLocations
+        label.font = .navBar
+        label.textAlignment = .left
+        label.textColor = Current.themeManager.color(for: .text)
+        return label
+    }()
+    
+    private lazy var nearestStoresText: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = L10n.findNearestStore
+        label.textAlignment = .left
+        label.font = .bodyTextLarge
+        label.textColor = Current.themeManager.color(for: .text)
+        return label
     }()
     
     lazy var separator: UIView = {
@@ -206,9 +257,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         informationTableView.separatorColor = Current.themeManager.color(for: .divider)
         informationTableView.reloadData()
         titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
-        
-        guard let plan = viewModel.membershipCard.membershipPlan else { return }
-        configureBrandHeader(with: plan)
 
         let plrVoucherCells = stackScrollView.arrangedSubviews.filter { $0.isKind(of: PLRBaseCollectionViewCell.self) }
         if let voucherCells = plrVoucherCells as? [PLRBaseCollectionViewCell], let vouchers = viewModel.vouchers {
@@ -264,12 +312,7 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.headerToBarcodeButtonPadding, after: brandHeader)
         stackScrollView.add(arrangedSubview: brandHeaderBarcodeButtonPadding)
         
-        if viewModel.shouldShowBarcodeButton {
-            showBarcodeButton.setTitle(viewModel.barcodeButtonTitle, for: .normal)
-            stackScrollView.add(arrangedSubview: showBarcodeButton)
-            let gestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(showBarcodeButtonPressed))
-            brandHeader.addGestureRecognizer(gestureRecogniser)
-        }
+        configureShowBarcodeButton()
         
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: showBarcodeButton)
         stackScrollView.add(arrangedSubview: modulesStackView)
@@ -288,6 +331,34 @@ private extension LoyaltyCardFullDetailsViewController {
             NSLayoutConstraint.activate([
                 offerTilesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
                 offerTilesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding)
+            ])
+        }
+        
+        if viewModel.shouldDisplayLocationOption {
+            // Build locations
+            stackScrollView.add(arrangedSubview: locationView)
+            stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: locationView)
+            
+            locationView.addSubview(locationImage)
+            locationView.addSubview(showLocationsText)
+            locationView.addSubview(nearestStoresText)
+            NSLayoutConstraint.activate([
+                locationView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
+                locationView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
+                locationView.heightAnchor.constraint(equalToConstant: LayoutHelper.GeoLocationCallout.locationViewHeight),
+                
+                showLocationsText.rightAnchor.constraint(equalTo: locationView.rightAnchor, constant: -LayoutHelper.GeoLocationCallout.locationsTextRightOffset),
+                showLocationsText.topAnchor.constraint(equalTo: locationView.topAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextTopOffset),
+                showLocationsText.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextLeftOffset),
+
+                nearestStoresText.rightAnchor.constraint(equalTo: locationView.rightAnchor, constant: -LayoutHelper.GeoLocationCallout.nearestStoresTextRightOffset),
+                nearestStoresText.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.nearestStoresTextBottomOffset),
+                nearestStoresText.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextLeftOffset),
+                
+                locationImage.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset),
+                locationImage.topAnchor.constraint(equalTo: locationView.topAnchor, constant: LayoutHelper.GeoLocationCallout.locationImageVerticalOffset),
+                locationImage.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageVerticalOffset),
+                locationImage.rightAnchor.constraint(equalTo: nearestStoresText.leftAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset)
             ])
         }
         
@@ -348,6 +419,19 @@ private extension LoyaltyCardFullDetailsViewController {
         barcode.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
         barcode.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
         barcode.layoutIfNeeded()
+    }
+    
+    private func configureShowBarcodeButton(insertAt index: Int? = nil) {
+        if viewModel.shouldShowBarcodeButton {
+            showBarcodeButton.setTitle(viewModel.barcodeButtonTitle, for: .normal)
+            if let index = index {
+                stackScrollView.insert(arrangedSubview: showBarcodeButton, atIndex: index)
+            } else {
+                stackScrollView.add(arrangedSubview: showBarcodeButton)
+            }
+            let gestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(showBarcodeButtonPressed))
+            brandHeader.addGestureRecognizer(gestureRecogniser)
+        }
     }
     
     private func setupCellForType<T: PLRBaseCollectionViewCell>(_ cellType: T.Type, voucher: CD_Voucher) {
@@ -416,6 +500,12 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     func configurePLRCells() {
+        stackScrollView.arrangedSubviews.forEach { subview in
+            if subview.isKind(of: PLRBaseCollectionViewCell.self) {
+                stackScrollView.remove(arrangedSubview: subview)
+            }
+        }
+        
         if viewModel.shouldShowPLR {
             if let vouchers = viewModel.vouchers {
                 for voucher in vouchers {
@@ -439,6 +529,10 @@ private extension LoyaltyCardFullDetailsViewController {
     
     @objc func showBarcodeButtonPressed() {
         viewModel.toBarcodeModel()
+    }
+    
+    @objc func showMapLocations() {
+        viewModel.toGeoLocations()
     }
     
     private func setPadding(animated: Bool = true) {
@@ -522,13 +616,17 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
 // MARK: - Modal Delegate
 
 extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDelegate {
-    func modalWillDismiss() {
+    func refreshModules() {
         configureModules()
-
+    }
+    
+    func refreshUI() {
         Current.wallet.reload { [weak self] in
             guard let self = self else { return }
             if let updatedMembershipCard = Current.wallet.membershipCards?.first(where: { $0.id == self.viewModel.membershipCard.id }) {
                 self.viewModel.membershipCard = updatedMembershipCard
+                self.configureShowBarcodeButton(insertAt: 2)
+                self.stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: self.showBarcodeButton)
                 self.configureModules()
                 self.configurePLRCells()
             }

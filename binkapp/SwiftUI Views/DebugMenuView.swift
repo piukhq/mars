@@ -28,11 +28,21 @@ struct DebugMenuView: View {
                 ToggleDebugRow(title: "Response code visualiser", defaultsKey: .responseCodeVisualiser)
                 ToggleDebugRow(title: "Apply in-app review rules", defaultsKey: .applyInAppReviewRules)
                 ToggleDebugRow(title: "Enable analytics", defaultsKey: .analyticsDebugMode)
+                ToggleDebugRow(title: "Always download images", defaultsKey: .alwaysDownloadImages)
                 
                 if hasUser {
                     ToggleDebugRow(title: "LPC debug mode", defaultsKey: .lpcDebugMode)
                     NavigationDebugRow(title: "Loyalty plan colour swatches", destination: SwatchView())
                 }
+                
+                PickerDebugRow(type: .snackbar)
+                DebugRow(rowType: .exportNetworkActivity, destructive: false)
+            }
+            .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
+            
+            Section(header: Text("Date Manager")) {
+                DatePickerRow()
+                DebugRow(rowType: .resetDate)
             }
             .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
             
@@ -54,6 +64,11 @@ struct DebugMenuView: View {
                     }
                 }
                 .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
+                
+                Section(footer: Text("Tap to copy to clipboard")) {
+                    DebugRow(rowType: .token, subtitle: Current.userManager.currentToken, destructive: false)
+                }
+                .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
             }
             
             Section(footer: Text("This will immediately crash the application.")) {
@@ -70,18 +85,17 @@ struct DebugMenuView: View {
 struct DebugRow: View {
     enum RowType: String {
         case forceCrash = "Force crash"
-        
-        func action() {
-            switch self {
-            case .forceCrash:
-                SentryService.forceCrash()
-            }
-        }
+        case resetDate = "Reset"
+        case token = "Current Token"
+        case exportNetworkActivity = "Export Recent Network Activity"
     }
     
     let rowType: RowType
     let subtitle: String?
     let destructive: Bool
+    
+    @State private var presentActivitySheet = false
+    @State private var buttonTapped = false
     
     init(rowType: RowType, subtitle: String? = nil, destructive: Bool = false) {
         self.rowType = rowType
@@ -90,16 +104,47 @@ struct DebugRow: View {
     }
     
     var body: some View {
-        Button(action: rowType.action, label: {
+        HStack {
             VStack(alignment: .leading, spacing: 5) {
                 Text(rowType.rawValue)
-                    .foregroundColor(destructive ? .red : .black)
+                    .foregroundColor(destructive ? .red : buttonTapped ? Color(.binkGradientBlueRight.lighter() ?? .grey10) : Color(.binkGradientBlueRight))
                 if let subtitle = subtitle {
                     Text(subtitle)
-                        .font(.subheadline)
+                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                        .font(.callout)
                 }
             }
+            .padding([.top, .bottom], 10)
+            .sheet(isPresented: $presentActivitySheet) {
+                if let url = BinkNetworkingLogger().networkLogsFilePath() {
+                    ActivityViewController(activityItemMetadata: LinkMetadataManager(title: "Export recent API requests and responses", url: url))
+                }
+            }
+            
+            Spacer()
+        }
+        .background(content: {
+            Color(Current.themeManager.color(for: .walletCardBackground))
         })
+        .onTapGesture {
+            buttonTapped = true
+            
+            switch rowType {
+            case .forceCrash:
+                SentryService.forceCrash()
+            case .resetDate:
+                Current.dateManager.reset()
+            case .token:
+                UIPasteboard.general.string = Current.userManager.currentToken
+                MessageView.show("Copied to clipboard", type: .snackbar(.short))
+            case .exportNetworkActivity:
+                presentActivitySheet = true
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                buttonTapped = false
+            }
+        }
     }
 }
 
@@ -122,6 +167,7 @@ struct ToggleDebugRow: View {
         Toggle(isOn: $isEnabled) {
             Text(title)
                 .font(.body)
+                .foregroundColor(Color(.binkGradientBlueRight))
             if let subtitle = subtitle {
                 Text(subtitle)
                     .font(.subheadline)
@@ -160,6 +206,7 @@ struct StepperDebugRow: View {
                 .onChange(of: stepperValue, perform: { value in
                     valueHandler(Int(value))
                 })
+                .foregroundColor(Color(.binkGradientBlueRight))
             Text("\(Int(stepperValue))")
         }
     }
@@ -167,13 +214,33 @@ struct StepperDebugRow: View {
 
 @available(iOS 14.0, *)
 struct PickerDebugRow: View {
-    enum RowType: String {
-        case environment = "Select environment"
+    enum RowType {
+        enum SnackbarAction: String, CaseIterable {
+            case short
+            case long
+            case multiline
+            case action
+            case input
+        }
+        
+        case environment
+        case snackbar
+        
+        var title: String {
+            switch self {
+            case .environment:
+                return "Select environment"
+            case .snackbar:
+                return "Snackbars"
+            }
+        }
         
         var initialValue: String {
             switch self {
             case .environment:
                 return APIConstants.baseURLString
+            case .snackbar:
+                return "Choose..."
             }
         }
         
@@ -181,6 +248,8 @@ struct PickerDebugRow: View {
             switch self {
             case .environment:
                 return EnvironmentType.allCases.map { $0.rawValue }
+            case .snackbar:
+                return SnackbarAction.allCases.map { $0.rawValue }
             }
         }
         
@@ -189,6 +258,40 @@ struct PickerDebugRow: View {
             case .environment:
                 APIConstants.changeEnvironment(environment: EnvironmentType(rawValue: selection) ?? .dev)
                 NotificationCenter.default.post(name: .shouldLogout, object: nil)
+            case .snackbar:
+                let snackbarAction = SnackbarAction(rawValue: selection)
+                
+                switch snackbarAction {
+                case .short:
+                    MessageView.show("This is a short snackbar", type: .snackbar(.short))
+                case .long:
+                    MessageView.show("This is a long snackbar", type: .snackbar(.long))
+                case .multiline:
+                    MessageView.show("This is a snackbar with so much text, the label is like whuuuut?! I can't contain this much text yo, I'm gonna spill", type: .snackbar(.long))
+                case .action:
+                    let alert = ViewControllerFactory.makeTwoButtonAlertViewController(title: "Choose Action Type", message: nil, primaryButtonTitle: "Success", secondaryButtonTitle: "Error") {
+                        let button = MessageButton(title: "UNDO", type: .success) {
+                            MessageView.show("Success Action Triggered", type: .snackbar(.short))
+                        }
+                        MessageView.show("This is a snackbar with an action", type: .snackbar(.long), button: button)
+                    } secondaryButtonCompletion: {
+                        let button = MessageButton(title: "UNDO", type: .error) {
+                            MessageView.show("Error Action Triggered", type: .snackbar(.short))
+                        }
+                        MessageView.show("This is a snackbar with an action", type: .snackbar(.long), button: button)
+                    }
+
+                    let alertRequest = AlertNavigationRequest(alertController: alert)
+                    Current.navigate.to(alertRequest)
+                case .input:
+                    let alert = ViewControllerFactory.makeAlertViewControllerWithTextfield(title: "Snackbar Message", message: "Enter a message to display on the snackbar", cancelButton: true, keyboardType: .default) { message in
+                        MessageView.show(message, type: .snackbar(.long))
+                    }
+                    let alertRequest = AlertNavigationRequest(alertController: alert)
+                    Current.navigate.to(alertRequest)
+                case .none:
+                    break
+                }
             }
         }
     }
@@ -204,23 +307,28 @@ struct PickerDebugRow: View {
     
     var body: some View {
         HStack {
-            Picker(type.rawValue.capitalized, selection: $selection) {
+            Text(type.title)
+                .lineLimit(1)
+                .truncationMode(.tail)
+                .foregroundColor(Color(.binkGradientBlueRight))
+
+            Spacer()
+
+            Picker(type.title.capitalized, selection: $selection) {
                 ForEach(type.options, id: \.self) {
-                    Text($0)
+                    switch type {
+                    case .environment:
+                        Text($0)
+                    case .snackbar:
+                        Text($0.capitalized)
+                    }
                 }
             }
             .pickerStyle(MenuPickerStyle())
-            .foregroundColor(Color(.binkGradientBlueRight))
+            .accentColor(Color(UIColor.binkPurple))
             .onChange(of: selection, perform: { value in
                 type.handleSelection(value)
             })
-            
-            Spacer()
-            
-            Text(selection)
-                .lineLimit(1)
-                .truncationMode(.tail)
-                .foregroundColor(.gray)
         }
     }
 }
@@ -232,6 +340,7 @@ struct NavigationDebugRow<Destination: View>: View {
     
     var body: some View {
         NavigationLink(title, destination: destination)
+            .foregroundColor(Color(.binkGradientBlueRight))
     }
 }
 
@@ -262,6 +371,16 @@ struct SwatchView: View {
             }
         }
         .navigationTitle("Secondary plan colours")
+    }
+}
+
+struct DatePickerRow: View {
+    @ObservedObject private var dateManager = Current.dateManager
+    
+    var body: some View {
+        DatePicker("Adjust device date", selection: $dateManager.currentDate)
+            .foregroundColor(Color(.binkGradientBlueRight))
+            .datePickerStyle(.compact)
     }
 }
 
