@@ -423,6 +423,7 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
     }
     
     @objc private func enterManually() {
+        MixpanelUtility.track(.binkScannerEnterManuallyPressed(brandName: viewModel.plan?.account?.companyName ?? ""))
         delegate?.binkScannerViewControllerShouldEnterManually(self, completion: { [weak self] in
             guard let self = self else { return }
             self.navigationController?.removeViewController(self)
@@ -547,7 +548,10 @@ extension BinkScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegat
             guard shouldAllowScanning else { return }
             let ciImage = CIImage(cvImageBuffer: frame)
             visionUtility.detectBarcode(ciImage: ciImage) { [weak self] barcode in
-                guard let barcode = barcode, let self = self, self.shouldAllowScanning else { return }
+                guard let barcode = barcode, let self = self, self.shouldAllowScanning else {
+                    self?.visionUtility.barcodeDetected = false
+                    return
+                }
                 self.timer?.invalidate()
                 self.shouldAllowScanning = false
                 self.captureSource = .camera(self.viewModel.plan)
