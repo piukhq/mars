@@ -8,8 +8,9 @@
 
 import Foundation
 import CardScan
+import VisionKit
 
-class PaymentWalletViewModel: WalletViewModel {
+class PaymentWalletViewModel: NSObject, WalletViewModel {
     typealias T = CD_PaymentCard
 
     private let repository = PaymentWalletRepository()
@@ -33,9 +34,9 @@ class PaymentWalletViewModel: WalletViewModel {
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
         switch walletPrompt.type {
         case .addPaymentCards:
-            guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
-            PermissionsUtility.launchPaymentScanner(viewController) {
-                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            let scannerViewController = ViewControllerFactory.makeScannerViewController(type: .payment, delegate: Current.navigate.scannerDelegate)
+            PermissionsUtility.launchPaymentScanner(scannerViewController) {
+                let navigationRequest = ModalNavigationRequest(viewController: scannerViewController)
                 Current.navigate.to(navigationRequest)
             } enterManuallyAction: {
                 let addPaymentCardViewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .wallet)

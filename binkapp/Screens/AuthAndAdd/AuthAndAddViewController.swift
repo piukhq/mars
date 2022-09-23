@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 import NotificationCenter
 
 class AuthAndAddViewController: BaseFormViewController {
@@ -27,8 +28,9 @@ class AuthAndAddViewController: BaseFormViewController {
         }
     }()
     
-    private let visionUtility = VisionImageDetectionUtility()
-    let viewModel: AuthAndAddViewModel
+    private let visionUtility = VisionUtility()
+    private let viewModel: AuthAndAddViewModel
+    private var subscriptions = Set<AnyCancellable>()
     
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
@@ -48,12 +50,13 @@ class AuthAndAddViewController: BaseFormViewController {
         setNavigationBar()
         configureUI()
         configureLayout()
+        configureSubscribers()
         stackScrollView.insert(arrangedSubview: brandHeaderView, atIndex: 0, customSpacing: Constants.cardPadding)
         collectionView.delegate = self
         
         // If we enter this view controller from the scanner, we should safely remove the barcode scanner from the stack
         if viewModel.shouldRemoveScannerFromStack {
-            navigationController?.removeViewControllerBehind(self, ifViewControllerBehindIsOfType: BarcodeScannerViewController.self)
+            navigationController?.removeViewControllerBehind(self, ifViewControllerBehindIsOfType: BinkScannerViewController.self)
         }
     }
     
@@ -102,6 +105,31 @@ class AuthAndAddViewController: BaseFormViewController {
         descriptionLabel.isHidden = viewModel.getDescription() == nil
     }
     
+    private func configureSubscribers() {
+        visionUtility.barcodePassthroughSubject.sink { _ in } receiveValue: { barcode in
+            Current.navigate.close(animated: true) { [weak self] in
+                Current.wallet.identifyMembershipPlanForBarcode(barcode) { plan in
+                    if plan != self?.viewModel.getMembershipPlan() {
+                        self?.showError(barcodeDetected: true)
+                    } else {
+                        self?.refreshForm(for: barcode)
+                    }
+                }
+            }
+        }
+        .store(in: &subscriptions)
+        
+        visionUtility.$failedToDetectBarcode.sink { failed in
+            guard failed else { return }
+            DispatchQueue.main.async {
+                Current.navigate.close(animated: true) { [weak self] in
+                    self?.showError(barcodeDetected: false)
+                }
+            }
+        }
+        .store(in: &subscriptions)
+    }
+    
     private func handlePrimaryButtonTap() {
         primaryButton.toggleLoading(isLoading: true)
         try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes, completion: { [weak self] in
@@ -134,14 +162,14 @@ class AuthAndAddViewController: BaseFormViewController {
     }
 }
 
-extension AuthAndAddViewController: BarcodeScannerViewControllerDelegate {
-    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
+extension AuthAndAddViewController: BinkScannerViewControllerDelegate {
+    func binkScannerViewController(_ viewController: BinkScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
         Current.navigate.close(animated: true) { [weak self] in
             self?.refreshForm(for: barcode)
         }
     }
     
-    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
+    func binkScannerViewControllerShouldEnterManually(_ viewController: BinkScannerViewController, completion: (() -> Void)?) {
         Current.navigate.close()
     }
 }
@@ -201,21 +229,6 @@ extension AuthAndAddViewController: AuthAndAddViewModelDelegate {
 extension AuthAndAddViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
-        visionUtility.createVisionRequest(image: image) { barcode in
-            Current.navigate.close(animated: true) { [weak self] in
-                guard let barcode = barcode else {
-                    self?.showError(barcodeDetected: false)
-                    return
-                }
-                
-                Current.wallet.identifyMembershipPlanForBarcode(barcode) { plan in
-                    if plan != self?.viewModel.getMembershipPlan() {
-                        self?.showError(barcodeDetected: true)
-                    } else {
-                        self?.refreshForm(for: barcode)
-                    }
-                }
-            }
-        }
+        visionUtility.detectBarcode(ciImage: image.ciImage(), fromPhotoLibrary: true)
     }
 }

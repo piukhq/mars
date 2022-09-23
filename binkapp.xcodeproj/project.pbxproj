@@ -300,7 +300,8 @@
 		CE07917A25ADB4A4009FE8BA /* LoyaltyWalletAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07917925ADB4A3009FE8BA /* LoyaltyWalletAnimator.swift */; };
 		CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */; };
 		CE0C24792678EDE500CB7150 /* WhoWeAreSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */; };
-		CE1015252722A63F0000A838 /* VisionImageDetectionUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1015242722A63F0000A838 /* VisionImageDetectionUtility.swift */; };
+		CE1015252722A63F0000A838 /* VisionUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1015242722A63F0000A838 /* VisionUtility.swift */; };
+		CE261634283CD926003570D8 /* PaymentCardNameRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE261633283CD926003570D8 /* PaymentCardNameRecognition.swift */; };
 		CE27A0DA25DA990E00C58412 /* OnboardingCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */; };
 		CE27A0DB25DA990E00C58412 /* OnboardingCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */; };
 		CE285B4328B4E19A00EBA3E7 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE285B4228B4E19A00EBA3E7 /* DateManager.swift */; };
@@ -450,7 +451,7 @@
 		EF4B46662346489C009A3651 /* PaymentCardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B46642346489B009A3651 /* PaymentCardDetailViewController.swift */; };
 		EF4B46672346489C009A3651 /* PaymentCardDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF4B46652346489B009A3651 /* PaymentCardDetailViewController.xib */; };
 		EF4B46692346491E009A3651 /* PaymentCardDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B46682346491D009A3651 /* PaymentCardDetailViewModel.swift */; };
-		EF51CCD424363A140035BF02 /* BarcodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF51CCD324363A140035BF02 /* BarcodeScannerViewController.swift */; };
+		EF51CCD424363A140035BF02 /* BinkScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF51CCD324363A140035BF02 /* BinkScannerViewController.swift */; };
 		EF51CCD7243B56150035BF02 /* LoyaltyScannerWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF51CCD6243B56150035BF02 /* LoyaltyScannerWidgetView.swift */; };
 		EF5229B82423FC4E004AC972 /* stagingPublicKey.der in Resources */ = {isa = PBXBuildFile; fileRef = EF5229B72423FC4E004AC972 /* stagingPublicKey.der */; };
 		EF5229BA2423FC96004AC972 /* prodPublicKey.der in Resources */ = {isa = PBXBuildFile; fileRef = EF5229B92423FC96004AC972 /* prodPublicKey.der */; };
@@ -1003,7 +1004,8 @@
 		CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardDetailViewModelTests.swift; sourceTree = "<group>"; };
 		CE0AE2DD2542DB81000CDB86 /* binkapp - 23-10-20 - Card secondary colour.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 23-10-20 - Card secondary colour.xcdatamodel"; sourceTree = "<group>"; };
 		CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoWeAreSwiftUIView.swift; sourceTree = "<group>"; };
-		CE1015242722A63F0000A838 /* VisionImageDetectionUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionImageDetectionUtility.swift; sourceTree = "<group>"; };
+		CE1015242722A63F0000A838 /* VisionUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionUtility.swift; sourceTree = "<group>"; };
+		CE261633283CD926003570D8 /* PaymentCardNameRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardNameRecognition.swift; sourceTree = "<group>"; };
 		CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingCardCollectionViewCell.xib; sourceTree = "<group>"; };
 		CE285B4228B4E19A00EBA3E7 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
@@ -1016,6 +1018,7 @@
 		CE3A5517253EE89A007989FE /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		CE3D31DA2649660C0072BD97 /* ScanLoyaltyCardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanLoyaltyCardButton.swift; sourceTree = "<group>"; };
 		CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanLoyaltyCardButton.xib; sourceTree = "<group>"; };
+		CE3EA70C28CA272D00EFEDA9 /* binkapp - 8-9-22 - AddField-alternatives-type-edit.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 8-9-22 - AddField-alternatives-type-edit.xcdatamodel"; sourceTree = "<group>"; };
 		CE4A628025715519003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A6285257155AE003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE51291528AAAC1200F85039 /* BinkNetworkingLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkNetworkingLogger.swift; sourceTree = "<group>"; };
@@ -1139,7 +1142,7 @@
 		EF4B46642346489B009A3651 /* PaymentCardDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailViewController.swift; sourceTree = "<group>"; };
 		EF4B46652346489B009A3651 /* PaymentCardDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentCardDetailViewController.xib; sourceTree = "<group>"; };
 		EF4B46682346491D009A3651 /* PaymentCardDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailViewModel.swift; sourceTree = "<group>"; };
-		EF51CCD324363A140035BF02 /* BarcodeScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerViewController.swift; sourceTree = "<group>"; };
+		EF51CCD324363A140035BF02 /* BinkScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkScannerViewController.swift; sourceTree = "<group>"; };
 		EF51CCD6243B56150035BF02 /* LoyaltyScannerWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyScannerWidgetView.swift; sourceTree = "<group>"; };
 		EF5229B72423FC4E004AC972 /* stagingPublicKey.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = stagingPublicKey.der; sourceTree = "<group>"; };
 		EF5229B92423FC96004AC972 /* prodPublicKey.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = prodPublicKey.der; sourceTree = "<group>"; };
@@ -2497,7 +2500,8 @@
 		CE1015232722A60E0000A838 /* Vision */ = {
 			isa = PBXGroup;
 			children = (
-				CE1015242722A63F0000A838 /* VisionImageDetectionUtility.swift */,
+				CE1015242722A63F0000A838 /* VisionUtility.swift */,
+				CE261633283CD926003570D8 /* PaymentCardNameRecognition.swift */,
 			);
 			path = Vision;
 			sourceTree = "<group>";
@@ -3238,7 +3242,7 @@
 			isa = PBXGroup;
 			children = (
 				EF51CCD5243B55C70035BF02 /* WidgetView */,
-				EF51CCD324363A140035BF02 /* BarcodeScannerViewController.swift */,
+				EF51CCD324363A140035BF02 /* BinkScannerViewController.swift */,
 			);
 			path = LoyaltyScanner;
 			sourceTree = "<group>";
@@ -3972,6 +3976,7 @@
 				70A61D532630A23C0073A08A /* BinkModuleView.swift in Sources */,
 				CEA0E1E3274E9CAD00CC2FC6 /* AutofillFormInputCell.swift in Sources */,
 				3C453CB72338E84F00287B56 /* PaymentWalletViewModel.swift in Sources */,
+				CE261634283CD926003570D8 /* PaymentCardNameRecognition.swift in Sources */,
 				EF4B46662346489C009A3651 /* PaymentCardDetailViewController.swift in Sources */,
 				CEE209142684653A004D3759 /* WidgetContent.swift in Sources */,
 				CEA16EC526249C6300D449E1 /* BarcodeView.swift in Sources */,
@@ -4137,7 +4142,7 @@
 				BD99D2DF2350E4BD00823FC4 /* SettingsSection.swift in Sources */,
 				BD475E6B23A255570071302A /* PlanDocumentDisplayModel.swift in Sources */,
 				EFA5F7262379A7C70027AB80 /* CD_PaymentCardAccountConsents.swift in Sources */,
-				EF51CCD424363A140035BF02 /* BarcodeScannerViewController.swift in Sources */,
+				EF51CCD424363A140035BF02 /* BinkScannerViewController.swift in Sources */,
 				EFD8653B232FCDD800036C17 /* ReasonCode.swift in Sources */,
 				3CFDB225230C382400E75A14 /* BinkGradientButton.swift in Sources */,
 				EFB7ED612379CA4000B72D06 /* PLRRewardsHistoryViewController.swift in Sources */,
@@ -4233,7 +4238,7 @@
 				3CFDB227230C38A700E75A14 /* BinkTextField.swift in Sources */,
 				BD475E7123A2AED80071302A /* CD_PlanDocumentDisplay.swift in Sources */,
 				EF480C21235754C20060B7C1 /* WalletPromptFactory.swift in Sources */,
-				CE1015252722A63F0000A838 /* VisionImageDetectionUtility.swift in Sources */,
+				CE1015252722A63F0000A838 /* VisionUtility.swift in Sources */,
 				BDB01870232D99D200BFFA18 /* FormField.swift in Sources */,
 				B76659992320F68D00B327BE /* HyperlinkAlertController.swift in Sources */,
 				214EC02928743165000A3F73 /* GeoModel.swift in Sources */,
@@ -4573,7 +4578,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development: Greg Gormley (83RWG25XKA)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
@@ -4612,7 +4617,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
@@ -4830,7 +4835,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG = "";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
@@ -4988,7 +4993,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG = true;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
@@ -5109,7 +5114,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -5194,7 +5199,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -5273,7 +5278,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -5352,7 +5357,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -5430,7 +5435,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -5514,7 +5519,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -5592,7 +5597,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -5671,7 +5676,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Bink Watch App Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -5750,7 +5755,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development: Greg Gormley (83RWG25XKA)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -5832,7 +5837,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -5908,7 +5913,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -5984,7 +5989,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -6340,6 +6345,7 @@
 		5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CE3EA70C28CA272D00EFEDA9 /* binkapp - 8-9-22 - AddField-alternatives-type-edit.xcdatamodel */,
 				CEA905B825C9859A000F69E1 /* binkapp - 2-2-21 - Membership card image dark mode url .xcdatamodel */,
 				702E4CA925BAE51E00C4772F /* binkapp - 22-1-21 - Membership plan image dark mode url 2.xcdatamodel */,
 				702B1F0725A479CA00C7563F /* binkapp - 5-1-21 - Membership plan image cta url.xcdatamodel */,
@@ -6355,7 +6361,7 @@
 				BD475E6C23A256820071302A /* binkapp - Plan Documents Display.xcdatamodel */,
 				5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */,
 			);
-			currentVersion = CEA905B825C9859A000F69E1 /* binkapp - 2-2-21 - Membership card image dark mode url .xcdatamodel */;
+			currentVersion = CE3EA70C28CA272D00EFEDA9 /* binkapp - 8-9-22 - AddField-alternatives-type-edit.xcdatamodel */;
 			path = binkapp.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

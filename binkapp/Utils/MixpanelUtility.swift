@@ -15,14 +15,14 @@ enum MixpanelUtility {
     static func configure() {
         if Current.userDefaults.bool(forDefaultsKey: .analyticsDebugMode) {
             Mixpanel.removeInstance(name: "prod")
-            mixpanelInstance = Mixpanel.initialize(token: BinkappKeys().mixpanelTokenDev, trackAutomaticEvents: false, flushInterval: 60, instanceName: "dev", optOutTrackingByDefault: false)
+            mixpanelInstance = Mixpanel.initialize(token: BinkappKeys().mixpanelTokenDev, flushInterval: 60, instanceName: "dev", optOutTrackingByDefault: false, trackAutomaticEvents: false)
             Mixpanel.setMainInstance(name: "dev")
         } else {
             Mixpanel.removeInstance(name: "dev")
             mixpanelInstance = nil
             
             if !Configuration.isDebug() {
-                mixpanelInstance = Mixpanel.initialize(token: BinkappKeys().mixpanelTokenProduction, trackAutomaticEvents: false, flushInterval: 60, instanceName: "prod", optOutTrackingByDefault: false)
+                mixpanelInstance = Mixpanel.initialize(token: BinkappKeys().mixpanelTokenProduction, flushInterval: 60, instanceName: "prod", optOutTrackingByDefault: false, trackAutomaticEvents: false)
                 Mixpanel.setMainInstance(name: "prod")
             }
         }
@@ -66,6 +66,7 @@ enum MixpanelTrackableEvent {
     case barcodeScreenIssueReported(brandName: String, reason: BarcodeScreenIssue)
     case toLocations(brandName: String)
     case toAppleMaps(brandName: String)
+    case binkScannerEnterManuallyPressed(brandName: String)
     
     enum JourneyRoute: String {
         case wallet = "Wallet"
@@ -107,6 +108,8 @@ enum MixpanelTrackableEvent {
             return "Tapped Show Locations"
         case .toAppleMaps:
             return "Launch Apple Maps for Directions"
+        case .binkScannerEnterManuallyPressed:
+            return "Bink scanner enter manually pressed"
         }
     }
     
@@ -162,6 +165,8 @@ enum MixpanelTrackableEvent {
         case .toLocations(brandName: let brandName):
             return ["Brand": brandName]
         case .toAppleMaps(brandName: let brandName):
+            return ["Brand": brandName]
+        case .binkScannerEnterManuallyPressed(let brandName):
             return ["Brand": brandName]
         }
     }

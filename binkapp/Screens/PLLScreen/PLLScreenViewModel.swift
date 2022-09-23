@@ -154,7 +154,7 @@ class PLLScreenViewModel {
     }
     
     func toPaymentScanner(delegate: ScanDelegate?) {
-        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: delegate) else { return }
+        let viewController = ViewControllerFactory.makeScannerViewController(type: .payment, delegate: Current.navigate.scannerDelegate)
         PermissionsUtility.launchPaymentScanner(viewController) {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
