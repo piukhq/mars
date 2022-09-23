@@ -39,29 +39,29 @@ class MessageViewTests: XCTestCase {
         sut.removeFromSuperview()
     }
     
-    func test_textColor_returnsCorrectColor() {
-        MessageView.show("", type: .snackbar(.long), button: MessageButton(title: "", type: .success, action: {}))
-        getKeyWindow()
-        
-        if let button = sut.getMessageButton() {
-            XCTAssertEqual(button.textColor, .greenOk)
-        } else {
-            XCTFail("GreenOK: Message button is nil")
-        }
-        
-        sut.removeFromSuperview()
-        
-        MessageView.show("", type: .snackbar(.long), button: MessageButton(title: "", type: .error, action: {}))
-        getKeyWindow()
-        
-        if let button = sut.getMessageButton() {
-            XCTAssertEqual(button.textColor, .binkDynamicRed)
-        } else {
-            XCTFail("Red: Message button is nil")
-        }
-        
-        sut.removeFromSuperview()
-    }
+//    func test_textColor_returnsCorrectColor() {
+//        MessageView.show("", type: .snackbar(.long), button: MessageButton(title: "", type: .success, action: {}))
+//        getKeyWindow()
+//        
+//        if let button = sut.getMessageButton() {
+//            XCTAssertEqual(button.textColor, .greenOk)
+//        } else {
+//            XCTFail("GreenOK: Message button is nil")
+//        }
+//        
+//        sut.removeFromSuperview()
+//        
+//        MessageView.show("", type: .snackbar(.long), button: MessageButton(title: "", type: .error, action: {}))
+//        getKeyWindow()
+//        
+//        if let button = sut.getMessageButton() {
+//            XCTAssertEqual(button.textColor, .binkDynamicRed)
+//        } else {
+//            XCTFail("Red: Message button is nil")
+//        }
+//        
+//        sut.removeFromSuperview()
+//    }
     
 //    func test_hide_correctlyAdjustsViewPosition() {
 //        MessageView.show("", type: .responseCodeVisualizer(.success))
