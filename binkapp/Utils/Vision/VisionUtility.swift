@@ -11,13 +11,15 @@ import UIKit
 import Vision
 
 class VisionUtility: ObservableObject {
+    enum VisionError: Error {
+        case barcodeDetionFailure
+    }
+    
     private let requestHandler = VNSequenceRequestHandler()
     
     // MARK: - Loyalty Card
-//    var barcode: String?
-//    var membershipPlan: CD_MembershipPlan?
-    var barcodeDetected = false
-    
+    @Published var failedToDetectBarcode = false
+    let barcodePassthroughSubject = PassthroughSubject<String, Error>()
 
     // MARK: - Payment Card
     var pan: String?
@@ -168,34 +170,28 @@ class VisionUtility: ObservableObject {
     
     // MARK: - Still image
     
-    func detectBarcode(ciImage: CIImage? = nil, completion: @escaping (String?) -> Void ) {
+    func detectBarcode(ciImage: CIImage? = nil, fromPhotoLibrary: Bool = false) {
         var vnBarcodeDetectionRequest: VNDetectBarcodesRequest {
             let request = VNDetectBarcodesRequest { request, error in
                 guard error == nil else {
-                    completion(nil)
+                    self.failedToDetectBarcode = true
                     return
                 }
                 
                 guard let observations = request.results as? [VNBarcodeObservation], let stringValue = observations.first?.payloadStringValue else {
-                    DispatchQueue.main.async {
-                        completion(nil)
+                    self.detectBarcodeString(from: ciImage) {
+                        if fromPhotoLibrary {
+                            self.failedToDetectBarcode = true
+                        }
                     }
                     return
                 }
                 
                 DispatchQueue.main.async {
-                    guard !self.barcodeDetected else { return }
-                    self.barcodeDetected = true
-                    completion(stringValue)
+                    self.barcodePassthroughSubject.send(stringValue)
                 }
             }
             return request
-        }
-        
-        detectBarcodeString(from: ciImage) { barcode in
-            guard !self.barcodeDetected else { return }
-            self.barcodeDetected = true
-            completion(barcode)
         }
         
         // Detect barcode
@@ -210,12 +206,12 @@ class VisionUtility: ObservableObject {
             do {
                 try requestHandler?.perform(vnRequests)
             } catch {
-                completion(nil)
+                self.barcodePassthroughSubject.send(completion: .failure(VisionError.barcodeDetionFailure))
             }
         }
     }
     
-    private func detectBarcodeString(from ciImage: CIImage?, completion: @escaping (String?) -> Void ) {
+    private func detectBarcodeString(from ciImage: CIImage?, completion: @escaping () -> Void ) {
         guard let ciImage = ciImage else { return }
 
         let vnTextTextRecognitionRequest = VNRecognizeTextRequest()
@@ -230,17 +226,16 @@ class VisionUtility: ObservableObject {
                 return observation.topCandidates(1).first
             }
             
-            for text in recognizedTexts {
+            for (i, text) in recognizedTexts.enumerated() {
                 let formattedText = text.string.replacingOccurrences(of: " ", with: "")
                 Current.wallet.identifyMembershipPlanForBarcode(formattedText) { plan in
-//                    guard !self.barcodeDetected else { return }
-                    guard plan != nil else { return }
-//                        self.membershipPlan = plan
-//                        self.barcode = formattedText
-//                        self.barcodeDetected = true
-//
-                        completion(formattedText)
-//                    }
+                    guard plan != nil else {
+                        if i == (recognizedTexts.count - 1) {
+                            completion()
+                        }
+                        return
+                    }
+                    self.barcodePassthroughSubject.send(formattedText)
                 }
             }
         }

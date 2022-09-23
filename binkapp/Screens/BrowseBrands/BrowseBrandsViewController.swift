@@ -5,6 +5,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
+import Combine
 import UIKit
 
 fileprivate enum Constants {
@@ -66,6 +67,7 @@ class BrowseBrandsViewController: BinkViewController {
     private var didLayoutSubviews = false
     private var sectionToScrollTo: Int?
     private let visionUtility = VisionUtility()
+    private var subscriptions = Set<AnyCancellable>()
     
     init(viewModel: BrowseBrandsViewModel, section: Int?) {
         self.viewModel = viewModel
@@ -93,6 +95,7 @@ class BrowseBrandsViewController: BinkViewController {
         
         configureSearchTextField()
         configureCollectionView()
+        configureSubscribers()
                 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
@@ -208,6 +211,31 @@ class BrowseBrandsViewController: BinkViewController {
         filtersVisible.toggle()
     }
     
+    private func configureSubscribers() {
+        visionUtility.barcodePassthroughSubject.sink { _ in } receiveValue: { barcode in
+            Current.wallet.identifyMembershipPlanForBarcode(barcode) { membershipPlan in
+                guard let membershipPlan = membershipPlan else {
+                    self.showError()
+                    return
+                }
+                Current.navigate.close(animated: true) {
+                    let prefilledValues = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
+                    let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, existingMembershipCard: nil, prefilledFormValues: [prefilledValues])
+                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
+                    HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
+                }
+            }
+        }
+        .store(in: &subscriptions)
+        
+        visionUtility.$failedToDetectBarcode.sink { failed in
+            guard failed else { return }
+            self.showError()
+        }
+        .store(in: &subscriptions)
+    }
+    
     private func hideFilters(with contentOffsetY: CGFloat) {
         filtersButton?.isEnabled = false
         filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .disabled)
@@ -270,8 +298,12 @@ class BrowseBrandsViewController: BinkViewController {
     }
     
     private func showError() {
-        let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: L10n.loyaltyScannerFailedToDetectBarcode)
-        self.present(alert, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            Current.navigate.close(animated: true) { [weak self] in
+                let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: L10n.loyaltyScannerFailedToDetectBarcode)
+                self?.present(alert, animated: true, completion: nil)
+            }
+        }
     }
 }
 
@@ -413,24 +445,6 @@ extension BrowseBrandsViewController: ScanLoyaltyCardButtonDelegate {
 extension BrowseBrandsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
-        visionUtility.detectBarcode(ciImage: image.ciImage()) { [weak self] barcode in
-            guard let barcode = barcode else {
-                Current.navigate.close(animated: true) { [weak self] in
-                    self?.showError()
-                }
-                return
-            }
-
-            Current.wallet.identifyMembershipPlanForBarcode(barcode) { membershipPlan in
-                guard let membershipPlan = membershipPlan else { return }
-                Current.navigate.close(animated: true) {
-                    let prefilledValues = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
-                    let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, existingMembershipCard: nil, prefilledFormValues: [prefilledValues])
-                    let navigationRequest = PushNavigationRequest(viewController: viewController)
-                    Current.navigate.to(navigationRequest)
-                    HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
-                }
-            }
-        }
+        visionUtility.detectBarcode(ciImage: image.ciImage(), fromPhotoLibrary: true)
     }
 }

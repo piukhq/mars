@@ -400,14 +400,23 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
         }
         .store(in: &subscriptions)
         
-//        visionUtility.$barcodeDetected
-//            .sink { [unowned self] _ in
-//                guard let barcode = self.visionUtility.barcode, let plan = self.visionUtility.membershipPlan, self.shouldAllowScanning else { return }
-//                self.shouldAllowScanning = false
-//                self.captureSource = .camera(self.viewModel.plan)
-//                self.passDataToBarcodeScannerDelegate(barcode: barcode, membershipPlan: plan)
-//            }
-//            .store(in: &subscriptions)
+        visionUtility.barcodePassthroughSubject.sink { _ in } receiveValue: { barcode in
+            guard self.shouldAllowScanning else { return }
+            self.timer?.invalidate()
+            self.shouldAllowScanning = false
+            self.captureSource = .camera(self.viewModel.plan)
+            self.identifyMembershipPlanForBarcode(barcode)
+        }
+        .store(in: &subscriptions)
+        
+        visionUtility.$failedToDetectBarcode.sink { failed in
+            guard failed else { return }
+            DispatchQueue.main.async {
+                self.shouldAllowScanning = false
+                self.showError(barcodeDetected: false)
+            }
+        }
+        .store(in: &subscriptions)
     }
 
     private func toPhotoLibrary() {
@@ -514,18 +523,14 @@ extension BinkScannerViewController: UIImagePickerControllerDelegate {
         guard let image = info[.editedImage] as? UIImage else { return }
         
         Current.navigate.close(animated: true) { [weak self] in
-            self?.visionUtility.detectBarcode(ciImage: image.ciImage()) { barcode in
-                guard let barcode = barcode else {
-                    self?.showError(barcodeDetected: false)
-                    return
-                }
-                self?.identifyMembershipPlanForBarcode(barcode)
-            }
+            self?.visionUtility.detectBarcode(ciImage: image.ciImage(), fromPhotoLibrary: true)
+            self?.shouldAllowScanning = true
         }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         Current.navigate.close(animated: true) {
+            self.shouldAllowScanning = true
             self.scheduleTimer()
         }
     }
@@ -533,30 +538,21 @@ extension BinkScannerViewController: UIImagePickerControllerDelegate {
 
 extension BinkScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        guard let frame = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+        guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
         
         switch viewModel.type {
         case .payment:
             if let paymentCardRectangleObservation = self.paymentCardRectangleObservation {
                 DispatchQueue.main.async {
-                    self.handleObservedPaymentCard(paymentCardRectangleObservation, in: frame)
+                    self.handleObservedPaymentCard(paymentCardRectangleObservation, in: imageBuffer)
                 }
-            } else if let paymentCardRectangleObservation = self.visionUtility.detectPaymentCard(frame: frame) {
+            } else if let paymentCardRectangleObservation = self.visionUtility.detectPaymentCard(frame: imageBuffer) {
                 self.paymentCardRectangleObservation = paymentCardRectangleObservation
             }
         case .loyalty:
             guard shouldAllowScanning else { return }
-            let ciImage = CIImage(cvImageBuffer: frame)
-            visionUtility.detectBarcode(ciImage: ciImage) { [weak self] barcode in
-                guard let barcode = barcode, let self = self, self.shouldAllowScanning else {
-                    self?.visionUtility.barcodeDetected = false
-                    return
-                }
-                self.timer?.invalidate()
-                self.shouldAllowScanning = false
-                self.captureSource = .camera(self.viewModel.plan)
-                self.identifyMembershipPlanForBarcode(barcode)
-            }
+            let ciImage = CIImage(cvImageBuffer: imageBuffer)
+            visionUtility.detectBarcode(ciImage: ciImage) 
         }
     }
     
