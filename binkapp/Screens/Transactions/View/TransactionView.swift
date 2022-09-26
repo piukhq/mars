@@ -48,11 +48,11 @@ class TransactionView: CustomView {
             imageView.image = Asset.down.image
             imageView.tintColor = Current.themeManager.color(for: .text)
         } else if transactionValue > 0 {
-            valueLabel.text = "+" + String(format: text, addDecimals ? Float(transactionValue) : transactionValue)
+            valueLabel.text = "+" + String(format: text, addDecimals ? Float(transactionValue) : Int(transactionValue))
             valueLabel.textColor = .greenOk
             imageView.image = Asset.up.image
         } else {
-            valueLabel.text = String(format: text, addDecimals ? Float(transactionValue) : transactionValue)
+            valueLabel.text = String(format: text, addDecimals ? Float(transactionValue) : Int(transactionValue))
             valueLabel.textColor = .amberPending
             imageView.image = Asset.neutralArrow.image
         }
