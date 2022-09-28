@@ -77,4 +77,20 @@ class GeoLocationViewModel: ObservableObject {
             }
         }
     }
+    
+    func openGoogleMaps() {
+        if let annotation = selectedAnnotation {
+            let latitude = annotation.coordinate.latitude
+            let longitude = annotation.coordinate.longitude
+        
+            guard let urlNavigation = URL(string: "comgooglemaps://") else { return }
+            
+            if UIApplication.shared.canOpenURL(urlNavigation) {
+                if let urlDestination = URL(string: "comgooglemaps://?daddr=\(latitude),\(longitude)&directionsmode=driving&zoom=14&views=traffic") {
+                    UIApplication.shared.open(urlDestination, options: [:], completionHandler: nil)
+                    MixpanelUtility.track(.toGoogleMaps(brandName: companyName))
+                }
+            }
+        }
+    }
 }
