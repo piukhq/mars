@@ -72,6 +72,7 @@ class GeoLocationViewModel: ObservableObject {
             let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: options)
             let mapItem = MKMapItem(placemark: placemark)
             mapItem.name = annotation.location
+            
             let window = UIApplication.shared.connectedScenes.flatMap { ($0 as? UIWindowScene)?.windows ?? [] }.first { $0.isKeyWindow }
             mapItem.openInMaps(launchOptions: nil, from: window?.windowScene, completionHandler: { success in
                 if success {
