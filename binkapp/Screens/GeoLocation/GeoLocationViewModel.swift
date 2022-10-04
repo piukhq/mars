@@ -72,9 +72,12 @@ class GeoLocationViewModel: ObservableObject {
             let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: options)
             let mapItem = MKMapItem(placemark: placemark)
             mapItem.name = annotation.location
-            if mapItem.openInMaps(launchOptions: nil) {
-                MixpanelUtility.track(.toAppleMaps(brandName: companyName))
-            }
+            let window = UIApplication.shared.connectedScenes.flatMap { ($0 as? UIWindowScene)?.windows ?? [] }.first { $0.isKeyWindow }
+            mapItem.openInMaps(launchOptions: nil, from: window?.windowScene, completionHandler: { success in
+                if success {
+                    MixpanelUtility.track(.toAppleMaps(brandName: self.companyName))
+                }
+            })
         }
     }
     
@@ -83,10 +86,10 @@ class GeoLocationViewModel: ObservableObject {
             let latitude = annotation.coordinate.latitude
             let longitude = annotation.coordinate.longitude
         
-            guard let urlNavigation = URL(string: "comgooglemaps://") else { return }
+            guard let urlNavigation = URL(string: "https://maps.google.com/maps") else { return }
             
             if UIApplication.shared.canOpenURL(urlNavigation) {
-                if let urlDestination = URL(string: "comgooglemaps://?daddr=\(latitude),\(longitude)&directionsmode=driving&zoom=14&views=traffic") {
+                if let urlDestination = URL(string: "\(urlNavigation)?daddr=\(latitude),\(longitude)&directionsmode=driving&zoom=14&views=traffic") {
                     UIApplication.shared.open(urlDestination, options: [:], completionHandler: nil)
                     MixpanelUtility.track(.toGoogleMaps(brandName: companyName))
                 }
