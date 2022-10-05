@@ -11,7 +11,8 @@ import SwiftUI
 struct BrowseBrandsListRowView: View {
     private enum Constants {
         static let rowHeight: CGFloat = 70
-        static let padding: CGFloat = 10.0
+        static let rowVerticalPadding: CGFloat = 10.0
+        static let rowHorizontalPadding: CGFloat = 25.0
         static let separatorHeight: CGFloat = 1.0
     }
     
@@ -60,11 +61,11 @@ struct BrowseBrandsListRowView: View {
                             Image(uiImage: Asset.iconsChevronRight.image)
                                 .foregroundColor(Color(themeManager.color(for: .text)))
                         }
-                        .padding(.vertical, Constants.padding)
+                        .padding(.vertical, Constants.rowVerticalPadding)
                     }
                 }
             }
-            .padding(.horizontal, 25)
+            .padding(.horizontal, Constants.rowHorizontalPadding)
             .background(Color(Current.themeManager.color(for: .viewBackground)))
         }
     }

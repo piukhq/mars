@@ -467,8 +467,6 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         XCTAssertNil(Self.baseSut.statusForMembershipCard(atIndexPath: IndexPath(row: 0, section: 0)))
     }
     
-
-    
     func test_35_performActionForInformationRowatIndexPath_performsCorrectAction() {
         Self.walletCardDetailInformationRowFactory.delegate = self
         switchCardStatus(status: .active) {

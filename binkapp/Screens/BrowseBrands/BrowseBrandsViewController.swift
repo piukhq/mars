@@ -339,38 +339,3 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
         switchTableWithNoMatchesLabel()
     }
 }
-//
-//extension BrowseBrandsViewController: ScanLoyaltyCardButtonDelegate {
-//    func addPhotoFromLibraryButtonWasTapped(_ scanLoyaltyCardButton: ScanLoyaltyCardButton) {
-//        let picker = UIImagePickerController()
-//        picker.allowsEditing = true
-//        picker.delegate = self
-//        let navigationRequest = ModalNavigationRequest(viewController: picker, embedInNavigationController: false)
-//        Current.navigate.to(navigationRequest)
-//    }
-//}
-//
-//extension BrowseBrandsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-//        guard let image = info[.editedImage] as? UIImage else { return }
-//        visionUtility.createVisionRequest(image: image) { [weak self] barcode in
-//            guard let barcode = barcode else {
-//                Current.navigate.close(animated: true) { [weak self] in
-//                    self?.showError()
-//                }
-//                return
-//            }
-//
-//            Current.wallet.identifyMembershipPlanForBarcode(barcode) { membershipPlan in
-//                guard let membershipPlan = membershipPlan else { return }
-//                Current.navigate.close(animated: true) {
-//                    let prefilledValues = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
-//                    let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, existingMembershipCard: nil, prefilledFormValues: [prefilledValues])
-//                    let navigationRequest = PushNavigationRequest(viewController: viewController)
-//                    Current.navigate.to(navigationRequest)
-//                    HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
-//                }
-//            }
-//        }
-//    }
-//}
