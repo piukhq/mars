@@ -42,7 +42,7 @@ class GeoLocationsViewModelTests: XCTestCase {
                 }]
             }
         """
-        Cache.geoLocationsDataCache.setObject(goodJson.data(using: .utf8)! as NSData, forKey: "tesco.geojson".toNSString())
+        Cache.geoLocationsDataCache.setObject(DataCache(data: goodJson.data(using: .utf8)! as NSData), forKey: "tesco.geojson".toNSString())
     }
     
     func test_titleIsCorrect() throws {
