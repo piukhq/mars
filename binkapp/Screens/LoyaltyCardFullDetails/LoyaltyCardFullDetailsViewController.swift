@@ -634,7 +634,7 @@ extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDeleg
 extension LoyaltyCardFullDetailsViewController {
     func fetchGeoData() {
         viewModel.fetchGeoData(completion: { geoDataIsAvailable, animated in
-            guard geoDataIsAvailable == true else { return }
+            guard geoDataIsAvailable else { return }
             
             if animated {
                 self.locationView.isHidden = false
