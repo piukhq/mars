@@ -124,7 +124,7 @@ class LoyaltyCardFullDetailsViewModel {
     // MARK: - Public methods
     
     func fetchGeoData(completion: @escaping (Bool, Bool) -> Void) {
-        if Current.featureManager.isFeatureEnabled(.locations) {
+        if Current.featureManager.isFeatureEnabled(.locations, merchant: brandNameForGeoData) {
             let companyName = brandNameForGeoData
             if !companyName.isBlank {
                 let fileName = "\(companyName).geojson"
