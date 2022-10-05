@@ -36,8 +36,8 @@ class GeoLocationViewModel: ObservableObject {
     
     private func getGeoLocationData() -> Data? {
         let geoLocationFileName = companyName.replacingOccurrences(of: " ", with: "-").lowercased()
-        if let cachedGeoData = Cache.geoLocationsDataCache.object(forKey: "\(geoLocationFileName).geojson".toNSString()) {
-            return cachedGeoData as Data
+        if let cachedGeoData = Cache.geoLocationsDataCache.object(forKey: "\(geoLocationFileName).geojson".toNSString()), let nsData = cachedGeoData.cachedData {
+            return Data(nsData)
         }
         
         return nil

@@ -141,7 +141,8 @@ class LoyaltyCardFullDetailsViewModel {
                         completion(false, false)
                         return
                     }
-                    Cache.geoLocationsDataCache.setObject(data as NSData, forKey: fileName.toNSString())
+                    
+                    Cache.geoLocationsDataCache.setObject(DataCache(data: data as NSData), forKey: fileName.toNSString())
                     completion(true, true)
                 }
             }
