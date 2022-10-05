@@ -29,10 +29,8 @@ extension LayoutHelper {
     enum GeoLocationCallout {
         static let calloutHeight: CGFloat = 80.0
         static let calloutWidth: CGFloat = 340.0
-        static let titleLabelTopOffset: CGFloat = 16.0
-        static let titleLabelLeadingOffset: CGFloat = 84.0
-        static let subtitleLabelTopOffset: CGFloat = 8
-        static let imageViewOffset: CGFloat = 18
+        static let padding: CGFloat = 15
+        static let imageWidth: CGFloat = 40
         static let locationsTextTopOffset: CGFloat = 24
         static let locationsTextRightOffset: CGFloat = 8
         static let locationsTextLeftOffset: CGFloat = 84

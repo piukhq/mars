@@ -8,12 +8,17 @@
 
 import UIKit
 
-struct SettingsSection {
+struct SettingsSection: Identifiable {
+    var id = UUID()
     let title: String
     var rows: [SettingsRow]
 }
 
-struct SettingsRow {
+struct SettingsRow: Identifiable, Equatable {
+    static func == (lhs: SettingsRow, rhs: SettingsRow) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     typealias VoidClosure = () -> Void
     
     enum RowType: String {
@@ -67,20 +72,11 @@ struct SettingsRow {
     }
     
     enum RowAction {
-        case pushToViewController(viewController: UIViewController.Type)
-        case pushToSwiftUIView(swiftUIView: SwiftUIView)
-        case pushToReusable(screen: ReusableScreen)
+        case navigate(to: DestinationView)
         case logout
         case customAction(action: VoidClosure)
         case launchSupport(service: SupportService)
         case delete
-    }
-    
-    enum ReusableScreen {
-        case securityAndPrivacy
-        case howItWorks
-        case privacyPolicy
-        case termsAndConditions
     }
 
     enum SupportService {
@@ -88,9 +84,15 @@ struct SettingsRow {
         case contactUs
     }
     
-    enum SwiftUIView {
+    enum DestinationView {
+        case securityAndPrivacy
+        case howItWorks
+        case privacyPolicy
+        case termsAndConditions
         case whoWeAre
         case featureFlags
+        case debug
+        case preferences
     }
     
     let type: RowType
@@ -99,6 +101,7 @@ struct SettingsRow {
         return type.title
     }
     
+    let id = UUID()
     let subtitle: String?
     let action: RowAction
     let actionRequired: Bool

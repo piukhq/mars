@@ -21,11 +21,8 @@ class GeoLocationViewModel: ObservableObject {
     var annotations: [CustomAnnotation] {
         features.compactMap { feature in
             guard let lat = feature.geometry.coordinates[safe: 1], let lon = feature.geometry.coordinates[safe: 0] else { return nil }
-            let annotation = CustomAnnotation(
-                location: (feature.properties.locationName ?? "") + " - " + (feature.properties.city ?? ""),
-                coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon),
-                image: UIImage(named: Asset.locationArrow.name))
-            return annotation
+            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            return CustomAnnotation(coordinate: coordinate, feature: feature)
         }
     }
     

@@ -57,6 +57,18 @@ extension UIFont {
         return UIFont(name: "NunitoSans-SemiBold", size: 17.0) ?? UIFont()
     }
     
+    class var calloutViewTitle: UIFont {
+        return UIFont(name: "NunitoSans-Bold", size: 18.0) ?? UIFont()
+    }
+    
+    class var calloutViewSubtitle: UIFont {
+        return UIFont(name: "NunitoSans-Regular", size: 18.0) ?? UIFont()
+    }
+    
+    class var calloutViewOpeningHours: UIFont {
+        return UIFont(name: "NunitoSans-Bold", size: 14.0) ?? UIFont()
+    }
+    
     class var textFieldLabel: UIFont {
         return UIFont(name: "NunitoSans-ExtraBold", size: 15.0) ?? UIFont()
     }

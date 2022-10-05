@@ -36,6 +36,13 @@ struct DebugMenuView: View {
                 }
                 
                 PickerDebugRow(type: .snackbar)
+                DebugRow(rowType: .exportNetworkActivity, destructive: false)
+            }
+            .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
+            
+            Section(header: Text("Date Manager")) {
+                DatePickerRow()
+                DebugRow(rowType: .resetDate)
             }
             .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
             
@@ -57,6 +64,11 @@ struct DebugMenuView: View {
                     }
                 }
                 .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
+                
+                Section(footer: Text("Tap to copy to clipboard")) {
+                    DebugRow(rowType: .token, subtitle: Current.userManager.currentToken, destructive: false)
+                }
+                .listRowBackground(Color(Current.themeManager.color(for: .walletCardBackground)))
             }
             
             Section(footer: Text("This will immediately crash the application.")) {
@@ -73,18 +85,17 @@ struct DebugMenuView: View {
 struct DebugRow: View {
     enum RowType: String {
         case forceCrash = "Force crash"
-        
-        func action() {
-            switch self {
-            case .forceCrash:
-                SentryService.forceCrash()
-            }
-        }
+        case resetDate = "Reset"
+        case token = "Current Token"
+        case exportNetworkActivity = "Export Recent Network Activity"
     }
     
     let rowType: RowType
     let subtitle: String?
     let destructive: Bool
+    
+    @State private var presentActivitySheet = false
+    @State private var buttonTapped = false
     
     init(rowType: RowType, subtitle: String? = nil, destructive: Bool = false) {
         self.rowType = rowType
@@ -93,16 +104,47 @@ struct DebugRow: View {
     }
     
     var body: some View {
-        Button(action: rowType.action, label: {
+        HStack {
             VStack(alignment: .leading, spacing: 5) {
                 Text(rowType.rawValue)
-                    .foregroundColor(destructive ? .red : .black)
+                    .foregroundColor(destructive ? .red : buttonTapped ? Color(.binkGradientBlueRight.lighter() ?? .grey10) : Color(.binkGradientBlueRight))
                 if let subtitle = subtitle {
                     Text(subtitle)
-                        .font(.subheadline)
+                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                        .font(.callout)
                 }
             }
+            .padding([.top, .bottom], 10)
+            .sheet(isPresented: $presentActivitySheet) {
+                if let url = BinkNetworkingLogger().networkLogsFilePath() {
+                    ActivityViewController(activityItemMetadata: LinkMetadataManager(title: "Export recent API requests and responses", url: url))
+                }
+            }
+            
+            Spacer()
+        }
+        .background(content: {
+            Color(Current.themeManager.color(for: .walletCardBackground))
         })
+        .onTapGesture {
+            buttonTapped = true
+            
+            switch rowType {
+            case .forceCrash:
+                SentryService.forceCrash()
+            case .resetDate:
+                Current.dateManager.reset()
+            case .token:
+                UIPasteboard.general.string = Current.userManager.currentToken
+                MessageView.show("Copied to clipboard", type: .snackbar(.short))
+            case .exportNetworkActivity:
+                presentActivitySheet = true
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                buttonTapped = false
+            }
+        }
     }
 }
 
@@ -329,6 +371,16 @@ struct SwatchView: View {
             }
         }
         .navigationTitle("Secondary plan colours")
+    }
+}
+
+struct DatePickerRow: View {
+    @ObservedObject private var dateManager = Current.dateManager
+    
+    var body: some View {
+        DatePicker("Adjust device date", selection: $dateManager.currentDate)
+            .foregroundColor(Color(.binkGradientBlueRight))
+            .datePickerStyle(.compact)
     }
 }
 

@@ -15,14 +15,14 @@ enum MixpanelUtility {
     static func configure() {
         if Current.userDefaults.bool(forDefaultsKey: .analyticsDebugMode) {
             Mixpanel.removeInstance(name: "prod")
-            mixpanelInstance = Mixpanel.initialize(token: BinkappKeys().mixpanelTokenDev, flushInterval: 60, instanceName: "dev", optOutTrackingByDefault: false)
+            mixpanelInstance = Mixpanel.initialize(token: BinkappKeys().mixpanelTokenDev, trackAutomaticEvents: false, flushInterval: 60, instanceName: "dev", optOutTrackingByDefault: false)
             Mixpanel.setMainInstance(name: "dev")
         } else {
             Mixpanel.removeInstance(name: "dev")
             mixpanelInstance = nil
             
             if !Configuration.isDebug() {
-                mixpanelInstance = Mixpanel.initialize(token: BinkappKeys().mixpanelTokenProduction, flushInterval: 60, instanceName: "prod", optOutTrackingByDefault: false)
+                mixpanelInstance = Mixpanel.initialize(token: BinkappKeys().mixpanelTokenProduction, trackAutomaticEvents: false, flushInterval: 60, instanceName: "prod", optOutTrackingByDefault: false)
                 Mixpanel.setMainInstance(name: "prod")
             }
         }

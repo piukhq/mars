@@ -24,6 +24,56 @@ struct Geometry: Codable {
     let coordinates: [Double]
 }
 
+struct OpenHours: Codable {
+    let mon: [[String]]
+    let tue: [[String]]
+    let wed: [[String]]
+    let thu: [[String]]
+    let fri: [[String]]
+    let sat: [[String]]
+    let sun: [[String]]
+    
+    enum CodingKeys: String, CodingKey {
+        case mon = "Mon"
+        case tue = "Tue"
+        case wed = "Wed"
+        case thu = "Thu"
+        case fri = "Fri"
+        case sat = "Sat"
+        case sun = "Sun"
+    }
+    
+    var weeklyHours: [[String]] {
+        /// Beginning on Sat to match Int ID returned from Date weekday components
+        return [sat, sun, mon, tue, wed, thu, fri, sat, sun, mon, tue, wed, thu, fri].map { Array($0.joined()) }
+    }
+    
+    func openingTimes(for day: Int) -> OpeningTimes? {
+        guard !weeklyHours[day].isEmpty else { return nil }
+        return OpeningTimes(opening: weeklyHours[day][0], closing: weeklyHours[day][1], day: day)
+    }
+    
+    func openingTimesForNextOpenDay(from day: Int) -> OpeningTimes? {
+        for dayIndex in day...(weeklyHours.count - 1) {
+            if let openingTimes = openingTimes(for: dayIndex) {
+                return openingTimes
+            }
+        }
+        
+        return nil
+    }
+}
+
+struct OpeningTimes {
+    var opening: String
+    let closing: String
+    let day: Int
+    
+    var dayString: String {
+        return Current.dateManager.dayOfTheWeek(id: day)
+    }
+}
+
 struct Properties: Codable {
     let locationName: String?
     let latitude: String?

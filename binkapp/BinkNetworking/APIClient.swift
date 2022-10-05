@@ -103,7 +103,7 @@ final class APIClient {
 
             let configuration = URLSessionConfiguration.default
             configuration.timeoutIntervalForRequest = 10.0
-            session = Session(configuration: configuration, serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators))
+            session = Session(configuration: configuration, serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators), eventMonitors: [BinkNetworkingLogger()])
         }
     }
 }

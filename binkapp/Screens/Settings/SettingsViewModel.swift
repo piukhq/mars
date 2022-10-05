@@ -6,19 +6,28 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
+import Combine
+import SwiftUI
 import UIKit
 
-class SettingsViewModel: UserServiceProtocol {
-    private let factory: SettingsFactory
+class SettingsViewModel: ObservableObject, UserServiceProtocol {
+    private enum Constants {
+        static let privacyPolicyUrl = "https://bink.com/privacy-policy/"
+        static let termsAndConditionsUrl = "https://bink.com/terms-and-conditions/"
+    }
+    
+    @Published var sections: [SettingsSection]
+    private var featureSubscriber: AnyCancellable?
     
     init(rowsWithActionRequired: [SettingsRow.RowType]?) {
-        factory = SettingsFactory(rowsWithActionRequired: rowsWithActionRequired)
+        let factory = SettingsFactory(rowsWithActionRequired: rowsWithActionRequired)
+        sections = factory.sectionData()
+        
+        featureSubscriber = Current.featureManager.$featuresDidUpdate.sink(receiveValue: { [weak self] _ in
+            self?.sections = factory.sectionData()
+        })
     }
-    
-    var sections: [SettingsSection] {
-        return factory.sectionData()
-    }
-    
+        
     var title: String {
         return L10n.settingsTitle
     }
@@ -54,7 +63,14 @@ class SettingsViewModel: UserServiceProtocol {
         Current.navigate.to(navigationRequest)
     }
     
-    func handleRowActionForAccountDeletion(loadingCompleteViewController: UIViewController) {
+    func shouldShowSeparator(section: SettingsSection, row: SettingsRow) -> Bool {
+        if let rowIndex = section.rows.firstIndex(of: row) {
+            return (rowIndex + 1) < section.rows.count
+        }
+        return false
+    }
+    
+    func handleRowActionForAccountDeletion() {
         let alert = ViewControllerFactory.makeOkCancelAlertViewController(title: L10n.settingsDeleteAccountActionTitle, message: L10n.settingsDeleteAccountActionSubtitle, okActionTitle: L10n.deleteActionTitle, cancelButton: true) {
             let navigationRequest = ModalNavigationRequest(viewController: LoadingScreen(), fullScreen: true, embedInNavigationController: false, animated: false, transition: .crossDissolve, dragToDismiss: false, hideCloseButton: true)
             Current.navigate.to(navigationRequest)
@@ -82,6 +98,57 @@ class SettingsViewModel: UserServiceProtocol {
             }
         }
         let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
+    }
+    
+    func handleRowAction(for row: SettingsRow) {
+        switch row.action {
+        case .customAction(let action):
+            action()
+        case .navigate(let destination):
+            switch destination {
+            case .whoWeAre:
+                navigate(to: WhoWeAreSwiftUIView())
+            case .featureFlags:
+                navigate(to: FeatureFlagsSwiftUIView())
+            case .debug:
+                navigate(to: DebugMenuView())
+            case .securityAndPrivacy:
+                navigate(to: ReusableTemplateView(title: L10n.securityAndPrivacyTitle, description: L10n.securityAndPrivacyDescription))
+            case .howItWorks:
+                navigate(to: ReusableTemplateView(title: L10n.howItWorksTitle, description: L10n.howItWorksDescription))
+            case .privacyPolicy:
+                openWebView(url: Constants.privacyPolicyUrl)
+            case .termsAndConditions:
+                openWebView(url: Constants.termsAndConditionsUrl)
+            case .preferences:
+                navigate(to: PreferencesView(viewModel: PreferencesViewModel()))
+            }
+        case .logout:
+            let alert = BinkAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .alert)
+            alert.addAction(
+                UIAlertAction(title: "Log out", style: .default, handler: { _ in
+                    NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                })
+            )
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            let navigationRequest = AlertNavigationRequest(alertController: alert)
+            Current.navigate.to(navigationRequest)
+        case .launchSupport(service: let service):
+            switch service {
+            case .faq:
+                BinkSupportUtility.launchFAQs()
+            case .contactUs:
+                BinkSupportUtility.launchContactSupport()
+            }
+        case .delete:
+            handleRowActionForAccountDeletion()
+        }
+    }
+    
+    private func navigate<Content: View>(to view: Content) {
+        let hostingViewController = UIHostingController(rootView: view)
+        let navigationRequest = PushNavigationRequest(viewController: hostingViewController)
         Current.navigate.to(navigationRequest)
     }
 }

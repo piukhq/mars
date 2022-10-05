@@ -58,7 +58,7 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private weak var delegate: BarcodeScannerViewControllerDelegate?
 
     private var session = AVCaptureSession()
-    private var captureOutput: AVCaptureMetadataOutput?
+    private var captureOutput: AVCaptureOutput?
     private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     private var previewView = UIView()
     private let schemeScanningQueue = DispatchQueue(label: "com.bink.wallet.scanning.loyalty.scheme.queue")
@@ -68,7 +68,8 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
     private var hideNavigationBar = true
     private var shouldAllowScanning = true
     private var captureSource: BarcodeCaptureSource
-    private let visionUtility = VisionImageDetectionUtility()
+    private let visionDetectionUtility = VisionImageDetectionUtility() // RS - leaving this one for scanning from image
+    private let visionUtility = VisionUtility()
 
     private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .regular))
@@ -208,7 +209,6 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         guard let backCamera = AVCaptureDevice.default(for: .video) else { return }
         guard let input = try? AVCaptureDeviceInput(device: backCamera) else { return }
         performCaptureChecksForDevice(backCamera)
-        captureOutput = AVCaptureMetadataOutput()
 
         if session.canAddInput(input) {
             session.addInput(input)
@@ -222,31 +222,23 @@ class BarcodeScannerViewController: BinkViewController, UINavigationControllerDe
         previewView.layer.addSublayer(videoPreviewLayer)
         videoPreviewLayer.frame = view.frame
 
-        guard let captureOutput = captureOutput else { return }
-
-        if session.outputs.isEmpty {
-            if session.canAddOutput(captureOutput) {
-                session.addOutput(captureOutput)
-                captureOutput.setMetadataObjectsDelegate(self, queue: schemeScanningQueue)
-                captureOutput.metadataObjectTypes = [
-                    .qr,
-                    .code128,
-                    .aztec,
-                    .pdf417,
-                    .ean13,
-                    .dataMatrix,
-                    .interleaved2of5,
-                    .code39
-                ]
-            }
+        let videoOutput = AVCaptureVideoDataOutput()
+        videoOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as NSString): NSNumber(value: kCVPixelFormatType_32BGRA)] as [String: Any]
+        videoOutput.setSampleBufferDelegate(self, queue: schemeScanningQueue) /// Change to global variable queue?
+        
+        if session.canAddOutput(videoOutput) {
+            session.addOutput(videoOutput)
         }
-
+        
+        guard let connection = videoOutput.connection(with: AVMediaType.video), connection.isVideoOrientationSupported else { return }
+        connection.videoOrientation = .portrait
+        
         if !session.isRunning {
             session.startRunning()
         }
 
-        captureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
-
+        captureOutput = videoOutput
+        
         scheduleTimer()
     }
 
@@ -418,7 +410,7 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
         Current.navigate.close(animated: true) { [weak self] in
-            self?.visionUtility.createVisionRequest(image: image) { barcode in
+            self?.visionDetectionUtility.createVisionRequest(image: image) { barcode in
                 guard let barcode = barcode else {
                     self?.showError(barcodeDetected: false)
                     return
@@ -431,6 +423,22 @@ extension BarcodeScannerViewController: UIImagePickerControllerDelegate {
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         Current.navigate.close(animated: true) {
             self.scheduleTimer()
+        }
+    }
+}
+
+extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        guard let frame = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+        
+        guard shouldAllowScanning else { return }
+        let ciImage = CIImage(cvImageBuffer: frame)
+        visionUtility.detectBarcode(ciImage: ciImage) { [weak self] barcode in
+            guard let barcode = barcode, let self = self, self.shouldAllowScanning else { return }
+            self.timer?.invalidate()
+            self.shouldAllowScanning = false
+            self.captureSource = .camera(self.viewModel.plan)
+            self.identifyMembershipPlanForBarcode(barcode)
         }
     }
 }
