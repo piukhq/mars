@@ -50,10 +50,15 @@ class CheckboxView: CustomView {
         super.init(frame: .zero)
         checkedState = checked
         configureCheckboxButton(forState: checkedState, animated: false)
+        Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
     }
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc private func configureForCurrentTheme() {
+        textView.textColor = Current.themeManager.color(for: .text)
     }
     
     func configure(title: NSMutableAttributedString, columnName: String, columnKind: FormField.ColumnKind, url: URL? = nil, delegate: CheckboxViewDelegate? = nil, optional: Bool = false, textSelected: TextAction? = nil, hideCheckbox: Bool = false) {
