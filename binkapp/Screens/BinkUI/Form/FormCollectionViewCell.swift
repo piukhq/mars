@@ -306,7 +306,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Actions
     
-    @objc func textFieldUpdated(_ textField: UITextField, text: String?, backingData: [Int]?) {
+    @objc func textFieldUpdated(_ textField: UITextField) {
         guard let textFieldText = textField.text else { return }
         formField?.updateValue(textFieldText)
         configureTextFieldRightView(shouldDisplay: textFieldText.isEmpty)
@@ -465,7 +465,7 @@ extension FormCollectionViewCell: AutofillFormInputAccessoryDelegate {
 }
 
 fileprivate extension Selector {
-    static let textFieldUpdated = #selector(FormCollectionViewCell.textFieldUpdated(_:text:backingData:))
+    static let textFieldUpdated = #selector(FormCollectionViewCell.textFieldUpdated)
     static let accessoryDoneTouchUpInside = #selector(FormCollectionViewCell.accessoryDoneTouchUpInside)
     static let handleScanButtonTap = #selector(FormCollectionViewCell.handleScanButtonTap)
     static let handleCellTap = #selector(FormCollectionViewCell.handleCellTap)

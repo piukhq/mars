@@ -32,6 +32,7 @@
 		2126377728B3E2FD00C795D6 /* BarcodeViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126377628B3E2FD00C795D6 /* BarcodeViewTests.swift */; };
 		212F0C442876EB7E007F09CE /* CalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C432876EB7E007F09CE /* CalloutView.swift */; };
 		212F0C462876EC63007F09CE /* GeoLocationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */; };
+		21410FA428DC8567002EE969 /* VisionUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21410FA328DC8567002EE969 /* VisionUtility.swift */; };
 		21497EC82864A1880053A9EE /* OptionItemListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21497EC72864A1880053A9EE /* OptionItemListViewController.swift */; };
 		21497ECD2869BE2E0053A9EE /* SortStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21497ECC2869BE2E0053A9EE /* SortStateTests.swift */; };
 		214DCF5128AD201900308531 /* NSNumberExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214DCF5028AD201900308531 /* NSNumberExtensionTests.swift */; };
@@ -711,6 +712,7 @@
 		2126377628B3E2FD00C795D6 /* BarcodeViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewTests.swift; sourceTree = "<group>"; };
 		212F0C432876EB7E007F09CE /* CalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalloutView.swift; sourceTree = "<group>"; };
 		212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationModelTests.swift; sourceTree = "<group>"; };
+		21410FA328DC8567002EE969 /* VisionUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionUtility.swift; sourceTree = "<group>"; };
 		2144647F3F7FD0825EAA4342 /* Pods-binkapp-binkappUITests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp-binkappUITests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkapp-binkappUITests/Pods-binkapp-binkappUITests.app store (internal).xcconfig"; sourceTree = "<group>"; };
 		21497EC72864A1880053A9EE /* OptionItemListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionItemListViewController.swift; sourceTree = "<group>"; };
 		21497ECC2869BE2E0053A9EE /* SortStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortStateTests.swift; sourceTree = "<group>"; };
@@ -1016,6 +1018,7 @@
 		CE3A5517253EE89A007989FE /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		CE3D31DA2649660C0072BD97 /* ScanLoyaltyCardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanLoyaltyCardButton.swift; sourceTree = "<group>"; };
 		CE3D31DB2649660C0072BD97 /* ScanLoyaltyCardButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScanLoyaltyCardButton.xib; sourceTree = "<group>"; };
+		CE3EA70C28CA272D00EFEDA9 /* binkapp - 8-9-22 - AddField-alternatives-type-edit.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 8-9-22 - AddField-alternatives-type-edit.xcdatamodel"; sourceTree = "<group>"; };
 		CE4A628025715519003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A6285257155AE003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE51291528AAAC1200F85039 /* BinkNetworkingLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkNetworkingLogger.swift; sourceTree = "<group>"; };
@@ -2498,6 +2501,7 @@
 			isa = PBXGroup;
 			children = (
 				CE1015242722A63F0000A838 /* VisionImageDetectionUtility.swift */,
+				21410FA328DC8567002EE969 /* VisionUtility.swift */,
 			);
 			path = Vision;
 			sourceTree = "<group>";
@@ -4139,6 +4143,7 @@
 				EFA5F7262379A7C70027AB80 /* CD_PaymentCardAccountConsents.swift in Sources */,
 				EF51CCD424363A140035BF02 /* BarcodeScannerViewController.swift in Sources */,
 				EFD8653B232FCDD800036C17 /* ReasonCode.swift in Sources */,
+				21410FA428DC8567002EE969 /* VisionUtility.swift in Sources */,
 				3CFDB225230C382400E75A14 /* BinkGradientButton.swift in Sources */,
 				EFB7ED612379CA4000B72D06 /* PLRRewardsHistoryViewController.swift in Sources */,
 				EFA5F72C2379A7C70027AB80 /* CD_MembershipTransaction.swift in Sources */,
@@ -4589,7 +4594,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.25;
+				MARKETING_VERSION = 2.3.26;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink α";
@@ -4636,7 +4641,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.25;
+				MARKETING_VERSION = 2.3.26;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink β";
@@ -4847,7 +4852,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.25;
+				MARKETING_VERSION = 2.3.26;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = Bink;
@@ -5004,7 +5009,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.25;
+				MARKETING_VERSION = 2.3.26;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink β";
@@ -5136,7 +5141,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.25;
+				MARKETING_VERSION = 2.3.26;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -5215,7 +5220,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.25;
+				MARKETING_VERSION = 2.3.26;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch;
@@ -5295,7 +5300,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.25;
+				MARKETING_VERSION = 2.3.26;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watch;
@@ -5373,7 +5378,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.25;
+				MARKETING_VERSION = 2.3.26;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch;
@@ -5459,7 +5464,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.25;
+				MARKETING_VERSION = 2.3.26;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -5537,7 +5542,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.25;
+				MARKETING_VERSION = 2.3.26;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch.extension;
@@ -5616,7 +5621,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.25;
+				MARKETING_VERSION = 2.3.26;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.watch.extension;
@@ -5694,7 +5699,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.25;
+				MARKETING_VERSION = 2.3.26;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.watch.extension;
@@ -5777,7 +5782,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.25;
+				MARKETING_VERSION = 2.3.26;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -5853,7 +5858,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.25;
+				MARKETING_VERSION = 2.3.26;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.widget;
@@ -5929,7 +5934,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.25;
+				MARKETING_VERSION = 2.3.26;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.widget;
@@ -6005,7 +6010,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.25;
+				MARKETING_VERSION = 2.3.26;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta.widget;
@@ -6340,6 +6345,7 @@
 		5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CE3EA70C28CA272D00EFEDA9 /* binkapp - 8-9-22 - AddField-alternatives-type-edit.xcdatamodel */,
 				CEA905B825C9859A000F69E1 /* binkapp - 2-2-21 - Membership card image dark mode url .xcdatamodel */,
 				702E4CA925BAE51E00C4772F /* binkapp - 22-1-21 - Membership plan image dark mode url 2.xcdatamodel */,
 				702B1F0725A479CA00C7563F /* binkapp - 5-1-21 - Membership plan image cta url.xcdatamodel */,
@@ -6355,7 +6361,7 @@
 				BD475E6C23A256820071302A /* binkapp - Plan Documents Display.xcdatamodel */,
 				5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */,
 			);
-			currentVersion = CEA905B825C9859A000F69E1 /* binkapp - 2-2-21 - Membership card image dark mode url .xcdatamodel */;
+			currentVersion = CE3EA70C28CA272D00EFEDA9 /* binkapp - 8-9-22 - AddField-alternatives-type-edit.xcdatamodel */;
 			path = binkapp.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
