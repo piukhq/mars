@@ -14,6 +14,8 @@ class GeoLocationsViewController: UIViewController {
     private let viewModel: GeoLocationViewModel
     private var locationManager: CLLocationManager!
     private var foundLocation = false
+    private let identifier = "location"
+    private let clusteringIdentifier = "mapClustering"
     
     init(viewModel: GeoLocationViewModel) {
         self.viewModel = viewModel
@@ -51,11 +53,6 @@ class GeoLocationsViewController: UIViewController {
         setMapConstraints()
         determineCurrentLocation()
         viewModel.parseGeoJson()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        addAnnotations()
     }
     
     private func determineCurrentLocation() {
@@ -104,10 +101,22 @@ extension GeoLocationsViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let annotation = annotation as? CustomAnnotation else { return nil }
         
-        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-        annotationView?.canShowCallout = true
-        annotationView?.detailCalloutAccessoryView = CalloutView(annotation: annotation)
-        return annotationView
+        var view: MKMarkerAnnotationView
+        
+        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView {
+            dequeuedView.annotation = annotation
+            dequeuedView.clusteringIdentifier = clusteringIdentifier
+            view = dequeuedView
+        } else {
+            view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            view.canShowCallout = true
+            view.clusteringIdentifier = clusteringIdentifier
+            view.detailCalloutAccessoryView = CalloutView(annotation: annotation)
+            view.displayPriority = .defaultLow
+            view.collisionMode = .circle
+        }
+        
+        return view
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -133,12 +142,13 @@ extension GeoLocationsViewController: CLLocationManagerDelegate {
         if !foundLocation {
             if let userLocation = locations.last {
                 let center = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-                let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+                let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))
                 
                 mapView.setRegion(region, animated: false)
                 
                 locationManager.stopUpdatingLocation()
                 foundLocation = true
+                addAnnotations()
             }
         }
     }
