@@ -75,10 +75,28 @@ class GeoLocationsViewController: UIViewController {
     
     @objc func tapOnCallout(sender: UIButton) {
         if viewModel.selectedAnnotation != nil {
-            viewModel.openAppleMaps()
-            mapView.deselectAnnotation(viewModel.selectedAnnotation, animated: false)
-            viewModel.selectedAnnotation = nil
+            displayNavigationOptions()
         }
+    }
+    
+    private func displayNavigationOptions() {
+        let vc = ViewControllerFactory.makeMapNavigationSelectionAlertViewController( appleMapsActionHandler: {
+            self.viewModel.openAppleMaps()
+            self.clearAnnotation()
+        }, googleMapsActionHandler: {
+            self.viewModel.openGoogleMaps()
+            self.clearAnnotation()
+        }, cancelActionHandler: {
+            self.clearAnnotation()
+        })
+        
+        let navigationRequest = AlertNavigationRequest(alertController: vc, completion: nil)
+        Current.navigate.to(navigationRequest)
+    }
+    
+    private func clearAnnotation() {
+        mapView.deselectAnnotation(viewModel.selectedAnnotation, animated: false)
+        viewModel.selectedAnnotation = nil
     }
 }
 
