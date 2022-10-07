@@ -34,7 +34,7 @@ class CheckboxViewModel: ObservableObject, Identifiable {
         }
         
         var string = attributedText
-        string.font = .custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize)
+        string.font = .bodyTextSmall
 
         if let urlRange = string.range(of: columnName) {
             var container = AttributeContainer()
@@ -46,8 +46,21 @@ class CheckboxViewModel: ObservableObject, Identifiable {
         }
     }
     
+    var value: String {
+        return checkedState ? "1" : "0"
+    }
+    
     /// Should only be used when the API call triggered by the delegate method fails, and we need to revert the state
     func reset() {
         checkedState.toggle()
+    }
+}
+
+extension CheckboxViewModel: InputValidation {
+    var isValid: Bool {
+        if hideCheckbox {
+            return true
+        }
+        return optional ? true : checkedState
     }
 }

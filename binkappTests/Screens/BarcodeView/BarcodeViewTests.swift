@@ -51,6 +51,7 @@ class BarcodeViewTests: XCTestCase, CoreDataTestable {
     
     func test_barcodeViewBarcodeWideIsValid() throws {
         let factory = WalletCardDetailInformationRowFactory()
+        Self.membershipCard.membershipPlan = Self.membershipPlan
         let model = LoyaltyCardFullDetailsViewModel(membershipCard: Self.membershipCard, informationRowFactory: factory)
         model.membershipCard.membershipPlan = Self.membershipPlan
         

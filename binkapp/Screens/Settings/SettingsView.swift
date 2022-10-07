@@ -15,7 +15,8 @@ struct SettingsView: View {
     }
     
     @ObservedObject var viewModel: SettingsViewModel
-    
+    @ObservedObject var themeManager = Current.themeManager
+
     var body: some View {
         ScrollView {
             VStack {
@@ -56,7 +57,7 @@ struct SettingsView: View {
             .padding(Constants.padding)
         }
         .navigationTitle("Settings")
-        .background(Color(Current.themeManager.color(for: .viewBackground)))
+        .background(Color(themeManager.color(for: .viewBackground)))
         .edgesIgnoringSafeArea(.bottom)
     }
 }
@@ -85,6 +86,7 @@ struct SettingsRowView: View {
         static let padding: CGFloat = 20.0
     }
     
+    @ObservedObject var themeManager = Current.themeManager
     var rowData: SettingsRow
     var viewModel: SettingsViewModel
     var showSeparator: Bool
@@ -97,12 +99,12 @@ struct SettingsRowView: View {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(rowData.title)
-                            .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                            .foregroundColor(Color(themeManager.color(for: .text)))
                             .uiFont(.subtitle)
                         if let subtitle = rowData.subtitle {
                             Text(subtitle)
                                 .uiFont(.bodyTextLarge)
-                                .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                                .foregroundColor(Color(themeManager.color(for: .text)))
                         }
                     }
                     .frame(height: Constants.rowHeight)
@@ -117,13 +119,13 @@ struct SettingsRowView: View {
                     }
                     
                     Image(uiImage: Asset.iconsChevronRight.image)
-                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                        .foregroundColor(Color(themeManager.color(for: .text)))
                 }
                 
                 if showSeparator {
                     Rectangle()
                         .frame(height: Constants.separatorHeight)
-                        .foregroundColor(Color(Current.themeManager.color(for: .divider)))
+                        .foregroundColor(Color(themeManager.color(for: .divider)))
                 }
             }
         }

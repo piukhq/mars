@@ -8,11 +8,12 @@
 
 import Foundation
 
-struct CardDetailInformationRow: Equatable {
+struct CardDetailInformationRow: Equatable, Identifiable {
     static func == (lhs: CardDetailInformationRow, rhs: CardDetailInformationRow) -> Bool {
         return lhs.type.subtitle == rhs.type.subtitle
     }
     
+    var id = UUID()
     var type: RowType
     var action: () -> Void
 

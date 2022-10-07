@@ -5,16 +5,13 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
-protocol BrowseBrandsViewModelDelegate: AnyObject {
-    func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan])
-}
-
-class BrowseBrandsViewModel {
+class BrowseBrandsViewModel: ObservableObject {
     private var membershipPlans: [CD_MembershipPlan] = []
-    
-    weak var delegate: BrowseBrandsViewModelDelegate?
+    @Published var sections: [[CD_MembershipPlan]] = [[]]
+    @Published var scrollToSection: Int = 0
+
     var shouldShowNoResultsLabel: Bool {
         return filteredPlans.isEmpty
     }
@@ -46,7 +43,13 @@ class BrowseBrandsViewModel {
             })
             .filter { $0.isPlanListable }
             self.selectedFilters = self.mapFilters(fromPlans: self.membershipPlans)
+            
+            self.configureSections()
         }
+    }
+    
+    func configureSections() {
+        sections = [getPllMembershipPlans(), getSeeMembershipPlans(), getStoreMembershipPlans()]
     }
     
     func getMembershipPlan(for indexPath: IndexPath) -> CD_MembershipPlan? {
@@ -76,7 +79,7 @@ class BrowseBrandsViewModel {
         }
     }
     
-    func getSectionDescriptionText(section: Int) -> NSMutableAttributedString? {
+    func getSectionDescriptionText(section: Int) -> AttributedString {
         var descriptionText: String
         switch section {
         case 0:
@@ -86,16 +89,22 @@ class BrowseBrandsViewModel {
         case 2:
             descriptionText = L10n.storeDescription
         default:
-            return nil
+            descriptionText = ""
         }
         
-        let attributedText = NSMutableAttributedString(string: descriptionText, attributes: [.font: UIFont.bodyTextLarge])
+        var attributedText = AttributedString(descriptionText)
+        attributedText.font = .bodyTextLarge
+        attributedText.foregroundColor = Color(Current.themeManager.color(for: .text))
         
         if section == 0 && !getPllMembershipPlans().isEmpty {
-            let automaticallyRange = NSString(string: attributedText.string).range(of: L10n.pllDescriptionHighlightAutomatically)
-            attributedText.addAttributes([.font: UIFont.bodyTextBold], range: automaticallyRange)
+            if let range = attributedText.range(of: L10n.pllDescriptionHighlightAutomatically) {
+                var container = AttributeContainer()
+                container.font = .bodyTextBold
+                attributedText[range].mergeAttributes(container)
+                return attributedText
+            }
         }
-        
+
         return attributedText
     }
     
@@ -172,7 +181,7 @@ class BrowseBrandsViewModel {
                 }
             }
         }
-        delegate?.browseBrandsViewModel(self, didUpdateFilteredData: filteredPlans)
+        self.configureSections()
     }
     
     func toAddOrJoinScreen(membershipPlan: CD_MembershipPlan) {

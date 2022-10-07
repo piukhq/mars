@@ -129,7 +129,7 @@ class AuthAndAddViewController: BaseFormViewController {
         primaryButton.enabled = fullFormIsValid
     }
     
-    override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
+    override func checkboxView(didTapOn URL: URL) {
         viewModel.presentPlanDocumentsModal(withUrl: URL)
     }
 }

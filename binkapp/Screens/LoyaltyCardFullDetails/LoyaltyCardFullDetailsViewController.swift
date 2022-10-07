@@ -5,7 +5,9 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import UIKit
+// swiftlint:disable force_unwrapping
+
+import SwiftUI
 
 protocol LoyaltyCardFullDetailsModalDelegate: AnyObject {
     func refreshUI()
@@ -162,18 +164,15 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         return separator
     }()
     
-    lazy var informationTableView: NestedTableView = {
-        let tableView = NestedTableView(frame: .zero, style: .plain)
-        tableView.backgroundColor = .clear
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(CardDetailInfoTableViewCell.self, asNib: true)
-        tableView.separatorInset = LayoutHelper.LoyaltyCardDetail.informationTableSeparatorInset
-        return tableView
+    private lazy var cardInformationView: UIView = {
+        let rowData = CardInformationView(viewModel: CardInformationViewModel(informationRows: viewModel.informationRows))
+        let view = UIHostingController(rootView: rowData).view!
+        view.backgroundColor = .clear
+        return view
     }()
+
     
-    let viewModel: LoyaltyCardFullDetailsViewModel
+    var viewModel: LoyaltyCardFullDetailsViewModel
     var navigationBarShouldBeVisible = false
     private var previousOffset = 0.0
     private var topConstraint: NSLayoutConstraint?
@@ -254,8 +253,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         navigationController?.setNavigationBarVisibility(navigationBarShouldBeVisible, animated: true)
         showBarcodeButton.setTitleColor(Current.themeManager.color(for: .text), for: .normal)
         separator.backgroundColor = Current.themeManager.color(for: .divider)
-        informationTableView.separatorColor = Current.themeManager.color(for: .divider)
-        informationTableView.reloadData()
         titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
 
         let plrVoucherCells = stackScrollView.arrangedSubviews.filter { $0.isKind(of: PLRBaseCollectionViewCell.self) }
@@ -272,35 +269,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     }
 }
 
-// MARK: - Table view
-
-extension LoyaltyCardFullDetailsViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.informationRows.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: CardDetailInfoTableViewCell = tableView.dequeue(indexPath: indexPath)
-        
-        let informationRow = viewModel.informationRow(forIndexPath: indexPath)
-        cell.configureWithInformationRow(informationRow)
-        
-        if tableView.cellAtIndexPathIsLastInSection(indexPath) {
-            cell.hideSeparator()
-        }
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.performActionForInformationRow(atIndexPath: indexPath)
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return LayoutHelper.PaymentCardDetail.informationRowCellHeight
-    }
-}
 
 // MARK: - Private methods
 
@@ -363,7 +331,7 @@ private extension LoyaltyCardFullDetailsViewController {
         }
         
         stackScrollView.add(arrangedSubview: separator)
-        stackScrollView.add(arrangedSubview: informationTableView)
+        stackScrollView.add(arrangedSubview: cardInformationView)
         
         configureLayout()
         
@@ -462,7 +430,7 @@ private extension LoyaltyCardFullDetailsViewController {
             modulesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
             separator.heightAnchor.constraint(equalToConstant: CGFloat.onePointScaled()),
             separator.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            cardInformationView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             brandHeaderImageView.heightAnchor.constraint(equalTo: brandHeader.heightAnchor),
             brandHeaderImageView.widthAnchor.constraint(equalTo: brandHeader.widthAnchor)
         ])

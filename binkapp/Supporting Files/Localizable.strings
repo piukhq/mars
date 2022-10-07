@@ -488,7 +488,7 @@
 
 // MARK: - Browse Brands
 "scan_button_title" = "Scan loyalty card";
-"scan_utton_subtitle" = "Quickly add a card you already have";
+"scan_button_subtitle" = "Quickly add a card you already have";
 
 // MARK: - Local Points Collection
 "lpc_points_module_balance_explainer_title" = "Balance";
