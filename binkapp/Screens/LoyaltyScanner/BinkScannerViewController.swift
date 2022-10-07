@@ -85,6 +85,7 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
     private var canPresentScanError = true
     private var hideNavigationBar = true
     private var shouldAllowScanning = true
+    private var shouldPresentWidgetError = true
     private var captureSource: BarcodeCaptureSource
     private let visionUtility = VisionUtility()
     private var paymentCardRectangleObservation: VNRectangleObservation?
@@ -323,11 +324,15 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
     
     private func scheduleTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: Constants.timerInterval, repeats: true, block: { [weak self] _ in
-            self?.widgetView.timeout()
+            guard let self = self else { return }
+            if self.shouldPresentWidgetError {
+                self.widgetView.timeout()
+                self.shouldPresentWidgetError = false
+            }
             
-            if self?.viewModel.type == .loyalty {
+            if self.viewModel.type == .loyalty {
                 /// If after 5 seconds no barcode has been scanned, switch detection type
-                self?.loyaltyScannerDetectionType = self?.loyaltyScannerDetectionType == .barcode ? .string : .barcode
+                self.loyaltyScannerDetectionType = self.loyaltyScannerDetectionType == .barcode ? .string : .barcode
             }
         })
     }
@@ -404,24 +409,6 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
             }
         }
         .store(in: &subscriptions)
-        
-//        visionUtility.barcodePassthroughSubject.sink { _ in } receiveValue: { barcode in
-//            guard self.shouldAllowScanning else { return }
-//            self.timer?.invalidate()
-//            self.shouldAllowScanning = false
-//            self.captureSource = .camera(self.viewModel.plan)
-//            self.identifyMembershipPlanForBarcode(barcode)
-//        }
-//        .store(in: &subscriptions)
-        
-//        visionUtility.$failedToDetectBarcode.sink { failed in
-//            guard failed else { return }
-//            DispatchQueue.main.async {
-//                self.shouldAllowScanning = false
-//                self.showError(barcodeDetected: false)
-//            }
-//        }
-//        .store(in: &subscriptions)
     }
 
     private func toPhotoLibrary() {
