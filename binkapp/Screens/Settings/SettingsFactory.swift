@@ -25,7 +25,7 @@ struct SettingsFactory {
                 SettingsRow(
                     type: .debug,
                     subtitle: L10n.settingsSectionDebugSubtitle,
-                    action: .pushToViewController(viewController: DebugMenuTableViewController.self),
+                    action: .navigate(to: .debug),
                     actionRequired: rowsWithActionRequired?.contains(.debug) ?? false
                 )
             ])
@@ -38,7 +38,7 @@ struct SettingsFactory {
         let accountSection = SettingsSection(title: L10n.settingsSectionAccountTitle, rows: [
             SettingsRow(
                 type: .preferences,
-                action: .pushToViewController(viewController: PreferencesViewController.self),
+                action: .navigate(to: .preferences),
                 actionRequired: rowsWithActionRequired?.contains(.preferences) ?? false
             ),
             SettingsRow(
@@ -121,6 +121,11 @@ struct SettingsFactory {
                     Current.navigate.to(navigationRequest)
                 }),
                 actionRequired: rowsWithActionRequired?.contains(.rateThisApp) ?? false
+            ),
+            SettingsRow(
+                type: .delete,
+                action: .delete,
+                actionRequired: rowsWithActionRequired?.contains(.delete) ?? false
             )
         ])
         
@@ -132,18 +137,18 @@ struct SettingsFactory {
             SettingsRow(
                 type: .securityAndPrivacy,
                 subtitle: L10n.settingsRowSecuritySubtitle,
-                action: .pushToReusable(screen: .securityAndPrivacy),
+                action: .navigate(to: .securityAndPrivacy),
                 actionRequired: rowsWithActionRequired?.contains(.securityAndPrivacy) ?? false
             ),
             SettingsRow(
                 type: .howItWorks,
                 subtitle: L10n.settingsRowHowitworksSubtitle,
-                action: .pushToReusable(screen: .howItWorks),
+                action: .navigate(to: .howItWorks),
                 actionRequired: rowsWithActionRequired?.contains(.howItWorks) ?? false
             ),
             SettingsRow(
                 type: .whoWeAre,
-                action: .pushToSwiftUIView(swiftUIView: .whoWeAre),
+                action: .navigate(to: .whoWeAre),
                 actionRequired: rowsWithActionRequired?.contains(.whoWeAre) ?? false
             )
         ])
@@ -155,12 +160,12 @@ struct SettingsFactory {
         let legalSection = SettingsSection(title: L10n.settingsSectionLegalTitle, rows: [
             SettingsRow(
                 type: .privacyPolicy,
-                action: .pushToReusable(screen: .privacyPolicy),
+                action: .navigate(to: .privacyPolicy),
                 actionRequired: rowsWithActionRequired?.contains(.privacyPolicy) ?? false
             ),
             SettingsRow(
                 type: .termsAndConditions,
-                action: .pushToReusable(screen: .termsAndConditions),
+                action: .navigate(to: .termsAndConditions),
                 actionRequired: rowsWithActionRequired?.contains(.termsAndConditions) ?? false
             )
         ])
@@ -170,11 +175,7 @@ struct SettingsFactory {
         // MARK: - Beta
         let action: SettingsRow.RowAction
         
-        if #available(iOS 14.0, *) {
-            action = .pushToSwiftUIView(swiftUIView: .featureFlags)
-        } else {
-            action = .pushToViewController(viewController: FeatureFlagsTableViewController.self)
-        }
+        action = .navigate(to: .featureFlags)
         
         let betaSection = SettingsSection(title: L10n.settingsSectionBetaTitle, rows: [
             SettingsRow(

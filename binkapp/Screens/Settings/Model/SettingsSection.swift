@@ -8,12 +8,17 @@
 
 import UIKit
 
-struct SettingsSection {
+struct SettingsSection: Identifiable {
+    var id = UUID()
     let title: String
     var rows: [SettingsRow]
 }
 
-struct SettingsRow {
+struct SettingsRow: Identifiable, Equatable {
+    static func == (lhs: SettingsRow, rhs: SettingsRow) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     typealias VoidClosure = () -> Void
     
     enum RowType: String {
@@ -30,6 +35,7 @@ struct SettingsRow {
         case whoWeAre
         case theme
         case featureFlags
+        case delete
         
         var title: String {
             switch self {
@@ -59,24 +65,18 @@ struct SettingsRow {
                 return L10n.settingsRowThemeTitle
             case .featureFlags:
                 return L10n.settingsRowFeatureflagsTitle
+            case .delete:
+                return L10n.settingsRowDeleteAccountTitle
             }
         }
     }
     
     enum RowAction {
-        case pushToViewController(viewController: UIViewController.Type)
-        case pushToSwiftUIView(swiftUIView: SwiftUIView)
-        case pushToReusable(screen: ReusableScreen)
+        case navigate(to: DestinationView)
         case logout
         case customAction(action: VoidClosure)
         case launchSupport(service: SupportService)
-    }
-    
-    enum ReusableScreen {
-        case securityAndPrivacy
-        case howItWorks
-        case privacyPolicy
-        case termsAndConditions
+        case delete
     }
 
     enum SupportService {
@@ -84,9 +84,15 @@ struct SettingsRow {
         case contactUs
     }
     
-    enum SwiftUIView {
+    enum DestinationView {
+        case securityAndPrivacy
+        case howItWorks
+        case privacyPolicy
+        case termsAndConditions
         case whoWeAre
         case featureFlags
+        case debug
+        case preferences
     }
     
     let type: RowType
@@ -95,6 +101,7 @@ struct SettingsRow {
         return type.title
     }
     
+    let id = UUID()
     let subtitle: String?
     let action: RowAction
     let actionRequired: Bool

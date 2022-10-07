@@ -118,6 +118,15 @@
       }
     },
     {
+      "identity" : "ios-core",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:binkhq/ios-core.git",
+      "state" : {
+        "revision" : "dc4b842f59e6f351b0567f8f92cd35bea85a7f54",
+        "version" : "1.0.0"
+      }
+    },
+    {
       "identity" : "jwtdecode.swift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/auth0/JWTDecode.swift.git",
@@ -160,6 +169,15 @@
       "state" : {
         "branch" : "master",
         "revision" : "9166f34e9605b21f373359d4427bcbd28616053d"
+      }
+    },
+    {
+      "identity" : "mocker",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:WeTransfer/Mocker.git",
+      "state" : {
+        "revision" : "e7165fb0378193c6784f1d46a9ab2b6184c384fa",
+        "version" : "2.7.0"
       }
     },
     {

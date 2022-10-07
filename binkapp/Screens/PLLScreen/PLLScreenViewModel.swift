@@ -109,7 +109,7 @@ class PLLScreenViewModel {
                     completion(false)
                 })
             default:
-                self?.displaySimplePopup(title: L10n.errorTitle, message: nil, completion: {
+                self?.displaySimplePopup(title: L10n.errorTitle, message: L10n.paymentCardLinkFailAlertMessage, completion: {
                     completion(false)
                 })
             }
@@ -142,8 +142,14 @@ class PLLScreenViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func close() {
-        delegate?.modalWillDismiss()
+    func close(refreshLCD: Bool = false, refreshModules: Bool = false) {
+        if refreshLCD {
+            delegate?.refreshUI()
+        }
+        
+        if refreshModules {
+            delegate?.refreshModules()
+        }
         Current.navigate.close()
     }
     
@@ -164,9 +170,7 @@ class PLLScreenViewModel {
     }
 
     func toFAQScreen() {
-        let viewController = ZendeskService.makeFAQViewController()
-        let navigationRequest = ModalNavigationRequest(viewController: viewController, hideCloseButton: true)
-        Current.navigate.to(navigationRequest)
+        BinkSupportUtility.launchFAQs()
     }
 }
 

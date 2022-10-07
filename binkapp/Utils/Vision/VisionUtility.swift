@@ -11,8 +11,17 @@ import UIKit
 import Vision
 
 class VisionUtility: ObservableObject {
+    enum VisionError: Error {
+        case barcodeDetionFailure
+    }
+    
     private let requestHandler = VNSequenceRequestHandler()
-    private var timer: Timer?
+    
+    // MARK: - Loyalty Card
+    @Published var failedToDetectBarcode = false
+    let barcodePassthroughSubject = PassthroughSubject<String, Error>()
+    var shouldDetectBarcodeString = false
+    var timer: Timer?
 
     // MARK: - Payment Card
     var pan: String?
@@ -161,11 +170,9 @@ class VisionUtility: ObservableObject {
     }
     
     
-    // MARK: - Still image
+    // MARK: - Barcode detection
     
-    func createVisionRequest(image: UIImage, completion: @escaping (String?) -> Void ) {
-        guard let cgImage = image.cgImage else { return }
-        
+    func detectBarcode(ciImage: CIImage? = nil, completion: @escaping (String?) -> Void) {
         var vnBarcodeDetectionRequest: VNDetectBarcodesRequest {
             let request = VNDetectBarcodesRequest { request, error in
                 guard error == nil else {
@@ -174,9 +181,7 @@ class VisionUtility: ObservableObject {
                 }
                 
                 guard let observations = request.results as? [VNBarcodeObservation], let stringValue = observations.first?.payloadStringValue else {
-                    DispatchQueue.main.async {
-                        completion(nil)
-                    }
+                    completion(nil)
                     return
                 }
                 
@@ -187,15 +192,52 @@ class VisionUtility: ObservableObject {
             return request
         }
         
-        let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+        // Detect barcode
+        var requestHandler: VNImageRequestHandler?
+        if let ciImage = ciImage {
+            requestHandler = VNImageRequestHandler(ciImage: ciImage, options: [:])
+        }
+        
         let vnRequests = [vnBarcodeDetectionRequest]
         
         DispatchQueue.global(qos: .userInitiated).async {
             do {
-                try requestHandler.perform(vnRequests)
+                try requestHandler?.perform(vnRequests)
             } catch {
                 completion(nil)
             }
+        }
+    }
+    
+    func detectBarcodeString(from ciImage: CIImage?, completion: @escaping (String?) -> Void) {
+        guard let ciImage = ciImage else { return }
+
+        let vnTextTextRecognitionRequest = VNRecognizeTextRequest()
+        vnTextTextRecognitionRequest.recognitionLevel = .accurate
+        vnTextTextRecognitionRequest.usesLanguageCorrection = false
+        
+        let stillImageRequestHandler = VNImageRequestHandler(ciImage: ciImage, options: [:])
+        try? stillImageRequestHandler.perform([vnTextTextRecognitionRequest])
+        
+        if let observations = vnTextTextRecognitionRequest.results, !observations.isEmpty {
+            let recognizedTexts = observations.compactMap { observation in
+                return observation.topCandidates(1).first
+            }
+            
+            for (i, text) in recognizedTexts.enumerated() {
+                let formattedText = text.string.replacingOccurrences(of: " ", with: "")
+                Current.wallet.identifyMembershipPlanForBarcode(formattedText) { plan in
+                    guard plan != nil else {
+                        if i == (recognizedTexts.count - 1) {
+                            completion(nil)
+                        }
+                        return
+                    }
+                    completion(formattedText)
+                }
+            }
+        } else {
+            completion(nil)
         }
     }
 }

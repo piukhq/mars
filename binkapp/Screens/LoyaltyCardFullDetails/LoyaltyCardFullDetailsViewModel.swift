@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class LoyaltyCardFullDetailsViewModel {
     typealias EmptyCompletionBlock = () -> Void
@@ -39,6 +40,16 @@ class LoyaltyCardFullDetailsViewModel {
     
     var brandName: String {
         return membershipCard.membershipPlan?.account?.companyName ?? ""
+    }
+    
+    var shouldDisplayLocationOption: Bool {
+        // RS - For now we only want to display the locations option only when a Tesco LC is tapped
+        if let companyName = membershipCard.membershipPlan?.account?.companyName {
+            let isTesco = companyName.contains("Tesco")
+            return isTesco && Current.featureManager.isFeatureEnabled(.tescoLocations)
+        }
+        
+        return false
     }
     
     var balance: CD_MembershipCardBalance? {
@@ -121,6 +132,14 @@ class LoyaltyCardFullDetailsViewModel {
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
         MixpanelUtility.track(.viewBarcode(brandName: membershipCard.membershipPlan?.account?.companyName ?? "Unknown", route: .lcd))
+    }
+    
+    func toGeoLocations() {
+        let companyName = membershipCard.membershipPlan?.account?.companyName ?? "Unknown"
+        let viewController = ViewControllerFactory.makeGeoLocationsViewController(companyName: companyName)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+        MixpanelUtility.track(.toLocations(brandName: companyName))
     }
     
     func goToScreenForState(state: ModuleState, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) {
@@ -237,11 +256,8 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     func toSecurityAndPrivacyScreen() {
-        let title: String = L10n.securityAndPrivacyTitle
-        let description: String = L10n.securityAndPrivacyDescription
-        let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
-        let viewController = ViewControllerFactory.makeSecurityAndPrivacyViewController(configuration: configuration)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        let hostingViewController = UIHostingController(rootView: ReusableTemplateView(title: L10n.securityAndPrivacyTitle, description: L10n.securityAndPrivacyDescription))
+        let navigationRequest = ModalNavigationRequest(viewController: hostingViewController)
         Current.navigate.to(navigationRequest)
     }
 
@@ -293,6 +309,13 @@ extension LoyaltyCardFullDetailsViewModel {
     }
     
     func showDeleteConfirmationAlert() {
+        guard membershipCard.status?.status != .pending else {
+            let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.alertViewCannotDeleteCardTitle, message: L10n.alertViewCannotDeleteCardBody)
+            let navigationRequest = AlertNavigationRequest(alertController: alert)
+            Current.navigate.to(navigationRequest)
+            return
+        }
+        
         let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: L10n.deleteCardConfirmation, deleteAction: { [weak self] in
             guard let self = self else { return }
             guard Current.apiClient.networkIsReachable else {
@@ -302,12 +325,9 @@ extension LoyaltyCardFullDetailsViewModel {
                 return
             }
             MixpanelUtility.track(.loyaltyCardDeleted(brandName: self.brandName, route: .lcd))
-
+            
             self.repository.delete(self.membershipCard) {
-                if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(event: LoyaltyCardLoggerEvent.loyaltyCardDeleted, value: self.membershipCard.id)
-                }
-                
+                BinkLogger.infoPrivateHash(event: LoyaltyCardLoggerEvent.loyaltyCardDeleted, value: self.membershipCard.id)
                 Current.wallet.refreshLocal()
                 Current.navigate.back()
             }

@@ -7,6 +7,7 @@
 //
 
 import CardScan
+import SwiftUI
 import UIKit
 
 enum AddPaymentCardJourney {
@@ -79,11 +80,8 @@ class AddPaymentCardViewModel {
     }
     
     func toPrivacyAndSecurity() {
-        let title: String = L10n.securityAndPrivacyTitle
-        let description: String = L10n.securityAndPrivacyDescription
-        let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
-        let viewController = ViewControllerFactory.makeSecurityAndPrivacyViewController(configuration: configuration)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        let hostingViewController = UIHostingController(rootView: ReusableTemplateView(title: L10n.settingsRowSecurityTitle, description: L10n.securityAndPrivacyDescription))
+        let navigationRequest = ModalNavigationRequest(viewController: hostingViewController)
         Current.navigate.to(navigationRequest)
     }
 
@@ -93,9 +91,7 @@ class AddPaymentCardViewModel {
             guard let paymentCard = paymentCard else { return }
             Current.wallet.refreshLocal()
             
-            if #available(iOS 14.0, *) {
-                BinkLogger.infoPrivateHash(event: PaymentCardLoggerEvent.paymentCardAdded, value: paymentCard.id)
-            }
+            BinkLogger.infoPrivateHash(event: PaymentCardLoggerEvent.paymentCardAdded, value: paymentCard.id)
             
             switch self.journey {
             case .wallet:

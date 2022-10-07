@@ -17,7 +17,6 @@
 "form_field_validation_error" = "Incorrect Format";
 
 "barcode_swipe_title" = "Barcode";
-"delete_swipe_title" = "Delete";
 "please_wait_title" = "Please wait";
 "sign_up_failed_title" = "Sign up failed";
 "please_try_again_title" = "Please try again";
@@ -70,6 +69,7 @@
 "barcode_copy_label" = "Copy";
 "barcode_report_issue_title" = "We're sorry you're experiencing an issue. Thank you for reporting it to us";
 "barcode_report_issue_button_title" = "Report Issue";
+"barcode_membership_number_title" = "%@ Number";
 
 "add_join_screen_store_title" = "Store";
 "add_join_screen_view_title" = "View";
@@ -250,11 +250,20 @@
 "settings_section_beta_title" = "Beta";
 "settings_row_featureflags_title" = "Feature flags";
 
+"settings_row_delete_account_title" = "Delete my account";
+"settings_delete_account_action_title" = "Delete Account";
+"settings_delete_account_action_subtitle" = "Account deletion is irreversible, are you sure you want to delete your account?";
+"settings_delete_account_failed_alert_message" = "Account deletion failed, please contact us";
+"settings_delete_account_success_alert_message"= "Account deletion is successful";
+
+
 // MARK: - Support mail
 
 "support_mail_subject" = "Bink App Support";
 "support_mail_body" = "\n\n\n\nThe below information will help us with with your query, please don’t change it.\nBink ID: %@\nVersion: %@\niOS Version: %@";
 "support_mail_app_version" = "%@ build %@";
+"support_mail_no_email_apps_title" = "No email app installed";
+"support_mail_no_email_apps_body" = "No Mail accounts set up, please email us directly: support@bink.com";
 
 "pll_error_title" = "Error";
 "pll_error_message" = "Unfortunately some of your cards failed to link, please try again later.";
@@ -389,7 +398,7 @@
 "plr_voucher_detail_expired_date_prefix" = "Expired ";
 "plr_voucher_detail_expires_date_prefix" = "Expires ";
 "plr_voucher_detail_subtext_inprogress" = "Spend %@%@ with us and you'll get a %@%@ %@.";
-"plr_voucher_detail_subtext_issued" = "Use the code above to redeem your reward. You will get %@%@%@ off your purchase.";
+"plr_voucher_detail_subtext_issued" = "Use the code above to redeem your reward. You will get a %@%@ %@ off your purchase.";
 "plr_lcd_points_module_title" = "Collecting";
 "plr_lcd_points_module_auth_title" = "Earning";
 "plr_lcd_points_module_description" = "Towards rewards";
@@ -498,3 +507,27 @@
 "unauthenticated_state_description" = "Please open the Bink app on your phone to login to your wallet";
 "no_response_title" = "No response from phone";
 "no_response_desciption" = "Please open the Bink app on your phone to sync with your watch";
+
+// MARK: - Global
+"alert_view_cannot_delete_card_title" = "Cannot delete";
+"alert_view_cannot_delete_card_body" = "While your card is pending it cannot be deleted. Please try again later.";
+
+"delete_action_title" = "Delete";
+"contact_us_action_title" = "Contact Us";
+
+"alert_view_changing_sort" = "Changing Sort";
+"alert_view_changing_sort_body" = "Some of your cards have been ordered manually. Press OK to change the sort order, but please note that your manual ordering of cards will be lost.";
+"sort_order" = "Sort Order";
+
+"empty_rewards" = "No rewards to display. Come back\n after you've earned vouchers to see\n your issued, redeemed or expired\n rewards";
+
+"show_tesco_locations" = "Show Tesco Locations";
+"find_nearest_store" = "Find your nearest store";
+"press_for_directions" = "Press for directions";
+"locations" = "Locations";
+
+"show_barcode_title" = "Showing Barcode";
+"show_barcode_body" = "For some brands, we do not automatically display a barcode\nif you add your loyalty card manually (without scanning). This\nis because we cannot guarantee it will work in store.\n\n**Press here** to show barcode anyway";
+"preferences_updated" = "Preferences Updated";
+
+"payment_card_link_fail_alert_message" = "Unable to adjust link at this time, if the problem persists please contact support";

@@ -54,7 +54,19 @@ extension UIFont {
     }
 
     class var alertText: UIFont {
-        return UIFont(name: "NunitoSans-ExtraBold", size: 17.0) ?? UIFont()
+        return UIFont(name: "NunitoSans-SemiBold", size: 17.0) ?? UIFont()
+    }
+    
+    class var calloutViewTitle: UIFont {
+        return UIFont(name: "NunitoSans-Bold", size: 18.0) ?? UIFont()
+    }
+    
+    class var calloutViewSubtitle: UIFont {
+        return UIFont(name: "NunitoSans-Regular", size: 18.0) ?? UIFont()
+    }
+    
+    class var calloutViewOpeningHours: UIFont {
+        return UIFont(name: "NunitoSans-Bold", size: 14.0) ?? UIFont()
     }
     
     class var textFieldLabel: UIFont {
@@ -91,6 +103,10 @@ extension UIFont {
     
     class var tabBar: UIFont {
         return UIFont(name: "NunitoSans-Regular", size: 12.0) ?? UIFont()
+    }
+    
+    class var tabBarSmall: UIFont {
+        return UIFont(name: "NunitoSans-Regular", size: 8.0) ?? UIFont()
     }
     
     class var navBar: UIFont {

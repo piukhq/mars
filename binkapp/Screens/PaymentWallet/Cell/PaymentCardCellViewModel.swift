@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct PaymentCardCellViewModel {
+struct PaymentCardCellViewModel: Equatable {
     private let paymentCard: CD_PaymentCard
 
     init(paymentCard: CD_PaymentCard) {

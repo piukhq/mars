@@ -1,8 +1,8 @@
 //
-//  BarcodeScannerViewController.swift
+//  BinkScannerViewController.swift
 //  binkapp
 //
-//  Created by Nick Farrant on 02/04/2020.
+//  Created by Sean Williams on 06/10/2022.
 //  Copyright © 2020 Bink. All rights reserved.
 //
 
@@ -66,6 +66,11 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
         static let timerInterval: TimeInterval = 5.0
         static let scanErrorThreshold: TimeInterval = 1.0
     }
+    
+    enum LoyaltyScannerDetectionType {
+        case barcode
+        case string
+    }
 
     private weak var delegate: BinkScannerViewControllerDelegate?
 
@@ -76,7 +81,7 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
     private let schemeScanningQueue = DispatchQueue(label: "com.bink.wallet.scanning.loyalty.scheme.queue")
     private var rectOfInterest = CGRect.zero
     private var timer: Timer?
-    private var ocrTimer: Timer?
+    private var loyaltyScannerDetectionType: LoyaltyScannerDetectionType = .barcode
     private var canPresentScanError = true
     private var hideNavigationBar = true
     private var shouldAllowScanning = true
@@ -174,6 +179,45 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
+        navigationController?.setNavigationBarVisibility(false)
+        configureSubscribers()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if hideNavigationBar {
+            navigationController?.setNavigationBarHidden(true, animated: false)
+            
+            view.addSubview(cancelButton)
+            NSLayoutConstraint.activate([
+                cancelButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
+                cancelButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -4),
+                cancelButton.heightAnchor.constraint(equalToConstant: Constants.closeButtonSize.height),
+                cancelButton.widthAnchor.constraint(equalToConstant: Constants.closeButtonSize.width)
+            ])
+        }
+
+        if !viewModel.isScanning {
+            startScanning()
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        stopScanning()
+        navigationController?.setNavigationBarVisibility(true)
+    }
+
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        blurredView.backgroundColor = Current.themeManager.color(for: .bar)
+        explainerLabel.textColor = Current.themeManager.color(for: .text)
+        cancelButton.tintColor = Current.themeManager.color(for: .text)
+        widgetView.configure()
+    }
+    
+    private func configureUI() {
         view.addSubview(previewView)
 
         // BLUR AND MASK
@@ -221,9 +265,109 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
             nameOnCardLabel.leadingAnchor.constraint(equalTo: guideImageView.leadingAnchor, constant: 25),
             nameOnCardLabel.bottomAnchor.constraint(equalTo: guideImageView.bottomAnchor, constant: -10)
         ])
+    }
+    
+    private func startScanning() {
+        viewModel.isScanning = true
+        session.sessionPreset = .high
+        guard let backCamera = AVCaptureDevice.default(for: .video) else { return }
+        guard let input = try? AVCaptureDeviceInput(device: backCamera) else { return }
+        performCaptureChecksForDevice(backCamera)
+
+        if session.canAddInput(input) {
+            session.addInput(input)
+        }
+
+        videoPreviewLayer = AVCaptureVideoPreviewLayer(session: session)
+        guard let videoPreviewLayer = videoPreviewLayer else { return }
+        videoPreviewLayer.videoGravity = .resizeAspect
+        videoPreviewLayer.connection?.videoOrientation = .portrait
+
+        previewView.layer.addSublayer(videoPreviewLayer)
+        videoPreviewLayer.frame = view.frame
         
-        navigationController?.setNavigationBarVisibility(false)
+        let videoOutput = AVCaptureVideoDataOutput()
+        videoOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as NSString): NSNumber(value: kCVPixelFormatType_32BGRA)] as [String: Any]
+        videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "my.image.handling.queue")) /// Change to global variable queue?
         
+        if session.outputs.isEmpty {
+            if session.canAddOutput(videoOutput) {
+                session.addOutput(videoOutput)
+            }
+        }
+        
+        guard let connection = videoOutput.connection(with: AVMediaType.video), connection.isVideoOrientationSupported else { return }
+        connection.videoOrientation = .portrait
+
+        if !session.isRunning {
+            DispatchQueue.global(qos: .background).async { [weak self] in
+                self?.session.startRunning()
+            }
+        }
+        
+        captureOutput = videoOutput
+        scheduleTimer()
+    }
+
+    private func stopScanning() {
+        viewModel.isScanning = false
+        schemeScanningQueue.async { [weak self] in
+            self?.session.stopRunning()
+            guard let outputs = self?.session.outputs else { return }
+            for output in outputs {
+                self?.session.removeOutput(output)
+            }
+            self?.timer?.invalidate()
+        }
+    }
+    
+    private func scheduleTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: Constants.timerInterval, repeats: true, block: { [weak self] _ in
+            self?.widgetView.timeout()
+            
+            if self?.viewModel.type == .loyalty {
+                /// If after 5 seconds no barcode has been scanned, switch detection type
+                self?.loyaltyScannerDetectionType = self?.loyaltyScannerDetectionType == .barcode ? .string : .barcode
+            }
+        })
+    }
+
+    private func performCaptureChecksForDevice(_ device: AVCaptureDevice) {
+        do {
+            try device.lockForConfiguration()
+        } catch let error {
+            // TODO: Handle error
+            BinkLogger.error(AppLoggerError.lockDeviceForAVCaptureConfig, value: error.localizedDescription)
+        }
+
+        if device.isFocusModeSupported(.continuousAutoFocus) {
+            device.focusMode = .continuousAutoFocus
+        }
+
+        if device.isSmoothAutoFocusSupported {
+            device.isSmoothAutoFocusEnabled = true
+        }
+
+        device.isSubjectAreaChangeMonitoringEnabled = true
+
+        if device.isFocusPointOfInterestSupported {
+            device.focusPointOfInterest = CGPoint(x: 0.5, y: 0.5)
+        }
+
+        if device.isAutoFocusRangeRestrictionSupported {
+            device.autoFocusRangeRestriction = .near
+        }
+
+        if device.isLowLightBoostSupported {
+            device.automaticallyEnablesLowLightBoostWhenAvailable = true
+        }
+
+        device.activeVideoMaxFrameDuration = CMTime(value: 1, timescale: 10)
+        device.activeVideoMinFrameDuration = CMTime(value: 1, timescale: 10)
+        device.unlockForConfiguration()
+    }
+    
+    private func configureSubscribers() {
         visionUtility.subject.sink { completion in
             switch completion {
             case .finished:
@@ -260,168 +404,28 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
             }
         }
         .store(in: &subscriptions)
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if hideNavigationBar {
-            navigationController?.setNavigationBarHidden(true, animated: false)
-            
-            view.addSubview(cancelButton)
-            NSLayoutConstraint.activate([
-                cancelButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
-                cancelButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -4),
-                cancelButton.heightAnchor.constraint(equalToConstant: Constants.closeButtonSize.height),
-                cancelButton.widthAnchor.constraint(equalToConstant: Constants.closeButtonSize.width)
-            ])
-        }
-
-        if !viewModel.isScanning {
-            startScanning()
-        }
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        stopScanning()
-        navigationController?.setNavigationBarVisibility(true)
-    }
-
-    override func configureForCurrentTheme() {
-        super.configureForCurrentTheme()
-        blurredView.backgroundColor = Current.themeManager.color(for: .bar)
-        explainerLabel.textColor = Current.themeManager.color(for: .text)
-        cancelButton.tintColor = Current.themeManager.color(for: .text)
-        widgetView.configure()
-    }
-    
-    private func startScanning() {
-        viewModel.isScanning = true
-        session.sessionPreset = .high
-        guard let backCamera = AVCaptureDevice.default(for: .video) else { return }
-        guard let input = try? AVCaptureDeviceInput(device: backCamera) else { return }
-        performCaptureChecksForDevice(backCamera)
-
-        if session.canAddInput(input) {
-            session.addInput(input)
-        }
-
-        videoPreviewLayer = AVCaptureVideoPreviewLayer(session: session)
-        guard let videoPreviewLayer = videoPreviewLayer else { return }
-        videoPreviewLayer.videoGravity = .resizeAspect
-        videoPreviewLayer.connection?.videoOrientation = .portrait
-
-        previewView.layer.addSublayer(videoPreviewLayer)
-        videoPreviewLayer.frame = view.frame
-
-        switch viewModel.type {
-        case .loyalty:
-            let metadataCaptureOutput = AVCaptureMetadataOutput()
-            if session.outputs.isEmpty {
-                if session.canAddOutput(metadataCaptureOutput) {
-                    session.addOutput(metadataCaptureOutput)
-                                    
-                    metadataCaptureOutput.setMetadataObjectsDelegate(self, queue: schemeScanningQueue)
-                    metadataCaptureOutput.metadataObjectTypes = [
-                        .qr,
-                        .code128,
-                        .aztec,
-                        .pdf417,
-                        .ean13,
-                        .dataMatrix,
-                        .interleaved2of5,
-                        .code39
-                    ]
-                }
-            }
-            
-            if !session.isRunning {
-                session.startRunning()
-            }
-            
-            metadataCaptureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
-            captureOutput = metadataCaptureOutput
-            
-        case .payment:
-            let videoOutput = AVCaptureVideoDataOutput()
-            videoOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as NSString): NSNumber(value: kCVPixelFormatType_32BGRA)] as [String: Any]
-            videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "my.image.handling.queue")) /// Change to global variable queue?
-            
-            if session.outputs.isEmpty {
-                if session.canAddOutput(videoOutput) {
-                    session.addOutput(videoOutput)
-                }
-            }
-            
-            guard let connection = videoOutput.connection(with: AVMediaType.video), connection.isVideoOrientationSupported else { return }
-            connection.videoOrientation = .portrait
-  
-            if !session.isRunning {
-                session.startRunning()
-            }
-            captureOutput = videoOutput
-        }
-
-        scheduleTimer()
-    }
-
-    private func stopScanning() {
-        viewModel.isScanning = false
-        schemeScanningQueue.async { [weak self] in
-            self?.session.stopRunning()
-            guard let outputs = self?.session.outputs else { return }
-            for output in outputs {
-                self?.session.removeOutput(output)
-            }
-            self?.timer?.invalidate()
-            self?.ocrTimer?.invalidate()
-        }
-    }
-    
-    private func scheduleTimer() {
-        timer = Timer.scheduledTimer(withTimeInterval: Constants.timerInterval, repeats: false, block: { [weak self] _ in
-            self?.widgetView.timeout()
-        })
-    }
-
-    private func performCaptureChecksForDevice(_ device: AVCaptureDevice) {
-        do {
-            try device.lockForConfiguration()
-        } catch let error {
-            // TODO: Handle error
-            if #available(iOS 14.0, *) {
-                BinkLogger.error(AppLoggerError.lockDeviceForAVCaptureConfig, value: error.localizedDescription)
-            }
-        }
-
-        if device.isFocusModeSupported(.continuousAutoFocus) {
-            device.focusMode = .continuousAutoFocus
-        }
-
-        if device.isSmoothAutoFocusSupported {
-            device.isSmoothAutoFocusEnabled = true
-        }
-
-        device.isSubjectAreaChangeMonitoringEnabled = true
-
-        if device.isFocusPointOfInterestSupported {
-            device.focusPointOfInterest = CGPoint(x: 0.5, y: 0.5)
-        }
-
-        if device.isAutoFocusRangeRestrictionSupported {
-            device.autoFocusRangeRestriction = .near
-        }
-
-        if device.isLowLightBoostSupported {
-            device.automaticallyEnablesLowLightBoostWhenAvailable = true
-        }
-
-        device.activeVideoMaxFrameDuration = CMTime(value: 1, timescale: 10)
-        device.activeVideoMinFrameDuration = CMTime(value: 1, timescale: 10)
-        device.unlockForConfiguration()
+        
+//        visionUtility.barcodePassthroughSubject.sink { _ in } receiveValue: { barcode in
+//            guard self.shouldAllowScanning else { return }
+//            self.timer?.invalidate()
+//            self.shouldAllowScanning = false
+//            self.captureSource = .camera(self.viewModel.plan)
+//            self.identifyMembershipPlanForBarcode(barcode)
+//        }
+//        .store(in: &subscriptions)
+        
+//        visionUtility.$failedToDetectBarcode.sink { failed in
+//            guard failed else { return }
+//            DispatchQueue.main.async {
+//                self.shouldAllowScanning = false
+//                self.showError(barcodeDetected: false)
+//            }
+//        }
+//        .store(in: &subscriptions)
     }
 
     private func toPhotoLibrary() {
+        self.shouldAllowScanning = false
         let picker = UIImagePickerController()
         picker.allowsEditing = true
         picker.delegate = self
@@ -433,6 +437,7 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
     }
     
     @objc private func enterManually() {
+        MixpanelUtility.track(.binkScannerEnterManuallyPressed(brandName: viewModel.plan?.account?.companyName ?? ""))
         delegate?.binkScannerViewControllerShouldEnterManually(self, completion: { [weak self] in
             guard let self = self else { return }
             self.navigationController?.removeViewController(self)
@@ -460,9 +465,7 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
                 return
             }
             
-            if #available(iOS 14.0, *) {
-                BinkLogger.infoPrivateHash(event: AppLoggerEvent.barcodeScanned, value: "ID: \(plan.id ?? "") - \(barcode)")
-            }
+            BinkLogger.infoPrivateHash(event: AppLoggerEvent.barcodeScanned, value: "ID: \(plan.id ?? "") - \(barcode)")
             
             self.passDataToBarcodeScannerDelegate(barcode: barcode, membershipPlan: plan)
         }
@@ -476,9 +479,7 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
                 if self.canPresentScanError {
                     self.canPresentScanError = false
                     DispatchQueue.main.async {
-                        if #available(iOS 14.0, *) {
-                            BinkLogger.error(AppLoggerError.barcodeScanningFailure, value: planFromForm.account?.companyName)
-                        }
+                        BinkLogger.error(AppLoggerError.barcodeScanningFailure, value: planFromForm.account?.companyName)
                         HapticFeedbackUtil.giveFeedback(forType: .notification(type: .error))
                         self.showError(barcodeDetected: true)
                     }
@@ -517,41 +518,45 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
     }
-}
-
-extension BinkScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
-    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        timer?.invalidate()
-        guard shouldAllowScanning else { return }
-        shouldAllowScanning = false
-
-        if let object = metadataObjects.first {
-            guard let readableObject = object as? AVMetadataMachineReadableCodeObject else { return }
-            guard let stringValue = readableObject.stringValue else { return }
-            captureSource = .camera(viewModel.plan)
-            identifyMembershipPlanForBarcode(stringValue)
-        }
+    
+    private func handleBarcodeDetection(_ barcode: String) {
+        self.timer?.invalidate()
+        self.shouldAllowScanning = false
+        self.captureSource = .camera(self.viewModel.plan)
+        self.identifyMembershipPlanForBarcode(barcode)
     }
 }
+
 
 // MARK: - Detect barcode from image
 
 extension BinkScannerViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
+        
         Current.navigate.close(animated: true) { [weak self] in
-            self?.visionUtility.createVisionRequest(image: image) { barcode in
+            self?.visionUtility.detectBarcode(ciImage: image.ciImage(), completion: { barcode in
                 guard let barcode = barcode else {
-                    self?.showError(barcodeDetected: false)
+                    self?.visionUtility.detectBarcodeString(from: image.ciImage(), completion: { barcode in
+                        guard let barcode = barcode else {
+                            DispatchQueue.main.async {
+                                self?.shouldAllowScanning = false
+                                self?.showError(barcodeDetected: false)
+                            }
+                            return
+                        }
+                        self?.handleBarcodeDetection(barcode)
+                    })
                     return
                 }
-                self?.identifyMembershipPlanForBarcode(barcode)
-            }
+                self?.handleBarcodeDetection(barcode)
+            })
         }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         Current.navigate.close(animated: true) {
+            self.shouldAllowScanning = true
             self.scheduleTimer()
         }
     }
@@ -559,14 +564,32 @@ extension BinkScannerViewController: UIImagePickerControllerDelegate {
 
 extension BinkScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        guard let frame = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
-
-        if let paymentCardRectangleObservation = self.paymentCardRectangleObservation {
-            DispatchQueue.main.async {
-                self.handleObservedPaymentCard(paymentCardRectangleObservation, in: frame)
+        guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+        
+        switch viewModel.type {
+        case .payment:
+            if let paymentCardRectangleObservation = self.paymentCardRectangleObservation {
+                DispatchQueue.main.async {
+                    self.handleObservedPaymentCard(paymentCardRectangleObservation, in: imageBuffer)
+                }
+            } else if let paymentCardRectangleObservation = self.visionUtility.detectPaymentCard(frame: imageBuffer) {
+                self.paymentCardRectangleObservation = paymentCardRectangleObservation
             }
-        } else if let paymentCardRectangleObservation = self.visionUtility.detectPaymentCard(frame: frame) {
-            self.paymentCardRectangleObservation = paymentCardRectangleObservation
+        case .loyalty:
+            guard shouldAllowScanning else { return }
+            let ciImage = CIImage(cvImageBuffer: imageBuffer)
+            switch loyaltyScannerDetectionType {
+            case .barcode:
+                visionUtility.detectBarcode(ciImage: ciImage, completion: { [weak self] barcode in
+                    guard let self = self, self.shouldAllowScanning, let barcode = barcode else { return }
+                    self.handleBarcodeDetection(barcode)
+                })
+            case .string:
+                visionUtility.detectBarcodeString(from: ciImage, completion: { [weak self] barcode in
+                    guard let self = self, self.shouldAllowScanning, let barcode = barcode else { return }
+                    self.handleBarcodeDetection(barcode)
+                })
+            }
         }
     }
     

@@ -72,6 +72,14 @@ internal enum L10n {
   internal static let addPaymentErrorMessage = L10n.tr("Localizable", "add_payment_error_message")
   /// Error Adding Card
   internal static let addPaymentErrorTitle = L10n.tr("Localizable", "add_payment_error_title")
+  /// While your card is pending it cannot be deleted. Please try again later.
+  internal static let alertViewCannotDeleteCardBody = L10n.tr("Localizable", "alert_view_cannot_delete_card_body")
+  /// Cannot delete
+  internal static let alertViewCannotDeleteCardTitle = L10n.tr("Localizable", "alert_view_cannot_delete_card_title")
+  /// Changing Sort
+  internal static let alertViewChangingSort = L10n.tr("Localizable", "alert_view_changing_sort")
+  /// Some of your cards have been ordered manually. Press OK to change the sort order, but please note that your manual ordering of cards will be lost.
+  internal static let alertViewChangingSortBody = L10n.tr("Localizable", "alert_view_changing_sort_body")
   /// All
   internal static let allTitle = L10n.tr("Localizable", "all_title")
   /// Please enter your %@ credentials below to add this card to your wallet.
@@ -90,6 +98,10 @@ internal enum L10n {
   internal static let barcodeError = L10n.tr("Localizable", "barcode_error")
   /// Maximise barcode
   internal static let barcodeMaximiseButton = L10n.tr("Localizable", "barcode_maximise_button")
+  /// %@ Number
+  internal static func barcodeMembershipNumberTitle(_ p1: Any) -> String {
+    return L10n.tr("Localizable", "barcode_membership_number_title", String(describing: p1))
+  }
   /// Report Issue
   internal static let barcodeReportIssueButtonTitle = L10n.tr("Localizable", "barcode_report_issue_button_title")
   /// We're sorry you're experiencing an issue. Thank you for reporting it to us
@@ -154,6 +166,8 @@ internal enum L10n {
   internal static let checkInboxTitle = L10n.tr("Localizable", "check_inbox_title")
   /// There was a problem communicating with the server. Please try again later.
   internal static let communicationError = L10n.tr("Localizable", "communication_error")
+  /// Contact Us
+  internal static let contactUsActionTitle = L10n.tr("Localizable", "contact_us_action_title")
   /// Continue
   internal static let continueButtonTitle = L10n.tr("Localizable", "continue_button_title")
   /// Enter credentials
@@ -166,6 +180,8 @@ internal enum L10n {
   internal static let debugMenuToolsSectionTitle = L10n.tr("Localizable", "debug_menu_tools_section_title")
   /// Decline
   internal static let decline = L10n.tr("Localizable", "decline")
+  /// Delete
+  internal static let deleteActionTitle = L10n.tr("Localizable", "delete_action_title")
   /// Are you sure you want to delete this card?
   internal static let deleteCardConfirmation = L10n.tr("Localizable", "delete_card_confirmation")
   /// Remove this card from Bink
@@ -176,8 +192,6 @@ internal enum L10n {
   }
   /// Delete this card
   internal static let deleteCardTitle = L10n.tr("Localizable", "delete_card_title")
-  /// Delete
-  internal static let deleteSwipeTitle = L10n.tr("Localizable", "delete_swipe_title")
   /// Tap to enlarge Aztec code
   internal static let detailsHeaderShowAztecCode = L10n.tr("Localizable", "details_header_show_aztec_code")
   /// Tap to enlarge barcode
@@ -190,12 +204,19 @@ internal enum L10n {
   internal static let done = L10n.tr("Localizable", "done")
   /// Use magic link
   internal static let emailMagicLink = L10n.tr("Localizable", "email_magic_link")
+  /// No rewards to display. Come back
+  ///  after you've earned vouchers to see
+  ///  your issued, redeemed or expired
+  ///  rewards
+  internal static let emptyRewards = L10n.tr("Localizable", "empty_rewards")
   /// Error
   internal static let errorTitle = L10n.tr("Localizable", "error_title")
   /// Filters
   internal static let filtersButtonTitle = L10n.tr("Localizable", "filters_button_title")
   /// Find and join loyalty schemes
   internal static let findAndJoinDescription = L10n.tr("Localizable", "find_and_join_description")
+  /// Find your nearest store
+  internal static let findNearestStore = L10n.tr("Localizable", "find_nearest_store")
   /// If the email address you entered is associated with a Bink account, then a password reset email will be sent.
   internal static let fogrotPasswordPopupText = L10n.tr("Localizable", "fogrot_password_popup_text")
   /// Please enter your email address and if it is associated with a Bink account, then a password reset email will be sent
@@ -253,6 +274,8 @@ internal enum L10n {
   internal static let linkedStatusImageName = L10n.tr("Localizable", "linked_status_image_name")
   /// There was a problem loading the page, please try again later.
   internal static let loadingError = L10n.tr("Localizable", "loading_error")
+  /// Locations
+  internal static let locations = L10n.tr("Localizable", "locations")
   /// Log in failed
   internal static let logInFailedTitle = L10n.tr("Localizable", "log_in_failed_title")
   /// You are seeing this because sometimes it takes a while to log in with the merchant. In the meantime please do not attempt to log in again, but you can use your card and receive your benefits as usual. After you are logged in you will be able to see your points balance.
@@ -410,6 +433,8 @@ internal enum L10n {
   internal static let paymentCardExpiredAlertMessage = L10n.tr("Localizable", "payment_card_expired_alert_message")
   /// This payment card has expired
   internal static let paymentCardExpiredAlertTitle = L10n.tr("Localizable", "payment_card_expired_alert_title")
+  /// Unable to adjust link at this time, if the problem persists please contact support
+  internal static let paymentCardLinkFailAlertMessage = L10n.tr("Localizable", "payment_card_link_fail_alert_message")
   /// Position your card in the frame so the card number is visible
   internal static let paymentScannerExplainerText = L10n.tr("Localizable", "payment_scanner_explainer_text")
   /// You can also type in the card details yourself
@@ -574,7 +599,7 @@ internal enum L10n {
   internal static func plrVoucherDetailSubtextInprogress(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
     return L10n.tr("Localizable", "plr_voucher_detail_subtext_inprogress", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5))
   }
-  /// Use the code above to redeem your reward. You will get %@%@%@ off your purchase.
+  /// Use the code above to redeem your reward. You will get a %@%@ %@ off your purchase.
   internal static func plrVoucherDetailSubtextIssued(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
     return L10n.tr("Localizable", "plr_voucher_detail_subtext_issued", String(describing: p1), String(describing: p2), String(describing: p3))
   }
@@ -643,6 +668,10 @@ internal enum L10n {
   internal static let preferencesScreenDescription = L10n.tr("Localizable", "preferences_screen_description")
   /// We can't update your preferences at the moment. Please try again later.
   internal static let preferencesUpdateFail = L10n.tr("Localizable", "preferences_update_fail")
+  /// Preferences Updated
+  internal static let preferencesUpdated = L10n.tr("Localizable", "preferences_updated")
+  /// Press for directions
+  internal static let pressForDirections = L10n.tr("Localizable", "press_for_directions")
   /// Privacy Policy
   internal static let privacyPolicy = L10n.tr("Localizable", "privacy_policy")
   /// Your recent transaction history
@@ -711,10 +740,20 @@ internal enum L10n {
   internal static let seeDescription = L10n.tr("Localizable", "see_description")
   /// See your balance
   internal static let seeTitle = L10n.tr("Localizable", "see_title")
+  /// Account deletion is irreversible, are you sure you want to delete your account?
+  internal static let settingsDeleteAccountActionSubtitle = L10n.tr("Localizable", "settings_delete_account_action_subtitle")
+  /// Delete Account
+  internal static let settingsDeleteAccountActionTitle = L10n.tr("Localizable", "settings_delete_account_action_title")
+  /// Account deletion failed, please contact us
+  internal static let settingsDeleteAccountFailedAlertMessage = L10n.tr("Localizable", "settings_delete_account_failed_alert_message")
+  /// Account deletion is successful
+  internal static let settingsDeleteAccountSuccessAlertMessage = L10n.tr("Localizable", "settings_delete_account_success_alert_message")
   /// Get in touch with Bink
   internal static let settingsRowContactSubtitle = L10n.tr("Localizable", "settings_row_contact_subtitle")
   /// Contact us
   internal static let settingsRowContactTitle = L10n.tr("Localizable", "settings_row_contact_title")
+  /// Delete my account
+  internal static let settingsRowDeleteAccountTitle = L10n.tr("Localizable", "settings_row_delete_account_title")
   /// Frequently asked questions
   internal static let settingsRowFaqsSubtitle = L10n.tr("Localizable", "settings_row_faqs_subtitle")
   /// FAQs
@@ -769,6 +808,16 @@ internal enum L10n {
   internal static let settingsTitle = L10n.tr("Localizable", "settings_title")
   /// Who we are
   internal static let settingsWhoWeAreTitle = L10n.tr("Localizable", "settings_who_we_are_title")
+  /// For some brands, we do not automatically display a barcode
+  /// if you add your loyalty card manually (without scanning). This
+  /// is because we cannot guarantee it will work in store.
+  /// 
+  /// **Press here** to show barcode anyway
+  internal static let showBarcodeBody = L10n.tr("Localizable", "show_barcode_body")
+  /// Showing Barcode
+  internal static let showBarcodeTitle = L10n.tr("Localizable", "show_barcode_title")
+  /// Show Tesco Locations
+  internal static let showTescoLocations = L10n.tr("Localizable", "show_tesco_locations")
   /// Sign up
   internal static let signUpButtonTitle = L10n.tr("Localizable", "sign_up_button_title")
   /// Sign up failed
@@ -797,6 +846,8 @@ internal enum L10n {
   internal static let somethingWentWrongDescription = L10n.tr("Localizable", "something_went_wrong_description")
   /// Something went wrong
   internal static let somethingWentWrongTitle = L10n.tr("Localizable", "something_went_wrong_title")
+  /// Sort Order
+  internal static let sortOrder = L10n.tr("Localizable", "sort_order")
   /// Connection error. Please try again.
   internal static let sslPinningFailureText = L10n.tr("Localizable", "ssl_pinning_failure_text")
   /// Error
@@ -820,6 +871,10 @@ internal enum L10n {
   internal static func supportMailBody(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
     return L10n.tr("Localizable", "support_mail_body", String(describing: p1), String(describing: p2), String(describing: p3))
   }
+  /// No Mail accounts set up, please email us directly: support@bink.com
+  internal static let supportMailNoEmailAppsBody = L10n.tr("Localizable", "support_mail_no_email_apps_body")
+  /// No email app installed
+  internal static let supportMailNoEmailAppsTitle = L10n.tr("Localizable", "support_mail_no_email_apps_title")
   /// Bink App Support
   internal static let supportMailSubject = L10n.tr("Localizable", "support_mail_subject")
   /// Please read the Bink Privacy Policy for further details of how your data will be processed

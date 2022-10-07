@@ -334,12 +334,17 @@ private extension PLLScreenViewController {
 
                 switch self.journey {
                 case .newCard:
-                    self.viewModel.close()
+                    self.viewModel.close(refreshLCD: true)
                 case .existingCard:
-                    self.viewModel.isEmptyPll ? self.viewModel.toPaymentScanner(delegate: self) : self.viewModel.close()
+                    self.viewModel.isEmptyPll ? self.viewModel.toPaymentScanner(delegate: self) : self.viewModel.close(refreshModules: true)
                 }
             } else {
-                self.viewModel.close()
+                switch self.journey {
+                case .newCard:
+                    self.viewModel.close(refreshLCD: true)
+                case .existingCard:
+                    self.viewModel.close()
+                }
             }
         }
     }
@@ -365,9 +370,7 @@ extension PLLScreenViewController: ScanDelegate {
     }
     
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
-        if #available(iOS 14.0, *) {
-            BinkLogger.infoPrivateHash(event: AppLoggerEvent.paymentCardScanned, value: creditCard.number)
-        }
+        BinkLogger.infoPrivateHash(event: AppLoggerEvent.paymentCardScanned, value: creditCard.number)
         BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
         let month = creditCard.expiryMonthInteger()
         let year = creditCard.expiryYearInteger()

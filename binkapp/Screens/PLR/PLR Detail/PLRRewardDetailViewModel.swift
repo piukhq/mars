@@ -28,6 +28,14 @@ class PLRRewardDetailViewModel {
     }
 
     var codeString: String? {
+        if let code = voucher.code {
+            if code.contains("Due:") {
+                var updatedCode = code.insertCharacterInString(step: 4, withCharacter: " ")
+                updatedCode = updatedCode.replacingOccurrences(of: "  ", with: " ")
+                return updatedCode
+            }
+        }
+        
         return voucher.code
     }
 
@@ -59,7 +67,7 @@ class PLRRewardDetailViewModel {
         case (.accumulator, .inProgress):
             return L10n.plrVoucherDetailSubtextInprogress(voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "", voucher.burn?.prefix ?? "", voucher.burn?.value?.twoDecimalPointString() ?? "", voucher.burn?.type ?? "")
         case (.accumulator, .issued):
-            return L10n.plrVoucherDetailSubtextIssued(voucher.burn?.prefix ?? "", voucher.burn?.value?.twoDecimalPointString() ?? "", voucher.burn?.suffix ?? "")
+            return L10n.plrVoucherDetailSubtextIssued(voucher.burn?.prefix ?? "", voucher.burn?.value?.twoDecimalPointString() ?? " ", voucher.burn?.suffix ?? "")
             
         case (.stamps, .inProgress):
             return membershipPlan.dynamicContentValue(forColumn: .voucherStampsInProgressDetail)

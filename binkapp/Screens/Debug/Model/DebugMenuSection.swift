@@ -13,7 +13,11 @@ struct DebugMenuSection {
     let rows: [DebugMenuRow]
 }
 
-struct DebugMenuRow {
+struct DebugMenuRow: Equatable {
+    static func == (lhs: DebugMenuRow, rhs: DebugMenuRow) -> Bool {
+        return lhs.title == rhs.title
+    }
+    
     enum RowType {
         case version
         case email
@@ -25,7 +29,7 @@ struct DebugMenuRow {
         case customBundleClientLogin
     }
     
-    enum CellType {
+    enum CellType: Equatable {
         case titleSubtitle
         case segmentedControl
         case picker(PromptType?)

@@ -52,12 +52,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         // Device storage
         StorageUtility.start()
         
-        // Remote config
+        // Remote config 
         Current.remoteConfig.configure()
 
-        // Initialise Zendesk
-        ZendeskService.start()
-        
         // Start points scraping manager
         Current.pointsScrapingManager.start()
         
@@ -65,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         if Current.userManager.hasCurrentUser {
             getUserProfile { result in
                 guard let response = try? result.get() else { return }
-                Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
+                Current.userManager.setProfile(withResponse: response)
             }
         }
 
@@ -93,17 +90,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        if #available(iOS 14.0, *) {
-            BinkLogger.info(event: AppLoggerEvent.appEnteredForeground)
-        }
+        BinkLogger.info(event: AppLoggerEvent.appEnteredForeground)
         Current.wallet.refreshMembershipPlansIfNecessary()
         InAppReviewUtility.recordAppLaunch()
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        if #available(iOS 14.0, *) {
-            BinkLogger.info(event: AppLoggerEvent.appEnteredBackground)
-        }
+        BinkLogger.info(event: AppLoggerEvent.appEnteredBackground)
         Current.wallet.handleAppDidEnterBackground()
     }
     

@@ -79,6 +79,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         refreshControl.addTarget(self, action: #selector(reloadWallet), for: .valueChanged)
         
         configureCollectionView()
+        configureNavigationItem()
         
         /// Disabling pending a review of diffable data source and core data behaviour
 //        if #available(iOS 14.0, *) {
@@ -100,7 +101,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         }
         
         configureLoadingIndicator()
-        checkForZendeskUpdates()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -127,12 +127,12 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         dotView.removeFromSuperview()
     }
     
-    private func configureNavigationItem(hasSupportUpdates: Bool) {
-        self.hasSupportUpdates = hasSupportUpdates
+    private func configureNavigationItem() {
         let settingsIcon = Asset.settings.image.withRenderingMode(.alwaysOriginal)
         let settingsBarButton = UIBarButtonItem(image: settingsIcon, style: .plain, target: self, action: #selector(settingsButtonTapped))
+
         settingsBarButton.accessibilityIdentifier = "settings"
-        navigationItem.rightBarButtonItem = settingsBarButton
+        navigationItem.rightBarButtonItems = [settingsBarButton]
         
         var rightInset: CGFloat = 0
         switch UIDevice.current.width {
@@ -146,23 +146,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             rightInset = 7
         }
         settingsBarButton.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: rightInset)
-        
-        guard hasSupportUpdates else {
-            dotView.removeFromSuperview()
-            return
-        }
-        if let navBar = navigationController?.navigationBar {
-            dotView.translatesAutoresizingMaskIntoConstraints = false
-            dotView.backgroundColor = .systemRed
-            dotView.layer.cornerRadius = 5
-            navBar.addSubview(dotView)
-            NSLayoutConstraint.activate([
-                dotView.widthAnchor.constraint(equalToConstant: WalletViewControllerConstants.dotViewHeightWidth),
-                dotView.heightAnchor.constraint(equalToConstant: WalletViewControllerConstants.dotViewHeightWidth),
-                dotView.rightAnchor.constraint(equalTo: navBar.rightAnchor, constant: -WalletViewControllerConstants.dotViewRightPadding),
-                dotView.topAnchor.constraint(equalTo: navBar.topAnchor, constant: WalletViewControllerConstants.dotViewTopPadding)
-            ])
-        }
     }
     
     @objc func settingsButtonTapped() {
@@ -170,16 +153,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         if hasSupportUpdates {
             actionRequiredSettings.append(.contactUs)
         }
-        viewModel.toSettings(rowsWithActionRequired: actionRequiredSettings, delegate: self)
-    }
-    
-    func checkForZendeskUpdates() {
-        /// In case the Zendesk SDK is slow to return a state, we should configure the navigation item to a default state
-        configureNavigationItem(hasSupportUpdates: Current.userDefaults.bool(forDefaultsKey: .hasSupportUpdates))
-        
-        ZendeskService.getIdentityRequestUpdates { hasUpdates in
-            self.configureNavigationItem(hasSupportUpdates: hasUpdates)
-        }
+        viewModel.toSettings(rowsWithActionRequired: actionRequiredSettings)
     }
     
     func configureCollectionView() {
@@ -267,11 +241,13 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     }
     
     private func deleteCard(at indexPath: IndexPath) {
-        self.collectionView.performBatchUpdates({ [weak self] in
-            self?.collectionView.deleteItems(at: [indexPath])
-        }) { [weak self] _ in
-            self?.reloadCollectionView()
-            self?.indexPathOfCardToDelete = nil
+        if self.collectionView.numberOfItems(inSection: indexPath.section) > 0 {
+            self.collectionView.performBatchUpdates({ [weak self] in
+                self?.collectionView.deleteItems(at: [indexPath])
+            }) { [weak self] _ in
+                self?.reloadCollectionView()
+                self?.indexPathOfCardToDelete = nil
+            }
         }
     }
     
@@ -318,6 +294,18 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         return proposedIndexPath
     }
     
+    private func animate(_ cell: UICollectionViewCell, to transform: CGAffineTransform) {
+        UIView.animate(
+            withDuration: 0.4,
+            delay: 0,
+            usingSpringWithDamping: 0.4,
+            initialSpringVelocity: 3,
+            options: [.curveEaseInOut],
+            animations: {
+                cell.transform = transform
+            }, completion: nil)
+    }
+    
     @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
         switch gesture.state {
         case .began:
@@ -329,11 +317,17 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             
             orderingManager.start()
             collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+            
+            if let cell = selectedCell {
+                if !cell.isKind(of: WalletPromptCollectionViewCell.self) && !cell.isKind(of: OnboardingCardCollectionViewCell.self) {
+                    animate(cell, to: CGAffineTransform(translationX: 0, y: -LayoutHelper.WalletDimensions.cardLineSpacing))
+                }
+            }
         case .changed:
             if let bounds = gesture.view?.bounds {
                 let gestureLocation = gesture.location(in: gesture.view)
                 let centerX: CGFloat = bounds.size.width / 2
-                let updatedLocation = CGPoint(x: centerX, y: gestureLocation.y + (distanceFromCenterOfCell ?? 0))
+                let updatedLocation = CGPoint(x: centerX, y: gestureLocation.y - LayoutHelper.WalletDimensions.cardLineSpacing + (distanceFromCenterOfCell ?? 0))
                 collectionView.updateInteractiveMovementTargetPosition(updatedLocation)
             }
         case .ended:
@@ -413,12 +407,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
 //            }
 //        }
 //    }
-}
-
-extension WalletViewController: SettingsViewControllerDelegate {
-    func settingsViewControllerDidDismiss(_ settingsViewController: SettingsViewController) {
-        checkForZendeskUpdates()
-    }
 }
 
 struct WalletOrderingManager {

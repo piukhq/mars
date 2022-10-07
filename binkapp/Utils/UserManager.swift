@@ -76,9 +76,7 @@ class UserManager {
         do {
             try token = keychain.getString(key)
         } catch {
-            if #available(iOS 14.0, *) {
-                BinkLogger.error(AppLoggerError.retrieveKeychainValueFromKey, value: error.localizedDescription)
-            }
+            BinkLogger.error(AppLoggerError.retrieveKeychainValueFromKey, value: error.localizedDescription)
         }
         
         return token
@@ -90,13 +88,11 @@ class UserManager {
             try setEmail(with: response)
             UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(true, forDefaultsKey: .hasCurrentUser)
         } catch {
-            if #available(iOS 14.0, *) {
-                BinkLogger.error(UserLoggerError.setNewUser, value: error.localizedDescription)
-            }
+            BinkLogger.error(UserLoggerError.setNewUser, value: error.localizedDescription)
         }
     }
     
-    func setProfile(withResponse response: UserProfileResponse, updateZendeskIdentity: Bool) {
+    func setProfile(withResponse response: UserProfileResponse) {
         // Store what we can, but don't bail if the values don't exist
         if let email = response.email {
             try? keychain.set(email, key: Constants.emailKey)
@@ -119,12 +115,8 @@ class UserManager {
             
             MixpanelUtility.setUserIdentity(userId: userId)
         }
-        
-        if updateZendeskIdentity {
-            ZendeskService.setIdentity(firstName: currentFirstName, lastName: currentLastName)
-        }
-        
-        AutofillUtil().configureUserPreferenceFromAPI()
+
+        PreferencesViewModel().configureUserPreferenceFromAPI()
     }
     
     private func setToken(with response: LoginResponse) throws {

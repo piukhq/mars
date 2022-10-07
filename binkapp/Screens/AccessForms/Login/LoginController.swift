@@ -62,7 +62,7 @@ class LoginController: UserServiceProtocol {
         
             Current.userManager.setNewUser(with: response)
             
-            createService(params: APIConstants.makeServicePostRequest(email: email), completion: { [weak self] (success, _) in
+            createService(params: APIConstants.makeServiceRequest(email: email), completion: { [weak self] (success, _) in
                 guard success else {
                     completion(.failedToCreateService)
                     return
@@ -75,7 +75,7 @@ class LoginController: UserServiceProtocol {
                         return
                     }
                     
-                    Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
+                    Current.userManager.setProfile(withResponse: response)
                     BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
                 })
                 

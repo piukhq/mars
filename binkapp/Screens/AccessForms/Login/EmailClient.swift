@@ -35,6 +35,14 @@ enum EmailClient: String, CaseIterable {
         return availableClients
     }
 
+    
+    static func openDefault(address: String, subject: String?) {
+        let subjectEncoded = subject?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        if let safeURL = URL(string: "mailto:\(address)?subject=\(subjectEncoded ?? "")"), UIApplication.shared.canOpenURL(safeURL) {
+            UIApplication.shared.open(safeURL)
+        }
+    }
+    
     func open() {
         if let safeURL = URL(string: url), UIApplication.shared.canOpenURL(safeURL) {
             UIApplication.shared.open(safeURL, options: [:])

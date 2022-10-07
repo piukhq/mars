@@ -15,14 +15,14 @@ enum MixpanelUtility {
     static func configure() {
         if Current.userDefaults.bool(forDefaultsKey: .analyticsDebugMode) {
             Mixpanel.removeInstance(name: "prod")
-            mixpanelInstance = Mixpanel.initialize(token: BinkappKeys().mixpanelTokenDev, flushInterval: 60, instanceName: "dev", optOutTrackingByDefault: false)
+            mixpanelInstance = Mixpanel.initialize(token: BinkappKeys().mixpanelTokenDev, flushInterval: 60, instanceName: "dev", optOutTrackingByDefault: false, trackAutomaticEvents: false)
             Mixpanel.setMainInstance(name: "dev")
         } else {
             Mixpanel.removeInstance(name: "dev")
             mixpanelInstance = nil
             
             if !Configuration.isDebug() {
-                mixpanelInstance = Mixpanel.initialize(token: BinkappKeys().mixpanelTokenProduction, flushInterval: 60, instanceName: "prod", optOutTrackingByDefault: false)
+                mixpanelInstance = Mixpanel.initialize(token: BinkappKeys().mixpanelTokenProduction, flushInterval: 60, instanceName: "prod", optOutTrackingByDefault: false, trackAutomaticEvents: false)
                 Mixpanel.setMainInstance(name: "prod")
             }
         }
@@ -64,6 +64,9 @@ enum MixpanelTrackableEvent {
     case logout
     case viewBarcode(brandName: String, route: JourneyRoute)
     case barcodeScreenIssueReported(brandName: String, reason: BarcodeScreenIssue)
+    case toLocations(brandName: String)
+    case toAppleMaps(brandName: String)
+    case binkScannerEnterManuallyPressed(brandName: String)
     
     enum JourneyRoute: String {
         case wallet = "Wallet"
@@ -101,6 +104,12 @@ enum MixpanelTrackableEvent {
             return "Barcode viewed"
         case .barcodeScreenIssueReported:
             return "Barcode screen issue reported"
+        case .toLocations:
+            return "Tapped Show Locations"
+        case .toAppleMaps:
+            return "Launch Apple Maps for Directions"
+        case .binkScannerEnterManuallyPressed:
+            return "Bink scanner enter manually pressed"
         }
     }
     
@@ -153,6 +162,12 @@ enum MixpanelTrackableEvent {
                 "Reason": reason.rawValue,
                 "Brand name": brandName
             ]
+        case .toLocations(brandName: let brandName):
+            return ["Brand": brandName]
+        case .toAppleMaps(brandName: let brandName):
+            return ["Brand": brandName]
+        case .binkScannerEnterManuallyPressed(let brandName):
+            return ["Brand": brandName]
         }
     }
 }
@@ -166,6 +181,8 @@ enum MixpanelUserProperty {
     case widget(Bool)
     case loyaltyCards
     case lastEngaged(Int)
+    case loyaltyCardsSortOrder(String)
+    case showBarcodeAlways(Bool)
     
     var identifer: String {
         switch self {
@@ -185,6 +202,10 @@ enum MixpanelUserProperty {
             return "Loyalty cards"
         case .lastEngaged:
             return "Last engaged"
+        case .loyaltyCardsSortOrder:
+            return "Wallet Sort Setting"
+        case .showBarcodeAlways:
+            return "Show barcode always"
         }
     }
     
@@ -192,6 +213,10 @@ enum MixpanelUserProperty {
         switch self {
         case.appleWatchInstalled(let isInstalled):
             return [identifer: isInstalled]
+        case.loyaltyCardsSortOrder(let value):
+            return [identifer: value]
+        case.showBarcodeAlways(let value):
+            return [identifer: value]
         default:
             return ["": ""]
         }

@@ -37,6 +37,10 @@ extension UIColor {
         return UIColor(red: 127 / 255, green: 127 / 255, blue: 127 / 255, alpha: 1.0)
     }
     
+    static var sortBarButton: UIColor {
+        return UIColor(red: 177 / 255, green: 194 / 255, blue: 203 / 255, alpha: 1.0)
+    }
+    
     static let binkGradientBlueLeft = UIColor(hexString: "194B53")
     static let binkGradientBlueRight = UIColor(hexString: "3D908F")
     static let binkBlueTitleText = UIColor(hexString: "438086")
