@@ -202,25 +202,32 @@ extension AuthAndAddViewController: AuthAndAddViewModelDelegate {
 extension AuthAndAddViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
-        visionUtility.detectBarcode(ciImage: image.ciImage(), completion: { [weak self] barcode in
-            guard let barcode = barcode else {
-                DispatchQueue.main.async {
-                    Current.navigate.close(animated: true) { [weak self] in
-                        self?.showError(barcodeDetected: false)
-                    }
+        Current.navigate.close(animated: true) { [weak self] in
+            self?.visionUtility.detectBarcode(ciImage: image.ciImage(), completion: { barcode in
+                guard let barcode = barcode else {
+                    self?.visionUtility.detectBarcodeString(from: image.ciImage(), completion: { barcode in
+                        guard let barcode = barcode else {
+                            DispatchQueue.main.async {
+                                self?.showError(barcodeDetected: false)
+                            }
+                            return
+                        }
+                        self?.handleBarcodeDetection(barcode)
+                    })
+                    return
                 }
-                return
+                self?.handleBarcodeDetection(barcode)
+            })
+        }
+    }
+    
+    private func handleBarcodeDetection(_ barcode: String) {
+        Current.wallet.identifyMembershipPlanForBarcode(barcode) { [weak self] plan in
+            if plan != self?.viewModel.getMembershipPlan() {
+                self?.showError(barcodeDetected: true)
+            } else {
+                self?.refreshForm(for: barcode)
             }
-            
-            Current.navigate.close(animated: true) { [weak self] in
-                Current.wallet.identifyMembershipPlanForBarcode(barcode) { plan in
-                    if plan != self?.viewModel.getMembershipPlan() {
-                        self?.showError(barcodeDetected: true)
-                    } else {
-                        self?.refreshForm(for: barcode)
-                    }
-                }
-            }
-        })
+        }
     }
 }
