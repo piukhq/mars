@@ -30,7 +30,6 @@ class AuthAndAddViewController: BaseFormViewController {
     
     private let visionUtility = VisionUtility()
     private let viewModel: AuthAndAddViewModel
-    private var subscriptions = Set<AnyCancellable>()
     
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
@@ -50,7 +49,6 @@ class AuthAndAddViewController: BaseFormViewController {
         setNavigationBar()
         configureUI()
         configureLayout()
-        configureSubscribers()
         stackScrollView.insert(arrangedSubview: brandHeaderView, atIndex: 0, customSpacing: Constants.cardPadding)
         collectionView.delegate = self
         
@@ -104,32 +102,7 @@ class AuthAndAddViewController: BaseFormViewController {
         descriptionLabel.font = UIFont.bodyTextLarge
         descriptionLabel.isHidden = viewModel.getDescription() == nil
     }
-    
-    private func configureSubscribers() {
-        visionUtility.barcodePassthroughSubject.sink { _ in } receiveValue: { barcode in
-            Current.navigate.close(animated: true) { [weak self] in
-                Current.wallet.identifyMembershipPlanForBarcode(barcode) { plan in
-                    if plan != self?.viewModel.getMembershipPlan() {
-                        self?.showError(barcodeDetected: true)
-                    } else {
-                        self?.refreshForm(for: barcode)
-                    }
-                }
-            }
-        }
-        .store(in: &subscriptions)
-        
-        visionUtility.$failedToDetectBarcode.sink { failed in
-            guard failed else { return }
-            DispatchQueue.main.async {
-                Current.navigate.close(animated: true) { [weak self] in
-                    self?.showError(barcodeDetected: false)
-                }
-            }
-        }
-        .store(in: &subscriptions)
-    }
-    
+
     private func handlePrimaryButtonTap() {
         primaryButton.toggleLoading(isLoading: true)
         try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes, completion: { [weak self] in
@@ -228,7 +201,26 @@ extension AuthAndAddViewController: AuthAndAddViewModelDelegate {
 
 extension AuthAndAddViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-//        guard let image = info[.editedImage] as? UIImage else { return }
-//        visionUtility.detectBarcode(ciImage: image.ciImage())
+        guard let image = info[.editedImage] as? UIImage else { return }
+        visionUtility.detectBarcode(ciImage: image.ciImage(), completion: { [weak self] barcode in
+            guard let barcode = barcode else {
+                DispatchQueue.main.async {
+                    Current.navigate.close(animated: true) { [weak self] in
+                        self?.showError(barcodeDetected: false)
+                    }
+                }
+                return
+            }
+            
+            Current.navigate.close(animated: true) { [weak self] in
+                Current.wallet.identifyMembershipPlanForBarcode(barcode) { plan in
+                    if plan != self?.viewModel.getMembershipPlan() {
+                        self?.showError(barcodeDetected: true)
+                    } else {
+                        self?.refreshForm(for: barcode)
+                    }
+                }
+            }
+        })
     }
 }

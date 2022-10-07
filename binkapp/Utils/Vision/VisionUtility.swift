@@ -16,12 +16,6 @@ class VisionUtility: ObservableObject {
     }
     
     private let requestHandler = VNSequenceRequestHandler()
-    
-    // MARK: - Loyalty Card
-    @Published var failedToDetectBarcode = false
-    let barcodePassthroughSubject = PassthroughSubject<String, Error>()
-    var shouldDetectBarcodeString = false
-    var timer: Timer?
 
     // MARK: - Payment Card
     var pan: String?
