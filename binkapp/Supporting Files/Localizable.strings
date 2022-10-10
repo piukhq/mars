@@ -521,7 +521,7 @@
 
 "empty_rewards" = "No rewards to display. Come back\n after you've earned vouchers to see\n your issued, redeemed or expired\n rewards";
 
-"show_tesco_locations" = "Show Tesco Locations";
+"show_locations" = "Show Locations";
 "find_nearest_store" = "Find your nearest store";
 "press_for_directions" = "Press for directions";
 "locations" = "Locations";

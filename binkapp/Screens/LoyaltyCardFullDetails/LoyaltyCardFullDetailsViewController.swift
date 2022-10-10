@@ -110,6 +110,9 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     
     private lazy var locationView: UIView = {
         let view = UIView()
+        view.isHidden = true
+        view.layer.opacity = 0
+        view.transform = CGAffineTransform(scaleX: 0, y: 0)
         view.isUserInteractionEnabled = true
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
@@ -118,11 +121,13 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         view.layer.applyDefaultBinkShadow()
         let gestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(showMapLocations))
         view.addGestureRecognizer(gestureRecogniser)
+        view.addSubview(locationImage)
+        view.addSubview(showLocationsText)
+        view.addSubview(nearestStoresText)
         return view
     }()
     
     private lazy var locationImage: UIImageView = {
-        // RS = using a gif at the moment. This asset might not be final
         let image = UIImage.gifImageWithName("place-marker")
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -134,14 +139,13 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         imageView.animationDuration = 2.5
         imageView.image = image?.images?.last
         imageView.tintColor = Current.themeManager.color(for: .walletCardBackground)
-        imageView.startAnimating()
         return imageView
     }()
     
     private lazy var showLocationsText: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = L10n.showTescoLocations
+        label.text = L10n.showLocations
         label.font = .navBar
         label.textAlignment = .left
         label.textColor = Current.themeManager.color(for: .text)
@@ -199,6 +203,8 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         super.viewDidLoad()
         configureUI()
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidUpdate, object: nil)
+        
+        fetchGeoData()
     }
     
     @objc private func handlePointsScrapingUpdate() {
@@ -288,6 +294,10 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: modulesStackView)
         configurePLRCells()
         
+        // Build locations
+        stackScrollView.add(arrangedSubview: locationView)
+        stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: locationView)
+        
         if viewModel.shouldShowOfferTiles {
             stackScrollView.add(arrangedSubview: offerTilesStackView)
             viewModel.offerTileImages?.forEach { offerTileImage in
@@ -299,34 +309,6 @@ private extension LoyaltyCardFullDetailsViewController {
             NSLayoutConstraint.activate([
                 offerTilesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
                 offerTilesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding)
-            ])
-        }
-        
-        if viewModel.shouldDisplayLocationOption {
-            // Build locations
-            stackScrollView.add(arrangedSubview: locationView)
-            stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: locationView)
-            
-            locationView.addSubview(locationImage)
-            locationView.addSubview(showLocationsText)
-            locationView.addSubview(nearestStoresText)
-            NSLayoutConstraint.activate([
-                locationView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
-                locationView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
-                locationView.heightAnchor.constraint(equalToConstant: LayoutHelper.GeoLocationCallout.locationViewHeight),
-                
-                showLocationsText.rightAnchor.constraint(equalTo: locationView.rightAnchor, constant: -LayoutHelper.GeoLocationCallout.locationsTextRightOffset),
-                showLocationsText.topAnchor.constraint(equalTo: locationView.topAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextTopOffset),
-                showLocationsText.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextLeftOffset),
-
-                nearestStoresText.rightAnchor.constraint(equalTo: locationView.rightAnchor, constant: -LayoutHelper.GeoLocationCallout.nearestStoresTextRightOffset),
-                nearestStoresText.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.nearestStoresTextBottomOffset),
-                nearestStoresText.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextLeftOffset),
-                
-                locationImage.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset),
-                locationImage.topAnchor.constraint(equalTo: locationView.topAnchor, constant: LayoutHelper.GeoLocationCallout.locationImageVerticalOffset),
-                locationImage.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageVerticalOffset),
-                locationImage.rightAnchor.constraint(equalTo: nearestStoresText.leftAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset)
             ])
         }
         
@@ -432,7 +414,20 @@ private extension LoyaltyCardFullDetailsViewController {
             separator.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             cardInformationView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             brandHeaderImageView.heightAnchor.constraint(equalTo: brandHeader.heightAnchor),
-            brandHeaderImageView.widthAnchor.constraint(equalTo: brandHeader.widthAnchor)
+            brandHeaderImageView.widthAnchor.constraint(equalTo: brandHeader.widthAnchor),
+            locationView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
+            locationView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
+            locationView.heightAnchor.constraint(equalToConstant: LayoutHelper.GeoLocationCallout.locationViewHeight),
+            showLocationsText.rightAnchor.constraint(equalTo: locationView.rightAnchor, constant: -LayoutHelper.GeoLocationCallout.locationsTextRightOffset),
+            showLocationsText.topAnchor.constraint(equalTo: locationView.topAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextTopOffset),
+            showLocationsText.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextLeftOffset),
+            nearestStoresText.rightAnchor.constraint(equalTo: locationView.rightAnchor, constant: -LayoutHelper.GeoLocationCallout.nearestStoresTextRightOffset),
+            nearestStoresText.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.nearestStoresTextBottomOffset),
+            nearestStoresText.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationsTextLeftOffset),
+            locationImage.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset),
+            locationImage.topAnchor.constraint(equalTo: locationView.topAnchor, constant: LayoutHelper.GeoLocationCallout.locationImageVerticalOffset),
+            locationImage.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageVerticalOffset),
+            locationImage.rightAnchor.constraint(equalTo: nearestStoresText.leftAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset)
         ])
     }
     
@@ -599,6 +594,32 @@ extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDeleg
                 self.configurePLRCells()
             }
         }
+    }
+}
+
+// MARK: - Fetch geo data - update UI
+
+extension LoyaltyCardFullDetailsViewController {
+    func fetchGeoData() {
+        viewModel.fetchGeoData(completion: { geoDataIsAvailable, animated in
+            guard geoDataIsAvailable else { return }
+            
+            if animated {
+                self.locationView.isHidden = false
+                UIView.animate(withDuration: 0.8) {
+                    self.locationView.layer.opacity = 1.0
+                    self.locationView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                    self.locationImage.startAnimating()
+                }
+            } else {
+                self.locationView.isHidden = false
+                self.locationView.layer.opacity = 1.0
+                self.locationView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                self.locationImage.startAnimating()
+            }
+        })
     }
 }
 

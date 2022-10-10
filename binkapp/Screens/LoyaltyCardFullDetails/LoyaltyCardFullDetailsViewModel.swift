@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import FirebaseStorage
 
 class LoyaltyCardFullDetailsViewModel {
     typealias EmptyCompletionBlock = () -> Void
@@ -45,14 +46,9 @@ class LoyaltyCardFullDetailsViewModel {
         return membershipCard.membershipPlan?.account?.companyName ?? ""
     }
     
-    var shouldDisplayLocationOption: Bool {
-        // RS - For now we only want to display the locations option only when a Tesco LC is tapped
-        if let companyName = membershipCard.membershipPlan?.account?.companyName {
-            let isTesco = companyName.contains("Tesco")
-            return isTesco && Current.featureManager.isFeatureEnabled(.tescoLocations)
-        }
-        
-        return false
+    var brandNameForGeoData: String {
+        let formatted = membershipCard.membershipPlan?.account?.companyName?.replacingOccurrences(of: " ", with: "-")
+        return formatted?.lowercased() ?? ""
     }
     
     var balance: CD_MembershipCardBalance? {
@@ -129,6 +125,32 @@ class LoyaltyCardFullDetailsViewModel {
     }
         
     // MARK: - Public methods
+    
+    func fetchGeoData(completion: @escaping (Bool, Bool) -> Void) {
+        if Current.featureManager.isFeatureEnabled(.locations, merchant: brandNameForGeoData) {
+            let companyName = brandNameForGeoData
+            if !companyName.isBlank {
+                let fileName = "\(companyName).geojson"
+                if let _ = Cache.geoLocationsDataCache.object(forKey: fileName.toNSString()) {
+                    completion(true, false)
+                    return
+                }
+                
+                let storage = Storage.storage()
+                let pathReference = storage.reference(withPath: "locations/\(fileName)")
+                
+                pathReference.getData(maxSize: 4 * 1024 * 1024) { data, _ in
+                    guard let data = data else {
+                        completion(false, false)
+                        return
+                    }
+                    
+                    Cache.geoLocationsDataCache.setObject(DataCache(data: data as NSData), forKey: fileName.toNSString())
+                    completion(true, true) 
+                }
+            }
+        }
+    }
     
     func toBarcodeModel() {
         let viewController = ViewControllerFactory.makeBarcodeViewController(membershipCard: membershipCard)

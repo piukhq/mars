@@ -60,10 +60,6 @@ class GeoLocationsViewController: UIViewController {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
-
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.startUpdatingLocation()
-        }
     }
     
     private func addAnnotations() {
@@ -138,6 +134,13 @@ extension GeoLocationsViewController: MKMapViewDelegate {
 }
 
 extension GeoLocationsViewController: CLLocationManagerDelegate {
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        guard manager.authorizationStatus == .authorizedWhenInUse else { return }
+        DispatchQueue.global(qos: .background).async {
+            manager.startUpdatingLocation()
+        }
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if !foundLocation {
             if let userLocation = locations.last {
