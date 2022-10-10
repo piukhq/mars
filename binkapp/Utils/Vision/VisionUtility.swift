@@ -238,7 +238,7 @@ class VisionUtility: ObservableObject {
     
     // MARK: - Errors
     
-    func showError(barcodeDetected: Bool, membershipPlan: CD_MembershipPlan?) {
+    func showError(barcodeDetected: Bool, membershipPlan: CD_MembershipPlan? = nil) {
         let captureSource = BarcodeCaptureSource.photoLibrary(membershipPlan)
         let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: barcodeDetected ? captureSource.errorMessage : L10n.loyaltyScannerFailedToDetectBarcode)
         let navigationRequest = AlertNavigationRequest(alertController: alert)
