@@ -112,7 +112,43 @@ class NetworkRequestTests: XCTestCase, UserServiceProtocol {
     }
     
     func test_updateUserProfile() throws {
+        let userProfileUpdateRequest = UserProfileUpdateRequest(firstName: "James", lastName: "Hetfield")
+        let userProfileResponse = UserProfileResponse(uid: "turkey-chicken-beef", firstName: "James", lastName: "Hetfield", email: "ricksanchez@email.com")
+        let mocked = try! JSONEncoder().encode(userProfileResponse)
+        let mock = Mock(url: URL(string: APIEndpoint.me.urlString!)!, dataType: .json, statusCode: 200, data: [.put: mocked])
+        mock.register()
         
+        updateUserProfile(request: userProfileUpdateRequest, completion: { result in
+            switch result {
+            case .success(let response):
+                XCTAssertEqual(response.firstName, "James")
+                XCTAssertEqual(response.lastName, "Hetfield")
+            case .failure:
+                XCTFail()
+            }
+        })
+        
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
+    }
+    
+    func test_registerUser() throws {
+        let loginRequest = LoginRequest(email: "ricksanchez@email.com", password: "testpass")
+        let mocked = try! JSONEncoder().encode(Self.loginResponse)
+        let mock = Mock(url: URL(string: APIEndpoint.register.urlString!)!, dataType: .json, statusCode: 200, data: [.post: mocked])
+        mock.register()
+        
+        registerUser(request: loginRequest, completion: { result in
+            switch result {
+            case .success(let response):
+                XCTAssertEqual(response.apiKey, "apiKey")
+                XCTAssertEqual(response.userEmail, "ricksanchez@email.com")
+                XCTAssertEqual(response.uid, "turkey-chicken-beef")
+            case .failure:
+                XCTFail()
+            }
+        })
+        
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
     }
     
     func test_networkLogout() throws {
@@ -140,6 +176,10 @@ class NetworkRequestTests: XCTestCase, UserServiceProtocol {
         _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
 
         XCTAssertTrue(completed)
+    }
+    
+    func test_requestMagicLinkAccessToken() throws {
+        
     }
     
     func test_network_requestForgotPassword() throws {
