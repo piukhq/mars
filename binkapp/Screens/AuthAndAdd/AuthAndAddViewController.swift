@@ -120,12 +120,6 @@ class AuthAndAddViewController: BaseFormViewController {
         self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
     }
     
-    private func showError(barcodeDetected: Bool) {
-        let captureSource = BarcodeCaptureSource.photoLibrary(viewModel.getMembershipPlan())
-        let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: barcodeDetected ? captureSource.errorMessage : L10n.loyaltyScannerFailedToDetectBarcode)
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     override func formValidityUpdated(fullFormIsValid: Bool) {
         primaryButton.enabled = fullFormIsValid
     }
@@ -203,31 +197,32 @@ extension AuthAndAddViewController: UIImagePickerControllerDelegate, UINavigatio
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
         Current.navigate.close(animated: true) { [weak self] in
-            self?.visionUtility.detectBarcode(ciImage: image.ciImage(), completion: { barcode in
+            guard let self = self else { return }
+            self.visionUtility.detectBarcode(ciImage: image.ciImage(), completion: { barcode in
                 guard let barcode = barcode else {
-                    self?.visionUtility.detectBarcodeString(from: image.ciImage(), completion: { barcode in
+                    self.visionUtility.detectBarcodeString(from: image.ciImage(), completion: { barcode in
                         guard let barcode = barcode else {
                             DispatchQueue.main.async {
-                                self?.showError(barcodeDetected: false)
+                                self.visionUtility.showError(barcodeDetected: false, membershipPlan: self.viewModel.getMembershipPlan())
                             }
                             return
                         }
-                        self?.handleBarcodeDetection(barcode)
+                        self.handleBarcodeDetection(barcode)
                     })
                     return
                 }
-                self?.handleBarcodeDetection(barcode)
+                self.handleBarcodeDetection(barcode)
             })
         }
     }
     
     private func handleBarcodeDetection(_ barcode: String) {
         Current.wallet.identifyMembershipPlanForBarcode(barcode) { [weak self] plan in
-            if plan != self?.viewModel.getMembershipPlan() {
-                self?.showError(barcodeDetected: true)
-            } else {
-                self?.refreshForm(for: barcode)
+            guard let self = self, plan == self.viewModel.getMembershipPlan() else {
+                self?.visionUtility.showError(barcodeDetected: true, membershipPlan: self?.viewModel.getMembershipPlan())
+                return
             }
+            self.refreshForm(for: barcode)
         }
     }
 }
