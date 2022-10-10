@@ -40,7 +40,7 @@ struct CheckboxSwiftUIView: View {
                 
                 Text(viewModel.attributedText ?? AttributedString(viewModel.checkboxText))
                     .uiFont(.bodyTextSmall)
-                    .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                    .foregroundColor(Color(viewModel.textColour))
                     .multilineTextAlignment(.leading)
                     .environment(\.openURL, OpenURLAction { url in
                         didTapOnURL?(url)
