@@ -105,7 +105,7 @@ class TermsAndConditionsViewController: BaseFormViewController, UserServiceProto
         showError()
     }
     
-    override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
+    override func checkboxView(didTapOn URL: URL) {
         let viewController = ViewControllerFactory.makeWebViewController(urlString: URL.absoluteString)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)

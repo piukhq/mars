@@ -10,7 +10,7 @@ import Foundation
 
 enum FeatureType: String, Codable {
     case themes
-    case tescoLocations = "tesco_locations"
+    case locations
     case unknown
     
     init(from decoder: Decoder) throws {
@@ -27,6 +27,7 @@ struct BetaFeature: Codable, Identifiable {
     let title: String?
     let description: String?
     let isEnabledOnRemoteConfig: Bool?
+    let enabledMerchants: [String]?
 
     enum CodingKeys: String, CodingKey {
         case slug
@@ -34,6 +35,7 @@ struct BetaFeature: Codable, Identifiable {
         case title
         case description
         case isEnabledOnRemoteConfig = "enabled"
+        case enabledMerchants
     }
 
     var isEnabled: Bool {
