@@ -223,6 +223,7 @@ extension AuthAndAddViewController: UIImagePickerControllerDelegate, UINavigatio
                 return
             }
             self.refreshForm(for: barcode)
+            HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
         }
     }
 }
