@@ -34,8 +34,13 @@ final class FeatureTogglingManager: ObservableObject {
         return betaUsers?.contains(where: { $0.uid == UID }) ?? false
     }
 
-    func isFeatureEnabled(_ featureType: FeatureType) -> Bool {
+    func isFeatureEnabled(_ featureType: FeatureType, merchant: String? = nil) -> Bool {
         let feature = features?.first(where: { $0.type == featureType })
+        
+        if let enabledMerchants = feature?.enabledMerchants, let merchant = merchant {
+            return enabledMerchants.contains(merchant)
+        }
+        
         return feature?.isEnabled ?? false
     }
 

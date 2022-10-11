@@ -5,13 +5,13 @@
 //  Created by Nick Farrant on 03/10/2019.
 //  Copyright © 2019 Bink. All rights reserved.
 //
+// swiftlint:disable force_unwrapping
 
-import UIKit
+import SwiftUI
 
 class PaymentCardDetailViewController: BinkViewController {
     private var viewModel: PaymentCardDetailViewModel
     private var hasSetupCell = false
-    
     private var refreshTimer: Timer?
 
     // MARK: - UI lazy vars
@@ -88,17 +88,18 @@ class PaymentCardDetailViewController: BinkViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-
-    private lazy var informationTableView: NestedTableView = {
-        let tableView = NestedTableView(frame: .zero, style: .plain)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
-    }()
     
-    lazy var separator: UIView = {
+    private lazy var separator: UIView = {
         let separator = UIView()
         separator.translatesAutoresizingMaskIntoConstraints = false
         return separator
+    }()
+    
+    private lazy var cardInformationView: UIView = {
+        let cardInformationView = CardInformationView(viewModel: viewModel.cardInformationViewModel)
+        let view = UIHostingController(rootView: cardInformationView).view!
+        view.backgroundColor = .clear
+        return view
     }()
 
     // MARK: - Init
@@ -186,7 +187,7 @@ private extension PaymentCardDetailViewController {
         cardAddedLabel.isHidden = !viewModel.shouldShowCardAddedLabel
         addedCardsTableView.isHidden = !viewModel.shouldShowAddedLoyaltyCardTableView
         otherCardsTableView.isHidden = !viewModel.shouldShowOtherCardsTableView
-        informationTableView.isHidden = !viewModel.shouldShowInformationTableView
+        cardInformationView.isHidden = !viewModel.shouldShowInformationTableView
         separator.isHidden = !viewModel.shouldShowSeparator
         
         stackScrollView.customPadding(viewModel.paymentCardStatus == .pending ? 20 : 0, after: cardAddedLabel)
@@ -202,14 +203,13 @@ private extension PaymentCardDetailViewController {
         cardAddedLabel.textColor = Current.themeManager.color(for: .text)
         addedCardsTableView.backgroundColor = Current.themeManager.color(for: .viewBackground)
         otherCardsTableView.backgroundColor = Current.themeManager.color(for: .viewBackground)
-        informationTableView.backgroundColor = Current.themeManager.color(for: .viewBackground)
         separator.backgroundColor = Current.themeManager.color(for: .divider)
     }
 
     func configureLayout() {
         stackScrollView.insert(arrangedSubview: card, atIndex: 0, customSpacing: LayoutHelper.PaymentCardDetail.stackScrollViewTopPadding)
         
-        stackScrollView.add(arrangedSubviews: [addedCardsTitleLabel, addedCardsDescriptionLabel, cardAddedLabel, addedCardsTableView, otherCardsTitleLabel, otherCardsDescriptionLabel, otherCardsTableView, separator, informationTableView])
+        stackScrollView.add(arrangedSubviews: [addedCardsTitleLabel, addedCardsDescriptionLabel, cardAddedLabel, addedCardsTableView, otherCardsTitleLabel, otherCardsDescriptionLabel, otherCardsTableView, separator, cardInformationView])
         NSLayoutConstraint.activate([
             addedCardsTitleLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
             addedCardsTitleLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
@@ -229,14 +229,14 @@ private extension PaymentCardDetailViewController {
             stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
             card.heightAnchor.constraint(equalToConstant: LayoutHelper.WalletDimensions.cardSize.height),
             card.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -LayoutHelper.PaymentCardDetail.cardViewPadding),
-            informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            cardInformationView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             separator.heightAnchor.constraint(equalToConstant: CGFloat.onePointScaled()),
             separator.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor)
         ])
     }
 
     func setupTables() {
-        [addedCardsTableView, otherCardsTableView, informationTableView].forEach {
+        [addedCardsTableView, otherCardsTableView].forEach {
             $0.delegate = self
             $0.dataSource = self
             $0.separatorInset = LayoutHelper.PaymentCardDetail.tableViewCellSeparatorInsets
@@ -245,7 +245,6 @@ private extension PaymentCardDetailViewController {
         addedCardsTableView.register(PaymentCardDetailLinkLoyaltyCardCell.self, asNib: true)
         addedCardsTableView.register(PaymentCardDetailLoyaltyCardStatusCell.self, asNib: true)
         otherCardsTableView.register(PaymentCardDetailAddLoyaltyCardCell.self, asNib: true)
-        informationTableView.register(CardDetailInfoTableViewCell.self, asNib: true)
     }
 
     func refreshViews() {
@@ -253,7 +252,6 @@ private extension PaymentCardDetailViewController {
         self.configureUI()
         self.addedCardsTableView.reloadData()
         self.otherCardsTableView.reloadData()
-        self.informationTableView.reloadData()
         Current.wallet.refreshLocal()
     }
 }
@@ -268,10 +266,6 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
 
         if tableView == otherCardsTableView {
             return viewModel.pllPlansNotAddedToWalletCount
-        }
-
-        if tableView == informationTableView {
-            return viewModel.informationRows.count
         }
 
         return 0
@@ -314,7 +308,7 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
 
                 return cell
             }
-        } else if tableView == otherCardsTableView {
+        } else {
             let cell: PaymentCardDetailAddLoyaltyCardCell = tableView.dequeue(indexPath: indexPath)
 
             guard let plan = viewModel.pllPlanNotAddedToWallet(forIndexPath: indexPath) else {
@@ -332,17 +326,6 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
             }
 
             return cell
-        } else { // This will always be the information table view
-            let cell: CardDetailInfoTableViewCell = tableView.dequeue(indexPath: indexPath)
-
-            let informationRow = viewModel.informationRow(forIndexPath: indexPath)
-            cell.configureWithInformationRow(informationRow)
-
-            if tableView.cellAtIndexPathIsLastInSection(indexPath) {
-                cell.hideSeparator()
-            }
-
-            return cell
         }
     }
 
@@ -355,10 +338,6 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
         if tableView == otherCardsTableView {
             guard let plan = viewModel.pllPlanNotAddedToWallet(forIndexPath: indexPath) else { return }
             viewModel.toAddOrJoin(forMembershipPlan: plan)
-        }
-
-        if tableView == informationTableView {
-            viewModel.performActionForInformationRow(atIndexPath: indexPath)
         }
 
         tableView.deselectRow(at: indexPath, animated: true)

@@ -488,7 +488,7 @@
 
 // MARK: - Browse Brands
 "scan_button_title" = "Scan loyalty card";
-"scan_utton_subtitle" = "Quickly add a card you already have";
+"scan_button_subtitle" = "Quickly add a card you already have";
 
 // MARK: - Local Points Collection
 "lpc_points_module_balance_explainer_title" = "Balance";
@@ -521,7 +521,7 @@
 
 "empty_rewards" = "No rewards to display. Come back\n after you've earned vouchers to see\n your issued, redeemed or expired\n rewards";
 
-"show_tesco_locations" = "Show Tesco Locations";
+"show_locations" = "Show Locations";
 "find_nearest_store" = "Find your nearest store";
 "press_for_directions" = "Press for directions";
 "locations" = "Locations";

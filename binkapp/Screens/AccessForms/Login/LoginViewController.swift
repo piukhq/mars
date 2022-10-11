@@ -50,7 +50,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         let attributedDescription = NSMutableAttributedString(string: L10n.magicLinkDescription, attributes: [.font: UIFont.bodyTextLarge])
         let baseDescription = NSString(string: attributedDescription.string)
         let magicLinkRange = baseDescription.range(of: L10n.whatIsMagicLinkHyperlink)
-        attributedDescription.addAttributes([.link: "https://help.bink.com/hc/en-gb/articles/4404303824786"], range: magicLinkRange)
+        attributedDescription.addAttributes([.link: "https://help.gb.bink.com/docs/managing-your-account.html"], range: magicLinkRange)
         
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 18.0) ?? UIFont()]
         let noteRange = baseDescription.range(of: L10n.magicLinkDescriptionNoteHighlight)
@@ -205,7 +205,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         showError()
     }
     
-    override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
+    override func checkboxView(didTapOn URL: URL) {
         let viewController = ViewControllerFactory.makeWebViewController(urlString: URL.absoluteString)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
