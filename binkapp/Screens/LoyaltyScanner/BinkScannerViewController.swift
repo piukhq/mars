@@ -524,20 +524,45 @@ extension BinkScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegat
             self.visionUtility.performPaymentCardOCR(frame: imageBuffer)
         case .loyalty:
             guard shouldAllowScanning else { return }
-            let ciImage = CIImage(cvImageBuffer: imageBuffer)
+            let croppedImage = cropImage(imageBuffer: imageBuffer)
+            
             switch loyaltyScannerDetectionType {
             case .barcode:
-                visionUtility.detectBarcode(ciImage: ciImage, completion: { [weak self] barcode in
+                visionUtility.detectBarcode(ciImage: croppedImage, completion: { [weak self] barcode in
                     guard let self = self, self.shouldAllowScanning, let barcode = barcode else { return }
                     self.handleBarcodeDetection(barcode)
                 })
             case .string:
-                visionUtility.detectBarcodeString(from: ciImage, completion: { [weak self] barcode in
+                visionUtility.detectBarcodeString(from: croppedImage, completion: { [weak self] barcode in
                     guard let self = self, self.shouldAllowScanning, let barcode = barcode else { return }
                     self.handleBarcodeDetection(barcode)
                 })
             }
         }
+    }
+    
+    private func cropImage(imageBuffer: CVImageBuffer) -> CIImage? {
+        CVPixelBufferLockBaseAddress(imageBuffer, .readOnly)
+        guard let baseAddress = CVPixelBufferGetBaseAddress(imageBuffer) else { return nil }
+        let bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer)
+        let scale = UIScreen.main.scale
+        let cropWidth = Int(rectOfInterest.width * scale)
+        let cropHeight = Int(rectOfInterest.height * scale)
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        
+        // Calculate start position
+        let bytesPerPixel = 4
+        let startPointX = Int(rectOfInterest.minX)
+        let startPointY = Int(rectOfInterest.minY)
+        let startAddress = baseAddress + startPointY * bytesPerRow + startPointX * bytesPerPixel
+        let context = CGContext(data: startAddress, width: cropWidth, height: cropHeight, bitsPerComponent: 8, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue)
+
+        CVPixelBufferUnlockBaseAddress(imageBuffer, .readOnly)
+        
+        if let cgImage = context?.makeImage() {
+            return CIImage(cgImage: cgImage)
+        }
+        return nil
     }
 }
 
