@@ -66,7 +66,7 @@ class VisionUtility: ObservableObject {
         }
     }
     
-    func detectPaymentCard(frame: CVImageBuffer) {
+    func performPaymentCardOCR(frame: CVImageBuffer) {
         let rectangleDetectionRequest = VNDetectRectanglesRequest()
         let paymentCardAspectRatio: Float = 85.60 / 53.98
         rectangleDetectionRequest.minimumAspectRatio = paymentCardAspectRatio * 0.95
