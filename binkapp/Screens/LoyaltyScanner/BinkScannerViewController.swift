@@ -513,6 +513,35 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
 }
 
 
+// MARK: - AV Delegate
+
+extension BinkScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+        
+        switch viewModel.type {
+        case .payment:
+            self.visionUtility.performPaymentCardOCR(frame: imageBuffer)
+        case .loyalty:
+            guard shouldAllowScanning else { return }
+            let ciImage = CIImage(cvImageBuffer: imageBuffer)
+            switch loyaltyScannerDetectionType {
+            case .barcode:
+                visionUtility.detectBarcode(ciImage: ciImage, completion: { [weak self] barcode in
+                    guard let self = self, self.shouldAllowScanning, let barcode = barcode else { return }
+                    self.handleBarcodeDetection(barcode)
+                })
+            case .string:
+                visionUtility.detectBarcodeString(from: ciImage, completion: { [weak self] barcode in
+                    guard let self = self, self.shouldAllowScanning, let barcode = barcode else { return }
+                    self.handleBarcodeDetection(barcode)
+                })
+            }
+        }
+    }
+}
+
+
 // MARK: - Detect barcode from image
 
 extension BinkScannerViewController: UIImagePickerControllerDelegate {
@@ -543,32 +572,6 @@ extension BinkScannerViewController: UIImagePickerControllerDelegate {
         Current.navigate.close(animated: true) {
             self.shouldAllowScanning = true
             self.scheduleTimer()
-        }
-    }
-}
-
-extension BinkScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
-        
-        switch viewModel.type {
-        case .payment:
-            self.visionUtility.performPaymentCardOCR(frame: imageBuffer)
-        case .loyalty:
-            guard shouldAllowScanning else { return }
-            let ciImage = CIImage(cvImageBuffer: imageBuffer)
-            switch loyaltyScannerDetectionType {
-            case .barcode:
-                visionUtility.detectBarcode(ciImage: ciImage, completion: { [weak self] barcode in
-                    guard let self = self, self.shouldAllowScanning, let barcode = barcode else { return }
-                    self.handleBarcodeDetection(barcode)
-                })
-            case .string:
-                visionUtility.detectBarcodeString(from: ciImage, completion: { [weak self] barcode in
-                    guard let self = self, self.shouldAllowScanning, let barcode = barcode else { return }
-                    self.handleBarcodeDetection(barcode)
-                })
-            }
         }
     }
 }
