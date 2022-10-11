@@ -28,7 +28,7 @@ class VisionUtility: ObservableObject {
     }
     
     var ocrComplete: Bool {
-        return pan != nil && expiryMonth != nil && expiryYear != nil
+        return pan != nil && expiryMonth != nil && expiryYear != nil && name != nil
     }
     
     let subject = PassthroughSubject<PaymentCardCreateModel, Error>()
@@ -53,12 +53,12 @@ class VisionUtility: ObservableObject {
                 self.subject.send(PaymentCardCreateModel(fullPan: self.pan, nameOnCard: self.name, month: self.expiryMonth, year: self.expiryYear))
             }
             
-//            for text in recognizedTexts {
-//                if text.confidence == 1, let name = self.likelyName(text: text.string) {
-//                    self.name = name
-//                    self.subject.send(PaymentCardCreateModel(fullPan: self.pan, nameOnCard: self.name, month: self.expiryMonth, year: self.expiryYear))
-//                }
-//            }
+            for text in recognizedTexts {
+                if text.confidence == 1, let name = self.likelyName(text: text.string) {
+                    self.name = name
+                    self.subject.send(PaymentCardCreateModel(fullPan: self.pan, nameOnCard: self.name, month: self.expiryMonth, year: self.expiryYear))
+                }
+            }
             
             if ocrComplete {
                 self.subject.send(completion: .finished)
@@ -79,23 +79,6 @@ class VisionUtility: ObservableObject {
         
         recognizePaymentCard(frame: frame, rectangle: rectangle)
     }
-    
-//    func trackPaymentCard(for observation: VNRectangleObservation, in frame: CVImageBuffer) -> VNRectangleObservation? {
-//        let request = VNTrackRectangleRequest(rectangleObservation: observation)
-//        request.trackingLevel = .fast
-//
-//        try? self.requestHandler.perform([request], on: frame)
-//
-//        guard let trackedRectangle = (request.results as? [VNRectangleObservation])?.first else { return nil }
-//        return trackedRectangle
-//    }
-    
-//    func restartOCR() {
-//        pan = nil
-//        expiryMonth = nil
-//        expiryYear = nil
-//        name = nil
-//    }
     
     private func scheduleTimer() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
@@ -127,7 +110,6 @@ class VisionUtility: ObservableObject {
     
     private func extractExpiryDate(observations: [VNRecognizedTextObservation]) -> (String, String)? {
         for text in observations.flatMap({ $0.topCandidates(1) }) {
-            print("SW: - \(text.string) - Confidence: \(text.confidence)")
             if text.confidence == 1, let expiry = likelyExpiry(text.string) {
                 guard let expiryMonth = Int(expiry.0) else { return nil }
                 guard let expiryYear = Int("20" + expiry.1) else { return nil }
@@ -242,79 +224,5 @@ class VisionUtility: ObservableObject {
         let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: barcodeDetected ? captureSource.errorMessage : L10n.loyaltyScannerFailedToDetectBarcode)
         let navigationRequest = AlertNavigationRequest(alertController: alert)
         Current.navigate.to(navigationRequest)
-    }
-}
-
-extension CGImage {
-    func toFullScreenAndRoi(previewViewFrame: CGRect, regionOfInterestLabelFrame: CGRect) -> (CGImage, CGRect)? {
-        let imageCenterX = CGFloat(self.width) / 2.0
-        let imageCenterY = CGFloat(self.height) / 2.0
-        
-        let imageAspectRatio = CGFloat(self.height) / CGFloat(self.width)
-        let previewViewAspectRatio = previewViewFrame.height / previewViewFrame.width
-        
-        let pointsToPixel: CGFloat = imageAspectRatio > previewViewAspectRatio ? CGFloat(self.width) / previewViewFrame.width : CGFloat(self.height) / previewViewFrame.height
-        
-        let cropRatio = CGFloat(16.0) / CGFloat(9.0)
-        var fullScreenCropHeight: CGFloat = CGFloat(self.height)
-        var fullScreenCropWidth: CGFloat = CGFloat(self.width)
-        
-        let previewViewHeight = previewViewFrame.height * pointsToPixel
-        let previewViewWidth = previewViewFrame.width * pointsToPixel
-        
-        // Get ratio to convert points to pixels
-        let fullScreenImage: CGImage? = {
-            // if image is already 16:9, no need to crop to match crop ratio
-            if cropRatio == imageAspectRatio {
-                return self
-            }
-            // imageAspectRatio not being 16:9 implies image being in landscape
-            // get width to first not cut out any card information
-            fullScreenCropWidth = previewViewFrame.width * pointsToPixel
-            fullScreenCropHeight = fullScreenCropWidth * (16.0 / 9.0)
-            let imageHeight = CGFloat(self.height)
-
-            // If 16:9 crop height is larger than the image height itself (i.e. custom formsheet size height is much shorter than the width), crop the image with full height and add grey boxes
-            if fullScreenCropHeight > imageHeight {
-                guard let croppedImage = self.cropping(to: CGRect(x: imageCenterX - fullScreenCropWidth / 2.0, y: imageCenterY - imageHeight / 2.0, width: fullScreenCropWidth, height: imageHeight)) else { return nil }
-                return self.drawGrayToFillFullScreen(croppedImage: croppedImage, targetSize: CGSize(width: fullScreenCropWidth, height: fullScreenCropHeight))
-            }
-
-            return self.cropping(to: CGRect(x: imageCenterX - fullScreenCropWidth / 2.0, y: imageCenterY - fullScreenCropHeight / 2.0, width: fullScreenCropWidth, height: fullScreenCropHeight))
-        }()
-
-        let roiRect: CGRect? = {
-            let roiWidth = regionOfInterestLabelFrame.width * pointsToPixel
-            let roiHeight = regionOfInterestLabelFrame.height * pointsToPixel
-            
-            var roiCenterX = roiWidth / 2.0 + regionOfInterestLabelFrame.origin.x * pointsToPixel
-            var roiCenterY = roiHeight / 2.0 + regionOfInterestLabelFrame.origin.y * pointsToPixel
-
-            if fullScreenCropHeight > previewViewHeight {
-                roiCenterY += (fullScreenCropHeight - previewViewHeight) / 2.0
-            }
-            if fullScreenCropWidth > previewViewWidth {
-                roiCenterX += (fullScreenCropWidth - previewViewWidth) / 2.0
-            }
-
-            return CGRect(x: roiCenterX - roiWidth / 2.0, y: roiCenterY - roiHeight / 2.0, width: roiWidth, height: roiHeight)
-        }()
-
-        guard let regionOfInterestRect = roiRect, let fullScreenCgImage = fullScreenImage else { return nil }
-        return (fullScreenCgImage, regionOfInterestRect)
-    }
-    
-    func drawGrayToFillFullScreen(croppedImage: CGImage, targetSize: CGSize) -> CGImage? {
-        let image = UIImage(cgImage: croppedImage)
-        
-        UIGraphicsBeginImageContext(targetSize)
-        // Make whole image grey
-        UIColor.gray.setFill()
-        UIRectFill(CGRect(x: 0, y: 0, width: targetSize.width, height: targetSize.height))
-        // Put in image in the center
-        image.draw(in: CGRect(x: 0.0, y: (CGFloat(targetSize.height) - CGFloat(croppedImage.height)) / 2.0, width: CGFloat(croppedImage.width), height: CGFloat(croppedImage.height)))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage?.cgImage
     }
 }
