@@ -179,7 +179,20 @@ class NetworkRequestTests: XCTestCase, UserServiceProtocol {
     }
     
     func test_requestMagicLinkAccessToken() throws {
+        let mocked = try! JSONEncoder().encode(Self.loginResponse)
+        let mock = Mock(url: URL(string: APIEndpoint.magicLinksAccessTokens.urlString!)!, dataType: .json, statusCode: 200, data: [.post: mocked])
+        mock.register()
         
+        requestMagicLinkAccessToken(for: "accessToken", completion: { result, res  in
+            switch result {
+            case .success(let response):
+                XCTAssertEqual(response.accessToken, "accessToken")
+            case .failure:
+                XCTFail()
+            }
+        })
+        
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
     }
     
     func test_network_requestForgotPassword() throws {
@@ -194,5 +207,9 @@ class NetworkRequestTests: XCTestCase, UserServiceProtocol {
         _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
 
         XCTAssertTrue(completed)
+    }
+    
+    func test_preferences() throws {
+        
     }
 }
