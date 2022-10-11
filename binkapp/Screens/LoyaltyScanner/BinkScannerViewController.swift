@@ -555,13 +555,19 @@ extension BinkScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegat
         
         switch viewModel.type {
         case .payment:
-            if let paymentCardRectangleObservation = self.paymentCardRectangleObservation {
-                DispatchQueue.main.async {
-                    self.handleObservedPaymentCard(paymentCardRectangleObservation, in: imageBuffer)
-                }
-            } else if let paymentCardRectangleObservation = self.visionUtility.detectPaymentCard(frame: imageBuffer) {
-                self.paymentCardRectangleObservation = paymentCardRectangleObservation
+            DispatchQueue.main.async {
+                self.visionUtility.detectPaymentCard(frame: imageBuffer)
             }
+            
+            
+//            if let paymentCardRectangleObservation = self.paymentCardRectangleObservation {
+//                DispatchQueue.main.async {
+//                    self.visionUtility.recognizePaymentCard(frame: imageBuffer, rectangle: paymentCardRectangleObservation)
+////                    self.handleObservedPaymentCard(paymentCardRectangleObservation, in: imageBuffer)
+//                }
+//            } else if let paymentCardRectangleObservation = self.visionUtility.detectPaymentCard(frame: imageBuffer) {
+//                 self.paymentCardRectangleObservation = paymentCardRectangleObservation
+//            }
         case .loyalty:
             guard shouldAllowScanning else { return }
             let ciImage = CIImage(cvImageBuffer: imageBuffer)
@@ -610,7 +616,7 @@ extension BinkScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegat
         let widthMatched = rect.width > (width - 60)
 //        let heightMatched = rect.height > (height - 26)
         
-        return xPosMatched && yPosMatched && widthMatched
+        return xPosMatched && yPosMatched
     }
     
     private func createRectangleDrawing(_ rectangleObservation: VNRectangleObservation) -> CGRect {
@@ -622,7 +628,7 @@ extension BinkScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegat
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = boundingBoxPath
         shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.strokeColor = UIColor.clear.cgColor
+        shapeLayer.strokeColor = UIColor.binkPurple.cgColor
         shapeLayer.lineWidth = 3
         shapeLayer.borderWidth = 5
         self.trackingRect = shapeLayer
