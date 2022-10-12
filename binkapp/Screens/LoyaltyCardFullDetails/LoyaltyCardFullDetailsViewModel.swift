@@ -36,6 +36,23 @@ class LoyaltyCardFullDetailsViewModel {
     
     init(membershipCard: CD_MembershipCard, informationRowFactory: WalletCardDetailInformationRowFactory, animated: Bool = true) {
         self.membershipCard = membershipCard
+                
+        Current.database.performBackgroundTask(with: self.membershipCard) { (backgroundContext, safeObject) in
+            guard let membershipCard = safeObject else {
+                fatalError("We should never get here. Core data didn't return us an object, why not?")
+            }
+            
+            membershipCard.openedTime = Date()
+            
+            do {
+                try backgroundContext.save()
+            } catch {
+                print("fail")
+            }
+        }
+        
+        
+        self.membershipCard.openedTime = Date()
         self.informationRowFactory = informationRowFactory
         self.barcodeViewModel = BarcodeViewModel(membershipCard: membershipCard)
         self.animated = animated

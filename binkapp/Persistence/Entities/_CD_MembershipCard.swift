@@ -1,10 +1,12 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
 // Make changes to CD_MembershipCard.swift instead.
 
-// swiftlint:disable all
-
 import Foundation
 import CoreData
+
+public enum CD_MembershipCardAttributes: String {
+    case openedTime = "openedTime"
+}
 
 public enum CD_MembershipCardRelationships: String {
     case account = "account"
@@ -47,6 +49,9 @@ open class _CD_MembershipCard: CD_CardAccount {
     }
 
     // MARK: - Properties
+
+    @NSManaged open
+    var openedTime: Date?
 
     // MARK: - Relationships
 

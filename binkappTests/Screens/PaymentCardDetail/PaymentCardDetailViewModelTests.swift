@@ -53,7 +53,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
             self.membershipCardStatus = membershipCardStatus
         }
         
-        baseMembershipCardResponse = MembershipCardModel(apiId: 300, membershipPlan: 500, membershipTransactions: nil, status: statusResponse, card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
+        baseMembershipCardResponse = MembershipCardModel(apiId: 300, membershipPlan: 500, membershipTransactions: nil, status: statusResponse, card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil, openedTime: Date())
 
         mapResponseToManagedObject(baseMembershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
             self.membershipCard = membershipCard
