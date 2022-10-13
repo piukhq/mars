@@ -402,10 +402,21 @@ extension Wallet {
             let orderedCards = order.map { cardId in
                 cards.first(where: { $0.id == cardId })
             }
+            
+            /// if the sort order is Recent
+            var cardsOpened = orderedCards.filter({ $0?.lastOpened != nil }).sorted(by: {
+                if let firstDate = $0?.lastOpened, let secondDate = $1?.lastOpened {
+                    return firstDate > secondDate
+                }
+
+                return false
+            })
 
             /// Sync the datasource and local card order
             localOrder = order
-            walletDataSource = orderedCards.compactMap({ $0 })
+            let cardsWithoutOpenedDate = orderedCards.filter({ $0?.lastOpened == nil })
+            cardsOpened.append(contentsOf: cardsWithoutOpenedDate)
+            walletDataSource = cardsOpened.compactMap({ $0 })
         } else {
             /// Sync the datasource and set the local card order
             localOrder = cards.compactMap { $0.id }
