@@ -52,7 +52,7 @@ class BarcodeViewModelTests: XCTestCase, CoreDataTestable {
         Self.membershipCardResponse.card?.barcode = nil
         mapMembershipCard()
         Self.sut.barcodeUse = .loyaltyCard
-        XCTAssertEqual(Self.sut.descriptionText, "Share this number in-store just like you would a physical loyalty card.")
+        XCTAssertEqual(Self.sut.descriptionText, "Share this number in-store or online just like you would a physical loyalty card.")
     }
     
     func test_description_is_correct_coupon() {
