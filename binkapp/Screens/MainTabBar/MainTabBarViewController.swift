@@ -71,7 +71,7 @@ extension MainTabBarViewController: UITabBarControllerDelegate {
     }
 }
 
-extension MainTabBarViewController: BinkScannerViewControllerDelegate {
+extension MainTabBarViewController: BinkScannerViewControllerDelegate, ScanDelegate {
     func binkScannerViewController(_ viewController: BinkScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
         let prefilledBarcodeValue = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
         let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, prefilledFormValues: [prefilledBarcodeValue])
@@ -99,26 +99,29 @@ extension MainTabBarViewController: BinkScannerViewControllerDelegate {
         Current.navigate.to(navigationRequest)
     }
     
-//    func userDidCancel(_ scanViewController: ScanViewController) {
-//        Current.navigate.close()
-//    }
-//
-//    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
-//        if #available(iOS 14.0, *) {
-//            BinkLogger.infoPrivateHash(event: AppLoggerEvent.paymentCardScanned, value: creditCard.number)
-//        }
-//        BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
-//        let month = creditCard.expiryMonthInteger()
-//        let year = creditCard.expiryYearInteger()
-//        let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
-//        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .wallet)
-//        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
-//        Current.navigate.to(navigationRequest)
-//    }
-//
-//    func userDidSkip(_ scanViewController: ScanViewController) {
-//        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .wallet)
-//        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
-//        Current.navigate.to(navigationRequest)
-//    }
+    
+    // TODO: Delete once payment scanner is switched
+    
+    func userDidCancel(_ scanViewController: ScanViewController) {
+        Current.navigate.close()
+    }
+
+    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
+        if #available(iOS 14.0, *) {
+            BinkLogger.infoPrivateHash(event: AppLoggerEvent.paymentCardScanned, value: creditCard.number)
+        }
+        BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
+        let month = creditCard.expiryMonthInteger()
+        let year = creditCard.expiryYearInteger()
+        let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .wallet)
+        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+        Current.navigate.to(navigationRequest)
+    }
+
+    func userDidSkip(_ scanViewController: ScanViewController) {
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .wallet)
+        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+        Current.navigate.to(navigationRequest)
+    }
 }

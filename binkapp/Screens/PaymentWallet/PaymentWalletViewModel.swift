@@ -34,9 +34,13 @@ class PaymentWalletViewModel: NSObject, WalletViewModel {
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
         switch walletPrompt.type {
         case .addPaymentCards:
-            let scannerViewController = ViewControllerFactory.makeScannerViewController(type: .payment, delegate: Current.navigate.scannerDelegate)
-            PermissionsUtility.launchPaymentScanner(scannerViewController) {
-                let navigationRequest = ModalNavigationRequest(viewController: scannerViewController)
+//            let scannerViewController = ViewControllerFactory.makeScannerViewController(type: .payment, delegate: Current.navigate.scannerDelegate)
+            
+            // TODO: Delete once payment scanner is switched
+            guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
+            
+            PermissionsUtility.launchPaymentScanner(viewController) {
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
                 Current.navigate.to(navigationRequest)
             } enterManuallyAction: {
                 let addPaymentCardViewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .wallet)

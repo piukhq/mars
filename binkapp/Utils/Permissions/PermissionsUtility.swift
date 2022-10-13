@@ -37,7 +37,13 @@ extension PermissionsUtility {
         launchScanner(walletType: .loyalty, viewController: viewController, grantedAction: grantedAction, enterManuallyAction: enterManuallyAction, addFromPhotoLibraryAction: addFromPhotoLibraryAction)
     }
 
-    static func launchPaymentScanner(_ viewController: BinkScannerViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil) {
+//    static func launchPaymentScanner(_ viewController: BinkScannerViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil) {
+//        launchScanner(walletType: .payment, viewController: viewController, grantedAction: grantedAction, enterManuallyAction: enterManuallyAction)
+//    }
+    
+    
+    // TODO: Delete once payment scanner is switched
+    static func launchPaymentScanner(_ viewController: ScanViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil) {
         launchScanner(walletType: .payment, viewController: viewController, grantedAction: grantedAction, enterManuallyAction: enterManuallyAction)
     }
 
