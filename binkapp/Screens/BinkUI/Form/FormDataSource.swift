@@ -6,14 +6,13 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
 protocol FormDataSourceDelegate: NSObjectProtocol {
     func formDataSource(_ dataSource: FormDataSource, changed value: String?, for field: FormField)
     func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField)
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField)
-    func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView)
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool
     func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource)
     func formDataSourceShouldRefresh(_ dataSource: FormDataSource)
@@ -27,7 +26,6 @@ extension FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, changed value: String?, for field: FormField) {}
     func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField) {}
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField) {}
-    func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView) {}
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool {
         return false
     }
@@ -53,7 +51,7 @@ class FormDataSource: NSObject {
         var value: String?
     }
     
-    typealias MultiDelegate = FormDataSourceDelegate & CheckboxViewDelegate & FormCollectionViewCellDelegate
+    typealias MultiDelegate = FormDataSourceDelegate & FormCollectionViewCellDelegate
     
     private enum Constants {
         static let expiryYearsInTheFuture = 50
@@ -66,7 +64,7 @@ class FormDataSource: NSObject {
     private var visibleFields: [FormField] {
         return fields.filter { !$0.hidden }
     }
-    private(set) var checkboxes: [CheckboxView] = []
+    private(set) var checkboxes: [CheckboxViewModel] = []
     private var cellTextFields: [Int: UITextField] = [:]
     private var selectedCheckboxIndex = 0
     weak var delegate: MultiDelegate?
@@ -140,7 +138,6 @@ extension FormDataSource {
             forcedValue: model.fullPan,
             fieldCommonName: .cardNumber
         )
-        
         
         let monthData = Calendar.current.monthSymbols.enumerated().compactMap { index, _ in
             FormPickerData(String(format: "%02d", index + 1), backingData: index + 1)
@@ -218,9 +215,9 @@ extension FormDataSource {
         if case .addFromScanner = formPurpose {
             model.account?.formattedAddFields(omitting: [.cardNumber])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
-                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .add, delegate: self)
+                    var attributedString = AttributedString(field.fieldDescription ?? "")
+                    attributedString.font = .bodyTextSmall
+                    let checkbox = CheckboxViewModel(checkedState: false, attributedText: attributedString, columnName: field.column, columnKind: .add)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -248,9 +245,9 @@ extension FormDataSource {
         if formPurpose == .add || formPurpose == .addFailed || formPurpose == .ghostCard {
             model.account?.formattedAddFields(omitting: [.barcode])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
-                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .add, delegate: self)
+                    var attributedString = AttributedString(field.fieldDescription ?? "")
+                    attributedString.font = .bodyTextSmall
+                    let checkbox = CheckboxViewModel(checkedState: false, attributedText: attributedString, columnName: field.column, columnKind: .add)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -278,9 +275,9 @@ extension FormDataSource {
         if case .addFromScanner = formPurpose {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
-                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .auth, delegate: self)
+                    var attributedString = AttributedString(field.fieldDescription ?? "")
+                    attributedString.font = .bodyTextSmall
+                    let checkbox = CheckboxViewModel(checkedState: false, attributedText: attributedString, columnName: field.column, columnKind: .auth)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -330,9 +327,9 @@ extension FormDataSource {
         } else if formPurpose != .signUp && formPurpose != .signUpFailed && formPurpose != .ghostCard && formPurpose != .patchGhostCard {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
-                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .auth, delegate: self)
+                    var attributedString = AttributedString(field.fieldDescription ?? "")
+                    attributedString.font = .bodyTextSmall
+                    let checkbox = CheckboxViewModel(checkedState: false, attributedText: attributedString, columnName: field.column, columnKind: .auth)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -383,9 +380,9 @@ extension FormDataSource {
         if formPurpose == .signUp || formPurpose == .signUpFailed {
             model.account?.formattedEnrolFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
-                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .enrol, delegate: self)
+                    var attributedString = AttributedString(field.fieldDescription ?? "")
+                    attributedString.font = .bodyTextSmall
+                    let checkbox = CheckboxViewModel(checkedState: false, attributedText: attributedString, columnName: field.column, columnKind: .enrol)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -406,18 +403,18 @@ extension FormDataSource {
             }
             
             let checkedState = Current.userDefaults.bool(forDefaultsKey: .rememberMyDetails)
-            let checkbox = CheckboxView(checked: checkedState)
-            let title = NSMutableAttributedString(string: "Remember my details", attributes: [.font: UIFont.bodyTextSmall])
-            checkbox.configure(title: title, columnName: "remember-my-details", columnKind: .userPreference, delegate: self, optional: true)
+            var attributedString = AttributedString("Remember my details")
+            attributedString.font = .bodyTextSmall
+            let checkbox = CheckboxViewModel(checkedState: checkedState, attributedText: attributedString, columnName: "remember-my-details", columnKind: .userPreference, optional: true)
             checkboxes.append(checkbox)
         }
         
         if formPurpose == .ghostCard || formPurpose == .patchGhostCard {
             model.account?.formattedRegistrationFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
-                    let checkbox = CheckboxView(checked: false)
-                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
-                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .register, delegate: self)
+                    var attributedString = AttributedString(field.fieldDescription ?? "")
+                    attributedString.font = .bodyTextSmall
+                    let checkbox = CheckboxViewModel(checkedState: false, attributedText: attributedString, columnName: field.column, columnKind: .register)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -441,26 +438,20 @@ extension FormDataSource {
         checkboxes.append(contentsOf: getPlanDocumentsCheckboxes(journey: formPurpose.planDocumentDisplayMatching, membershipPlan: model))
     }
     
-    private func getPlanDocumentsCheckboxes(journey: PlanDocumentDisplayModel, membershipPlan: CD_MembershipPlan) -> [CheckboxView] {
-        var checkboxes: [CheckboxView] = []
+    private func getPlanDocumentsCheckboxes(journey: PlanDocumentDisplayModel, membershipPlan: CD_MembershipPlan) -> [CheckboxViewModel] {
+        var checkboxes: [CheckboxViewModel] = []
         
         membershipPlan.account?.formattedPlanDocuments?.forEach { field in
             let displayFields = field.formattedDisplay
             
             guard displayFields.contains(where: { $0.value == journey.rawValue }) else { return }
             
-            let checkbox = CheckboxView(checked: false)
-            
             let url = URL(string: field.url ?? "")
             let fieldText = (field.documentDescription ?? "") + " " + (field.name ?? "")
-            let attributedString = NSMutableAttributedString(string: fieldText, attributes: [.font: UIFont.bodyTextSmall])
-            
-            if field.checkbox?.boolValue == true {
-                checkbox.configure(title: attributedString, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: self)
-            } else {
-                // If we don't want a checkbox, we don't need a delegate for it, so we will hide the checkbox by checking if we have a delegate or not
-                checkbox.configure(title: attributedString, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: self, hideCheckbox: true)
-            }
+            var attributedString = AttributedString(fieldText)
+            attributedString.font = .bodyTextSmall
+            let hideCheckbox = (field.checkbox?.boolValue ?? false) ? false : true
+            let checkbox = CheckboxViewModel(checkedState: false, attributedText: attributedString, columnName: field.name ?? "", columnKind: .planDocument, url: url, hideCheckbox: hideCheckbox)
             checkboxes.append(checkbox)
         }
         
@@ -556,43 +547,37 @@ extension FormDataSource {
             fields.append(bundleIDField)
         }
         
-        let attributedTCs = NSMutableAttributedString(string: L10n.tandcsTitle + "\n" + L10n.tandcsDescription, attributes: [.font: UIFont.bodyTextSmall])
-        let baseTCs = NSString(string: attributedTCs.string)
-        let tcsRange = baseTCs.range(of: L10n.tandcsLink)
-        let privacyPolicyRange = baseTCs.range(of: L10n.ppolicyLink)
-        attributedTCs.addAttributes([.link: "https://bink.com/terms-and-conditions/"], range: tcsRange)
-        attributedTCs.addAttributes([.link: "https://bink.com/privacy-policy/"], range: privacyPolicyRange)
+        var attributedTCs = AttributedString(L10n.tandcsTitle + "\n" + L10n.tandcsDescription)
+        attributedTCs.font = .bodyTextSmall
         
-        let termsAndConditions = CheckboxView(checked: false)
-        termsAndConditions.accessibilityIdentifier = "Terms and conditions"
-        termsAndConditions.configure(title: attributedTCs, columnName: L10n.tandcsLink, columnKind: .none, delegate: self)
-        
-        let attributedMarketing = NSMutableAttributedString(string: L10n.marketingTitle + "\n" + L10n.preferencesPrompt, attributes: [.font: UIFont.bodyTextSmall])
-        let baseMarketing = NSString(string: attributedMarketing.string)
-        let rewardsRange = baseMarketing.range(of: L10n.preferencesPromptHighlightRewards)
-        let offersRange = baseMarketing.range(of: L10n.preferencesPromptHighlightOffers)
-        let updatesRange = baseMarketing.range(of: L10n.preferencesPromptHighlightUpdates)
-        
-        let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 14.0) ?? UIFont()]
-        
-        attributedMarketing.addAttributes(attributes, range: rewardsRange)
-        attributedMarketing.addAttributes(attributes, range: offersRange)
-        attributedMarketing.addAttributes(attributes, range: updatesRange)
-        
-        let marketingCheckbox = CheckboxView(checked: false)
-        marketingCheckbox.configure(title: attributedMarketing, columnName: "marketing-bink", columnKind: .userPreference, delegate: self, optional: true)
-        
-        if accessForm == .termsAndConditions {
-            checkboxes.append(termsAndConditions)
-            checkboxes.append(marketingCheckbox)
+        if let tcsRange = attributedTCs.range(of: L10n.tandcsLink), let privacyPolicyRange = attributedTCs.range(of: L10n.ppolicyLink) {
+            var container = AttributeContainer()
+            container.link = URL(string: "https://bink.com/terms-and-conditions/")
+            container.foregroundColor = Color(UIColor.blueAccent)
+            container.underlineStyle = .single
+            attributedTCs[tcsRange].mergeAttributes(container)
+            container.link = URL(string: "https://bink.com/privacy-policy/")
+            attributedTCs[privacyPolicyRange].mergeAttributes(container)
+            let checkbox = CheckboxViewModel(checkedState: false, attributedText: attributedTCs, columnName: L10n.tandcsLink, columnKind: FormField.ColumnKind.none)
+            if accessForm == .termsAndConditions || accessForm == .magicLink {
+                checkboxes.append(checkbox)
+            }
         }
         
-        if accessForm == .magicLink {
-            checkboxes.append(termsAndConditions)
-        }
+        var attributedMarketing = AttributedString(L10n.marketingTitle + "\n" + L10n.preferencesPrompt)
+        attributedMarketing.font = .bodyTextSmall
         
-        if accessForm == .success {
-            checkboxes.append(marketingCheckbox)
+        if let rewardsRange = attributedMarketing.range(of: L10n.preferencesPromptHighlightRewards),
+            let offersRange = attributedMarketing.range(of: L10n.preferencesPromptHighlightOffers),
+            let updatesRange = attributedMarketing.range(of: L10n.preferencesPromptHighlightUpdates) {
+            var container = AttributeContainer()
+            container.font = .nunitoExtraBold(14)
+            [rewardsRange, offersRange, updatesRange].forEach { attributedMarketing[$0].mergeAttributes(container) }
+            
+            let checkbox = CheckboxViewModel(checkedState: false, attributedText: attributedMarketing, columnName: "marketing-bink", columnKind: .userPreference, optional: true)
+            if accessForm == .termsAndConditions || accessForm == .success {
+                checkboxes.append(checkbox)
+            }
         }
     }
     
@@ -602,17 +587,6 @@ extension FormDataSource {
         attributed.addAttributes([.underlineStyle: NSUnderlineStyle.single.rawValue, .foregroundColor: UIColor.blueAccent, .font: UIFont.checkboxText], range: NSMakeRange(countMinusHyperlinkString, hyperlink.count))
         
         return attributed
-    }
-}
-
-extension FormDataSource: CheckboxViewDelegate {
-    func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {
-        delegate?.checkboxView(checkboxView, didCompleteWithColumn: column, value: value, fieldType: fieldType)
-        delegate?.formDataSource(self, checkboxUpdated: checkboxView)
-    }
-    
-    func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
-        delegate?.checkboxView(checkboxView, didTapOn: URL)
     }
 }
 

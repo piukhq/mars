@@ -323,6 +323,23 @@ enum ViewControllerFactory {
         }))
         return alert
     }
+    
+    static func makeMapNavigationSelectionAlertViewController(appleMapsActionHandler: @escaping () -> Void, googleMapsActionHandler: @escaping () -> Void, cancelActionHandler: @escaping () -> Void ) -> BinkAlertController {
+        let alert = BinkAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        alert.addAction(UIAlertAction(title: "Apple Maps", style: .default, handler: { _ in
+            appleMapsActionHandler()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Google Maps", style: .default, handler: { _ in
+            googleMapsActionHandler()
+        }))
+        
+        alert.addAction(UIAlertAction(title: L10n.cancel, style: .cancel, handler: { _ in
+            cancelActionHandler()
+        }))
+        return alert
+    }
 
     static func makeDebugViewController() -> UIViewController {
         return UIHostingController(rootView: DebugMenuView())

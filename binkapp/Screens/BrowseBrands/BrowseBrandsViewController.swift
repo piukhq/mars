@@ -5,8 +5,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import Combine
-import UIKit
+import SwiftUI
 
 fileprivate enum Constants {
     static let searchIconLeftPadding = 12
@@ -19,7 +18,6 @@ fileprivate enum Constants {
 }
 
 class BrowseBrandsViewController: BinkViewController {
-    @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var searchTextField: BinkTextField!
     @IBOutlet private weak var noMatchesLabel: UILabel!
     @IBOutlet private weak var searchTextFieldContainer: UIView!
@@ -62,6 +60,22 @@ class BrowseBrandsViewController: BinkViewController {
         return height + Constants.filterViewHeightPadding
     }
     
+    private lazy var browseBrandsListView: UIHostingController<BrowseBrandsListView> = {
+        let listView = BrowseBrandsListView(viewModel: viewModel)
+        let hostingController = UIHostingController(rootView: listView)
+        addChild(hostingController)
+        view.addSubview(hostingController.view)
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        hostingController.didMove(toParent: self)
+        return hostingController
+    }()
+    
+    private lazy var listViewTopConstraint: NSLayoutConstraint = {
+        let constraint = browseBrandsListView.view.topAnchor.constraint(equalTo: topStackView.bottomAnchor)
+        constraint.isActive = true
+        return constraint
+    }()
+    
     let viewModel: BrowseBrandsViewModel
     private var selectedFilters: [String]
     private var didLayoutSubviews = false
@@ -81,22 +95,19 @@ class BrowseBrandsViewController: BinkViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(BrandTableViewCell.self, asNib: true)
-        tableView.register(HeaderTableViewCell.self, asNib: true)
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.contentInset = Constants.contentInset
         searchTextField.delegate = self
-        viewModel.delegate = self
-        
         noMatchesLabel.font = UIFont.bodyTextLarge
         noMatchesLabel.text = L10n.noMatches
         
         configureSearchTextField()
         configureCollectionView()
-                
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
+        
+        NSLayoutConstraint.activate([
+            browseBrandsListView.view.leftAnchor.constraint(equalTo: view.leftAnchor),
+            browseBrandsListView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            browseBrandsListView.view.rightAnchor.constraint(equalTo: view.rightAnchor),
+            listViewTopConstraint
+        ])
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -134,7 +145,6 @@ class BrowseBrandsViewController: BinkViewController {
         
         if didLayoutSubviews {
             collectionView.reloadData()
-            tableView.reloadData()
         }
     }
     
@@ -181,35 +191,16 @@ class BrowseBrandsViewController: BinkViewController {
         view.endEditing(true)
     }
     
-    @objc private func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if filtersVisible {
-                tableView.contentInset = UIEdgeInsets(top: filterViewHeight, left: 0, bottom: keyboardSize.height, right: 0)
-            } else {
-                tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
-            }
-        }
-    }
-    
-    @objc private func keyboardDidHide(notification: NSNotification) {
-        if filtersVisible {
-            tableView.contentInset = UIEdgeInsets(top: filterViewHeight, left: 0, bottom: 0, right: 0)
-        } else {
-            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        }
-    }
-    
     @objc func filtersButtonTapped() {
-        let tableContentOffsetY = tableView.contentOffset.y
         if filtersVisible {
-            hideFilters(with: tableContentOffsetY)
+            hideFilters()
         } else {
-            displayFilters(with: tableContentOffsetY)
+            displayFilters()
         }
         filtersVisible.toggle()
     }
     
-    private func hideFilters(with contentOffsetY: CGFloat) {
+    private func hideFilters() {
         filtersButton?.isEnabled = false
         filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .disabled)
         
@@ -218,18 +209,17 @@ class BrowseBrandsViewController: BinkViewController {
         }
 
         let frame = self.collectionView.frame
+        listViewTopConstraint.constant = 0
         UIView.animate(withDuration: 0.3, animations: {
             self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: 0)
-            self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY + self.filterViewHeight)
             self.view.layoutIfNeeded()
         }) { [weak self] _ in
-            self?.tableView.contentInset.top = 0.0
             self?.filtersButton?.isEnabled = true
             self?.filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
         }
     }
     
-    private func displayFilters(with contentOffsetY: CGFloat) {
+    private func displayFilters() {
         if !self.noMatchesLabel.isHidden {
             self.noMatchesLabelTopConstraint.constant = self.filterViewHeight
         }
@@ -237,22 +227,21 @@ class BrowseBrandsViewController: BinkViewController {
         filtersButton?.isEnabled = false
         filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .disabled)
         let frame = self.collectionView.frame
+        listViewTopConstraint.constant = filterViewHeight
         UIView.animate(withDuration: 0.3, animations: {
             self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: self.view.frame.width - (Constants.marginPadding * 2), height: self.filterViewHeight)
-            self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY - self.filterViewHeight)
             UIView.performWithoutAnimation {
                 self.collectionView.performBatchUpdates(nil, completion: nil)
             }
             self.view.layoutIfNeeded()
         }) { [weak self] _ in
-            self?.tableView.contentInset.top = self?.filterViewHeight ?? 0.0
             self?.filtersButton?.isEnabled = true
             self?.filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
         }
     }
     
     private func switchTableWithNoMatchesLabel() {
-        tableView.isHidden = viewModel.shouldShowNoResultsLabel
+        browseBrandsListView.view.isHidden = viewModel.shouldShowNoResultsLabel
         noMatchesLabelTopConstraint.constant = filtersVisible ? filterViewHeight : 0.0
         noMatchesLabel.isHidden = !viewModel.shouldShowNoResultsLabel
     }
@@ -264,52 +253,14 @@ class BrowseBrandsViewController: BinkViewController {
             /// If there are no pll or see membership plans, section adjusted by -1 so that the correct section is scrolled to
             section -= 1
         }
-        
-        let indexPath = IndexPath(row: NSNotFound, section: section)
-        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+
+        viewModel.scrollToSection = section
         sectionToScrollTo = nil
     }
-}
-
-extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.numberOfSections()
-    }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.getNumberOfRowsFor(section: section)
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: BrandTableViewCell = tableView.dequeue(indexPath: indexPath)
-        
-        guard let membershipPlan = viewModel.getMembershipPlan(for: indexPath) else { return cell }
-        
-        if let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
-            cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists, indexPath: indexPath)
-        }
-        
-        if tableView.cellAtIndexPathIsLastInSection(indexPath) {
-            cell.hideSeparatorView()
-        }
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderTableViewCell") as? HeaderTableViewCell else { return nil }
-        headerCell.configure(section: section, viewModel: viewModel)
-        headerCell.scanLoyaltyCardButton.delegate = self
-        return headerCell
-    }
-
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        view.backgroundColor = .clear
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let membershipPlan = viewModel.getMembershipPlan(for: indexPath) else { return }
-        viewModel.toAddOrJoinScreen(membershipPlan: membershipPlan)
-        tableView.deselectRow(at: indexPath, animated: true)
+    private func showError() {
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.errorTitle, message: L10n.loyaltyScannerFailedToDetectBarcode)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
@@ -335,15 +286,8 @@ extension BrowseBrandsViewController: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        tableView.reloadData()
         view.endEditing(true)
         return true
-    }
-}
-
-extension BrowseBrandsViewController: BrowseBrandsViewModelDelegate {
-    func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan]) {
-        tableView.reloadData()
     }
 }
 
@@ -396,15 +340,15 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
     }
 }
 
-extension BrowseBrandsViewController: ScanLoyaltyCardButtonDelegate {
-    func addPhotoFromLibraryButtonWasTapped(_ scanLoyaltyCardButton: ScanLoyaltyCardButton) {
-        let picker = UIImagePickerController()
-        picker.allowsEditing = true
-        picker.delegate = self
-        let navigationRequest = ModalNavigationRequest(viewController: picker, embedInNavigationController: false)
-        Current.navigate.to(navigationRequest)
-    }
-}
+//extension BrowseBrandsViewController: ScanLoyaltyCardButtonDelegate {
+//    func addPhotoFromLibraryButtonWasTapped(_ scanLoyaltyCardButton: ScanLoyaltyCardButton) {
+//        let picker = UIImagePickerController()
+//        picker.allowsEditing = true
+//        picker.delegate = self
+//        let navigationRequest = ModalNavigationRequest(viewController: picker, embedInNavigationController: false)
+//        Current.navigate.to(navigationRequest)
+//    }
+//}
 
 extension BrowseBrandsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {

@@ -7,12 +7,15 @@
 
 import UIKit
 import SwiftUI
+import FirebaseStorage
 
 class LoyaltyCardFullDetailsViewModel {
     typealias EmptyCompletionBlock = () -> Void
 
     private let repository = LoyaltyCardFullDetailsRepository()
     private let informationRowFactory: WalletCardDetailInformationRowFactory
+    
+    var informationRows: [CardDetailInformationRow]
     
     var paymentCards: [CD_PaymentCard]? {
         return Current.wallet.paymentCards
@@ -36,20 +39,16 @@ class LoyaltyCardFullDetailsViewModel {
         self.informationRowFactory = informationRowFactory
         self.barcodeViewModel = BarcodeViewModel(membershipCard: membershipCard)
         self.animated = animated
+        self.informationRows = informationRowFactory.makeLoyaltyInformationRows(membershipCard: membershipCard)
     }
     
     var brandName: String {
         return membershipCard.membershipPlan?.account?.companyName ?? ""
     }
     
-    var shouldDisplayLocationOption: Bool {
-        // RS - For now we only want to display the locations option only when a Tesco LC is tapped
-        if let companyName = membershipCard.membershipPlan?.account?.companyName {
-            let isTesco = companyName.contains("Tesco")
-            return isTesco && Current.featureManager.isFeatureEnabled(.tescoLocations)
-        }
-        
-        return false
+    var brandNameForGeoData: String {
+        let formatted = membershipCard.membershipPlan?.account?.companyName?.replacingOccurrences(of: " ", with: "-")
+        return formatted?.lowercased() ?? ""
     }
     
     var balance: CD_MembershipCardBalance? {
@@ -126,6 +125,32 @@ class LoyaltyCardFullDetailsViewModel {
     }
         
     // MARK: - Public methods
+    
+    func fetchGeoData(completion: @escaping (Bool, Bool) -> Void) {
+        if Current.featureManager.isFeatureEnabled(.locations, merchant: brandNameForGeoData) {
+            let companyName = brandNameForGeoData
+            if !companyName.isBlank {
+                let fileName = "\(companyName).geojson"
+                if let _ = Cache.geoLocationsDataCache.object(forKey: fileName.toNSString()) {
+                    completion(true, false)
+                    return
+                }
+                
+                let storage = Storage.storage()
+                let pathReference = storage.reference(withPath: "locations/\(fileName)")
+                
+                pathReference.getData(maxSize: 4 * 1024 * 1024) { data, _ in
+                    guard let data = data else {
+                        completion(false, false)
+                        return
+                    }
+                    
+                    Cache.geoLocationsDataCache.setObject(DataCache(data: data as NSData), forKey: fileName.toNSString())
+                    completion(true, true) 
+                }
+            }
+        }
+    }
     
     func toBarcodeModel() {
         let viewController = ViewControllerFactory.makeBarcodeViewController(membershipCard: membershipCard)
@@ -293,21 +318,7 @@ class LoyaltyCardFullDetailsViewModel {
     }
 }
 
-// MARK: Information rows
-
 extension LoyaltyCardFullDetailsViewModel {
-    var informationRows: [CardDetailInformationRow] {
-        return informationRowFactory.makeLoyaltyInformationRows(membershipCard: membershipCard)
-    }
-    
-    func informationRow(forIndexPath indexPath: IndexPath) -> CardDetailInformationRow {
-        return informationRows[indexPath.row]
-    }
-    
-    func performActionForInformationRow(atIndexPath indexPath: IndexPath) {
-        informationRows[indexPath.row].action()
-    }
-    
     func showDeleteConfirmationAlert() {
         guard membershipCard.status?.status != .pending else {
             let alert = ViewControllerFactory.makeOkAlertViewController(title: L10n.alertViewCannotDeleteCardTitle, message: L10n.alertViewCannotDeleteCardBody)

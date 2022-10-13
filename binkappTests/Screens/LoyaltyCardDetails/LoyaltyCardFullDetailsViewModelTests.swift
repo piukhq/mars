@@ -58,6 +58,11 @@ class LoyaltyCardFullDetailsViewModelTests: XCTestCase, CoreDataTestable {
         
         mapResponseToManagedObject(baseMembershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
             self.membershipCard = membershipCard
+<<<<<<< HEAD
+=======
+            self.mapMembershipPlan()
+            self.membershipCard.membershipPlan = self.membershipPlan
+>>>>>>> develop
         }
         
         let factory = WalletCardDetailInformationRowFactory()
@@ -70,7 +75,11 @@ class LoyaltyCardFullDetailsViewModelTests: XCTestCase, CoreDataTestable {
         }
     }
     
+<<<<<<< HEAD
     private func mapMembershipPlan() {
+=======
+    private class func mapMembershipPlan() {
+>>>>>>> develop
         mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { plan in
             Self.membershipPlan = plan
         }
@@ -92,6 +101,14 @@ class LoyaltyCardFullDetailsViewModelTests: XCTestCase, CoreDataTestable {
         XCTAssertEqual(Self.model.brandName, "Tesco")
     }
     
+<<<<<<< HEAD
+=======
+    func test_brandNameForGeoData() throws {
+        Self.model.membershipCard.membershipPlan = Self.membershipPlan
+        XCTAssertEqual(Self.model.brandNameForGeoData, "tesco")
+    }
+    
+>>>>>>> develop
     func test_pointsValueText() throws {
         Self.baseMembershipCardResponse.status?.state = .failed
         mapMembershipCard()
@@ -103,7 +120,11 @@ class LoyaltyCardFullDetailsViewModelTests: XCTestCase, CoreDataTestable {
         Self.featureSetResponse = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: nil, hasVouchers: true)
         Self.membershipPlanResponse.hasVouchers = true
         Self.membershipPlanResponse.featureSet = Self.featureSetResponse
+<<<<<<< HEAD
         mapMembershipPlan()
+=======
+        Self.mapMembershipPlan()
+>>>>>>> develop
         Self.baseMembershipCardResponse.status?.state = .authorised
         mapMembershipCard()
         Self.model.membershipCard.membershipPlan = Self.membershipPlan
@@ -114,7 +135,11 @@ class LoyaltyCardFullDetailsViewModelTests: XCTestCase, CoreDataTestable {
         Self.featureSetResponse = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: nil, hasVouchers: false)
         Self.membershipPlanResponse.hasVouchers = false
         Self.membershipPlanResponse.featureSet = Self.featureSetResponse
+<<<<<<< HEAD
         mapMembershipPlan()
+=======
+        Self.mapMembershipPlan()
+>>>>>>> develop
 
         Self.baseMembershipCardResponse.status?.state = .authorised
         mapMembershipCard()
