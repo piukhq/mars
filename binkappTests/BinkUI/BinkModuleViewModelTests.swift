@@ -34,7 +34,7 @@ class BinkModuleViewModelTests: XCTestCase, CoreDataTestable {
         
         baseMembershipPlanModel = MembershipPlanModel(apiId: nil, status: nil, featureSet: baseFeatureSetModel, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
         
-        baseMembershipCardModel = MembershipCardModel(apiId: nil, membershipPlan: 1, membershipTransactions: nil, status: MembershipCardStatusModel(apiId: nil, state: .authorised, reasonCodes: nil), card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil, openedTime: Date())
+        baseMembershipCardModel = MembershipCardModel(apiId: nil, membershipPlan: 1, membershipTransactions: nil, status: MembershipCardStatusModel(apiId: nil, state: .authorised, reasonCodes: nil), card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil, openedTime: nil)
         
         basePaymentCardModel = PaymentCardModel(apiId: 1, membershipCards: nil, status: nil, card: nil, account: nil)
         mapResponseToManagedObject(basePaymentCardModel, managedObjectType: CD_PaymentCard.self) { mappedPaymentCard in

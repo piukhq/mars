@@ -27,8 +27,8 @@ class PaymentCardCellViewModelTests: XCTestCase, CoreDataTestable {
             LinkedCardResponse(id: 1, activeLink: true),
             LinkedCardResponse(id: 2, activeLink: false)
         ]
-        membershipCardResponse = MembershipCardModel(apiId: 1, membershipPlan: nil, membershipTransactions: nil, status: nil, card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
-        secondMembershipCardResponse = MembershipCardModel(apiId: 2, membershipPlan: nil, membershipTransactions: nil, status: nil, card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
+        membershipCardResponse = MembershipCardModel(apiId: 1, membershipPlan: nil, membershipTransactions: nil, status: nil, card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil, openedTime: nil)
+        secondMembershipCardResponse = MembershipCardModel(apiId: 2, membershipPlan: nil, membershipTransactions: nil, status: nil, card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil, openedTime: nil)
         
         mapResponseToManagedObject(membershipCardResponse, managedObjectType: CD_MembershipCard.self) { _ in }
         mapResponseToManagedObject(secondMembershipCardResponse, managedObjectType: CD_MembershipCard.self) { _ in }
@@ -96,7 +96,7 @@ class PaymentCardCellViewModelTests: XCTestCase, CoreDataTestable {
     }
 
     func test_linkedText_ifLinkedToTwoMembershipCards() {
-        let membershipCardResponse = MembershipCardModel(apiId: 3, membershipPlan: nil, membershipTransactions: nil, status: nil, card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
+        let membershipCardResponse = MembershipCardModel(apiId: 3, membershipPlan: nil, membershipTransactions: nil, status: nil, card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil, openedTime: nil)
         mapResponseToManagedObject(membershipCardResponse, managedObjectType: CD_MembershipCard.self) { _ in }
         Self.membershipCards.append(LinkedCardResponse(id: 3, activeLink: true))
         Self.basePaymentCardResponse.membershipCards = Self.membershipCards
