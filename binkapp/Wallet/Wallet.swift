@@ -405,23 +405,21 @@ extension Wallet {
             
             /// if the sort order is Recent - membershipCards only
             if walletType == .loyalty {
-                if let type = Current.userDefaults.string(forDefaultsKey: .membershipCardsSortType) {
-                    if type == MembershipCardsSortState.recent.rawValue {
-                        var cardsOpened = orderedCards.filter({ $0?.lastOpened != nil }).sorted(by: {
-                            if let firstDate = $0?.lastOpened, let secondDate = $1?.lastOpened {
-                                return firstDate > secondDate
-                            }
-
-                            return false
-                        })
-                        
-                        /// Sync the datasource and local card order
-                        let cardsWithoutOpenedDate = orderedCards.filter({ $0?.lastOpened == nil })
-                        cardsOpened.append(contentsOf: cardsWithoutOpenedDate)
-                        walletDataSource = cardsOpened.compactMap({ $0 })
-                        localOrder = cardsOpened.compactMap { $0?.id }
-                        return
-                    }
+                let isRecentSort = Current.userDefaults.string(forDefaultsKey: .membershipCardsSortType) == MembershipCardsSortState.recent.rawValue
+                if isRecentSort {
+                    var cardsOpened = orderedCards.filter({ $0?.lastOpened != nil }).sorted(by: {
+                        if let firstDate = $0?.lastOpened, let secondDate = $1?.lastOpened {
+                            return firstDate > secondDate
+                        }
+                        return false
+                    })
+                    
+                    /// apend the unopened cards to the bottom and ync the datasource and local card order
+                    let cardsWithoutOpenedDate = orderedCards.filter({ $0?.lastOpened == nil })
+                    cardsOpened.append(contentsOf: cardsWithoutOpenedDate)
+                    walletDataSource = cardsOpened.compactMap({ $0 })
+                    localOrder = cardsOpened.compactMap { $0?.id }
+                    return
                 }
             }
 

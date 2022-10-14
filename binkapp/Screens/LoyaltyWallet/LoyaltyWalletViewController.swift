@@ -281,16 +281,14 @@ extension LoyaltyWalletViewController: OptionItemListViewControllerDelegate {
         if sortItem.isSelected {
             guard sortItem.orderType != previousSortType else { return }
             
-            if ((viewModel.hasMembershipCardMoved() && previousSortType == .custom) || previousSortType == .recent) && sortItem.orderType == .newest {
+            if viewModel.hasMembershipCardMoved() && previousSortType == .custom && sortItem.orderType == .newest {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4, execute: {
                     self.viewModel.showSortOrderChangeAlert() {
-                        self.viewModel.setMembershipCardsSortingType(sortType: sortItem.orderType)
-                        self.setupSortBarButton()
-                        self.viewModel.clearLocalWalletSortedCardsKey()
-                        self.viewModel.setMembershipCardMoved(hasMoved: false)
-                        Current.wallet.launch()
+                        self.resetSort(orderType: sortItem.orderType)
                     }
                 })
+            } else if previousSortType == .recent && sortItem.orderType == .newest {
+                self.resetSort(orderType: sortItem.orderType)
             } else {
                 viewModel.setMembershipCardsSortingType(sortType: sortItem.orderType)
                 setupSortBarButton()
@@ -299,5 +297,13 @@ extension LoyaltyWalletViewController: OptionItemListViewControllerDelegate {
                 }
             }
         }
+    }
+    
+    private func resetSort(orderType: MembershipCardsSortState) {
+        self.viewModel.setMembershipCardsSortingType(sortType: orderType)
+        self.setupSortBarButton()
+        self.viewModel.clearLocalWalletSortedCardsKey()
+        self.viewModel.setMembershipCardMoved(hasMoved: false)
+        Current.wallet.launch()
     }
 }
