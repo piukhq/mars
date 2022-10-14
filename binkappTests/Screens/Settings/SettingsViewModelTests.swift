@@ -42,11 +42,7 @@ class SettingsViewModelTests: XCTestCase {
     }
 
     func test_rowsCount_returnsCorrectCountForSupportSection() {
-<<<<<<< HEAD
         XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 2 + appearanceSection), 4)
-=======
-        XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 2 + appearanceSection), 4) 
->>>>>>> develop
     }
     
     func test_rowsCount_returnsCorrectCountForAboutSection() {

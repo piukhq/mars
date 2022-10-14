@@ -29,7 +29,7 @@ class AuthAndAddViewController: BaseFormViewController {
     }()
     
     private let visionUtility = VisionUtility()
-    private let viewModel: AuthAndAddViewModel
+    let viewModel: AuthAndAddViewModel
     
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel

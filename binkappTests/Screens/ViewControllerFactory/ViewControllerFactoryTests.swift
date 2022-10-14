@@ -51,17 +51,10 @@ class ViewControllerFactoryTests: XCTestCase, CoreDataTestable {
         }
     }
 
-<<<<<<< HEAD
 //    func test_makeLoyaltyScannerViewController_navigatesToCorrectViewController() {
 //        let vc = ViewControllerFactory.makeLoyaltyScannerViewController(delegate: nil)
 //        XCTAssertTrue(vc.isKind(of: BarcodeScannerViewController.self))
 //    }
-=======
-    func test_makeLoyaltyScannerViewController_navigatesToCorrectViewController() {
-        let vc = ViewControllerFactory.makeLoyaltyScannerViewController(delegate: nil)
-        XCTAssertTrue(vc.isKind(of: BarcodeScannerViewController.self))
-    }
->>>>>>> develop
     
     func test_makeBrowseBrandsViewController_navigatesToCorrectViewController() {
         let vc = ViewControllerFactory.makeBrowseBrandsViewController()

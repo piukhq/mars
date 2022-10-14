@@ -9,12 +9,6 @@
 import XCTest
 @testable import binkapp
 
-<<<<<<< HEAD
-class GeoLocationsViewModelTests: XCTestCase {
-    static var sut = GeoLocationViewModel(companyName: "Tesco")
-
-
-=======
 // swiftlint:disable all
 
 class GeoLocationsViewModelTests: XCTestCase {
@@ -51,7 +45,6 @@ class GeoLocationsViewModelTests: XCTestCase {
         Cache.geoLocationsDataCache.setObject(DataCache(data: goodJson.data(using: .utf8)! as NSData), forKey: "tesco.geojson".toNSString())
     }
     
->>>>>>> develop
     func test_titleIsCorrect() throws {
         XCTAssertEqual(Self.sut.title, "Tesco Locations")
     }
