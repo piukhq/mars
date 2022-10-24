@@ -11,7 +11,7 @@ open class CD_Voucher: _CD_Voucher {
         case .accumulator:
             return "\(earn?.prefix ?? "")\(earn?.value?.twoDecimalPointString() ?? "")/\(earn?.prefix ?? "")\(earn?.targetValue?.twoDecimalPointString() ?? "")\(suffix)"
         case .stamps:
-            return "\(earn?.prefix ?? "")\(earn?.value ?? 0)/\(earn?.prefix ?? "")\(earn?.targetValue ?? 0)\(suffix)"
+            return "\(earn?.prefix ?? "")\(Int(truncating: earn?.value ?? 0))/\(earn?.prefix ?? "")\(earn?.targetValue ?? 0)\(suffix)"
         default:
             return nil
         }
@@ -35,7 +35,8 @@ open class CD_Voucher: _CD_Voucher {
         
         switch (earnType, voucherState) {
         case (.stamps, .inProgress):
-            return displayValue.intValue > 1 ? L10n.plrStampVoucherHeadlinePlural(prefix, displayValueString) : L10n.plrStampVoucherHeadline(prefix, displayValueString)
+            let roundedDisplayValue = Int(displayValue.floatValue.rounded())
+            return Int(displayValue.floatValue.rounded()) > 1 ? L10n.plrStampVoucherHeadlinePlural(prefix, roundedDisplayValue) : L10n.plrStampVoucherHeadline(prefix, roundedDisplayValue)
         case (.accumulator, .inProgress):
             return L10n.plrAccumulatorVoucherHeadline(prefix, displayValueString, suffix)
         case (_, .issued):

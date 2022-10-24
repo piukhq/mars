@@ -24,11 +24,22 @@ struct PreferencesView: View {
                         .uiFont(.bodyTextLarge)
                         .padding(.bottom, 15)
                     
-                    ForEach(viewModel.checkboxViewModels, id: \.columnName) { viewModel in
-                        CheckboxSwiftUIView(viewModel: viewModel) {
-                            self.viewModel.checkboxViewWasToggled(viewModel)
+                    if viewModel.checkboxViewModels.isEmpty {
+                        HStack(alignment: .center, spacing: 30) {
+                            Spacer()
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: Color(Current.themeManager.color(for: .text))))
+                                .scaleEffect(2.0, anchor: .center)
+                            Spacer()
                         }
-                        .padding(.bottom, 15)
+                        .padding(20)
+                    } else {
+                        ForEach(viewModel.checkboxViewModels, id: \.columnName) { viewModel in
+                            CheckboxSwiftUIView(viewModel: viewModel) {
+                                self.viewModel.checkboxViewWasToggled(viewModel)
+                            }
+                            .padding(.bottom, 15)
+                        }
                     }
                     
                     Spacer()
