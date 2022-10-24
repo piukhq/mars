@@ -11,6 +11,7 @@ import SwiftUI
 struct CheckboxSwiftUIView: View {
     @ObservedObject var viewModel: CheckboxViewModel
     var checkboxSelected: () -> Void
+    var didTapOnURL: ((URL) -> Void)?
 
     var body: some View {
         Button(action: {
@@ -39,11 +40,16 @@ struct CheckboxSwiftUIView: View {
                 
                 Text(viewModel.attributedText ?? AttributedString(viewModel.checkboxText))
                     .uiFont(.bodyTextSmall)
-                    .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                    .foregroundColor(Color(viewModel.textColour))
                     .multilineTextAlignment(.leading)
+                    .environment(\.openURL, OpenURLAction { url in
+                        didTapOnURL?(url)
+                        return .handled
+                    })
                 Spacer()
             }
         })
+        .background(Color(Current.themeManager.color(for: .viewBackground)))
     }
 }
 

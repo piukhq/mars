@@ -11,6 +11,7 @@ import SwiftUI
 class CheckboxViewModel: ObservableObject, Identifiable {
     @Published var checkboxText: String
     @Published var checkedState = false
+    @Published var textColour = Current.themeManager.color(for: .text)
 
     private(set) var attributedText: AttributedString?
     private(set) var hideCheckbox: Bool
@@ -28,13 +29,15 @@ class CheckboxViewModel: ObservableObject, Identifiable {
         self.optional = optional
         self.hideCheckbox = hideCheckbox
         
+        Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
+        
         guard let safeUrl = url, let attributedText = attributedText, let columnName = columnName else {
             self.attributedText = attributedText
             return
         }
         
         var string = attributedText
-        string.font = .custom(UIFont.bodyTextSmall.fontName, size: UIFont.bodyTextSmall.pointSize)
+        string.font = .bodyTextSmall
 
         if let urlRange = string.range(of: columnName) {
             var container = AttributeContainer()
@@ -46,8 +49,29 @@ class CheckboxViewModel: ObservableObject, Identifiable {
         }
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    var value: String {
+        return checkedState ? "1" : "0"
+    }
+    
     /// Should only be used when the API call triggered by the delegate method fails, and we need to revert the state
     func reset() {
         checkedState.toggle()
+    }
+    
+    @objc private func configureForCurrentTheme() {
+        textColour = Current.themeManager.color(for: .text)
+    }
+}
+
+extension CheckboxViewModel: InputValidation {
+    var isValid: Bool {
+        if hideCheckbox {
+            return true
+        }
+        return optional ? true : checkedState
     }
 }
