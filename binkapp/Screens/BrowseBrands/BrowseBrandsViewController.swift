@@ -340,16 +340,6 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
     }
 }
 
-//extension BrowseBrandsViewController: ScanLoyaltyCardButtonDelegate {
-//    func addPhotoFromLibraryButtonWasTapped(_ scanLoyaltyCardButton: ScanLoyaltyCardButton) {
-//        let picker = UIImagePickerController()
-//        picker.allowsEditing = true
-//        picker.delegate = self
-//        let navigationRequest = ModalNavigationRequest(viewController: picker, embedInNavigationController: false)
-//        Current.navigate.to(navigationRequest)
-//    }
-//}
-
 extension BrowseBrandsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
