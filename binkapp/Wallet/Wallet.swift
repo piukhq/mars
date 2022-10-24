@@ -414,7 +414,7 @@ extension Wallet {
                         return false
                     })
                     
-                    /// apend the unopened cards to the bottom and ync the datasource and local card order
+                    /// apend the unopened cards to the bottom and sync the datasource and local card order
                     let cardsWithoutOpenedDate = orderedCards.filter({ $0?.lastOpened == nil })
                     cardsOpened.append(contentsOf: cardsWithoutOpenedDate)
                     walletDataSource = cardsOpened.compactMap({ $0 })
