@@ -12,7 +12,7 @@ import DeepDiff
 struct MembershipCardModel: Codable {
     let apiId: Int?
     let membershipPlan: Int?
-    let membershipTransactions: [MembershipTransaction]?
+    var membershipTransactions: [MembershipTransaction]?
     var status: MembershipCardStatusModel?
     var card: CardModel?
     let images: [MembershipCardImageModel]?

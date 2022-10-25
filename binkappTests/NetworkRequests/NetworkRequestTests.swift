@@ -15,9 +15,22 @@ import Mocker
 class NetworkRequestTests: XCTestCase, UserServiceProtocol {
     static var logoutResponse: LogoutResponse!
     static var loginResponse: LoginResponse!
+    static var baseFeatureSetModel: FeatureSetModel!
+    static var baseMembershipPlanModel: MembershipPlanModel!
+    static var baseMembershipCardModel: MembershipCardModel!
     override class func setUp() {
         logoutResponse = LogoutResponse(loggedOut: true)
         loginResponse = LoginResponse(apiKey: "apiKey", userEmail: "ricksanchez@email.com", uid: "turkey-chicken-beef", accessToken: "accessToken")
+        
+        baseFeatureSetModel = nil
+        baseMembershipPlanModel = nil
+        baseMembershipCardModel = nil
+        
+        baseFeatureSetModel = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: true, cardType: .link, linkingSupport: nil, hasVouchers: nil)
+        
+        baseMembershipPlanModel = MembershipPlanModel(apiId: nil, status: nil, featureSet: baseFeatureSetModel, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+        
+        baseMembershipCardModel = MembershipCardModel(apiId: nil, membershipPlan: 1, membershipTransactions: nil, status: MembershipCardStatusModel(apiId: nil, state: .authorised, reasonCodes: nil), card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
     }
     
     func test_login() throws {
@@ -210,6 +223,38 @@ class NetworkRequestTests: XCTestCase, UserServiceProtocol {
     }
     
     func test_preferences() throws {
+        Current.apiClient.testResponseData = nil
+        let preferencesModel = [PreferencesModel(isUserDefined: true, user: 1, value: "0", slug: "marketing", defaultValue: "0", valueType: "boolean", scheme: nil, label: "Marketing Bink", category: "marketing")]
+        let mocked = try! JSONEncoder().encode(preferencesModel)
         
+        let mock = Mock(url: URL(string: APIEndpoint.preferences.urlString!)!, dataType: .json, statusCode: 200, data: [.get: mocked])
+        mock.register()
+        
+        getPreferences(completion: { result in
+            switch result {
+            case .success(let response):
+                let safeResponse = response.compactMap { $0.value }
+                XCTAssertNotNil(safeResponse)
+            case .failure:
+                XCTFail()
+            }
+        })
+        
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
+    }
+    
+    
+    // WALLET SERVICE
+    
+    func test_walletService_getMembershipPlans() throws {
+        Current.apiClient.testResponseData = nil
+        let mocked = try! JSONEncoder().encode([Self.baseMembershipPlanModel])
+        
+        let mock = Mock(url: URL(string: APIEndpoint.membershipPlans.urlString!)!, dataType: .json, statusCode: 200, data: [.get: mocked])
+        mock.register()
+        
+        
+//        getMembershipPlans(isUserDriven: false) { [weak self] result in
+//        }
     }
 }
