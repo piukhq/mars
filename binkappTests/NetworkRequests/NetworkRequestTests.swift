@@ -12,7 +12,7 @@ import Mocker
 
 // swiftlint:disable all
 
-class NetworkRequestTests: XCTestCase, UserServiceProtocol {
+class NetworkRequestTests: XCTestCase, UserServiceProtocol, WalletServiceProtocol {
     static var logoutResponse: LogoutResponse!
     static var loginResponse: LoginResponse!
     static var baseFeatureSetModel: FeatureSetModel!
@@ -254,7 +254,7 @@ class NetworkRequestTests: XCTestCase, UserServiceProtocol {
         mock.register()
         
         
-//        getMembershipPlans(isUserDriven: false) { [weak self] result in
-//        }
+        getMembershipPlans(isUserDriven: false) { [weak self] result in
+        }
     }
 }

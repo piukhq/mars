@@ -32,3 +32,11 @@
 - _CD_Voucher.swift
 - _CD_VoucherBurn.swift
 - _CD_VoucherEarn.swift
+- BinkButtonSwiftUIView.swift
+- CheckboxSwiftUIView.swift
+- BarcodeScreenSwiftUIView.swift
+- FeatureFlagsSwiftUIView.swift
+- WhoWeAreSwiftUIView.swift
+- PreferencesView.swift
+- DebugMenuView.swift
+- HighVisibilityLabelView.swift
