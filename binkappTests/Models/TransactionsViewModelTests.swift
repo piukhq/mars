@@ -13,7 +13,6 @@ import XCTest
 final class TransactionsViewModelTests: XCTestCase, CoreDataTestable {
 
     static var membershipCardResponse: MembershipCardModel!
-    static var paymentCardResponse: PaymentCardModel!
     static var membershipPlanResponse: MembershipPlanModel!
     static var paymentCardCardResponse: PaymentCardCardResponse!
     static let linkedResponse = LinkedCardResponse(id: 300, activeLink: true)
@@ -27,7 +26,9 @@ final class TransactionsViewModelTests: XCTestCase, CoreDataTestable {
         super.setUp()
         
         let featureSet = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: [.add], hasVouchers: nil)
+        
         membershipPlanResponse = MembershipPlanModel(apiId: 500, status: nil, featureSet: featureSet, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+        
         mapResponseToManagedObject(membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { plan in
             self.membershipPlan = plan
         }

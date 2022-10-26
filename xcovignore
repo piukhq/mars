@@ -40,3 +40,5 @@
 - PreferencesView.swift
 - DebugMenuView.swift
 - HighVisibilityLabelView.swift
+- GifLoader.swift
+- ScanLoyaltyCardButtonViewModel.swift
