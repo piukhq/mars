@@ -12,12 +12,17 @@ import Mocker
 
 // swiftlint:disable all
 
-class NetworkRequestTests: XCTestCase, UserServiceProtocol, WalletServiceProtocol {
+class NetworkRequestTests: XCTestCase, UserServiceProtocol, WalletServiceProtocol, CoreDataTestable {
     static var logoutResponse: LogoutResponse!
     static var loginResponse: LoginResponse!
     static var baseFeatureSetModel: FeatureSetModel!
     static var baseMembershipPlanModel: MembershipPlanModel!
     static var baseMembershipCardModel: MembershipCardModel!
+    static var basePaymentCardResponse: PaymentCardModel!
+    static var paymentCardCardResponse: PaymentCardCardResponse!
+    static let linkedResponse = LinkedCardResponse(id: 300, activeLink: true)
+    static var membershipCard: CD_MembershipCard!
+    static var paymentCard: CD_PaymentCard!
     override class func setUp() {
         logoutResponse = LogoutResponse(loggedOut: true)
         loginResponse = LoginResponse(apiKey: "apiKey", userEmail: "ricksanchez@email.com", uid: "turkey-chicken-beef", accessToken: "accessToken")
@@ -30,7 +35,19 @@ class NetworkRequestTests: XCTestCase, UserServiceProtocol, WalletServiceProtoco
         
         baseMembershipPlanModel = MembershipPlanModel(apiId: nil, status: nil, featureSet: baseFeatureSetModel, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
         
-        baseMembershipCardModel = MembershipCardModel(apiId: nil, membershipPlan: 1, membershipTransactions: nil, status: MembershipCardStatusModel(apiId: nil, state: .authorised, reasonCodes: nil), card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
+        baseMembershipCardModel = MembershipCardModel(apiId: 10, membershipPlan: 1, membershipTransactions: nil, status: MembershipCardStatusModel(apiId: nil, state: .authorised, reasonCodes: nil), card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
+        
+        paymentCardCardResponse = PaymentCardCardResponse(apiId: 100, firstSix: nil, lastFour: "1234", month: 30, year: 3000, country: nil, currencyCode: nil, nameOnCard: "Rick Sanchez", provider: nil, type: nil)
+        
+        basePaymentCardResponse = PaymentCardModel(apiId: 100, membershipCards: [Self.linkedResponse], status: "active", card: paymentCardCardResponse, account: PaymentCardAccountResponse(apiId: 0, verificationInProgress: nil, status: 0, consents: []))
+        
+        mapResponseToManagedObject(baseMembershipCardModel, managedObjectType: CD_MembershipCard.self) { membershipCard in
+            self.membershipCard = membershipCard
+        }
+        
+        mapResponseToManagedObject(Self.basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
+            Self.paymentCard = paymentCard
+        }
     }
     
     func test_login() throws {
@@ -254,7 +271,239 @@ class NetworkRequestTests: XCTestCase, UserServiceProtocol, WalletServiceProtoco
         mock.register()
         
         
-        getMembershipPlans(isUserDriven: false) { [weak self] result in
+        getMembershipPlans(isUserDriven: false) { result in
+            switch result {
+            case .success(let response):
+                XCTAssertNotNil(response)
+            case .failure:
+                XCTFail()
+            }
         }
+        
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
+    }
+    
+    func test_walletService_getMembershipCards() throws {
+        Current.apiClient.testResponseData = nil
+        let mocked = try! JSONEncoder().encode([Self.baseMembershipCardModel])
+        
+        let mock = Mock(url: URL(string: APIEndpoint.membershipCards.urlString!)!, dataType: .json, statusCode: 200, data: [.get: mocked])
+        mock.register()
+        
+        
+        getMembershipCards(isUserDriven: false) { result in
+            switch result {
+            case .success(let response):
+                XCTAssertTrue(response[0].membershipPlan == 1)
+            case .failure:
+                XCTFail()
+            }
+        }
+        
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
+    }
+    
+    func test_walletService_addMembershipCard() throws {
+        Current.apiClient.testResponseData = nil
+        let model = MembershipCardPostModel(account: nil, membershipPlan: 1)
+        let mocked = try! JSONEncoder().encode(Self.baseMembershipCardModel)
+
+        let endpoint = APIEndpoint.membershipCard(cardId: Self.membershipCard.id).urlString!
+        let mock = Mock(url: URL(string: endpoint)!, dataType: .json, statusCode: 200, data: [.put: mocked])
+        mock.register()
+
+        addMembershipCard(withRequestModel: model, existingMembershipCard: Self.membershipCard, completion: { result, e in
+            switch result {
+            case .success(let response):
+                XCTAssertTrue(response.membershipPlan == 1)
+            case .failure:
+                XCTFail()
+            }
+        })
+
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
+    }
+    
+    func test_walletService_addGhostCard() throws {
+        Current.apiClient.testResponseData = nil
+        let model = MembershipCardPostModel(account: nil, membershipPlan: 1)
+        let mocked = try! JSONEncoder().encode(Self.baseMembershipCardModel)
+
+        let endpoint = APIEndpoint.membershipCards.urlString!
+        let mock = Mock(url: URL(string: endpoint)!, dataType: .json, statusCode: 200, data: [.post: mocked])
+        mock.register()
+
+        addGhostCard(withRequestModel: model, completion: { result in
+            switch result {
+            case .success(let response):
+                XCTAssertTrue(response.membershipPlan == 1)
+            case .failure:
+                XCTFail()
+            }
+        })
+
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
+    }
+    
+    func test_walletService_patchGhostCard() throws {
+        Current.apiClient.testResponseData = nil
+        let model = MembershipCardPostModel(account: nil, membershipPlan: 1)
+        let mocked = try! JSONEncoder().encode(Self.baseMembershipCardModel)
+
+        let endpoint = APIEndpoint.membershipCard(cardId: Self.membershipCard.id).urlString!
+        let mock = Mock(url: URL(string: endpoint)!, dataType: .json, statusCode: 200, data: [.patch: mocked])
+        mock.register()
+
+        patchGhostCard(withRequestModel: model, existingMembershipCard: Self.membershipCard, completion: { result in
+            switch result {
+            case .success(let response):
+                XCTAssertTrue(response.membershipPlan == 1)
+            case .failure:
+                XCTFail()
+            }
+        })
+
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
+    }
+    
+    func test_walletService_deleteMembershipCard() throws {
+        Current.apiClient.testResponseData = nil
+        
+        let endpoint = APIEndpoint.membershipCard(cardId: Self.membershipCard.id).urlString!
+        let mock = Mock(url: URL(string: endpoint)!, dataType: .json, statusCode: 200, data: [.delete: Data()])
+        mock.register()
+        var completed = false
+        
+        deleteMembershipCard(Self.membershipCard, completion: { success, _, _ in
+            completed = success
+        })
+
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
+
+        XCTAssertTrue(completed)
+    }
+    
+    func test_walletService_getPaymentCards() throws {
+        Current.apiClient.testResponseData = nil
+        let mocked = try! JSONEncoder().encode([Self.basePaymentCardResponse])
+        
+        let mock = Mock(url: URL(string: APIEndpoint.paymentCards.urlString!)!, dataType: .json, statusCode: 200, data: [.get: mocked])
+        mock.register()
+        
+        getPaymentCards(isUserDriven: false) { result in
+            switch result {
+            case .success(let response):
+                XCTAssertTrue(response[0].apiId == 100)
+                XCTAssertTrue(response[0].status == "active")
+            case .failure:
+                XCTFail()
+            }
+        }
+        
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
+    }
+    
+    func test_walletService_getSpreedlyToken() throws {
+        Current.apiClient.testResponseData = nil
+        let spreedlyRequest = SpreedlyRequest(fullName: "Rick", number: "200", month: 1, year: 2022)
+        let spreedlyResponse = SpreedlyResponse(transaction: SpreedlyResponse.Transaction(paymentMethod: nil, state: "active", succeeded: true))
+        
+        let mocked = try! JSONEncoder().encode(spreedlyResponse)
+        
+        let mock = Mock(url: URL(string: APIEndpoint.spreedly.urlString!)!, dataType: .json, statusCode: 200, data: [.post: mocked])
+        mock.register()
+        
+        getSpreedlyToken(withRequest: spreedlyRequest, completion: { result in
+            switch result {
+            case .success(let response):
+                XCTAssertTrue(response.transaction!.state == "active")
+            case .failure:
+                XCTFail()
+            }
+        })
+        
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
+    }
+    
+//    func test_walletService_addPaymentCard() throws {
+//        Current.apiClient.testResponseData = nil
+//        let paymentCardCreateModel = PaymentCardCreateModel(fullPan: "5454 5454 5454 5454", nameOnCard: "Rick Morty", month: 4, year: 2030)
+//
+//        let cardRequest = PaymentCardCreateRequest(model: paymentCardCreateModel)
+//
+//        let mocked = try! JSONEncoder().encode(Self.basePaymentCardResponse)
+//
+//        let mock = Mock(url: URL(string: APIEndpoint.paymentCards.urlString!)!, dataType: .json, statusCode: 200, data: [.post: mocked])
+//        mock.register()
+//
+//        addPaymentCard(withRequestModel: cardRequest!, completion: { result, e in
+//            switch result {
+//            case .success(let response):
+//                XCTAssertTrue(response.apiId == 100)
+//            case .failure:
+//                XCTFail()
+//            }
+//        })
+//
+//        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
+//    }
+    
+    func test_walletService_deletePaymentCard() throws {
+        Current.apiClient.testResponseData = nil
+        
+        let endpoint = APIEndpoint.paymentCard(cardId: Self.paymentCard.id).urlString!
+        let mock = Mock(url: URL(string: endpoint)!, dataType: .json, statusCode: 200, data: [.delete: Data()])
+        mock.register()
+        var completed = false
+        
+        deletePaymentCard(Self.paymentCard, completion: { success, _, _ in
+            completed = success
+        })
+
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
+
+        XCTAssertTrue(completed)
+    }
+    
+    func test_walletService_toggleMembershipCardPaymentCardLink_ShouldLink() throws {
+        Current.apiClient.testResponseData = nil
+        
+        let mocked = try! JSONEncoder().encode(Self.basePaymentCardResponse)
+        let endpoint = APIEndpoint.linkMembershipCardToPaymentCard(membershipCardId: Self.membershipCard.id, paymentCardId: Self.paymentCard.id).urlString!
+        let mock = Mock(url: URL(string: endpoint)!, dataType: .json, statusCode: 200, data: [.patch: mocked])
+        mock.register()
+        
+        toggleMembershipCardPaymentCardLink(membershipCard: Self.membershipCard, paymentCard: Self.paymentCard, shouldLink: true, completion: { result in
+            switch result {
+            case .success(let response):
+                XCTAssertTrue(response.apiId == 100)
+                XCTAssertTrue(response.status == "active")
+            case .failure:
+                XCTFail()
+            }
+        })
+
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
+    }
+    
+    func test_walletService_toggleMembershipCardPaymentCardLink_Should_Not_Link() throws {
+        Current.apiClient.testResponseData = nil
+        
+        let mocked = try! JSONEncoder().encode(Self.basePaymentCardResponse)
+        let endpoint = APIEndpoint.linkMembershipCardToPaymentCard(membershipCardId: Self.membershipCard.id, paymentCardId: Self.paymentCard.id).urlString!
+        let mock = Mock(url: URL(string: endpoint)!, dataType: .json, statusCode: 200, data: [.delete: mocked])
+        mock.register()
+        
+        toggleMembershipCardPaymentCardLink(membershipCard: Self.membershipCard, paymentCard: Self.paymentCard, shouldLink: false, completion: { result in
+            switch result {
+            case .success(let response):
+                XCTAssertTrue(response.apiId == 100)
+                XCTAssertTrue(response.status == "active")
+            case .failure:
+                XCTFail()
+            }
+        })
+
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
     }
 }
