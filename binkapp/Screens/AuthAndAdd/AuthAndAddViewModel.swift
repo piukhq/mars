@@ -266,20 +266,22 @@ class AuthAndAddViewModel {
                 return
             }
             
-            // Navigate to LCD for the new card behind the modal
-            let lcdViewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card)
-            let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController)
-            let tabNavigationRequest = TabBarNavigationRequest(tab: .loyalty, popToRoot: true, backgroundPushNavigationRequest: lcdNavigationRequest)
-            Current.navigate.to(tabNavigationRequest)
+            if !UIApplication.isRunningUnitTests {
+                // Navigate to LCD for the new card behind the modal
+                let lcdViewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card)
+                let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController)
+                let tabNavigationRequest = TabBarNavigationRequest(tab: .loyalty, popToRoot: true, backgroundPushNavigationRequest: lcdNavigationRequest)
+                Current.navigate.to(tabNavigationRequest)
 
-            if card.membershipPlan?.isPLL == true {
-                PllLoyaltyInAppReviewableJourney().begin()
+                if card.membershipPlan?.isPLL == true {
+                    PllLoyaltyInAppReviewableJourney().begin()
 
-                let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
-                let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
-                Current.navigate.to(navigationRequest)
-            } else {
-                Current.navigate.close()
+                    let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
+                    let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+                    Current.navigate.to(navigationRequest)
+                } else {
+                    Current.navigate.close()
+                }
             }
         }) { (error) in
             self.displaySimplePopup(title: L10n.errorTitle, message: error?.localizedDescription)

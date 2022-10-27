@@ -53,6 +53,10 @@
 		214EC02628734B45000A3F73 /* GeoLocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02528734B45000A3F73 /* GeoLocationsViewController.swift */; };
 		214EC02928743165000A3F73 /* GeoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02828743165000A3F73 /* GeoModel.swift */; };
 		214EC02E28743883000A3F73 /* GeoLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02D28743883000A3F73 /* GeoLocationViewModel.swift */; };
+		215147622909BE0200E6B209 /* BrowseBrandsListRowViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215147612909BE0200E6B209 /* BrowseBrandsListRowViewModelTests.swift */; };
+		215147642909C02E00E6B209 /* BinkTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215147632909C02E00E6B209 /* BinkTextFieldTests.swift */; };
+		215147662909C0A900E6B209 /* BinkSwitchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215147652909C0A900E6B209 /* BinkSwitchTests.swift */; };
+		2151476B290A938400E6B209 /* AuthAndAddViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2151476A290A938400E6B209 /* AuthAndAddViewModelTests.swift */; };
 		215BC59528A6900100DB1377 /* BinkCore in Frameworks */ = {isa = PBXBuildFile; productRef = 215BC59428A6900100DB1377 /* BinkCore */; };
 		216B999C28AE902000A67A14 /* FloatExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216B999B28AE902000A67A14 /* FloatExtensionTests.swift */; };
 		217288EF28B4BF5200258EBA /* AccountPostModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288EE28B4BF5200258EBA /* AccountPostModelTests.swift */; };
@@ -735,6 +739,10 @@
 		214EC02528734B45000A3F73 /* GeoLocationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationsViewController.swift; sourceTree = "<group>"; };
 		214EC02828743165000A3F73 /* GeoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoModel.swift; sourceTree = "<group>"; };
 		214EC02D28743883000A3F73 /* GeoLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationViewModel.swift; sourceTree = "<group>"; };
+		215147612909BE0200E6B209 /* BrowseBrandsListRowViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseBrandsListRowViewModelTests.swift; sourceTree = "<group>"; };
+		215147632909C02E00E6B209 /* BinkTextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkTextFieldTests.swift; sourceTree = "<group>"; };
+		215147652909C0A900E6B209 /* BinkSwitchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkSwitchTests.swift; sourceTree = "<group>"; };
+		2151476A290A938400E6B209 /* AuthAndAddViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAndAddViewModelTests.swift; sourceTree = "<group>"; };
 		216B999B28AE902000A67A14 /* FloatExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtensionTests.swift; sourceTree = "<group>"; };
 		217288EE28B4BF5200258EBA /* AccountPostModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPostModelTests.swift; sourceTree = "<group>"; };
 		217288F128B4D62100258EBA /* AddPaymentCardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentCardViewModelTests.swift; sourceTree = "<group>"; };
@@ -1473,6 +1481,14 @@
 			path = GeoLocation;
 			sourceTree = "<group>";
 		};
+		21514769290A934900E6B209 /* AuthAndAdd */ = {
+			isa = PBXGroup;
+			children = (
+				2151476A290A938400E6B209 /* AuthAndAddViewModelTests.swift */,
+			);
+			path = AuthAndAdd;
+			sourceTree = "<group>";
+		};
 		217288F028B4D60800258EBA /* AddPaymentCard */ = {
 			isa = PBXGroup;
 			children = (
@@ -1802,6 +1818,7 @@
 			isa = PBXGroup;
 			children = (
 				3CEE169A2440550D00933859 /* BrowseBrandsViewModelTests.swift */,
+				215147612909BE0200E6B209 /* BrowseBrandsListRowViewModelTests.swift */,
 			);
 			path = "Browse Brands";
 			sourceTree = "<group>";
@@ -2562,6 +2579,8 @@
 				CE971A3428807FBB001D7E1C /* BinkInfoButtonTests.swift */,
 				70A61D15263095060073A08A /* BinkModuleViewModelTests.swift */,
 				CE8058212897EF86002AB70F /* MessageViewTests.swift */,
+				215147632909C02E00E6B209 /* BinkTextFieldTests.swift */,
+				215147652909C0A900E6B209 /* BinkSwitchTests.swift */,
 			);
 			path = BinkUI;
 			sourceTree = "<group>";
@@ -2821,6 +2840,7 @@
 		EF485578231E5A3600FC9E5F /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				21514769290A934900E6B209 /* AuthAndAdd */,
 				2110584A2909635C00DFDF90 /* Cells */,
 				217288F628B5009500258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModel */,
 				217288F328B4E62600258EBA /* MainTabBar */,
@@ -4302,9 +4322,11 @@
 				217288FA28B50D3700258EBA /* PLRCellViewModelTests.swift in Sources */,
 				2126212028AFE80900939609 /* LCDPlaceHolderGeneratorTests.swift in Sources */,
 				2110584F2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift in Sources */,
+				215147662909C0A900E6B209 /* BinkSwitchTests.swift in Sources */,
 				2126211D28AFD9A900939609 /* PaymentCardCreateModelTests.swift in Sources */,
 				214DCF5F28AE399100308531 /* WalletRefreshManagerTests.swift in Sources */,
 				EF7F6E6123E4288C00352DCF /* StorageUtilityTests.swift in Sources */,
+				215147642909C02E00E6B209 /* BinkTextFieldTests.swift in Sources */,
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
 				3CEE169B2440550D00933859 /* BrowseBrandsViewModelTests.swift in Sources */,
 				212F0C462876EC63007F09CE /* GeoLocationModelTests.swift in Sources */,
@@ -4317,6 +4339,7 @@
 				CE971A3728817A41001D7E1C /* AddOrJoinViewModelTests.swift in Sources */,
 				EF758E1523225F95000D26A9 /* TestDatabase.xcdatamodeld in Sources */,
 				CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */,
+				2151476B290A938400E6B209 /* AuthAndAddViewModelTests.swift in Sources */,
 				70E8E37B2566DE430027A244 /* PLLScreenViewModelTests.swift in Sources */,
 				CEFB742325668A5100896DE5 /* BrandHeaderViewTests.swift in Sources */,
 				217288F228B4D62100258EBA /* AddPaymentCardViewModelTests.swift in Sources */,
@@ -4338,6 +4361,7 @@
 				2126211928AFB4B900939609 /* NetworkRequestTests.swift in Sources */,
 				217288F828B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift in Sources */,
 				CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */,
+				215147622909BE0200E6B209 /* BrowseBrandsListRowViewModelTests.swift in Sources */,
 				CE8058222897EF86002AB70F /* MessageViewTests.swift in Sources */,
 				216B999C28AE902000A67A14 /* FloatExtensionTests.swift in Sources */,
 				214DCF5328AD25C500308531 /* TimeIntervalExtensionTests.swift in Sources */,

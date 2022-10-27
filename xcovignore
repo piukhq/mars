@@ -42,3 +42,7 @@
 - HighVisibilityLabelView.swift
 - GifLoader.swift
 - ScanLoyaltyCardButtonViewModel.swift
+- VisionUtility,swift
+- BrowseBrandsListRowView.swift
+- BrowseBrandsListView.swift
+- CardInformationView.swift
