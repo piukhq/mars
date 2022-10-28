@@ -57,6 +57,9 @@
 		215147642909C02E00E6B209 /* BinkTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215147632909C02E00E6B209 /* BinkTextFieldTests.swift */; };
 		215147662909C0A900E6B209 /* BinkSwitchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215147652909C0A900E6B209 /* BinkSwitchTests.swift */; };
 		2151476B290A938400E6B209 /* AuthAndAddViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2151476A290A938400E6B209 /* AuthAndAddViewModelTests.swift */; };
+		2151476E290AC6BE00E6B209 /* PreferencesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2151476D290AC6BE00E6B209 /* PreferencesViewModelTests.swift */; };
+		21514770290ADCDF00E6B209 /* PointsScrapingManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2151476F290ADCDF00E6B209 /* PointsScrapingManagerTests.swift */; };
+		21514773290BC98600E6B209 /* LoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21514772290BC98600E6B209 /* LoginViewControllerTests.swift */; };
 		215BC59528A6900100DB1377 /* BinkCore in Frameworks */ = {isa = PBXBuildFile; productRef = 215BC59428A6900100DB1377 /* BinkCore */; };
 		216B999C28AE902000A67A14 /* FloatExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216B999B28AE902000A67A14 /* FloatExtensionTests.swift */; };
 		217288EF28B4BF5200258EBA /* AccountPostModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288EE28B4BF5200258EBA /* AccountPostModelTests.swift */; };
@@ -743,6 +746,9 @@
 		215147632909C02E00E6B209 /* BinkTextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkTextFieldTests.swift; sourceTree = "<group>"; };
 		215147652909C0A900E6B209 /* BinkSwitchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkSwitchTests.swift; sourceTree = "<group>"; };
 		2151476A290A938400E6B209 /* AuthAndAddViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAndAddViewModelTests.swift; sourceTree = "<group>"; };
+		2151476D290AC6BE00E6B209 /* PreferencesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewModelTests.swift; sourceTree = "<group>"; };
+		2151476F290ADCDF00E6B209 /* PointsScrapingManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsScrapingManagerTests.swift; sourceTree = "<group>"; };
+		21514772290BC98600E6B209 /* LoginViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerTests.swift; sourceTree = "<group>"; };
 		216B999B28AE902000A67A14 /* FloatExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtensionTests.swift; sourceTree = "<group>"; };
 		217288EE28B4BF5200258EBA /* AccountPostModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPostModelTests.swift; sourceTree = "<group>"; };
 		217288F128B4D62100258EBA /* AddPaymentCardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentCardViewModelTests.swift; sourceTree = "<group>"; };
@@ -1487,6 +1493,22 @@
 				2151476A290A938400E6B209 /* AuthAndAddViewModelTests.swift */,
 			);
 			path = AuthAndAdd;
+			sourceTree = "<group>";
+		};
+		2151476C290AC68F00E6B209 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				2151476D290AC6BE00E6B209 /* PreferencesViewModelTests.swift */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
+		21514771290BC8D400E6B209 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				21514772290BC98600E6B209 /* LoginViewControllerTests.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		217288F028B4D60800258EBA /* AddPaymentCard */ = {
@@ -2840,6 +2862,8 @@
 		EF485578231E5A3600FC9E5F /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				21514771290BC8D400E6B209 /* Login */,
+				2151476C290AC68F00E6B209 /* Preferences */,
 				21514769290A934900E6B209 /* AuthAndAdd */,
 				2110584A2909635C00DFDF90 /* Cells */,
 				217288F628B5009500258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModel */,
@@ -3050,6 +3074,7 @@
 			children = (
 				EF7F6E6023E4288C00352DCF /* StorageUtilityTests.swift */,
 				70E867742489303F001ED282 /* SecureUtilityTests.swift */,
+				2151476F290ADCDF00E6B209 /* PointsScrapingManagerTests.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -4325,6 +4350,7 @@
 				215147662909C0A900E6B209 /* BinkSwitchTests.swift in Sources */,
 				2126211D28AFD9A900939609 /* PaymentCardCreateModelTests.swift in Sources */,
 				214DCF5F28AE399100308531 /* WalletRefreshManagerTests.swift in Sources */,
+				21514770290ADCDF00E6B209 /* PointsScrapingManagerTests.swift in Sources */,
 				EF7F6E6123E4288C00352DCF /* StorageUtilityTests.swift in Sources */,
 				215147642909C02E00E6B209 /* BinkTextFieldTests.swift in Sources */,
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
@@ -4334,6 +4360,7 @@
 				2126212428B274C300939609 /* VoucherModelTests.swift in Sources */,
 				214DCF5128AD201900308531 /* NSNumberExtensionTests.swift in Sources */,
 				2110584C2909637300DFDF90 /* MerchantHeroCellTests.swift in Sources */,
+				2151476E290AC6BE00E6B209 /* PreferencesViewModelTests.swift in Sources */,
 				CE971A3A2881AE1D001D7E1C /* PaymentCardDetailViewModelTests.swift in Sources */,
 				2126212228B271C200939609 /* FontExtensionTests.swift in Sources */,
 				CE971A3728817A41001D7E1C /* AddOrJoinViewModelTests.swift in Sources */,
@@ -4352,6 +4379,7 @@
 				70A61D16263095060073A08A /* BinkModuleViewModelTests.swift in Sources */,
 				214DCF6128AE597700308531 /* MagicLinkRequestModelTests.swift in Sources */,
 				CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */,
+				21514773290BC98600E6B209 /* LoginViewControllerTests.swift in Sources */,
 				214680F02907F4B400C03EB1 /* WebScrapingResponseTests.swift in Sources */,
 				CE971A3328806968001D7E1C /* MembershipPlanModelTests.swift in Sources */,
 				211058492909469B00DFDF90 /* PaymentWalletViewModelTests.swift in Sources */,
