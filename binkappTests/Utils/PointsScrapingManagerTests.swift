@@ -81,4 +81,60 @@ final class PointsScrapingManagerTests: XCTestCase, CoreDataTestable {
         e = PointsScrapingManager.PointsScrapingManagerError.failedToGetAgentForMembershipPlan
         XCTAssertTrue(e.message == "Failed to get agent for membership plan")
     }
+    
+    // MARK: Scraping utility errors
+    
+    func test_scrapingUtilityErrors_correctMessage() {
+        var error = WebScrapingUtilityError.agentProvidedInvalidUrl
+        XCTAssertTrue(error.domain == .webScrapingUtility)
+        XCTAssertTrue(error.message == "Agent provided invalid URL")
+        XCTAssertTrue(error.level == .client)
+        XCTAssertNil(error.underlyingError)
+        
+        error = WebScrapingUtilityError.scriptFileNotFound
+        XCTAssertTrue(error.message == "Script file not found")
+        XCTAssertTrue(error.level == .client)
+        
+        error = WebScrapingUtilityError.failedToExecuteScript
+        XCTAssertTrue(error.message == "Failed to execute script")
+        XCTAssertTrue(error.level == .client)
+        
+        error = WebScrapingUtilityError.failedToCastReturnValue
+        XCTAssertTrue(error.message == "Failed to cast return value")
+        XCTAssertTrue(error.level == .site)
+        
+        error = WebScrapingUtilityError.failedToAssignWebView
+        XCTAssertTrue(error.message == "Failed to assign web view")
+        XCTAssertTrue(error.level == .client)
+        
+        error = WebScrapingUtilityError.userDismissedWebView
+        XCTAssertTrue(error.message == "User dismissed web view for user action")
+        XCTAssertTrue(error.level == .user)
+        
+        error = WebScrapingUtilityError.unhandledIdling
+        XCTAssertTrue(error.message == "Unhandled idling")
+        XCTAssertTrue(error.level == .site)
+        
+        error = WebScrapingUtilityError.javascriptError
+        XCTAssertTrue(error.message == "Javascript error")
+        XCTAssertTrue(error.level == .client)
+        
+        error = WebScrapingUtilityError.noJavascriptResponse
+        XCTAssertTrue(error.message == "No javascript response")
+        XCTAssertTrue(error.level == .site)
+        
+        error = WebScrapingUtilityError.failedToDecodeJavascripResponse
+        XCTAssertTrue(error.message == "Failed to decode javascript response")
+        XCTAssertTrue(error.level == .client)
+        
+        error = WebScrapingUtilityError.incorrectCredentials(errorMessage: "error")
+        XCTAssertTrue(error.message == "Login failed - incorrect credentials")
+        XCTAssertTrue(error.underlyingError == "error")
+        XCTAssertTrue(error.level == .user)
+        
+        error = WebScrapingUtilityError.genericFailure(errorMessage: "error")
+        XCTAssertTrue(error.message == "Local points collection uncategorized failure")
+        XCTAssertTrue(error.underlyingError == "error")
+        XCTAssertTrue(error.level == .site)
+    }
 }

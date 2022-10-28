@@ -506,4 +506,44 @@ class NetworkRequestTests: XCTestCase, UserServiceProtocol, WalletServiceProtoco
 
         _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
     }
+    
+    // MARK: network errors
+    func test_networkErrors_TextIsCorrect() throws {
+        var error = NetworkingError.invalidRequest
+        XCTAssertTrue(error.domain == .networking)
+        XCTAssertTrue(error.message == "Invalid request")
+        
+        error = NetworkingError.unauthorized
+        XCTAssertTrue(error.message == "Request unauthorized")
+        
+        error = NetworkingError.noInternetConnection
+        XCTAssertTrue(error.message == "No internet connection")
+        
+        error = NetworkingError.methodNotAllowed
+        XCTAssertTrue(error.message == "Method not allowed")
+        
+        error = NetworkingError.invalidUrl
+        XCTAssertTrue(error.message == "Invalid URL")
+        
+        error = NetworkingError.sslPinningFailure
+        XCTAssertTrue(error.message == "SSL pinning failure")
+        
+        error = NetworkingError.invalidResponse
+        XCTAssertTrue(error.message == "Invalid response")
+        
+        error = NetworkingError.decodingError
+        XCTAssertTrue(error.message == "Decoding error")
+        
+        error = NetworkingError.clientError(500)
+        XCTAssertTrue(error.message == "Client error with status code 500")
+        
+        error = NetworkingError.checkStatusCode(400)
+        XCTAssertTrue(error.message == "Error with status code 400")
+        
+        error = NetworkingError.customError("Custom error")
+        XCTAssertTrue(error.message == "Custom error")
+        
+        error = NetworkingError.userFacingError(UserFacingNetworkingError.planAlreadyLinked)
+        XCTAssertTrue(error.message == "PLAN_ALREADY_LINKED")
+    }
 }

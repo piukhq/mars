@@ -22,11 +22,16 @@ class ViewControllerFactoryTests: XCTestCase, CoreDataTestable {
     static var planAccountResponse: MembershipPlanAccountModel!
     static var voucherResponse: VoucherModel!
     static var voucher: CD_Voucher!
+    static var basePaymentCardResponse: PaymentCardModel!
+    static var paymentCardCardResponse: PaymentCardCardResponse!
+    static var paymentCard: CD_PaymentCard!
+    static let linkedResponse = LinkedCardResponse(id: 300, activeLink: true)
     
     override class func setUp() {
         super.setUp()
+        let membershipCardBalanceModel = MembershipCardBalanceModel(apiId: 300, value: 500, currency: nil, prefix: "£", suffix: nil, updatedAt: nil)
         
-        baseMembershipCardResponse = MembershipCardModel(apiId: 300, membershipPlan: 500, membershipTransactions: nil, status: nil, card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
+        baseMembershipCardResponse = MembershipCardModel(apiId: 300, membershipPlan: 500, membershipTransactions: nil, status: nil, card: nil, images: nil, account: nil, paymentCards: nil, balances: [membershipCardBalanceModel], vouchers: nil)
         
         mapResponseToManagedObject(baseMembershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
             self.membershipCard = membershipCard
@@ -48,6 +53,14 @@ class ViewControllerFactoryTests: XCTestCase, CoreDataTestable {
         
         mapResponseToManagedObject(Self.voucherResponse, managedObjectType: CD_Voucher.self) { voucher in
             Self.voucher = voucher
+        }
+        
+        paymentCardCardResponse = PaymentCardCardResponse(apiId: 100, firstSix: nil, lastFour: "1234", month: 30, year: 3000, country: nil, currencyCode: nil, nameOnCard: "Rick Sanchez", provider: nil, type: nil)
+        
+        basePaymentCardResponse = PaymentCardModel(apiId: 100, membershipCards: [Self.linkedResponse], status: "active", card: paymentCardCardResponse, account: PaymentCardAccountResponse(apiId: 0, verificationInProgress: nil, status: 0, consents: []))
+        
+        mapResponseToManagedObject(Self.basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
+            Self.paymentCard = paymentCard
         }
     }
 
@@ -116,5 +129,133 @@ class ViewControllerFactoryTests: XCTestCase, CoreDataTestable {
         let configurationModel = ReusableModalConfiguration(title: L10n.termsAndConditionsTitle, text: NSMutableAttributedString(), primaryButtonTitle: L10n.iAccept, primaryButtonAction: nil, secondaryButtonTitle: L10n.iDecline, secondaryButtonAction: nil)
         let vc = ViewControllerFactory.makeReusableTemplateViewController(configuration: configurationModel)
         XCTAssertTrue(vc.isKind(of: ReusableTemplateViewController.self))
+    }
+    
+    func test_makeTransactionsViewController() {
+        let vc = ViewControllerFactory.makeTransactionsViewController(membershipCard: Self.membershipCard)
+        
+        XCTAssertTrue(vc.isKind(of: TransactionsViewController.self))
+    }
+    
+    func test_makePaymentCardDetailViewController() {
+        let vc = ViewControllerFactory.makePaymentCardDetailViewController(paymentCard: Self.paymentCard)
+        
+        XCTAssertTrue(vc.isKind(of: PaymentCardDetailViewController.self))
+    }
+    
+    func test_makeSettingsViewController() {
+        let vc = ViewControllerFactory.makeSettingsViewController(rowsWithActionRequired: [.faq])
+        
+        XCTAssertTrue(vc.isKind(of: UIHostingController<SettingsView>.self))
+    }
+    
+    func test_makeSocialTermsAndConditionsViewController() {
+        let vc = ViewControllerFactory.makeSocialTermsAndConditionsViewController(requestType: .magicLink(shortLivedToken: "token"))
+        
+        XCTAssertTrue(vc.isKind(of: TermsAndConditionsViewController.self))
+    }
+    
+    func test_makeLoginSuccessViewController() {
+        let vc = ViewControllerFactory.makeLoginSuccessViewController()
+        
+        XCTAssertTrue(vc.isKind(of: LoginSuccessViewController.self))
+    }
+    
+    func test_makeLoginViewController() {
+        let vc = ViewControllerFactory.makeLoginViewController()
+        
+        XCTAssertTrue(vc.isKind(of: LoginViewController.self))
+    }
+    
+    func test_makeForgottenPasswordViewController() {
+        let vc = ViewControllerFactory.makeForgottenPasswordViewController()
+        
+        XCTAssertTrue(vc.isKind(of: ForgotPasswordViewController.self))
+    }
+    
+    func test_makeCheckYourInboxViewController() {
+        let configurationModel = ReusableModalConfiguration(title: L10n.termsAndConditionsTitle, text: NSMutableAttributedString(), primaryButtonTitle: L10n.iAccept, primaryButtonAction: nil, secondaryButtonTitle: L10n.iDecline, secondaryButtonAction: nil)
+        
+        let vc = ViewControllerFactory.makeCheckYourInboxViewController(configuration: configurationModel)
+        
+        XCTAssertTrue(vc.isKind(of: CheckYourInboxViewController.self))
+    }
+    
+    func test_makeLocalPointsCollectionBalanceRefreshViewController() {
+        let vc = ViewControllerFactory.makeLocalPointsCollectionBalanceRefreshViewController(membershipCard: Self.membershipCard, lastCheckedDate: Date())
+        
+        XCTAssertTrue(vc.isKind(of: ReusableTemplateViewController.self))
+    }
+    
+    func test_makeDeleteConfirmationAlertController() {
+        let vc = ViewControllerFactory.makeDeleteConfirmationAlertController(message: "message", deleteAction: {})
+        
+        XCTAssertTrue(vc.isKind(of: BinkAlertController.self))
+    }
+    
+    func test_makeNoConnectivityAlertController() {
+        let vc = ViewControllerFactory.makeNoConnectivityAlertController(completion: {})
+        
+        XCTAssertTrue(vc.isKind(of: BinkAlertController.self))
+    }
+    
+    func test_makeOkAlertViewController() {
+        let vc = ViewControllerFactory.makeOkAlertViewController(title: "title", message: "message", completion: {})
+        
+        XCTAssertTrue(vc.isKind(of: BinkAlertController.self))
+    }
+   
+    func test_makeOkCancelAlertViewController() {
+        let vc = ViewControllerFactory.makeOkCancelAlertViewController(title: "", message: "", okActionTitle: "", cancelButton: false, completion: {})
+        
+        XCTAssertTrue(vc.isKind(of: BinkAlertController.self))
+    }
+     
+    func test_makeTwoButtonAlertViewController() {
+        let vc = ViewControllerFactory.makeTwoButtonAlertViewController(title: "", message: "", primaryButtonTitle: "", secondaryButtonTitle: "", primaryButtonCompletion: {}, secondaryButtonCompletion: {})
+        
+        XCTAssertTrue(vc.isKind(of: BinkAlertController.self))
+    }
+    
+    func test_makeRecommendedAppUpdateAlertController() {
+        let vc = ViewControllerFactory.makeRecommendedAppUpdateAlertController(skipVersionHandler: {})
+        
+        XCTAssertTrue(vc.isKind(of: BinkAlertController.self))
+    }
+    
+    func test_makeWebViewController() {
+        let vc = ViewControllerFactory.makeWebViewController(urlString: "")
+        
+        XCTAssertTrue(vc.isKind(of: WebViewController.self))
+    }
+    
+    func test_makeAlertViewControllerWithTextfield() {
+        let vc = ViewControllerFactory.makeAlertViewControllerWithTextfield(title: "", message: "", cancelButton: false, keyboardType: .alphabet, okActionHandler: {_ in }, cancelActionHandler: {})
+        
+        XCTAssertTrue(vc.isKind(of: BinkAlertController.self))
+    }
+    
+    func test_makeMapNavigationSelectionAlertViewController() {
+        let vc = ViewControllerFactory.makeMapNavigationSelectionAlertViewController(appleMapsActionHandler: {}, googleMapsActionHandler: {}, cancelActionHandler: {})
+        
+        XCTAssertTrue(vc.isKind(of: BinkAlertController.self))
+    }
+
+    func test_makeDebugViewController() {
+        let vc = ViewControllerFactory.makeDebugViewController()
+        
+        XCTAssertTrue(vc.isKind(of: UIHostingController<DebugMenuView>.self))
+    }
+    
+    func test_makeJailbrokenViewController() {
+        let vc = ViewControllerFactory.makeJailbrokenViewController()
+        
+        XCTAssertTrue(vc.isKind(of: JailbrokenViewController.self))
+    }
+    
+    func test_makeEmailClientsAlertController() {
+        let vc = ViewControllerFactory.makeEmailClientsAlertController([.mail])
+        
+        XCTAssertTrue(vc.isKind(of: BinkAlertController.self))
     }
 }
