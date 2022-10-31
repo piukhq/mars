@@ -61,6 +61,7 @@
 		21514770290ADCDF00E6B209 /* PointsScrapingManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2151476F290ADCDF00E6B209 /* PointsScrapingManagerTests.swift */; };
 		21514773290BC98600E6B209 /* LoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21514772290BC98600E6B209 /* LoginViewControllerTests.swift */; };
 		21514775290C264300E6B209 /* MixpanelUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21514774290C264300E6B209 /* MixpanelUtilityTests.swift */; };
+		21514777290FC88B00E6B209 /* AnalyticsEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21514776290FC88B00E6B209 /* AnalyticsEventTests.swift */; };
 		215BC59528A6900100DB1377 /* BinkCore in Frameworks */ = {isa = PBXBuildFile; productRef = 215BC59428A6900100DB1377 /* BinkCore */; };
 		216B999C28AE902000A67A14 /* FloatExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216B999B28AE902000A67A14 /* FloatExtensionTests.swift */; };
 		217288EF28B4BF5200258EBA /* AccountPostModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288EE28B4BF5200258EBA /* AccountPostModelTests.swift */; };
@@ -751,6 +752,7 @@
 		2151476F290ADCDF00E6B209 /* PointsScrapingManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsScrapingManagerTests.swift; sourceTree = "<group>"; };
 		21514772290BC98600E6B209 /* LoginViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerTests.swift; sourceTree = "<group>"; };
 		21514774290C264300E6B209 /* MixpanelUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixpanelUtilityTests.swift; sourceTree = "<group>"; };
+		21514776290FC88B00E6B209 /* AnalyticsEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsEventTests.swift; sourceTree = "<group>"; };
 		216B999B28AE902000A67A14 /* FloatExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtensionTests.swift; sourceTree = "<group>"; };
 		217288EE28B4BF5200258EBA /* AccountPostModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPostModelTests.swift; sourceTree = "<group>"; };
 		217288F128B4D62100258EBA /* AddPaymentCardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentCardViewModelTests.swift; sourceTree = "<group>"; };
@@ -3078,6 +3080,7 @@
 				70E867742489303F001ED282 /* SecureUtilityTests.swift */,
 				2151476F290ADCDF00E6B209 /* PointsScrapingManagerTests.swift */,
 				21514774290C264300E6B209 /* MixpanelUtilityTests.swift */,
+				21514776290FC88B00E6B209 /* AnalyticsEventTests.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -4383,6 +4386,7 @@
 				214DCF6128AE597700308531 /* MagicLinkRequestModelTests.swift in Sources */,
 				CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */,
 				21514773290BC98600E6B209 /* LoginViewControllerTests.swift in Sources */,
+				21514777290FC88B00E6B209 /* AnalyticsEventTests.swift in Sources */,
 				214680F02907F4B400C03EB1 /* WebScrapingResponseTests.swift in Sources */,
 				CE971A3328806968001D7E1C /* MembershipPlanModelTests.swift in Sources */,
 				211058492909469B00DFDF90 /* PaymentWalletViewModelTests.swift in Sources */,
