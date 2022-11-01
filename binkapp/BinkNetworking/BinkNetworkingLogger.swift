@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 class BinkNetworkingLogger: EventMonitor {
-    private var logs: [BinkNetworkingLog] = []
+    var logs: [BinkNetworkingLog] = []
     private var binkLog: BinkLog!
     
     init() {

@@ -91,7 +91,7 @@ final class APIClient {
         if UIApplication.isRunningUnitTests {
             let configuration = URLSessionConfiguration.af.default
             configuration.protocolClasses = [MockingURLProtocol.self] + (configuration.protocolClasses ?? [])
-            session = Session(configuration: configuration)
+            session = Session(configuration: configuration, eventMonitors: [BinkNetworkingLogger()])
         } else {
             let url = EnvironmentType.production.rawValue
             let evaluators = [
