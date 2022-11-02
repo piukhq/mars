@@ -20,10 +20,12 @@ final class BinkNetworkingLoggerTests: XCTestCase, CoreDataTestable {
     static var membershipCard: CD_MembershipCard!
     static var paymentCard: CD_PaymentCard!
     static var baseSut = PLLScreenViewModel(membershipCard: membershipCard, journey: .newCard)
-    var logger = BinkNetworkingLogger()
+    static var logger = BinkNetworkingLogger()
     
     override class func setUp() {
         super.setUp()
+        deleteExisitingLogs()
+        
         // Membership Card
         baseMembershipCardResponse = MembershipCardModel(apiId: 300, membershipPlan: 500, membershipTransactions: nil, status: nil, card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
 
@@ -52,7 +54,15 @@ final class BinkNetworkingLoggerTests: XCTestCase, CoreDataTestable {
         mock.register()
     }
     
-    func test_01_loggerInitializesLogs_successfully() {     
+    private static func deleteExisitingLogs() {
+        do {
+            try FileManager.default.removeItem(atPath: Self.logger.networkLogsFilePath()?.absoluteString ?? "")
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func test_01_loggerInitializesLogs_successfully() {
         let membershipCardPostModel = MembershipCardPostModel(account: nil, membershipPlan: 1)
         let mockedMembershipCard = try! JSONEncoder().encode(membershipCardPostModel)
         let endpoint = APIEndpoint.membershipCards.urlString ?? ""
@@ -64,7 +74,7 @@ final class BinkNetworkingLoggerTests: XCTestCase, CoreDataTestable {
         
         _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 10.0)
 
-        XCTAssertNotNil(logger.logs)
+        XCTAssertNotNil(Self.logger.logs)
     }
     
     func test_02_loggerSavesLogs_successfully() {
@@ -73,25 +83,31 @@ final class BinkNetworkingLoggerTests: XCTestCase, CoreDataTestable {
         Self.baseSut.toggleLinkForMembershipCards { _ in }
         _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 10.0)
 
-        XCTAssertFalse(logger.logs.isEmpty)
+        XCTAssertFalse(Self.logger.logs.isEmpty)
     }
     
     func test_03_loggerRequestContainsNoDataTask() {
-        let logs = logger.logs
+        let logs = Self.logger.logs
         APIClient().performEmptyRequest()
-        XCTAssertTrue(logs.first?.endpoint == logger.logs.first?.endpoint)
+        XCTAssertTrue(logs.first?.endpoint == Self.logger.logs.first?.endpoint)
     }
     
-//    func test_04_loggerRequestWithBody() {
-//        let membershipCardPostModel = MembershipCardPostModel(account: nil, membershipPlan: 1)
-//        let mockedMembershipCard = try! JSONEncoder().encode(membershipCardPostModel)
-//        let endpoint = APIEndpoint.membershipCards.urlString ?? ""
-//        let mock = Mock(url: URL(string: endpoint)!, dataType: .json, statusCode: 200, data: [.post: mockedMembershipCard])
-//        mock.register()
-//
-//        let authAndAddRepo = AuthAndAddRepository()
-//        authAndAddRepo.addMembershipCard(withRequestModel: membershipCardPostModel, existingMembershipCard: nil) { success, error in
-//
-//        }
-//    }
+    func test_04_loggerLimitsLogCountToTwenty() {
+        let membershipCardPostModel = MembershipCardPostModel(account: nil, membershipPlan: 1)
+        let mockedMembershipCard = try! JSONEncoder().encode(membershipCardPostModel)
+        let endpoint = APIEndpoint.membershipCards.urlString ?? ""
+        let mock = Mock(url: URL(string: endpoint)!, dataType: .json, statusCode: 200, data: [.post: mockedMembershipCard])
+        mock.register()
+
+        let authAndAddRepo = AuthAndAddRepository()
+        
+        for i in 0...20 {
+            authAndAddRepo.addMembershipCard(withRequestModel: membershipCardPostModel, existingMembershipCard: nil) { success, error in }
+            print(i)
+        }
+        
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 10.0)
+        
+        XCTAssertEqual(Self.logger.logs.count, 20)
+    }
 }
