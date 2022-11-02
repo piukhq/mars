@@ -51,10 +51,9 @@ final class BinkNetworkingLoggerTests: XCTestCase, CoreDataTestable {
         mock.register()
         
         Self.baseSut.addCardToChangedCardsArray(card: Self.paymentCard)
-        Self.baseSut.toggleLinkForMembershipCards { _ in }
+//        Self.baseSut.toggleLinkForMembershipCards { _ in }
         _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 10.0)
 
-        print(BinkNetworkingLogger().logs)
-        XCTAssertNotNil(Current.apiClient.testResponseData)
+        XCTAssertNotNil(BinkNetworkingLogger().logs)
     }
 }
