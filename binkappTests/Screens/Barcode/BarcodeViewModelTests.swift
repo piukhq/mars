@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import binkapp
+import ZXingObjC
 
 class BarcodeViewModelTests: XCTestCase, CoreDataTestable {
     static var membershipCardResponse: MembershipCardModel!
@@ -132,31 +133,64 @@ class BarcodeViewModelTests: XCTestCase, CoreDataTestable {
     }
 
     func test_barcodeType_is_correct() {
+        Self.membershipCardResponse.card?.barcodeType = 0
+        mapMembershipCard()
         XCTAssertEqual(Self.sut.barcodeType, .code128)
+        XCTAssertEqual(Self.sut.barcodeType.zxingType, kBarcodeFormatCode128)
 
         Self.membershipCardResponse.card?.barcodeType = 1
         mapMembershipCard()
         XCTAssertEqual(Self.sut.barcodeType, .qr)
+        XCTAssertEqual(Self.sut.barcodeType.zxingType, kBarcodeFormatQRCode)
 
         Self.membershipCardResponse.card?.barcodeType = 2
         mapMembershipCard()
         XCTAssertEqual(Self.sut.barcodeType, .aztec)
+        XCTAssertEqual(Self.sut.barcodeType.zxingType, kBarcodeFormatAztec)
 
         Self.membershipCardResponse.card?.barcodeType = 3
         mapMembershipCard()
         XCTAssertEqual(Self.sut.barcodeType, .pdf417)
+        XCTAssertEqual(Self.sut.barcodeType.zxingType, kBarcodeFormatPDF417)
 
         Self.membershipCardResponse.card?.barcodeType = 4
         mapMembershipCard()
         XCTAssertEqual(Self.sut.barcodeType, .ean13)
+        XCTAssertEqual(Self.sut.barcodeType.zxingType, kBarcodeFormatEan13)
 
         Self.membershipCardResponse.card?.barcodeType = 5
         mapMembershipCard()
         XCTAssertEqual(Self.sut.barcodeType, .dataMatrix)
+        XCTAssertEqual(Self.sut.barcodeType.zxingType, kBarcodeFormatDataMatrix)
+        
+        Self.membershipCardResponse.card?.barcodeType = 6
+        mapMembershipCard()
+        XCTAssertEqual(Self.sut.barcodeType, .itf)
+        XCTAssertEqual(Self.sut.barcodeType.zxingType, kBarcodeFormatITF)
+        
+        Self.membershipCardResponse.card?.barcodeType = 7
+        mapMembershipCard()
+        XCTAssertEqual(Self.sut.barcodeType, .code39)
+        XCTAssertEqual(Self.sut.barcodeType.zxingType, kBarcodeFormatCode39)
 
         Self.membershipCardResponse.card?.barcodeType = nil
         mapMembershipCard()
         XCTAssertEqual(Self.sut.barcodeType, .code128)
+    }
+    
+    func test_preferedWidth() throws {
+        Self.membershipCardResponse.card?.barcodeType = 7
+        mapMembershipCard()
+        
+        var value = Self.sut.barcodeType.preferredWidth(for: 10, targetWidth: 100)
+        print(value)
+        XCTAssertTrue(value == CGFloat(155.0))
+        
+        Self.membershipCardResponse.card?.barcodeType = 0
+        mapMembershipCard()
+        
+        value = Self.sut.barcodeType.preferredWidth(for: 12, targetWidth: 100)
+        XCTAssertTrue(value == 1)
     }
 
     func test_barcode_image_is_returned() {

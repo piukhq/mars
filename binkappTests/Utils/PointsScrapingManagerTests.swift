@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import binkapp
+import KeychainAccess
 
 // swiftlint:disable all
 
@@ -31,7 +32,18 @@ final class PointsScrapingManagerTests: XCTestCase, CoreDataTestable {
     static var voucherResponse: VoucherModel!
     static var voucher: CD_Voucher!
     
-    static var sut: PointsScrapingManager!
+    //static var sut: PointsScrapingManager!
+    
+    let keychain = Keychain(service: APIConstants.bundleID)
+    
+    override func setUpWithError() throws {
+        Current.pointsScrapingManager.start()
+    }
+
+    override func tearDownWithError() throws {
+        Current.pointsScrapingManager.handleLogout()
+        Current.pointsScrapingManager.handleDelete(for: Self.membershipCard)
+    }
     
     override class func setUp() {
         super.setUp()
@@ -56,13 +68,14 @@ final class PointsScrapingManagerTests: XCTestCase, CoreDataTestable {
         
         membershipCardStatusModel = MembershipCardStatusModel(apiId: 500, state: .authorised, reasonCodes: [.pointsScrapingLoginRequired])
         
-        membershipCardResponse = MembershipCardModel(apiId: 500, membershipPlan: 500, membershipTransactions: nil, status: membershipCardStatusModel, card: cardResponse, images: nil, account: MembershipCardAccountModel(apiId: 500, tier: 1), paymentCards: nil, balances: [membershipCardBalanceModel], vouchers: [voucherResponse])
+        membershipCardResponse = MembershipCardModel(apiId: 500, membershipPlan: 64, membershipTransactions: nil, status: membershipCardStatusModel, card: cardResponse, images: nil, account: MembershipCardAccountModel(apiId: 500, tier: 1), paymentCards: nil, balances: [membershipCardBalanceModel], vouchers: [voucherResponse])
         
         mapResponseToManagedObject(membershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
             self.membershipCard = membershipCard
         }
         
-        sut = PointsScrapingManager()
+        //sut = PointsScrapingManager()
+        //sut.start()
     }
     
     func test_PointsScrapingManagerError_Erros() throws {
@@ -137,4 +150,91 @@ final class PointsScrapingManagerTests: XCTestCase, CoreDataTestable {
         XCTAssertTrue(error.underlyingError == "error")
         XCTAssertTrue(error.level == .site)
     }
+    
+    func test_canMakeCredentials() throws {
+        let field = FormField(
+            title: "Name on card",
+            placeholder: "J Appleseed",
+            validation: "^(((?=.{1,}$)[A-Za-z\\-\\u00C0-\\u00FF' ])+\\s*)$",
+            fieldType: .email,
+            value: "email@email.com",
+            updated: { field, newValue in
+                
+            },
+            shouldChange: { (field, textField, range, newValue) in return false},
+            fieldExited: { field in },
+            columnKind: .lpcAuth,
+            forcedValue: "email@email.com",
+            fieldCommonName: .email
+        )
+        
+        let passField = FormField(
+            title: "Name on card",
+            placeholder: "J Appleseed",
+            validation: "^(((?=.{1,}$)[A-Za-z\\-\\u00C0-\\u00FF' ])+\\s*)$",
+            fieldType: .text,
+            value: "pass",
+            updated: { field, newValue in },
+            shouldChange: { (field, textField, range, newValue) in return false},
+            fieldExited: { field in },
+            columnKind: .lpcAuth,
+            forcedValue: "pass",
+            fieldCommonName: .password
+        )
+        let credentials = Current.pointsScrapingManager.makeCredentials(fromFormFields: [field, passField], membershipPlanId: "64")
+        XCTAssertNotNil(credentials)
+    }
+    
+//    func test_enableLocalScrapPoints_storesValuesinKeychain() throws {
+//        let model = MembershipCardPostModel(account: nil, membershipPlan: 64)
+//        let credentials = WebScrapingCredentials(username: "email@email.com", password: "pass", cardNumber: nil)
+//        try Current.pointsScrapingManager.enableLocalPointsScrapingForCardIfPossible(withRequest: model, credentials: credentials, membershipCard: Self.membershipCard)
+//        
+//        let key = String(format: "com.bink.wallet.pointsScraping.credentials.cardId_%@.%@", "500", PointsScrapingManager.CredentialStoreType.username.rawValue)
+//        let value = try keychain.get(key)
+//        
+//        XCTAssertTrue(value! == "email@email.com")
+//    }
+//    
+//    func test_retrieveCredentials() throws {
+//        let model = MembershipCardPostModel(account: nil, membershipPlan: 64)
+//        let credentials = WebScrapingCredentials(username: "email@email.com", password: "pass", cardNumber: nil)
+//        try Current.pointsScrapingManager.enableLocalPointsScrapingForCardIfPossible(withRequest: model, credentials: credentials, membershipCard: Self.membershipCard)
+//        
+//        let retrivedCredentials = try Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: "500")
+//        
+//        XCTAssertNotNil(retrivedCredentials)
+//        XCTAssertTrue(retrivedCredentials.username == "email@email.com")
+//    }
+//    
+//    func test_precessingQueue_shouldNotbeEmpty() throws {
+//        Current.pointsScrapingManager.performBalanceRefresh(for: Self.membershipCard)
+//        XCTAssertTrue(!Current.pointsScrapingManager.processingQueue.isEmpty)
+//    }
+//    
+//    func test_handleLogout() throws {
+//        let model = MembershipCardPostModel(account: nil, membershipPlan: 64)
+//        let credentials = WebScrapingCredentials(username: "email@email.com", password: "pass", cardNumber: nil)
+//        try Current.pointsScrapingManager.enableLocalPointsScrapingForCardIfPossible(withRequest: model, credentials: credentials, membershipCard: Self.membershipCard)
+//
+//        Current.pointsScrapingManager.handleLogout()
+//
+//        XCTAssertTrue(Current.pointsScrapingManager.processingQueue.isEmpty)
+//    }
+//
+//    func test_handledelete() throws {
+//        let model = MembershipCardPostModel(account: nil, membershipPlan: 64)
+//        let credentials = WebScrapingCredentials(username: "email@email.com", password: "pass", cardNumber: nil)
+//        try Current.pointsScrapingManager.enableLocalPointsScrapingForCardIfPossible(withRequest: model, credentials: credentials, membershipCard: Self.membershipCard)
+//
+//        Current.pointsScrapingManager.handleDelete(for: Self.membershipCard)
+//
+//        XCTAssertTrue(Current.pointsScrapingManager.processingQueue.isEmpty)
+//
+//        let key = String(format: "com.bink.wallet.pointsScraping.credentials.cardId_%@.%@", "500", PointsScrapingManager.CredentialStoreType.username.rawValue)
+//        let value = try keychain.get(key)
+//
+//        XCTAssertNil(value)
+//    }
+    
 }

@@ -7,6 +7,12 @@
 //
 
 import Foundation
+import UIKit
+
+protocol BarcodeViewNoBarcodeTestable {
+    func getCardNumberLabel() -> UILabel
+    func getIconImageView() -> UIImageView
+}
 
 class BarcodeViewNoBarcode: BarcodeView {
     func configure(viewModel: LoyaltyCardFullDetailsViewModel) {
@@ -21,5 +27,15 @@ class BarcodeViewNoBarcode: BarcodeView {
         super.layoutSubviews()
         iconImageView.layer.cornerRadius = 10
         iconImageView.layer.cornerCurve = .continuous
+    }
+}
+
+extension BarcodeViewNoBarcode: BarcodeViewNoBarcodeTestable {
+    func getCardNumberLabel() -> UILabel {
+        return self.cardNumberLabel
+    }
+    
+    func getIconImageView() -> UIImageView {
+        return self.iconImageView
     }
 }

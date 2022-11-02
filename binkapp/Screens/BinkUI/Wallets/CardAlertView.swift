@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol CardAlertViewTestable {
+    func getAlertLabel() -> UILabel
+}
+
 typealias CardAlertViewAction = () -> Void
 
 enum CardAlertViewType: String {
@@ -35,5 +39,11 @@ class CardAlertView: CustomView {
 
     @objc private func wasTapped() {
         action?()
+    }
+}
+
+extension CardAlertView: CardAlertViewTestable {
+    func getAlertLabel() -> UILabel {
+        return self.alertLabel
     }
 }
