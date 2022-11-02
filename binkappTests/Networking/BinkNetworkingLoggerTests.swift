@@ -48,14 +48,19 @@ final class BinkNetworkingLoggerTests: XCTestCase, CoreDataTestable {
         Current.apiClient.testResponseData = nil
         let mockedPaymentCard = try! JSONEncoder().encode(Self.basePaymentCardResponse)
         let endpoint = APIEndpoint.linkMembershipCardToPaymentCard(membershipCardId: Self.membershipCard.id, paymentCardId: Self.basePaymentCardResponse.id)
-        let mock = Mock(url: URL(string: endpoint.urlString!)!, dataType: .json, statusCode: 200, data: [.delete: mockedPaymentCard])
+        let mock = Mock(url: URL(string: endpoint.urlString!)!, dataType: .json, statusCode: 200, data: [.post: mockedPaymentCard])
         mock.register()
-        
     }
     
-    func test_01_loggerInitializesLogs_successfully() {
-        mockPaymentCardLinkingRequest()
-        Self.baseSut.addCardToChangedCardsArray(card: Self.paymentCard)
+    func test_01_loggerInitializesLogs_successfully() {     
+        let membershipCardPostModel = MembershipCardPostModel(account: nil, membershipPlan: 1)
+        let mockedMembershipCard = try! JSONEncoder().encode(membershipCardPostModel)
+        let endpoint = APIEndpoint.membershipCards.urlString ?? ""
+        let mock = Mock(url: URL(string: endpoint)!, dataType: .json, statusCode: 200, data: [.post: mockedMembershipCard])
+        mock.register()
+        
+        let authAndAddRepo = AuthAndAddRepository()
+        authAndAddRepo.addMembershipCard(withRequestModel: membershipCardPostModel, existingMembershipCard: nil) { success, error in }
         
         _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 10.0)
 
@@ -76,4 +81,17 @@ final class BinkNetworkingLoggerTests: XCTestCase, CoreDataTestable {
         APIClient().performEmptyRequest()
         XCTAssertTrue(logs.first?.endpoint == logger.logs.first?.endpoint)
     }
+    
+//    func test_04_loggerRequestWithBody() {
+//        let membershipCardPostModel = MembershipCardPostModel(account: nil, membershipPlan: 1)
+//        let mockedMembershipCard = try! JSONEncoder().encode(membershipCardPostModel)
+//        let endpoint = APIEndpoint.membershipCards.urlString ?? ""
+//        let mock = Mock(url: URL(string: endpoint)!, dataType: .json, statusCode: 200, data: [.post: mockedMembershipCard])
+//        mock.register()
+//
+//        let authAndAddRepo = AuthAndAddRepository()
+//        authAndAddRepo.addMembershipCard(withRequestModel: membershipCardPostModel, existingMembershipCard: nil) { success, error in
+//
+//        }
+//    }
 }
