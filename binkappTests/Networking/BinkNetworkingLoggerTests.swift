@@ -20,6 +20,7 @@ final class BinkNetworkingLoggerTests: XCTestCase, CoreDataTestable {
     static var membershipCard: CD_MembershipCard!
     static var paymentCard: CD_PaymentCard!
     static var baseSut = PLLScreenViewModel(membershipCard: membershipCard, journey: .newCard)
+    var logger = BinkNetworkingLogger()
     
     override class func setUp() {
         super.setUp()
@@ -43,17 +44,36 @@ final class BinkNetworkingLoggerTests: XCTestCase, CoreDataTestable {
         }
     }
     
-    func test_01_loggerInitializesLogsSuccessfully() {
+    private func mockPaymentCardLinkingRequest() {
         Current.apiClient.testResponseData = nil
         let mockedPaymentCard = try! JSONEncoder().encode(Self.basePaymentCardResponse)
         let endpoint = APIEndpoint.linkMembershipCardToPaymentCard(membershipCardId: Self.membershipCard.id, paymentCardId: Self.basePaymentCardResponse.id)
         let mock = Mock(url: URL(string: endpoint.urlString!)!, dataType: .json, statusCode: 200, data: [.delete: mockedPaymentCard])
         mock.register()
         
+    }
+    
+    func test_01_loggerInitializesLogs_successfully() {
+        mockPaymentCardLinkingRequest()
         Self.baseSut.addCardToChangedCardsArray(card: Self.paymentCard)
-//        Self.baseSut.toggleLinkForMembershipCards { _ in }
+        
         _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 10.0)
 
-        XCTAssertNotNil(BinkNetworkingLogger().logs)
+        XCTAssertNotNil(logger.logs)
+    }
+    
+    func test_02_loggerSavesLogs_successfully() {
+        mockPaymentCardLinkingRequest()
+        
+        Self.baseSut.toggleLinkForMembershipCards { _ in }
+        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 10.0)
+
+        XCTAssertFalse(logger.logs.isEmpty)
+    }
+    
+    func test_03_loggerRequestContainsNoDataTask() {
+        let logs = logger.logs
+        APIClient().performEmptyRequest()
+        XCTAssertTrue(logs.first?.endpoint == logger.logs.first?.endpoint)
     }
 }

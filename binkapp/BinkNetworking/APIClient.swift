@@ -347,3 +347,10 @@ private extension APIClient {
         }
     }
 }
+
+// Unit Tests
+extension APIClient {
+    func performEmptyRequest() {
+        session.request("").response { _ in }
+    }
+}
