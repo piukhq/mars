@@ -53,6 +53,13 @@ final class BinkNetworkingLoggerTests: XCTestCase, CoreDataTestable {
         mock.register()
     }
     
+    private func mockAddMembershipCardRequest(with model: MembershipCardPostModel) {
+        let mockedMembershipCard = try! JSONEncoder().encode(model)
+        let endpoint = APIEndpoint.membershipCards.urlString ?? ""
+        let mock = Mock(url: URL(string: endpoint)!, dataType: .json, statusCode: 200, data: [.post: mockedMembershipCard])
+        mock.register()
+    }
+    
     private static func deleteExisitingLogs() {
         Current.apiClient.binkNetworkingLogger.logs = []
         do {
@@ -66,10 +73,7 @@ final class BinkNetworkingLoggerTests: XCTestCase, CoreDataTestable {
     
     func test_01_loggerInitializesLogs_successfully() {
         let membershipCardPostModel = MembershipCardPostModel(account: nil, membershipPlan: 1)
-        let mockedMembershipCard = try! JSONEncoder().encode(membershipCardPostModel)
-        let endpoint = APIEndpoint.membershipCards.urlString ?? ""
-        let mock = Mock(url: URL(string: endpoint)!, dataType: .json, statusCode: 200, data: [.post: mockedMembershipCard])
-        mock.register()
+        mockAddMembershipCardRequest(with: membershipCardPostModel)
         
         let authAndAddRepo = AuthAndAddRepository()
         authAndAddRepo.addMembershipCard(withRequestModel: membershipCardPostModel, existingMembershipCard: nil) { success, error in }
@@ -96,16 +100,11 @@ final class BinkNetworkingLoggerTests: XCTestCase, CoreDataTestable {
     
     func test_04_loggerLimitsLogCountToTwenty() {
         let membershipCardPostModel = MembershipCardPostModel(account: nil, membershipPlan: 1)
-        let mockedMembershipCard = try! JSONEncoder().encode(membershipCardPostModel)
-        let endpoint = APIEndpoint.membershipCards.urlString ?? ""
-        let mock = Mock(url: URL(string: endpoint)!, dataType: .json, statusCode: 200, data: [.post: mockedMembershipCard])
-        mock.register()
+        mockAddMembershipCardRequest(with: membershipCardPostModel)
 
         let authAndAddRepo = AuthAndAddRepository()
-        
-        for i in 0...20 {
+        for _ in 0...20 {
             authAndAddRepo.addMembershipCard(withRequestModel: membershipCardPostModel, existingMembershipCard: nil) { success, error in }
-            print(i)
         }
         
         _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 10.0)
