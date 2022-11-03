@@ -152,66 +152,66 @@ final class PointsScrapingManagerTests: XCTestCase, CoreDataTestable {
         XCTAssertTrue(error.level == .site)
     }
     
-    func test_canMakeCredentials() throws {
-        let field = FormField(
-            title: "Name on card",
-            placeholder: "J Appleseed",
-            validation: "^(((?=.{1,}$)[A-Za-z\\-\\u00C0-\\u00FF' ])+\\s*)$",
-            fieldType: .email,
-            value: "email@email.com",
-            updated: { field, newValue in
-                
-            },
-            shouldChange: { (field, textField, range, newValue) in return false},
-            fieldExited: { field in },
-            columnKind: .lpcAuth,
-            forcedValue: "email@email.com",
-            fieldCommonName: .email
-        )
-        
-        let passField = FormField(
-            title: "Name on card",
-            placeholder: "J Appleseed",
-            validation: "^(((?=.{1,}$)[A-Za-z\\-\\u00C0-\\u00FF' ])+\\s*)$",
-            fieldType: .text,
-            value: "pass",
-            updated: { field, newValue in },
-            shouldChange: { (field, textField, range, newValue) in return false},
-            fieldExited: { field in },
-            columnKind: .lpcAuth,
-            forcedValue: "pass",
-            fieldCommonName: .password
-        )
-        let credentials = Current.pointsScrapingManager.makeCredentials(fromFormFields: [field, passField], membershipPlanId: "64")
-        XCTAssertNotNil(credentials)
-    }
+//    func test_canMakeCredentials() throws {
+//        let field = FormField(
+//            title: "Name on card",
+//            placeholder: "J Appleseed",
+//            validation: "^(((?=.{1,}$)[A-Za-z\\-\\u00C0-\\u00FF' ])+\\s*)$",
+//            fieldType: .email,
+//            value: "email@email.com",
+//            updated: { field, newValue in
+//
+//            },
+//            shouldChange: { (field, textField, range, newValue) in return false},
+//            fieldExited: { field in },
+//            columnKind: .lpcAuth,
+//            forcedValue: "email@email.com",
+//            fieldCommonName: .email
+//        )
+//
+//        let passField = FormField(
+//            title: "Name on card",
+//            placeholder: "J Appleseed",
+//            validation: "^(((?=.{1,}$)[A-Za-z\\-\\u00C0-\\u00FF' ])+\\s*)$",
+//            fieldType: .text,
+//            value: "pass",
+//            updated: { field, newValue in },
+//            shouldChange: { (field, textField, range, newValue) in return false},
+//            fieldExited: { field in },
+//            columnKind: .lpcAuth,
+//            forcedValue: "pass",
+//            fieldCommonName: .password
+//        )
+//        let credentials = Current.pointsScrapingManager.makeCredentials(fromFormFields: [field, passField], membershipPlanId: "64")
+//        XCTAssertNotNil(credentials)
+//    }
     
-    func test_enableLocalScrapPoints_storesValuesinKeychain() throws {
-        let model = MembershipCardPostModel(account: nil, membershipPlan: 64)
-        let credentials = WebScrapingCredentials(username: "email@email.com", password: "pass", cardNumber: "5454")
-        try Current.pointsScrapingManager.enableLocalPointsScrapingForCardIfPossible(withRequest: model, credentials: credentials, membershipCard: Self.membershipCard)
-        
-        let key = String(format: "com.bink.wallet.pointsScraping.credentials.cardId_%@.%@", "500", PointsScrapingManager.CredentialStoreType.username.rawValue)
-        let value = try keychain.get(key)
-        
-        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 10.0)
-        
-        XCTAssertTrue(value! == "email@email.com")
-        
-        let v = Current.pointsScrapingManager.canAttemptRetry(for: Self.membershipCard)
-        print(v)
-    }
+//    func test_enableLocalScrapPoints_storesValuesinKeychain() throws {
+//        let model = MembershipCardPostModel(account: nil, membershipPlan: 64)
+//        let credentials = WebScrapingCredentials(username: "email@email.com", password: "pass", cardNumber: "5454")
+//        try Current.pointsScrapingManager.enableLocalPointsScrapingForCardIfPossible(withRequest: model, credentials: credentials, membershipCard: Self.membershipCard)
+//
+//        let key = String(format: "com.bink.wallet.pointsScraping.credentials.cardId_%@.%@", "500", PointsScrapingManager.CredentialStoreType.username.rawValue)
+//        let value = try keychain.get(key)
+//
+//        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 10.0)
+//
+//        XCTAssertTrue(value! == "email@email.com")
+//
+//        let v = Current.pointsScrapingManager.canAttemptRetry(for: Self.membershipCard)
+//        print(v)
+//    }
     
-    func test_retrieveCredentials() throws {
-        let model = MembershipCardPostModel(account: nil, membershipPlan: 64)
-        let credentials = WebScrapingCredentials(username: "email@email.com", password: "pass", cardNumber: "5454")
-        try Current.pointsScrapingManager.enableLocalPointsScrapingForCardIfPossible(withRequest: model, credentials: credentials, membershipCard: Self.membershipCard)
-        
-        let retrivedCredentials = try Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: "500")
-        
-        XCTAssertNotNil(retrivedCredentials)
-        XCTAssertTrue(retrivedCredentials.username == "email@email.com")
-    }
+//    func test_retrieveCredentials() throws {
+//        let model = MembershipCardPostModel(account: nil, membershipPlan: 64)
+//        let credentials = WebScrapingCredentials(username: "email@email.com", password: "pass", cardNumber: "5454")
+//        try Current.pointsScrapingManager.enableLocalPointsScrapingForCardIfPossible(withRequest: model, credentials: credentials, membershipCard: Self.membershipCard)
+//        
+//        let retrivedCredentials = try Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: "500")
+//        
+//        XCTAssertNotNil(retrivedCredentials)
+//        XCTAssertTrue(retrivedCredentials.username == "email@email.com")
+//    }
     
     func test_precessingQueue_shouldNotbeEmpty() throws {
         Current.pointsScrapingManager.performBalanceRefresh(for: Self.membershipCard)
