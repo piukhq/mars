@@ -156,14 +156,6 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
         return button
     }()
     
-    private lazy var imageView: UIImageView = {
-        let view = UIImageView()
-        view.contentMode = .scaleAspectFit
-        view.clipsToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private lazy var photoLibraryButton: BinkButton = {
         return BinkButton(type: .plain, title: L10n.loyaltyScannerAddPhotoFromLibraryButtonTitle, enabled: true, action: { [weak self] in
             self?.toPhotoLibrary()
@@ -255,7 +247,6 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
         view.addSubview(panLabel)
         view.addSubview(expiryLabel)
         view.addSubview(nameOnCardLabel)
-        view.addSubview(imageView)
         
         NSLayoutConstraint.activate([
             explainerLabel.topAnchor.constraint(equalTo: guideImageView.bottomAnchor, constant: Constants.explainerLabelPadding),
@@ -271,11 +262,7 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
             expiryLabel.topAnchor.constraint(equalTo: panLabel.bottomAnchor),
             expiryLabel.centerXAnchor.constraint(equalTo: panLabel.centerXAnchor),
             nameOnCardLabel.leadingAnchor.constraint(equalTo: guideImageView.leadingAnchor, constant: 25),
-            nameOnCardLabel.bottomAnchor.constraint(equalTo: guideImageView.bottomAnchor, constant: -10),
-            imageView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.rectOfInterestInset),
-            imageView.topAnchor.constraint(equalTo: explainerLabel.bottomAnchor, constant: 10),
-            imageView.heightAnchor.constraint(equalToConstant: rectOfInterest.height),
-            imageView.widthAnchor.constraint(equalToConstant: rectOfInterest.width)
+            nameOnCardLabel.bottomAnchor.constraint(equalTo: guideImageView.bottomAnchor, constant: -10)
         ])
     }
     
@@ -539,12 +526,6 @@ extension BinkScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegat
             guard shouldAllowScanning else { return }
             let croppedImage = cropImage(imageBuffer: imageBuffer)
             
-            if let cropImage = croppedImage {
-                DispatchQueue.main.async {
-                    self.imageView.image = UIImage(ciImage: cropImage)
-                }
-            }
-            
             switch loyaltyScannerDetectionType {
             case .barcode:
                 visionUtility.detectBarcode(ciImage: croppedImage, completion: { [weak self] barcode in
@@ -564,7 +545,7 @@ extension BinkScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegat
         CVPixelBufferLockBaseAddress(imageBuffer, .readOnly)
         guard let baseAddress = CVPixelBufferGetBaseAddress(imageBuffer) else { return nil }
         let bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer)
-        let scale = UIScreen.main.scale
+        let scale = 3.0
         let cropWidth = Int(rectOfInterest.width * scale)
         let cropHeight = Int(rectOfInterest.height * scale)
         let colorSpace = CGColorSpaceCreateDeviceRGB()
