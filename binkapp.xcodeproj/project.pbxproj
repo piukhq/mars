@@ -79,6 +79,7 @@
 		21A771242912DCD700233953 /* ActivityViewControllerRepresentableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A771232912DCD700233953 /* ActivityViewControllerRepresentableTests.swift */; };
 		21A771262912E43600233953 /* BarcodeViewNoBarcodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A771252912E43600233953 /* BarcodeViewNoBarcodeTests.swift */; };
 		21E5E2E728B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E5E2E628B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift */; };
+		21F313212913E02D009960F0 /* FilterBrandsCollectionViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F313202913E02D009960F0 /* FilterBrandsCollectionViewCellTests.swift */; };
 		3C05A9DC2327CD3D00620583 /* AppDelegate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DB2327CD3D00620583 /* AppDelegate+Extension.swift */; };
 		3C05A9DE2327CE6300620583 /* PaymentCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DD2327CE6300620583 /* PaymentCardModel.swift */; };
 		3C05A9E02327D35100620583 /* PortraitNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DF2327D35100620583 /* PortraitNavigationController.swift */; };
@@ -778,6 +779,7 @@
 		21A771232912DCD700233953 /* ActivityViewControllerRepresentableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewControllerRepresentableTests.swift; sourceTree = "<group>"; };
 		21A771252912E43600233953 /* BarcodeViewNoBarcodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewNoBarcodeTests.swift; sourceTree = "<group>"; };
 		21E5E2E628B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsViewModelTests.swift; sourceTree = "<group>"; };
+		21F313202913E02D009960F0 /* FilterBrandsCollectionViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBrandsCollectionViewCellTests.swift; sourceTree = "<group>"; };
 		2211289D0FB0F1A14BC9E957 /* Pods-binkapp.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.beta.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.beta.xcconfig"; sourceTree = "<group>"; };
 		26F00637A9D94FD020319165 /* Pods-binkappUITests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.app store (internal).xcconfig"; sourceTree = "<group>"; };
 		352CBEDF33DDEB7B603C909B /* Pods_binkappTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1879,6 +1881,7 @@
 			children = (
 				3CEE169A2440550D00933859 /* BrowseBrandsViewModelTests.swift */,
 				215147612909BE0200E6B209 /* BrowseBrandsListRowViewModelTests.swift */,
+				21F313202913E02D009960F0 /* FilterBrandsCollectionViewCellTests.swift */,
 			);
 			path = "Browse Brands";
 			sourceTree = "<group>";
@@ -4426,6 +4429,7 @@
 				CEFB742325668A5100896DE5 /* BrandHeaderViewTests.swift in Sources */,
 				217288F228B4D62100258EBA /* AddPaymentCardViewModelTests.swift in Sources */,
 				2147C69E2907FD8C00B233B3 /* TransactionsViewModelTests.swift in Sources */,
+				21F313212913E02D009960F0 /* FilterBrandsCollectionViewCellTests.swift in Sources */,
 				EF586FE52357A90C000917B6 /* PaymentCardCellViewModelTests.swift in Sources */,
 				CE971A28287EE138001D7E1C /* DebugMenuFactoryTests.swift in Sources */,
 				217288F528B4E63A00258EBA /* MainTabBarViewModelTests.swift in Sources */,
