@@ -125,17 +125,7 @@ target =
     run_tests(
       workspace: "binkapp.xcworkspace",
       device: "iPhone 12 Pro",
-      scheme: "binkapp tests",
-      code_coverage: true,
-      result_bundle: true,
-    )
-
-    xcov(
-      workspace: "binkapp.xcworkspace",
-      scheme: "binkapp tests",
-      output_directory: "fastlane/xcov_output",
-      markdown_report: true,
-      ignore_file_path: "xcovignore"
+      scheme: "binkapp tests"
     )
 
     build_app(
