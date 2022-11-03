@@ -54,10 +54,10 @@ final class BinkNetworkingLoggerTests: XCTestCase, CoreDataTestable {
     }
     
     private static func deleteExisitingLogs() {
+        Current.apiClient.binkNetworkingLogger.logs = []
         do {
             if let url = Current.apiClient.binkNetworkingLogger.networkLogsFilePath() {
                 try FileManager.default.removeItem(at: url)
-                
             }
         } catch {
             print(error.localizedDescription)

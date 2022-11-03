@@ -60,12 +60,7 @@ class BinkNetworkingLogger: EventMonitor {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         guard let encoded = try? encoder.encode(logs), let path = networkLogsFilePath() else { return }
-
-        do {
-            try encoded.write(to: path, options: .atomicWrite)
-        } catch {
-            print(error.localizedDescription)
-        }
+        try? encoded.write(to: path, options: .atomicWrite)
     }
     
     private func readLogsFromDisk() {
