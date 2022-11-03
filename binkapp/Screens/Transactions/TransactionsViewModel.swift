@@ -12,8 +12,6 @@ struct TransactionsViewModel {
     var transactions: [CD_MembershipTransaction] = []
     
     var title: String {
-        print("transactions.count")
-        print(transactions.count)
         if transactions.isEmpty {
             return L10n.transactionHistoryUnavailableTitle
         }

@@ -40,11 +40,15 @@ final class TransactionsViewModelTests: XCTestCase, CoreDataTestable {
         }
     }
     
-    func test_title_noTransactions() {
-        Self.membershipCardResponse.membershipTransactions = nil
+    private func mapMembershipCard() {
         mapResponseToManagedObject(Self.membershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
             Self.membershipCard = membershipCard
         }
+    }
+    
+    func test_title_noTransactions() {
+        Self.membershipCardResponse.membershipTransactions = nil
+        mapMembershipCard()
         
         Self.sut = TransactionsViewModel(membershipCard: Self.membershipCard)
         
@@ -53,9 +57,7 @@ final class TransactionsViewModelTests: XCTestCase, CoreDataTestable {
     
     func test_description_noTransactions() {
         Self.membershipCardResponse.membershipTransactions = nil
-        mapResponseToManagedObject(Self.membershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
-            Self.membershipCard = membershipCard
-        }
+        mapMembershipCard()
         
         Self.sut = TransactionsViewModel(membershipCard: Self.membershipCard)
         
@@ -64,9 +66,7 @@ final class TransactionsViewModelTests: XCTestCase, CoreDataTestable {
     
     func test_title_withTransactions() {
         Self.membershipCardResponse.membershipTransactions = [MembershipTransaction(apiId: 5, status: "Something", timestamp: 12345, transactionDescription: "test", amounts: nil)]
-        mapResponseToManagedObject(Self.membershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
-            Self.membershipCard = membershipCard
-        }
+        mapMembershipCard()
         
         Self.sut = TransactionsViewModel(membershipCard: Self.membershipCard)
         
@@ -75,9 +75,7 @@ final class TransactionsViewModelTests: XCTestCase, CoreDataTestable {
     
     func test_description_withTransactions() {
         Self.membershipCardResponse.membershipTransactions = [MembershipTransaction(apiId: 5, status: "Something", timestamp: 12345, transactionDescription: "test", amounts: nil)]
-        mapResponseToManagedObject(Self.membershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
-            Self.membershipCard = membershipCard
-        }
+        mapMembershipCard()
         
         Self.sut = TransactionsViewModel(membershipCard: Self.membershipCard)
         
@@ -86,9 +84,7 @@ final class TransactionsViewModelTests: XCTestCase, CoreDataTestable {
     
     func test_storeTransaction() {
         Self.membershipCardResponse.membershipTransactions = [MembershipTransaction(apiId: 5, status: "Something", timestamp: 12345, transactionDescription: "test", amounts: nil)]
-        mapResponseToManagedObject(Self.membershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
-            Self.membershipCard = membershipCard
-        }
+        mapMembershipCard()
         
         Self.sut = TransactionsViewModel(membershipCard: Self.membershipCard)
         

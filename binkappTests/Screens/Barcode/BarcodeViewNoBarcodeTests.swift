@@ -16,8 +16,6 @@ final class BarcodeViewNoBarcodeTests: XCTestCase, CoreDataTestable {
     static var model: LoyaltyCardFullDetailsViewModel!
     static var membershipCard: CD_MembershipCard!
     static var membershipPlan: CD_MembershipPlan!
-    //static var baseMembershipCardResponse: MembershipCardModel!
-    //static var membershipPlanResponse: MembershipPlanModel!
     
     override class func setUp() {
         super.setUp()

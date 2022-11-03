@@ -32,18 +32,7 @@ final class PointsScrapingManagerTests: XCTestCase, CoreDataTestable {
     static var voucherResponse: VoucherModel!
     static var voucher: CD_Voucher!
     
-    //static var sut: PointsScrapingManager!
-    
     let keychain = Keychain(service: APIConstants.bundleID)
-    
-//    override func setUpWithError() throws {
-//        Current.pointsScrapingManager.start()
-//    }
-//
-//    override func tearDownWithError() throws {
-//        Current.pointsScrapingManager.handleLogout()
-//        Current.pointsScrapingManager.handleDelete(for: Self.membershipCard)
-//    }
     
     override class func setUp() {
         super.setUp()
@@ -74,26 +63,23 @@ final class PointsScrapingManagerTests: XCTestCase, CoreDataTestable {
             self.membershipCard = membershipCard
             self.membershipCard.membershipPlan = self.membershipPlan
         }
-        
-        //sut = PointsScrapingManager()
-        //sut.start()
     }
     
     func test_PointsScrapingManagerError_Erros() throws {
-        var e = PointsScrapingManager.PointsScrapingManagerError.failedToStoreCredentials
-        XCTAssertTrue(e.message == "Failed to store credentials")
+        var error = PointsScrapingManager.PointsScrapingManagerError.failedToStoreCredentials
+        XCTAssertTrue(error.message == "Failed to store credentials")
         
-        e = PointsScrapingManager.PointsScrapingManagerError.failedToRetrieveCredentials
-        XCTAssertTrue(e.message == "Failed to retrieve credentials")
+        error = PointsScrapingManager.PointsScrapingManagerError.failedToRetrieveCredentials
+        XCTAssertTrue(error.message == "Failed to retrieve credentials")
         
-        e = PointsScrapingManager.PointsScrapingManagerError.failedToEnableMembershipCardForPointsScraping
-        XCTAssertTrue(e.message == "Failed to enable membership card for points scraping")
+        error = PointsScrapingManager.PointsScrapingManagerError.failedToEnableMembershipCardForPointsScraping
+        XCTAssertTrue(error.message == "Failed to enable membership card for points scraping")
         
-        e = PointsScrapingManager.PointsScrapingManagerError.failedToGetMembershipPlanFromRequest
-        XCTAssertTrue(e.message == "Failed to get membership plan from request")
+        error = PointsScrapingManager.PointsScrapingManagerError.failedToGetMembershipPlanFromRequest
+        XCTAssertTrue(error.message == "Failed to get membership plan from request")
         
-        e = PointsScrapingManager.PointsScrapingManagerError.failedToGetAgentForMembershipPlan
-        XCTAssertTrue(e.message == "Failed to get agent for membership plan")
+        error = PointsScrapingManager.PointsScrapingManagerError.failedToGetAgentForMembershipPlan
+        XCTAssertTrue(error.message == "Failed to get agent for membership plan")
     }
     
     // MARK: Scraping utility errors
@@ -206,9 +192,9 @@ final class PointsScrapingManagerTests: XCTestCase, CoreDataTestable {
 //        let model = MembershipCardPostModel(account: nil, membershipPlan: 64)
 //        let credentials = WebScrapingCredentials(username: "email@email.com", password: "pass", cardNumber: "5454")
 //        try Current.pointsScrapingManager.enableLocalPointsScrapingForCardIfPossible(withRequest: model, credentials: credentials, membershipCard: Self.membershipCard)
-//        
+//
 //        let retrivedCredentials = try Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: "500")
-//        
+//
 //        XCTAssertNotNil(retrivedCredentials)
 //        XCTAssertTrue(retrivedCredentials.username == "email@email.com")
 //    }
