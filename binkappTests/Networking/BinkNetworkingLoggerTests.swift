@@ -20,7 +20,6 @@ final class BinkNetworkingLoggerTests: XCTestCase, CoreDataTestable {
     static var membershipCard: CD_MembershipCard!
     static var paymentCard: CD_PaymentCard!
     static var baseSut = PLLScreenViewModel(membershipCard: membershipCard, journey: .newCard)
-    static var logger = BinkNetworkingLogger()
     
     override class func setUp() {
         super.setUp()
@@ -56,7 +55,10 @@ final class BinkNetworkingLoggerTests: XCTestCase, CoreDataTestable {
     
     private static func deleteExisitingLogs() {
         do {
-            try FileManager.default.removeItem(atPath: Self.logger.networkLogsFilePath()?.absoluteString ?? "")
+            if let url = Current.apiClient.binkNetworkingLogger.networkLogsFilePath() {
+                try FileManager.default.removeItem(at: url)
+                
+            }
         } catch {
             print(error.localizedDescription)
         }
@@ -74,7 +76,7 @@ final class BinkNetworkingLoggerTests: XCTestCase, CoreDataTestable {
         
         _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 10.0)
 
-        XCTAssertNotNil(Self.logger.logs)
+        XCTAssertNotNil(Current.apiClient.binkNetworkingLogger.logs)
     }
     
     func test_02_loggerSavesLogs_successfully() {
@@ -83,13 +85,13 @@ final class BinkNetworkingLoggerTests: XCTestCase, CoreDataTestable {
         Self.baseSut.toggleLinkForMembershipCards { _ in }
         _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 10.0)
 
-        XCTAssertFalse(Self.logger.logs.isEmpty)
+        XCTAssertFalse(Current.apiClient.binkNetworkingLogger.logs.isEmpty)
     }
     
     func test_03_loggerRequestContainsNoDataTask() {
-        let logs = Self.logger.logs
+        let logs = Current.apiClient.binkNetworkingLogger.logs
         APIClient().performEmptyRequest()
-        XCTAssertTrue(logs.first?.endpoint == Self.logger.logs.first?.endpoint)
+        XCTAssertTrue(logs.first?.endpoint == Current.apiClient.binkNetworkingLogger.logs.first?.endpoint)
     }
     
     func test_04_loggerLimitsLogCountToTwenty() {
@@ -108,6 +110,6 @@ final class BinkNetworkingLoggerTests: XCTestCase, CoreDataTestable {
         
         _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 10.0)
         
-        XCTAssertEqual(Self.logger.logs.count, 20)
+        XCTAssertEqual(Current.apiClient.binkNetworkingLogger.logs.count, 20)
     }
 }

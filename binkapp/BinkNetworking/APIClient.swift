@@ -86,12 +86,13 @@ final class APIClient {
 
     private let reachabilityManager = NetworkReachabilityManager()
     private let session: Session
+    let binkNetworkingLogger = BinkNetworkingLogger()
 
     init() {
         if UIApplication.isRunningUnitTests {
             let configuration = URLSessionConfiguration.af.default
             configuration.protocolClasses = [MockingURLProtocol.self] + (configuration.protocolClasses ?? [])
-            session = Session(configuration: configuration, eventMonitors: [BinkNetworkingLogger()])
+            session = Session(configuration: configuration, eventMonitors: [binkNetworkingLogger])
         } else {
             let url = EnvironmentType.production.rawValue
             let evaluators = [
