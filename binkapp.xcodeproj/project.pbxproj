@@ -6388,8 +6388,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "git@github.com:WeTransfer/Mocker.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				kind = exactVersion;
+				version = 2.6.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
