@@ -297,6 +297,7 @@
 		CE0C24792678EDE500CB7150 /* WhoWeAreSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */; };
 		CE1015252722A63F0000A838 /* VisionUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1015242722A63F0000A838 /* VisionUtility.swift */; };
 		CE261634283CD926003570D8 /* PaymentCardNameRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE261633283CD926003570D8 /* PaymentCardNameRecognition.swift */; };
+		CE2751AF2915087F005C27AB /* Mocker in Frameworks */ = {isa = PBXBuildFile; productRef = CE2751AE2915087F005C27AB /* Mocker */; };
 		CE27A0DA25DA990E00C58412 /* OnboardingCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */; };
 		CE27A0DB25DA990E00C58412 /* OnboardingCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */; };
 		CE285B4328B4E19A00EBA3E7 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE285B4228B4E19A00EBA3E7 /* DateManager.swift */; };
@@ -410,7 +411,6 @@
 		CEE20921268E1DAA004D3759 /* WalletCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE20920268E1DAA004D3759 /* WalletCardView.swift */; };
 		CEE20923268E1E0E004D3759 /* AddCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE20922268E1E0E004D3759 /* AddCardView.swift */; };
 		CEE20925268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE20924268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift */; };
-		CEF3E5A928903BBF0082EBE0 /* Mocker in Frameworks */ = {isa = PBXBuildFile; productRef = CEF3E5A828903BBF0082EBE0 /* Mocker */; };
 		CEFAB4E9279ABD0A00D061A9 /* BarcodeViewNoBarcode.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEFAB4E8279ABD0900D061A9 /* BarcodeViewNoBarcode.xib */; };
 		CEFAB4EB279AC10B00D061A9 /* BarcodeViewNoBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFAB4EA279AC10B00D061A9 /* BarcodeViewNoBarcode.swift */; };
 		CEFB742325668A5100896DE5 /* BrandHeaderViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE387AA02565749D006BAC11 /* BrandHeaderViewTests.swift */; };
@@ -1316,8 +1316,8 @@
 				CEADBFDE2747CBC6008810A8 /* FirebaseRemoteConfig in Frameworks */,
 				7075382D26DFA96800690965 /* Disk in Frameworks */,
 				215BC59528A6900100DB1377 /* BinkCore in Frameworks */,
-				CEF3E5A928903BBF0082EBE0 /* Mocker in Frameworks */,
 				CEB8242927391F0500F5954D /* FirebaseAnalytics in Frameworks */,
+				CE2751AF2915087F005C27AB /* Mocker in Frameworks */,
 				7075381E26DFA26C00690965 /* Alamofire in Frameworks */,
 				7063B1EB270473EE00C5C633 /* FirebaseStorage in Frameworks */,
 				7075382A26DFA72800690965 /* KeychainAccess in Frameworks */,
@@ -3350,8 +3350,8 @@
 				7063B1E8270473EE00C5C633 /* FirebaseAnalytics */,
 				7063B1EA270473EE00C5C633 /* FirebaseStorage */,
 				7063B1EC270473EE00C5C633 /* FirebaseRemoteConfig */,
-				CEF3E5A828903BBF0082EBE0 /* Mocker */,
 				215BC59428A6900100DB1377 /* BinkCore */,
+				CE2751AE2915087F005C27AB /* Mocker */,
 			);
 			productName = binkapp;
 			productReference = 5ECE046822CE5798001BA964 /* Bink α.app */;
@@ -3511,8 +3511,8 @@
 				7075382E26DFAB2B00690965 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
 				70A4FDA4271588AC00DA7FAA /* XCRemoteSwiftPackageReference "mixpanel-swift" */,
 				7063B1E7270473EE00C5C633 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				CEF3E5A728903BBE0082EBE0 /* XCRemoteSwiftPackageReference "Mocker" */,
 				215BC59328A6900100DB1377 /* XCRemoteSwiftPackageReference "ios-core" */,
+				CE2751AD2915087F005C27AB /* XCRemoteSwiftPackageReference "Mocker" */,
 			);
 			productRefGroup = 5ECE046922CE5798001BA964 /* Products */;
 			projectDirPath = "";
@@ -6226,20 +6226,20 @@
 				minimumVersion = 7.6.1;
 			};
 		};
+		CE2751AD2915087F005C27AB /* XCRemoteSwiftPackageReference "Mocker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WeTransfer/Mocker.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		CE85A1D926B05D95003B74CD /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 3.2.3;
-			};
-		};
-		CEF3E5A728903BBE0082EBE0 /* XCRemoteSwiftPackageReference "Mocker" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:WeTransfer/Mocker.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -6310,6 +6310,11 @@
 			package = 96F22DFE2507C5AC0009951B /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
 			productName = Sentry;
 		};
+		CE2751AE2915087F005C27AB /* Mocker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE2751AD2915087F005C27AB /* XCRemoteSwiftPackageReference "Mocker" */;
+			productName = Mocker;
+		};
 		CE4A624825714EAE003271F6 /* Sentry */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 96F22DFE2507C5AC0009951B /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
@@ -6319,11 +6324,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CE85A1D926B05D95003B74CD /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
-		};
-		CEF3E5A828903BBF0082EBE0 /* Mocker */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CEF3E5A728903BBE0082EBE0 /* XCRemoteSwiftPackageReference "Mocker" */;
-			productName = Mocker;
 		};
 /* End XCSwiftPackageProductDependency section */
 
