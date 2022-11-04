@@ -121,14 +121,15 @@ class Navigate {
         return rootViewController as? MainTabBarViewController
     }
     
-    var loyaltyCardScannerDelegate: BarcodeScannerViewControllerDelegate? {
+    var scannerDelegate: BinkScannerViewControllerDelegate? {
         return tabBarController
     }
     
+    // TODO: Delete when payment scanner is changed
     var paymentCardScannerDelegate: ScanDelegate? {
         return tabBarController
     }
-    
+
     func setRootViewController(_ rootViewController: UIViewController?) {
         self.rootViewController = rootViewController
         
