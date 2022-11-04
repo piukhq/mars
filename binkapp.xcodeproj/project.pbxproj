@@ -297,6 +297,7 @@
 		CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */; };
 		CE0C24792678EDE500CB7150 /* WhoWeAreSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */; };
 		CE1015252722A63F0000A838 /* VisionImageDetectionUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1015242722A63F0000A838 /* VisionImageDetectionUtility.swift */; };
+		CE2751B229152540005C27AB /* CalloutViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2751B129152540005C27AB /* CalloutViewTests.swift */; };
 		CE27A0DA25DA990E00C58412 /* OnboardingCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */; };
 		CE27A0DB25DA990E00C58412 /* OnboardingCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */; };
 		CE285B4328B4E19A00EBA3E7 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE285B4228B4E19A00EBA3E7 /* DateManager.swift */; };
@@ -998,6 +999,7 @@
 		CE0AE2DD2542DB81000CDB86 /* binkapp - 23-10-20 - Card secondary colour.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 23-10-20 - Card secondary colour.xcdatamodel"; sourceTree = "<group>"; };
 		CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoWeAreSwiftUIView.swift; sourceTree = "<group>"; };
 		CE1015242722A63F0000A838 /* VisionImageDetectionUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionImageDetectionUtility.swift; sourceTree = "<group>"; };
+		CE2751B129152540005C27AB /* CalloutViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalloutViewTests.swift; sourceTree = "<group>"; };
 		CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingCardCollectionViewCell.xib; sourceTree = "<group>"; };
 		CE285B4228B4E19A00EBA3E7 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
@@ -1951,6 +1953,7 @@
 		5ECE048222CE579B001BA964 /* binkappTests */ = {
 			isa = PBXGroup;
 			children = (
+				CE2751B02915248D005C27AB /* GeoLocation */,
 				2126211728AFB48A00939609 /* Networking */,
 				706157C6264A848A0002701E /* Recommended App Update */,
 				70D6863C257152D700403448 /* Dynamic Actions */,
@@ -2498,6 +2501,14 @@
 				21410FA328DC8567002EE969 /* VisionUtility.swift */,
 			);
 			path = Vision;
+			sourceTree = "<group>";
+		};
+		CE2751B02915248D005C27AB /* GeoLocation */ = {
+			isa = PBXGroup;
+			children = (
+				CE2751B129152540005C27AB /* CalloutViewTests.swift */,
+			);
+			path = GeoLocation;
 			sourceTree = "<group>";
 		};
 		CE2CFE9625E3D4FA00B1CB93 /* FeatureFlags */ = {
@@ -4295,6 +4306,7 @@
 				217288F528B4E63A00258EBA /* MainTabBarViewModelTests.swift in Sources */,
 				CE971A2C28802AEC001D7E1C /* PaymentCardDetailLoyaltyCardStatusCellViewModelTests.swift in Sources */,
 				DB4D8EAD2440864C0085595D /* SettingsViewModelTests.swift in Sources */,
+				CE2751B229152540005C27AB /* CalloutViewTests.swift in Sources */,
 				70A61D16263095060073A08A /* BinkModuleViewModelTests.swift in Sources */,
 				214DCF6128AE597700308531 /* MagicLinkRequestModelTests.swift in Sources */,
 				CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */,
