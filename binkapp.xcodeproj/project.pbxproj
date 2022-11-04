@@ -6231,7 +6231,7 @@
 			repositoryURL = "https://github.com/WeTransfer/Mocker.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				minimumVersion = 2.6.0;
 			};
 		};
 		CE85A1D926B05D95003B74CD /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
