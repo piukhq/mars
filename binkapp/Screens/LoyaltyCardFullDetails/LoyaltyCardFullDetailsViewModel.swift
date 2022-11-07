@@ -126,6 +126,22 @@ class LoyaltyCardFullDetailsViewModel {
         
     // MARK: - Public methods
     
+    func storeOpenedTimeForCard() {
+        Current.database.performBackgroundTask(with: membershipCard) { (backgroundContext, safeObject) in
+            guard let card = safeObject else {
+                fatalError("We should never get here. Core data didn't return us an object, why not?")
+            }
+            
+            card.openedTime = Date()
+            
+            do {
+                try backgroundContext.save()
+            } catch {
+                print("Failed to save")
+            }
+        }
+    }
+    
     func fetchGeoData(completion: @escaping (Bool, Bool) -> Void) {
         if Current.featureManager.isFeatureEnabled(.locations, merchant: brandNameForGeoData) {
             let companyName = brandNameForGeoData
