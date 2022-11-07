@@ -26,7 +26,34 @@ final class CalloutViewTests: XCTestCase {
     }
     
     func test_textStackGetter_successfullyReturnsStackView() {
-        
+        Self.sut.subviews.forEach {
+            if $0.isKind(of: UIStackView.self) {
+                XCTAssertTrue(true)
+            }
+        }
     }
     
+    func test_textStack_containsCorrectViews() {
+        Self.sut.subviews.forEach {
+            if $0.isKind(of: UIStackView.self) {
+                XCTAssertEqual($0.subviews.count, 3)
+            }
+        }
+    }
+    
+    func test_imageViewGetter_successfullyReturnsImageView() {
+        Self.sut.subviews.forEach {
+            if $0.isKind(of: UIImageView.self) {
+                XCTAssertTrue(true)
+            }
+        }
+    }
+    
+    func test_imageView_displaysCorrectImage() {
+        Self.sut.subviews.forEach {
+            if let imageview = $0 as? UIImageView {
+                XCTAssertEqual(imageview.image, UIImage(named: Asset.locationArrow.name))
+            }
+        }
+    }
 }

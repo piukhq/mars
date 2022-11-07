@@ -298,6 +298,7 @@
 		CE0C24792678EDE500CB7150 /* WhoWeAreSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */; };
 		CE1015252722A63F0000A838 /* VisionImageDetectionUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1015242722A63F0000A838 /* VisionImageDetectionUtility.swift */; };
 		CE2751B229152540005C27AB /* CalloutViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2751B129152540005C27AB /* CalloutViewTests.swift */; };
+		CE2751B429192CCD005C27AB /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2751B329192CCD005C27AB /* CustomAnnotation.swift */; };
 		CE27A0DA25DA990E00C58412 /* OnboardingCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */; };
 		CE27A0DB25DA990E00C58412 /* OnboardingCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */; };
 		CE285B4328B4E19A00EBA3E7 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE285B4228B4E19A00EBA3E7 /* DateManager.swift */; };
@@ -1000,6 +1001,7 @@
 		CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoWeAreSwiftUIView.swift; sourceTree = "<group>"; };
 		CE1015242722A63F0000A838 /* VisionImageDetectionUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionImageDetectionUtility.swift; sourceTree = "<group>"; };
 		CE2751B129152540005C27AB /* CalloutViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalloutViewTests.swift; sourceTree = "<group>"; };
+		CE2751B329192CCD005C27AB /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingCardCollectionViewCell.xib; sourceTree = "<group>"; };
 		CE285B4228B4E19A00EBA3E7 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
@@ -1448,6 +1450,7 @@
 				214EC02828743165000A3F73 /* GeoModel.swift */,
 				214EC02D28743883000A3F73 /* GeoLocationViewModel.swift */,
 				212F0C432876EB7E007F09CE /* CalloutView.swift */,
+				CE2751B329192CCD005C27AB /* CustomAnnotation.swift */,
 			);
 			path = GeoLocation;
 			sourceTree = "<group>";
@@ -4113,6 +4116,7 @@
 				EF3BC915234779C900FE52ED /* PaymentWalletRepository.swift in Sources */,
 				3CCAB7522379B520001B566D /* RegistrationFieldPostModel.swift in Sources */,
 				EFA5F6C0237429D30027AB80 /* UITableViewCellExtension.swift in Sources */,
+				CE2751B429192CCD005C27AB /* CustomAnnotation.swift in Sources */,
 				70A4EE7824BDBA5900FA33B1 /* PermissionsUtility.swift in Sources */,
 				EF1110542354D4BE009A4438 /* WalletCardCollectionViewCell.swift in Sources */,
 				BDFAA07B23E243EF00949271 /* LCDPlaceholderGenerator.swift in Sources */,
@@ -6252,8 +6256,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "git@github.com:WeTransfer/Mocker.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				kind = exactVersion;
+				version = 2.6.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
