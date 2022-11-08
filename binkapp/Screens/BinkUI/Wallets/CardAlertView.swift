@@ -44,6 +44,6 @@ class CardAlertView: CustomView {
 
 extension CardAlertView: CardAlertViewTestable {
     func getAlertLabel() -> UILabel {
-        return self.alertLabel
+        return alertLabel
     }
 }

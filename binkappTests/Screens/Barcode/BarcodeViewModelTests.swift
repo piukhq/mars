@@ -91,7 +91,6 @@ class BarcodeViewModelTests: XCTestCase, CoreDataTestable {
     
     func test_heightForHighVisView() {
         let height = Self.sut.heightForHighVisView(text: "123456789")
-        print(height)
         XCTAssertTrue(height == 153.0)
     }
     

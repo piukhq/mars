@@ -65,7 +65,7 @@ final class PointsScrapingManagerTests: XCTestCase, CoreDataTestable {
         }
     }
     
-    func test_PointsScrapingManagerError_Erros() throws {
+    func test_pointsScrapingManagerError_Erros() throws {
         var error = PointsScrapingManager.PointsScrapingManagerError.failedToStoreCredentials
         XCTAssertTrue(error.message == "Failed to store credentials")
         

@@ -32,10 +32,10 @@ class BarcodeViewNoBarcode: BarcodeView {
 
 extension BarcodeViewNoBarcode: BarcodeViewNoBarcodeTestable {
     func getCardNumberLabel() -> UILabel {
-        return self.cardNumberLabel
+        return cardNumberLabel
     }
     
     func getIconImageView() -> UIImageView {
-        return self.iconImageView
+        return iconImageView
     }
 }

@@ -112,10 +112,10 @@ extension LoyaltyScannerWidgetView {
 
 extension LoyaltyScannerWidgetView: LoyaltyScannerWidgetViewTestable {
     func getTitleLabel() -> UILabel {
-        return self.titleLabel
+        return titleLabel
     }
     
     func getExplainerLabel() -> UILabel {
-        return self.explainerLabel
+        return explainerLabel
     }
 }

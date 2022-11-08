@@ -40,7 +40,7 @@ final class MerchantHeroCellTests: XCTestCase, CoreDataTestable {
         XCTAssertTrue(cell.reuseIdentifier == "MerchantHeroCell")
     }
     
-    func test_bg_Colour_is_Placeholder() throws {
+    func test_bg_colour_is_placeholder() throws {
         let cell = MerchantHeroCell()
         cell.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         
@@ -49,7 +49,7 @@ final class MerchantHeroCellTests: XCTestCase, CoreDataTestable {
         XCTAssertTrue(cell.backgroundColor?.cgColor.components![0] == 1.0)
     }
     
-    func test_bg_Colour_showMorePlansCells() throws {
+    func test_bg_colour_showMorePlansCells() throws {
         let cell = MerchantHeroCell()
         cell.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         
@@ -58,7 +58,7 @@ final class MerchantHeroCellTests: XCTestCase, CoreDataTestable {
         XCTAssertTrue(cell.backgroundColor == .binkDynamicGray2)
     }
     
-    func test_bg_Colour_noMorePlansCells() throws {
+    func test_bg_colour_noMorePlansCells() throws {
         let cell = MerchantHeroCell()
         cell.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         
@@ -110,11 +110,5 @@ final class MerchantHeroCellTests: XCTestCase, CoreDataTestable {
         
         XCTAssertTrue(Int(label.frame.width) == 170)
         XCTAssertTrue(Int(label.frame.height) == 101)
-        
-//        let imageView = cell.subviews[0] as! UIImageView
-//        XCTAssertTrue(imageView.contentMode == .scaleAspectFill)
-//        XCTAssertTrue(imageView.layer.cornerRadius == 10)
-//        XCTAssertTrue(imageView.layer.cornerCurve == .continuous)
-//        XCTAssertTrue(imageView.clipsToBounds == true)
     }
 }

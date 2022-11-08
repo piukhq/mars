@@ -28,13 +28,13 @@ final class WebScrapingResponseTests: XCTestCase {
         "user_action_complete": ""
     ]
 
-    func test_validResponse_DecodesCorrectly() {
+    func test_validResponse_decodesCorrectly() {
         let responseData = try! JSONSerialization.data(withJSONObject: stubbedValidResponse, options: .prettyPrinted)
         let decodedResponse = try! JSONDecoder().decode(WebScrapingResponse.self, from: responseData)
         XCTAssertNotNil(decodedResponse)
     }
 
-    func test_invalidResponse_FailsToDecode() {
+    func test_invalidResponse_failsToDecode() {
         let responseData = try? JSONSerialization.data(withJSONObject: stubbedInvalidResponse, options: .prettyPrinted)
         let decodedResponse = try? JSONDecoder().decode(WebScrapingResponse.self, from: responseData!)
         XCTAssertNil(decodedResponse)
@@ -45,7 +45,6 @@ final class WebScrapingResponseTests: XCTestCase {
         let decodedResponse = try! JSONDecoder().decode(WebScrapingResponse.self, from: responseData)
         XCTAssertNotNil(decodedResponse)
         
-        print(decodedResponse.pointsValue)
         XCTAssertTrue(decodedResponse.pointsValue == 100)
     }
 }

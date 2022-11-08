@@ -13,7 +13,7 @@ import XCTest
 
 final class CardAlertViewTests: XCTestCase {
 
-    func test_CorrectpropertiesForType() throws {
+    func test_correctPropertiesForType() throws {
         let view = CardAlertView()
         view.configureForType(.loyaltyLogIn, action: {})
         XCTAssertTrue(view.getAlertLabel().text == "Log in")

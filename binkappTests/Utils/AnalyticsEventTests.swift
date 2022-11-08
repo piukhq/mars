@@ -189,7 +189,7 @@ final class AnalyticsEventTests: XCTestCase, CoreDataTestable {
     }
     
     // MARK: - PLLAnalytics events
-    func test_PLLAnalyticsEvent_correctStringAndDataFromEvent() throws {
+    func test_pLLAnalyticsEvent_correctStringAndDataFromEvent() throws {
         var event = PLLAnalyticsEvent.pllActive(loyaltyCard: Self.membershipCard, paymentCard: Self.paymentCard)
         XCTAssertTrue(event.name == "pll_active")
         XCTAssertTrue(event.data!["payment_id"] as! String == "500")
@@ -213,7 +213,7 @@ final class AnalyticsEventTests: XCTestCase, CoreDataTestable {
     }
     
     // MARK: - InAppReviewAnalytics events
-    func test_InAppReviewAnalyticsEvent_correctStringAndDataFromEvent() throws {
+    func test_inAppReviewAnalyticsEvent_correctStringAndDataFromEvent() throws {
         Current.inAppReviewableJourney = PllLoyaltyInAppReviewableJourney()
         var event = InAppReviewAnalyticsEvent.add
         XCTAssertTrue(event.name == "in_app_review_request")
@@ -236,7 +236,7 @@ final class AnalyticsEventTests: XCTestCase, CoreDataTestable {
     }
     
     // MARK: - DynamicActionsAnalytics events
-    func test_DynamicActionsAnalyticsEvent_correctStringAndDataFromEvent() throws {
+    func test_dynamicActionsAnalyticsEvent_correctStringAndDataFromEvent() throws {
         let action = DynamicAction(name: "action", type: nil, startDate: nil, endDate: nil, locations: nil, event: nil, enabledLive: false, forceDebug: false)
         var event = DynamicActionsAnalyticsEvent.triggered(action)
         XCTAssertTrue(event.name == "dynamic_action_triggered")
@@ -244,7 +244,7 @@ final class AnalyticsEventTests: XCTestCase, CoreDataTestable {
     }
     
     // MARK: - Recommended App Update
-    func test_RecommendedAppUpdateAnalyticsEvent_correctStringAndDataFromEvent() throws {
+    func test_recommendedAppUpdateAnalyticsEvent_correctStringAndDataFromEvent() throws {
         var event = RecommendedAppUpdateAnalyticsEvent.openAppStore
         XCTAssertTrue(event.name == "recommended_app_update_action")
         XCTAssertTrue(event.data!["user_action"] as! String == "open_app_store")
@@ -259,7 +259,7 @@ final class AnalyticsEventTests: XCTestCase, CoreDataTestable {
     }
     
     // MARK: - Widgets
-    func test_WidgetAnalyticsEvent_correctStringAndDataFromEvent() throws {
+    func test_widgetAnalyticsEvent_correctStringAndDataFromEvent() throws {
         var event = WidgetAnalyticsEvent.widgetLaunch(urlPath: "path", widgetType: .quickLaunch)
         XCTAssertTrue(event.name == "widget_launch")
         XCTAssertTrue(event.data!["launch_reason"] as! String == "path")

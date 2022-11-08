@@ -92,15 +92,4 @@ final class TransactionsViewModelTests: XCTestCase, CoreDataTestable {
         
         XCTAssertTrue(Self.sut.hasStoredMostRecentTransaction)
     }
-    
-//    func test_shouldRequestReview() {
-//        Self.membershipCardResponse.membershipTransactions = [MembershipTransaction(apiId: 5, status: "Something", timestamp: 12345, transactionDescription: "test", amounts: nil)]
-//        mapResponseToManagedObject(Self.membershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
-//            Self.membershipCard = membershipCard
-//        }
-//
-//        Self.sut = TransactionsViewModel(membershipCard: Self.membershipCard)
-//
-//        XCTAssertTrue(Self.sut.shouldRequestInAppReview)
-//    }
 }

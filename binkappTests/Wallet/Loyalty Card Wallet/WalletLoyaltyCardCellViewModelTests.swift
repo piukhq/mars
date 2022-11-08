@@ -65,7 +65,7 @@ final class WalletLoyaltyCardCellViewModelTests: XCTestCase, CoreDataTestable {
         sut = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
     }
     
-    func test_ShouldBeSetupCorrectly() throws {
+    func test_shouldBeSetupCorrectly() throws {
         Self.membershipPlanResponse.featureSet?.cardType = .link
         
         mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { plan in

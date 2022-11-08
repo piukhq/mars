@@ -22,13 +22,13 @@ final class LoginViewControllerTests: XCTestCase {
         XCTAssertTrue(!Self.sut.stackScrollView.subviews.isEmpty)
     }
     
-    func test_footerButtons_HasCorrectAmount() throws {
+    func test_footerButtons_hasCorrectAmount() throws {
         Self.sut.viewDidLoad()
         
         XCTAssertTrue(Self.sut.footerButtons.count == 2)
     }
     
-    func test_screenName_HasCorrectName() throws {
+    func test_screenName_hasCorrectName() throws {
         Self.sut.viewDidLoad()
         Self.sut.viewDidAppear(false)
         

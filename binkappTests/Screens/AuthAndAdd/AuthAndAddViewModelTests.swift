@@ -85,7 +85,7 @@ final class AuthAndAddViewModelTests: XCTestCase, CoreDataTestable {
         XCTAssertTrue(Self.sut.formPurpose.planDocumentDisplayMatching == PlanDocumentDisplayModel.registration)
     }
     
-    func test_title_FromFormPurpose() throws {
+    func test_title_fromFormPurpose() throws {
         Self.sut = AuthAndAddViewModel(membershipPlan: Self.membershipPlan, formPurpose: .signUp, existingMembershipCard: Self.membershipCard, prefilledFormValues: [FormDataSource.PrefilledValue(commonName: .email, value: "rick@mail.com")])
         
         XCTAssertTrue(Self.sut.title == "Sign up for Test Plan")
@@ -100,7 +100,7 @@ final class AuthAndAddViewModelTests: XCTestCase, CoreDataTestable {
         XCTAssertTrue(Self.sut.title == "Register your card")
     }
     
-    func test_buttonTitle_FromFormPurpose() throws {
+    func test_buttonTitle_fromFormPurpose() throws {
         Self.sut = AuthAndAddViewModel(membershipPlan: Self.membershipPlan, formPurpose: .signUp, existingMembershipCard: Self.membershipCard, prefilledFormValues: [FormDataSource.PrefilledValue(commonName: .email, value: "rick@mail.com")])
         
         XCTAssertTrue(Self.sut.title == "Sign up for Test Plan")
@@ -115,7 +115,7 @@ final class AuthAndAddViewModelTests: XCTestCase, CoreDataTestable {
         XCTAssertTrue(Self.sut.title == "Register your card")
     }
     
-    func test_getDescription_FromFormPurpose() throws {
+    func test_getDescription_fromFormPurpose() throws {
         Self.sut = AuthAndAddViewModel(membershipPlan: Self.membershipPlan, formPurpose: .add, existingMembershipCard: Self.membershipCard, prefilledFormValues: [FormDataSource.PrefilledValue(commonName: .email, value: "rick@mail.com")])
         
         XCTAssertTrue(Self.sut.getDescription() == "Please enter your Tesco credentials below to add this card to your wallet.")
@@ -191,40 +191,6 @@ final class AuthAndAddViewModelTests: XCTestCase, CoreDataTestable {
         
         XCTAssertTrue(complete)
     }
-    
-    // RS - having a lot of issues with this one. Will revise later
-    
-//    func test_addMembershipCard_add() throws {
-//        Self.sut = AuthAndAddViewModel(membershipPlan: Self.membershipPlan, formPurpose: .add, existingMembershipCard: Self.membershipCard, prefilledFormValues: [FormDataSource.PrefilledValue(commonName: .email, value: "rick@mail.com")])
-//
-//        let nameOnCardField = FormField(
-//            title: "Name on card",
-//            placeholder: "J Appleseed",
-//            validation: "^(((?=.{1,}$)[A-Za-z\\-\\u00C0-\\u00FF' ])+\\s*)$",
-//            fieldType: .text,
-//            updated: { field, newValue in },
-//            shouldChange: { (field, textField, range, newValue) in return false},
-//            fieldExited: { field in }
-//        )
-//
-//        Current.apiClient.testResponseData = nil
-//        let model = MembershipCardPostModel(account: nil, membershipPlan: 500)
-//        let mocked = try! JSONEncoder().encode(Self.membershipCardResponse)
-//
-//        let endpoint = APIEndpoint.membershipCard(cardId: Self.membershipCard.id).urlString!
-//        let mock = Mock(url: URL(string: endpoint)!, dataType: .json, statusCode: 200, data: [.put: mocked])
-//        mock.register()
-//
-//        var complete = false
-//
-//        try Self.sut.addMembershipCard(with: [nameOnCardField], completion: {
-//            complete = true
-//        })
-//
-//        _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
-//
-//        XCTAssertTrue(complete)
-//    }
     
     func test_brandHeaderTapped() {
         Self.sut = AuthAndAddViewModel(membershipPlan: Self.membershipPlan, formPurpose: .ghostCard, existingMembershipCard: Self.membershipCard, prefilledFormValues: [FormDataSource.PrefilledValue(commonName: .email, value: "rick@mail.com")])

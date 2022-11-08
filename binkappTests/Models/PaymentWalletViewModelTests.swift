@@ -42,15 +42,4 @@ final class PaymentWalletViewModelTests: XCTestCase, CoreDataTestable {
         
         XCTAssertTrue(Current.navigate.currentViewController!.isKind(of: BinkAlertController.self) == true)
     }
-    
-//    func test_cardDetail_DisplaysCorrectViewController() {
-//        Self.sut.toCardDetail(for: Self.paymentCard)
-//        
-//        XCTAssertTrue(Current.navigate.currentViewController!.isKind(of: PaymentCardDetailViewController.self) == true)
-//    }
-    
-//    func test_correctVC_addPaymentCards_ShouldBeNil() {
-//        Self.sut.didSelectWalletPrompt(WalletPrompt(type: .addPaymentCards))
-//        XCTAssertNil(Current.navigate.currentViewController)
-//    }
 }

@@ -55,11 +55,11 @@ class FilterBrandsCollectionViewCell: UICollectionViewCell {
 
 extension FilterBrandsCollectionViewCell: FilterBrandsCollectionViewCellTestable {
     func getImageView() -> UIImageView {
-        return self.imageView
+        return imageView
     }
     
     func getFilterTitleLabel() -> UILabel {
-        return self.filterTitleLabel
+        return filterTitleLabel
     }
     
     func getCustomSeparatorView() -> UIView {

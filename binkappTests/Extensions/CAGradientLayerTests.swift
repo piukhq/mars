@@ -13,7 +13,7 @@ import XCTest
 
 final class CAGradientLayerTests: XCTestCase {
 
-    func test_canMakeGradients_AndRevomeGradients() throws {
+    func test_canMakeGradients_andRemoveGradients() throws {
         let gradient = CAGradientLayer.makeGradient(firstColor: .blue, secondColor: .red)
         
         XCTAssertNotNil(gradient)
