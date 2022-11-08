@@ -33,6 +33,11 @@ class PaymentCardCreateModel: Codable {
         self.cardType = PaymentCardType.type(from: pan)
     }
     
+    func formattedExpiryDate() -> String? {
+        guard let month = month, let year = year else { return nil }
+        return "\(month)/\(year)"
+    }
+    
     private func formattFullPanIfNecessary() {
         /// If we have scanned a card, we will have a fullPan available
         /// This pan should not contain any spaces, but guard against it anyway

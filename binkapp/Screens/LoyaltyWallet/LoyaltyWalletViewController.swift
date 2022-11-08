@@ -64,6 +64,12 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarVisibility(true, animated: false)
+        
+        if let sortType = viewModel.getCurrentMembershipCardsSortType() {
+            if sortType == .recent {
+                Current.wallet.refreshLocal()
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -92,7 +98,8 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         let sortType = viewModel.getCurrentMembershipCardsSortType()
         let newestOptionItem = SortOrderOptionItem(isSelected: sortType == .newest, orderType: .newest)
         let customOptionItem = SortOrderOptionItem(isSelected: sortType == .custom, orderType: .custom)
-        presentOptionsPopover(withOptionItems: [newestOptionItem, customOptionItem], fromBarButtonItem: sender)
+        let recentOptionItem = SortOrderOptionItem(isSelected: sortType == .recent, orderType: .recent)
+        presentOptionsPopover(withOptionItems: [newestOptionItem, customOptionItem, recentOptionItem], fromBarButtonItem: sender)
     }
     
     @objc private func handlePointsScrapingUpdate() {
@@ -277,17 +284,26 @@ extension LoyaltyWalletViewController: OptionItemListViewControllerDelegate {
             if viewModel.hasMembershipCardMoved() && previousSortType == .custom && sortItem.orderType == .newest {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4, execute: {
                     self.viewModel.showSortOrderChangeAlert() {
-                        self.viewModel.setMembershipCardsSortingType(sortType: sortItem.orderType)
-                        self.setupSortBarButton()
-                        self.viewModel.clearLocalWalletSortedCardsKey()
-                        self.viewModel.setMembershipCardMoved(hasMoved: false)
-                        Current.wallet.launch()
+                        self.resetSort(orderType: sortItem.orderType)
                     }
                 })
+            } else if previousSortType == .recent && sortItem.orderType == .newest {
+                self.resetSort(orderType: sortItem.orderType)
             } else {
                 viewModel.setMembershipCardsSortingType(sortType: sortItem.orderType)
                 setupSortBarButton()
+                if sortItem.orderType == .recent {
+                    Current.wallet.refreshLocal()
+                }
             }
         }
+    }
+    
+    private func resetSort(orderType: MembershipCardsSortState) {
+        self.viewModel.setMembershipCardsSortingType(sortType: orderType)
+        self.setupSortBarButton()
+        self.viewModel.clearLocalWalletSortedCardsKey()
+        self.viewModel.setMembershipCardMoved(hasMoved: false)
+        Current.wallet.launch()
     }
 }

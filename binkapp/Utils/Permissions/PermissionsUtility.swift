@@ -33,10 +33,16 @@ enum PermissionsUtility {
 }
 
 extension PermissionsUtility {
-    static func launchLoyaltyScanner(_ viewController: BarcodeScannerViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil, addFromPhotoLibraryAction: @escaping EmptyCompletionBlock) {
+    static func launchLoyaltyScanner(_ viewController: BinkScannerViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil, addFromPhotoLibraryAction: @escaping EmptyCompletionBlock) {
         launchScanner(walletType: .loyalty, viewController: viewController, grantedAction: grantedAction, enterManuallyAction: enterManuallyAction, addFromPhotoLibraryAction: addFromPhotoLibraryAction)
     }
 
+//    static func launchPaymentScanner(_ viewController: BinkScannerViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil) {
+//        launchScanner(walletType: .payment, viewController: viewController, grantedAction: grantedAction, enterManuallyAction: enterManuallyAction)
+//    }
+    
+    
+    // TODO: Delete once payment scanner is switched
     static func launchPaymentScanner(_ viewController: ScanViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil) {
         launchScanner(walletType: .payment, viewController: viewController, grantedAction: grantedAction, enterManuallyAction: enterManuallyAction)
     }

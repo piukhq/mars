@@ -238,7 +238,7 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
             fetchCoreDataObjects(forObjectType: CD_MembershipCard.self) { [weak self] cards in
                 guard let self = self else { return }
                 self.membershipCards = cards
-                self.applyLocalWalletOrder(&self.localMembershipCardsOrder, to: cards, updating: &self.membershipCards)
+                self.applyLocalWalletOrder(&self.localMembershipCardsOrder, to: cards, updating: &self.membershipCards, for: .loyalty)
                 completion(true, nil)
             }
             return
@@ -250,7 +250,7 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
                     self?.fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, completion: { cards in
                         guard let self = self else { return }
                         self.membershipCards = cards
-                        self.applyLocalWalletOrder(&self.localMembershipCardsOrder, to: cards, updating: &self.membershipCards)
+                        self.applyLocalWalletOrder(&self.localMembershipCardsOrder, to: cards, updating: &self.membershipCards, for: .loyalty)
                         completion(true, nil)
                     })
                 })
@@ -265,7 +265,7 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
             fetchCoreDataObjects(forObjectType: CD_PaymentCard.self) { [weak self] cards in
                 guard let self = self else { return }
                 self.paymentCards = cards
-                self.applyLocalWalletOrder(&self.localPaymentCardsOrder, to: cards, updating: &self.paymentCards)
+                self.applyLocalWalletOrder(&self.localPaymentCardsOrder, to: cards, updating: &self.paymentCards, for: .payment)
                 completion(true, nil)
             }
             return
@@ -278,7 +278,7 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
                     self?.fetchCoreDataObjects(forObjectType: CD_PaymentCard.self) { cards in
                         guard let self = self else { return }
                         self.paymentCards = cards
-                        self.applyLocalWalletOrder(&self.localPaymentCardsOrder, to: cards, updating: &self.paymentCards)
+                        self.applyLocalWalletOrder(&self.localPaymentCardsOrder, to: cards, updating: &self.paymentCards, for: .payment)
                         completion(true, nil)
                     }
                 })
@@ -378,7 +378,7 @@ extension Wallet {
         localCardsOrder?.insert(card.id, at: destinationIndex)
     }
 
-    private func applyLocalWalletOrder<C: WalletCard>(_ localOrder: inout [String]?, to cards: [C]?, updating walletDataSource: inout [C]?) {
+    private func applyLocalWalletOrder<C: WalletCard>(_ localOrder: inout [String]?, to cards: [C]?, updating walletDataSource: inout [C]?, for walletType: WalletType) {
         guard let cards = cards else { return }
 
         /// On logout, we delete all core data objects, so the first time we fall into this method is when we attempt to load local cards, which won't exist. We should return out at this point.
@@ -401,6 +401,26 @@ extension Wallet {
             /// Sort cards in the custom order
             let orderedCards = order.map { cardId in
                 cards.first(where: { $0.id == cardId })
+            }
+            
+            /// if the sort order is Recent - membershipCards only
+            if walletType == .loyalty {
+                let isRecentSort = Current.userDefaults.string(forDefaultsKey: .membershipCardsSortType) == MembershipCardsSortState.recent.rawValue
+                if isRecentSort {
+                    var cardsOpened = orderedCards.filter({ $0?.lastOpened != nil }).sorted(by: {
+                        if let firstDate = $0?.lastOpened, let secondDate = $1?.lastOpened {
+                            return firstDate > secondDate
+                        }
+                        return false
+                    })
+                    
+                    /// append the unopened cards to the bottom and sync the datasource and local card order
+                    let cardsWithoutOpenedDate = orderedCards.filter({ $0?.lastOpened == nil })
+                    cardsOpened.append(contentsOf: cardsWithoutOpenedDate)
+                    walletDataSource = cardsOpened.compactMap({ $0 })
+                    localOrder = cardsOpened.compactMap { $0?.id }
+                    return
+                }
             }
 
             /// Sync the datasource and local card order

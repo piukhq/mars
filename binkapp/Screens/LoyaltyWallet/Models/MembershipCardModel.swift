@@ -20,6 +20,7 @@ struct MembershipCardModel: Codable {
     var paymentCards: [LinkedCardResponse]?
     var balances: [MembershipCardBalanceModel]?
     let vouchers: [VoucherModel]?
+    let openedTime: Date?
     
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
@@ -32,6 +33,7 @@ struct MembershipCardModel: Codable {
         case paymentCards = "payment_cards"
         case balances
         case vouchers
+        case openedTime
     }
 }
 
@@ -181,6 +183,10 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
                 update(cdVoucher, \.membershipCard, with: cdObject, delta: false)
                 cdObject.addVouchersObject(cdVoucher)
             }
+        }
+        
+        if let openedTime = openedTime {
+            update(cdObject, \.openedTime, with: openedTime, delta: true)
         }
 
         return cdObject
