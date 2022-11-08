@@ -59,6 +59,10 @@ class BinkButton {
     func setTitle(_ title: String) {
         button.setTitle(title, for: .normal)
     }
+    
+    func getTitle() -> String? {
+        button.currentTitle
+    }
 
     @objc private func performAction() {
         action()
