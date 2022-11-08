@@ -169,7 +169,8 @@ extension FormDataSource {
             fieldType: .text,
             updated: updatedBlock,
             shouldChange: shouldChangeBlock,
-            fieldExited: fieldExitedBlock
+            fieldExited: fieldExitedBlock,
+            forcedValue: model.nameOnCard
         )
         
         fields = [cardNumberField, expiryField, nameOnCardField]

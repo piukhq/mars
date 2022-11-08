@@ -14,6 +14,7 @@ import CardScan
 enum MembershipCardsSortState: String {
     case newest = "Newest"
     case custom = "Custom"
+    case recent = "Recent"
 }
 
 class LoyaltyWalletViewModel: WalletViewModel {

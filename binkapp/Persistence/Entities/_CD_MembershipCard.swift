@@ -6,6 +6,10 @@
 import Foundation
 import CoreData
 
+public enum CD_MembershipCardAttributes: String {
+    case openedTime = "openedTime"
+}
+
 public enum CD_MembershipCardRelationships: String {
     case account = "account"
     case balances = "balances"
@@ -47,6 +51,9 @@ open class _CD_MembershipCard: CD_CardAccount {
     }
 
     // MARK: - Properties
+
+    @NSManaged open
+    var openedTime: Date?
 
     // MARK: - Relationships
 
