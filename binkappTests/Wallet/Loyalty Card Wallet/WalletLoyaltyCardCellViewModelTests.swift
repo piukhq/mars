@@ -56,7 +56,7 @@ final class WalletLoyaltyCardCellViewModelTests: XCTestCase, CoreDataTestable {
         
         membershipCardStatusModel = MembershipCardStatusModel(apiId: 500, state: .authorised, reasonCodes: [.pointsScrapingLoginRequired])
         
-        membershipCardResponse = MembershipCardModel(apiId: 300, membershipPlan: 500, membershipTransactions: nil, status: membershipCardStatusModel, card: cardResponse, images: nil, account: nil, paymentCards: nil, balances: [membershipCardBalanceModel], vouchers: [voucherResponse])
+        membershipCardResponse = MembershipCardModel(apiId: 300, membershipPlan: 500, membershipTransactions: nil, status: membershipCardStatusModel, card: cardResponse, images: nil, account: nil, paymentCards: nil, balances: [membershipCardBalanceModel], vouchers: [voucherResponse], openedTime: nil)
         
         mapResponseToManagedObject(membershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
             self.membershipCard = membershipCard

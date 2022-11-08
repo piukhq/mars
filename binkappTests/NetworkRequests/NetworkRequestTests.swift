@@ -35,7 +35,7 @@ class NetworkRequestTests: XCTestCase, UserServiceProtocol, WalletServiceProtoco
         
         baseMembershipPlanModel = MembershipPlanModel(apiId: nil, status: nil, featureSet: baseFeatureSetModel, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
         
-        baseMembershipCardModel = MembershipCardModel(apiId: 10, membershipPlan: 1, membershipTransactions: nil, status: MembershipCardStatusModel(apiId: nil, state: .authorised, reasonCodes: nil), card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
+        baseMembershipCardModel = MembershipCardModel(apiId: 10, membershipPlan: 1, membershipTransactions: nil, status: MembershipCardStatusModel(apiId: nil, state: .authorised, reasonCodes: nil), card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil, openedTime: nil)
         
         paymentCardCardResponse = PaymentCardCardResponse(apiId: 100, firstSix: nil, lastFour: "1234", month: 30, year: 3000, country: nil, currencyCode: nil, nameOnCard: "Rick Sanchez", provider: nil, type: nil)
         

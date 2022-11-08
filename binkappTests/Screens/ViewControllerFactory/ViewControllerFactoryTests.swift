@@ -31,7 +31,7 @@ class ViewControllerFactoryTests: XCTestCase, CoreDataTestable {
         super.setUp()
         let membershipCardBalanceModel = MembershipCardBalanceModel(apiId: 300, value: 500, currency: nil, prefix: "£", suffix: nil, updatedAt: nil)
 
-        baseMembershipCardResponse = MembershipCardModel(apiId: 300, membershipPlan: 500, membershipTransactions: nil, status: nil, card: nil, images: nil, account: nil, paymentCards: nil, balances: [membershipCardBalanceModel], vouchers: nil)
+        baseMembershipCardResponse = MembershipCardModel(apiId: 300, membershipPlan: 500, membershipTransactions: nil, status: nil, card: nil, images: nil, account: nil, paymentCards: nil, balances: [membershipCardBalanceModel], vouchers: nil, openedTime: nil)
         
         mapResponseToManagedObject(baseMembershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
             self.membershipCard = membershipCard
