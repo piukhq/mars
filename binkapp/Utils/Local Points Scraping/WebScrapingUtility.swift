@@ -479,7 +479,9 @@ extension WebScrapingUtility: WKNavigationDelegate {
     }
     
     func debug() {
-        presentWebView()
+        if isInDebugMode {
+            presentWebView()
+        }
     }
 }
 
