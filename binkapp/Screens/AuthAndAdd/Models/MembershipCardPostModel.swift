@@ -16,4 +16,8 @@ struct MembershipCardPostModel: Codable {
         case account = "account"
         case membershipPlan = "membership_plan"
     }
+    
+    var isCustomCard: Bool {
+        return membershipPlan == 9999
+    }
 }

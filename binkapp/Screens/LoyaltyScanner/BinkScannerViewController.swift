@@ -442,6 +442,19 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
                     DispatchQueue.main.async { [weak self] in
                         guard let self = self else { return }
                         self.widgetView.unrecognizedBarcode()
+                        
+                        let alertController = ViewControllerFactory.makeTwoButtonAlertViewController(title: "Unrecog", message: "Would you?", primaryButtonTitle: "Cancel", secondaryButtonTitle: "Add Custom") {
+                            /// Cancel
+                        } secondaryButtonCompletion: {
+                            if let customPlan = Current.wallet.membershipPlans?.first(where: { $0.isCustomCard }) {
+                                let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: customPlan, formPurpose: .add)
+                                let navigationRequest = PushNavigationRequest(viewController: viewController)
+                                Current.navigate.to(navigationRequest)
+                            }
+                        }
+
+                        let alertRequest = AlertNavigationRequest(alertController: alertController)
+                        Current.navigate.to(alertRequest)
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: { [weak self] in
                         self?.canPresentScanError = true
