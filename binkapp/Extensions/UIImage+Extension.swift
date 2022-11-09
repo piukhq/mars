@@ -20,4 +20,17 @@ extension UIImage {
         }
         return nil
     }
+    
+    public func grayScale() -> UIImage? {
+        guard let cgImage = cgImage else { return nil }
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue)
+        let context = CGContext(data: nil, width: Int(size.width), height: Int(size.height), bitsPerComponent: 8, bytesPerRow: 0, space: CGColorSpaceCreateDeviceGray(), bitmapInfo: bitmapInfo.rawValue)
+        let imageRect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        context?.draw(cgImage, in: imageRect)
+        
+        if let imageRef = context?.makeImage() {
+            return UIImage(cgImage: imageRef)
+        }
+        return nil
+    }
 }

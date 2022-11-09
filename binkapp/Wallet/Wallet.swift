@@ -214,17 +214,20 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
         }
 
         getMembershipPlans(isUserDriven: isUserDriven) { [weak self] result in
+            guard let self = self else { return }
             switch result {
-            case .success(let response):
-                self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipPlan.self, completion: {
-                    self?.fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self) { plans in
-                        self?.membershipPlans = plans
+            case .success(var response):
+                response.append(self.customCardPlan())
+                
+                self.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipPlan.self, completion: {
+                    self.fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self) { plans in
+                        self.membershipPlans = plans
                         completion(true, nil)
                         StorageUtility.refreshPlanImages()
                     }
                 })
             case .failure(let error):
-                guard let localPlans = self?.membershipPlans, !localPlans.isEmpty else {
+                guard let localPlans = self.membershipPlans, !localPlans.isEmpty else {
                     completion(false, error)
                     return
                 }
@@ -317,6 +320,13 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
                 return
             }
         }
+    }
+    
+    private func customCardPlan() -> MembershipPlanModel {
+        let customCard = CardModel(apiId: nil, colour: nil, secondaryColour: nil)
+        let account = MembershipPlanAccountModel(apiId: nil, planNameCard: "Other card", companyName: "Other card", category: "Other", planDescription: nil, barcodeRedeemInstructions: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
+        let featureSet = FeatureSetModel(apiId: nil, authorisationRequired: nil, digitalOnly: nil, cardType: .store, linkingSupport: [.add], hasVouchers: nil)
+        return MembershipPlanModel(apiId: 9999, status: "active", featureSet: featureSet, images: nil, account: account, balances: nil, card: customCard)
     }
 }
 
