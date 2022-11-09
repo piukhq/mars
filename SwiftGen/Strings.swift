@@ -174,6 +174,16 @@ internal enum L10n {
   internal static let continueButtonTitle = L10n.tr("Localizable", "continue_button_title")
   /// Enter credentials
   internal static let credentialsTitle = L10n.tr("Localizable", "credentials_title")
+  /// Other card
+  internal static let customCardCompanyName = L10n.tr("Localizable", "custom_card_company_name")
+  /// Enter name of store
+  internal static let customCardNameAddFieldDescription = L10n.tr("Localizable", "custom_card_name_add_field_description")
+  /// Store name
+  internal static let customCardNameAddFieldTitle = L10n.tr("Localizable", "custom_card_name_add_field_title")
+  /// Enter card number
+  internal static let customCardNumberAddFieldDescription = L10n.tr("Localizable", "custom_card_number_add_field_description")
+  /// Card number
+  internal static let customCardNumberAddFieldTitle = L10n.tr("Localizable", "custom_card_number_add_field_title")
   /// day
   internal static let day = L10n.tr("Localizable", "day")
   /// days

@@ -532,3 +532,12 @@
 "preferences_updated" = "Preferences Updated";
 
 "payment_card_link_fail_alert_message" = "Unable to adjust link at this time, if the problem persists please contact support";
+
+
+// MARK: - Wallet
+"custom_card_number_add_field_title" = "Card number";
+"custom_card_number_add_field_description" = "Enter card number";
+"custom_card_name_add_field_title" = "Store name";
+"custom_card_name_add_field_description" = "Enter name of store";
+"custom_card_company_name" = "Other card";
+
