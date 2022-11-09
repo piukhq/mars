@@ -53,6 +53,10 @@ open class CD_MembershipPlan: _CD_MembershipPlan {
             return secondaryColor ?? .darkGray
         }
     }
+    
+    var isCustomCard: Bool {
+        return id == "9999"
+    }
 
     enum DynamicContentColumn: String {
         case voucherStampsExpiredDetail = "Voucher_Expired_Detail"

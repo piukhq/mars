@@ -82,6 +82,8 @@ internal enum L10n {
   internal static let alertViewChangingSortBody = L10n.tr("Localizable", "alert_view_changing_sort_body")
   /// All
   internal static let allTitle = L10n.tr("Localizable", "all_title")
+  /// Please enter your credentials below to add this card to your wallet.
+  internal static let authScreenCustomCardDescription = L10n.tr("Localizable", "auth_screen_custom_card_description")
   /// Please enter your %@ credentials below to add this card to your wallet.
   internal static func authScreenDescription(_ p1: Any) -> String {
     return L10n.tr("Localizable", "auth_screen_description", String(describing: p1))
