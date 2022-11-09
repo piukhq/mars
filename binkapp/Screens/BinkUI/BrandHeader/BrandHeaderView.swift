@@ -26,7 +26,7 @@ class BrandHeaderView: CustomView {
         logoImageView.backgroundColor = .clear
         guard let membershipPlan = plan else { return }
         
-        logoImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
+        logoImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan), withPlaceholderImage: UIImage(named: Asset.binkIconLogo.name)?.grayScale())
         logoImageView.layer.cornerRadius = LayoutHelper.iconCornerRadius
         backgroundColor = .clear
         
