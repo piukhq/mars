@@ -31,7 +31,7 @@ class WebViewController: BinkViewController {
         
         setWebView()
         setBottomToolbar()
-        
+
         guard let safeUrl = url else { return }
         let request = URLRequest(url: safeUrl)
         webView.load(request)
@@ -139,6 +139,7 @@ extension WebViewController: WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         showActivityIndicator(show: false)
+        webView.evaluateJavaScript("document.querySelector('[data-webviewid=\"accept-cookies\"]').click()") { (_, _) in }
     }
 
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
