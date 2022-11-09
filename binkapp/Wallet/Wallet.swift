@@ -324,7 +324,9 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
     
     private func customCardPlan() -> MembershipPlanModel {
         let customCard = CardModel(apiId: nil, colour: nil, secondaryColour: nil)
-        let account = MembershipPlanAccountModel(apiId: nil, planNameCard: "Other card", companyName: "Other card", category: "Other", planDescription: nil, barcodeRedeemInstructions: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
+        let cardNumberField = AddFieldModel(apiId: 0, column: "Card number", validation: nil, fieldDescription: "Enter card number", type: 0, choices: nil, commonName: nil, alternatives: nil)
+        let storeNameField = AddFieldModel(apiId: 0, column: "Store name", validation: nil, fieldDescription: "Enter name of store", type: 0, choices: nil, commonName: nil, alternatives: nil)
+        let account = MembershipPlanAccountModel(apiId: nil, planNameCard: "Other card", companyName: "Other card", category: "Other", planDescription: nil, barcodeRedeemInstructions: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, addFields: [cardNumberField, storeNameField], authoriseFields: nil, registrationFields: nil, enrolFields: nil)
         let featureSet = FeatureSetModel(apiId: nil, authorisationRequired: nil, digitalOnly: nil, cardType: .store, linkingSupport: [.add], hasVouchers: nil)
         return MembershipPlanModel(apiId: 9999, status: "active", featureSet: featureSet, images: nil, account: account, balances: nil, card: customCard)
     }
