@@ -27,6 +27,10 @@ class AddPaymentCardViewModelTests: XCTestCase {
     var currentViewController: UIViewController {
         return Current.navigate.currentViewController!
     }
+    
+    func test_shouldDisplayTermsAndConditions() throws {
+        XCTAssertTrue(Self.model.shouldDisplayTermsAndConditions)
+    }
 
     func test_shouldGetCorrectCardType() throws {
         Self.model.setPaymentCardType(.mastercard)

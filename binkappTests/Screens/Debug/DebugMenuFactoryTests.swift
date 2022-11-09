@@ -89,4 +89,10 @@ class DebugMenuFactoryTests: XCTestCase {
         XCTAssertNil(sectionOne?.rows[9].subtitle)
         XCTAssertEqual(sectionOne?.rows[9].cellType, .picker(.store))
     }
+    
+    func test_returnEnvAlertView() {
+        let vc = sut.makeEnvironmentAlertController(navigationController: UINavigationController())
+        
+        XCTAssertTrue(vc.isKind(of: BinkAlertController.self))
+    }
 }

@@ -18,7 +18,7 @@ enum MembershipCardStatus: String, Codable {
 struct MembershipCardStatusModel: Codable {
     let apiId: Int?
     var state: MembershipCardStatus?
-    let reasonCodes: [ReasonCode]?
+    var reasonCodes: [ReasonCode]?
     
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
