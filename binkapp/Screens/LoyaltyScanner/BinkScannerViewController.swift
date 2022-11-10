@@ -443,7 +443,7 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
                         guard let self = self else { return }
                         self.widgetView.unrecognizedBarcode()
                         
-                        let alertController = ViewControllerFactory.makeTwoButtonAlertViewController(title: "Unrecog", message: "Would you?", primaryButtonTitle: "Cancel", secondaryButtonTitle: "Add Custom") {
+                        let alertController = ViewControllerFactory.makeTwoButtonAlertViewController(title: L10n.loyaltyScannerWidgetTitleUnrecognizedBarcodeText, message: L10n.loyaltyScannerUnrecognizedBarcodeAlertDescription, primaryButtonTitle: L10n.cancel, secondaryButtonTitle: L10n.loyaltyScannerUnrecognizedBarcodeAlertAddCustomButtonText) {
                             /// Cancel
                         } secondaryButtonCompletion: {
                             if let customPlan = Current.wallet.membershipPlans?.first(where: { $0.isCustomCard }) {

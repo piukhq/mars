@@ -464,6 +464,9 @@
 "loyalty_scanner_widget_explainer_unrecognized_barcode_text" = "Please try adding the card manually.";
 "loyalty_scanner_add_photo_from_library_button_title" = "Add from Photo Library";
 "loyalty_scanner_failed_to_detect_barcode" = "Failed to detect barcode in the image, please try again";
+"loyalty_scanner_unrecognized_barcode_alert_description" = "Would you like to add this to your wallet anyway?";
+"loyalty_scanner_unrecognized_barcode_alert_add_custom_button_text" = "Add Custom";
+
 
 // MARK: - Payment Scanner
 "payment_scanner_explainer_text" = "Position your card in the frame so the card number is visible";

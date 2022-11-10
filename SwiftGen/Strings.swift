@@ -329,6 +329,10 @@ internal enum L10n {
   internal static let loyaltyScannerExplainerTextPermissionDenied = L10n.tr("Localizable", "loyalty_scanner_explainer_text_permission_denied")
   /// Failed to detect barcode in the image, please try again
   internal static let loyaltyScannerFailedToDetectBarcode = L10n.tr("Localizable", "loyalty_scanner_failed_to_detect_barcode")
+  /// Add Custom
+  internal static let loyaltyScannerUnrecognizedBarcodeAlertAddCustomButtonText = L10n.tr("Localizable", "loyalty_scanner_unrecognized_barcode_alert_add_custom_button_text")
+  /// Would you like to add this to your wallet anyway?
+  internal static let loyaltyScannerUnrecognizedBarcodeAlertDescription = L10n.tr("Localizable", "loyalty_scanner_unrecognized_barcode_alert_description")
   /// You can also type in the card details yourself.
   internal static let loyaltyScannerWidgetExplainerEnterManuallyText = L10n.tr("Localizable", "loyalty_scanner_widget_explainer_enter_manually_text")
   /// Please try adding the card manually.
