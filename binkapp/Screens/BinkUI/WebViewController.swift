@@ -62,7 +62,10 @@ class WebViewController: BinkViewController {
     }
     
     private func setWebView() {
-        webView = WKWebView(frame: view.frame)
+        let padding = CGFloat(34)
+        let bottomOffset = (navigationController?.navigationBar.frame.height ?? 0) + (navigationController?.toolbar.frame.height ?? 0) + padding
+        let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - bottomOffset)
+        webView = WKWebView(frame: frame)
         webView.navigationDelegate = self
 
         view.addSubview(webView)
@@ -139,7 +142,6 @@ extension WebViewController: WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         showActivityIndicator(show: false)
-        webView.evaluateJavaScript("document.querySelector('[data-webviewid=\"accept-cookies\"]').click()") { (_, _) in }
     }
 
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
