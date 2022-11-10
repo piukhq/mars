@@ -115,6 +115,11 @@ class AuthAndAddViewController: BaseFormViewController {
             FormDataSource.PrefilledValue(commonName: $0.fieldCommonName, value: $0.value)
         }
         prefilledValues.append(FormDataSource.PrefilledValue(commonName: .barcode, value: barcode))
+        
+        if viewModel.getMembershipPlan().isCustomCard {
+            prefilledValues.append(FormDataSource.PrefilledValue(commonName: .cardNumber, value: barcode))
+        }
+        
         self.dataSource = FormDataSource(authAdd: self.viewModel.getMembershipPlan(), formPurpose: .addFromScanner, delegate: self, prefilledValues: prefilledValues)
         self.viewModel.formPurpose = .addFromScanner
         self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
