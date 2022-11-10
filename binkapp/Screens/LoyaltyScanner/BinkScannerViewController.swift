@@ -442,7 +442,6 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
         Current.wallet.identifyMembershipPlanForBarcode(barcode) { [weak self] plan in
             guard let self = self else { return }
             guard let plan = plan else {
-                
                 /// If arrived from custom card Auth and Add screen and we can't identify plan,  pass data to scanner delegate with no plan
                 if self.viewModel.planIsCustomCard {
                     self.passDataToBarcodeScannerDelegate(barcode: barcode)
@@ -453,7 +452,7 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
                     DispatchQueue.main.async { [weak self] in
                         guard let self = self else { return }
                         self.widgetView.unrecognizedBarcode()
-                        self.showUnrecognisedBardcodeError()
+                        self.showUnrecognisedBardcodeError(barcode: barcode)
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: { [weak self] in
                         self?.canPresentScanError = true
@@ -512,14 +511,13 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
         }
     }
     
-    private func showUnrecognisedBardcodeError() {
+    private func showUnrecognisedBardcodeError(barcode: String) {
         let alertController = ViewControllerFactory.makeTwoButtonAlertViewController(title: L10n.loyaltyScannerWidgetTitleUnrecognizedBarcodeText, message: L10n.loyaltyScannerUnrecognizedBarcodeAlertDescription, primaryButtonTitle: L10n.cancel, secondaryButtonTitle: L10n.loyaltyScannerUnrecognizedBarcodeAlertAddCustomButtonText) {
             /// Cancel
         } secondaryButtonCompletion: {
             if let customPlan = Current.wallet.membershipPlans?.first(where: { $0.isCustomCard }) {
-                // TODO: Prefill barcode
-                
-                let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: customPlan, formPurpose: .add)
+                let prefilledValues = FormDataSource.PrefilledValue(commonName: .cardNumber, value: barcode)
+                let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: customPlan, formPurpose: .add, prefilledFormValues: [prefilledValues])
                 let navigationRequest = PushNavigationRequest(viewController: viewController)
                 Current.navigate.to(navigationRequest)
             }
