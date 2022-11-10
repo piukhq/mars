@@ -9,6 +9,13 @@ import Foundation
 
 class AuthAndAddRepository: WalletServiceProtocol {
     func addMembershipCard(request: MembershipCardPostModel, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard?, scrapingCredentials: WebScrapingCredentials? = nil, onSuccess: @escaping (CD_MembershipCard?) -> Void, onError: @escaping (BinkError?) -> Void) {
+        guard !request.isCustomCard else {
+            mapCustomCardToCoreData(membershipCard: request, completion: { membershipCard in
+                onSuccess(membershipCard)
+            })
+            return
+        }
+        
         addMembershipCard(withRequestModel: request, existingMembershipCard: existingMembershipCard) { (result, responseData) in
             switch result {
             case .success(let response):
@@ -50,6 +57,28 @@ class AuthAndAddRepository: WalletServiceProtocol {
                 BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardResponseFail(request: request, formPurpose: formPurpose, responseData: responseData))
                 BinkLogger.error(LoyaltyCardLoggerError.addLoyaltyCardFailure, value: responseData?.urlResponse?.statusCode.description)
                 onError(error)
+            }
+        }
+    }
+    
+    func mapCustomCardToCoreData(membershipCard: MembershipCardPostModel, completion: @escaping (CD_MembershipCard?) -> Void) {
+        Current.database.performBackgroundTask { context in
+            let barcode = membershipCard.account?.addFields?.first(where: { $0.column == "Card number" })?.value
+            let cardModel = CardModel(apiId: nil, barcode: barcode, colour: nil, secondaryColour: nil)
+            
+            let membershipCardModel = MembershipCardModel(apiId: Int(membershipCard.uuid),
+                                                          membershipPlan: membershipCard.membershipPlan,
+                                                          card: cardModel,
+                                                          images: nil,
+                                                          openedTime: nil)
+            
+            let newObject = membershipCardModel.mapToCoreData(context, .update, overrideID: nil)
+            try? context.save()
+            
+            DispatchQueue.main.async {
+                Current.database.performTask(with: newObject) { (_, safeObject) in
+                    completion(safeObject)
+                }
             }
         }
     }

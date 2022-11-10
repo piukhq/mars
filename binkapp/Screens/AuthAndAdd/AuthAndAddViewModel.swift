@@ -169,11 +169,6 @@ class AuthAndAddViewModel {
             }
         }
         
-        // TODO: - Persist custom card
-        if model.isCustomCard {
-            
-        }
-        
         repository.addMembershipCard(request: model, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, scrapingCredentials: scrapingCredentials, onSuccess: { card in
             if let card = card {
                 Current.watchController.addLoyaltyCardToWatch(card)
