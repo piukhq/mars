@@ -130,7 +130,7 @@ class AuthAndAddViewController: BaseFormViewController {
 }
 
 extension AuthAndAddViewController: BinkScannerViewControllerDelegate {
-    func binkScannerViewController(_ viewController: BinkScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
+    func binkScannerViewController(_ viewController: BinkScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan?, completion: (() -> Void)?) {
         Current.navigate.close(animated: true) { [weak self] in
             self?.refreshForm(for: barcode)
         }

@@ -72,7 +72,8 @@ extension MainTabBarViewController: UITabBarControllerDelegate {
 }
 
 extension MainTabBarViewController: BinkScannerViewControllerDelegate, ScanDelegate {
-    func binkScannerViewController(_ viewController: BinkScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
+    func binkScannerViewController(_ viewController: BinkScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan?, completion: (() -> Void)?) {
+        guard let membershipPlan = membershipPlan else { return }
         let prefilledBarcodeValue = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
         let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, prefilledFormValues: [prefilledBarcodeValue])
         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
