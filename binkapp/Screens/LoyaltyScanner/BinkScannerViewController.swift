@@ -38,7 +38,11 @@ enum BarcodeCaptureSource {
     var errorMessage: String {
         switch self {
         case .camera(let membershipPlan):
-            return "The card you scanned was not correct, please scan your \(membershipPlan?.account?.companyName ?? "") card"
+            if let plan = membershipPlan, plan.isCustomCard {
+                return "The barcode you scanned is a Bink loyalty brand, please add it via the Browse Brands screen, or continue adding a card which isn't on that list."
+            } else {
+                return "The card you scanned was not correct, please scan your \(membershipPlan?.account?.companyName ?? "") card"
+            }
         case .photoLibrary(let membershipPlan):
             return "Unrecognized barcode, please import an image of your \(membershipPlan?.account?.companyName ?? "") barcode"
         }
@@ -462,12 +466,6 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
             }
             
             BinkLogger.infoPrivateHash(event: AppLoggerEvent.barcodeScanned, value: "ID: \(plan.id ?? "") - \(barcode)")
-            
-            /// If arrived from custom card Auth and Add screen,  present error if we have a legit Bink plan
-            if self.viewModel.planIsCustomCard {
-                // TODO: Present error
-            }
-
             self.passDataToBarcodeScannerDelegate(barcode: barcode, membershipPlan: plan)
         }
     }
