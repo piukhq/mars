@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol LoginViewControllerTestable {
+    func handleLoginTypeToggling()
+    func getLoginTypeButton() -> BinkButton
+    func setLoginType(type: AccessForm)
+}
+
 enum MagicLinkStatus {
     case checkInbox
     case expired
@@ -67,6 +73,11 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     
     private var loginType: AccessForm = .magicLink
     
+    init(formaDataSource: FormDataSource) {
+        super.init(title: L10n.magicLinkTitle, description: "", attributedDescription: magicLinkattributedDescription, dataSource: formaDataSource)
+        dataSource.delegate = self
+    }
+    
     init() {
         super.init(title: L10n.magicLinkTitle, description: "", attributedDescription: magicLinkattributedDescription, dataSource: FormDataSource(accessForm: .magicLink))
         dataSource.delegate = self
@@ -111,7 +122,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         dataSource.delegate = self
         formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
         switchLoginTypeButton.setTitle(loginType == .magicLink ? L10n.loginWithPassword : L10n.emailMagicLink)
-        
+
         if loginType == .magicLink {
             titleLabel.text = L10n.magicLinkTitle
             textView.attributedText = magicLinkattributedDescription
@@ -226,4 +237,18 @@ extension LoginViewController: FormCollectionViewCellDelegate {
 private extension Selector {
     static let continueButtonTapped = #selector(LoginViewController.continueButtonTapped)
     static let forgotPasswordTapped = #selector(LoginViewController.forgotPasswordTapped)
+}
+
+extension LoginViewController: LoginViewControllerTestable {
+    func handleLoginTypeToggling() {
+        switchLoginTypeButtonHandler()
+    }
+    
+    func getLoginTypeButton() -> BinkButton {
+        return switchLoginTypeButton
+    }
+    
+    func setLoginType(type: AccessForm) {
+        loginType = type
+    }
 }

@@ -15,10 +15,10 @@ struct MembershipPlanAccountModel: Codable {
     var planURL: String?
     var companyName: String?
     let category: String?
-    let planSummary: String?
+    var planSummary: String?
     let planDescription: String?
     let barcodeRedeemInstructions: String?
-    let planRegisterInfo: String?
+    var planRegisterInfo: String?
     let companyURL: String?
     let enrolIncentive: String?
     let forgottenPasswordUrl: String?

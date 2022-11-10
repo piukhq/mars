@@ -21,6 +21,9 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		211058492909469B00DFDF90 /* PaymentWalletViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211058482909469B00DFDF90 /* PaymentWalletViewModelTests.swift */; };
+		2110584C2909637300DFDF90 /* MerchantHeroCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110584B2909637300DFDF90 /* MerchantHeroCellTests.swift */; };
+		2110584F2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110584E2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift */; };
 		2126211928AFB4B900939609 /* NetworkRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126211828AFB4B900939609 /* NetworkRequestTests.swift */; };
 		2126211B28AFD68E00939609 /* LoginResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126211A28AFD68E00939609 /* LoginResponseTests.swift */; };
 		2126211D28AFD9A900939609 /* PaymentCardCreateModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126211C28AFD9A900939609 /* PaymentCardCreateModelTests.swift */; };
@@ -32,6 +35,9 @@
 		2126377728B3E2FD00C795D6 /* BarcodeViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126377628B3E2FD00C795D6 /* BarcodeViewTests.swift */; };
 		212F0C442876EB7E007F09CE /* CalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C432876EB7E007F09CE /* CalloutView.swift */; };
 		212F0C462876EC63007F09CE /* GeoLocationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */; };
+		21410FA428DC8567002EE969 /* VisionUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21410FA328DC8567002EE969 /* VisionUtility.swift */; };
+		214680F02907F4B400C03EB1 /* WebScrapingResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214680EF2907F4B400C03EB1 /* WebScrapingResponseTests.swift */; };
+		2147C69E2907FD8C00B233B3 /* TransactionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2147C69D2907FD8C00B233B3 /* TransactionsViewModelTests.swift */; };
 		21497EC82864A1880053A9EE /* OptionItemListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21497EC72864A1880053A9EE /* OptionItemListViewController.swift */; };
 		21497ECD2869BE2E0053A9EE /* SortStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21497ECC2869BE2E0053A9EE /* SortStateTests.swift */; };
 		214DCF5128AD201900308531 /* NSNumberExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214DCF5028AD201900308531 /* NSNumberExtensionTests.swift */; };
@@ -47,6 +53,18 @@
 		214EC02628734B45000A3F73 /* GeoLocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02528734B45000A3F73 /* GeoLocationsViewController.swift */; };
 		214EC02928743165000A3F73 /* GeoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02828743165000A3F73 /* GeoModel.swift */; };
 		214EC02E28743883000A3F73 /* GeoLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214EC02D28743883000A3F73 /* GeoLocationViewModel.swift */; };
+		215147622909BE0200E6B209 /* BrowseBrandsListRowViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215147612909BE0200E6B209 /* BrowseBrandsListRowViewModelTests.swift */; };
+		215147642909C02E00E6B209 /* BinkTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215147632909C02E00E6B209 /* BinkTextFieldTests.swift */; };
+		215147662909C0A900E6B209 /* BinkSwitchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215147652909C0A900E6B209 /* BinkSwitchTests.swift */; };
+		2151476B290A938400E6B209 /* AuthAndAddViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2151476A290A938400E6B209 /* AuthAndAddViewModelTests.swift */; };
+		2151476E290AC6BE00E6B209 /* PreferencesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2151476D290AC6BE00E6B209 /* PreferencesViewModelTests.swift */; };
+		21514770290ADCDF00E6B209 /* PointsScrapingManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2151476F290ADCDF00E6B209 /* PointsScrapingManagerTests.swift */; };
+		21514773290BC98600E6B209 /* LoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21514772290BC98600E6B209 /* LoginViewControllerTests.swift */; };
+		21514775290C264300E6B209 /* MixpanelUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21514774290C264300E6B209 /* MixpanelUtilityTests.swift */; };
+		21514777290FC88B00E6B209 /* AnalyticsEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21514776290FC88B00E6B209 /* AnalyticsEventTests.swift */; };
+		215147792911284A00E6B209 /* HTMLParsingUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215147782911284A00E6B209 /* HTMLParsingUtilTests.swift */; };
+		2151478429114D0E00E6B209 /* fireBase-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 2151478229114D0E00E6B209 /* fireBase-config.json */; };
+		2151478529114D0E00E6B209 /* htmlTest.html in Resources */ = {isa = PBXBuildFile; fileRef = 2151478329114D0E00E6B209 /* htmlTest.html */; };
 		215BC59528A6900100DB1377 /* BinkCore in Frameworks */ = {isa = PBXBuildFile; productRef = 215BC59428A6900100DB1377 /* BinkCore */; };
 		216B999C28AE902000A67A14 /* FloatExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216B999B28AE902000A67A14 /* FloatExtensionTests.swift */; };
 		217288EF28B4BF5200258EBA /* AccountPostModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288EE28B4BF5200258EBA /* AccountPostModelTests.swift */; };
@@ -54,7 +72,14 @@
 		217288F528B4E63A00258EBA /* MainTabBarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288F428B4E63A00258EBA /* MainTabBarViewModelTests.swift */; };
 		217288F828B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288F728B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift */; };
 		217288FA28B50D3700258EBA /* PLRCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288F928B50D3700258EBA /* PLRCellViewModelTests.swift */; };
+		21A7711B29127FEE00233953 /* LoyaltyScannerWidgetViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A7711A29127FEE00233953 /* LoyaltyScannerWidgetViewTests.swift */; };
+		21A7711D29128B0600233953 /* CAGradientLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A7711C29128B0600233953 /* CAGradientLayerTests.swift */; };
+		21A7711F2912928100233953 /* CardAlertViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A7711E2912928100233953 /* CardAlertViewTests.swift */; };
+		21A771212912B34D00233953 /* DateManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A771202912B34D00233953 /* DateManagerTests.swift */; };
+		21A771242912DCD700233953 /* ActivityViewControllerRepresentableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A771232912DCD700233953 /* ActivityViewControllerRepresentableTests.swift */; };
+		21A771262912E43600233953 /* BarcodeViewNoBarcodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A771252912E43600233953 /* BarcodeViewNoBarcodeTests.swift */; };
 		21E5E2E728B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E5E2E628B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift */; };
+		21F313212913E02D009960F0 /* FilterBrandsCollectionViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F313202913E02D009960F0 /* FilterBrandsCollectionViewCellTests.swift */; };
 		3C05A9DC2327CD3D00620583 /* AppDelegate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DB2327CD3D00620583 /* AppDelegate+Extension.swift */; };
 		3C05A9DE2327CE6300620583 /* PaymentCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DD2327CE6300620583 /* PaymentCardModel.swift */; };
 		3C05A9E02327D35100620583 /* PortraitNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DF2327D35100620583 /* PortraitNavigationController.swift */; };
@@ -700,6 +725,9 @@
 
 /* Begin PBXFileReference section */
 		0578BBF342AD2E4F349D1822 /* Pods_binkappUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		211058482909469B00DFDF90 /* PaymentWalletViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWalletViewModelTests.swift; sourceTree = "<group>"; };
+		2110584B2909637300DFDF90 /* MerchantHeroCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantHeroCellTests.swift; sourceTree = "<group>"; };
+		2110584E2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletLoyaltyCardCellViewModelTests.swift; sourceTree = "<group>"; };
 		2126211828AFB4B900939609 /* NetworkRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequestTests.swift; sourceTree = "<group>"; };
 		2126211A28AFD68E00939609 /* LoginResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponseTests.swift; sourceTree = "<group>"; };
 		2126211C28AFD9A900939609 /* PaymentCardCreateModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCreateModelTests.swift; sourceTree = "<group>"; };
@@ -713,6 +741,8 @@
 		212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationModelTests.swift; sourceTree = "<group>"; };
 		21410FA328DC8567002EE969 /* VisionUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionUtility.swift; sourceTree = "<group>"; };
 		2144647F3F7FD0825EAA4342 /* Pods-binkapp-binkappUITests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp-binkappUITests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkapp-binkappUITests/Pods-binkapp-binkappUITests.app store (internal).xcconfig"; sourceTree = "<group>"; };
+		214680EF2907F4B400C03EB1 /* WebScrapingResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingResponseTests.swift; sourceTree = "<group>"; };
+		2147C69D2907FD8C00B233B3 /* TransactionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewModelTests.swift; sourceTree = "<group>"; };
 		21497EC72864A1880053A9EE /* OptionItemListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionItemListViewController.swift; sourceTree = "<group>"; };
 		21497ECC2869BE2E0053A9EE /* SortStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortStateTests.swift; sourceTree = "<group>"; };
 		214DCF5028AD201900308531 /* NSNumberExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNumberExtensionTests.swift; sourceTree = "<group>"; };
@@ -728,6 +758,18 @@
 		214EC02528734B45000A3F73 /* GeoLocationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationsViewController.swift; sourceTree = "<group>"; };
 		214EC02828743165000A3F73 /* GeoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoModel.swift; sourceTree = "<group>"; };
 		214EC02D28743883000A3F73 /* GeoLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationViewModel.swift; sourceTree = "<group>"; };
+		215147612909BE0200E6B209 /* BrowseBrandsListRowViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseBrandsListRowViewModelTests.swift; sourceTree = "<group>"; };
+		215147632909C02E00E6B209 /* BinkTextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkTextFieldTests.swift; sourceTree = "<group>"; };
+		215147652909C0A900E6B209 /* BinkSwitchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkSwitchTests.swift; sourceTree = "<group>"; };
+		2151476A290A938400E6B209 /* AuthAndAddViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAndAddViewModelTests.swift; sourceTree = "<group>"; };
+		2151476D290AC6BE00E6B209 /* PreferencesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewModelTests.swift; sourceTree = "<group>"; };
+		2151476F290ADCDF00E6B209 /* PointsScrapingManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsScrapingManagerTests.swift; sourceTree = "<group>"; };
+		21514772290BC98600E6B209 /* LoginViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerTests.swift; sourceTree = "<group>"; };
+		21514774290C264300E6B209 /* MixpanelUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixpanelUtilityTests.swift; sourceTree = "<group>"; };
+		21514776290FC88B00E6B209 /* AnalyticsEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsEventTests.swift; sourceTree = "<group>"; };
+		215147782911284A00E6B209 /* HTMLParsingUtilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLParsingUtilTests.swift; sourceTree = "<group>"; };
+		2151478229114D0E00E6B209 /* fireBase-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "fireBase-config.json"; sourceTree = "<group>"; };
+		2151478329114D0E00E6B209 /* htmlTest.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = htmlTest.html; sourceTree = "<group>"; };
 		216B999B28AE902000A67A14 /* FloatExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtensionTests.swift; sourceTree = "<group>"; };
 		217288EE28B4BF5200258EBA /* AccountPostModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPostModelTests.swift; sourceTree = "<group>"; };
 		217288F128B4D62100258EBA /* AddPaymentCardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentCardViewModelTests.swift; sourceTree = "<group>"; };
@@ -735,7 +777,14 @@
 		217288F728B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift; sourceTree = "<group>"; };
 		217288F928B50D3700258EBA /* PLRCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRCellViewModelTests.swift; sourceTree = "<group>"; };
 		21A9BE7128F6F1EF00FC1304 /* binkapp - 12-9-22 - MembershipCard - time when opened.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 12-9-22 - MembershipCard - time when opened.xcdatamodel"; sourceTree = "<group>"; };
+		21A7711A29127FEE00233953 /* LoyaltyScannerWidgetViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyScannerWidgetViewTests.swift; sourceTree = "<group>"; };
+		21A7711C29128B0600233953 /* CAGradientLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAGradientLayerTests.swift; sourceTree = "<group>"; };
+		21A7711E2912928100233953 /* CardAlertViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardAlertViewTests.swift; sourceTree = "<group>"; };
+		21A771202912B34D00233953 /* DateManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManagerTests.swift; sourceTree = "<group>"; };
+		21A771232912DCD700233953 /* ActivityViewControllerRepresentableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewControllerRepresentableTests.swift; sourceTree = "<group>"; };
+		21A771252912E43600233953 /* BarcodeViewNoBarcodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewNoBarcodeTests.swift; sourceTree = "<group>"; };
 		21E5E2E628B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsViewModelTests.swift; sourceTree = "<group>"; };
+		21F313202913E02D009960F0 /* FilterBrandsCollectionViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBrandsCollectionViewCellTests.swift; sourceTree = "<group>"; };
 		2211289D0FB0F1A14BC9E957 /* Pods-binkapp.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.beta.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.beta.xcconfig"; sourceTree = "<group>"; };
 		26F00637A9D94FD020319165 /* Pods-binkappUITests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.app store (internal).xcconfig"; sourceTree = "<group>"; };
 		352CBEDF33DDEB7B603C909B /* Pods_binkappTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1372,7 +1421,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2126211728AFB48A00939609 /* Networking */ = {
+		2110584A2909635C00DFDF90 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				2110584B2909637300DFDF90 /* MerchantHeroCellTests.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		2110584D290978ED00DFDF90 /* Loyalty Card Wallet */ = {
+			isa = PBXGroup;
+			children = (
+				2110584E2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift */,
+			);
+			path = "Loyalty Card Wallet";
+			sourceTree = "<group>";
+		};
+		2126211728AFB48A00939609 /* NetworkRequests */ = {
 			isa = PBXGroup;
 			children = (
 				2126211828AFB4B900939609 /* NetworkRequestTests.swift */,
@@ -1457,6 +1522,30 @@
 			path = GeoLocation;
 			sourceTree = "<group>";
 		};
+		21514769290A934900E6B209 /* AuthAndAdd */ = {
+			isa = PBXGroup;
+			children = (
+				2151476A290A938400E6B209 /* AuthAndAddViewModelTests.swift */,
+			);
+			path = AuthAndAdd;
+			sourceTree = "<group>";
+		};
+		2151476C290AC68F00E6B209 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				2151476D290AC6BE00E6B209 /* PreferencesViewModelTests.swift */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
+		21514771290BC8D400E6B209 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				21514772290BC98600E6B209 /* LoginViewControllerTests.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		217288F028B4D60800258EBA /* AddPaymentCard */ = {
 			isa = PBXGroup;
 			children = (
@@ -1479,6 +1568,22 @@
 				217288F728B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift */,
 			);
 			path = PaymentCardDetailAddLoyaltyCardCellViewModel;
+			sourceTree = "<group>";
+		};
+		21A7711929127FD200233953 /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				21A7711A29127FEE00233953 /* LoyaltyScannerWidgetViewTests.swift */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
+		21A771222912DCBB00233953 /* Wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				21A771232912DCD700233953 /* ActivityViewControllerRepresentableTests.swift */,
+			);
+			path = Wrappers;
 			sourceTree = "<group>";
 		};
 		21E5E2E528B38C9D00594DC3 /* LoyaltyCardDetails */ = {
@@ -1786,6 +1891,8 @@
 			isa = PBXGroup;
 			children = (
 				3CEE169A2440550D00933859 /* BrowseBrandsViewModelTests.swift */,
+				215147612909BE0200E6B209 /* BrowseBrandsListRowViewModelTests.swift */,
+				21F313202913E02D009960F0 /* FilterBrandsCollectionViewCellTests.swift */,
 			);
 			path = "Browse Brands";
 			sourceTree = "<group>";
@@ -2537,6 +2644,7 @@
 			isa = PBXGroup;
 			children = (
 				CE38784A2562EEDA006BAC11 /* BarcodeViewModelTests.swift */,
+				21A771252912E43600233953 /* BarcodeViewNoBarcodeTests.swift */,
 			);
 			path = Barcode;
 			sourceTree = "<group>";
@@ -2556,6 +2664,9 @@
 				CE971A3428807FBB001D7E1C /* BinkInfoButtonTests.swift */,
 				70A61D15263095060073A08A /* BinkModuleViewModelTests.swift */,
 				CE8058212897EF86002AB70F /* MessageViewTests.swift */,
+				215147632909C02E00E6B209 /* BinkTextFieldTests.swift */,
+				215147652909C0A900E6B209 /* BinkSwitchTests.swift */,
+				21A7711E2912928100233953 /* CardAlertViewTests.swift */,
 			);
 			path = BinkUI;
 			sourceTree = "<group>";
@@ -2704,6 +2815,7 @@
 				214DCF6228AE5C8800308531 /* EncodableExtensionTests.swift */,
 				216B999B28AE902000A67A14 /* FloatExtensionTests.swift */,
 				2126212128B271C200939609 /* FontExtensionTests.swift */,
+				21A7711C29128B0600233953 /* CAGradientLayerTests.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2815,6 +2927,12 @@
 		EF485578231E5A3600FC9E5F /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				21A771222912DCBB00233953 /* Wrappers */,
+				21A7711929127FD200233953 /* Widget */,
+				21514771290BC8D400E6B209 /* Login */,
+				2151476C290AC68F00E6B209 /* Preferences */,
+				21514769290A934900E6B209 /* AuthAndAdd */,
+				2110584A2909635C00DFDF90 /* Cells */,
 				217288F628B5009500258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModel */,
 				217288F328B4E62600258EBA /* MainTabBar */,
 				217288F028B4D60800258EBA /* AddPaymentCard */,
@@ -2862,6 +2980,7 @@
 		EF586FE12357A8DC000917B6 /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
+				2110584D290978ED00DFDF90 /* Loyalty Card Wallet */,
 				214DCF5D28AE396900308531 /* RefreshManager */,
 				21497ECB2869BDF20053A9EE /* Loyalty */,
 				CE3878CD25643C06006BAC11 /* Join Cards */,
@@ -3022,6 +3141,11 @@
 			children = (
 				EF7F6E6023E4288C00352DCF /* StorageUtilityTests.swift */,
 				70E867742489303F001ED282 /* SecureUtilityTests.swift */,
+				2151476F290ADCDF00E6B209 /* PointsScrapingManagerTests.swift */,
+				21514774290C264300E6B209 /* MixpanelUtilityTests.swift */,
+				21514776290FC88B00E6B209 /* AnalyticsEventTests.swift */,
+				215147782911284A00E6B209 /* HTMLParsingUtilTests.swift */,
+				21A771202912B34D00233953 /* DateManagerTests.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -3047,6 +3171,9 @@
 				2126211C28AFD9A900939609 /* PaymentCardCreateModelTests.swift */,
 				2126212328B274C300939609 /* VoucherModelTests.swift */,
 				217288EE28B4BF5200258EBA /* AccountPostModelTests.swift */,
+				214680EF2907F4B400C03EB1 /* WebScrapingResponseTests.swift */,
+				2147C69D2907FD8C00B233B3 /* TransactionsViewModelTests.swift */,
+				211058482909469B00DFDF90 /* PaymentWalletViewModelTests.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3235,6 +3362,8 @@
 		EFCB2C182329368D0060F73B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2151478229114D0E00E6B209 /* fireBase-config.json */,
+				2151478329114D0E00E6B209 /* htmlTest.html */,
 				CE51291E28AD43F400F85039 /* AppIcon.png */,
 				214EC020287320FD000A3F73 /* place-marker.gif */,
 				CE85A1FF26B1535B003B74CD /* Animations */,
@@ -3583,6 +3712,7 @@
 				214EC021287320FD000A3F73 /* place-marker.gif in Resources */,
 				3CD3493922F99E1D000C1F4D /* NunitoSans-SemiBoldItalic.ttf in Resources */,
 				EFEF54A9246EB52900A630F3 /* PLRStampViewCell.xib in Resources */,
+				2151478429114D0E00E6B209 /* fireBase-config.json in Resources */,
 				EFF59F25234DEE8E00CF3992 /* DetailNavigationTitleView.xib in Resources */,
 				EFA5F7632379BD520027AB80 /* PLRAccumulatorInactiveCell.xib in Resources */,
 				EFA5F76B2379BD790027AB80 /* PLRStampsInactiveCell.xib in Resources */,
@@ -3620,6 +3750,7 @@
 				3CD3493D22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf in Resources */,
 				CEFAB4E9279ABD0A00D061A9 /* BarcodeViewNoBarcode.xib in Resources */,
 				3CADDEB1231566E5006C3D9C /* LoginTextFieldView.xib in Resources */,
+				2151478529114D0E00E6B209 /* htmlTest.html in Resources */,
 				70A61D542630A23C0073A08A /* BinkModuleView.xib in Resources */,
 				EF2E8827233A6FDB00F678F3 /* CardAlertView.xib in Resources */,
 			);
@@ -4281,33 +4412,46 @@
 			files = (
 				21497ECD2869BE2E0053A9EE /* SortStateTests.swift in Sources */,
 				70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */,
+				21A771242912DCD700233953 /* ActivityViewControllerRepresentableTests.swift in Sources */,
 				70D6863E257152F300403448 /* DynamicActionsTests.swift in Sources */,
 				214DCF6328AE5C8800308531 /* EncodableExtensionTests.swift in Sources */,
 				2126211B28AFD68E00939609 /* LoginResponseTests.swift in Sources */,
 				214DCF5528AD2C5100308531 /* UIColorExtensionTests.swift in Sources */,
 				214DCF5928AD409E00308531 /* RemoteConfigFileModelTests.swift in Sources */,
+				21A7711F2912928100233953 /* CardAlertViewTests.swift in Sources */,
 				CE971A2A287EFDB4001D7E1C /* DebugMenuViewModelTests.swift in Sources */,
 				CE971A3528807FBB001D7E1C /* BinkInfoButtonTests.swift in Sources */,
 				2126377728B3E2FD00C795D6 /* BarcodeViewTests.swift in Sources */,
 				217288FA28B50D3700258EBA /* PLRCellViewModelTests.swift in Sources */,
 				2126212028AFE80900939609 /* LCDPlaceHolderGeneratorTests.swift in Sources */,
+				2110584F2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift in Sources */,
+				215147662909C0A900E6B209 /* BinkSwitchTests.swift in Sources */,
 				2126211D28AFD9A900939609 /* PaymentCardCreateModelTests.swift in Sources */,
+				215147792911284A00E6B209 /* HTMLParsingUtilTests.swift in Sources */,
 				214DCF5F28AE399100308531 /* WalletRefreshManagerTests.swift in Sources */,
+				21514770290ADCDF00E6B209 /* PointsScrapingManagerTests.swift in Sources */,
 				EF7F6E6123E4288C00352DCF /* StorageUtilityTests.swift in Sources */,
+				215147642909C02E00E6B209 /* BinkTextFieldTests.swift in Sources */,
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
 				3CEE169B2440550D00933859 /* BrowseBrandsViewModelTests.swift in Sources */,
 				212F0C462876EC63007F09CE /* GeoLocationModelTests.swift in Sources */,
 				3CFD913022F1BA8200F25AF1 /* (null) in Sources */,
 				2126212428B274C300939609 /* VoucherModelTests.swift in Sources */,
 				214DCF5128AD201900308531 /* NSNumberExtensionTests.swift in Sources */,
+				2110584C2909637300DFDF90 /* MerchantHeroCellTests.swift in Sources */,
+				21A7711D29128B0600233953 /* CAGradientLayerTests.swift in Sources */,
+				2151476E290AC6BE00E6B209 /* PreferencesViewModelTests.swift in Sources */,
 				CE971A3A2881AE1D001D7E1C /* PaymentCardDetailViewModelTests.swift in Sources */,
 				2126212228B271C200939609 /* FontExtensionTests.swift in Sources */,
 				CE971A3728817A41001D7E1C /* AddOrJoinViewModelTests.swift in Sources */,
 				EF758E1523225F95000D26A9 /* TestDatabase.xcdatamodeld in Sources */,
 				CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */,
+				2151476B290A938400E6B209 /* AuthAndAddViewModelTests.swift in Sources */,
 				70E8E37B2566DE430027A244 /* PLLScreenViewModelTests.swift in Sources */,
 				CEFB742325668A5100896DE5 /* BrandHeaderViewTests.swift in Sources */,
 				217288F228B4D62100258EBA /* AddPaymentCardViewModelTests.swift in Sources */,
+				2147C69E2907FD8C00B233B3 /* TransactionsViewModelTests.swift in Sources */,
+				21F313212913E02D009960F0 /* FilterBrandsCollectionViewCellTests.swift in Sources */,
 				EF586FE52357A90C000917B6 /* PaymentCardCellViewModelTests.swift in Sources */,
 				CE971A28287EE138001D7E1C /* DebugMenuFactoryTests.swift in Sources */,
 				217288F528B4E63A00258EBA /* MainTabBarViewModelTests.swift in Sources */,
@@ -4317,15 +4461,24 @@
 				70A61D16263095060073A08A /* BinkModuleViewModelTests.swift in Sources */,
 				214DCF6128AE597700308531 /* MagicLinkRequestModelTests.swift in Sources */,
 				CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */,
+				21514773290BC98600E6B209 /* LoginViewControllerTests.swift in Sources */,
+				21A771212912B34D00233953 /* DateManagerTests.swift in Sources */,
+				21514777290FC88B00E6B209 /* AnalyticsEventTests.swift in Sources */,
+				214680F02907F4B400C03EB1 /* WebScrapingResponseTests.swift in Sources */,
+				21A771262912E43600233953 /* BarcodeViewNoBarcodeTests.swift in Sources */,
 				CE971A3328806968001D7E1C /* MembershipPlanModelTests.swift in Sources */,
+				211058492909469B00DFDF90 /* PaymentWalletViewModelTests.swift in Sources */,
 				21E5E2E728B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift in Sources */,
 				214DCF5C28AD4FA000308531 /* GeoLocationsViewModelTests.swift in Sources */,
+				21A7711B29127FEE00233953 /* LoyaltyScannerWidgetViewTests.swift in Sources */,
 				EF8B701223587BE3006CE3DD /* MembershipCardBalanceModelTests.swift in Sources */,
 				2126211928AFB4B900939609 /* NetworkRequestTests.swift in Sources */,
 				217288F828B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift in Sources */,
 				CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */,
+				215147622909BE0200E6B209 /* BrowseBrandsListRowViewModelTests.swift in Sources */,
 				CE8058222897EF86002AB70F /* MessageViewTests.swift in Sources */,
 				216B999C28AE902000A67A14 /* FloatExtensionTests.swift in Sources */,
+				21514775290C264300E6B209 /* MixpanelUtilityTests.swift in Sources */,
 				214DCF5328AD25C500308531 /* TimeIntervalExtensionTests.swift in Sources */,
 				EF758E1623225F95000D26A9 /* DatabaseTests.swift in Sources */,
 				217288EF28B4BF5200258EBA /* AccountPostModelTests.swift in Sources */,
