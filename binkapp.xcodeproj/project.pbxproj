@@ -323,6 +323,8 @@
 		CE1015252722A63F0000A838 /* VisionUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1015242722A63F0000A838 /* VisionUtility.swift */; };
 		CE261634283CD926003570D8 /* PaymentCardNameRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE261633283CD926003570D8 /* PaymentCardNameRecognition.swift */; };
 		CE2751AF2915087F005C27AB /* Mocker in Frameworks */ = {isa = PBXBuildFile; productRef = CE2751AE2915087F005C27AB /* Mocker */; };
+        CE2751B229152540005C27AB /* CalloutViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2751B129152540005C27AB /* CalloutViewTests.swift */; };
+		CE2751B429192CCD005C27AB /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2751B329192CCD005C27AB /* CustomAnnotation.swift */; };
 		CE27A0DA25DA990E00C58412 /* OnboardingCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */; };
 		CE27A0DB25DA990E00C58412 /* OnboardingCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */; };
 		CE285B4328B4E19A00EBA3E7 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE285B4228B4E19A00EBA3E7 /* DateManager.swift */; };
@@ -417,6 +419,7 @@
 		CEC0ACBD2636AD0000845813 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0ACBB2636AD0000845813 /* Strings.swift */; };
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
 		CEC9A90B2757D725006F0630 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC9A90A2757D725006F0630 /* ExtensionDelegate.swift */; };
+		CEC9C9D1291192E900C612B5 /* BinkNetworkingLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC9C9D0291192E800C612B5 /* BinkNetworkingLoggerTests.swift */; };
 		CED69E6B253D7A5700A4CA21 /* HyperlinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */; };
 		CEE208AD272C446F00766BD6 /* BarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE208AC272C446F00766BD6 /* BarcodeView.swift */; };
 		CEE208AE27315A2600766BD6 /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492922F99E1D000C1F4D /* NunitoSans-Regular.ttf */; };
@@ -1048,6 +1051,8 @@
 		CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoWeAreSwiftUIView.swift; sourceTree = "<group>"; };
 		CE1015242722A63F0000A838 /* VisionUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionUtility.swift; sourceTree = "<group>"; };
 		CE261633283CD926003570D8 /* PaymentCardNameRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardNameRecognition.swift; sourceTree = "<group>"; };
+        CE2751B129152540005C27AB /* CalloutViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalloutViewTests.swift; sourceTree = "<group>"; };
+		CE2751B329192CCD005C27AB /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingCardCollectionViewCell.xib; sourceTree = "<group>"; };
 		CE285B4228B4E19A00EBA3E7 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
@@ -1136,6 +1141,7 @@
 		CEC0ACBB2636AD0000845813 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardScannerStrings.swift; sourceTree = "<group>"; };
 		CEC9A90A2757D725006F0630 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		CEC9C9D0291192E800C612B5 /* BinkNetworkingLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkNetworkingLoggerTests.swift; sourceTree = "<group>"; };
 		CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkLabel.swift; sourceTree = "<group>"; };
 		CEE208AC272C446F00766BD6 /* BarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeView.swift; sourceTree = "<group>"; };
 		CEE208B627317F5600766BD6 /* Bink Watch App Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bink Watch App Extension.entitlements"; sourceTree = "<group>"; };
@@ -1435,8 +1441,9 @@
 			isa = PBXGroup;
 			children = (
 				2126211828AFB4B900939609 /* NetworkRequestTests.swift */,
+				CEC9C9D0291192E800C612B5 /* BinkNetworkingLoggerTests.swift */,
 			);
-			path = NetworkRequests;
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		2126211E28AFE7E100939609 /* LCDPlaceHolderGenerator */ = {
@@ -1510,6 +1517,7 @@
 				214EC02828743165000A3F73 /* GeoModel.swift */,
 				214EC02D28743883000A3F73 /* GeoLocationViewModel.swift */,
 				212F0C432876EB7E007F09CE /* CalloutView.swift */,
+				CE2751B329192CCD005C27AB /* CustomAnnotation.swift */,
 			);
 			path = GeoLocation;
 			sourceTree = "<group>";
@@ -2057,7 +2065,8 @@
 		5ECE048222CE579B001BA964 /* binkappTests */ = {
 			isa = PBXGroup;
 			children = (
-				2126211728AFB48A00939609 /* NetworkRequests */,
+				CE2751B02915248D005C27AB /* GeoLocation */,
+				2126211728AFB48A00939609 /* Networking */,
 				706157C6264A848A0002701E /* Recommended App Update */,
 				70D6863C257152D700403448 /* Dynamic Actions */,
 				CE387A3925656E75006BAC11 /* BinkUI */,
@@ -2605,6 +2614,14 @@
 				CE261633283CD926003570D8 /* PaymentCardNameRecognition.swift */,
 			);
 			path = Vision;
+			sourceTree = "<group>";
+		};
+		CE2751B02915248D005C27AB /* GeoLocation */ = {
+			isa = PBXGroup;
+			children = (
+				CE2751B129152540005C27AB /* CalloutViewTests.swift */,
+			);
+			path = GeoLocation;
 			sourceTree = "<group>";
 		};
 		CE2CFE9625E3D4FA00B1CB93 /* FeatureFlags */ = {
@@ -4234,6 +4251,7 @@
 				EF3BC915234779C900FE52ED /* PaymentWalletRepository.swift in Sources */,
 				3CCAB7522379B520001B566D /* RegistrationFieldPostModel.swift in Sources */,
 				EFA5F6C0237429D30027AB80 /* UITableViewCellExtension.swift in Sources */,
+				CE2751B429192CCD005C27AB /* CustomAnnotation.swift in Sources */,
 				70A4EE7824BDBA5900FA33B1 /* PermissionsUtility.swift in Sources */,
 				EF1110542354D4BE009A4438 /* WalletCardCollectionViewCell.swift in Sources */,
 				BDFAA07B23E243EF00949271 /* LCDPlaceholderGenerator.swift in Sources */,
@@ -4439,6 +4457,7 @@
 				217288F528B4E63A00258EBA /* MainTabBarViewModelTests.swift in Sources */,
 				CE971A2C28802AEC001D7E1C /* PaymentCardDetailLoyaltyCardStatusCellViewModelTests.swift in Sources */,
 				DB4D8EAD2440864C0085595D /* SettingsViewModelTests.swift in Sources */,
+				CE2751B229152540005C27AB /* CalloutViewTests.swift in Sources */,
 				70A61D16263095060073A08A /* BinkModuleViewModelTests.swift in Sources */,
 				214DCF6128AE597700308531 /* MagicLinkRequestModelTests.swift in Sources */,
 				CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */,
@@ -4463,6 +4482,7 @@
 				214DCF5328AD25C500308531 /* TimeIntervalExtensionTests.swift in Sources */,
 				EF758E1623225F95000D26A9 /* DatabaseTests.swift in Sources */,
 				217288EF28B4BF5200258EBA /* AccountPostModelTests.swift in Sources */,
+				CEC9C9D1291192E900C612B5 /* BinkNetworkingLoggerTests.swift in Sources */,
 				2126212728B2794E00939609 /* OnboardingViewModelTests.swift in Sources */,
 				2126212A28B3751400939609 /* ViewControllerFactoryTests.swift in Sources */,
 			);
