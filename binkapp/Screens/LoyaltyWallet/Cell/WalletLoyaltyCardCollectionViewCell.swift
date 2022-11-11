@@ -128,7 +128,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         rectangleView.secondColor = plan.secondaryBrandColor
         
         /// Brand name
-        cardNameLabel.text = plan.account?.companyName
+        cardNameLabel.text = plan.isCustomCard ? plan.card?.membershipId : plan.account?.companyName
         
         /// Link Status
         cardLinkStatusLabel.text = viewModel.linkStatusText

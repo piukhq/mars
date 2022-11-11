@@ -64,13 +64,10 @@ class AuthAndAddRepository: WalletServiceProtocol {
     func mapCustomCardToCoreData(membershipCard: MembershipCardPostModel, completion: @escaping (CD_MembershipCard?) -> Void) {
         Current.database.performBackgroundTask { context in
             let barcode = membershipCard.account?.addFields?.first(where: { $0.column == "Card number" })?.value
-            let cardModel = CardModel(apiId: nil, barcode: barcode, colour: nil, secondaryColour: nil)
+            let merchantName = membershipCard.account?.addFields?.first(where: { $0.column == "Store name" })?.value
+            let cardModel = CardModel(apiId: nil, barcode: barcode, colour: nil, secondaryColour: nil, merchantName: merchantName)
             
-            let membershipCardModel = MembershipCardModel(apiId: Int(membershipCard.uuid),
-                                                          membershipPlan: membershipCard.membershipPlan,
-                                                          card: cardModel,
-                                                          images: nil,
-                                                          openedTime: nil)
+            let membershipCardModel = MembershipCardModel(apiId: Int(membershipCard.uuid), membershipPlan: membershipCard.membershipPlan, card: cardModel, images: nil, openedTime: nil)
             
             let newObject = membershipCardModel.mapToCoreData(context, .update, overrideID: nil)
             try? context.save()

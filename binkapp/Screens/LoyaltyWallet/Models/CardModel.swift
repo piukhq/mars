@@ -15,6 +15,7 @@ struct CardModel: Codable, Hashable {
     var barcodeType: Int?
     let colour: String?
     let secondaryColour: String?
+    let merchantName: String?
     
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
@@ -23,6 +24,7 @@ struct CardModel: Codable, Hashable {
         case barcodeType = "barcode_type"
         case colour
         case secondaryColour = "secondary_colour"
+        case merchantName
     }
 }
 
