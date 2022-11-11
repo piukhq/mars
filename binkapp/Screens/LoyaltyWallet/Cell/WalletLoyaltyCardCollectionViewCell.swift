@@ -119,6 +119,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
                 self?.cardIconImageView.image = image
             }
         }
+        
         accessibilityIdentifier = plan.account?.companyName
 
         /// Brand colours
@@ -126,6 +127,10 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         rectangleView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         rectangleView.firstColor = primaryBrandColor
         rectangleView.secondColor = plan.secondaryBrandColor
+        
+        if plan.isCustomCard {
+            cardIconImageView.backgroundColor = primaryBrandColor
+        }
         
         /// Brand name
         cardNameLabel.text = plan.isCustomCard ? plan.card?.membershipId : plan.account?.companyName
