@@ -69,7 +69,7 @@ class AuthAndAddRepository: WalletServiceProtocol {
             
             let membershipCardModel = MembershipCardModel(apiId: Int(membershipCard.uuid), membershipPlan: membershipCard.membershipPlan, card: cardModel, images: nil, openedTime: nil)
             
-            let newObject = membershipCardModel.mapToCoreData(context, .update, overrideID: nil)
+            let newObject = membershipCardModel.mapToCoreData(context, .update, overrideID: UUID().uuidString)
             try? context.save()
             
             DispatchQueue.main.async {
