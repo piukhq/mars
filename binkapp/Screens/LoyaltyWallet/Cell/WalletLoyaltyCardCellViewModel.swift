@@ -66,6 +66,10 @@ struct WalletLoyaltyCardCellViewModel {
     var brandColorHex: String? {
         return membershipCard.card?.colour
     }
+    
+    var customCardSecondaryColor: String? {
+        return membershipCard.card?.secondaryColour
+    }
 
     var companyName: String? {
         return membershipPlan?.account?.companyName

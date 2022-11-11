@@ -43,6 +43,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
     @IBOutlet private weak var deleteButton: UIButton!
     @IBOutlet private weak var barcodeButton: UIButton!
     @IBOutlet private weak var rectangleView: RectangleView!
+    @IBOutlet weak var customCardLogoLabel: UILabel!
     
     private lazy var width: NSLayoutConstraint = {
         let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
@@ -130,6 +131,11 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         
         if plan.isCustomCard {
             cardIconImageView.backgroundColor = primaryBrandColor
+            customCardLogoLabel.text = "G"
+            customCardLogoLabel.font = .customCardLogo
+            rectangleView.secondColor = UIColor(hexString: viewModel.customCardSecondaryColor ?? "")
+        } else {
+            customCardLogoLabel.text = nil
         }
         
         /// Brand name
