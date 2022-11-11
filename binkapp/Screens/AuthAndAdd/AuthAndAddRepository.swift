@@ -65,8 +65,8 @@ class AuthAndAddRepository: WalletServiceProtocol {
         Current.database.performBackgroundTask { context in
             let barcode = membershipCard.account?.addFields?.first(where: { $0.column == "Card number" })?.value
             let merchantName = membershipCard.account?.addFields?.first(where: { $0.column == "Store name" })?.value
-            let cardModel = CardModel(apiId: nil, barcode: barcode, colour: nil, secondaryColour: nil, merchantName: merchantName)
-            
+            let colorPallete = ColorPallete()
+            let cardModel = CardModel(apiId: nil, barcode: barcode, colour: colorPallete.primary, secondaryColour: colorPallete.secondary, merchantName: merchantName)
             let membershipCardModel = MembershipCardModel(apiId: Int(membershipCard.uuid), membershipPlan: membershipCard.membershipPlan, card: cardModel, images: nil, openedTime: nil)
             
             let newObject = membershipCardModel.mapToCoreData(context, .update, overrideID: UUID().uuidString)
