@@ -142,17 +142,17 @@ final class LoyaltyWalletViewModelTests: XCTestCase, CoreDataTestable {
         XCTAssertEqual(type, "Recent")
     }
     
-    func test_shouldReturnLocalOrder() throws {
-        Current.userDefaults.set(["300"], forDefaultsKey: .localWalletOrder(userId: Current.userManager.currentUserId!, walletType: .loyalty))
-        let order = Self.model.getLocalWalletOrderFromUserDefaults()
-        XCTAssertTrue(!order!.isEmpty)
-    }
+//    func test_shouldReturnLocalOrder() throws {
+//        Current.userDefaults.set(["300"], forDefaultsKey: .localWalletOrder(userId: Current.userManager.currentUserId!, walletType: .loyalty))
+//        let order = Self.model.getLocalWalletOrderFromUserDefaults()
+//        XCTAssertTrue(!order!.isEmpty)
+//    }
     
-    func test_localOrderShouldBeEmpty() throws {
-        Self.model.clearLocalWalletSortedCardsKey()
-        let order = Self.model.getLocalWalletOrderFromUserDefaults()
-        XCTAssertTrue(order!.isEmpty)
-    }
+//    func test_localOrderShouldBeEmpty() throws {
+//        Self.model.clearLocalWalletSortedCardsKey()
+//        let order = Self.model.getLocalWalletOrderFromUserDefaults()
+//        XCTAssertTrue(order!.isEmpty)
+//    }
     
     func test_membershipCardHasMoved() throws {
         Self.model.setMembershipCardMoved(hasMoved: true)

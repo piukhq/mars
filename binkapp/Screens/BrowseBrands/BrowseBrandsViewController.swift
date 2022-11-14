@@ -18,11 +18,11 @@ fileprivate enum Constants {
 }
 
 class BrowseBrandsViewController: BinkViewController {
-    @IBOutlet private weak var searchTextField: BinkTextField!
-    @IBOutlet private weak var noMatchesLabel: UILabel!
-    @IBOutlet private weak var searchTextFieldContainer: UIView!
-    @IBOutlet private weak var topStackView: UIStackView!
-    @IBOutlet private weak var noMatchesLabelTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var searchTextField: BinkTextField!
+    @IBOutlet weak var noMatchesLabel: UILabel!
+    @IBOutlet weak var searchTextFieldContainer: UIView!
+    @IBOutlet weak var topStackView: UIStackView!
+    @IBOutlet weak var noMatchesLabelTopConstraint: NSLayoutConstraint!
     
     private var filtersVisible = false
     private var selectedCollectionViewIndexPaths: [IndexPath] = []
@@ -133,6 +133,10 @@ class BrowseBrandsViewController: BinkViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         didLayoutSubviews = true
+    }
+    
+    func areFiltersVisible() -> Bool {
+        return filtersVisible
     }
     
     override func configureForCurrentTheme() {

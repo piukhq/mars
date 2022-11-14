@@ -72,6 +72,9 @@
 		217288F828B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288F728B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift */; };
 		217288FA28B50D3700258EBA /* PLRCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288F928B50D3700258EBA /* PLRCellViewModelTests.swift */; };
 		217C4498291E8B8000073E0A /* LoyaltyWalletViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C4497291E8B7F00073E0A /* LoyaltyWalletViewModelTests.swift */; };
+		217C449B2922487900073E0A /* OptionItemListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C449A2922487900073E0A /* OptionItemListViewControllerTests.swift */; };
+		217C449D2922835A00073E0A /* DebugMenuTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C449C2922835A00073E0A /* DebugMenuTableViewControllerTests.swift */; };
+		217C449F29229A6B00073E0A /* BrowseBrandsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C449E29229A6B00073E0A /* BrowseBrandsViewControllerTests.swift */; };
 		21A7711B29127FEE00233953 /* LoyaltyScannerWidgetViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A7711A29127FEE00233953 /* LoyaltyScannerWidgetViewTests.swift */; };
 		21A7711D29128B0600233953 /* CAGradientLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A7711C29128B0600233953 /* CAGradientLayerTests.swift */; };
 		21A7711F2912928100233953 /* CardAlertViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A7711E2912928100233953 /* CardAlertViewTests.swift */; };
@@ -777,6 +780,9 @@
 		217288F728B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift; sourceTree = "<group>"; };
 		217288F928B50D3700258EBA /* PLRCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRCellViewModelTests.swift; sourceTree = "<group>"; };
 		217C4497291E8B7F00073E0A /* LoyaltyWalletViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletViewModelTests.swift; sourceTree = "<group>"; };
+		217C449A2922487900073E0A /* OptionItemListViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionItemListViewControllerTests.swift; sourceTree = "<group>"; };
+		217C449C2922835A00073E0A /* DebugMenuTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuTableViewControllerTests.swift; sourceTree = "<group>"; };
+		217C449E29229A6B00073E0A /* BrowseBrandsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseBrandsViewControllerTests.swift; sourceTree = "<group>"; };
 		21A7711A29127FEE00233953 /* LoyaltyScannerWidgetViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyScannerWidgetViewTests.swift; sourceTree = "<group>"; };
 		21A7711C29128B0600233953 /* CAGradientLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAGradientLayerTests.swift; sourceTree = "<group>"; };
 		21A7711E2912928100233953 /* CardAlertViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardAlertViewTests.swift; sourceTree = "<group>"; };
@@ -1571,6 +1577,14 @@
 			path = PaymentCardDetailAddLoyaltyCardCellViewModel;
 			sourceTree = "<group>";
 		};
+		217C44992922484C00073E0A /* Popup */ = {
+			isa = PBXGroup;
+			children = (
+				217C449A2922487900073E0A /* OptionItemListViewControllerTests.swift */,
+			);
+			path = Popup;
+			sourceTree = "<group>";
+		};
 		21A7711929127FD200233953 /* Widget */ = {
 			isa = PBXGroup;
 			children = (
@@ -1895,6 +1909,7 @@
 				3CEE169A2440550D00933859 /* BrowseBrandsViewModelTests.swift */,
 				215147612909BE0200E6B209 /* BrowseBrandsListRowViewModelTests.swift */,
 				21F313202913E02D009960F0 /* FilterBrandsCollectionViewCellTests.swift */,
+				217C449E29229A6B00073E0A /* BrowseBrandsViewControllerTests.swift */,
 			);
 			path = "Browse Brands";
 			sourceTree = "<group>";
@@ -2743,6 +2758,7 @@
 			children = (
 				CE971A27287EE138001D7E1C /* DebugMenuFactoryTests.swift */,
 				CE971A29287EFDB4001D7E1C /* DebugMenuViewModelTests.swift */,
+				217C449C2922835A00073E0A /* DebugMenuTableViewControllerTests.swift */,
 			);
 			name = Debug;
 			path = Screens/Debug;
@@ -2929,6 +2945,7 @@
 		EF485578231E5A3600FC9E5F /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				217C44992922484C00073E0A /* Popup */,
 				21A771222912DCBB00233953 /* Wrappers */,
 				21A7711929127FD200233953 /* Widget */,
 				21514771290BC8D400E6B209 /* Login */,
@@ -4444,6 +4461,7 @@
 				21A7711D29128B0600233953 /* CAGradientLayerTests.swift in Sources */,
 				2151476E290AC6BE00E6B209 /* PreferencesViewModelTests.swift in Sources */,
 				CE971A3A2881AE1D001D7E1C /* PaymentCardDetailViewModelTests.swift in Sources */,
+				217C449D2922835A00073E0A /* DebugMenuTableViewControllerTests.swift in Sources */,
 				2126212228B271C200939609 /* FontExtensionTests.swift in Sources */,
 				CE971A3728817A41001D7E1C /* AddOrJoinViewModelTests.swift in Sources */,
 				EF758E1523225F95000D26A9 /* TestDatabase.xcdatamodeld in Sources */,
@@ -4451,6 +4469,7 @@
 				2151476B290A938400E6B209 /* AuthAndAddViewModelTests.swift in Sources */,
 				70E8E37B2566DE430027A244 /* PLLScreenViewModelTests.swift in Sources */,
 				217C4498291E8B8000073E0A /* LoyaltyWalletViewModelTests.swift in Sources */,
+				217C449B2922487900073E0A /* OptionItemListViewControllerTests.swift in Sources */,
 				CEFB742325668A5100896DE5 /* BrandHeaderViewTests.swift in Sources */,
 				217288F228B4D62100258EBA /* AddPaymentCardViewModelTests.swift in Sources */,
 				2147C69E2907FD8C00B233B3 /* TransactionsViewModelTests.swift in Sources */,
@@ -4464,6 +4483,7 @@
 				70A61D16263095060073A08A /* BinkModuleViewModelTests.swift in Sources */,
 				214DCF6128AE597700308531 /* MagicLinkRequestModelTests.swift in Sources */,
 				CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */,
+				217C449F29229A6B00073E0A /* BrowseBrandsViewControllerTests.swift in Sources */,
 				21514773290BC98600E6B209 /* LoginViewControllerTests.swift in Sources */,
 				21A771212912B34D00233953 /* DateManagerTests.swift in Sources */,
 				21514777290FC88B00E6B209 /* AnalyticsEventTests.swift in Sources */,

@@ -44,7 +44,7 @@ class OptionItemListViewController: UIViewController {
         return line
     }()
     
-    private lazy var tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let table = UITableView()
         table.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         table.isScrollEnabled = false
