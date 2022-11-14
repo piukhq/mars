@@ -203,7 +203,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         super.viewDidLoad()
         configureUI()
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidUpdate, object: nil)
-        viewModel.storeOpenedTimeForCard()
+        //viewModel.storeOpenedTimeForCard()
         fetchGeoData()
     }
     

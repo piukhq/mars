@@ -35,7 +35,6 @@
 		2126377728B3E2FD00C795D6 /* BarcodeViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126377628B3E2FD00C795D6 /* BarcodeViewTests.swift */; };
 		212F0C442876EB7E007F09CE /* CalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C432876EB7E007F09CE /* CalloutView.swift */; };
 		212F0C462876EC63007F09CE /* GeoLocationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */; };
-		21410FA428DC8567002EE969 /* VisionUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21410FA328DC8567002EE969 /* VisionUtility.swift */; };
 		214680F02907F4B400C03EB1 /* WebScrapingResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214680EF2907F4B400C03EB1 /* WebScrapingResponseTests.swift */; };
 		2147C69E2907FD8C00B233B3 /* TransactionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2147C69D2907FD8C00B233B3 /* TransactionsViewModelTests.swift */; };
 		21497EC82864A1880053A9EE /* OptionItemListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21497EC72864A1880053A9EE /* OptionItemListViewController.swift */; };
@@ -72,6 +71,7 @@
 		217288F528B4E63A00258EBA /* MainTabBarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288F428B4E63A00258EBA /* MainTabBarViewModelTests.swift */; };
 		217288F828B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288F728B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift */; };
 		217288FA28B50D3700258EBA /* PLRCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288F928B50D3700258EBA /* PLRCellViewModelTests.swift */; };
+		217C4498291E8B8000073E0A /* LoyaltyWalletViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C4497291E8B7F00073E0A /* LoyaltyWalletViewModelTests.swift */; };
 		21A7711B29127FEE00233953 /* LoyaltyScannerWidgetViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A7711A29127FEE00233953 /* LoyaltyScannerWidgetViewTests.swift */; };
 		21A7711D29128B0600233953 /* CAGradientLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A7711C29128B0600233953 /* CAGradientLayerTests.swift */; };
 		21A7711F2912928100233953 /* CardAlertViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A7711E2912928100233953 /* CardAlertViewTests.swift */; };
@@ -323,7 +323,7 @@
 		CE1015252722A63F0000A838 /* VisionUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1015242722A63F0000A838 /* VisionUtility.swift */; };
 		CE261634283CD926003570D8 /* PaymentCardNameRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE261633283CD926003570D8 /* PaymentCardNameRecognition.swift */; };
 		CE2751AF2915087F005C27AB /* Mocker in Frameworks */ = {isa = PBXBuildFile; productRef = CE2751AE2915087F005C27AB /* Mocker */; };
-        CE2751B229152540005C27AB /* CalloutViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2751B129152540005C27AB /* CalloutViewTests.swift */; };
+		CE2751B229152540005C27AB /* CalloutViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2751B129152540005C27AB /* CalloutViewTests.swift */; };
 		CE2751B429192CCD005C27AB /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2751B329192CCD005C27AB /* CustomAnnotation.swift */; };
 		CE27A0DA25DA990E00C58412 /* OnboardingCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */; };
 		CE27A0DB25DA990E00C58412 /* OnboardingCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */; };
@@ -776,13 +776,14 @@
 		217288F428B4E63A00258EBA /* MainTabBarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewModelTests.swift; sourceTree = "<group>"; };
 		217288F728B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift; sourceTree = "<group>"; };
 		217288F928B50D3700258EBA /* PLRCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRCellViewModelTests.swift; sourceTree = "<group>"; };
-		21A9BE7128F6F1EF00FC1304 /* binkapp - 12-9-22 - MembershipCard - time when opened.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 12-9-22 - MembershipCard - time when opened.xcdatamodel"; sourceTree = "<group>"; };
+		217C4497291E8B7F00073E0A /* LoyaltyWalletViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletViewModelTests.swift; sourceTree = "<group>"; };
 		21A7711A29127FEE00233953 /* LoyaltyScannerWidgetViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyScannerWidgetViewTests.swift; sourceTree = "<group>"; };
 		21A7711C29128B0600233953 /* CAGradientLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAGradientLayerTests.swift; sourceTree = "<group>"; };
 		21A7711E2912928100233953 /* CardAlertViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardAlertViewTests.swift; sourceTree = "<group>"; };
 		21A771202912B34D00233953 /* DateManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManagerTests.swift; sourceTree = "<group>"; };
 		21A771232912DCD700233953 /* ActivityViewControllerRepresentableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewControllerRepresentableTests.swift; sourceTree = "<group>"; };
 		21A771252912E43600233953 /* BarcodeViewNoBarcodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewNoBarcodeTests.swift; sourceTree = "<group>"; };
+		21A9BE7128F6F1EF00FC1304 /* binkapp - 12-9-22 - MembershipCard - time when opened.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 12-9-22 - MembershipCard - time when opened.xcdatamodel"; sourceTree = "<group>"; };
 		21E5E2E628B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		21F313202913E02D009960F0 /* FilterBrandsCollectionViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBrandsCollectionViewCellTests.swift; sourceTree = "<group>"; };
 		2211289D0FB0F1A14BC9E957 /* Pods-binkapp.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.beta.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.beta.xcconfig"; sourceTree = "<group>"; };
@@ -1051,7 +1052,7 @@
 		CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoWeAreSwiftUIView.swift; sourceTree = "<group>"; };
 		CE1015242722A63F0000A838 /* VisionUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionUtility.swift; sourceTree = "<group>"; };
 		CE261633283CD926003570D8 /* PaymentCardNameRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardNameRecognition.swift; sourceTree = "<group>"; };
-        CE2751B129152540005C27AB /* CalloutViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalloutViewTests.swift; sourceTree = "<group>"; };
+		CE2751B129152540005C27AB /* CalloutViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalloutViewTests.swift; sourceTree = "<group>"; };
 		CE2751B329192CCD005C27AB /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingCardCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1437,7 +1438,7 @@
 			path = "Loyalty Card Wallet";
 			sourceTree = "<group>";
 		};
-		2126211728AFB48A00939609 /* NetworkRequests */ = {
+		2126211728AFB48A00939609 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
 				2126211828AFB4B900939609 /* NetworkRequestTests.swift */,
@@ -1590,6 +1591,7 @@
 			isa = PBXGroup;
 			children = (
 				21E5E2E628B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift */,
+				217C4497291E8B7F00073E0A /* LoyaltyWalletViewModelTests.swift */,
 			);
 			path = LoyaltyCardDetails;
 			sourceTree = "<group>";
@@ -4448,6 +4450,7 @@
 				CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */,
 				2151476B290A938400E6B209 /* AuthAndAddViewModelTests.swift in Sources */,
 				70E8E37B2566DE430027A244 /* PLLScreenViewModelTests.swift in Sources */,
+				217C4498291E8B8000073E0A /* LoyaltyWalletViewModelTests.swift in Sources */,
 				CEFB742325668A5100896DE5 /* BrandHeaderViewTests.swift in Sources */,
 				217288F228B4D62100258EBA /* AddPaymentCardViewModelTests.swift in Sources */,
 				2147C69E2907FD8C00B233B3 /* TransactionsViewModelTests.swift in Sources */,
@@ -4594,7 +4597,7 @@
 			baseConfigurationReference = BD3CB9432328573C005C37AE /* Dev.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				API_BASE_URL = api.dev.gb.bink.com;
+				API_BASE_URL = api.staging.gb.bink.com;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -4731,7 +4734,7 @@
 			baseConfigurationReference = E708C17C8E9A69A07732E058 /* Pods-binkapp.alpha.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				API_BASE_URL = api.dev.gb.bink.com;
+				API_BASE_URL = api.staging.gb.bink.com;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Alpha";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;

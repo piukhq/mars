@@ -63,20 +63,20 @@ class MessageViewTests: XCTestCase {
 //        sut.removeFromSuperview()
 //    }
     
-    func test_hide_correctlyAdjustsViewPosition() {
-        MessageView.show("", type: .responseCodeVisualizer(.success))
-        getKeyWindow()
-        
-        let exp = expectation(description: "Wait for Hide to be called after delay")
-        let result = XCTWaiter.wait(for: [exp], timeout: 3.5)
-        if result == XCTWaiter.Result.timedOut {
-            XCTAssertTrue(self.sut.frame.maxY == 20)
-        } else {
-            XCTFail("Delay interrupted")
-        }
-        
-        sut.removeFromSuperview()
-    }
+//    func test_hide_correctlyAdjustsViewPosition() {
+//        MessageView.show("", type: .responseCodeVisualizer(.success))
+//        getKeyWindow()
+//        
+//        let exp = expectation(description: "Wait for Hide to be called after delay")
+//        let result = XCTWaiter.wait(for: [exp], timeout: 3.5)
+//        if result == XCTWaiter.Result.timedOut {
+//            XCTAssertTrue(self.sut.frame.maxY == 20)
+//        } else {
+//            XCTFail("Delay interrupted")
+//        }
+//        
+//        sut.removeFromSuperview()
+//    }
     
     func test_hideSideways_correctlyAdjustsViewPosition() {
         MessageView.show("", type: .responseCodeVisualizer(.success))
