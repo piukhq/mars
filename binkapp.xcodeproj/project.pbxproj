@@ -1081,6 +1081,7 @@
 		CE54AF5C25F938720061838C /* BinkLoggerEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLoggerEvents.swift; sourceTree = "<group>"; };
 		CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLoggerErrors.swift; sourceTree = "<group>"; };
 		CE59853E291E7D2D00C50EC4 /* ColorPallete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPallete.swift; sourceTree = "<group>"; };
+		CE5985402923A0AD00C50EC4 /* binkapp - 15-11-22 - Card - custom card store name.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 15-11-22 - Card - custom card store name.xcdatamodel"; sourceTree = "<group>"; };
 		CE65ED972840D8F70043E7B8 /* BinkSupportUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkSupportUtility.swift; sourceTree = "<group>"; };
 		CE67DC0C269F2407008D930D /* AutomatedTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting.swift; sourceTree = "<group>"; };
 		CE6DE55E267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsSwiftUIView.swift; sourceTree = "<group>"; };
@@ -3957,7 +3958,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/opt/homebrew/bin/mogenerator --swift --model binkapp/Persistence/Model/binkapp.xcdatamodeld --output-dir binkapp/Persistence/Entities\n";
+			shellScript = "/usr/local/bin/mogenerator --swift --model binkapp/Persistence/Model/binkapp.xcdatamodeld --output-dir binkapp/Persistence/Entities\n";
 		};
 		F8F07BEC58B2D2BCE544103B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -6488,6 +6489,7 @@
 		5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CE5985402923A0AD00C50EC4 /* binkapp - 15-11-22 - Card - custom card store name.xcdatamodel */,
 				21A9BE7128F6F1EF00FC1304 /* binkapp - 12-9-22 - MembershipCard - time when opened.xcdatamodel */,
 				CE3EA70C28CA272D00EFEDA9 /* binkapp - 8-9-22 - AddField-alternatives-type-edit.xcdatamodel */,
 				CEA905B825C9859A000F69E1 /* binkapp - 2-2-21 - Membership card image dark mode url .xcdatamodel */,
@@ -6505,7 +6507,7 @@
 				BD475E6C23A256820071302A /* binkapp - Plan Documents Display.xcdatamodel */,
 				5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */,
 			);
-			currentVersion = 21A9BE7128F6F1EF00FC1304 /* binkapp - 12-9-22 - MembershipCard - time when opened.xcdatamodel */;
+			currentVersion = CE5985402923A0AD00C50EC4 /* binkapp - 15-11-22 - Card - custom card store name.xcdatamodel */;
 			path = binkapp.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

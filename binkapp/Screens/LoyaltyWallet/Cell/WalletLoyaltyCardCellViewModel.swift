@@ -72,7 +72,7 @@ struct WalletLoyaltyCardCellViewModel {
     }
 
     var companyName: String? {
-        return membershipPlan?.account?.companyName
+        return membershipCard.card?.merchantName ?? membershipPlan?.account?.companyName
     }
 
     var hasLinkedPaymentCards: Bool {

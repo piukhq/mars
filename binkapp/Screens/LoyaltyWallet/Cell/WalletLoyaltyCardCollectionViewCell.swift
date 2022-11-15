@@ -129,9 +129,10 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         rectangleView.firstColor = primaryBrandColor
         rectangleView.secondColor = plan.secondaryBrandColor
         
+        /// Custom card config
         if plan.isCustomCard {
             cardIconImageView.backgroundColor = primaryBrandColor
-            customCardLogoLabel.text = "G"
+            customCardLogoLabel.text = viewModel.companyName?.first?.uppercased()
             customCardLogoLabel.font = .customCardLogo
             rectangleView.secondColor = UIColor(hexString: viewModel.customCardSecondaryColor ?? "")
         } else {
@@ -139,7 +140,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         }
         
         /// Brand name
-        cardNameLabel.text = plan.isCustomCard ? plan.card?.membershipId : plan.account?.companyName
+        cardNameLabel.text = viewModel.companyName
         
         /// Link Status
         cardLinkStatusLabel.text = viewModel.linkStatusText
