@@ -21,10 +21,18 @@ class DebugMenuTableViewControllerTests: XCTestCase {
         sut.viewDidLoad()
         sut.configureForCurrentTheme()
         
+        resetFlags()
+    }
+    
+    private func resetFlags() {
         Current.userDefaults.set(false, forDefaultsKey: .lpcDebugMode)
         Current.userDefaults.set(false, forDefaultsKey: .responseCodeVisualiser)
         Current.userDefaults.set(false, forDefaultsKey: .applyInAppReviewRules)
         Current.userDefaults.set(false, forDefaultsKey: .allowCustomBundleClientOnLogin)
+    }
+    
+    override func tearDown() {
+        resetFlags()
     }
 
     func test_hasCorrectBgForTheme() throws {
@@ -56,22 +64,22 @@ class DebugMenuTableViewControllerTests: XCTestCase {
     
     func test_performsCorrectAction() throws {
         sut.debugMenuFactory(DebugMenuFactory(), shouldPerformActionForType: DebugMenuRow.RowType.lpcDebugMode)
-        
+
         var value = Current.userDefaults.bool(forDefaultsKey: .lpcDebugMode)
         XCTAssertTrue(value)
-        
+
         sut.debugMenuFactory(DebugMenuFactory(), shouldPerformActionForType: DebugMenuRow.RowType.responseCodeVisualiser)
-        
+
         value = Current.userDefaults.bool(forDefaultsKey: .responseCodeVisualiser)
         XCTAssertTrue(value)
-        
+
         sut.debugMenuFactory(DebugMenuFactory(), shouldPerformActionForType: DebugMenuRow.RowType.inAppReviewRules)
-        
+
         value = Current.userDefaults.bool(forDefaultsKey: .applyInAppReviewRules)
         XCTAssertTrue(value)
-        
+
         sut.debugMenuFactory(DebugMenuFactory(), shouldPerformActionForType: DebugMenuRow.RowType.customBundleClientLogin)
-        
+
         value = Current.userDefaults.bool(forDefaultsKey: .allowCustomBundleClientOnLogin)
         XCTAssertTrue(value)
     }
