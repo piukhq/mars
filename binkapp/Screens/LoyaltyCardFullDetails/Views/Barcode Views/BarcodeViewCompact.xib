@@ -28,8 +28,8 @@
                         <constraint firstAttribute="width" secondItem="ccd-vJ-ShL" secondAttribute="height" multiplier="1:1" id="twU-uB-aiL"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hME-2G-AJ8">
-                    <rect key="frame" x="21" y="31.5" width="41.5" height="20.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hME-2G-AJ8">
+                    <rect key="frame" x="23" y="23" width="37.5" height="37.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -63,14 +63,16 @@
             <constraints>
                 <constraint firstItem="ccd-vJ-ShL" firstAttribute="leading" secondItem="b2e-YA-teQ" secondAttribute="leading" constant="20" id="9Jo-rm-wAA"/>
                 <constraint firstItem="T8c-B0-Mb8" firstAttribute="leading" secondItem="pck-86-UYi" secondAttribute="trailing" constant="20" id="9sh-Dw-n9n"/>
-                <constraint firstItem="hME-2G-AJ8" firstAttribute="centerX" secondItem="ccd-vJ-ShL" secondAttribute="centerX" id="CLo-1q-hRF"/>
+                <constraint firstItem="hME-2G-AJ8" firstAttribute="leading" secondItem="ccd-vJ-ShL" secondAttribute="leading" constant="3" id="DTx-fv-aZe"/>
                 <constraint firstItem="T8c-B0-Mb8" firstAttribute="top" secondItem="b4f-tC-okO" secondAttribute="top" constant="20" id="Dk6-Kw-8Hh"/>
                 <constraint firstItem="pck-86-UYi" firstAttribute="leading" secondItem="b2e-YA-teQ" secondAttribute="leading" constant="20" id="HN4-Mb-wah"/>
                 <constraint firstItem="ccd-vJ-ShL" firstAttribute="top" secondItem="b4f-tC-okO" secondAttribute="top" constant="20" id="K3N-9D-1QJ"/>
+                <constraint firstItem="hME-2G-AJ8" firstAttribute="bottom" secondItem="ccd-vJ-ShL" secondAttribute="bottom" constant="-3" id="K9d-IM-yBz"/>
                 <constraint firstItem="b2e-YA-teQ" firstAttribute="bottom" secondItem="T8c-B0-Mb8" secondAttribute="bottom" constant="20" id="Kt7-sd-6kM"/>
                 <constraint firstItem="pck-86-UYi" firstAttribute="top" secondItem="ccd-vJ-ShL" secondAttribute="bottom" constant="10" id="O8s-Gv-nTK"/>
-                <constraint firstItem="hME-2G-AJ8" firstAttribute="centerY" secondItem="ccd-vJ-ShL" secondAttribute="centerY" id="ZRW-xf-owz"/>
+                <constraint firstItem="hME-2G-AJ8" firstAttribute="top" secondItem="ccd-vJ-ShL" secondAttribute="top" constant="3" id="X29-Z6-Hpr"/>
                 <constraint firstItem="ccd-vJ-ShL" firstAttribute="height" secondItem="T8c-B0-Mb8" secondAttribute="height" multiplier="0.305509" id="Zs3-oq-NOh"/>
+                <constraint firstItem="hME-2G-AJ8" firstAttribute="trailing" secondItem="ccd-vJ-ShL" secondAttribute="trailing" constant="-3" id="eDu-iX-AzG"/>
                 <constraint firstItem="b2e-YA-teQ" firstAttribute="trailing" secondItem="T8c-B0-Mb8" secondAttribute="trailing" constant="20" id="w0m-MK-JYd"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

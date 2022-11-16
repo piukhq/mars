@@ -21,9 +21,11 @@ class BarcodeViewCompact: BarcodeView {
         }
         
         /// Custom card
-        let primaryBrandColor = UIColor(hexString: viewModel.membershipCard.card?.colour ?? "")
-        iconImageView.backgroundColor = primaryBrandColor
-        customCardIconLabel.text = viewModel.brandName.first?.uppercased()
-        customCardIconLabel.font = .customCardLogo
+        if viewModel.cardIsCustomCard {
+            let primaryBrandColor = UIColor(hexString: viewModel.membershipCard.card?.colour ?? "")
+            iconImageView.backgroundColor = primaryBrandColor
+            customCardIconLabel.text = viewModel.brandName.first?.uppercased()
+            customCardIconLabel.font = .customCardLogo
+        }
     }
 }

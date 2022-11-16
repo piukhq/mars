@@ -123,6 +123,10 @@ class LoyaltyCardFullDetailsViewModel {
     var indexToInsertVoucherCell: Int {
         return shouldShowBarcodeButton ? 4 : 3
     }
+    
+    var cardIsCustomCard: Bool {
+        return membershipCard.membershipPlan?.isCustomCard ?? false
+    }
         
     // MARK: - Public methods
     

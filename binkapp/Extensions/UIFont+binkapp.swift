@@ -14,7 +14,7 @@ extension UIFont {
     }
     
     class var customCardLogoSmall: UIFont {
-        return UIFont(name: "NunitoSans-ExtraBold", size: 26.0) ?? UIFont()
+        return UIFont(name: "NunitoSans-ExtraBold", size: 30.0) ?? UIFont()
     }
     
     class var headline: UIFont {
