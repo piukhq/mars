@@ -125,6 +125,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
 
         /// Brand colours
         let primaryBrandColor = UIColor(hexString: viewModel.brandColorHex ?? "")
+        let textColor: UIColor = primaryBrandColor.isLight(threshold: 0.8) ? .black : .white
         rectangleView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         rectangleView.firstColor = primaryBrandColor
         rectangleView.secondColor = plan.secondaryBrandColor
@@ -134,6 +135,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
             cardIconImageView.backgroundColor = primaryBrandColor
             customCardLogoLabel.text = viewModel.companyName?.first?.uppercased()
             customCardLogoLabel.font = .customCardLogo
+            customCardLogoLabel.textColor = textColor
             rectangleView.secondColor = UIColor(hexString: viewModel.customCardSecondaryColor ?? "")
         } else {
             customCardLogoLabel.text = nil
@@ -164,7 +166,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         cardValueSuffixLabel.isHidden = !viewModel.shouldShowPointsSuffixLabel
         
         [cardNameLabel, cardValuePointsLabel, cardLinkStatusLabel, cardValueSuffixLabel].forEach {
-            $0.textColor = primaryBrandColor.isLight(threshold: 0.8) ? .black : .white
+            $0.textColor = textColor
         }
         
         containerView.backgroundColor = .clear

@@ -23,9 +23,12 @@ class BarcodeViewCompact: BarcodeView {
         /// Custom card
         if viewModel.cardIsCustomCard {
             let primaryBrandColor = UIColor(hexString: viewModel.membershipCard.card?.colour ?? "")
+            let textColor: UIColor = primaryBrandColor.isLight(threshold: 0.8) ? .black : .white
+
             iconImageView.backgroundColor = primaryBrandColor
             customCardIconLabel.text = viewModel.brandName.first?.uppercased()
             customCardIconLabel.font = .customCardLogo
+            customCardIconLabel.textColor = textColor
         }
     }
 }
