@@ -6,6 +6,8 @@
 //  Copyright © 2021 Bink. All rights reserved.
 //
 
+import UIKit
+
 class BarcodeViewWide: BarcodeView {
     func configure(viewModel: LoyaltyCardFullDetailsViewModel) {
         cardNumberLabel.text = viewModel.barcodeViewModel.cardNumber
@@ -21,5 +23,11 @@ class BarcodeViewWide: BarcodeView {
         if viewModel.barcodeViewModel.barcodeType == .pdf417 {
             barcodeImageView.contentMode = .scaleAspectFit
         }
+        
+        /// Custom card
+        let primaryBrandColor = UIColor(hexString: viewModel.membershipCard.card?.colour ?? "")
+        iconImageView.backgroundColor = primaryBrandColor
+        customCardIconLabel.text = viewModel.brandName.first?.uppercased()
+        customCardIconLabel.font = .customCardLogoSmall
     }
 }

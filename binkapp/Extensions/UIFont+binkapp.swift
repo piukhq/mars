@@ -13,6 +13,10 @@ extension UIFont {
         return UIFont(name: "NunitoSans-ExtraBold", size: 40.0) ?? UIFont()
     }
     
+    class var customCardLogoSmall: UIFont {
+        return UIFont(name: "NunitoSans-ExtraBold", size: 26.0) ?? UIFont()
+    }
+    
     class var headline: UIFont {
         return UIFont(name: "NunitoSans-ExtraBold", size: 25.0) ?? UIFont()
     }
