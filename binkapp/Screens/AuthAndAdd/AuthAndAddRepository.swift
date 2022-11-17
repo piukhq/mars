@@ -61,7 +61,7 @@ class AuthAndAddRepository: WalletServiceProtocol {
         }
     }
     
-    func mapCustomCardToCoreData(membershipCard: MembershipCardPostModel, completion: @escaping (CD_MembershipCard?) -> Void) {
+    private func mapCustomCardToCoreData(membershipCard: MembershipCardPostModel, completion: @escaping (CD_MembershipCard?) -> Void) {
         Current.database.performBackgroundTask { context in
             let barcode = membershipCard.account?.addFields?.first(where: { $0.column == "Card number" })?.value
             let merchantName = membershipCard.account?.addFields?.first(where: { $0.column == "Store name" })?.value
