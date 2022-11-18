@@ -393,7 +393,7 @@ extension Wallet {
         guard let cards = cards else { return }
 
         /// On logout, we delete all core data objects, so the first time we fall into this method is when we attempt to load local cards, which won't exist. We should return out at this point.
-        if cards.isEmpty && !hasLaunched { return }
+        if cards.isEmpty && !hasLaunched || !hasLaunched { return }
 
         /// If we have a local order set
         if var order = localOrder {
