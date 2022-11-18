@@ -70,7 +70,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         return paddingView
     }()
     
-    private lazy var showBarcodeButton: UIButton = {
+    lazy var showBarcodeButton: UIButton = {
         let button = UIButton(type: .custom)
         button.titleLabel?.font = .bodyTextLarge
         button.addTarget(self, action: #selector(showBarcodeButtonPressed), for: .touchUpInside)
@@ -203,7 +203,11 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         super.viewDidLoad()
         configureUI()
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidUpdate, object: nil)
-        //viewModel.storeOpenedTimeForCard()
+        
+        if !UIApplication.isRunningUnitTests {
+            viewModel.storeOpenedTimeForCard()
+        }
+
         fetchGeoData()
     }
     
