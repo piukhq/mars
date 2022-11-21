@@ -31,7 +31,7 @@ class BarcodeViewWide: BarcodeView {
 
             iconImageView.backgroundColor = primaryBrandColor
             customCardIconLabel.text = viewModel.brandName.first?.uppercased()
-            customCardIconLabel.font = .customCardLogo
+            customCardIconLabel.font = .customCardLogoSmall
             customCardIconLabel.textColor = textColor
         }
     }
