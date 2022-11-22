@@ -116,7 +116,13 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let secondaryCard = UIView()
         secondaryCard.frame = CGRect(x: cellFrame.minX + LayoutHelper.RectangleView.secondaryRectX + 7.5, y: cellFrame.minY - LayoutHelper.WalletDimensions.cardLineSpacing, width: LayoutHelper.RectangleView.secondaryRectWidth / 2, height: LayoutHelper.RectangleView.secondaryRectHeight / 2)
         secondaryCard.transform = CGAffineTransform(rotationAngle: LayoutHelper.RectangleView.secondaryRectRotation)
-        secondaryCard.backgroundColor = membershipCard.membershipPlan?.secondaryBrandColor
+        
+        if let customColor = membershipCard.card?.secondaryColour {
+            secondaryCard.backgroundColor = UIColor(hexString: customColor)
+        } else {
+            secondaryCard.backgroundColor = membershipCard.membershipPlan?.secondaryBrandColor
+        }
+        
         secondaryCard.layer.cornerRadius = LayoutHelper.RectangleView.cornerRadius
         secondaryCard.alpha = 0
         
