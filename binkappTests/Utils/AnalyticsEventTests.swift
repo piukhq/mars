@@ -48,7 +48,7 @@ final class AnalyticsEventTests: XCTestCase, CoreDataTestable {
         
         membershipCardPostModel = MembershipCardPostModel(account: nil, membershipPlan: 500)
         
-        cardResponse = CardModel(apiId: 500, barcode: "123456789", membershipId: "999 666", barcodeType: 0, colour: "#0000ff", secondaryColour: nil)
+        cardResponse = CardModel(apiId: 500, barcode: "123456789", membershipId: "999 666", barcodeType: 0, colour: "#0000ff", secondaryColour: nil, merchantName: nil  )
         
         membershipCardStatusModel = MembershipCardStatusModel(apiId: 500, state: .authorised, reasonCodes: [.pointsScrapingLoginRequired])
         
