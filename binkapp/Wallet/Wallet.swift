@@ -393,15 +393,10 @@ extension Wallet {
         guard let cards = cards else { return }
 
         /// On logout, we delete all core data objects, so the first time we fall into this method is when we attempt to load local cards, which won't exist. We should return out at this point.
-            if cards.isEmpty { return }
+        if cards.isEmpty && !hasLaunched  { return }
 
         /// If we have a local order set
         if var order = localOrder {
-//            /// Remove id's from local order that don't exist in the latest cards response
-            order.removeAll { cardId in
-                !cards.contains(where: { $0.id == cardId })
-            }
-
             /// Add id's to top of local order for any new cards in the response
             var newCardIds = cards.compactMap { $0.id }.filter { !order.contains($0) }
             newCardIds.reverse()
