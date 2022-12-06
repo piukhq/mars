@@ -40,6 +40,8 @@ class WebViewController: BinkViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setActivityIndicator()
+        
+        navigationController?.setToolbarHidden(false, animated: false)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
