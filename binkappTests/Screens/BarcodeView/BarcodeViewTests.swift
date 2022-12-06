@@ -28,7 +28,7 @@ class BarcodeViewTests: XCTestCase, CoreDataTestable {
             self.membershipPlan = plan
         }
         
-        cardModel = CardModel(apiId: 300, barcode: "11111", membershipId: "1111", barcodeType: 1, colour: nil, secondaryColour: nil)
+        cardModel = CardModel(apiId: 300, barcode: "11111", membershipId: "1111", barcodeType: 1, colour: nil, secondaryColour: nil, merchantName: nil)
         membershipCardStatusModel = MembershipCardStatusModel(apiId: 300, state: .authorised, reasonCodes: nil)
         baseMembershipCardResponse = MembershipCardModel(apiId: 300, membershipPlan: 500, membershipTransactions: nil, status: membershipCardStatusModel, card: cardModel, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil, openedTime: nil)
         

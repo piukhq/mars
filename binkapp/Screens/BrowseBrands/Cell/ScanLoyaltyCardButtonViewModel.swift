@@ -33,7 +33,8 @@ class ScanLoyaltyCardButtonViewModel: NSObject {
 }
 
 extension ScanLoyaltyCardButtonViewModel: BinkScannerViewControllerDelegate {
-    func binkScannerViewController(_ viewController: BinkScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
+    func binkScannerViewController(_ viewController: BinkScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan?, completion: (() -> Void)?) {
+        guard let membershipPlan = membershipPlan else { return }
         let prefilledValues = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
         let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, existingMembershipCard: nil, prefilledFormValues: [prefilledValues])
         let navigationRequest = PushNavigationRequest(viewController: viewController)

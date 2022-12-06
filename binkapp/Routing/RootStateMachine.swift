@@ -6,6 +6,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
+import CoreData
 import UIKit
 import DTTJailbreakDetection
 
@@ -87,9 +88,13 @@ class RootStateMachine: NSObject, UserServiceProtocol {
     
     private func clearLocalStorage(completion: @escaping () -> Void) {
         Current.database.performBackgroundTask { context in
-            context.deleteAll(CD_MembershipCard.self)
+            var nonCustomMembershipCards = context.fetchAll(CD_MembershipCard.self).filter { $0.membershipPlan?.id != "9999" }
+
+            nonCustomMembershipCards.forEach {
+                context.delete($0)
+            }
+
             context.deleteAll(CD_PaymentCard.self)
-            context.deleteAll(CD_BaseObject.self) // Cleanup any orphaned objects
             try? context.save()
             DispatchQueue.main.async {
                 completion()

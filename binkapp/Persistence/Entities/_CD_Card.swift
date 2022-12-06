@@ -1,7 +1,7 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
 // Make changes to CD_Card.swift instead.
-
 // swiftlint:disable all
+
 
 import Foundation
 import CoreData
@@ -11,6 +11,7 @@ public enum CD_CardAttributes: String {
     case barcodeType = "barcodeType"
     case colour = "colour"
     case membershipId = "membershipId"
+    case merchantName = "merchantName"
     case secondaryColour = "secondaryColour"
 }
 
@@ -62,6 +63,9 @@ open class _CD_Card: CD_BaseObject {
     var membershipId: String?
 
     @NSManaged open
+    var merchantName: String?
+
+    @NSManaged open
     var secondaryColour: String?
 
     // MARK: - Relationships
@@ -71,5 +75,6 @@ open class _CD_Card: CD_BaseObject {
 
     @NSManaged open
     var membershipPlan: CD_MembershipPlan?
+
 }
 

@@ -24,6 +24,11 @@ struct BarcodeScannerViewModel {
     var hasPlan: Bool {
         return plan != nil
     }
+    
+    var planIsCustomCard: Bool {
+        guard let plan = plan else { return false }
+        return plan.isCustomCard
+    }
 }
 
 enum BarcodeCaptureSource {
@@ -33,7 +38,11 @@ enum BarcodeCaptureSource {
     var errorMessage: String {
         switch self {
         case .camera(let membershipPlan):
-            return "The card you scanned was not correct, please scan your \(membershipPlan?.account?.companyName ?? "") card"
+            if let plan = membershipPlan, plan.isCustomCard {
+                return "The barcode you scanned is a Bink loyalty brand, please add it via the Browse Brands screen, or continue adding a card which isn't on that list."
+            } else {
+                return "The card you scanned was not correct, please scan your \(membershipPlan?.account?.companyName ?? "") card"
+            }
         case .photoLibrary(let membershipPlan):
             return "Unrecognized barcode, please import an image of your \(membershipPlan?.account?.companyName ?? "") barcode"
         }
@@ -41,7 +50,7 @@ enum BarcodeCaptureSource {
 }
 
 protocol BinkScannerViewControllerDelegate: AnyObject {
-    func binkScannerViewController(_ viewController: BinkScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?)
+    func binkScannerViewController(_ viewController: BinkScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan?, completion: (() -> Void)?)
     func binkScannerViewControllerShouldEnterManually(_ viewController: BinkScannerViewController, completion: (() -> Void)?)
     func binkScannerViewController(_ viewController: BinkScannerViewController, didScan paymentCard: PaymentCardCreateModel)
 }
@@ -437,11 +446,17 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
         Current.wallet.identifyMembershipPlanForBarcode(barcode) { [weak self] plan in
             guard let self = self else { return }
             guard let plan = plan else {
+                /// If arrived from custom card Auth and Add screen and we can't identify plan,  pass data to scanner delegate with no plan
+                if self.viewModel.planIsCustomCard {
+                    self.passDataToBarcodeScannerDelegate(barcode: barcode)
+                }
+                
                 if self.canPresentScanError {
                     self.canPresentScanError = false
                     DispatchQueue.main.async { [weak self] in
                         guard let self = self else { return }
                         self.widgetView.unrecognizedBarcode()
+                        self.showUnrecognisedBardcodeError(barcode: barcode)
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: { [weak self] in
                         self?.canPresentScanError = true
@@ -451,12 +466,17 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
             }
             
             BinkLogger.infoPrivateHash(event: AppLoggerEvent.barcodeScanned, value: "ID: \(plan.id ?? "") - \(barcode)")
-            
             self.passDataToBarcodeScannerDelegate(barcode: barcode, membershipPlan: plan)
         }
     }
     
-    private func passDataToBarcodeScannerDelegate(barcode: String, membershipPlan: CD_MembershipPlan) {
+    private func passDataToBarcodeScannerDelegate(barcode: String, membershipPlan: CD_MembershipPlan? = nil) {
+        guard let membershipPlan = membershipPlan else {
+            /// Custom card journey
+            self.delegate?.binkScannerViewController(self, didScanBarcode: barcode, forMembershipPlan: nil, completion: nil)
+            return
+        }
+        
         // We recognised the plan, but is this the plan we injected if any?
         if let planFromForm = self.viewModel.plan {
             // We injected a plan from a form
@@ -487,6 +507,22 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
                 self.delegate?.binkScannerViewController(self, didScanBarcode: barcode, forMembershipPlan: membershipPlan, completion: nil)
             }
         }
+    }
+    
+    private func showUnrecognisedBardcodeError(barcode: String) {
+        let alertController = ViewControllerFactory.makeTwoButtonAlertViewController(title: L10n.loyaltyScannerWidgetTitleUnrecognizedBarcodeText, message: L10n.loyaltyScannerUnrecognizedBarcodeAlertDescription, primaryButtonTitle: L10n.cancel, secondaryButtonTitle: L10n.loyaltyScannerUnrecognizedBarcodeAlertAddCustomButtonText) {
+            /// Cancel
+        } secondaryButtonCompletion: {
+            if let customPlan = Current.wallet.membershipPlans?.first(where: { $0.isCustomCard }) {
+                let prefilledValues = FormDataSource.PrefilledValue(commonName: .cardNumber, value: barcode)
+                let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: customPlan, formPurpose: .add, prefilledFormValues: [prefilledValues])
+                let navigationRequest = PushNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
+            }
+        }
+
+        let alertRequest = AlertNavigationRequest(alertController: alertController)
+        Current.navigate.to(alertRequest)
     }
     
     private func showError(barcodeDetected: Bool) {

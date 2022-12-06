@@ -35,7 +35,6 @@
 		2126377728B3E2FD00C795D6 /* BarcodeViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126377628B3E2FD00C795D6 /* BarcodeViewTests.swift */; };
 		212F0C442876EB7E007F09CE /* CalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C432876EB7E007F09CE /* CalloutView.swift */; };
 		212F0C462876EC63007F09CE /* GeoLocationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */; };
-		21410FA428DC8567002EE969 /* VisionUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21410FA328DC8567002EE969 /* VisionUtility.swift */; };
 		214680F02907F4B400C03EB1 /* WebScrapingResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214680EF2907F4B400C03EB1 /* WebScrapingResponseTests.swift */; };
 		2147C69E2907FD8C00B233B3 /* TransactionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2147C69D2907FD8C00B233B3 /* TransactionsViewModelTests.swift */; };
 		21497EC82864A1880053A9EE /* OptionItemListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21497EC72864A1880053A9EE /* OptionItemListViewController.swift */; };
@@ -358,6 +357,7 @@
 		CE54AF5D25F938720061838C /* BinkLoggerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54AF5C25F938720061838C /* BinkLoggerEvents.swift */; };
 		CE54AF6225FA0BA00061838C /* BinkLoggerErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */; };
 		CE55086E278888D800A39178 /* UniversalLinkUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE85A1D726B0096A003B74CD /* UniversalLinkUtility.swift */; };
+		CE59853F291E7D2D00C50EC4 /* ColorPallete.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE59853E291E7D2D00C50EC4 /* ColorPallete.swift */; };
 		CE65ED982840D8F80043E7B8 /* BinkSupportUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE65ED972840D8F70043E7B8 /* BinkSupportUtility.swift */; };
 		CE67DC0D269F2407008D930D /* AutomatedTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE67DC0C269F2407008D930D /* AutomatedTesting.swift */; };
 		CE6DE55F267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6DE55E267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift */; };
@@ -776,13 +776,13 @@
 		217288F428B4E63A00258EBA /* MainTabBarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewModelTests.swift; sourceTree = "<group>"; };
 		217288F728B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift; sourceTree = "<group>"; };
 		217288F928B50D3700258EBA /* PLRCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRCellViewModelTests.swift; sourceTree = "<group>"; };
-		21A9BE7128F6F1EF00FC1304 /* binkapp - 12-9-22 - MembershipCard - time when opened.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 12-9-22 - MembershipCard - time when opened.xcdatamodel"; sourceTree = "<group>"; };
 		21A7711A29127FEE00233953 /* LoyaltyScannerWidgetViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyScannerWidgetViewTests.swift; sourceTree = "<group>"; };
 		21A7711C29128B0600233953 /* CAGradientLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAGradientLayerTests.swift; sourceTree = "<group>"; };
 		21A7711E2912928100233953 /* CardAlertViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardAlertViewTests.swift; sourceTree = "<group>"; };
 		21A771202912B34D00233953 /* DateManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManagerTests.swift; sourceTree = "<group>"; };
 		21A771232912DCD700233953 /* ActivityViewControllerRepresentableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewControllerRepresentableTests.swift; sourceTree = "<group>"; };
 		21A771252912E43600233953 /* BarcodeViewNoBarcodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewNoBarcodeTests.swift; sourceTree = "<group>"; };
+		21A9BE7128F6F1EF00FC1304 /* binkapp - 12-9-22 - MembershipCard - time when opened.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 12-9-22 - MembershipCard - time when opened.xcdatamodel"; sourceTree = "<group>"; };
 		21E5E2E628B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		21F313202913E02D009960F0 /* FilterBrandsCollectionViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBrandsCollectionViewCellTests.swift; sourceTree = "<group>"; };
 		2211289D0FB0F1A14BC9E957 /* Pods-binkapp.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.beta.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.beta.xcconfig"; sourceTree = "<group>"; };
@@ -1085,6 +1085,8 @@
 		CE539DFC25F0EBAB00BDA5EF /* BinkLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLogger.swift; sourceTree = "<group>"; };
 		CE54AF5C25F938720061838C /* BinkLoggerEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLoggerEvents.swift; sourceTree = "<group>"; };
 		CE54AF6125FA0BA00061838C /* BinkLoggerErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLoggerErrors.swift; sourceTree = "<group>"; };
+		CE59853E291E7D2D00C50EC4 /* ColorPallete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPallete.swift; sourceTree = "<group>"; };
+		CE5985402923A0AD00C50EC4 /* binkapp - 15-11-22 - Card - custom card store name.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 15-11-22 - Card - custom card store name.xcdatamodel"; sourceTree = "<group>"; };
 		CE65ED972840D8F70043E7B8 /* BinkSupportUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkSupportUtility.swift; sourceTree = "<group>"; };
 		CE67DC0C269F2407008D930D /* AutomatedTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting.swift; sourceTree = "<group>"; };
 		CE6DE55E267CA06D0063A3A9 /* FeatureFlagsSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsSwiftUIView.swift; sourceTree = "<group>"; };
@@ -3373,6 +3375,7 @@
 				3C71683424069F370058701E /* bink.der */,
 				CE822D8127B1321A00916C74 /* binkOld.der */,
 				5ECE047522CE579B001BA964 /* Assets.xcassets */,
+				CE59853E291E7D2D00C50EC4 /* ColorPallete.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -3972,7 +3975,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/opt/homebrew/bin/mogenerator --swift --model binkapp/Persistence/Model/binkapp.xcdatamodeld --output-dir binkapp/Persistence/Entities\n";
+			shellScript = "/usr/local/bin/mogenerator --swift --model binkapp/Persistence/Model/binkapp.xcdatamodeld --output-dir binkapp/Persistence/Entities\n";
 		};
 		F8F07BEC58B2D2BCE544103B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4166,6 +4169,7 @@
 				3C9B1A2723854BF60078A1EC /* PreferencesViewModel.swift in Sources */,
 				3C7AF52B23757FB0005964E0 /* FloatExtension.swift in Sources */,
 				EF9E9BCC23C3AC19002FF18E /* NSNumberExtension.swift in Sources */,
+				CE59853F291E7D2D00C50EC4 /* ColorPallete.swift in Sources */,
 				CE02D5132726BEA0008B9BFA /* CheckYourInboxViewController.swift in Sources */,
 				CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */,
 				7061053125B7349600A16DA5 /* ThemeManager.swift in Sources */,
@@ -6505,6 +6509,7 @@
 		5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CE5985402923A0AD00C50EC4 /* binkapp - 15-11-22 - Card - custom card store name.xcdatamodel */,
 				21A9BE7128F6F1EF00FC1304 /* binkapp - 12-9-22 - MembershipCard - time when opened.xcdatamodel */,
 				CE3EA70C28CA272D00EFEDA9 /* binkapp - 8-9-22 - AddField-alternatives-type-edit.xcdatamodel */,
 				CEA905B825C9859A000F69E1 /* binkapp - 2-2-21 - Membership card image dark mode url .xcdatamodel */,
@@ -6522,7 +6527,7 @@
 				BD475E6C23A256820071302A /* binkapp - Plan Documents Display.xcdatamodel */,
 				5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */,
 			);
-			currentVersion = 21A9BE7128F6F1EF00FC1304 /* binkapp - 12-9-22 - MembershipCard - time when opened.xcdatamodel */;
+			currentVersion = CE5985402923A0AD00C50EC4 /* binkapp - 15-11-22 - Card - custom card store name.xcdatamodel */;
 			path = binkapp.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -93,7 +93,7 @@ class BarcodeViewModel: ObservableObject {
     }
     
     var title: String {
-        return membershipCard.membershipPlan?.account?.companyName ?? ""
+        return membershipCard.card?.merchantName ?? membershipCard.membershipPlan?.account?.companyName ?? ""
     }
     
     var descriptionText: String {
@@ -110,7 +110,12 @@ class BarcodeViewModel: ObservableObject {
     }
     
     var membershipNumberTitle: String {
-        return L10n.barcodeMembershipNumberTitle(membershipCard.membershipPlan?.account?.planNameCard ?? "")
+        switch membershipCard.membershipPlan?.isCustomCard {
+        case false:
+            return L10n.barcodeMembershipNumberTitle(membershipCard.membershipPlan?.account?.planNameCard ?? "")
+        default:
+            return L10n.barcodeViewTitle
+        }
     }
     
     var isBarcodeAvailable: Bool {

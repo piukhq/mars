@@ -82,6 +82,8 @@ internal enum L10n {
   internal static let alertViewChangingSortBody = L10n.tr("Localizable", "alert_view_changing_sort_body")
   /// All
   internal static let allTitle = L10n.tr("Localizable", "all_title")
+  /// Please enter your credentials below to add this card to your wallet.
+  internal static let authScreenCustomCardDescription = L10n.tr("Localizable", "auth_screen_custom_card_description")
   /// Please enter your %@ credentials below to add this card to your wallet.
   internal static func authScreenDescription(_ p1: Any) -> String {
     return L10n.tr("Localizable", "auth_screen_description", String(describing: p1))
@@ -172,6 +174,16 @@ internal enum L10n {
   internal static let continueButtonTitle = L10n.tr("Localizable", "continue_button_title")
   /// Enter credentials
   internal static let credentialsTitle = L10n.tr("Localizable", "credentials_title")
+  /// Other card
+  internal static let customCardCompanyName = L10n.tr("Localizable", "custom_card_company_name")
+  /// Enter name of store
+  internal static let customCardNameAddFieldDescription = L10n.tr("Localizable", "custom_card_name_add_field_description")
+  /// Store name
+  internal static let customCardNameAddFieldTitle = L10n.tr("Localizable", "custom_card_name_add_field_title")
+  /// Enter card number
+  internal static let customCardNumberAddFieldDescription = L10n.tr("Localizable", "custom_card_number_add_field_description")
+  /// Card number
+  internal static let customCardNumberAddFieldTitle = L10n.tr("Localizable", "custom_card_number_add_field_title")
   /// day
   internal static let day = L10n.tr("Localizable", "day")
   /// days
@@ -317,6 +329,10 @@ internal enum L10n {
   internal static let loyaltyScannerExplainerTextPermissionDenied = L10n.tr("Localizable", "loyalty_scanner_explainer_text_permission_denied")
   /// Failed to detect barcode in the image, please try again
   internal static let loyaltyScannerFailedToDetectBarcode = L10n.tr("Localizable", "loyalty_scanner_failed_to_detect_barcode")
+  /// Add Custom
+  internal static let loyaltyScannerUnrecognizedBarcodeAlertAddCustomButtonText = L10n.tr("Localizable", "loyalty_scanner_unrecognized_barcode_alert_add_custom_button_text")
+  /// Would you like to add this to your wallet anyway?
+  internal static let loyaltyScannerUnrecognizedBarcodeAlertDescription = L10n.tr("Localizable", "loyalty_scanner_unrecognized_barcode_alert_description")
   /// You can also type in the card details yourself.
   internal static let loyaltyScannerWidgetExplainerEnterManuallyText = L10n.tr("Localizable", "loyalty_scanner_widget_explainer_enter_manually_text")
   /// Please try adding the card manually.

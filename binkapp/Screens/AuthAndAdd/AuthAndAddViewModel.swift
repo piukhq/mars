@@ -96,7 +96,7 @@ class AuthAndAddViewModel {
         switch formPurpose {
         case .add, .addFromScanner:
             guard let companyName = membershipPlan.account?.companyName else { return nil }
-            return L10n.authScreenDescription(companyName)
+            return membershipPlan.isCustomCard ? L10n.authScreenCustomCardDescription : L10n.authScreenDescription(companyName)
         case .signUp:
             if let planSummary = membershipPlan.account?.planSummary {
                 return planSummary

@@ -214,17 +214,20 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
         }
 
         getMembershipPlans(isUserDriven: isUserDriven) { [weak self] result in
+            guard let self = self else { return }
             switch result {
-            case .success(let response):
-                self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipPlan.self, completion: {
-                    self?.fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self) { plans in
-                        self?.membershipPlans = plans
+            case .success(var response):
+                response.append(self.customCardPlan())
+                
+                self.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipPlan.self, completion: {
+                    self.fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self) { plans in
+                        self.membershipPlans = plans
                         completion(true, nil)
                         StorageUtility.refreshPlanImages()
                     }
                 })
             case .failure(let error):
-                guard let localPlans = self?.membershipPlans, !localPlans.isEmpty else {
+                guard let localPlans = self.membershipPlans, !localPlans.isEmpty else {
                     completion(false, error)
                     return
                 }
@@ -318,6 +321,14 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
             }
         }
     }
+    
+    private func customCardPlan() -> MembershipPlanModel {
+        let cardNumberField = AddFieldModel(apiId: 0, column: L10n.customCardNumberAddFieldTitle, validation: nil, fieldDescription: L10n.customCardNumberAddFieldDescription, type: 0, choices: nil, commonName: FieldCommonName.cardNumber.rawValue, alternatives: ["barcode"])
+        let storeNameField = AddFieldModel(apiId: 0, column: L10n.customCardNameAddFieldTitle, validation: nil, fieldDescription: L10n.customCardNameAddFieldDescription, type: 0, choices: nil, commonName: nil, alternatives: nil)
+        let account = MembershipPlanAccountModel(apiId: nil, planNameCard: nil, companyName: L10n.customCardCompanyName, category: "Other", planDescription: nil, barcodeRedeemInstructions: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, addFields: [cardNumberField, storeNameField], authoriseFields: nil, registrationFields: nil, enrolFields: nil)
+        let featureSet = FeatureSetModel(apiId: nil, authorisationRequired: nil, digitalOnly: nil, cardType: .store, linkingSupport: [.add], hasVouchers: nil)
+        return MembershipPlanModel(apiId: 9999, status: "active", featureSet: featureSet, images: nil, account: account, balances: nil, card: nil)
+    }
 }
 
 // MARK: - Local wallet ordering
@@ -382,15 +393,10 @@ extension Wallet {
         guard let cards = cards else { return }
 
         /// On logout, we delete all core data objects, so the first time we fall into this method is when we attempt to load local cards, which won't exist. We should return out at this point.
-        if cards.isEmpty && !hasLaunched { return }
+        if cards.isEmpty && !hasLaunched  { return }
 
         /// If we have a local order set
         if var order = localOrder {
-            /// Remove id's from local order that don't exist in the latest cards response
-            order.removeAll { cardId in
-                !cards.contains(where: { $0.id == cardId })
-            }
-
             /// Add id's to top of local order for any new cards in the response
             var newCardIds = cards.compactMap { $0.id }.filter { !order.contains($0) }
             newCardIds.reverse()
@@ -424,7 +430,9 @@ extension Wallet {
             }
 
             /// Sync the datasource and local card order
-            localOrder = order
+            if hasLaunched {
+                localOrder = order
+            }
             walletDataSource = orderedCards.compactMap({ $0 })
         } else {
             /// Sync the datasource and set the local card order

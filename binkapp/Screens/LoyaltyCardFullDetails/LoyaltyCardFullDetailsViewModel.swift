@@ -43,7 +43,7 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     var brandName: String {
-        return membershipCard.membershipPlan?.account?.companyName ?? ""
+        return membershipCard.card?.merchantName ?? membershipCard.membershipPlan?.account?.companyName ?? ""
     }
     
     var brandNameForGeoData: String {
@@ -84,7 +84,11 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     var secondaryColor: UIColor? {
-        return membershipCard.membershipPlan?.secondaryBrandColor
+        if let customColor = membershipCard.card?.secondaryColour {
+            return UIColor(hexString: customColor)
+        } else {
+            return membershipCard.membershipPlan?.secondaryBrandColor
+        }
     }
     
     var secondaryColourIsDark: Bool {
@@ -122,6 +126,10 @@ class LoyaltyCardFullDetailsViewModel {
     
     var indexToInsertVoucherCell: Int {
         return shouldShowBarcodeButton ? 4 : 3
+    }
+    
+    var cardIsCustomCard: Bool {
+        return membershipCard.membershipPlan?.isCustomCard ?? false
     }
         
     // MARK: - Public methods
@@ -162,7 +170,7 @@ class LoyaltyCardFullDetailsViewModel {
                     }
                     
                     Cache.geoLocationsDataCache.setObject(DataCache(data: data as NSData), forKey: fileName.toNSString())
-                    completion(true, true) 
+                    completion(true, true)
                 }
             }
         }
