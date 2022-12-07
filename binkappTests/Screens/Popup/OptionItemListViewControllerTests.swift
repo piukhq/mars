@@ -47,8 +47,8 @@ class OptionItemListViewControllerTests: XCTestCase {
         XCTAssertTrue(height == 64)
     }
 
-    func test_returnsvalidCell() throws {
-        let cell = Self.sut.tableView(Self.sut.tableView, cellForRowAt: IndexPath(row: 0, section: 0))
+    func test_returnsValidCell() throws {
+        let cell = Self.sut.tableView(Self.sut.getTableView(), cellForRowAt: IndexPath(row: 0, section: 0))
         XCTAssertNotNil(cell)
     }
 

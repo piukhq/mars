@@ -79,8 +79,8 @@ final class LoyaltyCardFullDetailsViewControllerTests: XCTestCase, CoreDataTesta
     }
     
     func test_showBarCodeShouldBeVisible() throws {
-        XCTAssertNotNil(sut.showBarcodeButton)
-        XCTAssertTrue(sut.showBarcodeButton.currentTitle == "Tap to enlarge QR code")
+        XCTAssertNotNil(sut.getShowBarcodeButton())
+        XCTAssertTrue(sut.getShowBarcodeButton().currentTitle == "Tap to enlarge QR code")
     }
     
     /// RS - more to add here in the future

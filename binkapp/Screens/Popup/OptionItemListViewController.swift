@@ -7,6 +7,9 @@
 //
 
 import UIKit
+protocol OptionItemListViewControllerTestable {
+    func getTableView() -> UITableView
+}
 
 protocol OptionItemProtocol {
     var text: String { get }
@@ -44,7 +47,7 @@ class OptionItemListViewController: UIViewController {
         return line
     }()
     
-    lazy var tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let table = UITableView()
         table.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         table.isScrollEnabled = false
@@ -146,4 +149,10 @@ struct SortOrderOptionItem: OptionItemProtocol {
     }
     var isSelected: Bool
     var orderType: MembershipCardsSortState
+}
+
+extension OptionItemListViewController: OptionItemListViewControllerTestable {
+    func getTableView() -> UITableView {
+        return tableView
+    }
 }

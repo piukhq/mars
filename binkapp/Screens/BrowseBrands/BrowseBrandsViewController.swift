@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+protocol BrowseBrandsViewControllerTestable {
+    func getSearchTextField() -> BinkTextField
+    func getNoMatchesLabel() -> UILabel
+    func getSearchTextFieldContainer() -> UIView
+    func getTopStackView() -> UIStackView
+    func getNoMatchesLabelTopConstraint() -> NSLayoutConstraint
+    func areFiltersVisible() -> Bool
+}
+
 fileprivate enum Constants {
     static let searchIconLeftPadding = 12
     static let searchIconTopPadding = 13
@@ -18,11 +27,11 @@ fileprivate enum Constants {
 }
 
 class BrowseBrandsViewController: BinkViewController {
-    @IBOutlet weak var searchTextField: BinkTextField!
-    @IBOutlet weak var noMatchesLabel: UILabel!
-    @IBOutlet weak var searchTextFieldContainer: UIView!
-    @IBOutlet weak var topStackView: UIStackView!
-    @IBOutlet weak var noMatchesLabelTopConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var searchTextField: BinkTextField!
+    @IBOutlet private weak var noMatchesLabel: UILabel!
+    @IBOutlet private weak var searchTextFieldContainer: UIView!
+    @IBOutlet private weak var topStackView: UIStackView!
+    @IBOutlet private weak var noMatchesLabelTopConstraint: NSLayoutConstraint!
     
     private var filtersVisible = false
     private var selectedCollectionViewIndexPaths: [IndexPath] = []
@@ -133,10 +142,6 @@ class BrowseBrandsViewController: BinkViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         didLayoutSubviews = true
-    }
-    
-    func areFiltersVisible() -> Bool {
-        return filtersVisible
     }
     
     override func configureForCurrentTheme() {
@@ -382,5 +387,31 @@ extension BrowseBrandsViewController: UIImagePickerControllerDelegate, UINavigat
                 HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
             }
         }
+    }
+}
+
+extension BrowseBrandsViewController: BrowseBrandsViewControllerTestable {
+    func getSearchTextField() -> BinkTextField {
+        return searchTextField
+    }
+    
+    func getNoMatchesLabel() -> UILabel {
+        return noMatchesLabel
+    }
+    
+    func getSearchTextFieldContainer() -> UIView {
+        return searchTextFieldContainer
+    }
+    
+    func getTopStackView() -> UIStackView {
+        return topStackView
+    }
+    
+    func getNoMatchesLabelTopConstraint() -> NSLayoutConstraint {
+        return noMatchesLabelTopConstraint
+    }
+    
+    func areFiltersVisible() -> Bool {
+        return filtersVisible
     }
 }

@@ -43,14 +43,14 @@ final class BrowseBrandsViewControllerTests: XCTestCase, CoreDataTestable {
     func test_configuredCorrectly() throws {
         XCTAssertEqual(Self.sut.title, "Browse brands")
         
-        XCTAssertEqual(Self.sut.noMatchesLabel.font, UIFont.bodyTextLarge)
-        XCTAssertEqual(Self.sut.noMatchesLabel.text, "No matches")
+        XCTAssertEqual(Self.sut.getNoMatchesLabel().font, UIFont.bodyTextLarge)
+        XCTAssertEqual(Self.sut.getNoMatchesLabel().text, "No matches")
         
-        XCTAssertEqual(Self.sut.searchTextField.font, .textFieldInput)
-        XCTAssertEqual(Self.sut.searchTextField.placeholder, "Search")
-        XCTAssertEqual(Self.sut.searchTextField.textColor, .greyFifty)
+        XCTAssertEqual(Self.sut.getSearchTextField().font, .textFieldInput)
+        XCTAssertEqual(Self.sut.getSearchTextField().placeholder, "Search")
+        XCTAssertEqual(Self.sut.getSearchTextField().textColor, .greyFifty)
         
-        XCTAssertNotNil(Self.sut.searchTextField.leftView)
+        XCTAssertNotNil(Self.sut.getSearchTextField().leftView)
     }
     
     func test_filters() throws {
@@ -66,19 +66,21 @@ final class BrowseBrandsViewControllerTests: XCTestCase, CoreDataTestable {
     }
     
     func test_searchTextField_textHandledCorrecty() throws {
-        Self.sut.searchTextField.text = "test"
-        var complete = Self.sut.textField(Self.sut.searchTextField, shouldChangeCharactersIn: NSRange(location: 0, length: Self.sut.searchTextField.text!.count - 1), replacementString: "s")
+        var textField = Self.sut.getSearchTextField()
+        textField.text = "test"
+
+        var complete = Self.sut.textField(textField, shouldChangeCharactersIn: NSRange(location: 0, length: textField.text!.count - 1), replacementString: "s")
         XCTAssertTrue(complete)
         XCTAssertEqual(Self.sut.viewModel.searchText, "tests")
         
-        complete = Self.sut.textField(Self.sut.searchTextField, shouldChangeCharactersIn: NSRange(location: 0, length: Self.sut.searchTextField.text!.count - 1), replacementString: "")
+        complete = Self.sut.textField(textField, shouldChangeCharactersIn: NSRange(location: 0, length: textField.text!.count - 1), replacementString: "")
         
         XCTAssertEqual(Self.sut.viewModel.searchText, "tes")
         
-        complete = Self.sut.textFieldShouldClear(Self.sut.searchTextField)
+        complete = Self.sut.textFieldShouldClear(textField)
         XCTAssertEqual(Self.sut.viewModel.searchText, "")
         
-        complete = Self.sut.textFieldShouldReturn(Self.sut.searchTextField)
+        complete = Self.sut.textFieldShouldReturn(textField)
         XCTAssertTrue(complete)
     }
     

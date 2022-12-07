@@ -9,6 +9,10 @@
 
 import SwiftUI
 
+protocol LoyaltyCardFullDetailsViewControllerTestable {
+    func getShowBarcodeButton() -> UIButton
+}
+
 protocol LoyaltyCardFullDetailsModalDelegate: AnyObject {
     func refreshUI()
     func refreshModules()
@@ -70,7 +74,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         return paddingView
     }()
     
-    lazy var showBarcodeButton: UIButton = {
+    private lazy var showBarcodeButton: UIButton = {
         let button = UIButton(type: .custom)
         button.titleLabel?.font = .bodyTextLarge
         button.addTarget(self, action: #selector(showBarcodeButtonPressed), for: .touchUpInside)
@@ -640,5 +644,11 @@ extension LayoutHelper {
         static func brandHeaderAspectRatio(forMembershipCard card: CD_MembershipCard) -> CGFloat {
             return card.membershipPlan?.featureSet?.planCardType == .link ? brandHeaderAspectRatioLink : brandHeaderAspectRatio
         }
+    }
+}
+
+extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsViewControllerTestable {
+    func getShowBarcodeButton() -> UIButton {
+        return showBarcodeButton
     }
 }
