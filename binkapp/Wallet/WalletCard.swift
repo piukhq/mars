@@ -19,6 +19,7 @@ typealias WalletCard = WalletCardProtocol & NSManagedObject
 protocol WalletCardProtocol {
     var id: String! { get }
     var type: WalletCardType { get }
+    var lastOpened: Date? { get }
 }
 
 struct TrackableWalletCard {

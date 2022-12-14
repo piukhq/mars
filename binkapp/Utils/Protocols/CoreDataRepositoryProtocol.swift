@@ -43,7 +43,14 @@ extension CoreDataRepositoryProtocol {
                     
                     managedObjectIds.forEach { id in
                         if let object = backgroundContext.fetchWithID(type, id: id) {
-                            backgroundContext.delete(object)
+                            /// Prevent deletion of (locallly persisted) custom cards when performing remote refresh
+                            if let membershipCard = object as? CD_MembershipCard {
+                                if membershipCard.membershipPlan?.id != "9999" {
+                                    backgroundContext.delete(object)
+                                }
+                            } else {
+                                backgroundContext.delete(object)
+                            }
                         }
                     }
                 }

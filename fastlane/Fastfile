@@ -9,6 +9,7 @@ platform :ios do
   before_all do |lane, options|
 
     ENV["MATCH_PASSWORD"] = "c3rt1f1cat3s"
+    ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = 'true' 
 
     # This excludes these targets from the code coverage, required if we just want BinkApp posted to Slack
     ENV["COVERAGE_EXCLUDE_TARGETS"] = ""
@@ -162,7 +163,8 @@ target =
       workspace: "binkapp.xcworkspace",
       scheme: "binkapp tests",
       output_directory: "fastlane/xcov_output",
-      markdown_report: true
+      markdown_report: true,
+      ignore_file_path: "xcovignore"
     )
 
     coverage = sh("cat xcov_output/report.md | grep -i \"Current coverage for Bink.app\"")

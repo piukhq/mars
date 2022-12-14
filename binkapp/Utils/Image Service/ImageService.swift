@@ -149,6 +149,10 @@ extension UIImageView {
 
         let imageService = ImageService()
         imageService.retrieveImage(forPathType: pathType, policy: policy, userInterfaceStyle: traitCollection.userInterfaceStyle) { [weak self] retrievedImage, cached in
+            guard retrievedImage != nil else {
+                self?.image = placeholder
+                return
+            }
             if let self = self, animated {
                 if cached {
                     self.image = retrievedImage

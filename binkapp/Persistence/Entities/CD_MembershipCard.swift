@@ -2,6 +2,10 @@ import Foundation
 
 @objc(CD_MembershipCard)
 open class CD_MembershipCard: _CD_MembershipCard, WalletCardProtocol, Identifiable {
+    var lastOpened: Date? {
+        return openedTime
+    }
+    
     var type: WalletCardType {
         return .loyalty
     }

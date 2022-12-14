@@ -116,7 +116,11 @@ class AddPaymentCardViewModel {
     }
     
     func toPaymentCardScanner(delegate scanDelegate: ScanDelegate?) {
+//        let scannerViewController = ViewControllerFactory.makeScannerViewController(type: .payment, delegate: Current.navigate.scannerDelegate)
+        
+        // TODO: Delete once payment scanner is switched
         guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: strings, delegate: scanDelegate) else { return }
+        
         PermissionsUtility.launchPaymentScanner(viewController) {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)

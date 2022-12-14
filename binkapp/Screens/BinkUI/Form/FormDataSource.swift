@@ -169,7 +169,8 @@ extension FormDataSource {
             fieldType: .text,
             updated: updatedBlock,
             shouldChange: shouldChangeBlock,
-            fieldExited: fieldExitedBlock
+            fieldExited: fieldExitedBlock,
+            forcedValue: model.nameOnCard
         )
         
         fields = [cardNumberField, expiryField, nameOnCardField]
@@ -212,7 +213,7 @@ extension FormDataSource {
         }
         
         if case .addFromScanner = formPurpose {
-            model.account?.formattedAddFields(omitting: [.cardNumber])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
+            model.account?.formattedAddFields(omitting: model.isCustomCard ? [] : [.cardNumber])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     var attributedString = AttributedString(field.fieldDescription ?? "")
                     attributedString.font = .bodyTextSmall

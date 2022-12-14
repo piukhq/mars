@@ -63,7 +63,7 @@
 "barcode_error" = "This barcode cannot be displayed";
 "membership_number_title" = "Membership number";
 "barcode_card_description" = "Show this barcode in-store just like you would a physical loyalty card.";
-"barcode_card_number_description" = "Share this number in-store just like you would a physical loyalty card.";
+"barcode_card_number_description" = "Share this number in-store or online just like you would a physical loyalty card.";
 "barcode_coupon_description" = "Scan this barcode at the store, just like you would a physical coupon. Bear in mind that some store scanners cannot read from screens.";
 "barcode_maximise_button" = "Maximise barcode";
 "barcode_copy_label" = "Copy";
@@ -83,6 +83,7 @@
 "get_new_card_button" = "Get a new card";
 
 "auth_screen_description" = "Please enter your %@ credentials below to add this card to your wallet.";
+"auth_screen_custom_card_description" = "Please enter your credentials below to add this card to your wallet.";
 
 "pll_title" = "Link to your Payment Cards";
 "see_title" = "See your balance";
@@ -463,6 +464,9 @@
 "loyalty_scanner_widget_explainer_unrecognized_barcode_text" = "Please try adding the card manually.";
 "loyalty_scanner_add_photo_from_library_button_title" = "Add from Photo Library";
 "loyalty_scanner_failed_to_detect_barcode" = "Failed to detect barcode in the image, please try again";
+"loyalty_scanner_unrecognized_barcode_alert_description" = "Would you like to add this to your wallet anyway?";
+"loyalty_scanner_unrecognized_barcode_alert_add_custom_button_text" = "Add Custom";
+
 
 // MARK: - Payment Scanner
 "payment_scanner_explainer_text" = "Position your card in the frame so the card number is visible";
@@ -531,3 +535,12 @@
 "preferences_updated" = "Preferences Updated";
 
 "payment_card_link_fail_alert_message" = "Unable to adjust link at this time, if the problem persists please contact support";
+
+
+// MARK: - Wallet
+"custom_card_number_add_field_title" = "Card number";
+"custom_card_number_add_field_description" = "Enter card number";
+"custom_card_name_add_field_title" = "Store name";
+"custom_card_name_add_field_description" = "Enter name of store";
+"custom_card_company_name" = "Other card";
+

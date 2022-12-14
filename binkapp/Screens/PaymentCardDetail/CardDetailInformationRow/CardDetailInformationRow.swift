@@ -86,7 +86,13 @@ class WalletCardDetailInformationRowFactory: CardDetailInformationRowFactory {
         if plan.isPLR {
             return [makeRewardsHistoryRow(), makeAboutPlanRow(membershipCard: membershipCard), makeSecurityAndPrivacyRow(), makeDeleteMembershipCardRow(membershipCard: membershipCard)]
         }
-        return [makeAboutPlanRow(membershipCard: membershipCard), makeSecurityAndPrivacyRow(), makeDeleteMembershipCardRow(membershipCard: membershipCard)]
+        
+        var rows = [makeSecurityAndPrivacyRow(), makeDeleteMembershipCardRow(membershipCard: membershipCard)]
+        if !plan.isCustomCard {
+            rows.insert(makeAboutPlanRow(membershipCard: membershipCard), at: 0)
+        }
+        
+        return rows
     }
 
     func makePaymentInformationRows(for status: PaymentCardStatus) -> [CardDetailInformationRow] {

@@ -8,6 +8,7 @@
 
 import Foundation
 import KeychainAccess
+import UIKit
 
 class PointsScrapingManager {
     // MARK: - Objects
@@ -66,6 +67,19 @@ class PointsScrapingManager {
     private var webScrapingUtility: WebScrapingUtility?
     
     private var config: RemoteConfigFile.LocalPointsCollection? {
+        if UIApplication.isRunningUnitTests {
+            if let filePath = Bundle.main.path(forResource: "fireBase-config", ofType: "json") {
+                do {
+                    if let data = try String(contentsOfFile: filePath).data(using: .utf8) {
+                        let conf = try JSONDecoder().decode(RemoteConfigFile.self, from: data)
+                        return conf.localPointsCollection
+                    }
+                } catch {
+                    print("File error")
+                }
+            }
+        }
+        
         return Current.remoteConfig.configFile?.localPointsCollection
     }
     

@@ -51,10 +51,10 @@ class LoyaltyCardFullDetailsViewModelTests: XCTestCase, CoreDataTestable {
             self.membershipPlan = plan
         }
         
-        membershipCardBalanceModel = MembershipCardBalanceModel(apiId: nil, value: 500, currency: nil, prefix: "£", suffix: nil, updatedAt: nil)        
-        cardModel = CardModel(apiId: 300, barcode: "11111", membershipId: "1111", barcodeType: 1, colour: nil, secondaryColour: nil)
+        membershipCardBalanceModel = MembershipCardBalanceModel(apiId: nil, value: 500, currency: nil, prefix: "£", suffix: nil, updatedAt: nil)
+        cardModel = CardModel(apiId: 300, barcode: "11111", membershipId: "1111", barcodeType: 1, colour: nil, secondaryColour: nil, merchantName: nil)
         membershipCardStatusModel = MembershipCardStatusModel(apiId: 300, state: .authorised, reasonCodes: nil)
-        baseMembershipCardResponse = MembershipCardModel(apiId: 300, membershipPlan: 500, membershipTransactions: nil, status: membershipCardStatusModel, card: cardModel, images: nil, account: nil, paymentCards: nil, balances: [membershipCardBalanceModel], vouchers: [voucherResponse])
+        baseMembershipCardResponse = MembershipCardModel(apiId: 300, membershipPlan: 500, membershipTransactions: nil, status: membershipCardStatusModel, card: cardModel, images: nil, account: nil, paymentCards: nil, balances: [membershipCardBalanceModel], vouchers: [voucherResponse], openedTime: nil)
         
         mapResponseToManagedObject(baseMembershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
             self.membershipCard = membershipCard

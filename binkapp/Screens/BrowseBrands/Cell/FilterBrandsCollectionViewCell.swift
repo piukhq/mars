@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol FilterBrandsCollectionViewCellTestable {
+    func getImageView() -> UIImageView
+    func getFilterTitleLabel() -> UILabel
+    func getCustomSeparatorView() -> UIView
+}
+
 class FilterBrandsCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var filterTitleLabel: UILabel!
@@ -44,5 +50,19 @@ class FilterBrandsCollectionViewCell: UICollectionViewCell {
     
     func hideSeparator() {
         customSeparatorView.isHidden = true
+    }
+}
+
+extension FilterBrandsCollectionViewCell: FilterBrandsCollectionViewCellTestable {
+    func getImageView() -> UIImageView {
+        return imageView
+    }
+    
+    func getFilterTitleLabel() -> UILabel {
+        return filterTitleLabel
+    }
+    
+    func getCustomSeparatorView() -> UIView {
+        return customSeparatorView
     }
 }

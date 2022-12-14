@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol LoyaltyScannerWidgetViewTestable {
+    func getTitleLabel() -> UILabel
+    func getExplainerLabel() -> UILabel
+}
+
 class LoyaltyScannerWidgetView: CustomView {
     enum Constants {
         static let cornerRadius: CGFloat = 4
@@ -102,5 +107,15 @@ extension LoyaltyScannerWidgetView {
                 return Asset.loyaltyScannerError.name
             }
         }
+    }
+}
+
+extension LoyaltyScannerWidgetView: LoyaltyScannerWidgetViewTestable {
+    func getTitleLabel() -> UILabel {
+        return titleLabel
+    }
+    
+    func getExplainerLabel() -> UILabel {
+        return explainerLabel
     }
 }

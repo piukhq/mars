@@ -15,6 +15,7 @@ struct CardModel: Codable, Hashable {
     var barcodeType: Int?
     let colour: String?
     let secondaryColour: String?
+    let merchantName: String?
     
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
@@ -23,6 +24,7 @@ struct CardModel: Codable, Hashable {
         case barcodeType = "barcode_type"
         case colour
         case secondaryColour = "secondary_colour"
+        case merchantName
     }
 }
 
@@ -34,6 +36,7 @@ extension CardModel: CoreDataMappable, CoreDataIDMappable {
         update(cdObject, \.colour, with: colour, delta: delta)
         update(cdObject, \.membershipId, with: membershipId, delta: delta)
         update(cdObject, \.secondaryColour, with: secondaryColour, delta: delta)
+        update(cdObject, \.merchantName, with: merchantName, delta: delta)
 
         return cdObject
     }

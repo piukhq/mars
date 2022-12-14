@@ -96,7 +96,7 @@ class AuthAndAddViewModel {
         switch formPurpose {
         case .add, .addFromScanner:
             guard let companyName = membershipPlan.account?.companyName else { return nil }
-            return L10n.authScreenDescription(companyName)
+            return membershipPlan.isCustomCard ? L10n.authScreenCustomCardDescription : L10n.authScreenDescription(companyName)
         case .signUp:
             if let planSummary = membershipPlan.account?.planSummary {
                 return planSummary
@@ -266,20 +266,22 @@ class AuthAndAddViewModel {
                 return
             }
             
-            // Navigate to LCD for the new card behind the modal
-            let lcdViewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card)
-            let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController)
-            let tabNavigationRequest = TabBarNavigationRequest(tab: .loyalty, popToRoot: true, backgroundPushNavigationRequest: lcdNavigationRequest)
-            Current.navigate.to(tabNavigationRequest)
+            if !UIApplication.isRunningUnitTests {
+                // Navigate to LCD for the new card behind the modal
+                let lcdViewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card)
+                let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController)
+                let tabNavigationRequest = TabBarNavigationRequest(tab: .loyalty, popToRoot: true, backgroundPushNavigationRequest: lcdNavigationRequest)
+                Current.navigate.to(tabNavigationRequest)
 
-            if card.membershipPlan?.isPLL == true {
-                PllLoyaltyInAppReviewableJourney().begin()
+                if card.membershipPlan?.isPLL == true {
+                    PllLoyaltyInAppReviewableJourney().begin()
 
-                let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
-                let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
-                Current.navigate.to(navigationRequest)
-            } else {
-                Current.navigate.close()
+                    let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
+                    let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+                    Current.navigate.to(navigationRequest)
+                } else {
+                    Current.navigate.close()
+                }
             }
         }) { (error) in
             self.displaySimplePopup(title: L10n.errorTitle, message: error?.localizedDescription)
@@ -454,8 +456,8 @@ class AuthAndAddViewModel {
         Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     
-    func toLoyaltyScanner(forPlan plan: CD_MembershipPlan, delegate: BarcodeScannerViewControllerDelegate?) {
-        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(forPlan: plan, delegate: delegate)
+    func toLoyaltyScanner(forPlan plan: CD_MembershipPlan, delegate: BinkScannerViewControllerDelegate?) {
+        let viewController = ViewControllerFactory.makeScannerViewController(type: .loyalty, forPlan: plan, delegate: delegate)
         PermissionsUtility.launchLoyaltyScanner(viewController) {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
