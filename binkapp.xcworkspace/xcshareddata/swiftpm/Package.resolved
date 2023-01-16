@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Alamofire/Alamofire.git",
       "state" : {
-        "revision" : "8dd85aee02e39dd280c75eef88ffdb86eed4b07b",
-        "version" : "5.6.2"
+        "revision" : "78424be314842833c04bc3bef5b72e85fff99204",
+        "version" : "5.6.4"
       }
     },
     {
@@ -158,8 +158,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/airbnb/lottie-ios",
       "state" : {
-        "revision" : "4ca8023b820b7d5d5ae1e2637c046e3dab0f45d0",
-        "version" : "3.4.2"
+        "revision" : "b4bd0604ded9574807f41b4004b57dd1226a30a4",
+        "version" : "3.5.0"
       }
     },
     {
@@ -168,7 +168,7 @@
       "location" : "https://github.com/mixpanel/mixpanel-swift.git",
       "state" : {
         "branch" : "master",
-        "revision" : "41c9b820bb9d3053acbb47ba8964fbb178421af0"
+        "revision" : "7f2cac0be2b3cd4dbd8878d9b18f525e9c0c4165"
       }
     },
     {
@@ -203,8 +203,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/getsentry/sentry-cocoa.git",
       "state" : {
-        "revision" : "5bc31fd9bb476539387de7c6ff32acfaf2407157",
-        "version" : "7.23.0"
+        "revision" : "cf43eac1aa12017868c257ad3854ad87a5de0758",
+        "version" : "7.31.5"
       }
     },
     {
