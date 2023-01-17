@@ -11,8 +11,8 @@ def common_pods
 pod 'DTTJailbreakDetection', '~> 0.4' # No SPM package available - NF 01/09/21
 pod 'SwiftyRSA', :git => 'git@github.com:binkhq/SwiftyRSA.git'
 pod 'CardScan', :git => 'git@github.com:binkhq/cardscan-ios.git', :commit => 'bf8d4467'
-pod 'SwiftLint', '~> 0.43' # SPM led to compilation errors - NF 01/09/21
-pod 'SwiftGen', '~> 6.4' # SPM led to compilation errors - NF 01/09/21
+pod 'SwiftLint', '~> 0.50.3' # SPM led to compilation errors - NF 01/09/21
+pod 'SwiftGen', '~> 6.6.2' # SPM led to compilation errors - NF 01/09/21
 pod 'ZXingObjC', '~> 3.6'
 
 plugin 'cocoapods-keys', {
