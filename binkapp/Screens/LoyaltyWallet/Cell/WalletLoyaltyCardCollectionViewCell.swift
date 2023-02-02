@@ -43,6 +43,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
     @IBOutlet private weak var deleteButton: UIButton!
     @IBOutlet private weak var barcodeButton: UIButton!
     @IBOutlet private weak var rectangleView: RectangleView!
+    @IBOutlet weak var customCardLogoLabel: UILabel!
     
     private lazy var width: NSLayoutConstraint = {
         let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
@@ -119,16 +120,29 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
                 self?.cardIconImageView.image = image
             }
         }
+        
         accessibilityIdentifier = plan.account?.companyName
 
         /// Brand colours
         let primaryBrandColor = UIColor(hexString: viewModel.brandColorHex ?? "")
+        let textColor: UIColor = primaryBrandColor.isLight(threshold: 0.8) ? .black : .white
         rectangleView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         rectangleView.firstColor = primaryBrandColor
         rectangleView.secondColor = plan.secondaryBrandColor
         
+        /// Custom card config
+        if plan.isCustomCard {
+            cardIconImageView.backgroundColor = primaryBrandColor
+            customCardLogoLabel.text = viewModel.companyName?.first?.uppercased()
+            customCardLogoLabel.font = .customCardLogo
+            customCardLogoLabel.textColor = textColor
+            rectangleView.secondColor = UIColor(hexString: viewModel.customCardSecondaryColor ?? "")
+        } else {
+            customCardLogoLabel.text = nil
+        }
+        
         /// Brand name
-        cardNameLabel.text = plan.account?.companyName
+        cardNameLabel.text = viewModel.companyName
         
         /// Link Status
         cardLinkStatusLabel.text = viewModel.linkStatusText
@@ -152,7 +166,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         cardValueSuffixLabel.isHidden = !viewModel.shouldShowPointsSuffixLabel
         
         [cardNameLabel, cardValuePointsLabel, cardLinkStatusLabel, cardValueSuffixLabel].forEach {
-            $0.textColor = primaryBrandColor.isLight(threshold: 0.8) ? .black : .white
+            $0.textColor = textColor
         }
         
         containerView.backgroundColor = .clear

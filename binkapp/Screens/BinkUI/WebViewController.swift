@@ -31,7 +31,7 @@ class WebViewController: BinkViewController {
         
         setWebView()
         setBottomToolbar()
-        
+
         guard let safeUrl = url else { return }
         let request = URLRequest(url: safeUrl)
         webView.load(request)
@@ -40,6 +40,8 @@ class WebViewController: BinkViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setActivityIndicator()
+        
+        navigationController?.setToolbarHidden(false, animated: false)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -62,7 +64,10 @@ class WebViewController: BinkViewController {
     }
     
     private func setWebView() {
-        webView = WKWebView(frame: view.frame)
+        let padding = CGFloat(34)
+        let bottomOffset = (navigationController?.navigationBar.frame.height ?? 0) + (navigationController?.toolbar.frame.height ?? 0) + padding
+        let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - bottomOffset)
+        webView = WKWebView(frame: frame)
         webView.navigationDelegate = self
 
         view.addSubview(webView)

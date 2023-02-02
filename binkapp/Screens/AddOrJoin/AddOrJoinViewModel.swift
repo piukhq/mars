@@ -125,8 +125,11 @@ class AddOrJoinViewModel {
     }
     
     private func toPaymentCardScanner() {
-        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
+//        let viewController = ViewControllerFactory.makeScannerViewController(type: .payment, delegate: Current.navigate.scannerDelegate)
 
+        // TODO: Delete once payment scanner is switched
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
+        
         PermissionsUtility.launchPaymentScanner(viewController, grantedAction: {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)

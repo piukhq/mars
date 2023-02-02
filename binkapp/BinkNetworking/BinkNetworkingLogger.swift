@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 class BinkNetworkingLogger: EventMonitor {
-    private var logs: [BinkNetworkingLog] = []
+    var logs: [BinkNetworkingLog] = []
     private var binkLog: BinkLog!
     
     init() {
@@ -60,12 +60,7 @@ class BinkNetworkingLogger: EventMonitor {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         guard let encoded = try? encoder.encode(logs), let path = networkLogsFilePath() else { return }
-
-        do {
-            try encoded.write(to: path, options: .atomicWrite)
-        } catch {
-            print(error.localizedDescription)
-        }
+        try? encoded.write(to: path, options: .atomicWrite)
     }
     
     private func readLogsFromDisk() {
@@ -78,7 +73,7 @@ class BinkNetworkingLogger: EventMonitor {
     
     func networkLogsFilePath() -> URL? {
         let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-        return documents?.appendingPathComponent("/networkLogs.txt")
+        return documents?.appendingPathComponent("networkLogs.txt")
     }
 }
 

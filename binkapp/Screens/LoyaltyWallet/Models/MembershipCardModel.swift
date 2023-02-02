@@ -12,15 +12,16 @@ import DeepDiff
 struct MembershipCardModel: Codable {
     let apiId: Int?
     let membershipPlan: Int?
-    let membershipTransactions: [MembershipTransaction]?
+    var membershipTransactions: [MembershipTransaction]?
     var status: MembershipCardStatusModel?
     var card: CardModel?
     let images: [MembershipCardImageModel]?
     var account: MembershipCardAccountModel?
     var paymentCards: [LinkedCardResponse]?
     var balances: [MembershipCardBalanceModel]?
-    let vouchers: [VoucherModel]?
-    
+    var vouchers: [VoucherModel]?
+    let openedTime: Date?
+
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
         case membershipPlan = "membership_plan"
@@ -32,6 +33,7 @@ struct MembershipCardModel: Codable {
         case paymentCards = "payment_cards"
         case balances
         case vouchers
+        case openedTime
     }
 }
 
@@ -181,6 +183,10 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
                 update(cdVoucher, \.membershipCard, with: cdObject, delta: false)
                 cdObject.addVouchersObject(cdVoucher)
             }
+        }
+
+        if let openedTime = openedTime {
+            update(cdObject, \.openedTime, with: openedTime, delta: true)
         }
 
         return cdObject

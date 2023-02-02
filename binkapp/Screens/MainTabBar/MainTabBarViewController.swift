@@ -71,26 +71,42 @@ extension MainTabBarViewController: UITabBarControllerDelegate {
     }
 }
 
-extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDelegate {
-    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
+extension MainTabBarViewController: BinkScannerViewControllerDelegate, ScanDelegate {
+    func binkScannerViewController(_ viewController: BinkScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan?, completion: (() -> Void)?) {
+        guard let membershipPlan = membershipPlan else { return }
         let prefilledBarcodeValue = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
         let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, prefilledFormValues: [prefilledBarcodeValue])
         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
         Current.navigate.to(navigationRequest)
     }
     
-    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
-        Current.navigate.close {
-            let viewController = ViewControllerFactory.makeBrowseBrandsViewController()
-            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+    func binkScannerViewControllerShouldEnterManually(_ viewController: BinkScannerViewController, completion: (() -> Void)?) {
+        if viewController.viewModel.type == .payment {
+            let addpaymentCardViewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .wallet)
+            let navigationRequest = PushNavigationRequest(viewController: addpaymentCardViewController, hidesBackButton: true)
             Current.navigate.to(navigationRequest)
+        } else {
+            Current.navigate.close {
+                let viewController = ViewControllerFactory.makeBrowseBrandsViewController()
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
+            }
         }
     }
+    
+    func binkScannerViewController(_ viewController: BinkScannerViewController, didScan paymentCard: PaymentCardCreateModel) {
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: paymentCard, journey: .wallet)
+        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+        Current.navigate.to(navigationRequest)
+    }
+    
+    
+    // TODO: Delete once payment scanner is switched
     
     func userDidCancel(_ scanViewController: ScanViewController) {
         Current.navigate.close()
     }
-    
+
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
         BinkLogger.infoPrivateHash(event: AppLoggerEvent.paymentCardScanned, value: creditCard.number)
         BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
@@ -101,7 +117,7 @@ extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDe
         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
         Current.navigate.to(navigationRequest)
     }
-    
+
     func userDidSkip(_ scanViewController: ScanViewController) {
         let viewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .wallet)
         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)

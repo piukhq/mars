@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -71,6 +71,12 @@
                                     <constraint firstAttribute="width" constant="70" id="v6b-Du-gdL"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a81-gP-S1Z">
+                                <rect key="frame" x="34.5" y="51" width="41.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1AT-4M-cCB">
                                 <rect key="frame" x="150" y="50" width="211" height="22"/>
                                 <constraints>
@@ -124,6 +130,8 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="6Ln-ov-l0D" secondAttribute="trailing" constant="20" id="2LX-fe-k9Z"/>
                             <constraint firstItem="2il-5O-A8c" firstAttribute="centerY" secondItem="boF-NX-uce" secondAttribute="centerY" id="5RY-nx-bTD"/>
+                            <constraint firstItem="a81-gP-S1Z" firstAttribute="centerY" secondItem="2il-5O-A8c" secondAttribute="centerY" id="5yA-cm-xTz"/>
+                            <constraint firstItem="a81-gP-S1Z" firstAttribute="centerX" secondItem="2il-5O-A8c" secondAttribute="centerX" id="6wO-uE-g7D"/>
                             <constraint firstItem="2il-5O-A8c" firstAttribute="leading" secondItem="boF-NX-uce" secondAttribute="leading" constant="20" id="ACz-PF-v16"/>
                             <constraint firstAttribute="bottom" secondItem="3wQ-yx-2v3" secondAttribute="bottom" constant="-4" id="EJV-Ho-KE3"/>
                             <constraint firstAttribute="trailing" secondItem="40K-eq-Rsb" secondAttribute="trailing" constant="20" id="JDG-fk-iud"/>
@@ -167,6 +175,7 @@
                 <outlet property="cardValuePointsLabel" destination="6Ln-ov-l0D" id="TaQ-3y-bap"/>
                 <outlet property="cardValueSuffixLabel" destination="40K-eq-Rsb" id="5zk-aA-qra"/>
                 <outlet property="containerView" destination="boF-NX-uce" id="YB8-bC-TC3"/>
+                <outlet property="customCardLogoLabel" destination="a81-gP-S1Z" id="C7Z-DF-JqI"/>
                 <outlet property="deleteButton" destination="nlL-P9-bge" id="9NQ-Lj-f0y"/>
                 <outlet property="logInAlert" destination="UEC-Ml-S8b" id="SBl-aw-HWf"/>
                 <outlet property="rectangleView" destination="3wQ-yx-2v3" id="IcS-qw-Nhj"/>

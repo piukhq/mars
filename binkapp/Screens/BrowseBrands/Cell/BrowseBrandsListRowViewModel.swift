@@ -34,7 +34,7 @@ class BrowseBrandsListRowViewModel: ObservableObject {
     
     func getImage() {
         ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan), userInterfaceStyle: userInterfaceStyle) { [weak self] image in
-            self?.image = image
+            self?.image = image ?? UIImage(named: Asset.binkIconLogo.name)?.grayScale()
         }
     }
 }
