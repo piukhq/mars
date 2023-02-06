@@ -22,19 +22,6 @@ struct NetworkResponseData {
 typealias APIClientCompletionHandler<ResponseType: Any> = (Result<ResponseType, NetworkingError>, NetworkResponseData?) -> Void
 
 final class APIClient {
-    enum Certificates {
-        static let bink = Certificates.certificate(filename: "bink")
-        static let binkOld = Certificates.certificate(filename: "binkOld")
-
-        private static func certificate(filename: String) -> SecCertificate {
-            let filePath = Bundle.main.path(forResource: filename, ofType: "der")!
-            let data = try! Data(contentsOf: URL(fileURLWithPath: filePath))
-            let certificate = SecCertificateCreateWithData(nil, data as CFData)!
-
-            return certificate
-        }
-    }
-
     enum NetworkStrength: String {
         case wifi
         case cellular
@@ -94,17 +81,9 @@ final class APIClient {
             configuration.protocolClasses = [MockingURLProtocol.self] + (configuration.protocolClasses ?? [])
             session = Session(configuration: configuration, eventMonitors: [binkNetworkingLogger])
         } else {
-            let url = EnvironmentType.production.rawValue
-            let evaluators = [
-                url:
-                    PinnedCertificatesTrustEvaluator(certificates: [
-                        Certificates.bink, Certificates.binkOld
-                    ])
-            ]
-
             let configuration = URLSessionConfiguration.default
             configuration.timeoutIntervalForRequest = 10.0
-            session = Session(configuration: configuration, serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators), eventMonitors: [BinkNetworkingLogger()])
+            session = Session(configuration: configuration, eventMonitors: [BinkNetworkingLogger()])
         }
     }
 }
