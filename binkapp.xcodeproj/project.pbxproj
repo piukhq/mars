@@ -5304,7 +5304,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha.watch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.bink.wallet.alpha.watch";
-				SDKROOT = watchos;
+                SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Bink Watch App Extension/Bink Watch App-Bridging-Header.h";
@@ -6321,7 +6321,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 8.8.0;
+				minimumVersion = 10.3.0;
 			};
 		};
 		7075381C26DFA26C00690965 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
@@ -6377,7 +6377,7 @@
 			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.6.2;
+				minimumVersion = 3.0.0;
 			};
 		};
 		70A4FDA4271588AC00DA7FAA /* XCRemoteSwiftPackageReference "mixpanel-swift" */ = {
