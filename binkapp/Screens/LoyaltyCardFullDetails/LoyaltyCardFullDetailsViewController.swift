@@ -352,16 +352,9 @@ private extension LoyaltyCardFullDetailsViewController {
             barcode = barcodeView
             barcodeView.configure(viewModel: viewModel)
         } else {
-            switch (viewModel.barcodeViewModel.barcodeType, viewModel.barcodeViewModel.barcodeIsMoreSquareThanRectangle) {
-            case (.aztec, _), (.qr, _), (.dataMatrix, _), (_, true):
-                let barcodeView: BarcodeViewCompact = .fromNib()
-                barcode = barcodeView
-                barcodeView.configure(viewModel: viewModel)
-            default:
-                let barcodeView: BarcodeViewWide = .fromNib()
-                barcode = barcodeView
-                barcodeView.configure(viewModel: viewModel)
-            }
+            let barcodeView: BarcodeViewWide = .fromNib()
+            barcode = barcodeView
+            barcodeView.configure(viewModel: viewModel)
         }
         
         barcode.translatesAutoresizingMaskIntoConstraints = false

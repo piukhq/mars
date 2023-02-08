@@ -9,6 +9,7 @@
 import UIKit
 
 class BarcodeView: UIView {
+    @IBOutlet weak var barcodeImageContainer: UIView!
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var barcodeImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -19,7 +20,7 @@ class BarcodeView: UIView {
         super.layoutSubviews()
         layer.cornerRadius = 12
         clipsToBounds = true
-        backgroundColor = Current.themeManager.color(for: .walletCardBackground)
+        backgroundColor = Current.themeManager.color(for: .viewBackground)
         iconImageView.layer.cornerRadius = LayoutHelper.iconCornerRadius
         iconImageView.layer.cornerCurve = .continuous
         titleLabel.text = L10n.barcodeViewTitle
