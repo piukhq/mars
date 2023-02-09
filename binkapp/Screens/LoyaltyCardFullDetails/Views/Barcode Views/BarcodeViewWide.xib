@@ -22,12 +22,24 @@
             <rect key="frame" x="0.0" y="0.0" width="381" height="207"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="248" verticalHuggingPriority="248" verticalCompressionResistancePriority="739" translatesAutoresizingMaskIntoConstraints="NO" id="sk0-HZ-CRk">
-                    <rect key="frame" x="20" y="81" width="341" height="106"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GzR-aE-02j">
+                    <rect key="frame" x="20" y="71" width="341" height="121"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="248" verticalHuggingPriority="248" verticalCompressionResistancePriority="739" translatesAutoresizingMaskIntoConstraints="NO" id="sk0-HZ-CRk">
+                            <rect key="frame" x="5" y="5" width="331" height="111"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="sk0-HZ-CRk" secondAttribute="bottom" constant="5" id="QO5-RT-COp"/>
+                        <constraint firstAttribute="trailing" secondItem="sk0-HZ-CRk" secondAttribute="trailing" constant="5" id="R58-09-tol"/>
+                        <constraint firstItem="sk0-HZ-CRk" firstAttribute="leading" secondItem="GzR-aE-02j" secondAttribute="leading" constant="5" id="Yvi-eC-ypk"/>
+                        <constraint firstItem="sk0-HZ-CRk" firstAttribute="top" secondItem="GzR-aE-02j" secondAttribute="top" constant="5" id="xbU-ZT-Jhk"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TlX-Nk-3KJ">
-                    <rect key="frame" x="20" y="70" width="341" height="117"/>
+                    <rect key="frame" x="20" y="70.5" width="341" height="116.5"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d38-Qh-CDY">
@@ -43,7 +55,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-3" translatesAutoresizingMaskIntoConstraints="NO" id="XYh-fe-QI3">
-                    <rect key="frame" x="76" y="20.5" width="285" height="39.5"/>
+                    <rect key="frame" x="76" y="21" width="285" height="39.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bonus Card Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="mHY-lv-yLX">
                             <rect key="frame" x="0.0" y="0.0" width="285" height="20.5"/>
@@ -63,26 +75,27 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="sk0-HZ-CRk" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="0Xe-Mr-hh0"/>
-                <constraint firstItem="d38-Qh-CDY" firstAttribute="width" secondItem="sk0-HZ-CRk" secondAttribute="width" multiplier="0.12" id="4tH-HV-vKL"/>
                 <constraint firstItem="nag-xQ-ygP" firstAttribute="centerX" secondItem="d38-Qh-CDY" secondAttribute="centerX" id="HqS-9Q-oOh"/>
                 <constraint firstItem="nag-xQ-ygP" firstAttribute="centerY" secondItem="d38-Qh-CDY" secondAttribute="centerY" id="I6t-D3-7p7"/>
+                <constraint firstItem="TlX-Nk-3KJ" firstAttribute="trailing" secondItem="XYh-fe-QI3" secondAttribute="trailing" id="IIU-Zu-GhK"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="GzR-aE-02j" secondAttribute="trailing" constant="20" id="KAe-RI-m1c"/>
                 <constraint firstItem="d38-Qh-CDY" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="KMP-7k-FdT"/>
                 <constraint firstItem="d38-Qh-CDY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="Kh1-ra-ys9"/>
                 <constraint firstItem="TlX-Nk-3KJ" firstAttribute="top" secondItem="XYh-fe-QI3" secondAttribute="bottom" constant="10" id="MQE-dZ-Ocf"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="TlX-Nk-3KJ" secondAttribute="trailing" constant="20" id="RSM-Al-Ugc"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="sk0-HZ-CRk" secondAttribute="trailing" constant="20" id="UAZ-hh-3F6"/>
-                <constraint firstItem="XYh-fe-QI3" firstAttribute="trailing" secondItem="sk0-HZ-CRk" secondAttribute="trailing" id="XeY-Hl-xdc"/>
-                <constraint firstAttribute="bottom" secondItem="sk0-HZ-CRk" secondAttribute="bottom" constant="20" id="Z5a-U2-d1C"/>
-                <constraint firstItem="sk0-HZ-CRk" firstAttribute="top" secondItem="d38-Qh-CDY" secondAttribute="bottom" constant="20" id="dsV-3C-S5s"/>
+                <constraint firstItem="GzR-aE-02j" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="Rup-7S-ESn"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="GzR-aE-02j" secondAttribute="bottom" constant="15" id="XNK-EH-JdM"/>
+                <constraint firstItem="GzR-aE-02j" firstAttribute="width" secondItem="d38-Qh-CDY" secondAttribute="width" multiplier="8.31707" id="jc2-47-rlE"/>
                 <constraint firstItem="XYh-fe-QI3" firstAttribute="leading" secondItem="d38-Qh-CDY" secondAttribute="trailing" constant="15" id="jwP-Uk-b2t"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="TlX-Nk-3KJ" secondAttribute="bottom" constant="20" id="k5f-oV-Kx0"/>
                 <constraint firstItem="TlX-Nk-3KJ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="qC0-ut-qSs"/>
+                <constraint firstItem="GzR-aE-02j" firstAttribute="top" secondItem="d38-Qh-CDY" secondAttribute="bottom" constant="10" id="tmw-bJ-vdK"/>
                 <constraint firstItem="d38-Qh-CDY" firstAttribute="centerY" secondItem="XYh-fe-QI3" secondAttribute="centerY" id="uJn-vh-8uJ"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="barcodeImageContainer" destination="TlX-Nk-3KJ" id="8hi-sh-diw"/>
+                <outlet property="barcodeImageContainerView" destination="GzR-aE-02j" id="WoK-sK-gS0"/>
                 <outlet property="barcodeImageView" destination="sk0-HZ-CRk" id="D9i-TD-b0z"/>
                 <outlet property="cardNumberLabel" destination="QNX-eJ-QSX" id="diw-OY-515"/>
                 <outlet property="customCardIconLabel" destination="nag-xQ-ygP" id="jwg-MQ-FfE"/>

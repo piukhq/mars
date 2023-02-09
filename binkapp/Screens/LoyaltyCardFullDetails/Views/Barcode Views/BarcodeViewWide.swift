@@ -36,6 +36,7 @@ class BarcodeViewWide: BarcodeView {
             }
         default:
             barcodeImageContainer.isHidden = true
+            
             if let barcodeImage = viewModel.barcodeViewModel.barcodeImage(withSize: barcodeImageView.frame.size) {
                 barcodeImageView.image = barcodeImage
             }
