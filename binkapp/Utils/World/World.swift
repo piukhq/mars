@@ -21,7 +21,6 @@ class World {
     lazy var rootStateMachine = RootStateMachine()
     lazy var pointsScrapingManager = PointsScrapingManager()
     lazy var remoteConfig = RemoteConfigUtil()
-    lazy var paymentCardScannerStrings = PaymentCardScannerStrings()
     lazy var featureManager = FeatureTogglingManager()
     lazy var themeManager = ThemeManager()
     lazy var watchController = WatchController()

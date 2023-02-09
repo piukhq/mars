@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CardScan
 
 protocol WalletViewModel {
     associatedtype T

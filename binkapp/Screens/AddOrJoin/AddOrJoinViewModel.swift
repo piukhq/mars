@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import CardScan
 
 class AddOrJoinViewModel {
     private let membershipPlan: CD_MembershipPlan
@@ -125,12 +124,8 @@ class AddOrJoinViewModel {
     }
     
     private func toPaymentCardScanner() {
-//        let viewController = ViewControllerFactory.makeScannerViewController(type: .payment, delegate: Current.navigate.scannerDelegate)
-
-        // TODO: Delete once payment scanner is switched
-        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
-        
-        PermissionsUtility.launchPaymentScanner(viewController, grantedAction: {
+        let viewController = ViewControllerFactory.makeScannerViewController(type: .payment, delegate: Current.navigate.scannerDelegate)
+        PermissionsUtility.launchLoyaltyScanner(viewController, grantedAction: {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         }, enterManuallyAction: {

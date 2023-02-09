@@ -1,5 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-binkappUITests/Pods-binkappUITests-frameworks.sh
-${BUILT_PRODUCTS_DIR}/CardScan/CardScan.framework
 ${BUILT_PRODUCTS_DIR}/DTTJailbreakDetection/DTTJailbreakDetection.framework
 ${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework
 ${BUILT_PRODUCTS_DIR}/ZXingObjC/ZXingObjC.framework

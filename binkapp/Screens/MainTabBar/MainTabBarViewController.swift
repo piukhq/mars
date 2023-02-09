@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import CardScan
 
 extension LayoutHelper {
     enum SettingsButton {
@@ -71,7 +70,7 @@ extension MainTabBarViewController: UITabBarControllerDelegate {
     }
 }
 
-extension MainTabBarViewController: BinkScannerViewControllerDelegate, ScanDelegate {
+extension MainTabBarViewController: BinkScannerViewControllerDelegate {
     func binkScannerViewController(_ viewController: BinkScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan?, completion: (() -> Void)?) {
         guard let membershipPlan = membershipPlan else { return }
         let prefilledBarcodeValue = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
@@ -96,30 +95,6 @@ extension MainTabBarViewController: BinkScannerViewControllerDelegate, ScanDeleg
     
     func binkScannerViewController(_ viewController: BinkScannerViewController, didScan paymentCard: PaymentCardCreateModel) {
         let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: paymentCard, journey: .wallet)
-        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
-        Current.navigate.to(navigationRequest)
-    }
-    
-    
-    // TODO: Delete once payment scanner is switched
-    
-    func userDidCancel(_ scanViewController: ScanViewController) {
-        Current.navigate.close()
-    }
-
-    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
-        BinkLogger.infoPrivateHash(event: AppLoggerEvent.paymentCardScanned, value: creditCard.number)
-        BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
-        let month = creditCard.expiryMonthInteger()
-        let year = creditCard.expiryYearInteger()
-        let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
-        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .wallet)
-        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
-        Current.navigate.to(navigationRequest)
-    }
-
-    func userDidSkip(_ scanViewController: ScanViewController) {
-        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .wallet)
         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
         Current.navigate.to(navigationRequest)
     }

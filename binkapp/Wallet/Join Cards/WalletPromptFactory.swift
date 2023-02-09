@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CardScan
 
 enum WalletType {
     case loyalty

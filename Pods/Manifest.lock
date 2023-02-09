@@ -1,7 +1,4 @@
 PODS:
-  - CardScan (1.0.5049):
-    - CardScan/Core (= 1.0.5049)
-  - CardScan/Core (1.0.5049)
   - DTTJailbreakDetection (0.4.0)
   - Keys (1.0.1)
   - SwiftGen (6.6.2)
@@ -14,7 +11,6 @@ PODS:
   - ZXingObjC/All (3.6.5)
 
 DEPENDENCIES:
-  - "CardScan (from `git@github.com:binkhq/cardscan-ios.git`, commit `bf8d4467`)"
   - DTTJailbreakDetection (~> 0.4)
   - Keys (from `Pods/CocoaPodsKeys`)
   - SwiftGen (~> 6.6.2)
@@ -31,24 +27,17 @@ SPEC REPOS:
     - ZXingObjC
 
 EXTERNAL SOURCES:
-  CardScan:
-    :commit: bf8d4467
-    :git: "git@github.com:binkhq/cardscan-ios.git"
   Keys:
     :path: Pods/CocoaPodsKeys
   SwiftyRSA:
     :git: "git@github.com:binkhq/SwiftyRSA.git"
 
 CHECKOUT OPTIONS:
-  CardScan:
-    :commit: bf8d4467
-    :git: "git@github.com:binkhq/cardscan-ios.git"
   SwiftyRSA:
     :commit: c4f97d7726b5d1cb9480d7e442be4002716d1be9
     :git: "git@github.com:binkhq/SwiftyRSA.git"
 
 SPEC CHECKSUMS:
-  CardScan: ff2d73951a829020bbb5cb1309355f1006c412f7
   DTTJailbreakDetection: 5e356c5badc17995f65a83ed9483f787a0057b71
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   SwiftGen: 1366a7f71aeef49954ca5a63ba4bef6b0f24138c
@@ -56,6 +45,6 @@ SPEC CHECKSUMS:
   SwiftyRSA: 3b9c9179744217951facc6a3e9ae8d8c97061ffa
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 5ca5391b0aced59ae463c440291ee0b2591c2e6f
+PODFILE CHECKSUM: 55ff03ea3a2f10fd882b70925e3b3b718fd06591
 
 COCOAPODS: 1.11.3

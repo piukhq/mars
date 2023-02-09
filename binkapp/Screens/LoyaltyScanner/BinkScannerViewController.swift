@@ -251,7 +251,9 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
         view.addSubview(explainerLabel)
         view.addSubview(widgetView)
         
-        footerButtons = [photoLibraryButton]
+        if viewModel.type == .loyalty {
+            footerButtons = [photoLibraryButton]
+        }
         
         view.addSubview(panLabel)
         view.addSubview(expiryLabel)

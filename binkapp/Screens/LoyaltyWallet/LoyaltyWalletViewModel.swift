@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 import DeepDiff
 import CoreData
-import CardScan
 
 enum MembershipCardsSortState: String {
     case newest = "Newest"

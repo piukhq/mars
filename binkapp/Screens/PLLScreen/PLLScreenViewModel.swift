@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import CardScan
 
 class PLLScreenViewModel {
     private var membershipCard: CD_MembershipCard
@@ -153,13 +152,9 @@ class PLLScreenViewModel {
         Current.navigate.close()
     }
     
-    func toPaymentScanner(delegate: ScanDelegate?) {
-//        let viewController = ViewControllerFactory.makeScannerViewController(type: .payment, delegate: Current.navigate.scannerDelegate)
-        
-        // TODO: Delete once payment scanner is switched
-        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: delegate) else { return }
-
-        PermissionsUtility.launchPaymentScanner(viewController) {
+    func toPaymentScanner() {
+        let viewController = ViewControllerFactory.makeScannerViewController(type: .payment, delegate: Current.navigate.scannerDelegate)
+        PermissionsUtility.launchLoyaltyScanner(viewController) {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         } enterManuallyAction: { [weak self] in

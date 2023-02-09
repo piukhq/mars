@@ -6,7 +6,6 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import CardScan
 import UIKit
 import Keys
 import BinkCore
@@ -224,7 +223,7 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
     }
     
     func formDataSourceShouldPresentPaymentScanner(_ dataSource: FormDataSource) {
-        viewModel.toPaymentCardScanner(delegate: self)
+        viewModel.toPaymentCardScanner()
     }
 }
 
@@ -240,28 +239,4 @@ extension AddPaymentCardViewController: FormCollectionViewCellDelegate {
 
 private extension Selector {
     static let privacyButtonTapped = #selector(AddPaymentCardViewController.privacyButtonTapped)
-}
-
-extension AddPaymentCardViewController: ScanDelegate {
-    func userDidCancel(_ scanViewController: ScanViewController) {
-        Current.navigate.close()
-    }
-
-    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
-        BinkLogger.infoPrivateHash(event: AppLoggerEvent.paymentCardScanned, value: creditCard.number)
-        BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
-        let month = creditCard.expiryMonthInteger() ?? viewModel.paymentCard.month
-        let year = creditCard.expiryYearInteger() ?? viewModel.paymentCard.year
-        Current.navigate.close(animated: true) {
-            let paymentCardCreateModel = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: self.viewModel.paymentCard.nameOnCard, month: month, year: year)
-            self.card.configureWithAddViewModel(paymentCardCreateModel)
-            self.viewModel.paymentCard = paymentCardCreateModel
-            self.dataSource = FormDataSource(paymentCardCreateModel, delegate: self)
-            self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
-        }
-    }
-
-    func userDidSkip(_ scanViewController: ScanViewController) {
-        Current.navigate.close()
-    }
 }
