@@ -7,7 +7,6 @@
 //
 
 import XCTest
-import CardScan
 import SwiftUI
 @testable import binkapp
 

@@ -74,6 +74,7 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
         static let closeButtonSize = CGSize(width: 44, height: 44)
         static let timerInterval: TimeInterval = 5.0
         static let scanErrorThreshold: TimeInterval = 1.0
+        static let flashLightBottomOffset: CGFloat = 110
     }
     
     enum LoyaltyScannerDetectionType {
@@ -170,6 +171,25 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
             self?.toPhotoLibrary()
         })
     }()
+    
+    private lazy var flashLightButton: UIButton = {
+        var configuration = UIButton.Configuration.filled()
+        configuration.cornerStyle = .capsule
+        configuration.baseForegroundColor = UIColor.black
+        configuration.buttonSize = .large
+        let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 26)
+        let image = UIImage(systemName: "flashlight.on.fill", withConfiguration: imageConfiguration)
+        configuration.image = image
+        
+        let button = UIButton(type: .custom, primaryAction: UIAction(handler: { _ in
+            UIDevice.flashLightToggle()
+        }))
+        button.configuration = configuration
+        button.tintColor = .white
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.transform = CGAffineTransformMakeRotation(Double.pi / 4)
+        return button
+    }()
 
     var viewModel: BarcodeScannerViewModel
 
@@ -251,9 +271,6 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
         view.addSubview(explainerLabel)
         view.addSubview(widgetView)
         
-        if viewModel.type == .loyalty {
-            footerButtons = [photoLibraryButton]
-        }
         
         view.addSubview(panLabel)
         view.addSubview(expiryLabel)
@@ -275,6 +292,14 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
             nameOnCardLabel.leadingAnchor.constraint(equalTo: guideImageView.leadingAnchor, constant: 25),
             nameOnCardLabel.bottomAnchor.constraint(equalTo: guideImageView.bottomAnchor, constant: -10)
         ])
+        
+        if viewModel.type == .loyalty {
+            footerButtons = [photoLibraryButton]
+        } else {
+            view.addSubview(flashLightButton)
+            flashLightButton.topAnchor.constraint(equalTo: widgetView.bottomAnchor, constant: Constants.flashLightBottomOffset).isActive = true
+            flashLightButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        }
     }
     
     private func startScanning() {

@@ -7,7 +7,6 @@
 //
 
 import XCTest
-import CardScan
 @testable import binkapp
 // swiftlint:disable all
 
