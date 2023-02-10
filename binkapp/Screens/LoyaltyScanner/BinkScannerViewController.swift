@@ -187,7 +187,7 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
         button.configuration = configuration
         button.tintColor = .white
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.transform = CGAffineTransformMakeRotation(Double.pi / 4)
+        button.transform = CGAffineTransform(rotationAngle: Double.pi / 4)
         return button
     }()
 
