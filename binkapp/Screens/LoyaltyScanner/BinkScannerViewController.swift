@@ -580,14 +580,13 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
 
 extension BinkScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+        guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer), let croppedImage = cropImage(imageBuffer: imageBuffer) else { return }
         
         switch viewModel.type {
         case .payment:
-            self.visionUtility.performPaymentCardOCR(frame: imageBuffer)
+            visionUtility.recognizePaymentCard(in: croppedImage)
         case .loyalty:
             guard shouldAllowScanning else { return }
-            let croppedImage = cropImage(imageBuffer: imageBuffer)
             
             switch loyaltyScannerDetectionType {
             case .barcode:
