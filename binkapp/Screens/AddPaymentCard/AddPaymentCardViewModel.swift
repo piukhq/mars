@@ -113,8 +113,8 @@ class AddPaymentCardViewModel {
         Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     
-    func toPaymentCardScanner() {
-        let viewController = ViewControllerFactory.makeScannerViewController(type: .payment, delegate: Current.navigate.scannerDelegate)
+    func toPaymentCardScanner(delegate scanDelegate: BinkScannerViewControllerDelegate) {
+        let viewController = ViewControllerFactory.makeScannerViewController(type: .payment, delegate: scanDelegate)
         PermissionsUtility.launchLoyaltyScanner(viewController) {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)

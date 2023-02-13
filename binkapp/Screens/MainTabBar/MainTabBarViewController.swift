@@ -81,13 +81,6 @@ extension MainTabBarViewController: BinkScannerViewControllerDelegate {
     
     func binkScannerViewControllerShouldEnterManually(_ viewController: BinkScannerViewController, completion: (() -> Void)?) {
         if viewController.viewModel.type == .payment {
-            if let vc = viewController.navigationController?.presentingViewController {
-                if vc.isKind(of: PortraitNavigationController.self) {
-                    completion?()
-                    return
-                }
-            }
-
             let addpaymentCardViewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .wallet)
             let navigationRequest = PushNavigationRequest(viewController: addpaymentCardViewController, hidesBackButton: true)
             Current.navigate.to(navigationRequest)

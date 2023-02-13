@@ -223,7 +223,7 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
     }
     
     func formDataSourceShouldPresentPaymentScanner(_ dataSource: FormDataSource) {
-        viewModel.toPaymentCardScanner()
+        viewModel.toPaymentCardScanner(delegate: self)
     }
 }
 
@@ -239,4 +239,21 @@ extension AddPaymentCardViewController: FormCollectionViewCellDelegate {
 
 private extension Selector {
     static let privacyButtonTapped = #selector(AddPaymentCardViewController.privacyButtonTapped)
+}
+
+extension AddPaymentCardViewController: BinkScannerViewControllerDelegate {
+    func binkScannerViewController(_ viewController: BinkScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan?, completion: (() -> Void)?) { }
+    
+    func binkScannerViewController(_ viewController: BinkScannerViewController, didScan paymentCard: PaymentCardCreateModel) {
+        Current.navigate.close(animated: true) {
+            self.card.configureWithAddViewModel(paymentCard)
+            self.viewModel.paymentCard = paymentCard
+            self.dataSource = FormDataSource(paymentCard, delegate: self)
+            self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
+        }
+    }
+    
+    func binkScannerViewControllerShouldEnterManually(_ viewController: BinkScannerViewController, completion: (() -> Void)?) {
+        completion?()
+    }
 }
