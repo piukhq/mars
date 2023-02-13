@@ -461,7 +461,7 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
         MixpanelUtility.track(.binkScannerEnterManuallyPressed(brandName: viewModel.plan?.account?.companyName ?? ""))
         delegate?.binkScannerViewControllerShouldEnterManually(self, completion: { [weak self] in
             guard let self = self else { return }
-            self.navigationController?.removeViewController(self)
+            self.close()
         })
     }
     
