@@ -175,7 +175,7 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
     private lazy var flashLightButton: UIButton = {
         var configuration = UIButton.Configuration.filled()
         configuration.cornerStyle = .capsule
-        configuration.baseForegroundColor = UIColor.black
+        configuration.baseForegroundColor = .black
         configuration.buttonSize = .large
         let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 26)
         let image = UIImage(systemName: "flashlight.on.fill", withConfiguration: imageConfiguration)
