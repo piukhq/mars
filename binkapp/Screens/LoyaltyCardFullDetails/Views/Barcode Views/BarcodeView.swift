@@ -16,6 +16,7 @@ class BarcodeView: UIView {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var cardNumberLabel: UILabel!
     @IBOutlet weak var customCardIconLabel: UILabel!
+    @IBOutlet weak var copyButton: UIButton!
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -27,5 +28,6 @@ class BarcodeView: UIView {
         titleLabel.text = L10n.barcodeViewTitle
         titleLabel.textColor = Current.themeManager.color(for: .text)
         cardNumberLabel.textColor = Current.themeManager.color(for: .text)
+        copyButton.tintColor = Current.themeManager.color(for: .text)
     }
 }
