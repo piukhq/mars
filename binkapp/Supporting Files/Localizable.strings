@@ -536,6 +536,8 @@
 
 "payment_card_link_fail_alert_message" = "Unable to adjust link at this time, if the problem persists please contact support";
 
+"snackbar_message_copied_card_number" = "Copied card number";
+
 
 // MARK: - Wallet
 "custom_card_number_add_field_title" = "Card number";
