@@ -4,8 +4,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -40,7 +40,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TlX-Nk-3KJ">
-                    <rect key="frame" x="20" y="74.5" width="341" height="112.5"/>
+                    <rect key="frame" x="20" y="80.5" width="341" height="106.5"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d38-Qh-CDY">
@@ -55,66 +55,66 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-3" translatesAutoresizingMaskIntoConstraints="NO" id="XYh-fe-QI3">
-                    <rect key="frame" x="76" y="17" width="285" height="47.5"/>
+                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SbV-0Q-9Bi">
+                    <rect key="frame" x="76" y="15.5" width="257" height="50"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bonus Card Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="mHY-lv-yLX">
-                            <rect key="frame" x="0.0" y="0.0" width="285" height="20.5"/>
-                            <fontDescription key="fontDescription" name="NunitoSans-Regular" family="Nunito Sans" pointSize="15"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SbV-0Q-9Bi">
-                            <rect key="frame" x="0.0" y="17.5" width="285" height="30"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-3" translatesAutoresizingMaskIntoConstraints="NO" id="XYh-fe-QI3">
+                            <rect key="frame" x="0.0" y="0.0" width="106" height="50"/>
                             <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bonus Card Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="mHY-lv-yLX">
+                                    <rect key="frame" x="0.0" y="0.0" width="106" height="31"/>
+                                    <fontDescription key="fontDescription" name="NunitoSans-Regular" family="Nunito Sans" pointSize="15"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="12345678790" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="QNX-eJ-QSX">
-                                    <rect key="frame" x="0.0" y="0.0" width="106" height="30"/>
+                                    <rect key="frame" x="0.0" y="28" width="106" height="22"/>
                                     <fontDescription key="fontDescription" name="NunitoSans-Bold" family="Nunito Sans" pointSize="16"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4dh-1o-dla">
-                                    <rect key="frame" x="106" y="0.0" width="129" height="30"/>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" image="doc.on.doc" catalog="system">
-                                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="small"/>
-                                    </buttonConfiguration>
-                                    <connections>
-                                        <action selector="copyButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="PFj-Xs-jRc"/>
-                                    </connections>
-                                </button>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HVk-BT-inL">
-                                    <rect key="frame" x="235" y="0.0" width="50" height="30"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="15n-Qj-suA"/>
-                                        <constraint firstAttribute="height" constant="30" id="7S6-gC-I9t"/>
-                                    </constraints>
-                                </view>
                             </subviews>
                         </stackView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4dh-1o-dla">
+                            <rect key="frame" x="106" y="0.0" width="51" height="50"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain">
+                                <imageReference key="image" image="doc.on.doc" catalog="system" symbolScale="large"/>
+                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="default"/>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="copyButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="PFj-Xs-jRc"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HVk-BT-inL">
+                            <rect key="frame" x="157" y="0.0" width="100" height="50"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="10" id="15n-Qj-suA"/>
+                            </constraints>
+                        </view>
                     </subviews>
                 </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="SbV-0Q-9Bi" firstAttribute="leading" secondItem="d38-Qh-CDY" secondAttribute="trailing" constant="15" id="1Sa-3l-mu4"/>
+                <constraint firstItem="TlX-Nk-3KJ" firstAttribute="top" secondItem="SbV-0Q-9Bi" secondAttribute="bottom" constant="15" id="AuP-af-Uuc"/>
                 <constraint firstItem="nag-xQ-ygP" firstAttribute="centerX" secondItem="d38-Qh-CDY" secondAttribute="centerX" id="HqS-9Q-oOh"/>
                 <constraint firstItem="nag-xQ-ygP" firstAttribute="centerY" secondItem="d38-Qh-CDY" secondAttribute="centerY" id="I6t-D3-7p7"/>
-                <constraint firstItem="TlX-Nk-3KJ" firstAttribute="trailing" secondItem="XYh-fe-QI3" secondAttribute="trailing" id="IIU-Zu-GhK"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="GzR-aE-02j" secondAttribute="trailing" constant="20" id="KAe-RI-m1c"/>
                 <constraint firstItem="d38-Qh-CDY" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="KMP-7k-FdT"/>
                 <constraint firstItem="d38-Qh-CDY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="Kh1-ra-ys9"/>
-                <constraint firstItem="TlX-Nk-3KJ" firstAttribute="top" secondItem="XYh-fe-QI3" secondAttribute="bottom" constant="10" id="MQE-dZ-Ocf"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="TlX-Nk-3KJ" secondAttribute="trailing" constant="20" id="RSM-Al-Ugc"/>
                 <constraint firstItem="GzR-aE-02j" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="Rup-7S-ESn"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="GzR-aE-02j" secondAttribute="bottom" constant="15" id="XNK-EH-JdM"/>
+                <constraint firstItem="TlX-Nk-3KJ" firstAttribute="trailing" secondItem="SbV-0Q-9Bi" secondAttribute="trailing" constant="28" id="YIp-wd-kEQ"/>
+                <constraint firstItem="SbV-0Q-9Bi" firstAttribute="centerY" secondItem="d38-Qh-CDY" secondAttribute="centerY" id="ZHz-Cy-ucI"/>
                 <constraint firstItem="GzR-aE-02j" firstAttribute="width" secondItem="d38-Qh-CDY" secondAttribute="width" multiplier="8.31707" id="jc2-47-rlE"/>
-                <constraint firstItem="XYh-fe-QI3" firstAttribute="leading" secondItem="d38-Qh-CDY" secondAttribute="trailing" constant="15" id="jwP-Uk-b2t"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="TlX-Nk-3KJ" secondAttribute="bottom" constant="20" id="k5f-oV-Kx0"/>
                 <constraint firstItem="TlX-Nk-3KJ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="qC0-ut-qSs"/>
                 <constraint firstItem="GzR-aE-02j" firstAttribute="top" secondItem="d38-Qh-CDY" secondAttribute="bottom" constant="10" id="tmw-bJ-vdK"/>
-                <constraint firstItem="d38-Qh-CDY" firstAttribute="centerY" secondItem="XYh-fe-QI3" secondAttribute="centerY" id="uJn-vh-8uJ"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
@@ -132,8 +132,5 @@
     </objects>
     <resources>
         <image name="doc.on.doc" catalog="system" width="116" height="128"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>
