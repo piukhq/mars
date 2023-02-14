@@ -30,4 +30,8 @@ class BarcodeView: UIView {
         cardNumberLabel.textColor = Current.themeManager.color(for: .text)
         copyButton.tintColor = Current.themeManager.color(for: .text)
     }
+    
+    @IBAction func copyButtonTapped(_ sender: Any) {
+        UIPasteboard.general.string = cardNumberLabel.text
+    }
 }

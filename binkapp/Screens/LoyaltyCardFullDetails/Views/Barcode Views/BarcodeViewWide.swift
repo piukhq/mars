@@ -53,8 +53,4 @@ class BarcodeViewWide: BarcodeView {
             customCardIconLabel.textColor = textColor
         }
     }
-    
-    @IBAction func copyButtonTapped(_ sender: Any) {
-        UIPasteboard.general.string = cardNumberLabel.text
-    }
 }
