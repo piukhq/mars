@@ -176,28 +176,25 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     }()
     
     private lazy var goToSiteButton: UIButton = {
-        let hexStringColor = viewModel.membershipCard.card?.colour
         var config = UIButton.Configuration.filled()
         config.cornerStyle = .capsule
         config.title = L10n.goToSiteButton
+        config.baseBackgroundColor = viewModel.cardColor
         config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { container in
             var outContainer = container
             outContainer.font = .bodyTextBold
             return outContainer
         }
-        config.baseBackgroundColor = hexStringColor.isNilOrEmpty ? .binkGradientBlueLeft : UIColor(hexString: hexStringColor ?? "")
         
-        let url = viewModel.membershipCard.membershipPlan?.account?.planURL
-        
-        let button = UIButton(configuration: config, primaryAction: UIAction { _ in
-            if let url = url {
+        let button = UIButton(configuration: config, primaryAction: UIAction { [weak self] _ in
+            if let url = self?.viewModel.planUrl {
                 let viewController = ViewControllerFactory.makeWebViewController(urlString: url)
                 let navigationRequest = ModalNavigationRequest(viewController: viewController)
                 Current.navigate.to(navigationRequest)
             }
         })
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.isHidden = url.isNilOrEmpty
+        button.isHidden = viewModel.planUrl.isNilOrEmpty
         return button
     }()
 
