@@ -179,7 +179,12 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         var config = UIButton.Configuration.filled()
         config.cornerStyle = .capsule
         config.title = L10n.goToSiteButton
-        config.baseBackgroundColor = viewModel.cardColor
+        
+        if let color = viewModel.cardColor {
+            config.baseBackgroundColor = color
+            config.baseForegroundColor = color.isLight(threshold: 0.8) ? .black : .white
+        }
+        
         config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { container in
             var outContainer = container
             outContainer.font = .bodyTextBold
