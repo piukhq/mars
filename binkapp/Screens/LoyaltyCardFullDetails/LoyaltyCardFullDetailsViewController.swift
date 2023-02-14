@@ -174,6 +174,32 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         view.backgroundColor = .clear
         return view
     }()
+    
+    private lazy var goToSiteButton: UIButton = {
+        let hexStringColor = viewModel.membershipCard.card?.colour
+        var config = UIButton.Configuration.filled()
+        config.cornerStyle = .capsule
+        config.title = L10n.goToSiteButton
+        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { container in
+            var outContainer = container
+            outContainer.font = .bodyTextBold
+            return outContainer
+        }
+        config.baseBackgroundColor = hexStringColor.isNilOrEmpty ? .binkGradientBlueLeft : UIColor(hexString: hexStringColor ?? "")
+        
+        let url = viewModel.membershipCard.membershipPlan?.account?.planURL
+        
+        let button = UIButton(configuration: config, primaryAction: UIAction { _ in
+            if let url = url {
+                let viewController = ViewControllerFactory.makeWebViewController(urlString: url)
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
+            }
+        })
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.isHidden = url.isNilOrEmpty
+        return button
+    }()
 
     
     var viewModel: LoyaltyCardFullDetailsViewModel
@@ -297,6 +323,10 @@ private extension LoyaltyCardFullDetailsViewController {
         // Build locations
         stackScrollView.add(arrangedSubview: locationView)
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: locationView)
+        
+        /// go to site
+        stackScrollView.add(arrangedSubview: goToSiteButton)
+        stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: goToSiteButton)
         
         if viewModel.shouldShowOfferTiles {
             stackScrollView.add(arrangedSubview: offerTilesStackView)
@@ -427,7 +457,10 @@ private extension LoyaltyCardFullDetailsViewController {
             locationImage.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset),
             locationImage.topAnchor.constraint(equalTo: locationView.topAnchor, constant: LayoutHelper.GeoLocationCallout.locationImageVerticalOffset),
             locationImage.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageVerticalOffset),
-            locationImage.rightAnchor.constraint(equalTo: nearestStoresText.leftAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset)
+            locationImage.rightAnchor.constraint(equalTo: nearestStoresText.leftAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset),
+            goToSiteButton.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
+            goToSiteButton.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
+            goToSiteButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
     
