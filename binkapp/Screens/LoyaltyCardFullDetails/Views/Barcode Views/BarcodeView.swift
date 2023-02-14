@@ -33,5 +33,7 @@ class BarcodeView: UIView {
     
     @IBAction func copyButtonTapped(_ sender: Any) {
         UIPasteboard.general.string = cardNumberLabel.text
+        MessageView.show("Copied card number", type: .snackbar(.short))
+        MixpanelUtility.track(.cardNumberCopiedToPasteboard)
     }
 }
