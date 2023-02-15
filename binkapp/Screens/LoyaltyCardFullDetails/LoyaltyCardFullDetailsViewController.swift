@@ -186,10 +186,10 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
             config.baseForegroundColor = color.isLight(threshold: 0.8) ? .black : .white
         }
         
-        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
-            var outgoing = incoming
-            outgoing.font = .bodyTextBold
-            return outgoing
+        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { attributeContainer in
+            var modifiedContainer = attributeContainer
+            modifiedContainer.font = .bodyTextBold
+            return modifiedContainer
         }
         
         let button = UIButton(configuration: config, primaryAction: UIAction { [weak self] _ in
