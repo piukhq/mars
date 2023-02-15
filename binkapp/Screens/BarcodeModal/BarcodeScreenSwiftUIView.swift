@@ -153,6 +153,12 @@ struct BarcodeScreenSwiftUIView: View {
                         ])
                     }
             }
+            .onAppear {
+                UIScreen.main.brightness = 1
+            }
+            .onDisappear {
+                UIScreen.main.brightness = viewModel.screenBrightness
+            }
         }
     }
     

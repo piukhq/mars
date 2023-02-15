@@ -14,7 +14,6 @@ struct DebugMenuView: View {
     
     init() {
         UITableView.appearance().backgroundColor = UIColor(Color(Current.themeManager.color(for: .insetGroupedTableBackground)))
-        UIScreen.main.brightness = 1
     }
     
     var body: some View {
