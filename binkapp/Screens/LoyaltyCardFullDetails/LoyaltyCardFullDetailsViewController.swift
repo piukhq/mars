@@ -177,7 +177,8 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     
     private lazy var goToSiteButton: UIButton = {
         var config = UIButton.Configuration.filled()
-        config.cornerStyle = .capsule
+        config.cornerStyle = .fixed
+        config.background.cornerRadius = Constants.cornerRadius
         config.title = L10n.goToSiteButton
         
         if let color = viewModel.cardColor {
@@ -185,10 +186,10 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
             config.baseForegroundColor = color.isLight(threshold: 0.8) ? .black : .white
         }
         
-        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { container in
-            var outContainer = container
-            outContainer.font = .bodyTextBold
-            return outContainer
+        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
+            var outgoing = incoming
+            outgoing.font = .bodyTextBold
+            return outgoing
         }
         
         let button = UIButton(configuration: config, primaryAction: UIAction { [weak self] _ in
@@ -201,6 +202,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         })
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isHidden = viewModel.planUrl.isNilOrEmpty
+        button.layer.applyDefaultBinkShadow()
         return button
     }()
 
