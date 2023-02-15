@@ -193,6 +193,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         
         let button = UIButton(configuration: config, primaryAction: UIAction { [weak self] _ in
             if let url = self?.viewModel.planUrl {
+                MixpanelUtility.track(.goToSitePressed(brandName: self?.viewModel.brandName ?? ""))
                 let viewController = ViewControllerFactory.makeWebViewController(urlString: url)
                 let navigationRequest = ModalNavigationRequest(viewController: viewController)
                 Current.navigate.to(navigationRequest)
