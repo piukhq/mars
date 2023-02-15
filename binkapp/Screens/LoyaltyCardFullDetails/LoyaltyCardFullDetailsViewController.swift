@@ -463,7 +463,7 @@ private extension LoyaltyCardFullDetailsViewController {
             locationImage.rightAnchor.constraint(equalTo: nearestStoresText.leftAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset),
             goToSiteButton.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
             goToSiteButton.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
-            goToSiteButton.heightAnchor.constraint(equalToConstant: 48)
+            goToSiteButton.heightAnchor.constraint(equalToConstant: LayoutHelper.LoyaltyCardDetail.goToSiteButtonHeight)
         ])
     }
     
@@ -672,5 +672,6 @@ extension LayoutHelper {
         static func brandHeaderAspectRatio(forMembershipCard card: CD_MembershipCard) -> CGFloat {
             return card.membershipPlan?.featureSet?.planCardType == .link ? brandHeaderAspectRatioLink : brandHeaderAspectRatio
         }
+        static let goToSiteButtonHeight: CGFloat = 48
     }
 }
