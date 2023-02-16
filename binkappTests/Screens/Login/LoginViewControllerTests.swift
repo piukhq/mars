@@ -68,8 +68,7 @@ final class LoginViewControllerTests: XCTestCase {
         
         _ = XCTWaiter.wait(for: [self.expectation(description: "Wait for network call closure to complete")], timeout: 5.0)
         
-        XCTAssertTrue(Current.navigate.currentViewController!.isKind(of: CheckYourInboxViewController.self))
-
+        XCTAssertTrue(Current.navigate.currentViewController!.isKind(of: CheckYourInboxViewController.self), "Current view controller is: \(String(describing: Current.navigate.currentViewController))")
     }
     
     func test_loginTapped() throws {
