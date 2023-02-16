@@ -127,7 +127,7 @@ struct BinkButtonsStackView: View {
     enum Constants {
         static let buttonSpacing: CGFloat = 25.0
         static let height: CGFloat = BinkButtonSwiftUIView.Constants.height + buttonSpacing
-        static let topPadding: CGFloat = 20
+        static let topPadding: CGFloat = 60
         static let gradientOpacity: CGFloat = 0.1
     }
     
