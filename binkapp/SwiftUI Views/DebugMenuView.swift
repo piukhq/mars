@@ -309,16 +309,16 @@ struct PickerDebugRow: View {
         HStack {
             Text(type.title)
                 .lineLimit(1)
-                .truncationMode(.tail)
                 .foregroundColor(Color(.binkGradientBlueRight))
 
             Spacer()
 
-            Picker(type.title.capitalized, selection: $selection) {
+            Picker("", selection: $selection) {
                 ForEach(type.options, id: \.self) {
                     switch type {
                     case .environment:
                         Text($0)
+                            .truncationMode(.tail)
                     case .snackbar:
                         Text($0.capitalized)
                     }
