@@ -83,6 +83,14 @@ class LoyaltyCardFullDetailsViewModel {
         return LayoutHelper.LoyaltyCardDetail.brandHeaderAspectRatio(forMembershipCard: membershipCard)
     }
     
+    var cardColor: UIColor? {
+        if let hexColor = membershipCard.card?.colour {
+            return UIColor(hexString: hexColor)
+        } else {
+            return secondaryColor
+        }
+    }
+    
     var secondaryColor: UIColor? {
         if let customColor = membershipCard.card?.secondaryColour {
             return UIColor(hexString: customColor)
@@ -130,6 +138,10 @@ class LoyaltyCardFullDetailsViewModel {
     
     var cardIsCustomCard: Bool {
         return membershipCard.membershipPlan?.isCustomCard ?? false
+    }
+    
+    var planUrl: String? {
+        return membershipCard.membershipPlan?.account?.planURL
     }
         
     // MARK: - Public methods
