@@ -855,6 +855,8 @@ internal enum L10n {
   internal static let signUpPendingDescription = L10n.tr("Localizable", "sign_up_pending_description", fallback: "Sometimes it takes a while to sign up with your merchant.\nIn the meantime please do not attempt to sign up again. You can use your card and receive your benefits as normal.\nAfter the sign up has been completed you will be able to see your points balance.")
   /// Sign up pending
   internal static let signUpPendingTitle = L10n.tr("Localizable", "sign_up_pending_title", fallback: "Sign up pending")
+  /// Copied card number
+  internal static let snackbarMessageCopiedCardNumber = L10n.tr("Localizable", "snackbar_message_copied_card_number", fallback: "Copied card number")
   /// Sign in with Apple failed.
   internal static let socialTandcsSiwaError = L10n.tr("Localizable", "social_tandcs_siwa_error", fallback: "Sign in with Apple failed.")
   /// One last step...

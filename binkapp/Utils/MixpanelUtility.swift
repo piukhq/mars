@@ -68,6 +68,7 @@ enum MixpanelTrackableEvent {
     case toAppleMaps(brandName: String)
     case toGoogleMaps(brandName: String)
     case binkScannerEnterManuallyPressed(brandName: String)
+    case cardNumberCopiedToPasteboard
     case goToSitePressed(brandName: String)
 
     enum JourneyRoute: String {
@@ -114,6 +115,8 @@ enum MixpanelTrackableEvent {
             return "Launch Google Maps for Directions"
         case .binkScannerEnterManuallyPressed:
             return "Bink scanner enter manually pressed"
+        case .cardNumberCopiedToPasteboard:
+            return "Card number copied to pasteboard"
         case .goToSitePressed:
             return "Go to site pressed"
         }
@@ -161,8 +164,6 @@ enum MixpanelTrackableEvent {
                 "Brand name": brandName,
                 "Route": route.rawValue
             ]
-        case .logout, .onboardingCarouselSwipe, .forgottenPassword:
-            return [:]
         case .barcodeScreenIssueReported(brandName: let brandName, let reason):
             return [
                 "Reason": reason.rawValue,
@@ -176,6 +177,8 @@ enum MixpanelTrackableEvent {
             return ["Brand": brandName]
         case .binkScannerEnterManuallyPressed(let brandName):
             return ["Brand": brandName]
+        case .logout, .onboardingCarouselSwipe, .forgottenPassword, .cardNumberCopiedToPasteboard:
+            return [:]
         case .goToSitePressed(let brandName):
             return ["Brand": brandName]
         }
