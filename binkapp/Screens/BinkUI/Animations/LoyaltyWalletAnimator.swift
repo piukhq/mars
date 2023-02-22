@@ -63,24 +63,13 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
                 barcodeTransitionView = transitionView
                 transitionView.configure(viewModel: lcdViewController.viewModel)
             } else {
-                switch (lcdViewController.viewModel.barcodeViewModel.barcodeType, lcdViewController.viewModel.barcodeViewModel.barcodeIsMoreSquareThanRectangle) {
-                case (.aztec, _), (.qr, _), (_, true):
-                    let barcodeView: BarcodeViewCompact = .fromNib()
-                    barcode = barcodeView
-                    barcodeView.configure(viewModel: lcdViewController.viewModel)
-                    
-                    let transitionView: BarcodeViewCompact = .fromNib()
-                    barcodeTransitionView = transitionView
-                    transitionView.configure(viewModel: lcdViewController.viewModel)
-                default:
-                    let barcodeView: BarcodeViewWide = .fromNib()
-                    barcode = barcodeView
-                    barcodeView.configure(viewModel: lcdViewController.viewModel)
-                    
-                    let transitionView: BarcodeViewWide = .fromNib()
-                    barcodeTransitionView = transitionView
-                    transitionView.configure(viewModel: lcdViewController.viewModel)
-                }
+                let barcodeView: BarcodeViewWide = .fromNib()
+                barcode = barcodeView
+                barcodeView.configure(viewModel: lcdViewController.viewModel)
+                
+                let transitionView: BarcodeViewWide = .fromNib()
+                barcodeTransitionView = transitionView
+                transitionView.configure(viewModel: lcdViewController.viewModel)
             }
             
             barcodeView.addSubview(barcode)
