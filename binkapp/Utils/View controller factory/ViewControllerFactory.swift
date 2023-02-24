@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CardScan
 import SwiftUI
 
 enum ViewControllerFactory {
@@ -20,16 +19,6 @@ enum ViewControllerFactory {
     
     static func makeBrowseBrandsViewController(section: Int? = nil) -> BrowseBrandsViewController {
         return BrowseBrandsViewController(viewModel: BrowseBrandsViewModel(), section: section)
-    }
-    
-    static func makePaymentCardScannerViewController(strings: ScanStringsDataSource, allowSkip: Bool = true, delegate: ScanDelegate?) -> ScanViewController? {
-        guard let viewController = ScanViewController.createViewController(withDelegate: delegate) else { return nil }
-        viewController.themeDelegate = Current.themeManager
-        viewController.allowSkip = allowSkip
-        viewController.cornerColor = .white
-        viewController.torchButtonImage = Asset.paymentScannerTorch.image
-        viewController.stringDataSource = strings
-        return viewController
     }
     
     static func makeAddPaymentCardViewController(model: PaymentCardCreateModel? = nil, journey: AddPaymentCardJourney) -> AddPaymentCardViewController {

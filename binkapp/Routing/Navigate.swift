@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CardScan
 
 protocol BaseNavigationRequest {
     var completion: EmptyCompletionBlock? { get }
@@ -122,11 +121,6 @@ class Navigate {
     }
     
     var scannerDelegate: BinkScannerViewControllerDelegate? {
-        return tabBarController
-    }
-    
-    // TODO: Delete when payment scanner is changed
-    var paymentCardScannerDelegate: ScanDelegate? {
         return tabBarController
     }
 

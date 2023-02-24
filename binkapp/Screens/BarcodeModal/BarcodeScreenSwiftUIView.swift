@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import CardScan
 
 struct RemoteImage: View {
     var image: Image?

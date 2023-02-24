@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CardScan
 
 class ThemeManager: ObservableObject {
     enum ScreenElement {
@@ -123,27 +122,5 @@ class ThemeManager: ObservableObject {
 
     func addObserver(_ observer: Any, handler: Selector) {
         NotificationCenter.default.addObserver(observer, selector: handler, name: .themeManagerDidSetTheme, object: nil)
-    }
-}
-
-extension ThemeManager: ThemeDelegate {
-    var scannerBackgroundColor: UIColor {
-        return color(for: .bar)
-    }
-
-    var scannerTextColor: UIColor {
-        return color(for: .text)
-    }
-
-    var widgetBackgroundColor: UIColor {
-        return color(for: .viewBackground).withAlphaComponent(0.5)
-    }
-
-    var widgetTextColor: UIColor {
-        return color(for: .text)
-    }
-
-    var closeButtonColor: UIColor {
-        return color(for: .text)
     }
 }

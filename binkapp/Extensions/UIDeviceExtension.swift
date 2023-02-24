@@ -9,6 +9,7 @@
 // swiftlint:disable discouraged_direct_init
 
 import UIKit
+import AVFoundation
 
 extension UIDevice {
     var hasNotch: Bool {
@@ -93,6 +94,18 @@ extension UIDevice {
             return .iPhone12Size
         default:
             return .unknown
+        }
+    }
+    
+    static func flashLightToggle() {
+        guard let device = AVCaptureDevice.default(for: AVMediaType.video), device.hasTorch else { return }
+        do {
+            try device.lockForConfiguration()
+            try device.setTorchModeOn(level: 1.0)
+            device.torchMode = device.isTorchActive ? .off : .on
+            device.unlockForConfiguration()
+        } catch {
+            print("Flash light error, \(error)")
         }
     }
 }
