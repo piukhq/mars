@@ -13,7 +13,8 @@ struct WhatsNewModel: Codable {
     let features: [NewFeatureModel]?
 }
 
-struct NewFeatureModel: Codable {
+struct NewFeatureModel: Codable, Identifiable {
+    let id = UUID()
     let title: String?
     let description: String?
 }

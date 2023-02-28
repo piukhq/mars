@@ -9,13 +9,11 @@
 import SwiftUI
 
 class WhatsNewViewModel: ObservableObject {
+    @Published var features: [NewFeatureModel]?
+    @Published var merchants: [Int]?
+    
     init() {
-        let features = Current.remoteConfig.configFile?.whatsNew?.features
-        let merchants = Current.remoteConfig.configFile?.whatsNew?.merchants
-        
-        print(features?.first?.title)
-        print(features?.first?.description)
-        print(merchants)
-        
+        features = Current.remoteConfig.configFile?.whatsNew?.features
+        merchants = Current.remoteConfig.configFile?.whatsNew?.merchants
     }
 }
