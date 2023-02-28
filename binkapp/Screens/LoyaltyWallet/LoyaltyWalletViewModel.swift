@@ -136,4 +136,10 @@ class LoyaltyWalletViewModel: WalletViewModel {
     func hasMembershipCardMoved() -> Bool {
         return Current.userDefaults.bool(forDefaultsKey: .hasMembershipOrderChanged)
     }
+    
+    func presentWhatsNewView() {
+        let whatsNewViewController = ViewControllerFactory.makeWhatsNewViewController()
+        let modalRequest = ModalNavigationRequest(viewController: whatsNewViewController)
+        Current.navigate.to(modalRequest)
+    }
 }

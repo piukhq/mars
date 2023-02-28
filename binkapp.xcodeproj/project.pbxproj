@@ -319,6 +319,9 @@
 		CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */; };
 		CE0C24792678EDE500CB7150 /* WhoWeAreSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */; };
 		CE1015252722A63F0000A838 /* VisionUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1015242722A63F0000A838 /* VisionUtility.swift */; };
+		CE1665E229AE20FD00415D1B /* WhatsNewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1665E129AE20FD00415D1B /* WhatsNewModel.swift */; };
+		CE1665E429AE210F00415D1B /* WhatsNewSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1665E329AE210F00415D1B /* WhatsNewSwiftUIView.swift */; };
+		CE1665E629AE212100415D1B /* WhatsNewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1665E529AE212100415D1B /* WhatsNewViewModel.swift */; };
 		CE261634283CD926003570D8 /* PaymentCardNameRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE261633283CD926003570D8 /* PaymentCardNameRecognition.swift */; };
 		CE2751AF2915087F005C27AB /* Mocker in Frameworks */ = {isa = PBXBuildFile; productRef = CE2751AE2915087F005C27AB /* Mocker */; };
 		CE2751B229152540005C27AB /* CalloutViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2751B129152540005C27AB /* CalloutViewTests.swift */; };
@@ -1044,6 +1047,9 @@
 		CE0AE2DD2542DB81000CDB86 /* binkapp - 23-10-20 - Card secondary colour.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 23-10-20 - Card secondary colour.xcdatamodel"; sourceTree = "<group>"; };
 		CE0C24782678EDE500CB7150 /* WhoWeAreSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoWeAreSwiftUIView.swift; sourceTree = "<group>"; };
 		CE1015242722A63F0000A838 /* VisionUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionUtility.swift; sourceTree = "<group>"; };
+		CE1665E129AE20FD00415D1B /* WhatsNewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewModel.swift; sourceTree = "<group>"; };
+		CE1665E329AE210F00415D1B /* WhatsNewSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewSwiftUIView.swift; sourceTree = "<group>"; };
+		CE1665E529AE212100415D1B /* WhatsNewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewViewModel.swift; sourceTree = "<group>"; };
 		CE261633283CD926003570D8 /* PaymentCardNameRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardNameRecognition.swift; sourceTree = "<group>"; };
 		CE2751B129152540005C27AB /* CalloutViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalloutViewTests.swift; sourceTree = "<group>"; };
 		CE2751B329192CCD005C27AB /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
@@ -1892,6 +1898,7 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				CE1665E029AE20C500415D1B /* Whats New */,
 				CEADBFDC27464590008810A8 /* MixpanelUtility.swift */,
 				70FDBD72264E7C5300DC8DB3 /* Autofill */,
 				CE1015232722A60E0000A838 /* Vision */,
@@ -2605,6 +2612,16 @@
 				CE261633283CD926003570D8 /* PaymentCardNameRecognition.swift */,
 			);
 			path = Vision;
+			sourceTree = "<group>";
+		};
+		CE1665E029AE20C500415D1B /* Whats New */ = {
+			isa = PBXGroup;
+			children = (
+				CE1665E129AE20FD00415D1B /* WhatsNewModel.swift */,
+				CE1665E329AE210F00415D1B /* WhatsNewSwiftUIView.swift */,
+				CE1665E529AE212100415D1B /* WhatsNewViewModel.swift */,
+			);
+			path = "Whats New";
 			sourceTree = "<group>";
 		};
 		CE2751B02915248D005C27AB /* GeoLocation */ = {
@@ -4297,6 +4314,7 @@
 				70D748022552CC7800E9D2C1 /* InAppReviewable.swift in Sources */,
 				3C453CB42338E84500287B56 /* PaymentWalletViewController.swift in Sources */,
 				3C3C604F2302E65600D9EA25 /* BrandModel.swift in Sources */,
+				CE1665E629AE212100415D1B /* WhatsNewViewModel.swift in Sources */,
 				B726334D23058D2700951037 /* PlanDocumentModel.swift in Sources */,
 				BDB0186C232D96EB00BFFA18 /* BaseFormViewController.swift in Sources */,
 				EFA5F71C2379A7C70027AB80 /* _CD_MembershipPlanAccount.swift in Sources */,
@@ -4329,6 +4347,7 @@
 				BDB0186E232D98C000BFFA18 /* FormDataSource.swift in Sources */,
 				BD9E4CD623738B4900C6F098 /* PreferenceResponse.swift in Sources */,
 				3C05A9DE2327CE6300620583 /* PaymentCardModel.swift in Sources */,
+				CE1665E429AE210F00415D1B /* WhatsNewSwiftUIView.swift in Sources */,
 				EF8F0485238D583300BD708B /* _CD_LinkingSupport.swift in Sources */,
 				3CE892682338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift in Sources */,
 				70E8E4AA256712D80027A244 /* CoreDataTestable.swift in Sources */,
@@ -4340,6 +4359,7 @@
 				EFA5F71E2379A7C70027AB80 /* _CD_MembershipCardAccount.swift in Sources */,
 				BD9BAAD9232AF4AB00D2E1C4 /* DiffAware+Extension.swift in Sources */,
 				EFA5F7172379A7C70027AB80 /* CD_MembershipCard.swift in Sources */,
+				CE1665E229AE20FD00415D1B /* WhatsNewModel.swift in Sources */,
 				3C873FF722F073CF00FA3031 /* LoyaltyWalletViewController.swift in Sources */,
 				70D747FD2552A75D00E9D2C1 /* InAppReviewUtility.swift in Sources */,
 				3C93975D2386A2E00063C0B3 /* PreferencesModel.swift in Sources */,

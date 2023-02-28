@@ -41,8 +41,8 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         super.viewDidLoad()
         navigationController?.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidUpdate, object: nil)
-        
         setupSortBarButton()
+        viewModel.presentWhatsNewView()
     }
     
     func presentOptionsPopover(withOptionItems items: [SortOrderOptionItem], fromBarButtonItem barButtonItem: UIButton) {
