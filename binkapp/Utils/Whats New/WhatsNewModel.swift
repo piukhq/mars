@@ -14,7 +14,8 @@ struct WhatsNewModel: Codable {
 }
 
 struct NewFeatureModel: Codable, Identifiable {
-    let id = UUID()
+    var id = UUID()
     let title: String?
     let description: String?
+    let url: String?
 }
