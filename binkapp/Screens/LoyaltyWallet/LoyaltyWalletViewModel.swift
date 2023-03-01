@@ -138,7 +138,8 @@ class LoyaltyWalletViewModel: WalletViewModel {
     }
     
     func presentWhatsNewView() {
-        let whatsNewViewController = ViewControllerFactory.makeWhatsNewViewController()
+        let viewModel = WhatsNewViewModel(features: Current.remoteConfig.configFile?.whatsNew?.features, merchants: Current.remoteConfig.configFile?.whatsNew?.merchants)
+        let whatsNewViewController = ViewControllerFactory.makeWhatsNewViewController(viewModel: viewModel)
         let modalRequest = ModalNavigationRequest(viewController: whatsNewViewController)
         Current.navigate.to(modalRequest)
     }

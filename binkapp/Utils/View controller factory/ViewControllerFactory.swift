@@ -134,8 +134,8 @@ enum ViewControllerFactory {
         return UIHostingController(rootView: SettingsView(viewModel: viewModel))
     }
     
-    static func makeWhatsNewViewController() -> UIViewController {
-        return UIHostingController(rootView: WhatsNewSwiftUIView())
+    static func makeWhatsNewViewController(viewModel: WhatsNewViewModel) -> UIViewController {
+        return UIHostingController(rootView: WhatsNewSwiftUIView(viewModel: viewModel))
     }
 
     // MARK: - Onboarding

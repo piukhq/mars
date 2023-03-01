@@ -12,8 +12,8 @@ class WhatsNewViewModel: ObservableObject {
     @Published var features: [NewFeatureModel]?
     @Published var merchants: [Int]?
     
-    init() {
-        features = Current.remoteConfig.configFile?.whatsNew?.features
-        merchants = Current.remoteConfig.configFile?.whatsNew?.merchants
+    init(features: [NewFeatureModel]?, merchants: [Int]?) {
+        self.features = features
+        self.merchants = merchants
     }
 }
