@@ -12,16 +12,20 @@ struct WhatsNewSwiftUIView: View {
     @ObservedObject var viewModel: WhatsNewViewModel
     
     var body: some View {
-        if let merchants = viewModel.merchants {
-            ForEach(merchants) { merchant in
-                NewMerchantView(viewModel: viewModel, merchant: merchant)
+        ScrollView {
+            if let merchants = viewModel.merchants {
+                ForEach(merchants) { merchant in
+                    NewMerchantView(viewModel: viewModel, merchant: merchant)
+                }
             }
-        }
-        
-        if let features = viewModel.features {
-            ForEach(features) { feature in
-                NewFeatureView(feature: feature)
+            
+            if let features = viewModel.features {
+                ForEach(features) { feature in
+                    NewFeatureView(feature: feature)
+                }
             }
+            
+            Spacer()
         }
     }
 }
@@ -40,7 +44,7 @@ struct NewMerchantView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .frame(height: 120)
+                .frame(minHeight: 120)
                 .foregroundColor(Color(.secondarySystemBackground))
 //                .foregroundColor(Color(Current.themeManager.color(for: .text)))
             HStack {
