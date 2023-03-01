@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct WhatsNewSwiftUIView: View {
-    @ObservedObject var viewModel = WhatsNewViewModel()
+    @ObservedObject var viewModel: WhatsNewViewModel
     
     var body: some View {
         if let merchants = viewModel.merchants {
@@ -31,20 +31,44 @@ struct NewFeatureView: View {
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 25, style: .continuous)
-                .fill(Color(Current.themeManager.color(for: .walletCardBackground)))
-                .frame(height: 200)
-                .foregroundColor(Color(Current.themeManager.color(for: .walletCardBackground)))
-            VStack {
-                Text(feature.title ?? "Title")
-                Text(feature.description ?? "This summary, which briefly sets out your rights and obligations in relation to administration charges")
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .frame(height: 120)
+                .foregroundColor(Color(.secondarySystemBackground))
+//                .foregroundColor(Color(Current.themeManager.color(for: .text)))
+            HStack {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text(feature.title ?? "Title")
+                        .font(.nunitoBold(20))
+                    Text(feature.description ?? "This summary, which briefly sets out your rights and obligations in relation to administration charges")
+                        .font(.nunitoSans(16))
+                    
+                    if let _ = feature.url {
+                        HStack {
+                            Spacer()
+                            Button {
+                                
+                            } label: {
+                                Text("Take me there")
+                                    .font(.nunitoSemiBold(16))
+                            }
+                        }
+                    }
+                }
+                .padding(.top, 20)
+                .padding(.horizontal, 20)
+                .padding(.bottom, 10)
+                
+                Spacer()
             }
         }
+        .padding()
     }
 }
 
 struct WhatsNewSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        WhatsNewSwiftUIView()
+        let feature = NewFeatureModel(title: "New Feature", description: "Check out this mint new feature yo.", url: nil)
+        let feature2 = NewFeatureModel(title: "New Feature", description: "Check out this mint new feature yo.", url: "")
+        WhatsNewSwiftUIView(viewModel: WhatsNewViewModel(features: [feature, feature2], merchants: [207 ]))
     }
 }
