@@ -10,10 +10,14 @@ import SwiftUI
 
 class WhatsNewViewModel: ObservableObject {
     @Published var features: [NewFeatureModel]?
-    @Published var merchants: [Int]?
+    @Published var merchants: [NewMerchantModel]?
     
-    init(features: [NewFeatureModel]?, merchants: [Int]?) {
+    init(features: [NewFeatureModel]?, merchants: [NewMerchantModel]?) {
         self.features = features
         self.merchants = merchants
+    }
+    
+    func membershipPlan(from id: String) -> CD_MembershipPlan? {
+        return Current.wallet.membershipPlans?.first(where: { $0.id == id })
     }
 }

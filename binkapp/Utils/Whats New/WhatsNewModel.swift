@@ -9,8 +9,14 @@
 import Foundation
 
 struct WhatsNewModel: Codable {
-    let merchants: [Int]?
+    let merchants: [NewMerchantModel]?
     let features: [NewFeatureModel]?
+}
+
+struct NewMerchantModel: Codable, Identifiable {
+    var id: String?
+    let description: [String]?
+    let url: String?
 }
 
 struct NewFeatureModel: Codable, Identifiable {

@@ -13,8 +13,8 @@ struct WhatsNewSwiftUIView: View {
     
     var body: some View {
         if let merchants = viewModel.merchants {
-            ForEach(merchants, id: \.self) { merchant in
-                Text(String(merchant))
+            ForEach(merchants) { merchant in
+                NewMerchantView(viewModel: viewModel, merchant: merchant)
             }
         }
         
@@ -23,6 +23,56 @@ struct WhatsNewSwiftUIView: View {
                 NewFeatureView(feature: feature)
             }
         }
+    }
+}
+
+struct NewMerchantView: View {
+    var viewModel: WhatsNewViewModel
+    var merchant: NewMerchantModel
+    var membershipPlan: CD_MembershipPlan?
+    
+    init(viewModel: WhatsNewViewModel, merchant: NewMerchantModel) {
+        self.viewModel = viewModel
+        self.merchant = merchant
+        self.membershipPlan = viewModel.membershipPlan(from: merchant.id ?? "")
+    }
+    
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .frame(height: 120)
+                .foregroundColor(Color(.secondarySystemBackground))
+//                .foregroundColor(Color(Current.themeManager.color(for: .text)))
+            HStack {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text(membershipPlan?.account?.companyName ?? "Title")
+                        .font(.nunitoBold(20))
+                    
+                    if let descriptionTexts = merchant.description {
+                        ForEach(descriptionTexts, id: \.self) { descriptionText in
+                            Text(descriptionText)
+                                .font(.nunitoSans(16))
+                        }
+                    }
+                    
+                    if let _ = merchant.url {
+                        HStack {
+                            Spacer()
+                            Button {
+                                print("Button Tapped")
+                            } label: {
+                                Text("Take me there")
+                                    .font(.nunitoSemiBold(16))
+                            }
+                        }
+                    }
+                }
+                .padding(20)
+                
+                Spacer()
+            }
+        }
+        .padding()
     }
 }
 
@@ -46,7 +96,7 @@ struct NewFeatureView: View {
                         HStack {
                             Spacer()
                             Button {
-                                
+                                print("Button Tapped")
                             } label: {
                                 Text("Take me there")
                                     .font(.nunitoSemiBold(16))
@@ -54,9 +104,7 @@ struct NewFeatureView: View {
                         }
                     }
                 }
-                .padding(.top, 20)
-                .padding(.horizontal, 20)
-                .padding(.bottom, 10)
+                .padding(20)
                 
                 Spacer()
             }
@@ -67,8 +115,11 @@ struct NewFeatureView: View {
 
 struct WhatsNewSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        let feature = NewFeatureModel(title: "New Feature", description: "Check out this mint new feature yo.", url: nil)
-        let feature2 = NewFeatureModel(title: "New Feature", description: "Check out this mint new feature yo.", url: "")
-        WhatsNewSwiftUIView(viewModel: WhatsNewViewModel(features: [feature, feature2], merchants: [207 ]))
+        VStack {
+            let merchant = NewMerchantModel(id: "207", description: ["Check out out lastest new merchant", "Sign up for a card in out app"], url: "")
+            let feature = NewFeatureModel(title: "New Feature", description: "Check out this mint new feature yo.", url: nil)
+            let feature2 = NewFeatureModel(title: "New Feature", description: "Check out this mint new feature yo.", url: "")
+            WhatsNewSwiftUIView(viewModel: WhatsNewViewModel(features: [feature, feature2], merchants: [merchant]))
+        }
     }
 }
