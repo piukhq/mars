@@ -42,7 +42,6 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         navigationController?.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidUpdate, object: nil)
         setupSortBarButton()
-        viewModel.presentWhatsNewView()
     }
     
     func presentOptionsPopover(withOptionItems items: [SortOrderOptionItem], fromBarButtonItem barButtonItem: UIButton) {
@@ -74,6 +73,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .loyaltyWallet)
+        viewModel.presentWhatsNewView()
     }
     
     func setupSortBarButton() {

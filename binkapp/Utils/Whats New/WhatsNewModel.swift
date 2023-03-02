@@ -20,7 +20,7 @@ struct NewMerchantModel: Codable, Identifiable {
 }
 
 struct NewFeatureModel: Codable, Identifiable {
-    var id = UUID()
+    var id: String? = UUID().uuidString
     let title: String?
     let description: String?
     let url: String?

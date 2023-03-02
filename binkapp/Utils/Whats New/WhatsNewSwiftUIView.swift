@@ -27,11 +27,15 @@ struct WhatsNewSwiftUIView: View {
             
             Spacer()
         }
+        .padding(.top, 20)
+        .foregroundColor(Color(.green))
+//        .foregroundColor(Color(uiColor: Current.themeManager.color(for: .viewBackground)))
+        .navigationTitle("What's New?")
     }
 }
 
 struct NewMerchantView: View {
-    var viewModel: NewMerchantViewModel
+    @ObservedObject var viewModel: NewMerchantViewModel
     
     init(merchant: NewMerchantModel) {
         self.viewModel = NewMerchantViewModel(merchant: merchant)
@@ -41,27 +45,30 @@ struct NewMerchantView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .frame(minHeight: 120)
-                .foregroundColor(Color(.secondarySystemBackground))
-//                .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                .foregroundColor(Color(uiColor: viewModel.backgroundColor))
             HStack(spacing: 20) {
                 if let iconImage = viewModel.iconImage {
                     Image(uiImage: iconImage)
                         .resizable()
                         .frame(width: 70, height: 70, alignment: .center)
-                } else {
-                    Image(systemName: "lanyardcard")
-                        .resizable()
-                        .frame(width: 70, height: 70, alignment: .center)
+                        .cornerRadius(LayoutHelper.iconCornerRadius)
                 }
+//                else {
+//                    Image(systemName: "lanyardcard")
+//                        .resizable()
+//                        .frame(width: 70, height: 70, alignment: .center)
+//                }
                 
                 VStack(alignment: .leading, spacing: 5) {
                     Text(viewModel.title)
                         .font(.nunitoBold(18))
+                        .foregroundColor(viewModel.textColor)
                     
                     if let descriptionTexts = viewModel.descriptionTexts {
                         ForEach(descriptionTexts, id: \.self) { descriptionText in
                             Text(descriptionText)
                                 .font(.nunitoSans(14))
+                                .foregroundColor(viewModel.textColor)
                         }
                     }
                     
@@ -82,7 +89,6 @@ struct NewMerchantView: View {
             }
             .padding(.vertical, 10)
             .padding(.leading, 20)
-
         }
         .padding()
     }
@@ -112,6 +118,14 @@ class NewMerchantViewModel: ObservableObject {
         return merchant.url
     }
     
+    var backgroundColor: UIColor {
+        return membershipPlan?.secondaryBrandColor ?? .secondarySystemBackground
+    }
+    
+    var textColor: Color {
+        return backgroundColor.isLight(threshold: 0.8) ? .black : .white
+    }
+    
     func getMembershipPlan(from id: String) {
         membershipPlan = Current.wallet.membershipPlans?.first(where: { $0.id == id })
     }
@@ -131,14 +145,16 @@ struct NewFeatureView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .frame(height: 120)
-                .foregroundColor(Color(.secondarySystemBackground))
-//                .foregroundColor(Color(Current.themeManager.color(for: .text)))
+//                .foregroundColor(Color(.secondarySystemBackground))
+                .foregroundColor(Color(Current.themeManager.color(for: .walletCardBackground)))
             HStack {
                 VStack(alignment: .leading, spacing: 10) {
                     Text(feature.title ?? "Title")
-                        .font(.nunitoBold(20))
+                        .font(.nunitoBold(18))
+                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
                     Text(feature.description ?? "This summary, which briefly sets out your rights and obligations in relation to administration charges")
-                        .font(.nunitoSans(16))
+                        .font(.nunitoSans(14))
+                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
                     
                     if let _ = feature.url {
                         HStack {
@@ -147,7 +163,7 @@ struct NewFeatureView: View {
                                 print("Button Tapped")
                             } label: {
                                 Text("Take me there")
-                                    .font(.nunitoSemiBold(16))
+                                    .font(.nunitoSemiBold(14))
                             }
                         }
                     }
