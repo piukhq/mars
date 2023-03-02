@@ -28,8 +28,7 @@ struct WhatsNewSwiftUIView: View {
             Spacer()
         }
         .padding(.top, 20)
-        .foregroundColor(Color(.green))
-//        .foregroundColor(Color(uiColor: Current.themeManager.color(for: .viewBackground)))
+        .background(Color(uiColor: Current.themeManager.color(for: .viewBackground)))
         .navigationTitle("What's New?")
     }
 }
@@ -72,15 +71,15 @@ struct NewMerchantView: View {
                         }
                     }
                     
-                    if let _ = viewModel.url {
-                        HStack {
-                            Spacer()
-                            Button {
-                                print("Button Tapped")
-                            } label: {
-                                Text("Take me there")
-                                    .font(.nunitoSemiBold(14))
-                            }
+
+                    HStack {
+                        Spacer()
+                        Button {
+                            viewModel.handleNavigation()
+                        } label: {
+                            Text("Take me there")
+                                .font(.nunitoSemiBold(14))
+                                .foregroundColor(viewModel.textColor)
                         }
                     }
                 }
@@ -136,6 +135,19 @@ class NewMerchantViewModel: ObservableObject {
             self.iconImage = image ?? UIImage(named: "bink-icon-logo") ?? UIImage(systemName: "lanyardcard")
         })
     }
+    
+    func handleNavigation() {
+        guard let membershipPlan = membershipPlan else { return }
+        Current.navigate.close(animated: true) {
+            let browseBrandsVC = ViewControllerFactory.makeBrowseBrandsViewController()
+            let navigationRequest = ModalNavigationRequest(viewController: browseBrandsVC) {
+                let addJoinVC = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
+                let pushNavigationRequest = PushNavigationRequest(viewController: addJoinVC)
+                Current.navigate.to(pushNavigationRequest)
+            }
+            Current.navigate.to(navigationRequest)
+        }
+    }
 }
 
 struct NewFeatureView: View {
@@ -145,7 +157,6 @@ struct NewFeatureView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .frame(height: 120)
-//                .foregroundColor(Color(.secondarySystemBackground))
                 .foregroundColor(Color(Current.themeManager.color(for: .walletCardBackground)))
             HStack {
                 VStack(alignment: .leading, spacing: 10) {
