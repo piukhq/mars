@@ -322,6 +322,7 @@
 		CE1665E229AE20FD00415D1B /* WhatsNewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1665E129AE20FD00415D1B /* WhatsNewModel.swift */; };
 		CE1665E429AE210F00415D1B /* WhatsNewSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1665E329AE210F00415D1B /* WhatsNewSwiftUIView.swift */; };
 		CE1665E629AE212100415D1B /* WhatsNewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1665E529AE212100415D1B /* WhatsNewViewModel.swift */; };
+		CE1665E829B10BAC00415D1B /* NewFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1665E729B10BAC00415D1B /* NewFeatureView.swift */; };
 		CE261634283CD926003570D8 /* PaymentCardNameRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE261633283CD926003570D8 /* PaymentCardNameRecognition.swift */; };
 		CE2751AF2915087F005C27AB /* Mocker in Frameworks */ = {isa = PBXBuildFile; productRef = CE2751AE2915087F005C27AB /* Mocker */; };
 		CE2751B229152540005C27AB /* CalloutViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2751B129152540005C27AB /* CalloutViewTests.swift */; };
@@ -1050,6 +1051,7 @@
 		CE1665E129AE20FD00415D1B /* WhatsNewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewModel.swift; sourceTree = "<group>"; };
 		CE1665E329AE210F00415D1B /* WhatsNewSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewSwiftUIView.swift; sourceTree = "<group>"; };
 		CE1665E529AE212100415D1B /* WhatsNewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewViewModel.swift; sourceTree = "<group>"; };
+		CE1665E729B10BAC00415D1B /* NewFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFeatureView.swift; sourceTree = "<group>"; };
 		CE261633283CD926003570D8 /* PaymentCardNameRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardNameRecognition.swift; sourceTree = "<group>"; };
 		CE2751B129152540005C27AB /* CalloutViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalloutViewTests.swift; sourceTree = "<group>"; };
 		CE2751B329192CCD005C27AB /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
@@ -2620,6 +2622,7 @@
 				CE1665E129AE20FD00415D1B /* WhatsNewModel.swift */,
 				CE1665E329AE210F00415D1B /* WhatsNewSwiftUIView.swift */,
 				CE1665E529AE212100415D1B /* WhatsNewViewModel.swift */,
+				CE1665E729B10BAC00415D1B /* NewFeatureView.swift */,
 			);
 			path = "Whats New";
 			sourceTree = "<group>";
@@ -4295,6 +4298,7 @@
 				3CF029F622F45B53009A0E61 /* CustomView.swift in Sources */,
 				EFA8101D240562100000D21D /* PlanDynamicContentModel.swift in Sources */,
 				3C2C91012319560C00D112E3 /* InputView.swift in Sources */,
+				CE1665E829B10BAC00415D1B /* NewFeatureView.swift in Sources */,
 				CEA0E1E1274E35DE00CC2FC6 /* RecommendedVersionUtil.swift in Sources */,
 				70285D842588B674007B4298 /* BinkButtonsView.swift in Sources */,
 				70C3931D25D6E47F0065FDDE /* FeatureTogglingManager.swift in Sources */,

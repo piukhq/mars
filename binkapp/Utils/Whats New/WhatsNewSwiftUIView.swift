@@ -113,10 +113,6 @@ class NewMerchantViewModel: ObservableObject {
         return merchant.description
     }
     
-    var url: String? {
-        return merchant.url
-    }
-    
     var backgroundColor: UIColor {
         return membershipPlan?.secondaryBrandColor ?? .secondarySystemBackground
     }
@@ -150,50 +146,12 @@ class NewMerchantViewModel: ObservableObject {
     }
 }
 
-struct NewFeatureView: View {
-    var feature: NewFeatureModel
-    
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .frame(height: 120)
-                .foregroundColor(Color(Current.themeManager.color(for: .walletCardBackground)))
-            HStack {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text(feature.title ?? "Title")
-                        .font(.nunitoBold(18))
-                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
-                    Text(feature.description ?? "This summary, which briefly sets out your rights and obligations in relation to administration charges")
-                        .font(.nunitoSans(14))
-                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
-                    
-                    if let _ = feature.url {
-                        HStack {
-                            Spacer()
-                            Button {
-                                print("Button Tapped")
-                            } label: {
-                                Text("Take me there")
-                                    .font(.nunitoSemiBold(14))
-                            }
-                        }
-                    }
-                }
-                .padding(20)
-                
-                Spacer()
-            }
-        }
-        .padding()
-    }
-}
-
 struct WhatsNewSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            let merchant = NewMerchantModel(id: "207", description: ["Check out out lastest new merchant", "Sign up for a card in out app"], url: "")
-            let feature = NewFeatureModel(title: "New Feature", description: "Check out this mint new feature yo.", url: nil)
-            let feature2 = NewFeatureModel(title: "New Feature", description: "Check out this mint new feature yo.", url: "")
+            let merchant = NewMerchantModel(id: "207", description: ["Check out out lastest new merchant", "Sign up for a card in out app"])
+            let feature = NewFeatureModel(title: "New Feature", description: "Check out this mint new feature yo.", screen: 0)
+            let feature2 = NewFeatureModel(title: "New Feature", description: "Check out this mint new feature yo.", screen: 0)
             WhatsNewSwiftUIView(viewModel: WhatsNewViewModel(features: [feature, feature2], merchants: [merchant]))
         }
     }

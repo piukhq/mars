@@ -16,12 +16,11 @@ struct WhatsNewModel: Codable {
 struct NewMerchantModel: Codable, Identifiable {
     var id: String?
     let description: [String]?
-    let url: String?
 }
 
 struct NewFeatureModel: Codable, Identifiable {
     var id: String? = UUID().uuidString
     let title: String?
     let description: String?
-    let url: String?
+    let screen: Int?
 }
