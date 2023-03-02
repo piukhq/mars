@@ -49,8 +49,8 @@ struct TimeAndUsageBasedInAppReviewableJourney: InAppReviewableJourney {
 }
 
 enum InAppReviewUtility {
-    static let minimumMembershipCards = 4
-    static let minimumAppLaunches = 10
+    static let minimumMembershipCards = 3
+    static let minimumAppLaunches = 5
     static let minimumDaysSinceFirstLaunch = 2
     static let minimumForegroundRefreshes = 1
 
