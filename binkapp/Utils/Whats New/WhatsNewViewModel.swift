@@ -16,8 +16,4 @@ class WhatsNewViewModel: ObservableObject {
         self.features = features
         self.merchants = merchants
     }
-    
-    func membershipPlan(from id: String) -> CD_MembershipPlan? {
-        return Current.wallet.membershipPlans?.first(where: { $0.id == id })
-    }
 }
