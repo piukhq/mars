@@ -323,6 +323,9 @@
 		CE1665E429AE210F00415D1B /* WhatsNewSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1665E329AE210F00415D1B /* WhatsNewSwiftUIView.swift */; };
 		CE1665E629AE212100415D1B /* WhatsNewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1665E529AE212100415D1B /* WhatsNewViewModel.swift */; };
 		CE1665E829B10BAC00415D1B /* NewFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1665E729B10BAC00415D1B /* NewFeatureView.swift */; };
+		CE1665EA29B2498F00415D1B /* NewMerchantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1665E929B2498F00415D1B /* NewMerchantView.swift */; };
+		CE1665EC29B24A7400415D1B /* NewMerchantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1665EB29B24A7400415D1B /* NewMerchantViewModel.swift */; };
+		CE1665F029B24B3D00415D1B /* NewFeatureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1665EF29B24B3D00415D1B /* NewFeatureViewModel.swift */; };
 		CE261634283CD926003570D8 /* PaymentCardNameRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE261633283CD926003570D8 /* PaymentCardNameRecognition.swift */; };
 		CE2751AF2915087F005C27AB /* Mocker in Frameworks */ = {isa = PBXBuildFile; productRef = CE2751AE2915087F005C27AB /* Mocker */; };
 		CE2751B229152540005C27AB /* CalloutViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2751B129152540005C27AB /* CalloutViewTests.swift */; };
@@ -1052,6 +1055,9 @@
 		CE1665E329AE210F00415D1B /* WhatsNewSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewSwiftUIView.swift; sourceTree = "<group>"; };
 		CE1665E529AE212100415D1B /* WhatsNewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewViewModel.swift; sourceTree = "<group>"; };
 		CE1665E729B10BAC00415D1B /* NewFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFeatureView.swift; sourceTree = "<group>"; };
+		CE1665E929B2498F00415D1B /* NewMerchantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMerchantView.swift; sourceTree = "<group>"; };
+		CE1665EB29B24A7400415D1B /* NewMerchantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMerchantViewModel.swift; sourceTree = "<group>"; };
+		CE1665EF29B24B3D00415D1B /* NewFeatureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFeatureViewModel.swift; sourceTree = "<group>"; };
 		CE261633283CD926003570D8 /* PaymentCardNameRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardNameRecognition.swift; sourceTree = "<group>"; };
 		CE2751B129152540005C27AB /* CalloutViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalloutViewTests.swift; sourceTree = "<group>"; };
 		CE2751B329192CCD005C27AB /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
@@ -2620,11 +2626,38 @@
 			isa = PBXGroup;
 			children = (
 				CE1665E129AE20FD00415D1B /* WhatsNewModel.swift */,
-				CE1665E329AE210F00415D1B /* WhatsNewSwiftUIView.swift */,
-				CE1665E529AE212100415D1B /* WhatsNewViewModel.swift */,
-				CE1665E729B10BAC00415D1B /* NewFeatureView.swift */,
+				CE1665F129B24B8500415D1B /* Whats New View */,
+				CE1665ED29B24AE000415D1B /* New Merchant View */,
+				CE1665EE29B24B1900415D1B /* New Feature View */,
 			);
 			path = "Whats New";
+			sourceTree = "<group>";
+		};
+		CE1665ED29B24AE000415D1B /* New Merchant View */ = {
+			isa = PBXGroup;
+			children = (
+				CE1665E929B2498F00415D1B /* NewMerchantView.swift */,
+				CE1665EB29B24A7400415D1B /* NewMerchantViewModel.swift */,
+			);
+			path = "New Merchant View";
+			sourceTree = "<group>";
+		};
+		CE1665EE29B24B1900415D1B /* New Feature View */ = {
+			isa = PBXGroup;
+			children = (
+				CE1665E729B10BAC00415D1B /* NewFeatureView.swift */,
+				CE1665EF29B24B3D00415D1B /* NewFeatureViewModel.swift */,
+			);
+			path = "New Feature View";
+			sourceTree = "<group>";
+		};
+		CE1665F129B24B8500415D1B /* Whats New View */ = {
+			isa = PBXGroup;
+			children = (
+				CE1665E329AE210F00415D1B /* WhatsNewSwiftUIView.swift */,
+				CE1665E529AE212100415D1B /* WhatsNewViewModel.swift */,
+			);
+			path = "Whats New View";
 			sourceTree = "<group>";
 		};
 		CE2751B02915248D005C27AB /* GeoLocation */ = {
@@ -4080,6 +4113,7 @@
 				BD553CCF2332615900DA7D2A /* PaymentCardCreateRequest.swift in Sources */,
 				BDB01872232D9E7900BFFA18 /* FormCollectionViewCell.swift in Sources */,
 				EFA5F7132379A7C70027AB80 /* CD_MembershipCardImage.swift in Sources */,
+				CE1665EC29B24A7400415D1B /* NewMerchantViewModel.swift in Sources */,
 				EF51CCD7243B56150035BF02 /* LoyaltyScannerWidgetView.swift in Sources */,
 				CEC0ACBC2636AD0000845813 /* Assets.swift in Sources */,
 				CE54AF5D25F938720061838C /* BinkLoggerEvents.swift in Sources */,
@@ -4177,6 +4211,7 @@
 				3C36071F230FF03000AC76A3 /* BrandHeaderView.swift in Sources */,
 				CE02D52727298807008B9BFA /* WatchController.swift in Sources */,
 				3C873FF522F073CF00FA3031 /* MainTabBarViewModel.swift in Sources */,
+				CE1665F029B24B3D00415D1B /* NewFeatureViewModel.swift in Sources */,
 				EFA5F7542379AAB20027AB80 /* CD_VoucherEarn.swift in Sources */,
 				70A4EE7524BC651700FA33B1 /* PointsScrapingManager.swift in Sources */,
 				96F22E022508B6060009951B /* SentryService.swift in Sources */,
@@ -4391,6 +4426,7 @@
 				BD9FB6B223380C0900E5559A /* Encodable+Extension.swift in Sources */,
 				3CEABFCC2316AB65009B1122 /* MembershipCardStatusModel.swift in Sources */,
 				EFA5F7122379A7C70027AB80 /* _CD_Balance.swift in Sources */,
+				CE1665EA29B2498F00415D1B /* NewMerchantView.swift in Sources */,
 				EFA5F73E2379A7C70027AB80 /* CD_MembershipCardBalance.swift in Sources */,
 				BD475E7223A2AED80071302A /* _CD_PlanDocumentDisplay.swift in Sources */,
 				BDFAA07D23E24DC600949271 /* UIImage+Extension.swift in Sources */,
