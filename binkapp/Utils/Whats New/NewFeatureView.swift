@@ -37,6 +37,15 @@ class NewFeatureViewModel {
                 Current.navigate.to(navigationRequest)
             case .lcd:
                 guard let membershipCard = Current.wallet.membershipCards?.first else { return }
+                
+                let mainTabBar = UIViewController.topMostViewController() as? MainTabBarViewController
+                if let nav = mainTabBar?.viewControllers?.first as? PortraitNavigationController {
+                    if let walletViewController = nav.viewControllers.first as? LoyaltyWalletViewController {
+                        walletViewController.shouldUseTransition = true
+                        walletViewController.selectedIndexPath = IndexPath(item: 0, section: 0)
+                    }
+                }
+                
                 let navigationRequest = PushNavigationRequest(viewController: ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: membershipCard))
                 Current.navigate.to(navigationRequest)
             case .barcodeView:
