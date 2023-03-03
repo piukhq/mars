@@ -65,7 +65,7 @@ struct NewFeatureView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .frame(height: 120)
+                .frame(maxHeight: 150)
                 .foregroundColor(Color(Current.themeManager.color(for: .walletCardBackground)))
             HStack {
                 VStack(alignment: .leading, spacing: 10) {
