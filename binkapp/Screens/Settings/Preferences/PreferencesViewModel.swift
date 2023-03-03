@@ -114,6 +114,10 @@ class PreferencesViewModel: NSObject, ObservableObject, UserServiceProtocol {
             if let _ = dictionary[AutofillUtil.slug] {
                 Current.userDefaults.set(checkboxViewModel.checkedState, forDefaultsKey: .rememberMyDetails)
             }
+            if columnName == BarcodeViewModel.alwaysShowBarcodePreferencesSlug {
+                MixpanelUtility.setUserProperty(.showBarcodeAlways(checkboxViewModel.checkedState))
+                Current.userDefaults.set(checkboxViewModel.checkedState, forDefaultsKey: .showBarcodeAlways)
+            }
         }) { [weak self] _ in
             checkboxViewModel.reset()
             self?.errorText = L10n.preferencesUpdateFail
