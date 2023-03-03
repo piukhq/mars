@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import DeepDiff
 import CoreData
+import BinkCore
 
 enum MembershipCardsSortState: String {
     case newest = "Newest"
@@ -22,7 +23,8 @@ class LoyaltyWalletViewModel: WalletViewModel {
     private let repository = LoyaltyWalletRepository()
 
     var walletPrompts: [WalletPrompt]?
-    
+    var didPresentWhatsNewScreen = false
+
     var cards: [CD_MembershipCard]? {
         return Current.wallet.membershipCards
     }
@@ -137,7 +139,22 @@ class LoyaltyWalletViewModel: WalletViewModel {
         return Current.userDefaults.bool(forDefaultsKey: .hasMembershipOrderChanged)
     }
     
-    func presentWhatsNewView() {
+    func configureWhatsNewScreen() {
+        guard !didPresentWhatsNewScreen, let currentVersion = Bundle.currentVersion else { return }
+        
+        if let mostRecentAppVersionString = Current.userDefaults.string(forDefaultsKey: .mostRecentAppVersion), let mostRecentAppVersion = AppVersion(versionString: mostRecentAppVersionString) {
+            if currentVersion.isMoreRecentThanVersion(mostRecentAppVersion) {
+                presentWhatsNewView()
+            }
+        } else {
+            presentWhatsNewView()
+        }
+        
+        Current.userDefaults.set(currentVersion.versionString, forDefaultsKey: .mostRecentAppVersion)
+        didPresentWhatsNewScreen = true
+    }
+    
+    private func presentWhatsNewView() {
         let viewModel = WhatsNewViewModel(features: Current.remoteConfig.configFile?.whatsNew?.features, merchants: Current.remoteConfig.configFile?.whatsNew?.merchants)
         let whatsNewViewController = ViewControllerFactory.makeWhatsNewViewController(viewModel: viewModel)
         let modalRequest = ModalNavigationRequest(viewController: whatsNewViewController)

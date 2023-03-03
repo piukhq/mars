@@ -73,7 +73,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .loyaltyWallet)
-        viewModel.presentWhatsNewView()
+        viewModel.configureWhatsNewScreen()
     }
     
     func setupSortBarButton() {
