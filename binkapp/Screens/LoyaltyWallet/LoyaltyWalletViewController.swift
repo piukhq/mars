@@ -8,7 +8,6 @@
 import UIKit
 import CoreGraphics
 import DeepDiff
-import CardScan
 import WatchConnectivity
 
 class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> {

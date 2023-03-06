@@ -174,6 +174,37 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         view.backgroundColor = .clear
         return view
     }()
+    
+    private lazy var goToSiteButton: UIButton = {
+        var config = UIButton.Configuration.filled()
+        config.cornerStyle = .fixed
+        config.background.cornerRadius = Constants.cornerRadius
+        config.title = L10n.goToSiteButton
+        
+        if let color = viewModel.cardColor {
+            config.baseBackgroundColor = color
+            config.baseForegroundColor = color.isLight(threshold: 0.8) ? .black : .white
+        }
+        
+        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { attributeContainer in
+            var modifiedContainer = attributeContainer
+            modifiedContainer.font = .bodyTextBold
+            return modifiedContainer
+        }
+        
+        let button = UIButton(configuration: config, primaryAction: UIAction { [weak self] _ in
+            if let url = self?.viewModel.planUrl {
+                MixpanelUtility.track(.goToSitePressed(brandName: self?.viewModel.brandName ?? ""))
+                let viewController = ViewControllerFactory.makeWebViewController(urlString: url)
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
+            }
+        })
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.isHidden = viewModel.planUrl.isNilOrEmpty
+        button.layer.applyDefaultBinkShadow()
+        return button
+    }()
 
     
     var viewModel: LoyaltyCardFullDetailsViewModel
@@ -298,6 +329,10 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.add(arrangedSubview: locationView)
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: locationView)
         
+        /// go to site
+        stackScrollView.add(arrangedSubview: goToSiteButton)
+        stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: goToSiteButton)
+        
         if viewModel.shouldShowOfferTiles {
             stackScrollView.add(arrangedSubview: offerTilesStackView)
             viewModel.offerTileImages?.forEach { offerTileImage in
@@ -352,16 +387,9 @@ private extension LoyaltyCardFullDetailsViewController {
             barcode = barcodeView
             barcodeView.configure(viewModel: viewModel)
         } else {
-            switch (viewModel.barcodeViewModel.barcodeType, viewModel.barcodeViewModel.barcodeIsMoreSquareThanRectangle) {
-            case (.aztec, _), (.qr, _), (.dataMatrix, _), (_, true):
-                let barcodeView: BarcodeViewCompact = .fromNib()
-                barcode = barcodeView
-                barcodeView.configure(viewModel: viewModel)
-            default:
-                let barcodeView: BarcodeViewWide = .fromNib()
-                barcode = barcodeView
-                barcodeView.configure(viewModel: viewModel)
-            }
+            let barcodeView: BarcodeViewWide = .fromNib()
+            barcode = barcodeView
+            barcodeView.configure(viewModel: viewModel)
         }
         
         barcode.translatesAutoresizingMaskIntoConstraints = false
@@ -427,7 +455,10 @@ private extension LoyaltyCardFullDetailsViewController {
             locationImage.leftAnchor.constraint(equalTo: locationView.leftAnchor, constant: LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset),
             locationImage.topAnchor.constraint(equalTo: locationView.topAnchor, constant: LayoutHelper.GeoLocationCallout.locationImageVerticalOffset),
             locationImage.bottomAnchor.constraint(equalTo: locationView.bottomAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageVerticalOffset),
-            locationImage.rightAnchor.constraint(equalTo: nearestStoresText.leftAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset)
+            locationImage.rightAnchor.constraint(equalTo: nearestStoresText.leftAnchor, constant: -LayoutHelper.GeoLocationCallout.locationImageHorizontalOffset),
+            goToSiteButton.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
+            goToSiteButton.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
+            goToSiteButton.heightAnchor.constraint(equalToConstant: LayoutHelper.LoyaltyCardDetail.goToSiteButtonHeight)
         ])
     }
     
@@ -636,5 +667,6 @@ extension LayoutHelper {
         static func brandHeaderAspectRatio(forMembershipCard card: CD_MembershipCard) -> CGFloat {
             return card.membershipPlan?.featureSet?.planCardType == .link ? brandHeaderAspectRatioLink : brandHeaderAspectRatio
         }
+        static let goToSiteButtonHeight: CGFloat = 48
     }
 }

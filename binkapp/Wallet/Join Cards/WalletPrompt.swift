@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import CardScan
+import UIKit
 
 enum WalletPromptType {
     case addPaymentCards

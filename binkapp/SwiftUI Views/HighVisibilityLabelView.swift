@@ -29,6 +29,7 @@ struct HighVisibilityLabelView: View {
             .contextMenu {
                 Button {
                     UIPasteboard.general.string = text
+                    MessageView.show(L10n.snackbarMessageCopiedCardNumber, type: .snackbar(.short))
                 } label: {
                     Label(L10n.barcodeCopyLabel, systemImage: "doc.on.doc")
                 }

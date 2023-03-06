@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CardScan
 import SwiftUI
 
 enum ViewControllerFactory {
@@ -20,16 +19,6 @@ enum ViewControllerFactory {
     
     static func makeBrowseBrandsViewController(section: Int? = nil) -> BrowseBrandsViewController {
         return BrowseBrandsViewController(viewModel: BrowseBrandsViewModel(), section: section)
-    }
-    
-    static func makePaymentCardScannerViewController(strings: ScanStringsDataSource, allowSkip: Bool = true, delegate: ScanDelegate?) -> ScanViewController? {
-        guard let viewController = ScanViewController.createViewController(withDelegate: delegate) else { return nil }
-        viewController.themeDelegate = Current.themeManager
-        viewController.allowSkip = allowSkip
-        viewController.cornerColor = .white
-        viewController.torchButtonImage = Asset.paymentScannerTorch.image
-        viewController.stringDataSource = strings
-        return viewController
     }
     
     static func makeAddPaymentCardViewController(model: PaymentCardCreateModel? = nil, journey: AddPaymentCardJourney) -> AddPaymentCardViewController {
@@ -119,15 +108,6 @@ enum ViewControllerFactory {
         
         let attributedString = ReusableModalConfiguration.makeAttributedString(title: titleString, description: descriptionString)
         var configuration = ReusableModalConfiguration(text: attributedString)
-        
-        if let url = membershipPlan.account?.planURL {
-            configuration = ReusableModalConfiguration(text: attributedString, primaryButtonTitle: L10n.goToSiteButton, primaryButtonAction: {
-                /// Implemented navigation logic here instead of passing comletion block in via method property to reduce code repetition as it's called from multiple viewModels
-                let viewController = makeWebViewController(urlString: url)
-                let navigationRequest = ModalNavigationRequest(viewController: viewController)
-                Current.navigate.to(navigationRequest)
-            })
-        }
         
         return makeReusableTemplateViewController(configuration: configuration, floatingButtons: true)
     }

@@ -8,7 +8,6 @@
 
 import XCTest
 import SwiftUI
-import CardScan
 @testable import binkapp
 
 // swiftlint:disable all

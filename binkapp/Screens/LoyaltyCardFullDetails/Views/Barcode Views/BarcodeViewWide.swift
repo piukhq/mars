@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class BarcodeViewWide: BarcodeView {
     func configure(viewModel: LoyaltyCardFullDetailsViewModel) {
@@ -16,12 +17,29 @@ class BarcodeViewWide: BarcodeView {
             iconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan), animated: true)
         }
         
-        if let barcodeImage = viewModel.barcodeViewModel.barcodeImage(withSize: barcodeImageView.frame.size) {
-            barcodeImageView.image = barcodeImage
-        }
-        
-        if viewModel.barcodeViewModel.barcodeType == .pdf417 {
-            barcodeImageView.contentMode = .scaleAspectFit
+        switch viewModel.barcodeViewModel.barcodeType {
+        case .aztec, .dataMatrix, .qr:
+            barcodeImageView.isHidden = true
+            
+            let hostingController = UIHostingController(rootView: BarcodeImageView(viewModel: viewModel.barcodeViewModel, alwaysShowBarCode: viewModel.barcodeViewModel.alwaysShowBarcode))
+            if let swiftUIView = hostingController.view {
+                swiftUIView.translatesAutoresizingMaskIntoConstraints = false
+                swiftUIView.backgroundColor = .clear
+                addSubview(swiftUIView)
+                
+                NSLayoutConstraint.activate([
+                    swiftUIView.leadingAnchor.constraint(equalTo: barcodeImageContainer.leadingAnchor),
+                    swiftUIView.trailingAnchor.constraint(equalTo: barcodeImageContainer.trailingAnchor),
+                    swiftUIView.topAnchor.constraint(equalTo: barcodeImageContainer.topAnchor),
+                    swiftUIView.bottomAnchor.constraint(equalTo: barcodeImageContainer.bottomAnchor)
+                ])
+            }
+        default:
+            barcodeImageContainer.isHidden = true
+            
+            if let barcodeImage = viewModel.barcodeViewModel.barcodeImage(withSize: barcodeImageView.frame.size) {
+                barcodeImageView.image = barcodeImage
+            }
         }
         
         /// Custom card

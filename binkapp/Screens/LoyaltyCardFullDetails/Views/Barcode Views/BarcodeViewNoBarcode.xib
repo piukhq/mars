@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -28,21 +29,40 @@
                         <constraint firstAttribute="width" secondItem="LRz-ZH-1Vf" secondAttribute="height" multiplier="182:115" constant="9.730434782608711" id="FhN-Fe-pPM"/>
                     </constraints>
                 </imageView>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="o5E-Og-P6a">
-                    <rect key="frame" x="20" y="128.5" width="136.5" height="43.5"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-9" translatesAutoresizingMaskIntoConstraints="NO" id="o5E-Og-P6a">
+                    <rect key="frame" x="20" y="128.5" width="183" height="55.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bonus Card Number" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="0No-Do-o3B">
-                            <rect key="frame" x="0.0" y="0.0" width="136.5" height="20.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="183" height="20.5"/>
                             <fontDescription key="fontDescription" name="NunitoSans-Regular" family="Nunito Sans" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="1234 5678 7904" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="O4K-Tl-Jpv">
-                            <rect key="frame" x="0.0" y="21.5" width="136.5" height="22"/>
-                            <fontDescription key="fontDescription" name="NunitoSans-Bold" family="Nunito Sans" pointSize="16"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="-8" translatesAutoresizingMaskIntoConstraints="NO" id="yxi-1p-4Nx">
+                            <rect key="frame" x="0.0" y="11.5" width="183" height="44"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="1234 5678 7904" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="O4K-Tl-Jpv">
+                                    <rect key="frame" x="0.0" y="0.0" width="124" height="44"/>
+                                    <fontDescription key="fontDescription" name="NunitoSans-Bold" family="Nunito Sans" pointSize="16"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M8T-ig-dMe">
+                                    <rect key="frame" x="116" y="0.0" width="67" height="44"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="rtO-Qm-4hW"/>
+                                    </constraints>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" imagePlacement="leading" buttonSize="large">
+                                        <imageReference key="image" image="doc.on.doc" catalog="system" symbolScale="large"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="default"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="copyButtonTapped:" destination="biq-ii-24l" eventType="touchUpInside" id="oE2-Z2-wrm"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
                     </subviews>
                 </stackView>
             </subviews>
@@ -58,10 +78,14 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="cardNumberLabel" destination="O4K-Tl-Jpv" id="ZHk-VJ-PKl"/>
+                <outlet property="copyButton" destination="M8T-ig-dMe" id="GF0-K5-Gtv"/>
                 <outlet property="iconImageView" destination="LRz-ZH-1Vf" id="mB1-er-dG7"/>
                 <outlet property="titleLabel" destination="0No-Do-o3B" id="5i1-gh-Z5T"/>
             </connections>
             <point key="canvasLocation" x="-84.057971014492765" y="-118.52678571428571"/>
         </view>
     </objects>
+    <resources>
+        <image name="doc.on.doc" catalog="system" width="116" height="128"/>
+    </resources>
 </document>

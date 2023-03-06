@@ -64,6 +64,9 @@ final class MixpanelUtilityTests: XCTestCase {
         
         event = MixpanelTrackableEvent.toGoogleMaps(brandName: "Doom")
         XCTAssertTrue(event.identifier == "Launch Google Maps for Directions")
+        
+        event = MixpanelTrackableEvent.goToSitePressed(brandName: "Doom")
+        XCTAssertTrue(event.identifier == "Go to site pressed")
     }
     
     func test_mixpanelTrackableEvent_correctData() throws {

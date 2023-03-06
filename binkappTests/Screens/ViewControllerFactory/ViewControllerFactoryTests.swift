@@ -7,7 +7,6 @@
 //
 
 import XCTest
-import CardScan
 import SwiftUI
 @testable import binkapp
 
@@ -72,11 +71,6 @@ class ViewControllerFactoryTests: XCTestCase, CoreDataTestable {
     func test_makeBrowseBrandsViewController_navigatesToCorrectViewController() {
         let vc = ViewControllerFactory.makeBrowseBrandsViewController()
         XCTAssertTrue(vc.isKind(of: BrowseBrandsViewController.self))
-    }
-    
-    func test_makePaymentCardScannerViewController_navigatesToCorrectViewController() {
-        let vc = ViewControllerFactory.makePaymentCardScannerViewController(strings: PaymentCardScannerStrings(), delegate: nil)
-        XCTAssertTrue(vc!.isKind(of: ScanViewController.self))
     }
     
     func test_makeAddPaymentCardViewController_navigatesToCorrectViewController() {

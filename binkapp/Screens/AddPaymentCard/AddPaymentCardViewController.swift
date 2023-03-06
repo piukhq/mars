@@ -6,7 +6,6 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import CardScan
 import UIKit
 import Keys
 import BinkCore
@@ -242,26 +241,19 @@ private extension Selector {
     static let privacyButtonTapped = #selector(AddPaymentCardViewController.privacyButtonTapped)
 }
 
-extension AddPaymentCardViewController: ScanDelegate {
-    func userDidCancel(_ scanViewController: ScanViewController) {
-        Current.navigate.close()
-    }
-
-    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
-        BinkLogger.infoPrivateHash(event: AppLoggerEvent.paymentCardScanned, value: creditCard.number)
-        BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
-        let month = creditCard.expiryMonthInteger() ?? viewModel.paymentCard.month
-        let year = creditCard.expiryYearInteger() ?? viewModel.paymentCard.year
+extension AddPaymentCardViewController: BinkScannerViewControllerDelegate {
+    func binkScannerViewController(_ viewController: BinkScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan?, completion: (() -> Void)?) { }
+    
+    func binkScannerViewController(_ viewController: BinkScannerViewController, didScan paymentCard: PaymentCardCreateModel) {
         Current.navigate.close(animated: true) {
-            let paymentCardCreateModel = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: self.viewModel.paymentCard.nameOnCard, month: month, year: year)
-            self.card.configureWithAddViewModel(paymentCardCreateModel)
-            self.viewModel.paymentCard = paymentCardCreateModel
-            self.dataSource = FormDataSource(paymentCardCreateModel, delegate: self)
+            self.card.configureWithAddViewModel(paymentCard)
+            self.viewModel.paymentCard = paymentCard
+            self.dataSource = FormDataSource(paymentCard, delegate: self)
             self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
         }
     }
-
-    func userDidSkip(_ scanViewController: ScanViewController) {
-        Current.navigate.close()
+    
+    func binkScannerViewControllerShouldEnterManually(_ viewController: BinkScannerViewController, completion: (() -> Void)?) {
+        completion?()
     }
 }

@@ -6,7 +6,6 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import CardScan
 import SwiftUI
 import UIKit
 
@@ -18,7 +17,6 @@ enum AddPaymentCardJourney {
 class AddPaymentCardViewModel {
     private let repository = PaymentWalletRepository()
     private let journey: AddPaymentCardJourney
-    private let strings = PaymentCardScannerStrings()
     var paymentCard: PaymentCardCreateModel // Exposed to allow realtime updating
 
     var shouldDisplayTermsAndConditions: Bool {
@@ -115,13 +113,9 @@ class AddPaymentCardViewModel {
         Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     
-    func toPaymentCardScanner(delegate scanDelegate: ScanDelegate?) {
-//        let scannerViewController = ViewControllerFactory.makeScannerViewController(type: .payment, delegate: Current.navigate.scannerDelegate)
-        
-        // TODO: Delete once payment scanner is switched
-        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: strings, delegate: scanDelegate) else { return }
-        
-        PermissionsUtility.launchPaymentScanner(viewController) {
+    func toPaymentCardScanner(delegate scanDelegate: BinkScannerViewControllerDelegate) {
+        let viewController = ViewControllerFactory.makeScannerViewController(type: .payment, delegate: scanDelegate)
+        PermissionsUtility.launchLoyaltyScanner(viewController) {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         }

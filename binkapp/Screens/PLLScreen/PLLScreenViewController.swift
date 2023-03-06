@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import CardScan
 
 enum PllScreenJourney {
     case newCard
@@ -336,7 +335,7 @@ private extension PLLScreenViewController {
                 case .newCard:
                     self.viewModel.close(refreshLCD: true)
                 case .existingCard:
-                    self.viewModel.isEmptyPll ? self.viewModel.toPaymentScanner(delegate: self) : self.viewModel.close(refreshModules: true)
+                    self.viewModel.isEmptyPll ? self.viewModel.toPaymentScanner() : self.viewModel.close(refreshModules: true)
                 }
             } else {
                 switch self.journey {
@@ -350,7 +349,7 @@ private extension PLLScreenViewController {
     }
 
     func handleSecondaryButtonTap() {
-        viewModel.toPaymentScanner(delegate: self)
+        viewModel.toPaymentScanner()
     }
 }
 
@@ -361,28 +360,5 @@ extension PLLScreenViewController: PaymentCardCellDelegate {
         if let paymentCards = viewModel.activePaymentCards {
             viewModel.addCardToChangedCardsArray(card: paymentCards[cardIndex])
         }
-    }
-}
-
-extension PLLScreenViewController: ScanDelegate {
-    func userDidCancel(_ scanViewController: ScanViewController) {
-        Current.navigate.close()
-    }
-    
-    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
-        BinkLogger.infoPrivateHash(event: AppLoggerEvent.paymentCardScanned, value: creditCard.number)
-        BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
-        let month = creditCard.expiryMonthInteger()
-        let year = creditCard.expiryYearInteger()
-        let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
-        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .pll)
-        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
-        Current.navigate.to(navigationRequest)
-    }
-    
-    func userDidSkip(_ scanViewController: ScanViewController) {
-        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .pll)
-        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
-        Current.navigate.to(navigationRequest)
     }
 }

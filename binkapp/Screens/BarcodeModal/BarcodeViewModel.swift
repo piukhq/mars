@@ -68,6 +68,7 @@ class BarcodeViewModel: ObservableObject {
     let membershipCard: CD_MembershipCard
     var imageType: MerchantImageType = .hero
     var barcodeUse: BarcodeUse = .loyaltyCard
+    var screenBrightness: CGFloat
     static let alwaysShowBarcodePreferencesSlug = "show-barcode-always"
 
     @Published var merchantImage: Image?
@@ -153,6 +154,7 @@ class BarcodeViewModel: ObservableObject {
     // MARK: Init
 
     init(membershipCard: CD_MembershipCard) {
+        self.screenBrightness = UIScreen.main.brightness
         self.membershipCard = membershipCard
         self.setShouldAlwaysDisplayBarCode()
     }

@@ -5,6 +5,10 @@ protocol BinkModuleViewDelegate: AnyObject {
 }
 
 class BinkModuleView: CustomView {
+    enum Constants {
+        static let cornerRadius: CGFloat = 12
+    }
+    
     @IBOutlet private weak var moduleImageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
@@ -18,6 +22,7 @@ class BinkModuleView: CustomView {
         self.delegate = delegate
         
         contentView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
+        contentView.layer.cornerRadius = Constants.cornerRadius
         moduleImageView.image = UIImage(named: viewModel.imageName)
         titleLabel.text = viewModel.titleText
         titleLabel.accessibilityIdentifier = viewModel.titleText

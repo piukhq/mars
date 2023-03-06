@@ -177,28 +177,24 @@ code_sign_if_enabled() {
 
 if [[ "$CONFIGURATION" == "Alpha" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Keys-framework/Keys.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/CardScan/CardScan.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DTTJailbreakDetection/DTTJailbreakDetection.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ZXingObjC/ZXingObjC.framework"
 fi
 if [[ "$CONFIGURATION" == "App Store" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Keys-framework/Keys.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/CardScan/CardScan.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DTTJailbreakDetection/DTTJailbreakDetection.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ZXingObjC/ZXingObjC.framework"
 fi
 if [[ "$CONFIGURATION" == "App Store (Internal)" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Keys-framework/Keys.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/CardScan/CardScan.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DTTJailbreakDetection/DTTJailbreakDetection.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ZXingObjC/ZXingObjC.framework"
 fi
 if [[ "$CONFIGURATION" == "Beta" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Keys-framework/Keys.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/CardScan/CardScan.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DTTJailbreakDetection/DTTJailbreakDetection.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ZXingObjC/ZXingObjC.framework"

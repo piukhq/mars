@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import CardScan
 
 struct RemoteImage: View {
     var image: Image?
@@ -74,14 +73,9 @@ struct BarcodeScreenSwiftUIView: View {
     enum Constants {
         static let largeSpace: CGFloat = 20
         static let smallSpace: CGFloat = 15
-        static let cornerRadius: CGFloat = 10
         static let iconImageAspectRatio: CGFloat = 1
         static let horizontalInset: CGFloat = 25.0
         static let bottomInset: CGFloat = 150.0
-        
-        static let iconImageSize: CGFloat = 128
-        static let heroImageWidth: CGFloat = 182
-        static let heroImageHeight: CGFloat = 115
         static let titleFontSize: CGFloat = 20
     }
     
@@ -153,30 +147,11 @@ struct BarcodeScreenSwiftUIView: View {
                         ])
                     }
             }
-        }
-    }
-    
-    struct BarcodeImageView: View {
-        @ObservedObject var viewModel: BarcodeViewModel
-        var alwaysShowBarCode: Bool
-        
-        var body: some View {
-            if let barcodeImage = viewModel.barcodeImage(withSize: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width), alwaysShowBarCode: alwaysShowBarCode) {
-                Image(uiImage: barcodeImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-            } else {
-                switch viewModel.imageType {
-                case .icon:
-                    RemoteImage(image: viewModel.merchantImage)
-                        .frame(width: Constants.iconImageSize, height: Constants.iconImageSize, alignment: .center)
-                        .aspectRatio(contentMode: .fit)
-                        .cornerRadius(Constants.cornerRadius)
-                case .hero:
-                    RemoteImage(image: viewModel.merchantImage)
-                        .frame(width: Constants.heroImageWidth, height: Constants.heroImageHeight, alignment: .center)
-                        .cornerRadius(Constants.cornerRadius)
-                }
+            .onAppear {
+                UIScreen.main.brightness = 1
+            }
+            .onDisappear {
+                UIScreen.main.brightness = viewModel.screenBrightness
             }
         }
     }
@@ -191,6 +166,38 @@ struct BarcodeScreenSwiftUIView: View {
                     .font(font)
                     .foregroundColor(Color(Current.themeManager.color(for: .text)))
                 Spacer()
+            }
+        }
+    }
+}
+
+struct BarcodeImageView: View {
+    enum Constants {
+        static let cornerRadius: CGFloat = 10
+        static let iconImageSize: CGFloat = 128
+        static let heroImageWidth: CGFloat = 182
+        static let heroImageHeight: CGFloat = 115
+    }
+    
+    @ObservedObject var viewModel: BarcodeViewModel
+    var alwaysShowBarCode: Bool
+    
+    var body: some View {
+        if let barcodeImage = viewModel.barcodeImage(withSize: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width), alwaysShowBarCode: alwaysShowBarCode) {
+            Image(uiImage: barcodeImage)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        } else {
+            switch viewModel.imageType {
+            case .icon:
+                RemoteImage(image: viewModel.merchantImage)
+                    .frame(width: Constants.iconImageSize, height: Constants.iconImageSize, alignment: .center)
+                    .aspectRatio(contentMode: .fit)
+                    .cornerRadius(Constants.cornerRadius)
+            case .hero:
+                RemoteImage(image: viewModel.merchantImage)
+                    .frame(width: Constants.heroImageWidth, height: Constants.heroImageHeight, alignment: .center)
+                    .cornerRadius(Constants.cornerRadius)
             }
         }
     }

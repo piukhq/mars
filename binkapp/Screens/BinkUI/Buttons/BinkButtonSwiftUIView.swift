@@ -101,7 +101,7 @@ struct ActivityIndicator: UIViewRepresentable {
 
 class BinkButtonsStackViewModel {
     enum Constants {
-        static let gradientOpacity: CGFloat = 0.1
+        static let gradientOpacity: CGFloat = 0
     }
     
     func dynamicMaskGradientClearColor(colorScheme: ColorScheme) -> Color {

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import CardScan
 
 class AddOrJoinViewController: BinkViewController {
     private enum Constants {

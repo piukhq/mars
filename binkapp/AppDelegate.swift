@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 import Firebase
 import AlamofireNetworkActivityLogger
-import CardScan
 import Keys
 import SafariServices
 import WatchConnectivity
@@ -28,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         #if DEBUG
         NetworkActivityLogger.shared.level = .debug
         NetworkActivityLogger.shared.startLogging()
-        ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyDev)
         #endif
         
         if UIApplication.isRunningUITests {
@@ -44,7 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     
         #if RELEASE
         BinkAnalytics.beginSessionTracking()
-        ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyProduction)
         #endif
         
         MixpanelUtility.configure()
@@ -147,7 +144,7 @@ private extension AppDelegate {
 
         // Dismiss scanners and alerts
         if let navigationController = topViewController as? PortraitNavigationController {
-            if navigationController.visibleViewController?.isKind(of: CardScan.ScanViewController.self) == true || navigationController.visibleViewController?.isKind(of: BinkScannerViewController.self) == true {
+            if navigationController.visibleViewController?.isKind(of: BinkScannerViewController.self) == true {
                 Current.navigate.close(animated: false) {
                     self.displayLaunchScreen()
                     return
