@@ -521,5 +521,26 @@
         "uid": "32edbd34-23c7-4a43-9ef0-d43edc855da1"
       }
     ]
-  }
+  },
+  "releases": [
+      {
+        "releaseTitle": "Update: v2.3.28 Date: 27/02/2023",
+        "releaseNotes": [
+          {
+            "heading": "Features",
+            "bulletPoints": [
+              "added this",
+              "added that"
+            ]
+          },
+          {
+            "heading": "Bug Fixes",
+            "bulletPoints": [
+              "fixed this",
+              "fixed that"
+            ]
+          }
+        ]
+      }
+  ]
 }

@@ -13,12 +13,36 @@ struct RemoteConfigFile: Codable {
     let appConfig: AppConfig?
     let dynamicActions: [DynamicAction]?
     let beta: Beta?
+    let releases: [ReleaseGroup]?
     
     enum CodingKeys: String, CodingKey {
         case localPointsCollection = "local_points_collection"
         case appConfig = "app_config"
         case dynamicActions = "dynamic_actions"
         case beta
+        case releases
+    }
+    
+    struct ReleaseNotesGroup: Codable, Identifiable {
+        var id = UUID()
+        var heading: String?
+        var bulletPoints: [String]?
+        
+        enum CodingKeys: String, CodingKey {
+            case heading
+            case bulletPoints
+        }
+    }
+
+    struct ReleaseGroup: Codable, Identifiable {
+        var id = UUID()
+        var releaseTitle: String?
+        var releaseNotes: [ReleaseNotesGroup]?
+        
+        enum CodingKeys: String, CodingKey {
+            case releaseTitle
+            case releaseNotes
+        }
     }
     
     struct LocalPointsCollection: Codable {

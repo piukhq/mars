@@ -67,6 +67,7 @@
 		215BC59528A6900100DB1377 /* BinkCore in Frameworks */ = {isa = PBXBuildFile; productRef = 215BC59428A6900100DB1377 /* BinkCore */; };
 		216B999C28AE902000A67A14 /* FloatExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216B999B28AE902000A67A14 /* FloatExtensionTests.swift */; };
 		21719FE929B20F2800AEEB43 /* PreviousUpdatesSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21719FE829B20F2800AEEB43 /* PreviousUpdatesSwiftUIView.swift */; };
+		21719FEB29B6013400AEEB43 /* PreviousUpdatesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21719FEA29B6013400AEEB43 /* PreviousUpdatesViewModel.swift */; };
 		217288EF28B4BF5200258EBA /* AccountPostModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288EE28B4BF5200258EBA /* AccountPostModelTests.swift */; };
 		217288F228B4D62100258EBA /* AddPaymentCardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288F128B4D62100258EBA /* AddPaymentCardViewModelTests.swift */; };
 		217288F528B4E63A00258EBA /* MainTabBarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288F428B4E63A00258EBA /* MainTabBarViewModelTests.swift */; };
@@ -768,6 +769,7 @@
 		2151478329114D0E00E6B209 /* htmlTest.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = htmlTest.html; sourceTree = "<group>"; };
 		216B999B28AE902000A67A14 /* FloatExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtensionTests.swift; sourceTree = "<group>"; };
 		21719FE829B20F2800AEEB43 /* PreviousUpdatesSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousUpdatesSwiftUIView.swift; sourceTree = "<group>"; };
+		21719FEA29B6013400AEEB43 /* PreviousUpdatesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousUpdatesViewModel.swift; sourceTree = "<group>"; };
 		217288EE28B4BF5200258EBA /* AccountPostModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPostModelTests.swift; sourceTree = "<group>"; };
 		217288F128B4D62100258EBA /* AddPaymentCardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentCardViewModelTests.swift; sourceTree = "<group>"; };
 		217288F428B4E63A00258EBA /* MainTabBarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewModelTests.swift; sourceTree = "<group>"; };
@@ -1544,6 +1546,7 @@
 			isa = PBXGroup;
 			children = (
 				21719FE829B20F2800AEEB43 /* PreviousUpdatesSwiftUIView.swift */,
+				21719FEA29B6013400AEEB43 /* PreviousUpdatesViewModel.swift */,
 			);
 			path = PreviousUpdates;
 			sourceTree = "<group>";
@@ -4130,6 +4133,7 @@
 				EFB7ED5C2379C70C00B72D06 /* PLRBaseCollectionViewCell.swift in Sources */,
 				3CBA5EFF2456F175008252B6 /* WebViewController.swift in Sources */,
 				CE285B4328B4E19A00EBA3E7 /* DateManager.swift in Sources */,
+				21719FEB29B6013400AEEB43 /* PreviousUpdatesViewModel.swift in Sources */,
 				B7385F54234780D2007B88DA /* BinkSwitch.swift in Sources */,
 				B726334F23058DC800951037 /* RegistrationFieldModel.swift in Sources */,
 				70D6864625715D4800403448 /* DynamicActionsUtilityMock.swift in Sources */,

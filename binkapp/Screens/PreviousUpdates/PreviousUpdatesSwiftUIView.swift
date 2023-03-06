@@ -8,62 +8,51 @@
 
 import SwiftUI
 
-struct ReleaseNote: Codable {
-    let note: String
-}
-
-struct Release: Codable, Identifiable {
-    var id = UUID()
-    let name: String
-    var updateName: String?
-    var icon: String?
-    var items: [Release]?
-
-    // some example websites
-    static let apple = Release(name: "Tis is a massive long text and is just to infor the user that something has changed", icon: "circle.fill")
-    static let bbc = Release(name: "Fixed bug in Wallet", icon: "circle.fill")
-    static let swift = Release(name: "Colour fix in settings", icon: "circle.fill")
-    static let twitter = Release(name: "Go to site button now moved to the loyalty card details screen", icon: "circle.fill")
-
-    // some example groups
-    static let example1 = Release(name: "Version 2.3.28 - 27/02/2023", items: [Release.apple, Release.bbc, Release.swift, Release.twitter])
-    static let example2 = Release(name: "Version 2.3.27 - 12/12/2022", items: [Release.apple, Release.bbc, Release.swift, Release.twitter])
-    static let example3 = Release(name: "Version 2.3.26 - 4/8/2022", items: [Release.apple, Release.bbc, Release.swift, Release.twitter])
-}
-
 struct PreviousUpdatesSwiftUIView: View {
-    let items: [Release] = [.example1, .example2, .example3]
+    @ObservedObject var viewModel: PreviousUpdatesViewModel
     
     var body: some View {
         ScrollView {
             VStack {
                 HStack {
-                    Text("Release Notes")
+                    Text("Previous Updates")
                         .foregroundColor(Color(Current.themeManager.color(for: .text)))
                         .uiFont(.headline)
                     Spacer()
                 }
                 
-                ForEach(items, id: \.id) { name in
+                ForEach(viewModel.items ?? [], id: \.id) { release in
                     DisclosureGroup(
                         content: {
-                            ForEach(name.items!, id: \.id) { row in
-                                HStack {
-                                    if let icon = row.icon {
-                                        Image(systemName: icon)
-                                            .resizable()
-                                            .frame(width: 6, height: 6)
+                            ForEach(release.releaseNotes ?? [], id: \.id) { group in
+                                VStack {
+                                    HStack {
+                                        Text(group.heading ?? "Heading")
+                                            .uiFont(.subtitle)
+                                            .foregroundColor(.white)
+                                        Spacer()
                                     }
+                                    .padding(.top, 18)
                                     
-                                    Text(row.name)
-                                    Spacer()
+                                    ForEach(group.bulletPoints ?? [], id: \.self) { note in
+                                        HStack {
+                                            Image(systemName: "circle.fill")
+                                                .resizable()
+                                                .frame(width: 6, height: 6)
+                                            Text(note)
+                                                .uiFont(.bodyTextSmall)
+                                                .foregroundColor(.white)
+                                            Spacer()
+                                        }
+                                    }
                                 }
-                                .padding(6)
                             }
                         },
                         label: {
                             HStack {
-                                Text(name.name)
+                                Text(release.releaseTitle ?? "Title")
+                                    .uiFont(.miniButtonText)
+                                    .lineLimit(1)
                                     .foregroundColor(.white)
                                 Spacer()
                             }
@@ -77,24 +66,12 @@ struct PreviousUpdatesSwiftUIView: View {
             }
             .padding()
         }
-    } // body
-
-//    var body: some View {
-//
-//        List(items, children: \.items) { row in
-//            HStack {
-//                Image(systemName: row.icon)
-//                    .resizable()
-//                    .frame(width: 6, height: 6)
-//                Text(row.name)
-//            }
-//        }
-//    }
+    }
 }
 
 
 struct PreviousUpdatesSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        PreviousUpdatesSwiftUIView()
+        PreviousUpdatesSwiftUIView(viewModel: PreviousUpdatesViewModel())
     }
 }
