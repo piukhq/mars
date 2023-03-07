@@ -33,7 +33,8 @@ class NewMerchantViewModel: ObservableObject {
     }
     
     var textColor: Color {
-        return backgroundColor.isLight(threshold: 0.8) ? .black : .white
+        return .white
+//        return backgroundColor.isLight(threshold: 0.8) ? .black : .white
     }
     
     func getMembershipPlan(from id: String) {

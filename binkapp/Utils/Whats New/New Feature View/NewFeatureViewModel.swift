@@ -6,7 +6,7 @@
 //  Copyright © 2023 Bink. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
 enum Screen: Int {
     case loyaltyWallet
@@ -18,6 +18,16 @@ enum Screen: Int {
 }
 
 class NewFeatureViewModel {
+    var backgroundColor: Color {
+        return .teal
+//        return Color(Current.themeManager.color(for: .walletCardBackground))
+    }
+    
+    var textColor: Color {
+        return .black
+//        return Color(Current.themeManager.color(for: .text))
+    }
+    
     func navigate(to screen: Screen?) {
         guard let screen = screen else { return }
         Current.navigate.close(animated: true) {

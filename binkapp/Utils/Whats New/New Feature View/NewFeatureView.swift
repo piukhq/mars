@@ -16,15 +16,15 @@ struct NewFeatureView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .frame(maxHeight: 150)
-                .foregroundColor(Color(Current.themeManager.color(for: .walletCardBackground)))
+                .foregroundColor(viewModel.backgroundColor)
             HStack {
                 VStack(alignment: .leading, spacing: 10) {
                     Text(feature.title ?? "Title")
                         .font(.nunitoBold(18))
-                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                        .foregroundColor(viewModel.textColor)
                     Text(feature.description ?? "This summary, which briefly sets out your rights and obligations in relation to administration charges")
                         .font(.nunitoSans(14))
-                        .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                        .foregroundColor(viewModel.textColor)
                     
                     if let screen = feature.screen {
                         HStack {
@@ -34,17 +34,16 @@ struct NewFeatureView: View {
                             } label: {
                                 Text("Take me there")
                                     .font(.nunitoSemiBold(14))
-                                    .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                                    .foregroundColor(viewModel.textColor)
                             }
                         }
                     }
                 }
-                .padding(20)
+                .padding(.vertical, 20)
                 
                 Spacer()
             }
         }
-        .padding()
     }
 }
 

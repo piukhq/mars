@@ -12,24 +12,28 @@ struct WhatsNewSwiftUIView: View {
     @ObservedObject var viewModel: WhatsNewViewModel
     
     var body: some View {
-        ScrollView {
-            if let merchants = viewModel.merchants {
-                ForEach(merchants) { merchant in
-                    NewMerchantView(merchant: merchant)
+        GeometryReader { geo in
+            ScrollView {
+                if let merchants = viewModel.merchants {
+                    ForEach(merchants) { merchant in
+                        NewMerchantView(merchant: merchant, geometry: geo.size)
+                            .padding(.bottom, 20)
+                    }
+                }
+                
+                if let features = viewModel.features {
+                    ForEach(features) { feature in
+                        NewFeatureView(feature: feature)
+                            .padding(.bottom, 20)
+                    }
                 }
             }
-            
-            if let features = viewModel.features {
-                ForEach(features) { feature in
-                    NewFeatureView(feature: feature)
-                }
-            }
-            
-            Spacer()
+            .padding(.top, 20)
+            .navigationTitle("What's New?")
         }
-        .padding(.top, 20)
+        .padding(.horizontal, 25)
         .background(Color(uiColor: Current.themeManager.color(for: .viewBackground)))
-        .navigationTitle("What's New?")
+
     }
 }
 
@@ -41,5 +45,7 @@ struct WhatsNewSwiftUIView_Previews: PreviewProvider {
             let feature2 = NewFeatureModel(title: "New Feature", description: "Check out this mint new feature yo.", screen: 0)
             WhatsNewSwiftUIView(viewModel: WhatsNewViewModel(features: [feature, feature2], merchants: [merchant]))
         }
+        .foregroundColor(.gray)
+        .background(Color.gray)
     }
 }
