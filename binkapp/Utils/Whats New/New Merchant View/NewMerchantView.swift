@@ -20,18 +20,22 @@ struct NewMerchantView: View {
     
     var body: some View {
         ZStack {
-            /// Main shape
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
+            /// Main rect ------
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
                 .foregroundColor(.white)
+            /// --------------------------------------------------
+
             
-            /// Primary rect
-            RoundedRectangle(cornerRadius: 20)
+            /// Primary rect ------
+            RoundedRectangle(cornerRadius: 15)
                 .frame(width: 514.29, height: 333.64)
-                .offset(x: 204, y: 108.72)
-                .rotationEffect(.degrees(-25))
-                .foregroundColor(.purple)
+                .offset(x: 200, y: 128.72)
+                .rotationEffect(.degrees(-14))
+                .foregroundColor(.blue)
+            /// --------------------------------------------------
+
             
-            /// Icon image stack
+            /// Icon image stack ------
             HStack {
                 if let iconImage = viewModel.iconImage {
                     Image(uiImage: iconImage)
@@ -49,8 +53,11 @@ struct NewMerchantView: View {
             }
             .padding(.horizontal, 20)
             .frame(width: geometry.width, height: 120)
+            /// --------------------------------------------------
+
             
-            /// Text Stack
+            
+            /// Text Stack ------
             HStack(alignment: .top, spacing: 10) {
                 VStack(alignment: .leading) {
                     Text(viewModel.title)
@@ -74,10 +81,30 @@ struct NewMerchantView: View {
             .padding(.leading, 165)
             .padding(.trailing, 20)
             .frame(width: geometry.width, height: 120)
+            /// --------------------------------------------------
+            
+            /// New retailer text
+            HStack(alignment: .top) {
+                Spacer()
+                VStack(alignment: .trailing) {
+                    Text("NEW RETAILER")
+                        .font(.nunitoExtraBold(9))
+                        .padding(.vertical, 3)
+                        .padding(.horizontal, 10)
+                        .foregroundColor(.white)
+                        .background(.white.opacity(0.3))
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+
+                    Spacer()
+                }
+            }
+            .padding(10)
+            .frame(width: geometry.width, height: 120)
+            /// --------------------------------------------------
         }
         .frame(width: geometry.width, height: 120)
         .clipShape(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
         )
     }
 }
