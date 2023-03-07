@@ -69,7 +69,7 @@ struct SettingsRow: Identifiable, Equatable {
             case .delete:
                 return L10n.settingsRowDeleteAccountTitle
             case .previousUpdates:
-                return "Previous Updates"
+                return L10n.settingsPreviousUpdates
             }
         }
     }

@@ -15,7 +15,7 @@ struct PreviousUpdatesSwiftUIView: View {
         ScrollView {
             VStack {
                 HStack {
-                    Text("Previous Updates")
+                    Text(L10n.settingsPreviousUpdates)
                         .foregroundColor(Color(Current.themeManager.color(for: .text)))
                         .uiFont(.headline)
                     Spacer()

@@ -104,7 +104,7 @@ struct SettingsFactory {
         let supportSection = SettingsSection(title: L10n.settingsSectionSupportTitle, rows: [
             SettingsRow(
                 type: .previousUpdates,
-                subtitle: "Release Notes",
+                subtitle: L10n.settingsPreviousUpdatesSubtitle,
                 action: .navigate(to: .previousUpdates),
                 actionRequired: rowsWithActionRequired?.contains(.previousUpdates) ?? false
             ),
