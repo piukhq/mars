@@ -7,11 +7,25 @@
 //
 
 import Foundation
+import UIKit
 
 class PreviousUpdatesViewModel: ObservableObject {
     @Published var items: [RemoteConfigFile.ReleaseGroup] = []
     
     init() {
-        items = Current.remoteConfig.configFile?.releases ?? []
+        if UIApplication.isRunningUnitTests {
+            if let filePath = Bundle.main.path(forResource: "fireBase-config", ofType: "json") {
+                do {
+                    if let data = try String(contentsOfFile: filePath).data(using: .utf8) {
+                        let conf = try JSONDecoder().decode(RemoteConfigFile.self, from: data)
+                        self.items = conf.releases ?? []
+                    }
+                } catch let error {
+                    print(error.localizedDescription)
+                }
+            }
+        } else {
+            self.items = Current.remoteConfig.configFile?.releases ?? []
+        }
     }
 }
