@@ -26,17 +26,6 @@ class RemoteConfigUtil {
     var recommendedVersionUtil = RecommendedVersionUtil()
     
     var configFile: RemoteConfigFile? {
-        if let filePath = Bundle.main.path(forResource: "fireBase-config", ofType: "json") {
-            do {
-                if let data = try String(contentsOfFile: filePath).data(using: .utf8) {
-                    let conf = try JSONDecoder().decode(RemoteConfigFile.self, from: data)
-                    return conf
-                }
-            } catch let error {
-                print(error.localizedDescription)
-            }
-        }
-        
         return objectForConfigKey(.configFile, forObjectType: RemoteConfigFile.self)
     }
     
