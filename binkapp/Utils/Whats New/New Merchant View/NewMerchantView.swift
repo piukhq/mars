@@ -18,6 +18,10 @@ struct NewMerchantView: View {
         self.geometry = geometry
     }
     
+    var width: CGFloat {
+        return geometry.width - 50
+    }
+    
     var body: some View {
         ZStack {
             /// Main rect ------
@@ -25,15 +29,21 @@ struct NewMerchantView: View {
                 .foregroundColor(.white)
             /// --------------------------------------------------
 
+            /// Secondary rect ------
+            RoundedRectangle(cornerRadius: 15)
+                .frame(width: 514.29, height: 333.64)
+                .offset(x: 180, y: 138.72)
+                .rotationEffect(.degrees(-37))
+                .foregroundColor(.teal)
+            /// --------------------------------------------------
             
             /// Primary rect ------
             RoundedRectangle(cornerRadius: 15)
                 .frame(width: 514.29, height: 333.64)
-                .offset(x: 200, y: 128.72)
-                .rotationEffect(.degrees(-14))
+                .offset(x: 216, y: 128.72)
+                .rotationEffect(.degrees(-23))
                 .foregroundColor(.blue)
             /// --------------------------------------------------
-
             
             /// Icon image stack ------
             HStack {
@@ -52,7 +62,7 @@ struct NewMerchantView: View {
                 Spacer()
             }
             .padding(.horizontal, 20)
-            .frame(width: geometry.width, height: 120)
+            .frame(width: width, height: 120)
             /// --------------------------------------------------
 
             
@@ -80,7 +90,7 @@ struct NewMerchantView: View {
             .padding(.top, 37)
             .padding(.leading, 165)
             .padding(.trailing, 20)
-            .frame(width: geometry.width, height: 120)
+            .frame(width: width, height: 120)
             /// --------------------------------------------------
             
             /// New retailer text
@@ -99,10 +109,10 @@ struct NewMerchantView: View {
                 }
             }
             .padding(10)
-            .frame(width: geometry.width, height: 120)
+            .frame(width: width, height: 120)
             /// --------------------------------------------------
         }
-        .frame(width: geometry.width, height: 120)
+        .frame(width: width, height: 120)
         .clipShape(
             RoundedRectangle(cornerRadius: 12, style: .continuous)
         )
@@ -118,5 +128,20 @@ struct NewMerchantView_Previews: PreviewProvider {
             }
             .padding(.horizontal, 25)
         }
+        .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
+        .previewDisplayName("iPhone 14")
+        
+        ScrollView {
+            ZStack {
+                Color(uiColor: UIColor.primaryViewBackground).ignoresSafeArea()
+                VStack {
+                    NewMerchantView(merchant: NewMerchantModel(id: "207", description: ["Sick new merchant", "Clubcards for the win"]), geometry: CGSizeMake(UIScreen.main.bounds.width, 0))
+                }
+            }
+        }
+        .previewDevice(PreviewDevice(rawValue: "iPhone 12"))
+        .previewDisplayName("iPhone 12")
+        .padding(.leading, 25)
+        .padding(.trailing, 25)
     }
 }

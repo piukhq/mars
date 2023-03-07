@@ -31,9 +31,8 @@ struct WhatsNewSwiftUIView: View {
             .padding(.top, 20)
             .navigationTitle("What's New?")
         }
-        .padding(.horizontal, 25)
+//        .padding(.horizontal, 25)
         .background(Color(uiColor: Current.themeManager.color(for: .viewBackground)))
-
     }
 }
 
