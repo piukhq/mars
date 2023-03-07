@@ -21,15 +21,15 @@ struct PreviousUpdatesSwiftUIView: View {
                     Spacer()
                 }
                 
-                ForEach(viewModel.items ?? [], id: \.id) { release in
+                ForEach(viewModel.items, id: \.id) { release in
                     DisclosureGroup(
                         content: {
                             ForEach(release.releaseNotes ?? [], id: \.id) { group in
                                 VStack {
                                     HStack {
                                         Text(group.heading ?? "Heading")
-                                            .uiFont(.subtitle)
-                                            .foregroundColor(.white)
+                                            .uiFont(.linkTextButtonNormal)
+                                            .foregroundColor(Color(Current.themeManager.color(for: .text)))
                                         Spacer()
                                     }
                                     .padding(.top, 18)
@@ -41,31 +41,45 @@ struct PreviousUpdatesSwiftUIView: View {
                                                 .frame(width: 6, height: 6)
                                             Text(note)
                                                 .uiFont(.bodyTextSmall)
-                                                .foregroundColor(.white)
+                                                .foregroundColor(Color(Current.themeManager.color(for: .text)))
                                             Spacer()
                                         }
+                                        .padding(.leading, 6)
                                     }
                                 }
                             }
                         },
                         label: {
                             HStack {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 6, style: .continuous)
+                                        .fill((Color(UIColor.binkBlueTitleText)
+                                            .opacity(0.4)))
+                                        .frame(width: 26, height: 26)
+                                    Image(systemName: "gearshape")
+                                        .resizable()
+                                        .frame(width: 16, height: 16)
+                                        .foregroundColor(Color(UIColor.binkBlueTitleText))
+                                }
+                                
                                 Text(release.releaseTitle ?? "Title")
-                                    .uiFont(.miniButtonText)
+                                    .uiFont(.textFieldLabel)
                                     .lineLimit(1)
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                                
                                 Spacer()
                             }
                         }
                     )
                     .padding()
-                    .border(.white, width: 2)
-                    .cornerRadius(4)
-                    .accentColor(.white)
+                    .background(RoundedRectangle(cornerRadius: 12)
+                        .fill(Color(Current.themeManager.color(for: .walletCardBackground))))
+                    .accentColor(Color(Current.themeManager.color(for: .text)))
                 }
             }
             .padding()
         }
+        .background(Color(Current.themeManager.color(for: .viewBackground)))
     }
 }
 
