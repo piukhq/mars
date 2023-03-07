@@ -20,16 +20,19 @@ struct NewMerchantView: View {
     
     var body: some View {
         ZStack {
+            /// Main shape
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .foregroundColor(.white)
             
+            /// Primary rect
             RoundedRectangle(cornerRadius: 20)
                 .frame(width: 514.29, height: 333.64)
                 .offset(x: 204, y: 108.72)
                 .rotationEffect(.degrees(-25))
                 .foregroundColor(.purple)
             
-            HStack(spacing: 50) {
+            /// Icon image stack
+            HStack {
                 if let iconImage = viewModel.iconImage {
                     Image(uiImage: iconImage)
                         .resizable()
@@ -42,38 +45,35 @@ struct NewMerchantView: View {
                         .cornerRadius(LayoutHelper.iconCornerRadius)
                 }
                 
-                VStack(alignment: .leading, spacing: 5) {
-                    HStack {
-                        VStack {
-                            Text(viewModel.title)
-                                .font(.nunitoBold(22))
-                                .foregroundColor(viewModel.textColor)
-                            
-                            if let descriptionTexts = viewModel.descriptionTexts {
-                                ForEach(descriptionTexts, id: \.self) { descriptionText in
-                                    Text(descriptionText)
-                                        .font(.nunitoSemiBold(12))
-                                        .foregroundColor(viewModel.textColor)
-                                }
-                            }
-                        }
-                        
-                        Spacer()
-                            .frame(width: 5)
-                        Button {
-                            viewModel.handleNavigation()
-                        } label: {
-                            Image(systemName: "chevron.right")
+                Spacer()
+            }
+            .padding(.horizontal, 20)
+            .frame(width: geometry.width, height: 120)
+            
+            /// Text Stack
+            HStack(alignment: .top, spacing: 10) {
+                VStack(alignment: .leading) {
+                    Text(viewModel.title)
+                        .font(.nunitoExtraBold(22))
+                        .foregroundColor(viewModel.textColor)
+                    
+                    if let descriptionTexts = viewModel.descriptionTexts {
+                        ForEach(descriptionTexts, id: \.self) { descriptionText in
+                            Text(descriptionText)
+                                .font(.nunitoBold(10))
                                 .foregroundColor(viewModel.textColor)
                         }
                     }
+                    
+                    Spacer()
                 }
                 
                 Spacer()
             }
+            .padding(.top, 37)
+            .padding(.leading, 165)
+            .padding(.trailing, 20)
             .frame(width: geometry.width, height: 120)
-            .padding(.vertical, 10)
-            .padding(.leading, 40)
         }
         .frame(width: geometry.width, height: 120)
         .clipShape(
@@ -87,7 +87,7 @@ struct NewMerchantView_Previews: PreviewProvider {
         ZStack {
             Color(uiColor: UIColor.primaryViewBackground).ignoresSafeArea()
             VStack {
-                NewMerchantView(merchant: NewMerchantModel(id: "207", description: ["Check out out lastest new merchant", "Sign up for a card in our app"]), geometry: CGSizeMake(UIScreen.main.bounds.width, 0))
+                NewMerchantView(merchant: NewMerchantModel(id: "207", description: ["Sick new merchant", "Clubcards for the win"]), geometry: CGSizeMake(UIScreen.main.bounds.width, 0))
             }
             .padding(.horizontal, 25)
         }
