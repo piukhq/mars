@@ -28,7 +28,7 @@ struct NewFeatureView: View {
             }
         } label: {
             ZStack {
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .frame(maxHeight: 150)
                     .foregroundColor(viewModel.backgroundColor)
                 HStack {
@@ -45,6 +45,25 @@ struct NewFeatureView: View {
                     Spacer()
                 }
                 .padding(20)
+                
+                /// New retailer text
+                HStack(alignment: .top) {
+                    Spacer()
+                    VStack(alignment: .trailing) {
+                        Text("NEW FEATURE")
+                            .font(.nunitoExtraBold(9))
+                            .padding(.vertical, 3)
+                            .padding(.horizontal, 10)
+                            .foregroundColor(.white)
+                            .background(.white.opacity(0.3))
+                            .clipShape(RoundedRectangle(cornerRadius: 5))
+
+                        Spacer()
+                    }
+                }
+                .padding(10)
+                .frame(width: width, height: 120)
+                /// --------------------------------------------------
             }
             .frame(width: width, height: 120)
         }
