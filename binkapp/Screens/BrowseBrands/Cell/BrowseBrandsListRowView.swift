@@ -46,6 +46,7 @@ struct BrowseBrandsListRowView: View {
                                     if viewModel.brandExists {
                                         Image(Asset.existingSchemeIcon.name)
                                             .frame(width: 23, height: 16)
+                                            .foregroundColor(Color(Current.themeManager.color(for: .text)))
                                     }
                                 }
                                 if let subtitle = viewModel.subtitle {
