@@ -39,13 +39,20 @@ struct NewFeatureView: View {
                         Text(viewModel.feature.description ?? "This summary, which briefly sets out your rights and obligations in relation to administration charges")
                             .font(.nunitoSans(12))
                             .foregroundColor(viewModel.textColor)
+                            .multilineTextAlignment(.leading)
                     }
                     .padding(.vertical, 20)
                     
                     Spacer()
+                    
+                    if viewModel.hasDeeplink {
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.white)
+                    }
                 }
-                .padding(20)
-                
+                .padding(.leading, 20)
+                .padding(.trailing, 10)
+
                 /// New retailer text
                 HStack(alignment: .top) {
                     Spacer()
@@ -72,7 +79,7 @@ struct NewFeatureView: View {
 
 struct NewFeatureView_Previews: PreviewProvider {
     static var previews: some View {
-        let newFeature = NewFeatureModel(id: nil, title: "Updates", description: "Great stuff here", screen: 2)
+        let newFeature = NewFeatureModel(id: nil, title: "Updates", description: "Greattuffreat stuff hereGreat stuffreat stuff hereGreat stuffreat stuff hereGreat stuff hereGreat stuff here", screen: 2)
         NewFeatureView(viewModel: NewFeatureViewModel(feature: newFeature), parentSize: CGSize(width: UIScreen.main.bounds.width, height: 0))
     }
 }
