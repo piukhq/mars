@@ -51,16 +51,7 @@ struct PreviousUpdatesSwiftUIView: View {
                         },
                         label: {
                             HStack {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 6, style: .continuous)
-                                        .fill((Color(UIColor.binkBlueTitleText)
-                                            .opacity(0.4)))
-                                        .frame(width: 26, height: 26)
-                                    Image(systemName: "gearshape")
-                                        .resizable()
-                                        .frame(width: 16, height: 16)
-                                        .foregroundColor(Color(UIColor.binkBlueTitleText))
-                                }
+                                VersionIconView()
                                 
                                 Text(release.releaseTitle ?? "Title")
                                     .uiFont(.textFieldLabel)
@@ -80,6 +71,27 @@ struct PreviousUpdatesSwiftUIView: View {
             .padding()
         }
         .background(Color(Current.themeManager.color(for: .viewBackground)))
+    }
+}
+
+struct VersionIconView: View {
+    private enum Constants {
+        static let rectOpacity: CGFloat = 0.4
+        static let rectSize: CGFloat = 26
+        static let imageSize: CGFloat = 16
+    }
+    
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 6, style: .continuous)
+                .fill((Color(UIColor.binkBlueTitleText)
+                    .opacity(Constants.rectOpacity)))
+                .frame(width: Constants.rectSize, height: Constants.rectSize)
+            Image(systemName: "gearshape")
+                .resizable()
+                .frame(width: Constants.imageSize, height: Constants.imageSize)
+                .foregroundColor(Color(UIColor.binkBlueTitleText))
+        }
     }
 }
 
