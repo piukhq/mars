@@ -16,14 +16,14 @@ struct WhatsNewSwiftUIView: View {
             ScrollView {
                 if let merchants = viewModel.merchants {
                     ForEach(merchants) { merchant in
-                        NewMerchantView(merchant: merchant, geometry: geo.size)
+                        NewMerchantView(merchant: merchant, parentSize: geo.size)
                             .padding(.bottom, 20)
                     }
                 }
                 
                 if let features = viewModel.features {
                     ForEach(features) { feature in
-                        NewFeatureView(feature: feature)
+                        NewFeatureView(viewModel: NewFeatureViewModel(feature: feature), parentSize: geo.size)
                             .padding(.bottom, 20)
                     }
                 }
@@ -31,7 +31,7 @@ struct WhatsNewSwiftUIView: View {
             .padding(.top, 20)
             .navigationTitle("What's New?")
         }
-//        .padding(.horizontal, 25)
+        .padding(.horizontal, 25)
         .background(Color(uiColor: Current.themeManager.color(for: .viewBackground)))
     }
 }

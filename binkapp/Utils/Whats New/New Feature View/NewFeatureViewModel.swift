@@ -18,14 +18,29 @@ enum Screen: Int {
 }
 
 class NewFeatureViewModel {
+    var feature: NewFeatureModel
+
+    init(feature: NewFeatureModel) {
+        self.feature = feature
+    }
     var backgroundColor: Color {
         return .teal
-//        return Color(Current.themeManager.color(for: .walletCardBackground))
     }
     
     var textColor: Color {
-        return .black
-//        return Color(Current.themeManager.color(for: .text))
+        return .white
+    }
+    
+    var hasDeeplink: Bool {
+        return feature.screen != nil
+    }
+    
+    var deeplinkScreen: Screen? {
+        if let screen = feature.screen {
+            return Screen(rawValue: screen)
+        } else {
+            return nil
+        }
     }
     
     func navigate(to screen: Screen?) {

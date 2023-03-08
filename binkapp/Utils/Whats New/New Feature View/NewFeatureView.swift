@@ -9,46 +9,51 @@
 import SwiftUI
 
 struct NewFeatureView: View {
-    var feature: NewFeatureModel
-    let viewModel = NewFeatureViewModel()
+    let viewModel: NewFeatureViewModel
+    let parentSize: CGSize
+
+    init(viewModel: NewFeatureViewModel, parentSize: CGSize) {
+        self.viewModel = viewModel
+        self.parentSize = parentSize
+    }
+    
+    var width: CGFloat {
+        return parentSize.width
+    }
     
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .frame(maxHeight: 150)
-                .foregroundColor(viewModel.backgroundColor)
-            HStack {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text(feature.title ?? "Title")
-                        .font(.nunitoBold(18))
-                        .foregroundColor(viewModel.textColor)
-                    Text(feature.description ?? "This summary, which briefly sets out your rights and obligations in relation to administration charges")
-                        .font(.nunitoSans(14))
-                        .foregroundColor(viewModel.textColor)
-                    
-                    if let screen = feature.screen {
-                        HStack {
-                            Spacer()
-                            Button {
-                                viewModel.navigate(to: Screen(rawValue: screen))
-                            } label: {
-                                Text("Take me there")
-                                    .font(.nunitoSemiBold(14))
-                                    .foregroundColor(viewModel.textColor)
-                            }
-                        }
-                    }
-                }
-                .padding(.vertical, 20)
-                
-                Spacer()
+        Button {
+            if let screen = viewModel.deeplinkScreen {
+                viewModel.navigate(to: screen)
             }
+        } label: {
+            ZStack {
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .frame(maxHeight: 150)
+                    .foregroundColor(viewModel.backgroundColor)
+                HStack {
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text(viewModel.feature.title ?? "Title")
+                            .font(.nunitoBold(18))
+                            .foregroundColor(viewModel.textColor)
+                        Text(viewModel.feature.description ?? "This summary, which briefly sets out your rights and obligations in relation to administration charges")
+                            .font(.nunitoSans(12))
+                            .foregroundColor(viewModel.textColor)
+                    }
+                    .padding(.vertical, 20)
+                    
+                    Spacer()
+                }
+                .padding(20)
+            }
+            .frame(width: width, height: 120)
         }
     }
 }
 
 struct NewFeatureView_Previews: PreviewProvider {
     static var previews: some View {
-        NewFeatureView(feature: NewFeatureModel(id: nil, title: "Updates", description: "Great stuff here", screen: 2))
+        let newFeature = NewFeatureModel(id: nil, title: "Updates", description: "Great stuff here", screen: 2)
+        NewFeatureView(viewModel: NewFeatureViewModel(feature: newFeature), parentSize: CGSize(width: UIScreen.main.bounds.width, height: 0))
     }
 }

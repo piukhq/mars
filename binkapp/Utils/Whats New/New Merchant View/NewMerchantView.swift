@@ -11,15 +11,15 @@ import SwiftUI
 
 struct NewMerchantView: View {
     @ObservedObject var viewModel: NewMerchantViewModel
-    var geometry: CGSize
+    var parentSize: CGSize
     
-    init(merchant: NewMerchantModel, geometry: CGSize) {
+    init(merchant: NewMerchantModel, parentSize: CGSize) {
         self.viewModel = NewMerchantViewModel(merchant: merchant)
-        self.geometry = geometry
+        self.parentSize = parentSize
     }
     
     var width: CGFloat {
-        return geometry.width - 50
+        return parentSize.width
     }
     
     var body: some View {
@@ -32,8 +32,8 @@ struct NewMerchantView: View {
             /// Secondary rect ------
             RoundedRectangle(cornerRadius: 15)
                 .frame(width: 514.29, height: 333.64)
-                .offset(x: 180, y: 138.72)
-                .rotationEffect(.degrees(-37))
+                .offset(x: 193, y: 138.72)
+                .rotationEffect(.degrees(-46))
                 .foregroundColor(.teal)
             /// --------------------------------------------------
             
@@ -65,7 +65,6 @@ struct NewMerchantView: View {
             .frame(width: width, height: 120)
             /// --------------------------------------------------
 
-            
             
             /// Text Stack ------
             HStack(alignment: .top, spacing: 10) {
@@ -124,24 +123,24 @@ struct NewMerchantView_Previews: PreviewProvider {
         ZStack {
             Color(uiColor: UIColor.primaryViewBackground).ignoresSafeArea()
             VStack {
-                NewMerchantView(merchant: NewMerchantModel(id: "207", description: ["Sick new merchant", "Clubcards for the win"]), geometry: CGSizeMake(UIScreen.main.bounds.width, 0))
+                NewMerchantView(merchant: NewMerchantModel(id: "207", description: ["Sick new merchant", "Clubcards for the win"]), parentSize: CGSizeMake(UIScreen.main.bounds.width, 0))
             }
-            .padding(.horizontal, 25)
+//            .padding(.horizontal, 25)
         }
         .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
         .previewDisplayName("iPhone 14")
         
-        ScrollView {
-            ZStack {
-                Color(uiColor: UIColor.primaryViewBackground).ignoresSafeArea()
-                VStack {
-                    NewMerchantView(merchant: NewMerchantModel(id: "207", description: ["Sick new merchant", "Clubcards for the win"]), geometry: CGSizeMake(UIScreen.main.bounds.width, 0))
-                }
-            }
-        }
-        .previewDevice(PreviewDevice(rawValue: "iPhone 12"))
-        .previewDisplayName("iPhone 12")
-        .padding(.leading, 25)
-        .padding(.trailing, 25)
+//        ScrollView {
+//            ZStack {
+//                Color(uiColor: UIColor.primaryViewBackground).ignoresSafeArea()
+//                VStack {
+//                    NewMerchantView(merchant: NewMerchantModel(id: "207", description: ["Sick new merchant", "Clubcards for the win"]), parentSize: CGSizeMake(UIScreen.main.bounds.width, 0))
+//                }
+//            }
+//        }
+//        .previewDevice(PreviewDevice(rawValue: "iPhone 12"))
+//        .previewDisplayName("iPhone 12")
+//        .padding(.leading, 25)
+//        .padding(.trailing, 25)
     }
 }
