@@ -31,6 +31,10 @@ class NewFeatureViewModel {
         return .white
     }
     
+    var descriptionTexts: [String]? {
+        return feature.description
+    }
+    
     var hasDeeplink: Bool {
         return feature.screen != nil
     }

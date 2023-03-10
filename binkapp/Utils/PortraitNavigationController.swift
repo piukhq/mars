@@ -24,8 +24,9 @@ class PortraitNavigationController: UINavigationController {
         return closeButton
     }()
     
-    // TODO: When we kill off iOS 12 support, remove the init overrides and just use a custom init
+    var closeCompletion: EmptyCompletionBlock?
     
+    // TODO: When we kill off iOS 12 support, remove the init overrides and just use a custom init
     convenience init(rootViewController: UIViewController, isModallyPresented: Bool = false, shouldShowCloseButton: Bool = true) {
         self.init(rootViewController: rootViewController)
         self.isModallyPresented = isModallyPresented
@@ -116,7 +117,7 @@ class PortraitNavigationController: UINavigationController {
     }
     
     @objc private func close() {
-        Current.navigate.close()
+        Current.navigate.close(animated: true, completion: closeCompletion)
     }
 
     @objc func configureForCurrentTheme() {

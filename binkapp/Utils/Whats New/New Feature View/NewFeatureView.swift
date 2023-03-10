@@ -33,13 +33,18 @@ struct NewFeatureView: View {
                     .foregroundColor(viewModel.backgroundColor)
                 HStack {
                     VStack(alignment: .leading, spacing: 5) {
-                        Text(viewModel.feature.title ?? "Title")
+                        Text(viewModel.feature.title ?? "")
                             .font(.nunitoBold(18))
                             .foregroundColor(viewModel.textColor)
-                        Text(viewModel.feature.description ?? "This summary, which briefly sets out your rights and obligations in relation to administration charges")
-                            .font(.nunitoSans(12))
-                            .foregroundColor(viewModel.textColor)
-                            .multilineTextAlignment(.leading)
+                        
+                        if let descriptionTexts = viewModel.descriptionTexts {
+                            ForEach(descriptionTexts, id: \.self) { descriptionText in
+                                Text(descriptionText)
+                                    .font(.nunitoSans(12))
+                                    .foregroundColor(viewModel.textColor)
+                                    .multilineTextAlignment(.leading)
+                            }
+                        }
                     }
                     .padding(.vertical, 20)
                     
@@ -79,7 +84,7 @@ struct NewFeatureView: View {
 
 struct NewFeatureView_Previews: PreviewProvider {
     static var previews: some View {
-        let newFeature = NewFeatureModel(id: nil, title: "Updates", description: "Greattuffreat stuff hereGreat stuffreat stuff hereGreat stuffreat stuff hereGreat stuff hereGreat stuff here", screen: 2)
+        let newFeature = NewFeatureModel(id: nil, title: "Updates", description: ["Greattuffreat stuff hereGreat stuffreat stuff hereGreat stuffreat stuff hereGreat stuff hereGreat stuff here"], screen: 2)
         NewFeatureView(viewModel: NewFeatureViewModel(feature: newFeature), parentSize: CGSize(width: UIScreen.main.bounds.width, height: 0))
     }
 }

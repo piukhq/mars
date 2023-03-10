@@ -33,6 +33,7 @@ struct WhatsNewSwiftUIView: View {
         }
         .padding(.horizontal, 25)
         .background(Color(uiColor: Current.themeManager.color(for: .viewBackground)))
+        
     }
 }
 
@@ -40,8 +41,8 @@ struct WhatsNewSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             let merchant = NewMerchantModel(id: "207", description: ["Check out out lastest new merchant", "Sign up for a card in out app"])
-            let feature = NewFeatureModel(title: "New Feature", description: "Check out this mint new feature yo.", screen: 0)
-            let feature2 = NewFeatureModel(title: "New Feature", description: "Check out this mint new feature yo.", screen: 0)
+            let feature = NewFeatureModel(title: "New Feature", description: ["Check out this mint new feature yoint new feature yoint new feature yoint new feature yoint new feature yoint new feature yoint new feature yo."], screen: 0)
+            let feature2 = NewFeatureModel(title: "New Feature", description: ["Check out this mint new feature yo."], screen: 0)
             WhatsNewSwiftUIView(viewModel: WhatsNewViewModel(features: [feature, feature2], merchants: [merchant]))
         }
         .foregroundColor(.gray)

@@ -82,6 +82,7 @@ extension UserDefaults: BinkUserDefaults {
         case alwaysDownloadImages
         case showBarcodeAlways
         case mostRecentAppVersion
+        case hasDismissedWhatsNewModal
 
         var keyValue: String {
             switch self {
@@ -135,6 +136,8 @@ extension UserDefaults: BinkUserDefaults {
                 return "showBarcodeAlways"
             case .mostRecentAppVersion:
                 return "mostRecentAppVersion"
+            case .hasDismissedWhatsNewModal:
+                return "hasDismissedWhatsNewModal"
             }
         }
     }

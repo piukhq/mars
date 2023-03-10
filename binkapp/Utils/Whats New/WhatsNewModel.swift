@@ -9,8 +9,15 @@
 import Foundation
 
 struct WhatsNewModel: Codable {
+    let appVersion: String?
     let merchants: [NewMerchantModel]?
     let features: [NewFeatureModel]?
+    
+    enum CodingKeys: String, CodingKey {
+        case appVersion = "app_version"
+        case merchants
+        case features   
+    }
 }
 
 struct NewMerchantModel: Codable, Identifiable {
@@ -21,6 +28,6 @@ struct NewMerchantModel: Codable, Identifiable {
 struct NewFeatureModel: Codable, Identifiable {
     var id: String? = UUID().uuidString
     let title: String?
-    let description: String?
+    let description: [String]?
     let screen: Int?
 }

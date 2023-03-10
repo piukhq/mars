@@ -140,24 +140,34 @@ class LoyaltyWalletViewModel: WalletViewModel {
     }
     
     func configureWhatsNewScreen() {
-        guard !didPresentWhatsNewScreen, let currentVersion = Bundle.currentVersion else { return }
+        guard let remoteConfigVersion = Current.remoteConfig.configFile?.whatsNew?.appVersion, var currentVersion = Bundle.currentVersion else { return }
+        let hasDismissedWhatsNewModal = Current.userDefaults.bool(forDefaultsKey: .hasDismissedWhatsNewModal)
+//        currentVersion = AppVersion(versionString: "2.3.30")!
         
-        if let mostRecentAppVersionString = Current.userDefaults.string(forDefaultsKey: .mostRecentAppVersion), let mostRecentAppVersion = AppVersion(versionString: mostRecentAppVersionString) {
-            if currentVersion.isMoreRecentThanVersion(mostRecentAppVersion) {
-                presentWhatsNewView()
-            }
-        } else {
+        if remoteConfigVersion == currentVersion.versionString && !hasDismissedWhatsNewModal {
             presentWhatsNewView()
+            Current.userDefaults.set(currentVersion.versionString, forDefaultsKey: .mostRecentAppVersion)
+            return
         }
         
-        Current.userDefaults.set(currentVersion.versionString, forDefaultsKey: .mostRecentAppVersion)
-        didPresentWhatsNewScreen = true
+        if let mostRecentVersionString = Current.userDefaults.string(forDefaultsKey: .mostRecentAppVersion),
+            let mostRecentAppVersion = AppVersion(versionString: mostRecentVersionString),
+            let remoteConfigAppVersion = AppVersion(versionString: remoteConfigVersion) {
+            if remoteConfigAppVersion.isMoreRecentThanVersion(mostRecentAppVersion) && currentVersion.versionString == remoteConfigVersion {
+                presentWhatsNewView()
+                Current.userDefaults.set(false, forDefaultsKey: .hasDismissedWhatsNewModal)
+                Current.userDefaults.set(currentVersion.versionString, forDefaultsKey: .mostRecentAppVersion)
+            }
+        }
     }
     
     private func presentWhatsNewView() {
         let viewModel = WhatsNewViewModel(features: Current.remoteConfig.configFile?.whatsNew?.features, merchants: Current.remoteConfig.configFile?.whatsNew?.merchants)
         let whatsNewViewController = ViewControllerFactory.makeWhatsNewViewController(viewModel: viewModel)
-        let modalRequest = ModalNavigationRequest(viewController: whatsNewViewController)
+        let modalRequest = ModalNavigationRequest(viewController: whatsNewViewController, dragToDismiss: false, closeCompletion: {
+            Current.userDefaults.set(true, forDefaultsKey: .hasDismissedWhatsNewModal)
+        })
+        
         Current.navigate.to(modalRequest)
     }
 }

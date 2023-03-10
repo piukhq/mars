@@ -28,13 +28,24 @@ class NewMerchantViewModel: ObservableObject {
         return merchant.description
     }
     
-    var backgroundColor: UIColor {
-        return membershipPlan?.secondaryBrandColor ?? .secondarySystemBackground
+    var secondaryColor: Color {
+        if let color = membershipPlan?.secondaryBrandColor {
+            return Color(color)
+        } else {
+            return .teal
+        }
+    }
+    
+    var primaryColor: Color {
+        if let color = membershipPlan?.card?.colour {
+            return Color(UIColor(hexString: color))
+        } else {
+            return .blue
+        }
     }
     
     var textColor: Color {
         return .white
-//        return backgroundColor.isLight(threshold: 0.8) ? .black : .white
     }
     
     func getMembershipPlan(from id: String) {
@@ -52,11 +63,11 @@ class NewMerchantViewModel: ObservableObject {
         guard let membershipPlan = membershipPlan else { return }
         Current.navigate.close(animated: true) {
             let browseBrandsVC = ViewControllerFactory.makeBrowseBrandsViewController()
-            let navigationRequest = ModalNavigationRequest(viewController: browseBrandsVC) {
+            let navigationRequest = ModalNavigationRequest(viewController: browseBrandsVC, completion: {
                 let addJoinVC = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
                 let pushNavigationRequest = PushNavigationRequest(viewController: addJoinVC)
                 Current.navigate.to(pushNavigationRequest)
-            }
+            })
             Current.navigate.to(navigationRequest)
         }
     }
