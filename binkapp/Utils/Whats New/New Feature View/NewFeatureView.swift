@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct NewFeatureView: View {
-    let viewModel: NewFeatureViewModel
+    @ObservedObject var viewModel: NewFeatureViewModel
     let parentSize: CGSize
 
     init(viewModel: NewFeatureViewModel, parentSize: CGSize) {
@@ -33,6 +33,13 @@ struct NewFeatureView: View {
                     .foregroundColor(viewModel.backgroundColor)
                 HStack {
                     VStack(alignment: .leading, spacing: 5) {
+                        if let data = viewModel.imageData, let uiImage = UIImage(data: data) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .frame(width: 40, height: 40)
+                                .clipShape(Circle())
+                        }
+                        
                         Text(viewModel.feature.title ?? "")
                             .font(.nunitoBold(18))
                             .foregroundColor(viewModel.textColor)

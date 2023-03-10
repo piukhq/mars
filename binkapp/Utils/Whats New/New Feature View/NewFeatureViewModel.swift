@@ -6,6 +6,7 @@
 //  Copyright © 2023 Bink. All rights reserved.
 //
 
+import FirebaseStorage
 import SwiftUI
 
 enum Screen: Int {
@@ -17,11 +18,16 @@ enum Screen: Int {
     case barcodeView
 }
 
-class NewFeatureViewModel {
+class NewFeatureViewModel: ObservableObject {
+    @Published var imageData: Data?
+    
     var feature: NewFeatureModel
 
     init(feature: NewFeatureModel) {
         self.feature = feature
+        Task {
+            await fetchImageFromStorage()
+        }
     }
     var backgroundColor: Color {
         return .teal
@@ -45,6 +51,23 @@ class NewFeatureViewModel {
         } else {
             return nil
         }
+    }
+    
+    private func fetchImageFromStorage() async {
+        guard let id = feature.id else { return }
+        let storage = Storage.storage()
+        let pathReference = storage.reference(withPath: "new-features/\(id).jpeg")
+        
+        let imageData = try? await pathReference.data(maxSize: 1 * 512 * 512)
+        DispatchQueue.main.async {
+            self.imageData = imageData
+        }
+        
+//        pathReference.getData(maxSize: 1 * 1024 * 1024) { data, _ in
+//            guard let data = data else {
+//                return
+//            }
+//        }
     }
     
     func navigate(to screen: Screen?) {

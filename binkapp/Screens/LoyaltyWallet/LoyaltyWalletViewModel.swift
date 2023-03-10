@@ -23,7 +23,6 @@ class LoyaltyWalletViewModel: WalletViewModel {
     private let repository = LoyaltyWalletRepository()
 
     var walletPrompts: [WalletPrompt]?
-    var didPresentWhatsNewScreen = false
 
     var cards: [CD_MembershipCard]? {
         return Current.wallet.membershipCards
@@ -140,6 +139,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
     }
     
     func configureWhatsNewScreen() {
+        presentWhatsNewView()
         guard let remoteConfigVersion = Current.remoteConfig.configFile?.whatsNew?.appVersion, var currentVersion = Bundle.currentVersion else { return }
         let hasDismissedWhatsNewModal = Current.userDefaults.bool(forDefaultsKey: .hasDismissedWhatsNewModal)
 //        currentVersion = AppVersion(versionString: "2.3.30")!

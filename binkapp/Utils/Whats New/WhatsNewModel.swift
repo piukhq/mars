@@ -16,7 +16,7 @@ struct WhatsNewModel: Codable {
     enum CodingKeys: String, CodingKey {
         case appVersion = "app_version"
         case merchants
-        case features   
+        case features
     }
 }
 
@@ -26,7 +26,7 @@ struct NewMerchantModel: Codable, Identifiable {
 }
 
 struct NewFeatureModel: Codable, Identifiable {
-    var id: String? = UUID().uuidString
+    var id: String?
     let title: String?
     let description: [String]?
     let screen: Int?

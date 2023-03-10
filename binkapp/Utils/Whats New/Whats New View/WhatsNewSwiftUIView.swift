@@ -33,7 +33,6 @@ struct WhatsNewSwiftUIView: View {
         }
         .padding(.horizontal, 25)
         .background(Color(uiColor: Current.themeManager.color(for: .viewBackground)))
-        
     }
 }
 
