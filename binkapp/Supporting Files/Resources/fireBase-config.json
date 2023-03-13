@@ -524,6 +524,32 @@
     },
     "releases": [
         {
+            "release_title": "Update: v2.3.29 Date: 6/03/2023",
+            "release_notes": [
+                {
+                    "heading": "Features",
+                    "bullet_points": [
+                        "added this",
+                        "added that"
+                    ]
+                },
+                {
+                    "heading": "Bug Fixes",
+                    "bullet_points": [
+                        "fixed this",
+                        "fixed that"
+                    ]
+                },
+                {
+                    "heading": "Retailers",
+                    "bullet_points": [
+                        "Tesco",
+                        "Costa"
+                    ]
+                }
+            ]
+        },
+        {
             "release_title": "Update: v2.3.28 Date: 27/02/2023",
             "release_notes": [
                 {
@@ -545,32 +571,6 @@
                     "bullet_points": [
                         "fixed this",
                         "fixed that"
-                    ]
-                }
-            ]
-        },
-        {
-            "release_title": "Update: v2.3.27 Date: 11/23/2022",
-            "release_notes": [
-                {
-                    "heading": "Features",
-                    "bullet_points": [
-                        "added this",
-                        "added that"
-                    ]
-                },
-                {
-                    "heading": "Bug Fixes",
-                    "bullet_points": [
-                        "fixed this",
-                        "fixed that"
-                    ]
-                },
-                {
-                    "heading": "Retailers",
-                    "bullet_points": [
-                        "Tesco",
-                        "Costa"
                     ]
                 }
             ]
