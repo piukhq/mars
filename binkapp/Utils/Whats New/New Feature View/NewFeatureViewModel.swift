@@ -19,15 +19,13 @@ enum Screen: Int {
 }
 
 class NewFeatureViewModel: ObservableObject {
-    @Published var imageData: Data?
+    @Published var uiImage: UIImage?
     
     var feature: NewFeatureModel
 
     init(feature: NewFeatureModel) {
         self.feature = feature
-        Task {
-            await fetchImageFromStorage()
-        }
+        fetchImageFromStorage()
     }
     var backgroundColor: Color {
         return .teal
@@ -53,21 +51,25 @@ class NewFeatureViewModel: ObservableObject {
         }
     }
     
-    private func fetchImageFromStorage() async {
+    private func fetchImageFromStorage() {
         guard let id = feature.id else { return }
         let storage = Storage.storage()
-        let pathReference = storage.reference(withPath: "new-features/\(id).jpeg")
+        let path = "new-features/\(id).jpeg"
+        let pathReference = storage.reference(withPath: path)
         
-        let imageData = try? await pathReference.data(maxSize: 1 * 512 * 512)
-        DispatchQueue.main.async {
-            self.imageData = imageData
+        if let cachedImage = Cache.sharedImageCache.object(forKey: path.toNSString()) {
+            self.uiImage = cachedImage
+            return
         }
-        
-//        pathReference.getData(maxSize: 1 * 1024 * 1024) { data, _ in
-//            guard let data = data else {
-//                return
-//            }
-//        }
+
+        pathReference.getData(maxSize: 1 * 1024 * 1024) { data, _ in
+            guard let data = data, let uiImage = UIImage(data: data) else { return }
+            
+            Cache.sharedImageCache.setObject(uiImage, forKey: path.toNSString())
+            DispatchQueue.main.async {
+                self.uiImage = uiImage
+            }
+        }
     }
     
     func navigate(to screen: Screen?) {

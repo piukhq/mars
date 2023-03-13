@@ -33,10 +33,10 @@ struct NewFeatureView: View {
                     .foregroundColor(viewModel.backgroundColor)
                 HStack {
                     VStack(alignment: .leading, spacing: 5) {
-                        if let data = viewModel.imageData, let uiImage = UIImage(data: data) {
+                        if let uiImage = viewModel.uiImage {
                             Image(uiImage: uiImage)
                                 .resizable()
-                                .frame(width: 40, height: 40)
+                                .frame(width: 35, height: 35)
                                 .clipShape(Circle())
                         }
                         
@@ -53,7 +53,7 @@ struct NewFeatureView: View {
                             }
                         }
                     }
-                    .padding(.vertical, 20)
+                    .padding(.vertical, 15)
                     
                     Spacer()
                     
