@@ -91,7 +91,7 @@ struct NewFeatureView: View {
 
 struct NewFeatureView_Previews: PreviewProvider {
     static var previews: some View {
-        let newFeature = NewFeatureModel(id: nil, title: "Updates", description: ["Greattuffreat stuff hereGreat stuffreat stuff hereGreat stuffreat stuff hereGreat stuff hereGreat stuff here"], screen: 2)
+        let newFeature = NewFeatureModel(id: nil, title: "Updates", description: ["My word this new feature is good"], screen: 2)
         NewFeatureView(viewModel: NewFeatureViewModel(feature: newFeature), parentSize: CGSize(width: UIScreen.main.bounds.width, height: 0))
     }
 }

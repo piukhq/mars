@@ -21,7 +21,7 @@ class NewMerchantViewModel: ObservableObject {
     }
     
     var title: String {
-        return membershipPlan?.account?.companyName ?? "Tesco"
+        return membershipPlan?.account?.companyName ?? ""
     }
     
     var descriptionTexts: [String]? {
@@ -55,7 +55,7 @@ class NewMerchantViewModel: ObservableObject {
     func getIconImage() {
         guard let membershipPlan = membershipPlan else { return }
         ImageService.getImage(forPathType: .membershipPlanIcon(plan: membershipPlan), completion: { image in
-            self.iconImage = image ?? UIImage(named: "bink-icon-logo") ?? UIImage(systemName: "lanyardcard")
+            self.iconImage = image ?? UIImage(named: "bink-icon-logo")
         })
     }
     

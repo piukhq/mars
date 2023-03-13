@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+// swiftlint:disable force_unwrapping
 
 struct NewMerchantView: View {
     @ObservedObject var viewModel: NewMerchantViewModel
@@ -143,18 +144,5 @@ struct NewMerchantView_Previews: PreviewProvider {
         }
         .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
         .previewDisplayName("iPhone 14")
-        
-//        ScrollView {
-//            ZStack {
-//                Color(uiColor: UIColor.primaryViewBackground).ignoresSafeArea()
-//                VStack {
-//                    NewMerchantView(merchant: NewMerchantModel(id: "207", description: ["Sick new merchant", "Clubcards for the win"]), parentSize: CGSizeMake(UIScreen.main.bounds.width, 0))
-//                }
-//            }
-//        }
-//        .previewDevice(PreviewDevice(rawValue: "iPhone 12"))
-//        .previewDisplayName("iPhone 12")
-//        .padding(.leading, 25)
-//        .padding(.trailing, 25)
     }
 }
