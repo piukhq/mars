@@ -139,7 +139,7 @@ struct NewMerchantView_Previews: PreviewProvider {
         ZStack {
             Color(uiColor: UIColor.primaryViewBackground).ignoresSafeArea()
             VStack {
-                NewMerchantView(merchant: NewMerchantModel(id: "207", description: ["Sick new merchant", "Clubcards for the win"]), parentSize: CGSizeMake(UIScreen.main.bounds.width, 0))
+                NewMerchantView(merchant: NewMerchantModel(id: "207", description: ["Sick new merchant", "Clubcards for the win"]), parentSize: CGSize(width: UIScreen.main.bounds.width, height: 0))
             }
         }
         .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
