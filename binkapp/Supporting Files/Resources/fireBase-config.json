@@ -524,25 +524,25 @@
     },
     "releases": [
         {
-            "releaseTitle": "Update: v2.3.28 Date: 27/02/2023",
-            "releaseNotes": [
+            "release_title": "Update: v2.3.28 Date: 27/02/2023",
+            "release_notes": [
                 {
                     "heading": "Features",
-                    "bulletPoints": [
+                    "bullet_points": [
                         "super amazing duper awesome feature that will knock your socks off.",
                         "added that"
                     ]
                 },
                                 {
                     "heading": "Retailers",
-                    "bulletPoints": [
+                    "bullet_points": [
                         "B&Q",
                         "Iceland"
                     ]
                 },
                 {
                     "heading": "Bug Fixes",
-                    "bulletPoints": [
+                    "bullet_points": [
                         "fixed this",
                         "fixed that"
                     ]
@@ -550,25 +550,25 @@
             ]
         },
         {
-            "releaseTitle": "Update: v2.3.27 Date: 11/23/2022",
-            "releaseNotes": [
+            "release_title": "Update: v2.3.27 Date: 11/23/2022",
+            "release_notes": [
                 {
                     "heading": "Features",
-                    "bulletPoints": [
+                    "bullet_points": [
                         "added this",
                         "added that"
                     ]
                 },
                 {
                     "heading": "Bug Fixes",
-                    "bulletPoints": [
+                    "bullet_points": [
                         "fixed this",
                         "fixed that"
                     ]
                 },
                 {
                     "heading": "Retailers",
-                    "bulletPoints": [
+                    "bullet_points": [
                         "Tesco",
                         "Costa"
                     ]

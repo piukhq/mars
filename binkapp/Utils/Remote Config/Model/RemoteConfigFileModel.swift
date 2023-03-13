@@ -30,7 +30,7 @@ struct RemoteConfigFile: Codable {
         
         enum CodingKeys: String, CodingKey {
             case heading
-            case bulletPoints
+            case bulletPoints = "bullet_points"
         }
     }
 
@@ -40,8 +40,8 @@ struct RemoteConfigFile: Codable {
         var releaseNotes: [ReleaseNotesGroup]?
         
         enum CodingKeys: String, CodingKey {
-            case releaseTitle
-            case releaseNotes
+            case releaseTitle = "release_title"
+            case releaseNotes = "release_notes"
         }
     }
     
