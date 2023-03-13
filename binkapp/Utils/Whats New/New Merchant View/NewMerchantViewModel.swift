@@ -60,6 +60,8 @@ class NewMerchantViewModel: ObservableObject {
     }
     
     func handleNavigation() {
+        guard let id = merchant.id else { return }
+        getMembershipPlan(from: id)
         guard let membershipPlan = membershipPlan else { return }
         Current.navigate.close(animated: true) {
             let browseBrandsVC = ViewControllerFactory.makeBrowseBrandsViewController()

@@ -139,9 +139,8 @@ class LoyaltyWalletViewModel: WalletViewModel {
     }
     
     func configureWhatsNewScreen() {
-        presentWhatsNewView()
         guard let remoteConfigVersion = Current.remoteConfig.configFile?.whatsNew?.appVersion, var currentVersion = Bundle.currentVersion else { return }
-        let hasDismissedWhatsNewModal = Current.userDefaults.bool(forDefaultsKey: .hasDismissedWhatsNewModal)
+        let hasDismissedWhatsNewModal = Current.userDefaults.bool(forDefaultsKey: .hasDismissedWhatsNewView)
 //        currentVersion = AppVersion(versionString: "2.3.30")!
         
         if remoteConfigVersion == currentVersion.versionString && !hasDismissedWhatsNewModal {
@@ -155,7 +154,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
             let remoteConfigAppVersion = AppVersion(versionString: remoteConfigVersion) {
             if remoteConfigAppVersion.isMoreRecentThanVersion(mostRecentAppVersion) && currentVersion.versionString == remoteConfigVersion {
                 presentWhatsNewView()
-                Current.userDefaults.set(false, forDefaultsKey: .hasDismissedWhatsNewModal)
+                Current.userDefaults.set(false, forDefaultsKey: .hasDismissedWhatsNewView)
                 Current.userDefaults.set(currentVersion.versionString, forDefaultsKey: .mostRecentAppVersion)
             }
         }
@@ -165,7 +164,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
         let viewModel = WhatsNewViewModel(features: Current.remoteConfig.configFile?.whatsNew?.features, merchants: Current.remoteConfig.configFile?.whatsNew?.merchants)
         let whatsNewViewController = ViewControllerFactory.makeWhatsNewViewController(viewModel: viewModel)
         let modalRequest = ModalNavigationRequest(viewController: whatsNewViewController, dragToDismiss: false, closeCompletion: {
-            Current.userDefaults.set(true, forDefaultsKey: .hasDismissedWhatsNewModal)
+            Current.userDefaults.set(true, forDefaultsKey: .hasDismissedWhatsNewView)
         })
         
         Current.navigate.to(modalRequest)
