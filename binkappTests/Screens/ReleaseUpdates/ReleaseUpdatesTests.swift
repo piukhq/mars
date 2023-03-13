@@ -19,9 +19,9 @@ class ReleaseUpdatesTests: XCTestCase {
     }
     
     func test_releasesHaveCorrectTitles() {
-        XCTAssertEqual(sut.items[0].releaseTitle, "Update: v2.3.28 Date: 27/02/2023")
+        XCTAssertEqual(sut.items[0].releaseTitle, "Update: v2.3.29 Date: 6/03/2023")
         
-        XCTAssertEqual(sut.items[1].releaseTitle, "Update: v2.3.27 Date: 11/23/2022")
+        XCTAssertEqual(sut.items[1].releaseTitle, "Update: v2.3.28 Date: 27/02/2023")
     }
     
     func test_releasesNotesAreValid() {
@@ -30,7 +30,7 @@ class ReleaseUpdatesTests: XCTestCase {
         XCTAssertTrue(notes.bulletPoints!.count > 0)
         
         notes = sut.items[1].releaseNotes![1]
-        XCTAssertEqual(notes.heading, "Bug Fixes")
+        XCTAssertEqual(notes.heading, "Retailers")
         XCTAssertTrue(notes.bulletPoints!.count > 0)
     }
 }
