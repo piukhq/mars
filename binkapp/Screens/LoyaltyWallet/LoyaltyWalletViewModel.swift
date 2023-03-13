@@ -139,9 +139,8 @@ class LoyaltyWalletViewModel: WalletViewModel {
     }
     
     func configureWhatsNewScreen() {
-        guard let remoteConfigVersion = Current.remoteConfig.configFile?.whatsNew?.appVersion, var currentVersion = Bundle.currentVersion else { return }
+        guard let remoteConfigVersion = Current.remoteConfig.configFile?.whatsNew?.appVersion, let currentVersion = Bundle.currentVersion else { return }
         let hasDismissedWhatsNewModal = Current.userDefaults.bool(forDefaultsKey: .hasDismissedWhatsNewView)
-//        currentVersion = AppVersion(versionString: "2.3.30")!
         
         if remoteConfigVersion == currentVersion.versionString && !hasDismissedWhatsNewModal {
             presentWhatsNewView()
