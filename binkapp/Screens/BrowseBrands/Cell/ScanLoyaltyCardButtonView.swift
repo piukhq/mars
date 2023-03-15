@@ -28,6 +28,7 @@ struct ScanLoyaltyCardButtonView: View {
                     Text(L10n.scanButtonSubtitle)
                         .font(.nunitoSans(15))
                         .foregroundColor(.white)
+                        .minimumScaleFactor(0.5)
                 }
                 
                 Spacer()
