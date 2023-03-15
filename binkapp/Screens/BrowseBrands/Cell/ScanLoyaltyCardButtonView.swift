@@ -35,7 +35,11 @@ struct ScanLoyaltyCardButtonView: View {
             }
             .padding()
         }
-        .frame(maxWidth: 1800, maxHeight: 88)
+        .frame(maxWidth: .infinity)
+        .frame(height: 90)
+        .padding(.bottom, 10)
+        .padding(.horizontal, viewModel.type == .custom ? 25 : 0)
+        .padding(.top, viewModel.type == .custom ? 20 : 0)
         .onTapGesture {
             viewModel.handleButtonTap()
         }

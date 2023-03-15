@@ -15,10 +15,9 @@ struct BrowseBrandsHeaderView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             if section == 0 {
-                ScanLoyaltyCardButtonView(viewModel: ScanLoyaltyCardButtonViewModel(type: .custom))
-                    .padding(.bottom, 10)
+                ScanLoyaltyCardButtonView(viewModel: ScanLoyaltyCardButtonViewModel(type: .retailer))
             }
-            
+
             Text(viewModel.getSectionTitleText(section: section))
                 .uiFont(.headline)
                 .foregroundColor(Color(Current.themeManager.color(for: .text)))
