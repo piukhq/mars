@@ -19,10 +19,8 @@ fileprivate enum Constants {
 
 class BrowseBrandsViewController: BinkViewController {
     @IBOutlet private weak var searchTextField: BinkTextField!
-    @IBOutlet private weak var noMatchesLabel: UILabel!
     @IBOutlet private weak var searchTextFieldContainer: UIView!
     @IBOutlet private weak var topStackView: UIStackView!
-    @IBOutlet private weak var noMatchesLabelTopConstraint: NSLayoutConstraint!
     
     private var filtersVisible = false
     private var selectedCollectionViewIndexPaths: [IndexPath] = []
@@ -96,9 +94,6 @@ class BrowseBrandsViewController: BinkViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchTextField.delegate = self
-        noMatchesLabel.font = UIFont.bodyTextLarge
-        noMatchesLabel.text = L10n.noMatches
-        
         configureSearchTextField()
         configureCollectionView()
         
@@ -139,7 +134,6 @@ class BrowseBrandsViewController: BinkViewController {
         view.backgroundColor = Current.themeManager.color(for: .viewBackground)
         collectionView.backgroundColor = Current.themeManager.color(for: .viewBackground)
         topStackView.backgroundColor = Current.themeManager.color(for: .viewBackground)
-        noMatchesLabel.textColor = Current.themeManager.color(for: .text)
         searchTextField.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
         
@@ -203,10 +197,6 @@ class BrowseBrandsViewController: BinkViewController {
     private func hideFilters() {
         filtersButton?.isEnabled = false
         filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .disabled)
-        
-        if !self.noMatchesLabel.isHidden {
-            self.noMatchesLabelTopConstraint.constant = 0.0
-        }
 
         let frame = self.collectionView.frame
         listViewTopConstraint.constant = 0
@@ -220,10 +210,6 @@ class BrowseBrandsViewController: BinkViewController {
     }
     
     private func displayFilters() {
-        if !self.noMatchesLabel.isHidden {
-            self.noMatchesLabelTopConstraint.constant = self.filterViewHeight
-        }
-
         filtersButton?.isEnabled = false
         filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .disabled)
         let frame = self.collectionView.frame
@@ -238,12 +224,6 @@ class BrowseBrandsViewController: BinkViewController {
             self?.filtersButton?.isEnabled = true
             self?.filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
         }
-    }
-    
-    private func switchTableWithNoMatchesLabel() {
-        browseBrandsListView.view.isHidden = viewModel.shouldShowNoResultsLabel
-        noMatchesLabelTopConstraint.constant = filtersVisible ? filterViewHeight : 0.0
-        noMatchesLabel.isHidden = !viewModel.shouldShowNoResultsLabel
     }
     
     private func scrollToSection() {
@@ -274,14 +254,12 @@ extension BrowseBrandsViewController: UITextFieldDelegate {
             searchText = "\(textField.text ?? "")\(string)"
         }
         viewModel.searchText = searchText
-        switchTableWithNoMatchesLabel()
         textField.textColor = !searchText.isEmpty ? .black : .greyFifty
         return true
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         viewModel.searchText = ""
-        switchTableWithNoMatchesLabel()
         return true
     }
     
@@ -336,7 +314,6 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
             selectedFilters.append(cell.filterTitle ?? "")
         }
         viewModel.selectedFilters = selectedFilters
-        switchTableWithNoMatchesLabel()
     }
 }
 
