@@ -9,7 +9,35 @@
 import UIKit
 
 class ScanLoyaltyCardButtonViewModel: NSObject {
+    enum ScanButtonType {
+        case retailer
+        case custom
+    }
+    
     private let visionUtility = VisionUtility()
+    var type: ScanButtonType
+    
+    init(type: ScanButtonType) {
+        self.type = type
+    }
+    
+    var title: String {
+        switch type {
+        case .retailer:
+            return L10n.scanButtonTitle
+        case .custom:
+            return "Add custom card"
+        }
+    }
+    
+    var subtitle: String {
+        switch type {
+        case .retailer:
+            return L10n.scanButtonSubtitle
+        case .custom:
+            return "Can't find your card? Add custom cards here"
+        }
+    }
 
     func handleButtonTap() {
         let viewController = ViewControllerFactory.makeScannerViewController(type: .loyalty, hideNavigationBar: false, delegate: self)

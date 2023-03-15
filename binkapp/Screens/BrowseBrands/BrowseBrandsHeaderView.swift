@@ -15,7 +15,7 @@ struct BrowseBrandsHeaderView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             if section == 0 {
-                ScanLoyaltyCardButtonView()
+                ScanLoyaltyCardButtonView(viewModel: ScanLoyaltyCardButtonViewModel(type: .custom))
                     .padding(.bottom, 10)
             }
             

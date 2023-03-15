@@ -10,7 +10,7 @@ import SwiftUI
 import Lottie
 
 struct ScanLoyaltyCardButtonView: View {
-    var viewModel = ScanLoyaltyCardButtonViewModel()
+    var viewModel: ScanLoyaltyCardButtonViewModel
     
     var body: some View {
         ZStack {
@@ -22,10 +22,10 @@ struct ScanLoyaltyCardButtonView: View {
                     .frame(width: 50, height: 50)
                 
                 VStack(alignment: .leading) {
-                    Text(L10n.scanButtonTitle)
+                    Text(viewModel.title)
                         .font(.nunitoExtraBold(20))
                         .foregroundColor(.white)
-                    Text(L10n.scanButtonSubtitle)
+                    Text(viewModel.subtitle)
                         .font(.nunitoSans(15))
                         .foregroundColor(.white)
                         .minimumScaleFactor(0.5)
@@ -44,6 +44,6 @@ struct ScanLoyaltyCardButtonView: View {
 
 struct ScanLoyaltyCardButtonView_Previews: PreviewProvider {
     static var previews: some View {
-        ScanLoyaltyCardButtonView()
+        ScanLoyaltyCardButtonView(viewModel: ScanLoyaltyCardButtonViewModel(type: .custom))
     }
 }
