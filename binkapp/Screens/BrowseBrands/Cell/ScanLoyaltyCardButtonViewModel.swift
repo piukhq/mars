@@ -70,7 +70,16 @@ extension ScanLoyaltyCardButtonViewModel: BinkScannerViewControllerDelegate {
     }
     
     func binkScannerViewControllerShouldEnterManually(_ viewController: BinkScannerViewController, completion: (() -> Void)?) {
-        Current.navigate.back()
+        switch type {
+        case .retailer:
+            Current.navigate.back()
+        case .custom:
+            if let customPlan = Current.wallet.membershipPlans?.first(where: { $0.isCustomCard }) {
+                let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: customPlan, formPurpose: .add)
+                let navigationRequest = PushNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
+            }
+        }
     }
 }
 
