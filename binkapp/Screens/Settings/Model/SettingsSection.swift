@@ -36,6 +36,7 @@ struct SettingsRow: Identifiable, Equatable {
         case theme
         case featureFlags
         case delete
+        case previousUpdates
         
         var title: String {
             switch self {
@@ -67,6 +68,8 @@ struct SettingsRow: Identifiable, Equatable {
                 return L10n.settingsRowFeatureflagsTitle
             case .delete:
                 return L10n.settingsRowDeleteAccountTitle
+            case .previousUpdates:
+                return L10n.settingsPreviousUpdates
             }
         }
     }
@@ -93,6 +96,7 @@ struct SettingsRow: Identifiable, Equatable {
         case featureFlags
         case debug
         case preferences
+        case previousUpdates
     }
     
     let type: RowType

@@ -103,6 +103,12 @@ struct SettingsFactory {
         
         let supportSection = SettingsSection(title: L10n.settingsSectionSupportTitle, rows: [
             SettingsRow(
+                type: .previousUpdates,
+                subtitle: L10n.settingsPreviousUpdatesSubtitle,
+                action: .navigate(to: .previousUpdates),
+                actionRequired: rowsWithActionRequired?.contains(.previousUpdates) ?? false
+            ),
+            SettingsRow(
                 type: .faq,
                 subtitle: L10n.settingsRowFaqsSubtitle,
                 action: .launchSupport(service: .faq),
