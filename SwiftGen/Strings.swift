@@ -767,6 +767,10 @@ internal enum L10n {
   internal static let settingsDeleteAccountFailedAlertMessage = L10n.tr("Localizable", "settings_delete_account_failed_alert_message", fallback: "Account deletion failed, please contact us")
   /// Account deletion is successful
   internal static let settingsDeleteAccountSuccessAlertMessage = L10n.tr("Localizable", "settings_delete_account_success_alert_message", fallback: "Account deletion is successful")
+  /// Previous Updates
+  internal static let settingsPreviousUpdates = L10n.tr("Localizable", "settings_previous_updates", fallback: "Previous Updates")
+  /// Release Notes
+  internal static let settingsPreviousUpdatesSubtitle = L10n.tr("Localizable", "settings_previous_updates_subtitle", fallback: "Release Notes")
   /// Get in touch with Bink
   internal static let settingsRowContactSubtitle = L10n.tr("Localizable", "settings_row_contact_subtitle", fallback: "Get in touch with Bink")
   /// Contact us

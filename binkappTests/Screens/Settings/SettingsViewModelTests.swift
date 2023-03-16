@@ -42,7 +42,7 @@ class SettingsViewModelTests: XCTestCase {
     }
 
     func test_rowsCount_returnsCorrectCountForSupportSection() {
-        XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 2 + appearanceSection), 4)
+        XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 2 + appearanceSection), 5)
     }
     
     func test_rowsCount_returnsCorrectCountForAboutSection() {
@@ -104,17 +104,17 @@ class SettingsViewModelTests: XCTestCase {
     }
     
     func test_row_returnsCorrectRowForFAQRow() {
-        let faqs = getSettingsRow(forRow: 0, section: 2 + appearanceSection)
+        let faqs = getSettingsRow(forRow: 1, section: 2 + appearanceSection)
         XCTAssertEqual(faqs?.title, "FAQs")
     }
     
     func test_row_returnsCorrectRowForContactRow() {
-        let contact = getSettingsRow(forRow: 1, section: 2 + appearanceSection)
+        let contact = getSettingsRow(forRow: 2, section: 2 + appearanceSection)
         XCTAssertEqual(contact?.title, "Contact us")
     }
     
     func test_row_returnsCorrectRowForRateUsRow() {
-        let rateApp = getSettingsRow(forRow: 2, section: 2 + appearanceSection)
+        let rateApp = getSettingsRow(forRow: 3, section: 2 + appearanceSection)
         XCTAssertEqual(rateApp?.title, "Rate this app")
     }
     
