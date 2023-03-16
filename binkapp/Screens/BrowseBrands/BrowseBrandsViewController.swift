@@ -24,8 +24,8 @@ class BrowseBrandsViewController: BinkViewController {
     
     private var filtersVisible = false
     private var selectedCollectionViewIndexPaths: [IndexPath] = []
-    
     private var filtersButton: UIBarButtonItem?
+    
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.alwaysBounceVertical = false

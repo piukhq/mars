@@ -26,7 +26,7 @@ class ScanLoyaltyCardButtonViewModel: NSObject {
         case .retailer:
             return L10n.scanButtonTitle
         case .custom:
-            return "Add custom card"
+            return L10n.scanButtonCustomTitle
         }
     }
     
@@ -35,7 +35,7 @@ class ScanLoyaltyCardButtonViewModel: NSObject {
         case .retailer:
             return L10n.scanButtonSubtitle
         case .custom:
-            return "Can't find your card? Add custom cards here"
+            return L10n.scanButtonCustomSubtitle
         }
     }
 

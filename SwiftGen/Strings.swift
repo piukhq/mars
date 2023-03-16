@@ -739,6 +739,10 @@ internal enum L10n {
   internal static let scanACardDescription = L10n.tr("Localizable", "scan_a_card_description", fallback: "Scan a card you already have")
   /// Scan and link your payment card
   internal static let scanAndLinkDescription = L10n.tr("Localizable", "scan_and_link_description", fallback: "Scan and link your payment card")
+  /// Can't find your card? Add custom cards here
+  internal static let scanButtonCustomSubtitle = L10n.tr("Localizable", "scan_button_custom_subtitle", fallback: "Can't find your card? Add custom cards here")
+  /// Add custom card
+  internal static let scanButtonCustomTitle = L10n.tr("Localizable", "scan_button_custom_title", fallback: "Add custom card")
   /// Quickly add a card you already have
   internal static let scanButtonSubtitle = L10n.tr("Localizable", "scan_button_subtitle", fallback: "Quickly add a card you already have")
   /// Scan loyalty card
