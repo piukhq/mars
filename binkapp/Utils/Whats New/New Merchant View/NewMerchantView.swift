@@ -11,6 +11,27 @@ import SwiftUI
 // swiftlint:disable force_unwrapping
 
 struct NewMerchantView: View {
+    enum Constants {
+        static let cornerRadius: CGFloat = 12
+        static let cardCornerRadius: CGFloat = 15
+        static let cardWidth: CGFloat = 514.29
+        static let cardHeight: CGFloat = 333.64
+        static let secondaryRectXPos: CGFloat = 193
+        static let secondaryRectYPos: CGFloat = 138.72
+        static let secondaryRectRotation: CGFloat = -46
+        static let primaryRectXPos: CGFloat = 216
+        static let primaryRectYPos: CGFloat = 128.72
+        static let primaryRectRotation: CGFloat = -23
+        static let imageSize = CGSize(width: 70, height: 70)
+        static let horizontalPadding: CGFloat = 20
+        static let topPadding: CGFloat = 37
+        static let outerFrameHeight: CGFloat = 120
+        static let textStackLeadingPadding: CGFloat = 165
+        static let textVerticalPadding: CGFloat = 3
+        static let textHorizontalPadding: CGFloat = 10
+        static let featureTextPadding: CGFloat = 10
+    }
+    
     @ObservedObject var viewModel: NewMerchantViewModel
     var parentSize: CGSize
     
@@ -29,23 +50,23 @@ struct NewMerchantView: View {
         } label: {
             ZStack {
                 /// Main rect ------
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                RoundedRectangle(cornerRadius: Constants.cornerRadius, style: .continuous)
                     .foregroundColor(.white)
                 /// --------------------------------------------------
                 
                 /// Secondary rect ------
-                RoundedRectangle(cornerRadius: 15)
-                    .frame(width: 514.29, height: 333.64)
-                    .offset(x: 193, y: 138.72)
-                    .rotationEffect(.degrees(-46))
+                RoundedRectangle(cornerRadius: Constants.cardCornerRadius)
+                    .frame(width: Constants.cardWidth, height: Constants.cardHeight)
+                    .offset(x: Constants.secondaryRectXPos, y: Constants.secondaryRectYPos)
+                    .rotationEffect(.degrees(Constants.secondaryRectRotation))
                     .foregroundColor(viewModel.secondaryColor)
                 /// --------------------------------------------------
                 
                 /// Primary rect ------
-                RoundedRectangle(cornerRadius: 15)
-                    .frame(width: 514.29, height: 333.64)
-                    .offset(x: 216, y: 128.72)
-                    .rotationEffect(.degrees(-23))
+                RoundedRectangle(cornerRadius: Constants.cardCornerRadius)
+                    .frame(width: Constants.cardWidth, height: Constants.cardHeight)
+                    .offset(x: Constants.primaryRectXPos, y: Constants.primaryRectYPos)
+                    .rotationEffect(.degrees(Constants.primaryRectRotation))
                     .foregroundColor(viewModel.primaryColor)
                 /// --------------------------------------------------
                 
@@ -54,19 +75,19 @@ struct NewMerchantView: View {
                     if let iconImage = viewModel.iconImage {
                         Image(uiImage: iconImage)
                             .resizable()
-                            .frame(width: 70, height: 70, alignment: .center)
+                            .frame(width: Constants.imageSize.width, height: Constants.imageSize.height, alignment: .center)
                             .cornerRadius(LayoutHelper.iconCornerRadius)
                     } else {
                         Image(uiImage: UIImage(named: "bink-icon-logo")!)
                             .resizable()
-                            .frame(width: 70, height: 70, alignment: .center)
+                            .frame(width: Constants.imageSize.width, height: Constants.imageSize.height, alignment: .center)
                             .cornerRadius(LayoutHelper.iconCornerRadius)
                     }
                     
                     Spacer()
                 }
-                .padding(.horizontal, 20)
-                .frame(width: width, height: 120)
+                .padding(.horizontal, Constants.horizontalPadding)
+                .frame(width: width, height: Constants.outerFrameHeight)
                 /// --------------------------------------------------
                 
                 
@@ -91,10 +112,10 @@ struct NewMerchantView: View {
                     
                     Spacer()
                 }
-                .padding(.top, 37)
-                .padding(.leading, 165)
-                .padding(.trailing, 20)
-                .frame(width: width, height: 120)
+                .padding(.top, Constants.topPadding)
+                .padding(.leading, Constants.textStackLeadingPadding)
+                .padding(.trailing, Constants.horizontalPadding)
+                .frame(width: width, height: Constants.outerFrameHeight)
                 /// --------------------------------------------------
                 
                 /// New retailer text
@@ -103,8 +124,8 @@ struct NewMerchantView: View {
                     VStack(alignment: .trailing) {
                         Text("NEW RETAILER")
                             .font(.nunitoExtraBold(9))
-                            .padding(.vertical, 3)
-                            .padding(.horizontal, 10)
+                            .padding(.vertical, Constants.textVerticalPadding)
+                            .padding(.horizontal, Constants.textHorizontalPadding)
                             .foregroundColor(.white)
                             .background(.white.opacity(0.3))
                             .clipShape(RoundedRectangle(cornerRadius: 5))
@@ -112,8 +133,8 @@ struct NewMerchantView: View {
                         Spacer()
                     }
                 }
-                .padding(10)
-                .frame(width: width, height: 120)
+                .padding(Constants.featureTextPadding)
+                .frame(width: width, height: Constants.outerFrameHeight)
                 /// --------------------------------------------------
                 
                 /// Disclosure image
@@ -122,13 +143,13 @@ struct NewMerchantView: View {
                     Image(systemName: "chevron.right")
                         .foregroundColor(.white)
                 }
-                .frame(width: width, height: 120)
-                .padding(.trailing, 20)
+                .frame(width: width, height: Constants.outerFrameHeight)
+                .padding(.trailing, Constants.horizontalPadding)
                 /// --------------------------------------------------
             }
-            .frame(width: width, height: 120)
+            .frame(width: width, height: Constants.outerFrameHeight)
             .clipShape(
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                RoundedRectangle(cornerRadius: Constants.cornerRadius, style: .continuous)
             )
         }
     }
