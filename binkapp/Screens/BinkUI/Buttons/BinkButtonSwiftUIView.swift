@@ -150,8 +150,9 @@ struct BinkButtonsStackView: View {
                     Spacer(minLength: BinkButtonsView.bottomSafePadding)
                 }
             }
-            .frame(width: UIScreen.main.bounds.width, height: BinkButtonsView.bottomSafePadding + (Constants.height * CGFloat(buttons.count)), alignment: .center)
+
         }
+        .frame(width: UIScreen.main.bounds.width, height: BinkButtonsView.bottomSafePadding + (Constants.height * CGFloat(buttons.count)), alignment: .center)
         .background(Color.clear)
         .edgesIgnoringSafeArea(.bottom)
         .offset(y: BinkButtonsView.bottomSafePadding - BinkButtonsView.bottomPadding)
