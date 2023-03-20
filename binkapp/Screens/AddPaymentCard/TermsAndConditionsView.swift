@@ -18,13 +18,12 @@ struct TermsAndConditionsView: View {
                     .padding(.leading, 25)
                  Spacer()
             }
-            Text(L10n.termsAndConditionsDescription)
+            Text(viewModel.termsAndConditionsDescription)
                 .uiFont(.bodyTextLarge)
                 .padding(.horizontal, 25)
                 .minimumScaleFactor(0.5)
             
             BinkButtonsStackView(buttons: [viewModel.iAcceptButton, viewModel.iDeclineButton])
-//                .background(Color.pink)
         }
     }
 }
@@ -38,13 +37,27 @@ struct TermsAndConditionsView_Previews: PreviewProvider {
 class TermsAndConditionsViewModel {
     lazy var iAcceptButton: BinkButtonSwiftUIView = {
         return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.iAccept), alwaysEnabled: true, buttonTapped: {
-            
+            Current.navigate.close {}
         }, type: .gradient)
     }()
     
     lazy var iDeclineButton: BinkButtonSwiftUIView = {
         return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.iDecline), alwaysEnabled: true, buttonTapped: {
-            
+            Current.navigate.close()
         }, type: .plain)
     }()
+    
+    var termsAndConditionsDescription: AttributedString {
+        var attributedString = AttributedString(L10n.termsAndConditionsDescription)
+        attributedString.font = .bodyTextLarge
+        
+        if let privacyPolicyRange = attributedString.range(of: L10n.privacyPolicy) {
+            var container = AttributeContainer()
+            container.link = URL(string: "https://bink.com/privacy-policy/")
+            container.foregroundColor = .blueAccent
+            container.underlineStyle = .single
+            attributedString[privacyPolicyRange].mergeAttributes(container)
+        }
+        return attributedString
+    }
 }
