@@ -18,13 +18,14 @@ struct TermsAndConditionsView: View {
                     .uiFont(.headline)
                     .padding(.leading, 25)
                 
-                 Spacer()
+                Spacer()
             }
+            
             Text(viewModel.termsAndConditionsDescription)
                 .uiFont(.bodyTextLarge)
                 .padding(.horizontal, 25)
                 .minimumScaleFactor(0.5)
-            
+                
             BinkButtonsStackView(buttons: [viewModel.iAcceptButton, viewModel.iDeclineButton])
         }
         .padding(.top, 20)
@@ -46,9 +47,7 @@ class TermsAndConditionsViewModel {
     
     lazy var iAcceptButton: BinkButtonSwiftUIView = {
         return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.iAccept), enabled: true, buttonTapped: {
-            Current.navigate.close {
-                self.acceptAction?()
-            }
+            self.acceptAction?()
         }, type: .gradient)
     }()
     
