@@ -20,15 +20,15 @@ struct TermsAndConditionsView: View {
                 
                 Spacer()
             }
+            .background(Color.clear)
             
             Text(viewModel.termsAndConditionsDescription)
                 .uiFont(.bodyTextLarge)
                 .padding(.horizontal, 25)
                 .minimumScaleFactor(0.5)
-                
+
             BinkButtonsStackView(buttons: [viewModel.iAcceptButton, viewModel.iDeclineButton])
         }
-        .padding(.top, 20)
     }
 }
 
