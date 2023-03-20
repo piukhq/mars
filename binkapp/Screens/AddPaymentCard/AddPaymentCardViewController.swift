@@ -112,8 +112,6 @@ class AddPaymentCardViewController: BaseFormViewController {
                         self?.addButton.toggleLoading(isLoading: false)
                     }
                 }
-            }, declineAction: {
-                Current.navigate.close()
             })
         } else {
             addButton.toggleLoading(isLoading: true)

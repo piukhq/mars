@@ -36,9 +36,8 @@ enum ViewControllerFactory {
         return AuthAndAddViewController(viewModel: viewModel)
     }
     
-    static func makePaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration) -> ReusableTemplateViewController {
-        let viewModel = ReusableModalViewModel(configurationModel: configurationModel)
-        let viewController = ReusableTemplateViewController(viewModel: viewModel)
+    static func makePaymentTermsAndConditionsViewController(acceptActtion: BinkButtonAction? = nil) -> UIViewController {
+        let viewController = UIHostingController(rootView: TermsAndConditionsView(viewModel: TermsAndConditionsViewModel(acceptAction: acceptActtion)))
         return viewController
     }
     

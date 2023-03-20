@@ -9,13 +9,15 @@
 import SwiftUI
 
 struct TermsAndConditionsView: View {
-    var viewModel = TermsAndConditionsViewModel()
+    var viewModel: TermsAndConditionsViewModel
+    
     var body: some View {
         VStack {
             HStack {
                 Text(L10n.termsAndConditionsTitle)
                     .uiFont(.headline)
                     .padding(.leading, 25)
+                
                  Spacer()
             }
             Text(viewModel.termsAndConditionsDescription)
@@ -25,24 +27,33 @@ struct TermsAndConditionsView: View {
             
             BinkButtonsStackView(buttons: [viewModel.iAcceptButton, viewModel.iDeclineButton])
         }
+        .padding(.top, 20)
     }
 }
 
 struct TermsAndConditionsView_Previews: PreviewProvider {
     static var previews: some View {
-        TermsAndConditionsView()
+        TermsAndConditionsView(viewModel: TermsAndConditionsViewModel(acceptAction: {}))
     }
 }
 
 class TermsAndConditionsViewModel {
+    var acceptAction: BinkButtonAction?
+    
+    init(acceptAction: BinkButtonAction? = nil) {
+        self.acceptAction = acceptAction
+    }
+    
     lazy var iAcceptButton: BinkButtonSwiftUIView = {
-        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.iAccept), alwaysEnabled: true, buttonTapped: {
-            Current.navigate.close {}
+        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.iAccept), enabled: true, buttonTapped: {
+            Current.navigate.close {
+                self.acceptAction?()
+            }
         }, type: .gradient)
     }()
     
     lazy var iDeclineButton: BinkButtonSwiftUIView = {
-        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.iDecline), alwaysEnabled: true, buttonTapped: {
+        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.iDecline), enabled: true, buttonTapped: {
             Current.navigate.close()
         }, type: .plain)
     }()
