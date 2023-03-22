@@ -59,8 +59,8 @@ class AddPaymentCardViewModelTests: XCTestCase {
     }
     
     func test_toPaymentTermsAndConditions_shouldNavigate() throws {
-        Self.model.toPaymentTermsAndConditions(acceptAction: {}, declineAction: {})
-        XCTAssertTrue(currentViewController.isKind(of: ReusableTemplateViewController.self))
+        Self.model.toPaymentTermsAndConditions(acceptAction: {})
+        XCTAssertTrue(currentViewController.isKind(of: UIHostingController<TermsAndConditionsView>.self))
     }
     
     func test_toPrivacyAndSecurity_shouldNavigate() throws {

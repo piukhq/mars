@@ -84,9 +84,8 @@ class ViewControllerFactoryTests: XCTestCase, CoreDataTestable {
     }
     
     func test_makePaymentTermsAndConditionsViewController_navigatesToCorrectViewController() {
-        let configurationModel = ReusableModalConfiguration(title: L10n.termsAndConditionsTitle, text: NSMutableAttributedString(), primaryButtonTitle: L10n.iAccept, primaryButtonAction: nil, secondaryButtonTitle: L10n.iDecline, secondaryButtonAction: nil)
-        let vc = ViewControllerFactory.makePaymentTermsAndConditionsViewController(configurationModel: configurationModel)
-        XCTAssertTrue(vc.isKind(of: ReusableTemplateViewController.self))
+        let vc = ViewControllerFactory.makePaymentTermsAndConditionsViewController()
+        XCTAssertTrue(vc.isKind(of: UIHostingController<TermsAndConditionsView>.self))
     }
     
     func test_makePllViewController_navigatesToCorrectViewController() {
