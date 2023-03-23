@@ -112,6 +112,9 @@ platform :ios do
 
   desc "Submit merge request build to TestFlight"
   lane :mr do |options|
+	
+ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = "true"
+
     app_store_connect_api_key(
       key_id: ENV["FASTLANE_ASC_KEY_ID"],
       issuer_id: ENV["FASTLANE_ASC_ISSUER_ID"],
