@@ -11,7 +11,7 @@ import Alamofire
 import AlamofireImage
 import Mocker
 
-// swiftlint:disable force_try force_unwrapping identifier_name
+// swiftlint:disable identifier_name
 
 // MARK: - Config and init
 struct NetworkResponseData {

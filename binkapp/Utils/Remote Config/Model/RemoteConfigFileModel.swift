@@ -13,6 +13,7 @@ struct RemoteConfigFile: Codable {
     let appConfig: AppConfig?
     let dynamicActions: [DynamicAction]?
     let beta: Beta?
+    let whatsNew: WhatsNewModel?
     let releases: [ReleaseGroup]?
     
     enum CodingKeys: String, CodingKey {
@@ -20,6 +21,7 @@ struct RemoteConfigFile: Codable {
         case appConfig = "app_config"
         case dynamicActions = "dynamic_actions"
         case beta
+        case whatsNew = "whats_new"
         case releases
     }
     
