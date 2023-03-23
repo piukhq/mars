@@ -9,7 +9,7 @@ platform :ios do
   before_all do |lane, options|
 
     ENV["MATCH_PASSWORD"] = "c3rt1f1cat3s"
-    ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = 'true' 
+    ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = 'false' 
 
     # This excludes these targets from the code coverage, required if we just want BinkApp posted to Slack
     ENV["COVERAGE_EXCLUDE_TARGETS"] = ""
@@ -124,7 +124,7 @@ platform :ios do
 target =
     run_tests(
       workspace: "binkapp.xcworkspace",
-      device: "iPhone 12 Pro",
+      device: "iPhone 14",
       scheme: "binkapp tests"
     )
 
