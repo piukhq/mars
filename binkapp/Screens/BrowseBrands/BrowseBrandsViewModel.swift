@@ -15,6 +15,7 @@ class BrowseBrandsViewModel: ObservableObject {
     var shouldShowNoResultsLabel: Bool {
         return filteredPlans.isEmpty
     }
+    
     var searchText = "" {
         didSet {
             filterPlans()
@@ -55,7 +56,7 @@ class BrowseBrandsViewModel: ObservableObject {
     func getMembershipPlan(for indexPath: IndexPath) -> CD_MembershipPlan? {
         switch indexPath.section {
         case 0:
-            return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? getStoreMembershipPlans()[safe: indexPath.row]  : getSeeMembershipPlans()[safe: indexPath.row] ) : getPllMembershipPlans()[safe: indexPath.row]
+            return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? getStoreMembershipPlans()[safe: indexPath.row] : getSeeMembershipPlans()[safe: indexPath.row] ) : getPllMembershipPlans()[safe: indexPath.row]
         case 1:
             return getPllMembershipPlans().isEmpty ? getStoreMembershipPlans()[safe: indexPath.row] : (getSeeMembershipPlans().isEmpty ? getStoreMembershipPlans()[safe: indexPath.row] : getSeeMembershipPlans()[safe: indexPath.row])
         case 2:
@@ -69,7 +70,7 @@ class BrowseBrandsViewModel: ObservableObject {
     func getSectionTitleText(section: Int) -> String {
         switch section {
         case 0:
-            return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? L10n.storeTitle  : L10n.seeTitle) : L10n.pllTitle
+            return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? L10n.storeTitle : L10n.seeTitle) : L10n.pllTitle
         case 1:
             return getPllMembershipPlans().isEmpty ? L10n.storeTitle : (getSeeMembershipPlans().isEmpty ? L10n.storeTitle : L10n.seeTitle)
         case 2:

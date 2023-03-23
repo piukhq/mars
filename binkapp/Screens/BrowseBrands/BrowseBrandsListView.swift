@@ -29,30 +29,40 @@ struct BrowseBrandsListView: View {
         ScrollViewReader { proxy in
             ScrollView {
                 VStack(spacing: 0) {
-                    ForEach(0..<viewModel.sections.count, id: \.self) { sectionIndex in
-                        let sectionData = viewModel.sections[sectionIndex]
-                        if !sectionData.isEmpty {
-                            BrowseBrandsHeaderView(viewModel: viewModel, section: sectionIndex).id(idForSection(sectionIndex))
-                        }
-                        
-                        ForEach(0..<sectionData.count, id: \.self) { index in
-                            if let membershipPlan = sectionData[safe: index], let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
-                                let brandViewModel = BrowseBrandsListRowViewModel(title: brandName, plan: membershipPlan, brandExists: brandExists, showSeparator: true) {
-                                    viewModel.toAddOrJoinScreen(membershipPlan: membershipPlan)
-                                }
-                                
-                                VStack(spacing: 0) {
-                                    BrowseBrandsListRowView(viewModel: brandViewModel)
+                    if viewModel.shouldShowNoResultsLabel {
+                        ScanLoyaltyCardButtonView(viewModel: ScanLoyaltyCardButtonViewModel(type: .custom))
+                        Text(L10n.noMatches)
+                            .uiFont(.bodyTextLarge)
+                            .foregroundColor(Color(Current.themeManager.color(for: .text)))
+                            .padding(.top, 30)
+                    } else {
+                        ForEach(0..<viewModel.sections.count, id: \.self) { sectionIndex in
+                            let sectionData = viewModel.sections[sectionIndex]
+                            if !sectionData.isEmpty {
+                                BrowseBrandsHeaderView(viewModel: viewModel, section: sectionIndex).id(idForSection(sectionIndex))
+                            }
+                            
+                            ForEach(0..<sectionData.count, id: \.self) { index in
+                                if let membershipPlan = sectionData[safe: index], let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
+                                    let brandViewModel = BrowseBrandsListRowViewModel(title: brandName, plan: membershipPlan, brandExists: brandExists, showSeparator: true) {
+                                        viewModel.toAddOrJoinScreen(membershipPlan: membershipPlan)
+                                    }
                                     
-                                    if shouldShowSeparator(index: index, rowsInsection: sectionData.count) {
-                                        Rectangle()
-                                            .fill(Color(themeManager.color(for: .divider)))
-                                            .frame(height: Constants.separatorHeight)
-                                            .padding(.horizontal, 25)
+                                    VStack(spacing: 0) {
+                                        BrowseBrandsListRowView(viewModel: brandViewModel)
+                                        
+                                        if shouldShowSeparator(index: index, rowsInsection: sectionData.count) {
+                                            Rectangle()
+                                                .fill(Color(themeManager.color(for: .divider)))
+                                                .frame(height: Constants.separatorHeight)
+                                                .padding(.horizontal, 25)
+                                        }
                                     }
                                 }
                             }
                         }
+                        
+                        ScanLoyaltyCardButtonView(viewModel: ScanLoyaltyCardButtonViewModel(type: .custom))
                     }
                 }
                 .background(Color(Current.themeManager.color(for: .viewBackground)))
