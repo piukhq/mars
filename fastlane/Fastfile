@@ -9,7 +9,7 @@ platform :ios do
   before_all do |lane, options|
 
     ENV["MATCH_PASSWORD"] = "c3rt1f1cat3s"
-    ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = 'true' 
+    ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = "false"
 
     # This excludes these targets from the code coverage, required if we just want BinkApp posted to Slack
     ENV["COVERAGE_EXCLUDE_TARGETS"] = ""
@@ -112,9 +112,6 @@ platform :ios do
 
   desc "Submit merge request build to TestFlight"
   lane :mr do |options|
-	
-ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = "false"
-
     app_store_connect_api_key(
       key_id: ENV["FASTLANE_ASC_KEY_ID"],
       issuer_id: ENV["FASTLANE_ASC_ISSUER_ID"],
