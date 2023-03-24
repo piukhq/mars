@@ -36,8 +36,8 @@ enum ViewControllerFactory {
         return AuthAndAddViewController(viewModel: viewModel)
     }
     
-    static func makePaymentTermsAndConditionsViewController(acceptActtion: BinkButtonAction? = nil) -> UIViewController {
-        let viewController = UIHostingController(rootView: TermsAndConditionsView(viewModel: TermsAndConditionsViewModel(acceptAction: acceptActtion)))
+    static func makePaymentTermsAndConditionsViewController(acceptAction: BinkButtonAction? = nil) -> UIViewController {
+        let viewController = UIHostingController(rootView: TermsAndConditionsView(viewModel: TermsAndConditionsViewModel(acceptAction: acceptAction)))
         viewController.view.backgroundColor = Current.themeManager.color(for: .viewBackground)
         return viewController
     }

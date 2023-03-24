@@ -54,7 +54,7 @@ class AddPaymentCardViewModel {
     }
 
     func toPaymentTermsAndConditions(acceptAction: @escaping BinkButtonAction) {
-        let viewController = ViewControllerFactory.makePaymentTermsAndConditionsViewController(acceptActtion: acceptAction)
+        let viewController = ViewControllerFactory.makePaymentTermsAndConditionsViewController(acceptAction: acceptAction)
         let navigationRequest = ModalNavigationRequest(viewController: viewController, dragToDismiss: false, hideCloseButton: true)
         Current.navigate.to(navigationRequest)
     }
