@@ -9,38 +9,41 @@
 import Foundation
 import FirebaseFirestore
 
+
 class PollSwiftUIViewModel: ObservableObject {
     @Published var pollData: PollModel?
+    var votingModel: PollVotingModel?
     
     init () {
-        self.fetchPoll(documentId: "ocucW1dmZJOqsdgQJ1Qu")
+        self.getPollData()
     }
     
-    private func fetchPoll(documentId: String) {
-        let db = Firestore.firestore()
-        let docRef = db.collection("polls").document(documentId)
-        
-        docRef.getDocument(as: PollModel.self) { [weak self] result in
-            switch result {
-            case .success(let poll):
-                print(poll)
-                //self?.addVoting()
-                self?.pollData = poll
-            case .failure(let error):
-                print(error.localizedDescription)
+    private func getPollData() {
+        Current.firestoreManager.fetchDocument(PollModel.self, collection: "polls", documentId: "ocucW1dmZJOqsdgQJ1Qu") { [weak self] data in
+            if let validData = data {
+                self?.pollData = validData
+                
+                Current.firestoreManager.fetchDocumentsInCollection(PollVotingModel.self, collection: "pollResults") { [weak self] data in
+                    if let documents = data {
+                        self?.votingModel = documents.first(where: { $0.userId == "Ricardo" && $0.pollId == self?.pollData?.id })
+                    }
+                }
             }
+            
+            //let vote = PollVotingModel(pollId: "ocucW1dmZJOqsdgQJ1Qu", userId: "Ricardo", createdDate: Int(Date().timeIntervalSince1970), overwritten: false, answer: "Test")
+            //Current.firestoreManager.addDocument(vote, collection: "pollResults")
         }
     }
     
-    func addVoting() {
-        let db = Firestore.firestore()
-        let collectionRef = db.collection("pollResults")
-        do {
-            let vote = PollVotingModel(pollId: "ocucW1dmZJOqsdgQJ1Qu", userId: UUID().uuidString, createdDate: Int(Date().timeIntervalSince1970), overwritten: false, answer: "Apple")
-            let newDocReference = try collectionRef.addDocument(from: vote)
-            print("Voting stored with new document reference: \(newDocReference)")
-        } catch {
-            print(error)
+    func setAnswer(answer: String) {
+        if var model = votingModel {
+            model.answer = answer
+            Current.firestoreManager.addDocument(model, collection: "pollResults")
+        } else {
+            votingModel = PollVotingModel(pollId: pollData?.id ?? "", userId: "Ricardo", createdDate: Int(Date().timeIntervalSince1970), overwritten: false, answer: answer)
+            Current.firestoreManager.addDocument(votingModel, collection: "pollResults") { [weak self] documentId in
+                self?.votingModel?.id = documentId
+            }
         }
     }
     

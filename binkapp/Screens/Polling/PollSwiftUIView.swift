@@ -26,7 +26,7 @@ struct PollSwiftUIView: View {
                     VStack {
                         ForEach(viewModel.pollData?.answers ?? [], id: \.self) { answer in
                             Button(action: {
-                                // What to do
+                                viewModel.setAnswer(answer: "TEST")
                             }) {
                                 ZStack(alignment: .leading) {
                                     RoundedRectangle(cornerRadius: 12, style: .continuous)

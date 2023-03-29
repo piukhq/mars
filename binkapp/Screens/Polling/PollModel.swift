@@ -16,7 +16,7 @@ enum PollStatus: Int, Codable {
 }
 
 struct PollModel: Codable {
-    var id: String
+    @DocumentID var id: String?
     var title: String
     var answers: [String]
     var startTime: Int

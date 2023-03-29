@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		2106F1F029D44D0800EEDBE4 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2106F1EF29D44D0800EEDBE4 /* FirestoreManager.swift */; };
 		211058492909469B00DFDF90 /* PaymentWalletViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211058482909469B00DFDF90 /* PaymentWalletViewModelTests.swift */; };
 		2110584C2909637300DFDF90 /* MerchantHeroCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110584B2909637300DFDF90 /* MerchantHeroCellTests.swift */; };
 		2110584F2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110584E2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift */; };
@@ -736,6 +737,7 @@
 
 /* Begin PBXFileReference section */
 		0578BBF342AD2E4F349D1822 /* Pods_binkappUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2106F1EF29D44D0800EEDBE4 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		211058482909469B00DFDF90 /* PaymentWalletViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWalletViewModelTests.swift; sourceTree = "<group>"; };
 		2110584B2909637300DFDF90 /* MerchantHeroCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantHeroCellTests.swift; sourceTree = "<group>"; };
 		2110584E2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletLoyaltyCardCellViewModelTests.swift; sourceTree = "<group>"; };
@@ -1985,6 +1987,7 @@
 				BD458B3F236C987F0029A538 /* UserManager.swift */,
 				CE65ED972840D8F70043E7B8 /* BinkSupportUtility.swift */,
 				214EC01E28732020000A3F73 /* GifLoader.swift */,
+				2106F1EF29D44D0800EEDBE4 /* FirestoreManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -4247,6 +4250,7 @@
 				EF758E0F23225F45000D26A9 /* NSManagedObjectContext.swift in Sources */,
 				CE07917A25ADB4A4009FE8BA /* LoyaltyWalletAnimator.swift in Sources */,
 				EFA5F6D12379A53B0027AB80 /* VoucherBurnModel.swift in Sources */,
+				2106F1F029D44D0800EEDBE4 /* FirestoreManager.swift in Sources */,
 				70E8E5A72567FB690027A244 /* OptionalExtension.swift in Sources */,
 				EF485574231D72A700FC9E5F /* DebugMenuViewModel.swift in Sources */,
 				EFA5F7152379A7C70027AB80 /* _CD_Tier.swift in Sources */,

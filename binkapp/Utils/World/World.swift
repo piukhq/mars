@@ -25,6 +25,7 @@ class World {
     lazy var themeManager = ThemeManager()
     lazy var watchController = WatchController()
     lazy var dateManager = DateManager()
+    lazy var firestoreManager = FirestoreManager()
 
     var onboardingTrackingId: String? // Stored to provide a consistent id from start to finish of onboarding, reset upon a new journey
     var inAppReviewableJourney: Any? // We cast this to the correct type using generics when we need to

@@ -7,8 +7,10 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
 struct PollVotingModel: Codable {
+    @DocumentID var id: String?
     var pollId: String
     var userId: String
     var createdDate: Int
