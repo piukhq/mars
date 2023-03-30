@@ -41,9 +41,7 @@ extension UIColor {
         return UIColor(red: 177 / 255, green: 194 / 255, blue: 203 / 255, alpha: 1.0)
     }
     
-    static let binkGradientBlueLeft = UIColor(hexString: "194B53")
-    static let binkGradientBlueRight = UIColor(hexString: "3D908F")
-    static let binkBlueTitleText = UIColor(hexString: "438086")
+    static let binkBlue = UIColor(hexString: "077EA8")
 
     // MARK: - Card swipe gradients
     static let barcodeSwipeGradientLeft = UIColor(red: 180 / 255.0, green: 111 / 255.0, blue: 234 / 255.0, alpha: 1.0)
@@ -76,8 +74,6 @@ extension UIColor {
     static let visaPaymentCardGradients: [CGColor] = [UIColor.visaGradientLeft.cgColor, UIColor.visaGradientRight.cgColor]
     static let mastercardPaymentCardGradients: [CGColor] = [UIColor.mastercardGradientLeft.cgColor, UIColor.mastercardGradientRight.cgColor]
     static let amexPaymentCardGradients: [CGColor] = [UIColor.amexGradientLeft.cgColor, UIColor.amexGradientRight.cgColor]
-    static let unknownPaymentCardGradients: [CGColor] = [UIColor.binkGradientBlueLeft.cgColor, UIColor.binkGradientBlueRight.cgColor]
-    static let binkSwitchGradients: [CGColor] = [UIColor.binkGradientBlueLeft.cgColor, UIColor.binkGradientBlueRight.cgColor]
 
     // MARK: - Loyalty card secondary color helpers
 

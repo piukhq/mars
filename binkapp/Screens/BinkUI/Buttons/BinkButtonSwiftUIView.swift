@@ -67,10 +67,11 @@ struct BinkButtonSwiftUIView: View, Identifiable {
         .disabled(!enabled)
         .background(
             ZStack {
-                Color(.clear)
                 if type == .gradient {
-                    LinearGradient(gradient: Gradient(colors: [Color(.binkGradientBlueRight), Color(.binkGradientBlueLeft)]), startPoint: .leading, endPoint: .trailing)
+                    Color(uiColor: .binkBlue)
                         .opacity(enabled ? Constants.fullOpacity : Constants.halfOpacity)
+                } else {
+                    Color(.clear)
                 }
             })
         .cornerRadius(Constants.cornerRadius)

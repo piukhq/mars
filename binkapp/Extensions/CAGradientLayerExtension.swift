@@ -13,7 +13,6 @@ extension CAGradientLayer {
     static let mastercardPaymentCardGradient = makeGradient(firstColor: .mastercardGradientLeft, secondColor: .mastercardGradientRight)
     static let amexPaymentCardGradient = makeGradient(firstColor: .amexGradientLeft, secondColor: .amexGradientRight)
     static let unknownPaymentCardGradient = makeGradient(firstColor: .unknownGradientLeft, secondColor: .unknownGradientRight)
-    static let binkSwitchGradient = makeGradient(firstColor: .binkGradientBlueLeft, secondColor: .binkGradientBlueRight)
 
     static func makeGradient(firstColor: UIColor, secondColor: UIColor) -> CAGradientLayer {
         let gradientLayer = CAGradientLayer()

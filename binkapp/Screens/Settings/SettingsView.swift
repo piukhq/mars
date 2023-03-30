@@ -69,7 +69,7 @@ struct SettingsHeaderView: View {
         HStack {
             Text(title)
                 .uiFont(.headline)
-                .foregroundColor(Color(UIColor.binkBlueTitleText))
+                .foregroundColor(Color(UIColor.binkBlue))
 
             Spacer()
         }

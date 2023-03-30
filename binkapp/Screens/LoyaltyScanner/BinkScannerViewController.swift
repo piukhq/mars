@@ -415,7 +415,7 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
                         self.stopScanning()
                         self.nameOnCardLabel.text = self.visionUtility.paymentCard.nameOnCard ?? ""
                         self.nameOnCardLabel.alpha = 1
-                        self.guideImageView.tintColor = .binkBlueTitleText
+                        self.guideImageView.tintColor = .binkBlue
                         self.guideImageView.layer.addBinkAnimation(.shake)
                     } completion: { _ in
                         HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))

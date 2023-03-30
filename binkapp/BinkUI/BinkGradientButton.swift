@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 class BinkGradientButton: BinkPillButton {
-    private lazy var gradientLayer: CAGradientLayer = {
-        let gradient = CAGradientLayer()
+    private lazy var backgroundLayer: CALayer = {
+        let gradient = CALayer()
         layer.insertSublayer(gradient, at: 0)
         return gradient
     }()
@@ -23,7 +23,7 @@ class BinkGradientButton: BinkPillButton {
     
     override var isEnabled: Bool {
         didSet {
-            gradientLayer.opacity = isEnabled ? 1.0 : 0.5
+            backgroundLayer.opacity = isEnabled ? 1.0 : 0.5
             setTitleColor(isEnabled ? .white : UIColor.white.withAlphaComponent(0.5), for: .normal)
         }
     }
@@ -31,7 +31,10 @@ class BinkGradientButton: BinkPillButton {
     override func layoutSubviews() {
         // We need to process the gradient before we process the shadow
         // So we call super.layoutSubviews last
-        processGradient(.binkGradientBlueLeft, .binkGradientBlueRight)
+        backgroundLayer.backgroundColor = UIColor.binkBlue.cgColor
+        backgroundLayer.frame = bounds
+        backgroundLayer.cornerRadius = self.frame.size.height / 2
+        backgroundLayer.cornerCurve = .continuous
         super.layoutSubviews()
         setWhiteLayer()
     }
@@ -47,16 +50,6 @@ class BinkGradientButton: BinkPillButton {
         whiteLayer.backgroundColor = Current.themeManager.color(for: .viewBackground).cgColor
         whiteLayer.cornerRadius = self.frame.size.height / 2
         whiteLayer.cornerCurve = .continuous
-    }
-
-    private func processGradient(_ firstColor: UIColor, _ secondColor: UIColor) {
-        gradientLayer.frame = bounds
-        gradientLayer.colors = [firstColor.cgColor, secondColor.cgColor]
-        gradientLayer.locations = [0.0, 1.0]
-        gradientLayer.cornerRadius = self.frame.size.height / 2
-        gradientLayer.cornerCurve = .continuous
-        gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.0)
-        gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
     }
 }
 

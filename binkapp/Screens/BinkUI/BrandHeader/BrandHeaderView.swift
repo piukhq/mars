@@ -34,7 +34,7 @@ class BrandHeaderView: CustomView {
         addGestureRecognizer(gesture)
         
         if let planName = membershipPlan.account?.planName {
-            let attributes: [NSAttributedString.Key: Any] = [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkTextButtonNormal, .foregroundColor: UIColor.blueAccent]
+            let attributes: [NSAttributedString.Key: Any] = [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkTextButtonNormal, .foregroundColor: UIColor.binkBlue]
             let titleAttributedString = NSMutableAttributedString(string: "About \(planName)", attributes: attributes)
             loyaltyPlanButton.setAttributedTitle(titleAttributedString, for: .normal)
             loyaltyPlanButton.titleLabel?.textAlignment = .center
