@@ -59,12 +59,13 @@ class FirestoreManager {
         }
     }
     
-    func updateDocument(_ type: Codable, collection: String, completion: (() -> Void)? = nil) {
-        let collectionRef = db.collection(collection)
+    func updateDocument(_ type: Codable, collection: String, documentId: String, completion: (() -> Void)? = nil) {
+        let collectionRef = db.collection(collection).document(documentId)
         
         do {
-            let newDocReference = try collectionRef.addDocument(from: type)
-            print("Voting stored with new document reference: \(newDocReference)")
+            //let newDocReference = try collectionRef.addDocument(from: type)
+            //print("Voting stored with new document reference: \(newDocReference)")
+            try collectionRef.setData(from: type)
             completion?()
         } catch {
             print(error)

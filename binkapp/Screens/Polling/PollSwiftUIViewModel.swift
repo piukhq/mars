@@ -38,7 +38,8 @@ class PollSwiftUIViewModel: ObservableObject {
     func setAnswer(answer: String) {
         if var model = votingModel {
             model.answer = answer
-            Current.firestoreManager.addDocument(model, collection: "pollResults")
+            model.overwritten = true
+            Current.firestoreManager.updateDocument(model, collection: "pollResults", documentId: model.id ?? "")
         } else {
             votingModel = PollVotingModel(pollId: pollData?.id ?? "", userId: "Ricardo", createdDate: Int(Date().timeIntervalSince1970), overwritten: false, answer: answer)
             Current.firestoreManager.addDocument(votingModel, collection: "pollResults") { [weak self] documentId in
@@ -52,8 +53,8 @@ class PollSwiftUIViewModel: ObservableObject {
             return "0"
         }
         
-        var startDate = NSDate(timeIntervalSince1970: TimeInterval(poll.startTime))
-        var endDate = NSDate(timeIntervalSince1970: TimeInterval(poll.closeTime))
+        let startDate = NSDate(timeIntervalSince1970: TimeInterval(poll.startTime))
+        let endDate = NSDate(timeIntervalSince1970: TimeInterval(poll.closeTime))
         
         let days = Calendar.current.dateComponents([.day], from: startDate as Date, to: endDate as Date).day ?? 0
         return String(days)
