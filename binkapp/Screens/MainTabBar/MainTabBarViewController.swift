@@ -55,6 +55,7 @@ class MainTabBarViewController: UITabBarController {
         tabBar.standardAppearance = Current.themeManager.tabBarAppearance(for: traitCollection)
         tabBar.scrollEdgeAppearance = Current.themeManager.tabBarAppearance(for: traitCollection)
         tabBar.tintColor = Current.themeManager.color(for: .text)
+        
         tabBar.setNeedsLayout()
     }
 }

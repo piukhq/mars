@@ -86,6 +86,7 @@ class ThemeManager: ObservableObject {
         tabAppearance.shadowImage = UIImage()
         tabAppearance.backgroundColor = Styling.Colors.bar
         tabAppearance.backgroundEffect = Styling.barBlur(for: traitCollection)
+        tabAppearance.stackedLayoutAppearance.normal.iconColor = .binkBlue
         return tabAppearance
     }
 
