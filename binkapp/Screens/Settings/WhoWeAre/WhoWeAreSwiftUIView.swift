@@ -23,6 +23,9 @@ struct WhoWeAreSwiftUIView: View {
         static let textStackPadding: CGFloat = 40.0
         static let topPadding: CGFloat = 40.0
     }
+    
+    @Environment(\.colorScheme) private var colorScheme
+
     var teamMembers = [
         BinkTeamMember(name: "Paul Batty"),
         BinkTeamMember(name: "Nick Farrant"),
@@ -39,13 +42,23 @@ struct WhoWeAreSwiftUIView: View {
         BinkTeamMember(name: "Max Woodhams")
     ]
     
+    var logoImageName: String {
+        switch colorScheme {
+        case .dark:
+            return Asset.logoDark.name
+        default:
+            return Asset.logoPrimary.name
+        }
+    }
+    
     var body: some View {
         ScrollView(content: {
             VStack(alignment: .center, spacing: 0, content: {
                 Spacer(minLength: Constants.topPadding)
-                Image(Asset.binkIconLogo.name)
+                Image(logoImageName)
                     .resizable()
-                    .frame(width: Constants.imageSize, height: Constants.imageSize)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: Constants.imageSize)
                     .cornerRadius(Constants.cornerRadius)
                 MainTextStack()
                     .padding(.top, Constants.textStackPadding)

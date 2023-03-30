@@ -230,8 +230,7 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         case .amex:
             cardGradientLayer?.colors = UIColor.amexPaymentCardGradients
         case .none:
-            cardGradientLayer?.removeFromSuperlayer()
-            backgroundColor = UIColor.binkBlue
+            cardGradientLayer?.backgroundColor = UIColor.binkBlue.cgColor
         }
     }
     
