@@ -18,9 +18,7 @@ extension UIColor {
         let rgb: Int = (Int)(r * 255) << 16 | (Int)(g * 255) << 8 | (Int)(b * 255) << 0
         return String(format: "#%06x", rgb)
     }
-    
-    static let blueAccent = UIColor(hexString: "438086")
-    
+        
     class var binkPurple: UIColor {
         return UIColor(red: 180 / 255, green: 111 / 255, blue: 234 / 255, alpha: 1)
     }

@@ -42,7 +42,7 @@ class CheckboxViewModel: ObservableObject, Identifiable {
         if let urlRange = string.range(of: columnName) {
             var container = AttributeContainer()
             container.link = safeUrl
-            container.foregroundColor = Color(UIColor.blueAccent)
+            container.foregroundColor = Color(UIColor.binkBlue)
             container.underlineStyle = .single
             string[urlRange].mergeAttributes(container)
             self.attributedText = string

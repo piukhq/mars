@@ -40,7 +40,7 @@ class PLRStampViewCell: UICollectionViewCell {
         if index < stampsCollected {
             switch state {
             case .redeemed:
-                return .blueAccent
+                return .binkBlue
             case .issued:
                 return .greenOk
             case .inProgress:

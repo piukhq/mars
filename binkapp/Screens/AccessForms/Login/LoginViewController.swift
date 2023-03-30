@@ -42,7 +42,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         button.translatesAutoresizingMaskIntoConstraints = false
         let attrString = NSAttributedString(
             string: L10n.loginForgotPassword,
-            attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
+            attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.binkBlue]
         )
         button.setAttributedTitle(attrString, for: .normal)
         button.contentHorizontalAlignment = .left

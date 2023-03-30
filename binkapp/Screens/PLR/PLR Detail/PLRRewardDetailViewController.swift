@@ -68,7 +68,7 @@ class PLRRewardDetailViewController: BinkViewController {
     private lazy var termsAndConditionsButton: HyperlinkButton = {
         let button = HyperlinkButton()
         button.setTitle(viewModel.termsAndConditionsButtonTitle, for: .normal)
-        button.setTitleColor(.blueAccent, for: .normal)
+        button.setTitleColor(.binkBlue, for: .normal)
         button.titleLabel?.font = .linkUnderlined
         button.addTarget(self, action: #selector(handleTermsAndConditionsButtonPress), for: .touchUpInside)
         return button

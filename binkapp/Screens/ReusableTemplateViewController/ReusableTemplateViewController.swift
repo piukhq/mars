@@ -68,7 +68,7 @@ class ReusableTemplateViewController: BinkViewController, LoyaltyButtonDelegate 
     private func configureUI() {
         textView.textContainerInset = UIEdgeInsets(top: 0, left: -5, bottom: 140, right: -5)
         textView.attributedText = viewModel.text
-        textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
+        textView.linkTextAttributes = [.foregroundColor: UIColor.binkBlue, .underlineStyle: NSUnderlineStyle.single.rawValue]
         textView.textColor = Current.themeManager.color(for: .text)
         
         NSLayoutConstraint.activate([
