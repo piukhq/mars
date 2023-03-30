@@ -21,25 +21,25 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
         container.translatesAutoresizingMaskIntoConstraints = false
         return container
     }()
-
+    
     lazy var onboardingView1: OnboardingLearningView = {
         let onboardingView = OnboardingLearningView(frame: .zero)
         onboardingView.configure(forType: .pll)
         return onboardingView
     }()
-
+    
     lazy var onboardingView2: OnboardingLearningView = {
         let onboardingView = OnboardingLearningView(frame: .zero)
         onboardingView.configure(forType: .wallet)
         return onboardingView
     }()
-
+    
     lazy var onboardingView3: OnboardingLearningView = {
         let onboardingView = OnboardingLearningView(frame: .zero)
         onboardingView.configure(forType: .barcodeOrCollect)
         return onboardingView
     }()
-
+    
     lazy var onboardingViews: [UIView] = {
         return [
             onboardingView1,
@@ -51,20 +51,27 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     private lazy var signInWithAppleEnabled: Bool = {
         return APIConstants.isProduction && Current.isReleaseTypeBuild
     }()
-
+    
     private lazy var loginWithEmailButton: BinkButton = {
         return BinkButton(type: .gradient, title: viewModel.loginWithEmailButtonText) { [weak self] in
             self?.viewModel.pushToLogin()
         }
     }()
-
+    
     lazy var signInWithAppleButton: ASAuthorizationAppleIDButton = {
         let button = ASAuthorizationAppleIDButton(type: .continue, style: .black)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.cornerRadius = 27.5
         return button
     }()
-
+    
+    private lazy var logoImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        view.addSubview(imageView)
+        return imageView
+    }()
 
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
@@ -81,7 +88,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-        pageControl.currentPageIndicatorTintColor = .binkGradientBlueRight
+        pageControl.currentPageIndicatorTintColor = .binkBlue
         pageControl.pageIndicatorTintColor = .lightGray
         pageControl.numberOfPages = onboardingViews.count
         pageControl.currentPage = 0
@@ -134,7 +141,11 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
         learningContainerHeightConstraint.priority = .defaultHigh
         
         NSLayoutConstraint.activate([
-            learningContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: LayoutHelper.Onboarding.learningContainerTopPadding),
+            logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: LayoutHelper.Onboarding.learningContainerTopPadding),
+            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logoImageView.widthAnchor.constraint(equalToConstant: 100),
+            
+            learningContainer.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 10),
             learningContainer.leftAnchor.constraint(equalTo: view.leftAnchor),
             learningContainer.rightAnchor.constraint(equalTo: view.rightAnchor),
             learningContainerHeightConstraint,
@@ -161,6 +172,8 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     }
 
     private func configureUI() {
+        logoImageView.image = Asset.logoPrimary.image
+        
         if signInWithAppleEnabled, let buttonsView = footerButtonsView {
             signInWithAppleButton.layer.applyDefaultBinkShadow()
             buttonsView.insertAdditionalViews([signInWithAppleButton], at: 2)
