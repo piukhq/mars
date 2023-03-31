@@ -57,7 +57,7 @@ class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
     
     override func configureForCurrentTheme() {
         super.configureForCurrentTheme()
-        titleLabel.textColor = .binkBlueTitleText
+        titleLabel.textColor = .binkBlue
     }
     
     @objc func continueButtonTapped() {
