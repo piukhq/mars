@@ -135,6 +135,20 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
         onboardingView2.configure(forType: .wallet)
         onboardingView3.configure(forType: .barcodeOrCollect)
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        configureLogoImage()
+    }
+    
+    private func configureLogoImage() {
+        switch traitCollection.userInterfaceStyle {
+        case .dark:
+            logoImageView.image = Asset.logoDark.image
+        default:
+            logoImageView.image = Asset.logoPrimary.image
+        }
+    }
 
     private func setLayout() {
         let learningContainerHeightConstraint = learningContainer.heightAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.learningContainerHeight)
@@ -143,9 +157,10 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
         NSLayoutConstraint.activate([
             logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: LayoutHelper.Onboarding.learningContainerTopPadding),
             logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoImageView.widthAnchor.constraint(equalToConstant: 100),
+            logoImageView.widthAnchor.constraint(equalToConstant: 233),
+            logoImageView.heightAnchor.constraint(equalToConstant: 156),
             
-            learningContainer.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 10),
+            learningContainer.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: -60),
             learningContainer.leftAnchor.constraint(equalTo: view.leftAnchor),
             learningContainer.rightAnchor.constraint(equalTo: view.rightAnchor),
             learningContainerHeightConstraint,
@@ -172,7 +187,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     }
 
     private func configureUI() {
-        logoImageView.image = Asset.logoPrimary.image
+        configureLogoImage()
         
         if signInWithAppleEnabled, let buttonsView = footerButtonsView {
             signInWithAppleButton.layer.applyDefaultBinkShadow()
