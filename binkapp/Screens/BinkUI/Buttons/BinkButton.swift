@@ -13,7 +13,7 @@ typealias BinkButtonAction = () -> Void
 class BinkButton {
     enum ButtonType: Equatable {
         case pill(BinkPillButton.PillButtonType)
-        case gradient
+        case capsule
         case plain
     }
 
@@ -82,8 +82,8 @@ class BinkButton {
             button.addTarget(self, action: #selector(performAction), for: .touchUpInside)
             button.accessibilityIdentifier = title
             return button
-        case .gradient:
-            let button = BinkGradientButton(type: .system)
+        case .capsule:
+            let button = BinkCapsuleButton(type: .system)
             button.configure(title: title, hasShadow: true)
             button.isEnabled = enabled
             button.addTarget(self, action: #selector(performAction), for: .touchUpInside)

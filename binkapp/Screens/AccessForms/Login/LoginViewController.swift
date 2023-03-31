@@ -26,7 +26,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     }
     
     private lazy var continueButton: BinkButton = {
-        return BinkButton(type: .gradient, title: L10n.continueButtonTitle, enabled: false) { [weak self] in
+        return BinkButton(type: .capsule, title: L10n.continueButtonTitle, enabled: false) { [weak self] in
             self?.continueButtonTapped()
         }
     }()

@@ -25,7 +25,7 @@ class AddPaymentCardViewController: BaseFormViewController {
     }
 
     private lazy var addButton: BinkButton = {
-        return BinkButton(type: .gradient, title: "Add", enabled: false) { [weak self] in
+        return BinkButton(type: .capsule, title: "Add", enabled: false) { [weak self] in
             self?.addButtonTapped()
         }
     }()

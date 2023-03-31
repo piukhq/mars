@@ -1,5 +1,5 @@
 //
-//  BinkGradientButton.swift
+//  BinkCapsuleButton.swift
 //  binkapp
 //
 //  Copyright © 2019 Bink. All rights reserved.
@@ -8,11 +8,11 @@
 import Foundation
 import UIKit
 
-class BinkGradientButton: BinkPillButton {
+class BinkCapsuleButton: BinkPillButton {
     private lazy var backgroundLayer: CALayer = {
-        let gradient = CALayer()
-        layer.insertSublayer(gradient, at: 0)
-        return gradient
+        let backgroundLayer = CALayer()
+        layer.insertSublayer(backgroundLayer, at: 0)
+        return backgroundLayer
     }()
 
     private lazy var whiteLayer: CALayer = {
@@ -29,7 +29,7 @@ class BinkGradientButton: BinkPillButton {
     }
 
     override func layoutSubviews() {
-        // We need to process the gradient before we process the shadow
+        // We need to process the background color before we process the shadow
         // So we call super.layoutSubviews last
         backgroundLayer.backgroundColor = UIColor.binkBlue.cgColor
         backgroundLayer.frame = bounds
@@ -53,7 +53,7 @@ class BinkGradientButton: BinkPillButton {
     }
 }
 
-class BinkMiniGradientButton: BinkGradientButton {
+class BinkMiniCapsuleButton: BinkCapsuleButton {
     override func configure(title: String, hasShadow: Bool = true) {
         setTitle(title, for: .normal)
         setTitleColor(.white, for: .normal)

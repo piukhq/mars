@@ -94,7 +94,7 @@ class ReusableTemplateViewController: BinkViewController, LoyaltyButtonDelegate 
         var buttons: [BinkButton] = []
 
         if let primaryTitle = viewModel.primaryButtonTitle, let primaryAction = viewModel.primaryButtonAction {
-            buttons.append(BinkButton(type: .gradient, title: primaryTitle, action: primaryAction))
+            buttons.append(BinkButton(type: .capsule, title: primaryTitle, action: primaryAction))
         }
 
         if let secondaryTitle = viewModel.secondaryButtonTitle, let secondaryAction = viewModel.secondaryButtonAction {

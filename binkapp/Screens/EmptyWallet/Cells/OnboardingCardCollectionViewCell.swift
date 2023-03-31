@@ -26,7 +26,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        CAGradientLayer.removeGradientLayer(for: headerView)
+        headerView.backgroundColor = .clear
     }
     
     func configureWithWalletPrompt(_ walletPrompt: WalletPrompt) {

@@ -53,7 +53,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     }()
     
     private lazy var loginWithEmailButton: BinkButton = {
-        return BinkButton(type: .gradient, title: viewModel.loginWithEmailButtonText) { [weak self] in
+        return BinkButton(type: .capsule, title: viewModel.loginWithEmailButtonText) { [weak self] in
             self?.viewModel.pushToLogin()
         }
     }()
