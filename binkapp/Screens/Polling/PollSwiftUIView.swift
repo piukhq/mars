@@ -13,51 +13,55 @@ struct PollSwiftUIView: View {
     @State private var drawingWidth = false
     var body: some View {
         VStack {
-            Text(viewModel.pollData?.title ?? "")
-            ZStack {
-                Text(viewModel.pollData?.question ?? "")
-            }
-            .frame(maxWidth: .infinity)
-            .frame(height: 100)
-            .background(.teal)
-            
-            GeometryReader { gp in
-                ScrollView {
-                    VStack {
-                        ForEach(viewModel.pollData?.answers ?? [], id: \.self) { answer in
-                            Button(action: {
-                                viewModel.setAnswer(answer: answer)
-                            }) {
-                                ZStack(alignment: .leading) {
-                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                        .fill(.white)
-                                        .frame(maxWidth: gp.size.width)
-                                        .frame(height: 60)
-                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                        .fill(.blue)
-                                        .frame(maxWidth: drawingWidth ? gp.size.width * 1.0 : 0, alignment: .leading)
-                                        .frame(height: 60, alignment: .leading)
-                                        .animation(.easeInOut(duration: 2).repeatForever(autoreverses: false), value: drawingWidth)
-                                    
-                                    Text(answer)
-                                        .frame(maxWidth: .infinity, alignment: .center)
+            if (viewModel.pollData != nil) {
+                Text(viewModel.pollData?.title ?? "")
+                ZStack {
+                    Text(viewModel.pollData?.question ?? "")
+                }
+                .frame(maxWidth: .infinity)
+                .frame(height: 100)
+                .background(.teal)
+                
+                GeometryReader { gp in
+                    ScrollView {
+                        VStack {
+                            ForEach(viewModel.pollData?.answers ?? [], id: \.self) { answer in
+                                Button(action: {
+                                    viewModel.setAnswer(answer: answer)
+                                }) {
+                                    ZStack(alignment: .leading) {
+                                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                            .fill(.white)
+                                            .frame(maxWidth: gp.size.width)
+                                            .frame(height: 60)
+                                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                            .fill(.blue)
+                                            .frame(maxWidth: drawingWidth ? gp.size.width * viewModel.votePercentage(answer: answer) : 0, alignment: .leading)
+                                            .frame(height: 60, alignment: .leading)
+                                            .animation(.easeInOut(duration: 2), value: drawingWidth)
+                                        
+                                        Text(answer)
+                                            .frame(maxWidth: .infinity, alignment: .center)
+                                    }
+                                    .padding(.top, 20)
                                 }
-                                .padding(.top, 20)
                             }
                         }
-                    }
-                    .padding()
-                    .onAppear {
-                        drawingWidth.toggle()
+                        .padding()
+                        .onAppear {
+                            drawingWidth.toggle()
+                        }
                     }
                 }
+                
+                VStack(spacing: 6) {
+                    Text("Time left to vote:")
+                    Text(viewModel.daysToEnd() + " Days")
+                }
+                .padding(.bottom, 20)
+            } else {
+                Text("nothing to show")
             }
-            
-            VStack(spacing: 6) {
-                Text("Time left to vote:")
-                Text(viewModel.daysToEnd() + " Days")
-            }
-            .padding(.bottom, 20)
         }
         .background(Color(Current.themeManager.color(for: .viewBackground)))
     }

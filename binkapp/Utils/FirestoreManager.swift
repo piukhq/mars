@@ -9,11 +9,20 @@
 import Foundation
 import FirebaseFirestore
 
+enum FirestoreCollections: String {
+    case polls
+    case pollResults
+}
+
 class FirestoreManager {
     private let db = Firestore.firestore()
     
-    func fetchDocument<T: Codable>(_ type: T.Type, collection: String, documentId: String, completion: @escaping (T?) -> Void) {
-        let docRef = db.collection(collection).document(documentId)
+    func getCollection(collection: FirestoreCollections) -> CollectionReference? {
+        return db.collection(collection.rawValue)
+    }
+    
+    func fetchDocument<T: Codable>(_ type: T.Type, collection: FirestoreCollections, documentId: String, completion: @escaping (T?) -> Void) {
+        let docRef = db.collection(collection.rawValue).document(documentId)
         docRef.getDocument(as: type) { result in
             switch result {
             case .success(let data):
@@ -25,8 +34,8 @@ class FirestoreManager {
         }
     }
     
-    func fetchDocumentsInCollection<T: Codable>(_ type: T.Type, collection: String, completion: @escaping ([T]?) -> Void) {
-        db.collection(collection).addSnapshotListener { (querySnapshot, error) in
+    func fetchDocumentsInCollection<T: Codable>(_ type: T.Type, collection: FirestoreCollections, completion: @escaping ([T]?) -> Void) {
+        db.collection(collection.rawValue).addSnapshotListener { (querySnapshot, error) in
             do {
                 if let error = error {
                     throw error
@@ -45,28 +54,19 @@ class FirestoreManager {
         }
     }
     
-    func addDocument(_ type: Codable, collection: String, completion: ((String) -> Void)? = nil) {
-        let collectionRef = db.collection(collection)
-        let document = collectionRef.document()
+    func addDocument(_ type: Codable, collection: FirestoreCollections, documentId: String? = nil, completion: ((String) -> Void)? = nil) {
+        let collectionRef = db.collection(collection.rawValue)
+        var document: DocumentReference
         
+        if let docId = documentId {
+            document = collectionRef.document(docId)
+        } else {
+            document = collectionRef.document()
+        }
+
         do {
-            //let newDocReference = try collectionRef.addDocument(from: type)
-            //print("Voting stored with new document reference: \(newDocReference)")
             try document.setData(from: type)
             completion?(document.documentID)
-        } catch {
-            print(error)
-        }
-    }
-    
-    func updateDocument(_ type: Codable, collection: String, documentId: String, completion: (() -> Void)? = nil) {
-        let collectionRef = db.collection(collection).document(documentId)
-        
-        do {
-            //let newDocReference = try collectionRef.addDocument(from: type)
-            //print("Voting stored with new document reference: \(newDocReference)")
-            try collectionRef.setData(from: type)
-            completion?()
         } catch {
             print(error)
         }
