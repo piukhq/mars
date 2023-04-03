@@ -43,12 +43,7 @@ struct WhoWeAreSwiftUIView: View {
     ]
     
     var logoImageName: String {
-        switch colorScheme {
-        case .dark:
-            return Asset.logoDark.name
-        default:
-            return Asset.logoPrimary.name
-        }
+        return Current.themeManager.logo(for: colorScheme.userInterfaceStyle()).name
     }
     
     var body: some View {

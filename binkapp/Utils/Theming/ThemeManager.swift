@@ -120,6 +120,10 @@ class ThemeManager: ObservableObject {
     func scrollViewIndicatorStyle(for traitCollection: UITraitCollection) -> UIScrollView.IndicatorStyle {
         return Styling.scrollViewIndicatorStyle(for: traitCollection)
     }
+    
+    func logo(for userInterfaceStyle: UIUserInterfaceStyle) -> ImageAsset {
+        return Styling.logo(for: userInterfaceStyle)
+    }
 
     func addObserver(_ observer: Any, handler: Selector) {
         NotificationCenter.default.addObserver(observer, selector: handler, name: .themeManagerDidSetTheme, object: nil)

@@ -134,20 +134,11 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
         onboardingView1.configure(forType: .pll)
         onboardingView2.configure(forType: .wallet)
         onboardingView3.configure(forType: .barcodeOrCollect)
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
         configureLogoImage()
     }
     
     private func configureLogoImage() {
-        switch traitCollection.userInterfaceStyle {
-        case .dark:
-            logoImageView.image = Asset.logoDark.image
-        default:
-            logoImageView.image = Asset.logoPrimary.image
-        }
+        logoImageView.image = Current.themeManager.logo(for: traitCollection.userInterfaceStyle).image
     }
 
     private func setLayout() {
