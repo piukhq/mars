@@ -968,6 +968,8 @@ internal enum L10n {
   internal static let wentWrong = L10n.tr("Localizable", "went_wrong", fallback: "Something went wrong.")
   /// Magic Link
   internal static let whatIsMagicLinkHyperlink = L10n.tr("Localizable", "what_is_magic_link_hyperlink", fallback: "Magic Link")
+  /// Don't show me this again
+  internal static let whatsNewScreenDontShowAgain = L10n.tr("Localizable", "whats_new_screen_dont_show_again", fallback: "Don't show me this again")
   /// Below is a list of people that have been instrumental in developing the app you now hold in your hands.
   internal static let whoWeAreBody = L10n.tr("Localizable", "who_we_are_body", fallback: "Below is a list of people that have been instrumental in developing the app you now hold in your hands.")
   /// Who we are
