@@ -55,17 +55,6 @@ struct BinkButtonSwiftUIView: View, Identifiable {
             buttonTapped()
             loading = type == .capsule ? true : false
         } label: {
-            HStack {
-                Spacer()
-            Text(loading ? "" : viewModel.title)
-                .foregroundColor(enabled ? textColor : .white.opacity(Constants.halfOpacity))
-                .font(.custom(UIFont.buttonText.fontName, size: UIFont.buttonText.pointSize))
-                Spacer()
-            }
-            .frame(width: UIScreen.main.bounds.width * Constants.aspectRatioMultiplier, height: Constants.height)
-        }
-        .disabled(!enabled)
-        .background(
             ZStack {
                 if type == .capsule {
                     Color(uiColor: .binkBlue)
@@ -73,7 +62,13 @@ struct BinkButtonSwiftUIView: View, Identifiable {
                 } else {
                     Color(.clear)
                 }
-            })
+                Text(loading ? "" : viewModel.title)
+                    .foregroundColor(enabled ? textColor : .white.opacity(Constants.halfOpacity))
+                    .font(.custom(UIFont.buttonText.fontName, size: UIFont.buttonText.pointSize))
+            }
+            .frame(width: UIScreen.main.bounds.width * Constants.aspectRatioMultiplier, height: Constants.height)
+        }
+        .disabled(!enabled)
         .cornerRadius(Constants.cornerRadius)
         .shadow(color: .black.opacity(type == .capsule ? Constants.shadowSemiOpaque : Constants.shadowTransparent), radius: Constants.shadowRadius, x: Constants.shadowXPosition, y: Constants.shadowYPosition)
         .overlay(ActivityIndicator(animate: $loading, style: .medium), alignment: .center)
@@ -95,7 +90,11 @@ struct ActivityIndicator: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<ActivityIndicator>) {
-        animate ? uiView.startAnimating() : uiView.stopAnimating()
+        if animate {
+            uiView.startAnimating()
+        } else {
+            uiView.stopAnimating()
+        }
     }
 }
 
@@ -151,8 +150,8 @@ struct BinkButtonsStackView: View {
                     Spacer(minLength: BinkButtonsView.bottomSafePadding)
                 }
             }
-            .frame(width: UIScreen.main.bounds.width, height: BinkButtonsView.bottomSafePadding + (Constants.height * CGFloat(buttons.count)), alignment: .center)
         }
+        .frame(width: UIScreen.main.bounds.width, height: BinkButtonsView.bottomSafePadding + (Constants.height * CGFloat(buttons.count)), alignment: .center)
         .background(Color.clear)
         .edgesIgnoringSafeArea(.bottom)
         .offset(y: BinkButtonsView.bottomSafePadding - BinkButtonsView.bottomPadding)
