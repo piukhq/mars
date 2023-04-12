@@ -27,12 +27,19 @@ struct WhatsNewSwiftUIView: View {
                             .padding(.bottom, 20)
                     }
                 }
+                
+                CheckboxSwiftUIView(viewModel: viewModel.checkBoxViewModel, checkboxSelected: {})
             }
             .padding(.top, 20)
             .navigationTitle("What's New?")
         }
         .padding(.horizontal, 25)
         .background(viewModel.backgroundColor)
+        .onDisappear {
+            if viewModel.shouldHideWhatsNewScreen {
+                Current.userDefaults.set(true, forDefaultsKey: .hasDismissedWhatsNewView)
+            }
+        }
     }
 }
 
