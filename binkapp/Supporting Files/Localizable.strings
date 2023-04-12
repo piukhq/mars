@@ -257,6 +257,9 @@
 "settings_delete_account_failed_alert_message" = "Account deletion failed, please contact us";
 "settings_delete_account_success_alert_message"= "Account deletion is successful";
 
+"settings_previous_updates" = "Previous Updates";
+"settings_previous_updates_subtitle" = "Release Notes";
+
 
 // MARK: - Support mail
 
@@ -493,6 +496,8 @@
 // MARK: - Browse Brands
 "scan_button_title" = "Scan loyalty card";
 "scan_button_subtitle" = "Quickly add a card you already have";
+"scan_button_custom_title" = "Add custom card";
+"scan_button_custom_subtitle" = "Can't find your card? Add custom cards here";
 
 // MARK: - Local Points Collection
 "lpc_points_module_balance_explainer_title" = "Balance";

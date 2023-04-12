@@ -605,7 +605,9 @@ extension BinkScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegat
     
     private func cropImage(imageBuffer: CVImageBuffer) -> CIImage? {
         CVPixelBufferLockBaseAddress(imageBuffer, .readOnly)
-        guard let baseAddress = CVPixelBufferGetBaseAddress(imageBuffer) else { return nil }
+        let ciImage = CIImage(cvPixelBuffer: imageBuffer)
+        guard let baseAddress = CVPixelBufferGetBaseAddress(imageBuffer) else { return ciImage }
+        
         let bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer)
         let scale = 3.0
         let cropWidth = Int(rectOfInterest.width * scale)
@@ -624,7 +626,8 @@ extension BinkScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegat
         if let cgImage = context?.makeImage() {
             return CIImage(cgImage: cgImage)
         }
-        return nil
+        
+        return ciImage
     }
 }
 

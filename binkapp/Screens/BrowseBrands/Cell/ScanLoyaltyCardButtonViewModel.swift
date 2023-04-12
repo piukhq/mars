@@ -9,7 +9,35 @@
 import UIKit
 
 class ScanLoyaltyCardButtonViewModel: NSObject {
+    enum ScanButtonType {
+        case retailer
+        case custom
+    }
+    
     private let visionUtility = VisionUtility()
+    var type: ScanButtonType
+    
+    init(type: ScanButtonType) {
+        self.type = type
+    }
+    
+    var title: String {
+        switch type {
+        case .retailer:
+            return L10n.scanButtonTitle
+        case .custom:
+            return L10n.scanButtonCustomTitle
+        }
+    }
+    
+    var subtitle: String {
+        switch type {
+        case .retailer:
+            return L10n.scanButtonSubtitle
+        case .custom:
+            return L10n.scanButtonCustomSubtitle
+        }
+    }
 
     func handleButtonTap() {
         let viewController = ViewControllerFactory.makeScannerViewController(type: .loyalty, hideNavigationBar: false, delegate: self)
@@ -42,7 +70,16 @@ extension ScanLoyaltyCardButtonViewModel: BinkScannerViewControllerDelegate {
     }
     
     func binkScannerViewControllerShouldEnterManually(_ viewController: BinkScannerViewController, completion: (() -> Void)?) {
-        Current.navigate.back()
+        switch type {
+        case .retailer:
+            Current.navigate.back()
+        case .custom:
+            if let customPlan = Current.wallet.membershipPlans?.first(where: { $0.isCustomCard }) {
+                let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: customPlan, formPurpose: .add)
+                let navigationRequest = PushNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
+            }
+        }
     }
 }
 

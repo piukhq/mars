@@ -49,8 +49,9 @@ struct ModalNavigationRequest: BaseNavigationRequest {
     let transition: UIModalTransitionStyle
     let dragToDismiss: Bool
     let hideCloseButton: Bool
+    let closeCompletion: EmptyCompletionBlock?
     let completion: EmptyCompletionBlock?
-    init(viewController: UIViewController, fullScreen: Bool = false, embedInNavigationController: Bool = true, animated: Bool = true, transition: UIModalTransitionStyle = .coverVertical, dragToDismiss: Bool = true, hideCloseButton: Bool = false, completion: EmptyCompletionBlock? = nil) {
+    init(viewController: UIViewController, fullScreen: Bool = false, embedInNavigationController: Bool = true, animated: Bool = true, transition: UIModalTransitionStyle = .coverVertical, dragToDismiss: Bool = true, hideCloseButton: Bool = false, closeCompletion: EmptyCompletionBlock? = nil, completion: EmptyCompletionBlock? = nil) {
         self.viewController = viewController
         self.fullScreen = fullScreen
         self.embedInNavigationController = embedInNavigationController
@@ -58,6 +59,7 @@ struct ModalNavigationRequest: BaseNavigationRequest {
         self.transition = transition
         self.dragToDismiss = dragToDismiss
         self.hideCloseButton = hideCloseButton
+        self.closeCompletion = closeCompletion
         self.completion = completion
     }
 }
@@ -231,6 +233,10 @@ class BaseNavigationHandler {
             
             if !navigationRequest.dragToDismiss {
                 viewController.isModalInPresentation = true
+            }
+
+            if let navigationController = viewController as? PortraitNavigationController {
+                navigationController.closeCompletion = navigationRequest.closeCompletion
             }
             
             // We don't need to depend on a navigation controller to present modally, so simply present from the top view controller if possible

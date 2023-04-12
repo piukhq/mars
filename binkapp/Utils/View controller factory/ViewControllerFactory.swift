@@ -133,6 +133,10 @@ enum ViewControllerFactory {
         let viewModel = SettingsViewModel(rowsWithActionRequired: rowsWithActionRequired)
         return UIHostingController(rootView: SettingsView(viewModel: viewModel))
     }
+    
+    static func makeWhatsNewViewController(viewModel: WhatsNewViewModel) -> UIViewController {
+        return UIHostingController(rootView: WhatsNewSwiftUIView(viewModel: viewModel))
+    }
 
     // MARK: - Onboarding
 
