@@ -65,7 +65,7 @@ class PollSwiftUIViewModel: ObservableObject {
         guard let collectionReference = Current.firestoreManager.getCollection(collection: .polls) else { return }
         
         let query = collectionReference.whereField("publishedStatus", isEqualTo: PollStatus.published.rawValue )
-        query.getDocuments { [weak self] (snapshot, error) in
+        query.addSnapshotListener { [weak self] (snapshot, error) in
             do {
                 if let doc = snapshot?.documents.first {
                     self?.pollData = try doc.data(as: PollModel.self)
@@ -100,9 +100,7 @@ class PollSwiftUIViewModel: ObservableObject {
             Current.firestoreManager.addDocument(model, collection: .pollResults, documentId: model.id ?? "")
         } else {
             votingModel = PollVotingModel(pollId: pollData?.id ?? "", userId: userId, createdDate: Int(Date().timeIntervalSince1970), overwritten: false, answer: answer)
-            Current.firestoreManager.addDocument(votingModel, collection: .pollResults) { [weak self] documentId in
-                self?.votingModel?.id = documentId
-            }
+            Current.firestoreManager.addDocument(votingModel, collection: .pollResults)
         }
     }
     
