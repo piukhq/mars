@@ -76,11 +76,10 @@ struct CardInformationRowView: View {
                         Text(rowData.type.title)
                             .foregroundColor(Color(themeManager.color(for: .text)))
                             .uiFont(.subtitle)
-                        if let subtitle = rowData.type.subtitle {
-                            Text(subtitle)
-                                .uiFont(.bodyTextLarge)
-                                .foregroundColor(Color(themeManager.color(for: .text)))
-                        }
+                        
+                        Text(rowData.type.subtitle)
+                            .uiFont(.bodyTextLarge)
+                            .foregroundColor(Color(themeManager.color(for: .text)))
                     }
                     .frame(height: Constants.rowHeight)
                     

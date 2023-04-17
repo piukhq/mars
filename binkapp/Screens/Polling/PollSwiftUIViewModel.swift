@@ -11,6 +11,8 @@ import FirebaseFirestore
 
 class PollSwiftUIViewModel: ObservableObject {
     @Published var pollData: PollModel?
+    @Published var currentAnswer: String?
+    
     var votingModel: PollVotingModel?
     
     private let userId = Current.userManager.currentUserId
@@ -34,7 +36,7 @@ class PollSwiftUIViewModel: ObservableObject {
         guard let collectionReference = Current.firestoreManager.getCollection(collection: .pollResults) else { return }
         guard let pollData = self.pollData else { return }
         
-        let query = collectionReference.whereField("userId", isEqualTo: userId).whereField("pollId", isEqualTo: pollData.id ?? "")
+        let query = collectionReference.whereField("userId", isEqualTo: userId ?? "").whereField("pollId", isEqualTo: pollData.id ?? "")
         query.addSnapshotListener { [weak self] (snapshot, error) in
             do {
                 if let doc = snapshot?.documents.first {
@@ -93,13 +95,19 @@ class PollSwiftUIViewModel: ObservableObject {
 //        }
     }
     
-    func setAnswer(answer: String) {
+    func setCurrentAnswer(answer: String) {
+        currentAnswer = answer
+    }
+    
+    func submitAnswer() {
+        guard let answer = currentAnswer else { return }
+        
         if var model = votingModel {
             model.answer = answer
             model.overwritten = true
             Current.firestoreManager.addDocument(model, collection: .pollResults, documentId: model.id ?? "")
         } else {
-            votingModel = PollVotingModel(pollId: pollData?.id ?? "", userId: userId, createdDate: Int(Date().timeIntervalSince1970), overwritten: false, answer: answer)
+            votingModel = PollVotingModel(pollId: pollData?.id ?? "", userId: userId ?? "", createdDate: Int(Date().timeIntervalSince1970), overwritten: false, answer: answer)
             Current.firestoreManager.addDocument(votingModel, collection: .pollResults)
         }
     }
