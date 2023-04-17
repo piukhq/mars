@@ -42,6 +42,11 @@ class LoyaltyWalletViewModel: WalletViewModel {
         MixpanelUtility.track(.viewBarcode(brandName: card.membershipPlan?.account?.companyName ?? "Unknown", route: .wallet))
     }
     
+    func toPoll() {
+        let navigationRequest = PushNavigationRequest(viewController: ViewControllerFactory.makePollViewController())
+        Current.navigate.to(navigationRequest)
+    }
+    
     func toCardDetail(for card: CD_MembershipCard) {
         let navigationRequest = PushNavigationRequest(viewController: ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card))
         Current.navigate.to(navigationRequest)

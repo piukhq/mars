@@ -13,7 +13,7 @@ class PollSwiftUIViewModel: ObservableObject {
     @Published var pollData: PollModel?
     var votingModel: PollVotingModel?
     
-    private let userId = "7"
+    private let userId = Current.userManager.currentUserId
     
     var votesDictionary = [String: Int]()
     

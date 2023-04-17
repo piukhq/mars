@@ -69,6 +69,11 @@ enum ViewControllerFactory {
         return viewController
     }
     
+    static func makePollViewController() -> UIViewController {
+        let viewModel = PollSwiftUIViewModel()
+        return UIHostingController(rootView: PollSwiftUIView(viewModel: viewModel))
+    }
+    
     static func makeBarcodeViewController(membershipCard: CD_MembershipCard) -> UIViewController {
         let viewModel = BarcodeViewModel(membershipCard: membershipCard)
         return UIHostingController(rootView: BarcodeScreenSwiftUIView(viewModel: viewModel))

@@ -25,6 +25,8 @@
 		211058492909469B00DFDF90 /* PaymentWalletViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211058482909469B00DFDF90 /* PaymentWalletViewModelTests.swift */; };
 		2110584C2909637300DFDF90 /* MerchantHeroCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110584B2909637300DFDF90 /* MerchantHeroCellTests.swift */; };
 		2110584F2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110584E2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift */; };
+		211E83F129E96EAC00157B9F /* NewPollCellSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211E83F029E96EAB00157B9F /* NewPollCellSwiftUIView.swift */; };
+		211E83F329E970D600157B9F /* NewPollCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211E83F229E970D600157B9F /* NewPollCell.swift */; };
 		2126211928AFB4B900939609 /* NetworkRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126211828AFB4B900939609 /* NetworkRequestTests.swift */; };
 		2126211B28AFD68E00939609 /* LoginResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126211A28AFD68E00939609 /* LoginResponseTests.swift */; };
 		2126211D28AFD9A900939609 /* PaymentCardCreateModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126211C28AFD9A900939609 /* PaymentCardCreateModelTests.swift */; };
@@ -741,6 +743,8 @@
 		211058482909469B00DFDF90 /* PaymentWalletViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWalletViewModelTests.swift; sourceTree = "<group>"; };
 		2110584B2909637300DFDF90 /* MerchantHeroCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantHeroCellTests.swift; sourceTree = "<group>"; };
 		2110584E2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletLoyaltyCardCellViewModelTests.swift; sourceTree = "<group>"; };
+		211E83F029E96EAB00157B9F /* NewPollCellSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPollCellSwiftUIView.swift; sourceTree = "<group>"; };
+		211E83F229E970D600157B9F /* NewPollCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPollCell.swift; sourceTree = "<group>"; };
 		2126211828AFB4B900939609 /* NetworkRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequestTests.swift; sourceTree = "<group>"; };
 		2126211A28AFD68E00939609 /* LoginResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponseTests.swift; sourceTree = "<group>"; };
 		2126211C28AFD9A900939609 /* PaymentCardCreateModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCreateModelTests.swift; sourceTree = "<group>"; };
@@ -1620,6 +1624,8 @@
 				21A6C50229D2D7130051A481 /* PollVotingModel.swift */,
 				21A6C50629D301CF0051A481 /* PollSwiftUIView.swift */,
 				21A6C50829D30F950051A481 /* PollSwiftUIViewModel.swift */,
+				211E83F029E96EAB00157B9F /* NewPollCellSwiftUIView.swift */,
+				211E83F229E970D600157B9F /* NewPollCell.swift */,
 			);
 			path = Polling;
 			sourceTree = "<group>";
@@ -4096,6 +4102,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF59A12D244744D7001B60B8 /* BinkError.swift in Sources */,
+				211E83F329E970D600157B9F /* NewPollCell.swift in Sources */,
 				EF8F0482238D582300BD708B /* CD_PlanDocument.swift in Sources */,
 				EF3BC913234779AE00FE52ED /* LoyaltyWalletRepository.swift in Sources */,
 				EF3BC90D234750F900FE52ED /* Wallet.swift in Sources */,
@@ -4491,6 +4498,7 @@
 				EFA5F73E2379A7C70027AB80 /* CD_MembershipCardBalance.swift in Sources */,
 				BD475E7223A2AED80071302A /* _CD_PlanDocumentDisplay.swift in Sources */,
 				BDFAA07D23E24DC600949271 /* UIImage+Extension.swift in Sources */,
+				211E83F129E96EAC00157B9F /* NewPollCellSwiftUIView.swift in Sources */,
 				CE3EA70E28CB5FAA00EFEDA9 /* CardInformationView.swift in Sources */,
 				70A2EDA1261DED3200889914 /* SafeDecoding.swift in Sources */,
 				EFA5F7622379BD520027AB80 /* PLRAccumulatorInactiveCell.swift in Sources */,

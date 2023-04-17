@@ -252,15 +252,21 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return section == 0 ? viewModel.cardCount : viewModel.walletPromptsCount
+        if section == 0 {
+            return 1
+        }
+        return section == 1 ? viewModel.cardCount : viewModel.walletPromptsCount
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return section == 0 ? .zero : UIEdgeInsets(top: 15.0, left: 0.0, bottom: 0.0, right: 0.0)
+        if section == 0 {
+            return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 15.0, right: 0.0)
+        }
+        return section == 1 ? .zero : UIEdgeInsets(top: 15.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

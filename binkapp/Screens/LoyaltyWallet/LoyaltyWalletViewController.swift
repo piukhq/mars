@@ -33,6 +33,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     override func configureCollectionView() {
         super.configureCollectionView()
+        collectionView.register(NewPollCell.self, forCellWithReuseIdentifier: NewPollCell.reuseIdentifier)
         collectionView.register(WalletLoyaltyCardCollectionViewCell.self, asNib: true)
         collectionView.register(OnboardingCardCollectionViewCell.self, asNib: true)
     }
@@ -108,37 +109,47 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.section == 0 {
+        if indexPath.section == 1 {
             let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
             guard let membershipCard = viewModel.cards?[safe: indexPath.row] else { return cell }
             let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
             cell.configureUIWithViewModel(viewModel: cellViewModel, indexPath: indexPath, delegate: self)
             
             return cell
-        } else {
+        } else if indexPath.section == 2 {
             // Wallet prompts
             let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
             guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else { return cell }
             cell.configureWithWalletPrompt(walletPrompt)
+            return cell
+        } else {
+            let cell: NewPollCell = collectionView.dequeue(indexPath: indexPath)
             return cell
         }
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let cell = collectionView.cellForItem(at: indexPath) else {
-            if indexPath.section == 0 {
+            if indexPath.section == 1 {
                 /// Wallet cards
                 return LayoutHelper.WalletDimensions.cardSize
-            } else {
+            } else if indexPath.section == 2 {
                 /// Pass wallet prompt to layout helper to calculate size of prompt card based on the amount of merchant cells its collection view will contain
                 guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else { return .zero }
                 return LayoutHelper.WalletDimensions.sizeForWalletPrompt(walletPrompt: walletPrompt)
+            } else {
+                return LayoutHelper.WalletDimensions.cardSize
             }
         }
         return cell.frame.size
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 0 {            
+            viewModel.toPoll()
+            return
+        }
+        
         if indexPath.row < viewModel.cardCount {
             guard let card = viewModel.cards?[indexPath.row] else {
                 return
