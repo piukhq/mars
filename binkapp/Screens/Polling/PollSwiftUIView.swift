@@ -10,7 +10,6 @@ import SwiftUI
 
 struct PollSwiftUIView: View {
     @ObservedObject var viewModel: PollSwiftUIViewModel
-    @State private var drawingWidth = false
     @State private var submitted = false
     var body: some View {
         VStack(alignment: .leading) {
@@ -37,14 +36,15 @@ struct PollSwiftUIView: View {
                                 }) {
                                     ZStack(alignment: .leading) {
                                         RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                            .fill(viewModel.currentAnswer == answer ? Color(UIColor.darkGray) : Color(UIColor.lightGray))
+                                            .fill(viewModel.gotVotes ? Color(UIColor.lightGray) : viewModel.currentAnswer == answer ? Color(UIColor.darkGray) : Color(UIColor.lightGray))
                                             .frame(maxWidth: gp.size.width)
                                             .frame(height: 60)
-//                                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-//                                            .fill(Color(UIColor.darkGray))
-//                                            .frame(maxWidth: drawingWidth ? gp.size.width * viewModel.votePercentage(answer: answer) : 0, alignment: .leading)
-//                                            .frame(height: 60, alignment: .leading)
-//                                            .animation(.easeInOut(duration: 2), value: drawingWidth)
+                                        
+                                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                                .fill(Color(UIColor.darkGray))
+                                                .frame(maxWidth: viewModel.gotVotes ? gp.size.width * viewModel.votePercentage(answer: answer) : 0, alignment: .leading)
+                                                .frame(height: 60, alignment: .leading)
+                                                .animation(.easeIn(duration: 2), value: viewModel.gotVotes)
                                         
                                         HStack {
                                             ZStack {
@@ -65,8 +65,10 @@ struct PollSwiftUIView: View {
                                                 .uiFont(.checkboxText)
                                             
                                             Spacer()
-                                            Text("40%")
-                                                .uiFont(.tabBar)
+                                            if viewModel.gotVotes {
+                                                Text("\(Int(viewModel.votePercentage(answer: answer) * 100))" + "%")
+                                                    .uiFont(.tabBar)
+                                            }
                                         }
                                         .padding()
                                     }
@@ -74,9 +76,6 @@ struct PollSwiftUIView: View {
                             }
                         }
                         .padding()
-                        .onAppear {
-                           // drawingWidth.toggle()
-                        }
                     }
                 }
                 
