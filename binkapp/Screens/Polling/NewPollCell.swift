@@ -10,11 +10,10 @@ import SwiftUI
 import UIKit
 
 class NewPollCell: UICollectionViewCell {
-    
     static var reuseIdentifier = "NewPollCell"
     
     lazy var host: UIHostingController = {
-        return UIHostingController(rootView: NewPollCellSwiftUIView())
+        return UIHostingController(rootView: NewPollCellSwiftUIView(viewModel: NewPollCellViewModel()))
     }()
     
     override init(frame: CGRect) {
@@ -26,15 +25,16 @@ class NewPollCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupView() {
+    public func setupView() {
         host.view.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(host.view)
         
-//        NSLayoutConstraint.activate([
-//            host.view.topAnchor.constraint(equalTo: contentView.topAnchor),
-//            host.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-//            host.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-//            host.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
-//        ])
+        NSLayoutConstraint.activate([
+            host.view.topAnchor.constraint(equalTo: contentView.topAnchor),
+            host.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            host.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            host.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            host.view.widthAnchor.constraint(equalToConstant: contentView.frame.width)
+        ])
     }
 }

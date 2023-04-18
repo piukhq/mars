@@ -69,6 +69,7 @@
 		2151478529114D0E00E6B209 /* htmlTest.html in Resources */ = {isa = PBXBuildFile; fileRef = 2151478329114D0E00E6B209 /* htmlTest.html */; };
 		215BC59528A6900100DB1377 /* BinkCore in Frameworks */ = {isa = PBXBuildFile; productRef = 215BC59428A6900100DB1377 /* BinkCore */; };
 		216B999C28AE902000A67A14 /* FloatExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216B999B28AE902000A67A14 /* FloatExtensionTests.swift */; };
+		2171877F29EE90200079412B /* NewPollCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2171877E29EE90200079412B /* NewPollCellViewModel.swift */; };
 		21719FE929B20F2800AEEB43 /* PreviousUpdatesSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21719FE829B20F2800AEEB43 /* PreviousUpdatesSwiftUIView.swift */; };
 		21719FEB29B6013400AEEB43 /* PreviousUpdatesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21719FEA29B6013400AEEB43 /* PreviousUpdatesViewModel.swift */; };
 		21719FEE29B7777E00AEEB43 /* ReleaseUpdatesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21719FED29B7777E00AEEB43 /* ReleaseUpdatesTests.swift */; };
@@ -788,6 +789,7 @@
 		2151478229114D0E00E6B209 /* fireBase-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "fireBase-config.json"; sourceTree = "<group>"; };
 		2151478329114D0E00E6B209 /* htmlTest.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = htmlTest.html; sourceTree = "<group>"; };
 		216B999B28AE902000A67A14 /* FloatExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtensionTests.swift; sourceTree = "<group>"; };
+		2171877E29EE90200079412B /* NewPollCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPollCellViewModel.swift; sourceTree = "<group>"; };
 		21719FE829B20F2800AEEB43 /* PreviousUpdatesSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousUpdatesSwiftUIView.swift; sourceTree = "<group>"; };
 		21719FEA29B6013400AEEB43 /* PreviousUpdatesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousUpdatesViewModel.swift; sourceTree = "<group>"; };
 		21719FED29B7777E00AEEB43 /* ReleaseUpdatesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseUpdatesTests.swift; sourceTree = "<group>"; };
@@ -1626,6 +1628,7 @@
 				21A6C50829D30F950051A481 /* PollSwiftUIViewModel.swift */,
 				211E83F029E96EAB00157B9F /* NewPollCellSwiftUIView.swift */,
 				211E83F229E970D600157B9F /* NewPollCell.swift */,
+				2171877E29EE90200079412B /* NewPollCellViewModel.swift */,
 			);
 			path = Polling;
 			sourceTree = "<group>";
@@ -4359,6 +4362,7 @@
 				EFA5F6C0237429D30027AB80 /* UITableViewCellExtension.swift in Sources */,
 				CE2751B429192CCD005C27AB /* CustomAnnotation.swift in Sources */,
 				70A4EE7824BDBA5900FA33B1 /* PermissionsUtility.swift in Sources */,
+				2171877F29EE90200079412B /* NewPollCellViewModel.swift in Sources */,
 				21A6C50129D2D6FE0051A481 /* PollModel.swift in Sources */,
 				EF1110542354D4BE009A4438 /* WalletCardCollectionViewCell.swift in Sources */,
 				BDFAA07B23E243EF00949271 /* LCDPlaceholderGenerator.swift in Sources */,

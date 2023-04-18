@@ -31,6 +31,8 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     var selectedIndexPath: IndexPath?
     
+    var showPollInfo = true
+    
     override func configureCollectionView() {
         super.configureCollectionView()
         collectionView.register(NewPollCell.self, forCellWithReuseIdentifier: NewPollCell.reuseIdentifier)
@@ -42,6 +44,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         super.viewDidLoad()
         navigationController?.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidUpdate, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(shouldShowPollInfo(_:)), name: Notification.Name("test"), object: nil)
         setupSortBarButton()
     }
     
@@ -108,44 +111,110 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         }
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.section == 1 {
-            let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-            guard let membershipCard = viewModel.cards?[safe: indexPath.row] else { return cell }
-            let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
-            cell.configureUIWithViewModel(viewModel: cellViewModel, indexPath: indexPath, delegate: self)
+    @objc private func shouldShowPollInfo(_ notification: Notification) {
+        DispatchQueue.main.async {
+            self.showPollInfo = notification.userInfo?["show"] as? Bool ?? false
+            self.reloadCollectionView()
+        }
+    }
+    
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return showPollInfo ? 3 : 2
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if showPollInfo {
+            if section == 0 {
+                return 1
+            }
             
-            return cell
-        } else if indexPath.section == 2 {
-            // Wallet prompts
-            let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-            guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else { return cell }
-            cell.configureWithWalletPrompt(walletPrompt)
-            return cell
+            return section == 1 ? viewModel.cardCount : viewModel.walletPromptsCount
+        }
+        
+        return section == 0 ? viewModel.cardCount : viewModel.walletPromptsCount
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        if showPollInfo {
+            if section == 0 {
+                return UIEdgeInsets(top: 0.0, left: 0.0, bottom: showPollInfo ? 15.0 : 0, right: 0.0)
+            }
+            return section == 1 ? .zero : UIEdgeInsets(top: 15.0, left: 0.0, bottom: 0.0, right: 0.0)
+        }
+        
+        return section == 0 ? .zero : UIEdgeInsets(top: 15.0, left: 0.0, bottom: 0.0, right: 0.0)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if showPollInfo {
+            if indexPath.section == 0 {
+                let cell: NewPollCell = collectionView.dequeue(indexPath: indexPath)
+                return cell
+            } else {
+                if indexPath.section == 1 {
+                    let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+                    guard let membershipCard = viewModel.cards?[safe: indexPath.row] else { return cell }
+                    let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
+                    cell.configureUIWithViewModel(viewModel: cellViewModel, indexPath: indexPath, delegate: self)
+                    
+                    return cell
+                } else {
+                    // Wallet prompts
+                    let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+                    guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else { return cell }
+                    cell.configureWithWalletPrompt(walletPrompt)
+                    return cell
+                }
+            }
         } else {
-            let cell: NewPollCell = collectionView.dequeue(indexPath: indexPath)
-            return cell
+            if indexPath.section == 0 {
+                let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+                guard let membershipCard = viewModel.cards?[safe: indexPath.row] else { return cell }
+                let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
+                cell.configureUIWithViewModel(viewModel: cellViewModel, indexPath: indexPath, delegate: self)
+                
+                return cell
+            } else {
+                // Wallet prompts
+                let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+                guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else { return cell }
+                cell.configureWithWalletPrompt(walletPrompt)
+                return cell
+            }
         }
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let cell = collectionView.cellForItem(at: indexPath) else {
-            if indexPath.section == 1 {
+            if showPollInfo {
+                if indexPath.section == 0 {
+                    return LayoutHelper.WalletDimensions.cardSize
+                }
+                if indexPath.section == 1 {
+                    /// Wallet cards
+                    return LayoutHelper.WalletDimensions.cardSize
+                } else {
+                    /// Pass wallet prompt to layout helper to calculate size of prompt card based on the amount of merchant cells its collection view will contain
+                    guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else { return .zero }
+                    return LayoutHelper.WalletDimensions.sizeForWalletPrompt(walletPrompt: walletPrompt)
+                }
+                
+            }
+            
+            if indexPath.section == 0 {
                 /// Wallet cards
                 return LayoutHelper.WalletDimensions.cardSize
-            } else if indexPath.section == 2 {
+            } else {
                 /// Pass wallet prompt to layout helper to calculate size of prompt card based on the amount of merchant cells its collection view will contain
                 guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else { return .zero }
                 return LayoutHelper.WalletDimensions.sizeForWalletPrompt(walletPrompt: walletPrompt)
-            } else {
-                return LayoutHelper.WalletDimensions.cardSize
             }
         }
         return cell.frame.size
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 0 {            
+        if indexPath.section == 0 && showPollInfo {
             viewModel.toPoll()
             return
         }
