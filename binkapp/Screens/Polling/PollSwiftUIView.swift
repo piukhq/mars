@@ -11,21 +11,49 @@ import SwiftUI
 struct PollSwiftUIView: View {
     @ObservedObject var viewModel: PollSwiftUIViewModel
     @State private var submitted = false
+    @State var countdownText = ""
+    
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
     var body: some View {
         VStack(alignment: .leading) {
             if viewModel.pollData != nil {
-                Text("THIS POLL EXPIRES IN " + viewModel.daysToEnd() + " DAYS")
-                    .uiFont(.tabBar)
-                    .multilineTextAlignment(.leading)
-                    .padding()
-                    .padding(.bottom, 8)
-                
-                Text(viewModel.pollData?.question ?? "")
-                    .uiFont(.headline)
-                    .lineLimit(nil)
-                    .multilineTextAlignment(.leading)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding()
+                if !submitted {
+                    Text("THIS POLL EXPIRES IN " + countdownText)
+                        .uiFont(.tabBar)
+                        .multilineTextAlignment(.leading)
+                        .padding()
+                        .padding(.bottom, 8)
+                        .onReceive(timer) { _ in
+                            countdownText = viewModel.getTimeToEnd()
+                            if countdownText.isEmpty {
+                                self.timer.upstream.connect().cancel()
+                            }
+                        }
+                    
+                    Text(viewModel.pollData?.question ?? "")
+                        .uiFont(.headline)
+                        .lineLimit(nil)
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding()
+                } else {
+                    Text("Thanks for your response!")
+                        .uiFont(.headline)
+                        .lineLimit(nil)
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding()
+                        .padding(.top, 20)
+                    
+                    Text(viewModel.pollData?.question ?? "")
+                        .uiFont(.walletPromptTitleSmall)
+                        .lineLimit(nil)
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding()
+                        .padding(.bottom, -20)
+                }
                 
                 GeometryReader { gp in
                     ScrollView {
@@ -97,57 +125,6 @@ struct PollSwiftUIView: View {
                 .disabled(viewModel.currentAnswer == nil || submitted)
                 .padding()
             }
-            /*
-            if viewModel.pollData != nil {
-                Text(viewModel.pollData?.title ?? "")
-                ZStack {
-                    Text(viewModel.pollData?.question ?? "")
-                }
-                .frame(maxWidth: .infinity)
-                .frame(height: 100)
-                .background(.teal)
-                
-                GeometryReader { gp in
-                    ScrollView {
-                        VStack {
-                            ForEach(viewModel.pollData?.answers ?? [], id: \.self) { answer in
-                                Button(action: {
-                                    viewModel.setAnswer(answer: answer)
-                                }) {
-                                    ZStack(alignment: .leading) {
-                                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                            .fill(.white)
-                                            .frame(maxWidth: gp.size.width)
-                                            .frame(height: 60)
-                                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                            .fill(.blue)
-                                            .frame(maxWidth: drawingWidth ? gp.size.width * viewModel.votePercentage(answer: answer) : 0, alignment: .leading)
-                                            .frame(height: 60, alignment: .leading)
-                                            .animation(.easeInOut(duration: 2), value: drawingWidth)
-                                        
-                                        Text(answer)
-                                            .frame(maxWidth: .infinity, alignment: .center)
-                                    }
-                                    .padding(.top, 20)
-                                }
-                            }
-                        }
-                        .padding()
-                        .onAppear {
-                            drawingWidth.toggle()
-                        }
-                    }
-                }
-                
-                VStack(spacing: 6) {
-                    Text("Time left to vote:")
-                    Text(viewModel.daysToEnd() + " Days")
-                }
-                .padding(.bottom, 20)
-            } else {
-                Text("nothing to show")
-            }
-            */
         }
         .background(Color(Current.themeManager.color(for: .viewBackground)))
     }

@@ -110,16 +110,27 @@ class PollSwiftUIViewModel: ObservableObject {
         }
     }
     
-    func daysToEnd() -> String {
+    func getTimeToEnd() -> String {
         guard let poll = pollData else {
-            return "0"
+            return ""
         }
         
-        let startDate = NSDate(timeIntervalSince1970: TimeInterval(poll.startTime))
+        let startDate = NSDate(timeIntervalSince1970: TimeInterval(Date().timeIntervalSince1970))
         let endDate = NSDate(timeIntervalSince1970: TimeInterval(poll.closeTime))
         
-        let days = Calendar.current.dateComponents([.day], from: startDate as Date, to: endDate as Date).day ?? 0
-        return String(days)
+        let diffComponents = Calendar.current.dateComponents([.day, .hour, .minute, .second], from: startDate as Date, to: endDate as Date)
+        let days = diffComponents.day ?? 0
+        let hours = diffComponents.hour ?? 0
+        let minutes = diffComponents.minute ?? 0
+        let seconds = diffComponents.second ?? 0
+        
+        if days > 0 {
+            return "\(days) days"
+        } else if hours == 0 && minutes == 0 && seconds == 0 {
+            return ""
+        }
+        
+        return String(format: "%i:%i:%i", hours, minutes, seconds)
     }
     
     func votePercentage(answer: String) -> Double {
