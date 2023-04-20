@@ -44,7 +44,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         super.viewDidLoad()
         navigationController?.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidUpdate, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(shouldShowPollInfo(_:)), name: Notification.Name("test"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(shouldShowPollInfo(_:)), name: .displayPollInfoCell, object: nil)
         setupSortBarButton()
     }
     
@@ -385,4 +385,9 @@ extension LoyaltyWalletViewController: OptionItemListViewControllerDelegate {
         self.viewModel.setMembershipCardMoved(hasMoved: false)
         Current.wallet.launch()
     }
+}
+
+/// RS - need to move this to BinkCore
+extension Notification.Name {
+    static public let displayPollInfoCell = Notification.Name("display_poll_info_cell")
 }

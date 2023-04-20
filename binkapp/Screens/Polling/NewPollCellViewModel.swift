@@ -11,32 +11,75 @@ import FirebaseFirestore
 
 class NewPollCellViewModel: ObservableObject {
     @Published var question: String?
+    var pollData: PollModel?
+    
+    private let reminderInterval = 60.0
     
     init () {
+        self.startRemindLaterTimer()
         self.getPollData()
     }
     
     private func getPollData() {
         guard let collectionReference = Current.firestoreManager.getCollection(collection: .polls) else { return }
         
+        guard Current.userDefaults.bool(forDefaultsKey: .isInPollRemindPeriod) == false else { return }
+        
         let query = collectionReference.whereField("publishedStatus", isEqualTo: PollStatus.published.rawValue )
         query.addSnapshotListener { [weak self] (snapshot, error) in
             do {
                 if let doc = snapshot?.documents.first {
-                    let pollData = try doc.data(as: PollModel.self)
-                    self?.question = pollData.question
+                    self?.pollData = try doc.data(as: PollModel.self)
+                    self?.question = self?.pollData?.question
                     DispatchQueue.main.async {
-                        NotificationCenter.default.post(name: Notification.Name("test"), object: nil, userInfo: ["show": true])
+                        NotificationCenter.default.post(name: .displayPollInfoCell, object: nil, userInfo: ["show": true])
                     }
                 } else {
                     self?.question = nil
                     DispatchQueue.main.async {
-                        NotificationCenter.default.post(name: Notification.Name("test"), object: nil, userInfo: ["show": false])
+                        NotificationCenter.default.post(name: .displayPollInfoCell, object: nil, userInfo: ["show": false])
                     }
                 }
             } catch {
                 print("Error getting documents: \(error)")
             }
+        }
+    }
+    
+    func remindLaterPressed() {
+        guard let remindTime = self.pollData?.remindLaterMinutes else { return }
+        
+        /// add the time to remind the user to the current date
+        if let dateToCheck = Calendar.current.date(byAdding: .minute, value: remindTime, to: Date()) {
+            Current.userDefaults.set(true, forDefaultsKey: .isInPollRemindPeriod)
+            Current.userDefaults.set(dateToCheck, forDefaultsKey: .timeToPromptPollRemindDate)
+            startRemindLaterTimer()
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: .displayPollInfoCell, object: nil, userInfo: ["show": false])
+            }
+        }
+    }
+    
+    private func startRemindLaterTimer() {
+        if let dateToCheck = Current.userDefaults.value(forDefaultsKey: .timeToPromptPollRemindDate) as? Date {
+            if Date().isBefore(date: dateToCheck, toGranularity: .minute) {
+                let timer = Timer.scheduledTimer(withTimeInterval: reminderInterval, repeats: true) { timer in
+                    print("Timer fired!")
+
+                    /// if we passed the time diff we can show the poll cell again
+                    if !Date().isBefore(date: dateToCheck, toGranularity: .minute) {
+                        timer.invalidate()
+                        Current.userDefaults.set(false, forDefaultsKey: .isInPollRemindPeriod)
+                        self.getPollData()
+                    }
+                }
+
+                RunLoop.current.add(timer, forMode: .common)
+            } else {
+                Current.userDefaults.set(false, forDefaultsKey: .isInPollRemindPeriod)
+            }
+        } else {
+            Current.userDefaults.set(false, forDefaultsKey: .isInPollRemindPeriod)
         }
     }
 }

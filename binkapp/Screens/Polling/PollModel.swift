@@ -23,4 +23,5 @@ struct PollModel: Codable {
     var closeTime: Int
     var publishedStatus: PollStatus
     var question: String
+    var remindLaterMinutes: Int?
 }

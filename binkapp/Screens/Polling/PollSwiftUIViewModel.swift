@@ -80,7 +80,6 @@ class PollSwiftUIViewModel: ObservableObject {
             do {
                 if let doc = snapshot?.documents.first {
                     self?.pollData = try doc.data(as: PollModel.self)
-                    //self?.getVoteCount()
                     self?.getVotingData()
                 }
             } catch {

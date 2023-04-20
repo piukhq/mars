@@ -84,6 +84,8 @@ extension UserDefaults: BinkUserDefaults {
         case showBarcodeAlways
         case mostRecentAppVersion
         case hasDismissedWhatsNewView
+        case isInPollRemindPeriod
+        case timeToPromptPollRemindDate
 
         var keyValue: String {
             switch self {
@@ -139,6 +141,10 @@ extension UserDefaults: BinkUserDefaults {
                 return "mostRecentAppVersion"
             case .hasDismissedWhatsNewView:
                 return "hasDismissedWhatsNewView"
+            case .isInPollRemindPeriod:
+                return "isInPollRemindPeriod"
+            case .timeToPromptPollRemindDate:
+                return "timeToPromptPollRemindDate"
             }
         }
     }

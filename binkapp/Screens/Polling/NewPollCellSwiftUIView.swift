@@ -26,7 +26,7 @@ struct NewPollCellSwiftUIView: View {
                         Spacer()
                         
                         Button(action: {
-                            /// handle close here
+                            viewModel.remindLaterPressed()
                         }) {
                             Image(systemName: "xmark")
                                 .resizable()
