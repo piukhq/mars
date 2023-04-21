@@ -56,7 +56,7 @@ class DynamicActionViewController: BinkViewController {
     @IBOutlet private weak var descriptionLabel: UILabel!
 
     private lazy var button: BinkButton = {
-        return BinkButton(type: .gradient, title: viewModel.buttonTitle) { [weak self] in
+        return BinkButton(type: .capsule, title: viewModel.buttonTitle) { [weak self] in
             self?.viewModel.buttonHandler()
         }
     }()

@@ -24,7 +24,7 @@ class FilterBrandsCollectionViewCell: UICollectionViewCell {
             if cellWasTapped {
                 imageView.tintColor = .binkDynamicGray2
             } else {
-                imageView.tintColor = .blueAccent
+                imageView.tintColor = .binkBlue
             }
         }
     }

@@ -32,6 +32,6 @@ final class FilterBrandsCollectionViewCellTests: XCTestCase {
         XCTAssertTrue(cell.getImageView().tintColor == .binkDynamicGray2)
         
         cell.cellWasTapped = false
-        XCTAssertTrue(cell.getImageView().tintColor == .blueAccent)
+        XCTAssertTrue(cell.getImageView().tintColor == .binkBlue)
     }
 }

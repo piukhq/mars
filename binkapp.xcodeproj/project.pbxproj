@@ -165,7 +165,7 @@
 		3CF054CE22FD7DC80069E98A /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF054CD22FD7DC80069E98A /* UIView+Extension.swift */; };
 		3CFD913022F1BA8200F25AF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		3CFD913122F1BB7D00F25AF1 /* AutomatedTesting_0_Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048E22CE579B001BA964 /* AutomatedTesting_0_Login.swift */; };
-		3CFDB225230C382400E75A14 /* BinkGradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFDB224230C382400E75A14 /* BinkGradientButton.swift */; };
+		3CFDB225230C382400E75A14 /* BinkCapsuleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFDB224230C382400E75A14 /* BinkCapsuleButton.swift */; };
 		3CFDB227230C38A700E75A14 /* BinkTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFDB226230C38A700E75A14 /* BinkTextField.swift */; };
 		5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE046B22CE5798001BA964 /* AppDelegate.swift */; };
 		5ECE047122CE5798001BA964 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE046F22CE5798001BA964 /* Main.storyboard */; };
@@ -882,7 +882,7 @@
 		3CEE169A2440550D00933859 /* BrowseBrandsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseBrandsViewModelTests.swift; sourceTree = "<group>"; };
 		3CF029F522F45B53009A0E61 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		3CF054CD22FD7DC80069E98A /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
-		3CFDB224230C382400E75A14 /* BinkGradientButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BinkGradientButton.swift; path = binkapp/BinkUI/BinkGradientButton.swift; sourceTree = SOURCE_ROOT; };
+		3CFDB224230C382400E75A14 /* BinkCapsuleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BinkCapsuleButton.swift; path = binkapp/BinkUI/BinkCapsuleButton.swift; sourceTree = SOURCE_ROOT; };
 		3CFDB226230C38A700E75A14 /* BinkTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BinkTextField.swift; path = binkapp/BinkUI/BinkTextField.swift; sourceTree = SOURCE_ROOT; };
 		465792DCDD5293C0F9412E3A /* Pods-binkappUITests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.beta.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.beta.xcconfig"; sourceTree = "<group>"; };
 		48E817B386298CDCB07B08F6 /* Pods-binkapp.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.app store.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.app store.xcconfig"; sourceTree = "<group>"; };
@@ -1980,7 +1980,7 @@
 				3C36071D230FF01400AC76A3 /* BrandHeader */,
 				CE3A5517253EE89A007989FE /* MessageView.swift */,
 				3CFDB226230C38A700E75A14 /* BinkTextField.swift */,
-				3CFDB224230C382400E75A14 /* BinkGradientButton.swift */,
+				3CFDB224230C382400E75A14 /* BinkCapsuleButton.swift */,
 				3CD4F14D230D35AE0075F63C /* BinkInfoButton.swift */,
 				3CD39615231E8E7100CD5C31 /* LayoutHelper.swift */,
 				BDB01883232EB14A00BFFA18 /* StackScrollView.swift */,
@@ -4350,7 +4350,7 @@
 				EFA5F7262379A7C70027AB80 /* CD_PaymentCardAccountConsents.swift in Sources */,
 				EF51CCD424363A140035BF02 /* BinkScannerViewController.swift in Sources */,
 				EFD8653B232FCDD800036C17 /* ReasonCode.swift in Sources */,
-				3CFDB225230C382400E75A14 /* BinkGradientButton.swift in Sources */,
+				3CFDB225230C382400E75A14 /* BinkCapsuleButton.swift in Sources */,
 				EFB7ED612379CA4000B72D06 /* PLRRewardsHistoryViewController.swift in Sources */,
 				EFA5F72C2379A7C70027AB80 /* CD_MembershipTransaction.swift in Sources */,
 				EFA5F7102379A7C70027AB80 /* _CD_MembershipCard.swift in Sources */,

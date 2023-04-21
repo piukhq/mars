@@ -38,7 +38,7 @@ class LoyaltyPlanView: CustomView {
             }
         case .linkCell:
             if cardType == .link {
-                iconImageView.image = Asset.lcdModuleIconsLinkActive.image
+                iconImageView.image = Asset.activeLink.image
             } else {
                 iconImageView.image = Asset.inactiveLink.image
             }

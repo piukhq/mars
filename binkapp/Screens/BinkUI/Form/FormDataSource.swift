@@ -553,7 +553,7 @@ extension FormDataSource {
         if let tcsRange = attributedTCs.range(of: L10n.tandcsLink), let privacyPolicyRange = attributedTCs.range(of: L10n.ppolicyLink) {
             var container = AttributeContainer()
             container.link = URL(string: "https://bink.com/terms-and-conditions/")
-            container.foregroundColor = Color(UIColor.blueAccent)
+            container.foregroundColor = Color(UIColor.binkBlue)
             container.underlineStyle = .single
             attributedTCs[tcsRange].mergeAttributes(container)
             container.link = URL(string: "https://bink.com/privacy-policy/")
@@ -584,8 +584,7 @@ extension FormDataSource {
     private func hyperlinkString(_ text: String, hyperlink: String) -> NSAttributedString {
         let attributed = NSMutableAttributedString(string: text, attributes: [.font: UIFont.bodyTextSmall])
         let countMinusHyperlinkString = text.count - hyperlink.count
-        attributed.addAttributes([.underlineStyle: NSUnderlineStyle.single.rawValue, .foregroundColor: UIColor.blueAccent, .font: UIFont.checkboxText], range: NSMakeRange(countMinusHyperlinkString, hyperlink.count))
-        
+        attributed.addAttributes([.underlineStyle: NSUnderlineStyle.single.rawValue, .foregroundColor: UIColor.binkBlue, .font: UIFont.checkboxText], range: NSMakeRange(countMinusHyperlinkString, hyperlink.count))
         return attributed
     }
 }

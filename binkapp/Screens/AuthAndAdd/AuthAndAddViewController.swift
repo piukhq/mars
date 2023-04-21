@@ -23,7 +23,7 @@ class AuthAndAddViewController: BaseFormViewController {
     }()
     
     private lazy var primaryButton: BinkButton = {
-        return BinkButton(type: .gradient, title: viewModel.buttonTitle, enabled: dataSource.fullFormIsValid) { [weak self] in
+        return BinkButton(type: .capsule, title: viewModel.buttonTitle, enabled: dataSource.fullFormIsValid) { [weak self] in
             self?.handlePrimaryButtonTap()
         }
     }()

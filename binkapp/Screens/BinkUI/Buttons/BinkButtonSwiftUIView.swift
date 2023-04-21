@@ -37,7 +37,7 @@ struct BinkButtonSwiftUIView: View, Identifiable {
     @State var loading = false
     
     enum ButtonType {
-        case gradient
+        case capsule
         case plain
     }
 
@@ -47,18 +47,20 @@ struct BinkButtonSwiftUIView: View, Identifiable {
     var type: ButtonType
     
     var textColor: Color {
-        return type == .gradient ? .white : Color(Current.themeManager.color(for: .text))
+        return type == .capsule ? .white : Color(Current.themeManager.color(for: .text))
     }
     
     var body: some View {
         Button {
             buttonTapped()
-            loading = type == .gradient ? true : false
+            loading = type == .capsule ? true : false
         } label: {
             ZStack {
-                if type == .gradient {
-                    LinearGradient(gradient: Gradient(colors: [Color(.binkGradientBlueRight), Color(.binkGradientBlueLeft)]), startPoint: .leading, endPoint: .trailing)
+                if type == .capsule {
+                    Color(uiColor: .binkBlue)
                         .opacity(enabled ? Constants.fullOpacity : Constants.halfOpacity)
+                } else {
+                    Color(.clear)
                 }
                 Text(loading ? "" : viewModel.title)
                     .foregroundColor(enabled ? textColor : .white.opacity(Constants.halfOpacity))
@@ -68,7 +70,7 @@ struct BinkButtonSwiftUIView: View, Identifiable {
         }
         .disabled(!enabled)
         .cornerRadius(Constants.cornerRadius)
-        .shadow(color: .black.opacity(type == .gradient ? Constants.shadowSemiOpaque : Constants.shadowTransparent), radius: Constants.shadowRadius, x: Constants.shadowXPosition, y: Constants.shadowYPosition)
+        .shadow(color: .black.opacity(type == .capsule ? Constants.shadowSemiOpaque : Constants.shadowTransparent), radius: Constants.shadowRadius, x: Constants.shadowXPosition, y: Constants.shadowYPosition)
         .overlay(ActivityIndicator(animate: $loading, style: .medium), alignment: .center)
         .onReceive(viewModel.$isLoading) { isLoading in
             self.loading = isLoading
@@ -163,7 +165,7 @@ struct BinkButtonStackView_Previews: PreviewProvider {
                 Rectangle()
                     .foregroundColor(Color(UIColor.grey10))
                 BinkButtonsStackView(buttons: [
-                    BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: "Continue"), buttonTapped: {}, type: .gradient)
+                    BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: "Continue"), buttonTapped: {}, type: .capsule)
                 ])
             }
         }

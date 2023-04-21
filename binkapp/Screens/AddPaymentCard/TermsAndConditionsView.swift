@@ -48,7 +48,7 @@ class TermsAndConditionsViewModel {
     lazy var iAcceptButton: BinkButtonSwiftUIView = {
         return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.iAccept), enabled: true, buttonTapped: {
             self.acceptAction?()
-        }, type: .gradient)
+        }, type: .capsule)
     }()
     
     lazy var iDeclineButton: BinkButtonSwiftUIView = {
@@ -64,7 +64,7 @@ class TermsAndConditionsViewModel {
         if let privacyPolicyRange = attributedString.range(of: L10n.privacyPolicy) {
             var container = AttributeContainer()
             container.link = URL(string: "https://bink.com/privacy-policy/")
-            container.foregroundColor = .blueAccent
+            container.foregroundColor = .binkBlue
             container.underlineStyle = .single
             attributedString[privacyPolicyRange].mergeAttributes(container)
         }

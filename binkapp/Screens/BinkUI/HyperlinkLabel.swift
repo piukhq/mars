@@ -25,7 +25,7 @@ class HyperlinkLabel: UILabel {
         let attributedString = NSMutableAttributedString(string: text)
         range = (text as NSString).range(of: hyperlink)
         if let range = range {
-            attributedString.addAttributes([.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent], range: range)
+            attributedString.addAttributes([.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.binkBlue], range: range)
             attributedText = attributedString
         }
     }

@@ -35,7 +35,7 @@ class WalletPromptCollectionViewCell: WalletCardCollectionViewCell {
         detailLabel.text = walletPrompt.body
         titleLabel.sizeToFit()
         detailLabel.sizeToFit()
-        titleLabel.textColor = .binkBlueTitleText
+        titleLabel.textColor = .binkBlue
         
         if UIDevice.current.isSmallSize {
             titleLabel.font = .walletPromptTitleSmall

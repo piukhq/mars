@@ -64,6 +64,7 @@ class OnboardingLearningView: CustomView {
     
     func configure(forType type: OnboardingLearningType) {
         learningImageView.image = UIImage(named: type.learningImageName)
+        learningImageView.tintColor = .binkBlue
         headerTextLabel.text = type.headerText
         headerTextLabel.textColor = Current.themeManager.color(for: .text)
         bodyTextLabel.text = type.bodyText

@@ -75,7 +75,7 @@ class BaseFormViewController: BinkViewController, Form {
         textView.isEditable = false
         textView.backgroundColor = .clear
         textView.textContainerInset = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: -5)
-        textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
+        textView.linkTextAttributes = [.foregroundColor: UIColor.binkBlue, .underlineStyle: NSUnderlineStyle.single.rawValue]
         return textView
     }()
     

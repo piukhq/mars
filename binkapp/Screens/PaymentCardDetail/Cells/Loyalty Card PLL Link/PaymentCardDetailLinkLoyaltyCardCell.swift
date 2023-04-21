@@ -44,7 +44,6 @@ class PaymentCardDetailLinkLoyaltyCardCell: PaymentCardDetailTableViewCell {
     }
 
     @IBAction private func didToggle() {
-        linkToggle.isGradientVisible = linkToggle.isOn
         delegate?.linkedLoyaltyCardCell(self, shouldToggleLinkedStateForMembershipCard: viewModel.membershipCard)
     }
 }

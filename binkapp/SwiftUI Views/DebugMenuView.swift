@@ -107,7 +107,7 @@ struct DebugRow: View {
         HStack {
             VStack(alignment: .leading, spacing: 5) {
                 Text(rowType.rawValue)
-                    .foregroundColor(destructive ? .red : buttonTapped ? Color(.binkGradientBlueRight.lighter() ?? .grey10) : Color(.binkGradientBlueRight))
+                    .foregroundColor(destructive ? .red : buttonTapped ? Color(.binkBlue.lighter() ?? .grey10) : Color(.binkBlue))
                 if let subtitle = subtitle {
                     Text(subtitle)
                         .foregroundColor(Color(Current.themeManager.color(for: .text)))
@@ -167,13 +167,13 @@ struct ToggleDebugRow: View {
         Toggle(isOn: $isEnabled) {
             Text(title)
                 .font(.body)
-                .foregroundColor(Color(.binkGradientBlueRight))
+                .foregroundColor(Color(.binkBlue))
             if let subtitle = subtitle {
                 Text(subtitle)
                     .font(.subheadline)
             }
         }
-        .toggleStyle(SwitchToggleStyle(tint: Color(.binkGradientBlueRight)))
+        .toggleStyle(SwitchToggleStyle(tint: Color(.binkBlue)))
         .onChange(of: isEnabled) { enabled in
             Current.userDefaults.set(enabled, forDefaultsKey: userDefaultsKey)
             
@@ -206,7 +206,7 @@ struct StepperDebugRow: View {
                 .onChange(of: stepperValue, perform: { value in
                     valueHandler(Int(value))
                 })
-                .foregroundColor(Color(.binkGradientBlueRight))
+                .foregroundColor(Color(.binkBlue))
             Text("\(Int(stepperValue))")
         }
     }
@@ -309,7 +309,7 @@ struct PickerDebugRow: View {
         HStack {
             Text(type.title)
                 .lineLimit(1)
-                .foregroundColor(Color(.binkGradientBlueRight))
+                .foregroundColor(Color(.binkBlue))
 
             Spacer()
 
@@ -340,7 +340,7 @@ struct NavigationDebugRow<Destination: View>: View {
     
     var body: some View {
         NavigationLink(title, destination: destination)
-            .foregroundColor(Color(.binkGradientBlueRight))
+            .foregroundColor(Color(.binkBlue))
     }
 }
 
@@ -379,7 +379,7 @@ struct DatePickerRow: View {
     
     var body: some View {
         DatePicker("Adjust device date", selection: $dateManager.currentDate)
-            .foregroundColor(Color(.binkGradientBlueRight))
+            .foregroundColor(Color(.binkBlue))
             .datePickerStyle(.compact)
     }
 }

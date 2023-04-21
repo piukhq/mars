@@ -41,6 +41,17 @@ enum Styling {
             return .default
         }
     }
+    
+    static func logo(for userInterfaceStyle: UIUserInterfaceStyle) -> ImageAsset {
+        switch Current.themeManager.currentTheme.type {
+        case .light:
+            return Asset.logoPrimary
+        case .dark:
+            return Asset.logoDark
+        case .system:
+            return userInterfaceStyle == .light ? Asset.logoPrimary : Asset.logoDark
+        }
+    }
 
     enum Colors {
         static var viewBackground: UIColor {
