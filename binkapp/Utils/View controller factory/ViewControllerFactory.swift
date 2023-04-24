@@ -329,6 +329,23 @@ enum ViewControllerFactory {
         }))
         return alert
     }
+    
+    static func makePollManagementAlertViewController(remindLaterHandler: @escaping () -> Void, dontShowAgainHandler: @escaping () -> Void ) -> BinkAlertController {
+        let alert = BinkAlertController(title: "Help us manage your poll notifications better:", message: nil, preferredStyle: .actionSheet)
+
+        alert.addAction(UIAlertAction(title: "Remind me tomorrow", style: .default, handler: { _ in
+            remindLaterHandler()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Don't show me this poll again", style: .default, handler: { _ in
+            dontShowAgainHandler()
+        }))
+        
+        let cancelAction = UIAlertAction(title: L10n.cancel, style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        
+        return alert
+    }
 
     static func makeDebugViewController() -> UIViewController {
         return UIHostingController(rootView: DebugMenuView())

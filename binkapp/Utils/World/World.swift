@@ -86,6 +86,7 @@ extension UserDefaults: BinkUserDefaults {
         case hasDismissedWhatsNewView
         case isInPollRemindPeriod
         case timeToPromptPollRemindDate
+        case dismissedPollId
 
         var keyValue: String {
             switch self {
@@ -145,6 +146,8 @@ extension UserDefaults: BinkUserDefaults {
                 return "isInPollRemindPeriod"
             case .timeToPromptPollRemindDate:
                 return "timeToPromptPollRemindDate"
+            case .dismissedPollId:
+                return "dismissedPollId"
             }
         }
     }

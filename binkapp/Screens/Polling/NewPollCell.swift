@@ -34,7 +34,8 @@ class NewPollCell: UICollectionViewCell {
             host.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             host.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             host.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            host.view.widthAnchor.constraint(equalToConstant: contentView.frame.width)
+            host.view.widthAnchor.constraint(equalToConstant: contentView.frame.width),
+            host.view.heightAnchor.constraint(equalToConstant: 120.0)
         ])
     }
 }

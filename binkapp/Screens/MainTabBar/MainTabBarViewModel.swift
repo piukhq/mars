@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import SwiftUI
 
 class MainTabBarViewModel {
     // MARK: - Helpers
@@ -40,12 +39,7 @@ class MainTabBarViewModel {
         let paymentWalletNavigationController = PortraitNavigationController(rootViewController: paymentWalletViewController)
         paymentWalletNavigationController.tabBarItem = getTabBarPaymentButton()
         
-        // POLL
-        let hostingViewController = UIHostingController(rootView: PollSwiftUIView(viewModel: PollSwiftUIViewModel()))
-        let pollNavigationController = PortraitNavigationController(rootViewController: hostingViewController)
-        pollNavigationController.tabBarItem = getTabBarPollButton()
-        
-        viewControllers = [loyaltyWalletNavigationController, browseBrandsViewController, paymentWalletNavigationController, pollNavigationController]
+        viewControllers = [loyaltyWalletNavigationController, browseBrandsViewController, paymentWalletNavigationController]
     }
     
     private func getTabBarLoyaltyButton() -> UITabBarItem {
@@ -71,14 +65,6 @@ class MainTabBarViewModel {
         return item
     }
     
-    private func getTabBarPollButton() -> UITabBarItem {
-        let item = UITabBarItem(title: nil, image: UIImage(systemName: "chart.bar.doc.horizontal"), tag: Buttons.pollItem.rawValue)
-        item.selectedImage = UIImage(systemName: "chart.bar.doc.horizontal.fill")
-        item.title = "Poll"
-        item.imageInsets = UIEdgeInsets(top: Constants.iconInsets, left: 0, bottom: -Constants.iconInsets, right: 0)
-        return item
-    }
-    
     func toBrowseBrandsScreen() {
         let viewController = ViewControllerFactory.makeBrowseBrandsViewController()
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
@@ -90,5 +76,4 @@ enum Buttons: Int {
     case loyaltyItem = 0
     case paymentItem
     case addItem
-    case pollItem
 }
