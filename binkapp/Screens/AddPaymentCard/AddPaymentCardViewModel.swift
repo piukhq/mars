@@ -53,26 +53,8 @@ class AddPaymentCardViewModel {
         paymentCard.year = year
     }
 
-    func toPaymentTermsAndConditions(acceptAction: @escaping BinkButtonAction, declineAction: @escaping BinkButtonAction) {
-        let description = L10n.termsAndConditionsDescription
-        let titleAttributedString = NSMutableAttributedString(string: L10n.termsAndConditionsTitle + "\n", attributes: [
-            .font: UIFont.headline
-        ])
-        let descriptionAttributedString = NSMutableAttributedString(string: description, attributes: [
-            .font: UIFont.bodyTextLarge
-        ])
-        let urlString = L10n.privacyPolicy
-        if let urlRange = description.range(of: urlString) {
-            let nsRange = NSRange(urlRange, in: description)
-            descriptionAttributedString.addAttribute(.link, value: "https://bink.com/privacy-policy/", range: nsRange)
-        }
-
-        let attributedText = NSMutableAttributedString()
-        attributedText.append(titleAttributedString)
-        attributedText.append(descriptionAttributedString)
-        
-        let configurationModel = ReusableModalConfiguration(title: L10n.termsAndConditionsTitle, text: attributedText, primaryButtonTitle: L10n.iAccept, primaryButtonAction: acceptAction, secondaryButtonTitle: L10n.iDecline, secondaryButtonAction: declineAction)
-        let viewController = ViewControllerFactory.makePaymentTermsAndConditionsViewController(configurationModel: configurationModel)
+    func toPaymentTermsAndConditions(acceptAction: @escaping BinkButtonAction) {
+        let viewController = ViewControllerFactory.makePaymentTermsAndConditionsViewController(acceptAction: acceptAction)
         let navigationRequest = ModalNavigationRequest(viewController: viewController, dragToDismiss: false, hideCloseButton: true)
         Current.navigate.to(navigationRequest)
     }

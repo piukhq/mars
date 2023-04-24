@@ -59,12 +59,7 @@ struct ShowBarcodeAnywayButtonView: View {
                 }
             }
         }
-        .background(
-            ZStack {
-                Color(Current.themeManager.color(for: .viewBackground))
-                LinearGradient(gradient: Gradient(colors: [Color(.binkGradientBlueRight), Color(.binkGradientBlueLeft)]), startPoint: .leading, endPoint: .trailing)
-                    .opacity(1)
-            })
+        .background(Color(uiColor: .binkBlue))
         .cornerRadius(20)
     }
 }

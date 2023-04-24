@@ -52,7 +52,7 @@ struct FeatureFlagCell: View {
                     .lineLimit(1)
             }
         })
-        .toggleStyle(SwitchToggleStyle(tint: Color(.binkGradientBlueRight)))
+        .toggleStyle(SwitchToggleStyle(tint: Color(uiColor: .binkBlue)))
         .onChange(of: isEnabled, perform: { enabled in
             Current.featureManager.toggle(feature, enabled: enabled)
         })

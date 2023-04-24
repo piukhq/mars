@@ -26,7 +26,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        CAGradientLayer.removeGradientLayer(for: headerView)
+        headerView.backgroundColor = .clear
     }
     
     func configureWithWalletPrompt(_ walletPrompt: WalletPrompt) {
@@ -51,7 +51,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toBrowseBrands)))
         
         if case .link = walletPrompt.type {
-            CAGradientLayer.makeGradient(for: headerView, firstColor: .binkGradientBlueRight, secondColor: .binkGradientBlueLeft, startPoint: CGPoint(x: 0.7, y: 0.0))
+            headerView.backgroundColor = .binkBlue
             titleLabel.textColor = .white
             descriptionLabel.textColor = .white
 

@@ -2,7 +2,7 @@ PODS:
   - DTTJailbreakDetection (0.4.0)
   - Keys (1.0.1)
   - SwiftGen (6.6.2)
-  - SwiftLint (0.50.3)
+  - SwiftLint (0.51.0)
   - SwiftyRSA (1.6.0):
     - SwiftyRSA/ObjC (= 1.6.0)
   - SwiftyRSA/ObjC (1.6.0)
@@ -14,7 +14,7 @@ DEPENDENCIES:
   - DTTJailbreakDetection (~> 0.4)
   - Keys (from `Pods/CocoaPodsKeys`)
   - SwiftGen (~> 6.6.2)
-  - SwiftLint (~> 0.50.3)
+  - SwiftLint (~> 0.51.0)
   - "SwiftyRSA (from `git@github.com:binkhq/SwiftyRSA.git`)"
   - ZXingObjC (~> 3.6)
 
@@ -41,10 +41,10 @@ SPEC CHECKSUMS:
   DTTJailbreakDetection: 5e356c5badc17995f65a83ed9483f787a0057b71
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   SwiftGen: 1366a7f71aeef49954ca5a63ba4bef6b0f24138c
-  SwiftLint: 77f7cb2b9bb81ab4a12fcc86448ba3f11afa50c6
+  SwiftLint: 1b7561918a19e23bfed960e40759086e70f4dba5
   SwiftyRSA: 3b9c9179744217951facc6a3e9ae8d8c97061ffa
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 55ff03ea3a2f10fd882b70925e3b3b718fd06591
+PODFILE CHECKSUM: 4f8d724e0ae2a144b83bfbc303afe1d2c7675924
 
 COCOAPODS: 1.11.3

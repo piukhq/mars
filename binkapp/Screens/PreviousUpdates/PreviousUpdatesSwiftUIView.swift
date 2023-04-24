@@ -84,13 +84,13 @@ struct VersionIconView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 6, style: .continuous)
-                .fill((Color(UIColor.binkBlueTitleText)
+                .fill((Color(UIColor.binkBlue)
                     .opacity(Constants.rectOpacity)))
                 .frame(width: Constants.rectSize, height: Constants.rectSize)
             Image(systemName: "gearshape")
                 .resizable()
                 .frame(width: Constants.imageSize, height: Constants.imageSize)
-                .foregroundColor(Color(UIColor.binkBlueTitleText))
+                .foregroundColor(Color(UIColor.binkBlue))
         }
     }
 }

@@ -51,7 +51,7 @@ struct PreferencesView: View {
                         Text(L10n.preferencesClearCredentialsTitle)
                             .underline()
                             .uiFont(.linkUnderlined)
-                            .foregroundColor(Color(UIColor.blueAccent))
+                            .foregroundColor(Color(UIColor.binkBlue))
                     }
                     .padding(.bottom, 15)
 

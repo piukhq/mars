@@ -106,7 +106,7 @@ class PLLScreenViewController: BinkViewController {
     }()
 
     private lazy var primaryButton: BinkButton = {
-        return BinkButton(type: .gradient) { [weak self] in
+        return BinkButton(type: .capsule) { [weak self] in
             self?.handlePrimaryButtonTap()
         }
     }()
