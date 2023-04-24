@@ -39,6 +39,7 @@ struct BinkButtonSwiftUIView: View, Identifiable {
     enum ButtonType {
         case capsule
         case plain
+        case bordered
     }
 
     var id = UUID()
@@ -47,7 +48,7 @@ struct BinkButtonSwiftUIView: View, Identifiable {
     var type: ButtonType
     
     var textColor: Color {
-        return type == .capsule ? .white : Color(Current.themeManager.color(for: .text))
+        return type == .capsule ? .white : type == .plain ? Color(Current.themeManager.color(for: .text)) : Color(.binkBlue)
     }
     
     var body: some View {
@@ -70,7 +71,11 @@ struct BinkButtonSwiftUIView: View, Identifiable {
         }
         .disabled(!enabled)
         .cornerRadius(Constants.cornerRadius)
-        .shadow(color: .black.opacity(type == .capsule ? Constants.shadowSemiOpaque : Constants.shadowTransparent), radius: Constants.shadowRadius, x: Constants.shadowXPosition, y: Constants.shadowYPosition)
+        .shadow(color: .black.opacity(type == .capsule || type == .bordered ? Constants.shadowSemiOpaque : Constants.shadowTransparent), radius: Constants.shadowRadius, x: Constants.shadowXPosition, y: Constants.shadowYPosition)
+        .overlay(
+            type == .bordered ? RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                .stroke(Color(.binkBlue), lineWidth: 1) : nil
+        )
         .overlay(ActivityIndicator(animate: $loading, style: .medium), alignment: .center)
         .onReceive(viewModel.$isLoading) { isLoading in
             self.loading = isLoading

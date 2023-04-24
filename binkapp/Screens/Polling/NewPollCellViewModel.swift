@@ -23,7 +23,10 @@ class NewPollCellViewModel: ObservableObject {
     private func getPollData() {
         guard let collectionReference = Current.firestoreManager.getCollection(collection: .polls) else { return }
         
-        guard Current.userDefaults.bool(forDefaultsKey: .isInPollRemindPeriod) == false else { return }
+        guard Current.userDefaults.bool(forDefaultsKey: .isInPollRemindPeriod) == false else {
+            NotificationCenter.default.post(name: .displayPollInfoCell, object: nil, userInfo: ["show": false])
+            return
+        }
         
         let query = collectionReference.whereField("publishedStatus", isEqualTo: PollStatus.published.rawValue )
         query.addSnapshotListener { [weak self] (snapshot, error) in

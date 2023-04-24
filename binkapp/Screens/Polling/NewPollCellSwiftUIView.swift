@@ -10,12 +10,13 @@ import SwiftUI
 
 struct NewPollCellSwiftUIView: View {
     @ObservedObject var viewModel: NewPollCellViewModel
+    @ObservedObject var themeManager = Current.themeManager
     
     var body: some View {
         ZStack {
             if viewModel.question != nil {
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color.gray)
+                    .fill(LinearGradient(gradient: Gradient(colors: [Color(.binkBlue), Color(.answeredRowGreen)]), startPoint: .leading, endPoint: .trailing))
                 VStack(alignment: .leading) {
                     HStack {
                         Image(systemName: "chart.bar.xaxis")
@@ -54,7 +55,8 @@ struct NewPollCellSwiftUIView: View {
                 .padding()
             }
         }
-        //.frame(width: viewModel.question != nil ? UIScreen.main.bounds.width - (25 * 2) : 0, height: viewModel.question != nil ? 120.0 : 0)
+        .background(Color(themeManager.color(for: .viewBackground)))
+        .frame(width: viewModel.question != nil ? UIScreen.main.bounds.width - (25 * 2) : 0, height: viewModel.question != nil ? 120.0 : 0)
     }
 }
 

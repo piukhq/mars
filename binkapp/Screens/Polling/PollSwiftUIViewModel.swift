@@ -13,12 +13,37 @@ class PollSwiftUIViewModel: ObservableObject {
     @Published var pollData: PollModel?
     @Published var currentAnswer: String?
     @Published var gotVotes = false
+    @Published var submitted = false
     
     var votingModel: PollVotingModel?
     
     private let userId = Current.userManager.currentUserId
     
     var votesDictionary = [String: Int]()
+    
+    lazy var disabledAnswerButton: BinkButtonSwiftUIView = {
+        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: "Submit"), enabled: false, buttonTapped: {}, type: .capsule)
+    }()
+    
+    lazy var submitAnswerButton: BinkButtonSwiftUIView = {
+        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: "Submit"), enabled: true, buttonTapped: { [weak self] in
+            self?.submitAnswer()
+        }, type: .capsule)
+    }()
+    
+    lazy var editVoteButton: BinkButtonSwiftUIView = {
+        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: "Edit my vote"), enabled: true, buttonTapped: { [weak self] in
+            self?.currentAnswer = nil
+            self?.submitted = false
+            self?.gotVotes.toggle()
+        }, type: .bordered)
+    }()
+    
+    lazy var doneButton: BinkButtonSwiftUIView = {
+        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: "Done"), enabled: true, buttonTapped: { [weak self] in
+            Current.navigate.back()
+        }, type: .capsule)
+    }()
     
     init () {
         self.getPollData()
@@ -100,11 +125,13 @@ class PollSwiftUIViewModel: ObservableObject {
             model.overwritten = true
             Current.firestoreManager.addDocument(model, collection: .pollResults, documentId: model.id ?? "") { [weak self] _ in
                 self?.getVoteCount()
+                self?.submitted.toggle()
             }
         } else {
             votingModel = PollVotingModel(pollId: pollData?.id ?? "", userId: userId ?? "", createdDate: Int(Date().timeIntervalSince1970), overwritten: false, answer: answer)
             Current.firestoreManager.addDocument(votingModel, collection: .pollResults) { [weak self] _ in
                 self?.getVoteCount()
+                self?.submitted.toggle()
             }
         }
     }
