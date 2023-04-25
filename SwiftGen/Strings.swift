@@ -212,6 +212,10 @@ internal enum L10n {
   internal static let detailsHeaderShowCardNumber = L10n.tr("Localizable", "details_header_show_card_number", fallback: "Tap to show card number")
   /// Tap to enlarge QR code
   internal static let detailsHeaderShowQrCode = L10n.tr("Localizable", "details_header_show_qr_code", fallback: "Tap to enlarge QR code")
+  /// Help us manage your poll notifications better:
+  internal static let dismissAlertTitle = L10n.tr("Localizable", "dismiss_alert_title", fallback: "Help us manage your poll notifications better:")
+  /// Don't show me this poll again
+  internal static let dismissPoll = L10n.tr("Localizable", "dismiss_poll", fallback: "Don't show me this poll again")
   /// Done
   internal static let done = L10n.tr("Localizable", "done", fallback: "Done")
   /// Use magic link
@@ -226,6 +230,8 @@ internal enum L10n {
   /// 
   ///   Copyright © 2019 Bink. All rights reserved.
   internal static let errorTitle = L10n.tr("Localizable", "error_title", fallback: "Error")
+  /// THIS POLL EXPIRES IN 
+  internal static let expiresIn = L10n.tr("Localizable", "expires_in", fallback: "THIS POLL EXPIRES IN ")
   /// Filters
   internal static let filtersButtonTitle = L10n.tr("Localizable", "filters_button_title", fallback: "Filters")
   /// Find and join loyalty schemes
@@ -654,6 +660,8 @@ internal enum L10n {
   internal static let pointsModuleToSeeHistory = L10n.tr("Localizable", "points_module_to_see_history", fallback: "To see history")
   /// View history
   internal static let pointsModuleViewHistoryMessage = L10n.tr("Localizable", "points_module_view_history_message", fallback: "View history")
+  /// Thanks for your response!
+  internal static let pollAnswerThankYou = L10n.tr("Localizable", "poll_answer_thank_you", fallback: "Thanks for your response!")
   /// Popular
   internal static let popularTitle = L10n.tr("Localizable", "popular_title", fallback: "Popular")
   /// Privacy Policy
@@ -733,6 +741,8 @@ internal enum L10n {
   internal static let registrationUnavailableDescription = L10n.tr("Localizable", "registration_unavailable_description", fallback: "Please go to the merchant’s website to join this scheme. You can then come back and add your card.")
   /// Registration unavailable
   internal static let registrationUnavailableTitle = L10n.tr("Localizable", "registration_unavailable_title", fallback: "Registration unavailable")
+  /// Remind me tomorrow
+  internal static let remindMeLater = L10n.tr("Localizable", "remind_me_later", fallback: "Remind me tomorrow")
   /// Retry
   internal static let retryTitle = L10n.tr("Localizable", "retry_title", fallback: "Retry")
   /// Scan a card you already have
@@ -906,6 +916,8 @@ internal enum L10n {
   internal static let supportMailNoEmailAppsTitle = L10n.tr("Localizable", "support_mail_no_email_apps_title", fallback: "No email app installed")
   /// Bink App Support
   internal static let supportMailSubject = L10n.tr("Localizable", "support_mail_subject", fallback: "Bink App Support")
+  /// TAKE POLL
+  internal static let takePoll = L10n.tr("Localizable", "take_poll", fallback: "TAKE POLL")
   /// Please read the Bink Privacy Policy for further details of how your data will be processed
   internal static let tandcsDescription = L10n.tr("Localizable", "tandcs_description", fallback: "Please read the Bink Privacy Policy for further details of how your data will be processed")
   /// Terms and Conditions

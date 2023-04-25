@@ -331,17 +331,22 @@ enum ViewControllerFactory {
     }
     
     static func makePollManagementAlertViewController(remindLaterHandler: @escaping () -> Void, dontShowAgainHandler: @escaping () -> Void ) -> BinkAlertController {
-        let alert = BinkAlertController(title: "Help us manage your poll notifications better:", message: nil, preferredStyle: .actionSheet)
+        let alert = BinkAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let myMutableString = NSMutableAttributedString(string: L10n.dismissAlertTitle, attributes: [NSAttributedString.Key.font: UIFont.alertText])
+        alert.setValue(myMutableString, forKey: "attributedTitle")
 
-        alert.addAction(UIAlertAction(title: "Remind me tomorrow", style: .default, handler: { _ in
+        let remindAction = UIAlertAction(title: L10n.remindMeLater, style: .default, handler: { _ in
             remindLaterHandler()
-        }))
+        })
+        remindAction.setValue(UIColor.binkBlue, forKey: "titleTextColor")
+        alert.addAction(remindAction)
         
-        alert.addAction(UIAlertAction(title: "Don't show me this poll again", style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: L10n.dismissPoll, style: .destructive, handler: { _ in
             dontShowAgainHandler()
         }))
         
         let cancelAction = UIAlertAction(title: L10n.cancel, style: .cancel, handler: nil)
+        cancelAction.setValue(UIColor.binkBlue, forKey: "titleTextColor")
         alert.addAction(cancelAction)
         
         return alert

@@ -10,7 +10,6 @@ import SwiftUI
 
 struct PollSwiftUIView: View {
     @ObservedObject var viewModel: PollSwiftUIViewModel
-    //@State private var submitted = false
     @State var countdownText = ""
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -19,7 +18,7 @@ struct PollSwiftUIView: View {
         VStack(alignment: .leading) {
             if viewModel.pollData != nil {
                 if !viewModel.submitted {
-                    Text("THIS POLL EXPIRES IN " + countdownText)
+                    Text(L10n.expiresIn + countdownText)
                         .uiFont(.tabBar)
                         .foregroundColor(Color(.binkBlue))
                         .multilineTextAlignment(.leading)
@@ -39,7 +38,7 @@ struct PollSwiftUIView: View {
                         .fixedSize(horizontal: false, vertical: true)
                         .padding()
                 } else {
-                    Text("Thanks for your response!")
+                    Text(L10n.pollAnswerThankYou)
                         .uiFont(.headline)
                         .lineLimit(nil)
                         .multilineTextAlignment(.leading)

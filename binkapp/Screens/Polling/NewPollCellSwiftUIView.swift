@@ -27,7 +27,6 @@ struct NewPollCellSwiftUIView: View {
                         Spacer()
                         
                         Button(action: {
-                            ///viewModel.remindLaterPressed()
                             viewModel.displayPollOptions()
                         }) {
                             Image(systemName: "xmark")
@@ -45,10 +44,16 @@ struct NewPollCellSwiftUIView: View {
                             .lineLimit(nil)
                             .multilineTextAlignment(.leading)
                             .fixedSize(horizontal: false, vertical: true)
-                        
-                        Text("TAKE POLL ->")
-                            .uiFont(.tabBar)
-                            .foregroundColor(Color.white)
+                        HStack {
+                            Text(L10n.takePoll)
+                                .uiFont(.checkboxText)
+                                .foregroundColor(Color.white)
+                            Image(systemName: "arrow.right")
+                                .resizable()
+                                .frame(width: 12, height: 12)
+                                .foregroundColor(.white)
+                            Spacer()
+                        }
                     }
                     .padding(.top, -4)
                 }

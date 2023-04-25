@@ -552,3 +552,12 @@
 "custom_card_company_name" = "Other card";
 "whats_new_screen_dont_show_again" = "Don't show me this again";
 
+
+// MARK: - Polls
+"dismiss_alert_title" = "Help us manage your poll notifications better:";
+"remind_me_later" = "Remind me tomorrow";
+"dismiss_poll" = "Don't show me this poll again";
+"expires_in" = "THIS POLL EXPIRES IN ";
+"poll_answer_thank_you" = "Thanks for your response!";
+"take_poll" = "TAKE POLL";
+
