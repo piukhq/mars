@@ -281,12 +281,15 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         guard let cell = collectionView.cellForItem(at: indexPath) else { return false }
+        guard !cell.isKind(of: NewPollCell.self) else { return false }
         return !cell.isKind(of: WalletPromptCollectionViewCell.self) && !cell.isKind(of: OnboardingCardCollectionViewCell.self)
     }
     
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath, toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
         guard let cell = collectionView.cellForItem(at: proposedIndexPath) else { return proposedIndexPath }
-        
+        if cell.isKind(of: NewPollCell.self) {
+            return originalIndexPath
+        }
         if cell.isKind(of: WalletPromptCollectionViewCell.self) || cell.isKind(of: OnboardingCardCollectionViewCell.self) {
             return originalIndexPath
         }
@@ -311,14 +314,17 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         case .began:
             guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else { break }
             let selectedCell = collectionView.cellForItem(at: selectedIndexPath)
-            let centerY = (selectedCell?.bounds.size.height ?? 0) / 2
-            let gestureLocationInCell = gesture.location(in: selectedCell)
-            distanceFromCenterOfCell = centerY - gestureLocationInCell.y
-            
-            orderingManager.start()
-            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
             
             if let cell = selectedCell {
+                guard !cell.isKind(of: NewPollCell.self) else { return }
+                
+                let centerY = (selectedCell?.bounds.size.height ?? 0) / 2
+                let gestureLocationInCell = gesture.location(in: selectedCell)
+                distanceFromCenterOfCell = centerY - gestureLocationInCell.y
+                
+                orderingManager.start()
+                collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+                
                 if !cell.isKind(of: WalletPromptCollectionViewCell.self) && !cell.isKind(of: OnboardingCardCollectionViewCell.self) {
                     animate(cell, to: CGAffineTransform(translationX: 0, y: -LayoutHelper.WalletDimensions.cardLineSpacing))
                 }
