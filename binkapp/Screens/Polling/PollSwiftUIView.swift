@@ -8,6 +8,53 @@
 
 import SwiftUI
 
+struct PollTopTextView: View {
+    var viewModel: PollSwiftUIViewModel
+    @State private var countdownText = ""
+    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
+    var body: some View {
+        if !viewModel.submitted {
+            Text(L10n.expiresIn + countdownText)
+                .uiFont(.tabBar)
+                .foregroundColor(Color(.binkBlue))
+                .multilineTextAlignment(.leading)
+                .padding()
+                .padding(.bottom, 8)
+                .onReceive(timer) { _ in
+                    countdownText = viewModel.getTimeToEnd()
+                    if countdownText.isEmpty {
+                        self.timer.upstream.connect().cancel()
+                    }
+                }
+            
+            Text(viewModel.pollData?.question ?? "")
+                .uiFont(.headline)
+                .lineLimit(nil)
+                .multilineTextAlignment(.leading)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding()
+        } else {
+            Text(L10n.pollAnswerThankYou)
+                .uiFont(.headline)
+                .lineLimit(nil)
+                .multilineTextAlignment(.leading)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding()
+                .padding(.top, 20)
+            
+            Text(viewModel.pollData?.question ?? "")
+                .uiFont(.walletPromptTitleSmall)
+                .foregroundColor(Color(.binkBlue))
+                .lineLimit(nil)
+                .multilineTextAlignment(.leading)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding()
+                .padding(.bottom, -20)
+        }
+    }
+}
+
 struct PollSwiftUIView: View {
     @ObservedObject var viewModel: PollSwiftUIViewModel
     @State var countdownText = ""
@@ -17,44 +64,7 @@ struct PollSwiftUIView: View {
     var body: some View {
         VStack(alignment: .leading) {
             if viewModel.pollData != nil {
-                if !viewModel.submitted {
-                    Text(L10n.expiresIn + countdownText)
-                        .uiFont(.tabBar)
-                        .foregroundColor(Color(.binkBlue))
-                        .multilineTextAlignment(.leading)
-                        .padding()
-                        .padding(.bottom, 8)
-                        .onReceive(timer) { _ in
-                            countdownText = viewModel.getTimeToEnd()
-                            if countdownText.isEmpty {
-                                self.timer.upstream.connect().cancel()
-                            }
-                        }
-                    
-                    Text(viewModel.pollData?.question ?? "")
-                        .uiFont(.headline)
-                        .lineLimit(nil)
-                        .multilineTextAlignment(.leading)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .padding()
-                } else {
-                    Text(L10n.pollAnswerThankYou)
-                        .uiFont(.headline)
-                        .lineLimit(nil)
-                        .multilineTextAlignment(.leading)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .padding()
-                        .padding(.top, 20)
-                    
-                    Text(viewModel.pollData?.question ?? "")
-                        .uiFont(.walletPromptTitleSmall)
-                        .foregroundColor(Color(.binkBlue))
-                        .lineLimit(nil)
-                        .multilineTextAlignment(.leading)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .padding()
-                        .padding(.bottom, -20)
-                }
+                PollTopTextView(viewModel: viewModel)
                 
                 GeometryReader { gp in
                     ScrollView {
