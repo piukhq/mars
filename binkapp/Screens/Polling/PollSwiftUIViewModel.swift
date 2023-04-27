@@ -63,10 +63,15 @@ class PollSwiftUIViewModel: ObservableObject {
         guard let pollData = self.pollData else { return }
         
         let query = collectionReference.whereField("userId", isEqualTo: userId ?? "").whereField("pollId", isEqualTo: pollData.id ?? "")
-        query.addSnapshotListener { [weak self] (snapshot, error) in
+        query.getDocuments { [weak self] (snapshot, error) in
             do {
                 if let doc = snapshot?.documents.first {
                     self?.votingModel = try doc.data(as: PollVotingModel.self)
+                    if let answer = self?.votingModel?.answer, !answer.isEmpty {
+                        self?.getVoteCount()
+                        self?.submitted.toggle()
+                        self?.currentAnswer = answer
+                    }
                 }
             } catch {
                 print("Error getting documents: \(error)")
@@ -77,20 +82,11 @@ class PollSwiftUIViewModel: ObservableObject {
     private func getVoteCount() {
         guard let collectionReference = Current.firestoreManager.getCollection(collection: .pollResults) else { return }
         guard let pollData = self.pollData else { return }
-        /*
-        for answer in pollData.answers {
-            let query = collectionReference.whereField("pollId", isEqualTo: pollData.id ?? "").whereField("answer", isEqualTo: answer)
-            query.getDocuments { [weak self] (snapshot, _) in
-                self?.votesDictionary[answer] = snapshot?.documents.count
-            }
-        }
-         */
         
         let query = collectionReference.whereField("pollId", isEqualTo: pollData.id ?? "")
         query.getDocuments { [weak self] (snapshot, _) in
             for answer in pollData.answers {
                 self?.votesDictionary[answer] = snapshot?.documents.filter { $0["answer"] as? String == answer }.count
-                print(answer + "\(self?.votesDictionary[answer])")
             }
             self?.gotVotes.toggle()
         }

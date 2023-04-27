@@ -59,8 +59,6 @@ struct PollSwiftUIView: View {
     @ObservedObject var viewModel: PollSwiftUIViewModel
     @State var countdownText = ""
     
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    
     var body: some View {
         VStack(alignment: .leading) {
             if viewModel.pollData != nil {
