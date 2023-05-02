@@ -10,7 +10,7 @@ import SwiftUI
 import UIKit
 
 class NewPollCell: UICollectionViewCell {
-    static var reuseIdentifier = "NewPollCell"
+    //static var reuseIdentifier = "NewPollCell"
     
     lazy var host: UIHostingController = {
         return UIHostingController(rootView: NewPollCellSwiftUIView(viewModel: NewPollCellViewModel()))
@@ -35,7 +35,6 @@ class NewPollCell: UICollectionViewCell {
             host.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             host.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             host.view.widthAnchor.constraint(equalToConstant: contentView.frame.width)
-            //host.view.heightAnchor.constraint(equalToConstant: 120.0)
         ])
     }
 }

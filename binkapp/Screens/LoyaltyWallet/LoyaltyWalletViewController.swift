@@ -35,7 +35,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     override func configureCollectionView() {
         super.configureCollectionView()
-        collectionView.register(NewPollCell.self, forCellWithReuseIdentifier: NewPollCell.reuseIdentifier)
+        collectionView.register(NewPollCell.self, asNib: false)
         collectionView.register(WalletLoyaltyCardCollectionViewCell.self, asNib: true)
         collectionView.register(OnboardingCardCollectionViewCell.self, asNib: true)
     }
@@ -198,7 +198,6 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
                     guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else { return .zero }
                     return LayoutHelper.WalletDimensions.sizeForWalletPrompt(walletPrompt: walletPrompt)
                 }
-                
             }
             
             if indexPath.section == 0 {

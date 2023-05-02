@@ -560,4 +560,6 @@
 "expires_in" = "THIS POLL EXPIRES IN ";
 "poll_answer_thank_you" = "Thanks for your response!";
 "take_poll" = "TAKE POLL";
+"submit" = "Submit";
+"edit_my_vote" = "Edit my vote";
 

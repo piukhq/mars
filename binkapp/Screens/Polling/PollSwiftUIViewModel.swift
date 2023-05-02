@@ -15,24 +15,18 @@ class PollSwiftUIViewModel: ObservableObject {
     @Published var gotVotes = false
     @Published var submitted = false
     
-    var votingModel: PollVotingModel?
-    
-    private let userId = Current.userManager.currentUserId
-    
-    var votesDictionary = [String: Int]()
-    
     lazy var disabledAnswerButton: BinkButtonSwiftUIView = {
-        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: "Submit"), enabled: false, buttonTapped: {}, type: .capsule)
+        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.submit), enabled: false, buttonTapped: {}, type: .capsule)
     }()
     
     lazy var submitAnswerButton: BinkButtonSwiftUIView = {
-        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: "Submit"), enabled: true, buttonTapped: { [weak self] in
+        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.submit), enabled: true, buttonTapped: { [weak self] in
             self?.submitAnswer()
         }, type: .capsule)
     }()
     
     lazy var editVoteButton: BinkButtonSwiftUIView = {
-        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: "Edit my vote"), enabled: true, buttonTapped: { [weak self] in
+        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.editMyVote), enabled: true, buttonTapped: { [weak self] in
             self?.currentAnswer = nil
             self?.submitted = false
             self?.gotVotes.toggle()
@@ -40,10 +34,16 @@ class PollSwiftUIViewModel: ObservableObject {
     }()
     
     lazy var doneButton: BinkButtonSwiftUIView = {
-        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: "Done"), enabled: true, buttonTapped: { [weak self] in
+        return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.done), enabled: true, buttonTapped: { [weak self] in
             Current.navigate.back()
         }, type: .capsule)
     }()
+    
+    private var votingModel: PollVotingModel?
+    
+    private let userId = Current.userManager.currentUserId
+    
+    var votesDictionary: [String: Int] = [:]
     
     init () {
         self.getPollData()

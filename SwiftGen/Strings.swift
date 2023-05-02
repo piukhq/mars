@@ -218,6 +218,8 @@ internal enum L10n {
   internal static let dismissPoll = L10n.tr("Localizable", "dismiss_poll", fallback: "Don't show me this poll again")
   /// Done
   internal static let done = L10n.tr("Localizable", "done", fallback: "Done")
+  /// Edit my vote
+  internal static let editMyVote = L10n.tr("Localizable", "edit_my_vote", fallback: "Edit my vote")
   /// Use magic link
   internal static let emailMagicLink = L10n.tr("Localizable", "email_magic_link", fallback: "Use magic link")
   /// No rewards to display. Come back
@@ -895,6 +897,8 @@ internal enum L10n {
   internal static let storeDescription = L10n.tr("Localizable", "store_description", fallback: "Add these loyalty cards to store your barcode in Bink and always have it on your phone. No more plastic!")
   /// Store your barcode
   internal static let storeTitle = L10n.tr("Localizable", "store_title", fallback: "Store your barcode")
+  /// Submit
+  internal static let submit = L10n.tr("Localizable", "submit", fallback: "Submit")
   /// %@ build %@
   internal static func supportMailAppVersion(_ p1: Any, _ p2: Any) -> String {
     return L10n.tr("Localizable", "support_mail_app_version", String(describing: p1), String(describing: p2), fallback: "%@ build %@")

@@ -24,7 +24,7 @@ class NewPollCellViewModel: ObservableObject {
         guard let collectionReference = Current.firestoreManager.getCollection(collection: .polls) else { return }
         
         guard Current.userDefaults.bool(forDefaultsKey: .isInPollRemindPeriod) == false else {
-            NotificationCenter.default.post(name: .displayPollInfoCell, object: nil, userInfo: ["show": false])
+            dispatchNotification(showUI: false)
             return
         }
         
@@ -40,9 +40,7 @@ class NewPollCellViewModel: ObservableObject {
                         if self.isDateBefore(date: endDate) {
                             if let pollId = Current.userDefaults.string(forDefaultsKey: .dismissedPollId) {
                                 if pollId == poll.id {
-                                    DispatchQueue.main.async {
-                                        NotificationCenter.default.post(name: .displayPollInfoCell, object: nil, userInfo: ["show": false])
-                                    }
+                                    self.dispatchNotification(showUI: false)
                                     return
                                 }
                                 
@@ -50,20 +48,14 @@ class NewPollCellViewModel: ObservableObject {
                             }
                             
                             self.question = poll.question
-                            DispatchQueue.main.async {
-                                NotificationCenter.default.post(name: .displayPollInfoCell, object: nil, userInfo: ["show": true])
-                            }
+                            self.dispatchNotification(showUI: true)
                         } else {
-                            DispatchQueue.main.async {
-                                NotificationCenter.default.post(name: .displayPollInfoCell, object: nil, userInfo: ["show": false])
-                            }
+                            self.dispatchNotification(showUI: false)
                         }
                     }
                 } else {
                     self.question = nil
-                    DispatchQueue.main.async {
-                        NotificationCenter.default.post(name: .displayPollInfoCell, object: nil, userInfo: ["show": false])
-                    }
+                    self.dispatchNotification(showUI: false)
                 }
             } catch {
                 print("Error getting documents: \(error)")
@@ -75,9 +67,7 @@ class NewPollCellViewModel: ObservableObject {
         guard let pollId = self.pollData?.id else { return }
         
         Current.userDefaults.set(pollId, forDefaultsKey: .dismissedPollId)
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: .displayPollInfoCell, object: nil, userInfo: ["show": false])
-        }
+        dispatchNotification(showUI: false)
     }
     
     func remindLaterPressed() {
@@ -88,9 +78,7 @@ class NewPollCellViewModel: ObservableObject {
             Current.userDefaults.set(true, forDefaultsKey: .isInPollRemindPeriod)
             Current.userDefaults.set(dateToCheck, forDefaultsKey: .timeToPromptPollRemindDate)
             startRemindLaterTimer()
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: .displayPollInfoCell, object: nil, userInfo: ["show": false])
-            }
+            dispatchNotification(showUI: false)
         }
     }
     
@@ -130,5 +118,9 @@ class NewPollCellViewModel: ObservableObject {
         
         let navigationRequest = AlertNavigationRequest(alertController: vc, completion: nil)
         Current.navigate.to(navigationRequest)
+    }
+    
+    private func dispatchNotification(showUI: Bool) {
+        NotificationCenter.default.post(name: .displayPollInfoCell, object: nil, userInfo: ["show": showUI])
     }
 }
