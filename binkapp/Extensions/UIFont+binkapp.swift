@@ -133,6 +133,22 @@ extension UIFont {
         return UIFont(name: "NunitoSans-ExtraBold", size: 18.0) ?? UIFont()
     }
     
+    class var alertTitleSemiBold: UIFont {
+        return UIFont(name: "NunitoSans-SemiBold", size: 16.0) ?? UIFont()
+    }
+    
+    class var pollTimer: UIFont {
+        return UIFont(name: "NunitoSans-ExtraBold", size: 13.0) ?? UIFont()
+    }
+    
+    class var pollAnswer: UIFont {
+        return UIFont(name: "NunitoSans-Regular", size: 27.0) ?? UIFont()
+    }
+    
+    class var pollOption: UIFont {
+        return UIFont(name: "NunitoSans-SemiBold", size: 16.0) ?? UIFont()
+    }
+    
     class var addOrJoinBodyText: UIFont {
         var fontSize: CGFloat
         if UIDevice.current.height == .iPhonePlusSize || UIDevice.current.height == .iPhone11ProSize {

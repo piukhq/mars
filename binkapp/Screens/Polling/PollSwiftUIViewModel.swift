@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 import FirebaseFirestore
 
 class PollSwiftUIViewModel: ObservableObject {
@@ -158,5 +159,59 @@ class PollSwiftUIViewModel: ObservableObject {
     func votePercentage(answer: String) -> Double {
         let answerCount = Double(votesDictionary[answer] ?? 0)
         return answerCount / Double(votesTotalCount)
+    }
+    
+    func colorForOuterCircleIcons(colorScheme: ColorScheme) -> Color {
+        switch Current.themeManager.currentTheme.type {
+        case .system:
+            switch colorScheme {
+            case .light:
+                return  .gray
+            case .dark:
+                return Color(UIColor.binkBlue)
+            @unknown default:
+                return Color(UIColor.binkBlue)
+        }
+        case .light:
+            return .gray
+        case .dark:
+            return Color(UIColor.binkBlue)
+        }
+    }
+    
+    func colorForAnsweredRow(colorScheme: ColorScheme) -> Color {
+        switch Current.themeManager.currentTheme.type {
+        case .system:
+            switch colorScheme {
+            case .light:
+                return Color(.percentageGreen)
+            case .dark:
+                return Color(UIColor.binkBlue)
+            @unknown default:
+                return Color(UIColor.binkBlue)
+        }
+        case .light:
+            return Color(.percentageGreen)
+        case .dark:
+            return Color(UIColor.binkBlue)
+        }
+    }
+    
+    func colorForUnansweredRow(colorScheme: ColorScheme) -> Color {
+        switch Current.themeManager.currentTheme.type {
+        case .system:
+            switch colorScheme {
+            case .light:
+                return Color(.unansweredRowGreen)
+            case .dark:
+                return Color(.unansweredRowDarkBlue)
+            @unknown default:
+                return Color(.unansweredRowDarkBlue)
+        }
+        case .light:
+            return Color(.unansweredRowGreen)
+        case .dark:
+            return Color(.unansweredRowDarkBlue)
+        }
     }
 }

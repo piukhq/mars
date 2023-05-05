@@ -188,5 +188,6 @@ extension UIColor {
     // MARK: - Polls
     static let unansweredRowGreen = UIColor(hexString: "DFF3F2")
     static let answeredRowGreen = UIColor(hexString: "00CBC3")
+    static let unansweredRowDarkBlue = UIColor(hexString: "1A1A36")
     static let percentageGreen = UIColor(hexString: "A6E7E5")
 }
