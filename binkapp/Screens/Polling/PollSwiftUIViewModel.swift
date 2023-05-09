@@ -44,13 +44,13 @@ class PollSwiftUIViewModel: ObservableObject {
     
     private let userId = Current.userManager.currentUserId
     
-    var votesDictionary: [String: Int] = [:]
+    private var votesDictionary: [String: Int] = [:]
     
     init () {
         self.getPollData()
     }
     
-    var votesTotalCount: Int {
+    private var votesTotalCount: Int {
         var count = 0
         
         for value in votesDictionary.values {
@@ -108,10 +108,6 @@ class PollSwiftUIViewModel: ObservableObject {
                 print("Error getting documents: \(error)")
             }
         }
-    }
-    
-    func setCurrentAnswer(answer: String) {
-        currentAnswer = answer
     }
     
     func submitAnswer() {

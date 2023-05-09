@@ -71,7 +71,7 @@ struct PollSwiftUIView: View {
                         ForEach(viewModel.pollData?.answers ?? [], id: \.self) { answer in
                             Button(action: {
                                 if !viewModel.submitted {
-                                    viewModel.setCurrentAnswer(answer: answer)
+                                    viewModel.currentAnswer = answer
                                 }
                             }) {
                                 VStack(alignment: .leading) {
@@ -124,8 +124,10 @@ struct PollSwiftUIView: View {
                     
                     if viewModel.currentAnswer == nil {
                         BinkButtonsStackView(buttons: [viewModel.disabledAnswerButton])
+                            .padding(.top, -23)
                     } else if viewModel.currentAnswer != nil && !viewModel.submitted {
                         BinkButtonsStackView(buttons: [viewModel.submitAnswerButton])
+                            .padding(.top, -23)
                     } else if viewModel.submitted {
                         BinkButtonsStackView(buttons: [viewModel.editVoteButton, viewModel.doneButton])
                             .padding(.top, -46)
