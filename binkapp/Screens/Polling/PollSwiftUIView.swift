@@ -62,30 +62,31 @@ struct PollSwiftUIView: View {
     @State private var countdownText = ""
     
     var body: some View {
-        VStack(alignment: .leading) {
-            if viewModel.pollData != nil {
-                PollTopTextView(viewModel: viewModel)
-                
-                GeometryReader { gp in
-                    ScrollView {
-                        VStack(spacing: 10) {
-                            ForEach(viewModel.pollData?.answers ?? [], id: \.self) { answer in
-                                Button(action: {
-                                    if !viewModel.submitted {
-                                        viewModel.setCurrentAnswer(answer: answer)
-                                    }
-                                }) {
+        ScrollView {
+            VStack(alignment: .leading) {
+                if viewModel.pollData != nil {
+                    PollTopTextView(viewModel: viewModel)
+                    
+                    VStack(spacing: 10) {
+                        ForEach(viewModel.pollData?.answers ?? [], id: \.self) { answer in
+                            Button(action: {
+                                if !viewModel.submitted {
+                                    viewModel.setCurrentAnswer(answer: answer)
+                                }
+                            }) {
+                                VStack(alignment: .leading) {
                                     ZStack(alignment: .leading) {
                                         RoundedRectangle(cornerRadius: 12, style: .continuous)
                                             .fill(viewModel.gotVotes ? viewModel.colorForUnansweredRow(colorScheme: colorScheme) : viewModel.currentAnswer == answer ? viewModel.colorForAnsweredRow(colorScheme: colorScheme) : viewModel.colorForUnansweredRow(colorScheme: colorScheme))
-                                            .frame(maxWidth: gp.size.width)
+                                            .frame(maxWidth: .infinity)
                                             .frame(height: 73)
-                                        
+                                        GeometryReader { gp in
                                             RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                            .fill(viewModel.colorForAnsweredRow(colorScheme: colorScheme))
+                                                .fill(viewModel.colorForAnsweredRow(colorScheme: colorScheme))
                                                 .frame(maxWidth: viewModel.gotVotes ? gp.size.width * viewModel.votePercentage(answer: answer) : 0, alignment: .leading)
                                                 .frame(height: 73, alignment: .leading)
                                                 .animation(.easeIn(duration: viewModel.gotVotes ? 2 : 0), value: viewModel.gotVotes)
+                                        }
                                         
                                         HStack {
                                             ZStack {
@@ -118,20 +119,20 @@ struct PollSwiftUIView: View {
                                 }
                             }
                         }
-                        .padding()
                     }
-                    .padding(.bottom, -20)
-                }
-
-                if viewModel.currentAnswer == nil {
-                    BinkButtonsStackView(buttons: [viewModel.disabledAnswerButton])
-                } else if viewModel.currentAnswer != nil && !viewModel.submitted {
-                    BinkButtonsStackView(buttons: [viewModel.submitAnswerButton])
-                } else if viewModel.submitted {
-                    BinkButtonsStackView(buttons: [viewModel.editVoteButton, viewModel.doneButton])
-                        .padding(.top, -46)
+                    .padding()
+                    
+                    if viewModel.currentAnswer == nil {
+                        BinkButtonsStackView(buttons: [viewModel.disabledAnswerButton])
+                    } else if viewModel.currentAnswer != nil && !viewModel.submitted {
+                        BinkButtonsStackView(buttons: [viewModel.submitAnswerButton])
+                    } else if viewModel.submitted {
+                        BinkButtonsStackView(buttons: [viewModel.editVoteButton, viewModel.doneButton])
+                            .padding(.top, -46)
+                    }
                 }
             }
+            .background(Color(Current.themeManager.color(for: .viewBackground)))
         }
         .background(Color(Current.themeManager.color(for: .viewBackground)))
     }

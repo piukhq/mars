@@ -168,14 +168,14 @@ class PollSwiftUIViewModel: ObservableObject {
             case .light:
                 return  .gray
             case .dark:
-                return Color(UIColor.binkBlue)
+                return .white
             @unknown default:
-                return Color(UIColor.binkBlue)
+                return .white
         }
         case .light:
             return .gray
         case .dark:
-            return Color(UIColor.binkBlue)
+            return .white
         }
     }
     
