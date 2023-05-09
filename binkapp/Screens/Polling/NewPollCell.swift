@@ -10,8 +10,6 @@ import SwiftUI
 import UIKit
 
 class NewPollCell: UICollectionViewCell {
-    //static var reuseIdentifier = "NewPollCell"
-    
     lazy var host: UIHostingController = {
         return UIHostingController(rootView: NewPollCellSwiftUIView(viewModel: NewPollCellViewModel()))
     }()
