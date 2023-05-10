@@ -67,11 +67,15 @@ class NewPollCellViewModel: ObservableObject {
         guard let pollId = self.pollData?.id else { return }
         
         Current.userDefaults.set(pollId, forDefaultsKey: .dismissedPollId)
+        MixpanelUtility.track(.pollDismissedPermanently(pollId: pollId))
         dispatchNotification(showUI: false)
     }
     
     func remindLaterPressed() {
+        guard let pollId = self.pollData?.id else { return }
         guard let remindTime = self.pollData?.remindLaterMinutes else { return }
+        
+        MixpanelUtility.track(.pollDismissedTemporarily(pollId: pollId))
         
         /// add the reminder time to the current date
         if let dateToCheck = Calendar.current.date(byAdding: .minute, value: remindTime, to: Date()) {

@@ -103,6 +103,9 @@ class PollSwiftUIViewModel: ObservableObject {
                 if let doc = snapshot?.documents.first {
                     self?.pollData = try doc.data(as: PollModel.self)
                     self?.getVotingData()
+                    if let pollId = self?.pollData?.id {
+                        MixpanelUtility.track(.pollClicked(pollId: pollId))
+                    }
                 }
             } catch {
                 print("Error getting documents: \(error)")
