@@ -34,6 +34,10 @@ class LoyaltyScannerWidgetView: CustomView {
         configure()
     }
 
+    func enterManually() {
+        setState(.enterManually)
+    }
+    
     func unrecognizedBarcode() {
         error(state: .unrecognizedBarcode)
     }
