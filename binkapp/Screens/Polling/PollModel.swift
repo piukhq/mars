@@ -9,19 +9,13 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-enum PollStatus: Int, Codable {
-    case draft = 0
-    case published = 1
-    case closed = 2
-}
-
 struct PollModel: Codable {
     @DocumentID var id: String?
     var title: String
     var answers: [String]
     var startTime: Int
     var closeTime: Int
-    var publishedStatus: PollStatus
+    var published: Bool
     var question: String
     var remindLaterMinutes: Int?
 }

@@ -97,7 +97,7 @@ class PollSwiftUIViewModel: ObservableObject {
     private func getPollData() {
         guard let collectionReference = Current.firestoreManager.getCollection(collection: .polls) else { return }
         
-        let query = collectionReference.whereField("publishedStatus", isEqualTo: PollStatus.published.rawValue )
+        let query = collectionReference.whereField("published", isEqualTo: true )
         query.addSnapshotListener { [weak self] (snapshot, error) in
             do {
                 if let doc = snapshot?.documents.first {
