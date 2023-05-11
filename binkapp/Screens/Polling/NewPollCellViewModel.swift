@@ -28,7 +28,7 @@ class NewPollCellViewModel: ObservableObject {
             return
         }
         
-        let query = collectionReference.whereField("publishedStatus", isEqualTo: PollStatus.published.rawValue )
+        let query = collectionReference.whereField("published", isEqualTo: true )
         query.addSnapshotListener { [weak self] (snapshot, error) in
             do {
                 guard let self = self else { return }

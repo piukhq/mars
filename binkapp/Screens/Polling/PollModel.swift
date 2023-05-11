@@ -21,7 +21,8 @@ struct PollModel: Codable {
     var answers: [String]
     var startTime: Int
     var closeTime: Int
-    var publishedStatus: PollStatus
+    var published: Bool
     var question: String
     var remindLaterMinutes: Int?
+    var allowCustomAnswer: Bool?
 }

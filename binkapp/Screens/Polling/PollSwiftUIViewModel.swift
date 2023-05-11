@@ -13,6 +13,7 @@ import FirebaseFirestore
 class PollSwiftUIViewModel: ObservableObject {
     @Published var pollData: PollModel?
     @Published var currentAnswer: String?
+    @Published var customAnswer: String?
     @Published var gotVotes = false
     @Published var submitted = false
     
@@ -29,6 +30,7 @@ class PollSwiftUIViewModel: ObservableObject {
     lazy var editVoteButton: BinkButtonSwiftUIView = {
         return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.editMyVote), enabled: true, buttonTapped: { [weak self] in
             self?.currentAnswer = nil
+            self?.customAnswer = nil
             self?.submitted = false
             self?.gotVotes.toggle()
         }, type: .bordered)
@@ -72,6 +74,10 @@ class PollSwiftUIViewModel: ObservableObject {
                         self?.getVoteCount()
                         self?.submitted.toggle()
                         self?.currentAnswer = answer
+                    } else if let customAnswer = self?.votingModel?.customAnswer, !customAnswer.isEmpty {
+                        self?.getVoteCount()
+                        self?.submitted.toggle()
+                        self?.customAnswer = customAnswer
                     }
                 }
             } catch {
@@ -97,7 +103,7 @@ class PollSwiftUIViewModel: ObservableObject {
     private func getPollData() {
         guard let collectionReference = Current.firestoreManager.getCollection(collection: .polls) else { return }
         
-        let query = collectionReference.whereField("publishedStatus", isEqualTo: PollStatus.published.rawValue )
+        let query = collectionReference.whereField("published", isEqualTo: true)
         query.addSnapshotListener { [weak self] (snapshot, error) in
             do {
                 if let doc = snapshot?.documents.first {
@@ -114,17 +120,19 @@ class PollSwiftUIViewModel: ObservableObject {
     }
     
     func submitAnswer() {
-        guard let answer = currentAnswer else { return }
+        let answer = currentAnswer ?? ""
+        let customAnswer = customAnswer ?? ""
         
         if var model = votingModel {
             model.answer = answer
+            model.customAnswer = customAnswer
             model.overwritten = true
             Current.firestoreManager.addDocument(model, collection: .pollResults, documentId: model.id ?? "") { [weak self] _ in
                 self?.getVoteCount()
                 self?.submitted.toggle()
             }
         } else {
-            votingModel = PollVotingModel(pollId: pollData?.id ?? "", userId: userId ?? "", createdDate: Int(Date().timeIntervalSince1970), overwritten: false, answer: answer)
+            votingModel = PollVotingModel(pollId: pollData?.id ?? "", userId: userId ?? "", createdDate: Int(Date().timeIntervalSince1970), overwritten: false, answer: answer, customAnswer: customAnswer)
             Current.firestoreManager.addDocument(votingModel, collection: .pollResults) { [weak self] _ in
                 self?.getVoteCount()
                 self?.submitted.toggle()
