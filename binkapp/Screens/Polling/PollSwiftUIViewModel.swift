@@ -133,9 +133,10 @@ class PollSwiftUIViewModel: ObservableObject {
             }
         } else {
             votingModel = PollVotingModel(pollId: pollData?.id ?? "", userId: userId ?? "", createdDate: Int(Date().timeIntervalSince1970), overwritten: false, answer: answer, customAnswer: customAnswer)
-            Current.firestoreManager.addDocument(votingModel, collection: .pollResults) { [weak self] _ in
+            Current.firestoreManager.addDocument(votingModel, collection: .pollResults) { [weak self] docId in
                 self?.getVoteCount()
                 self?.submitted.toggle()
+                self?.votingModel?.id = docId
             }
         }
     }
@@ -166,6 +167,14 @@ class PollSwiftUIViewModel: ObservableObject {
     func votePercentage(answer: String) -> Double {
         let answerCount = Double(votesDictionary[answer] ?? 0)
         return answerCount / Double(votesTotalCount)
+    }
+    
+    func customAnswerIsValid() -> Bool {
+        guard let answer = customAnswer else {
+            return false
+        }
+        
+        return !answer.isEmpty
     }
     
     func colorForOuterCircleIcons(colorScheme: ColorScheme) -> Color {

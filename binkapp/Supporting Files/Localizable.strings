@@ -562,4 +562,5 @@
 "take_poll" = "TAKE POLL";
 "submit" = "Submit";
 "edit_my_vote" = "Edit my vote";
+"custom_answer_placeholder" = "Add your own suggestion";
 

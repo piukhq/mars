@@ -60,7 +60,6 @@ struct PollSwiftUIView: View {
     @ObservedObject var viewModel: PollSwiftUIViewModel
     @ObservedObject var themeManager = Current.themeManager
     @State private var countdownText = ""
-    @State private var suggestion = ""
     
     var body: some View {
         ScrollView {
@@ -122,8 +121,8 @@ struct PollSwiftUIView: View {
                             }
                         }
                         
-                        if let _ = viewModel.pollData?.allowCustomAnswer {
-                            TextField("Add your own suggestion", text: Binding<String>(
+                        if viewModel.pollData?.allowCustomAnswer == true {
+                            TextField(L10n.customAnswerPlaceholder, text: Binding<String>(
                                 get: { self.viewModel.customAnswer ?? "" },
                                 set: { self.viewModel.customAnswer = $0 }))
                                 .textFieldStyle(PlainTextFieldStyle())
@@ -131,24 +130,21 @@ struct PollSwiftUIView: View {
                                 .foregroundColor(Color(themeManager.color(for: .text)))
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 73)
-                                .padding([.horizontal], 12)
+                                .padding([.horizontal], 14)
                                 .cornerRadius(12)
-                                .background(RoundedRectangle(cornerRadius: 12).fill(Color(.unansweredRowDarkBlue)))
+                                .background(RoundedRectangle(cornerRadius: 12).fill(viewModel.customAnswerIsValid() ? viewModel.colorForAnsweredRow(colorScheme: colorScheme) : viewModel.colorForUnansweredRow(colorScheme: colorScheme)))
                                 .onTapGesture {
                                     viewModel.currentAnswer = nil
                                 }
                                 .disabled(viewModel.submitted)
-//                                .onSubmit {
-//                                    viewModel.customAnswer = suggestion
-//                                }
                         }
                     }
                     .padding()
                     
-                    if viewModel.currentAnswer == nil && viewModel.customAnswer == nil {
+                    if viewModel.currentAnswer == nil && !viewModel.customAnswerIsValid() {
                         BinkButtonsStackView(buttons: [viewModel.disabledAnswerButton])
                             .padding(.top, -23)
-                    } else if (viewModel.currentAnswer != nil || viewModel.customAnswer != nil) && !viewModel.submitted {
+                    } else if (viewModel.currentAnswer != nil || viewModel.customAnswerIsValid()) && !viewModel.submitted {
                         BinkButtonsStackView(buttons: [viewModel.submitAnswerButton])
                             .padding(.top, -23)
                     } else if viewModel.submitted {

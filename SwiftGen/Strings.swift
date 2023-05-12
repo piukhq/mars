@@ -174,6 +174,8 @@ internal enum L10n {
   internal static let continueButtonTitle = L10n.tr("Localizable", "continue_button_title", fallback: "Continue")
   /// Enter credentials
   internal static let credentialsTitle = L10n.tr("Localizable", "credentials_title", fallback: "Enter credentials")
+  /// Add your own suggestion
+  internal static let customAnswerPlaceholder = L10n.tr("Localizable", "custom_answer_placeholder", fallback: "Add your own suggestion")
   /// Other card
   internal static let customCardCompanyName = L10n.tr("Localizable", "custom_card_company_name", fallback: "Other card")
   /// Enter name of store
