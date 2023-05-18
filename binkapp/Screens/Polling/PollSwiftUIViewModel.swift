@@ -42,6 +42,17 @@ class PollSwiftUIViewModel: ObservableObject {
         }, type: .capsule)
     }()
     
+    var shouldDisplayCustomAnswer: Bool {
+        if pollData?.allowCustomAnswer == true {
+            if submitted && customAnswer == nil {
+                return false
+            }
+            return true
+        }
+        
+        return false
+    }
+    
     private var votingModel: PollVotingModel?
     
     private let userId = Current.userManager.currentUserId
@@ -67,16 +78,16 @@ class PollSwiftUIViewModel: ObservableObject {
                     self?.votingModel?.id = doc.id
                     return
                 }
-
+                
                 self?.votingModel = doc
                 if let answer = self?.votingModel?.answer, !answer.isEmpty {
                     self?.getVoteCount()
                     self?.submitted.toggle()
                     self?.currentAnswer = answer
                 } else if let customAnswer = self?.votingModel?.customAnswer, !customAnswer.isEmpty {
-                        self?.getVoteCount()
-                        self?.submitted.toggle()
-                        self?.customAnswer = customAnswer
+                    self?.getVoteCount()
+                    self?.submitted.toggle()
+                    self?.customAnswer = customAnswer
                 }
             }
         })
@@ -129,7 +140,6 @@ class PollSwiftUIViewModel: ObservableObject {
             votingModel = PollVotingModel(pollId: pollData?.id ?? "", userId: userId ?? "", createdDate: Int(Date().timeIntervalSince1970), overwritten: false, answer: answer, customAnswer: customAnswer)
             Current.firestoreManager.addDocument(votingModel, collection: .pollResults) { [weak self] docId in
                 self?.getVoteCount()
-                self?.submitted.toggle()
             }
         }
     }

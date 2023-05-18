@@ -16,5 +16,5 @@ struct PollVotingModel: Codable {
     var createdDate: Int
     var overwritten: Bool
     var answer: String
-    var customAnswer: String
+    var customAnswer: String?
 }

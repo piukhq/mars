@@ -121,7 +121,7 @@ struct PollSwiftUIView: View {
                             }
                         }
                         
-                        if viewModel.pollData?.allowCustomAnswer == true {
+                        if viewModel.shouldDisplayCustomAnswer {
                             TextField(L10n.customAnswerPlaceholder, text: Binding<String>(
                                 get: { self.viewModel.customAnswer ?? "" },
                                 set: { self.viewModel.customAnswer = $0 }))
