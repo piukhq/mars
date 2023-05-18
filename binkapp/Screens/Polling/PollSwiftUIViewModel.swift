@@ -51,12 +51,7 @@ class PollSwiftUIViewModel: ObservableObject {
     }
     
     private var votesTotalCount: Int {
-        var count = 0
-        
-        for value in votesDictionary.values {
-            count += value
-        }
-        return count
+        return votesDictionary.values.reduce(0, +)
     }
     
     private func getVotingData() {
@@ -64,20 +59,21 @@ class PollSwiftUIViewModel: ObservableObject {
         guard let pollData = self.pollData else { return }
         
         let query = collectionReference.whereField("userId", isEqualTo: userId ?? "").whereField("pollId", isEqualTo: pollData.id ?? "")
-        query.getDocuments { [weak self] (snapshot, error) in
-            do {
-                if let doc = snapshot?.documents.first {
-                    self?.votingModel = try doc.data(as: PollVotingModel.self)
-                    if let answer = self?.votingModel?.answer, !answer.isEmpty {
-                        self?.getVoteCount()
-                        self?.submitted.toggle()
-                        self?.currentAnswer = answer
-                    }
+        Current.firestoreManager.fetchDocumentsInCollection(PollVotingModel.self, query: query, completion: { [weak self] snapshot in
+            if let doc = snapshot?.first {
+                if self?.votingModel != nil {
+                    self?.votingModel?.id = doc.id
+                    return
                 }
-            } catch {
-                print("Error getting documents: \(error)")
+                
+                self?.votingModel = doc
+                if let answer = self?.votingModel?.answer, !answer.isEmpty {
+                    self?.getVoteCount()
+                    self?.submitted.toggle()
+                    self?.currentAnswer = answer
+                }
             }
-        }
+        })
     }
     
     private func getVoteCount() {
@@ -98,36 +94,33 @@ class PollSwiftUIViewModel: ObservableObject {
         guard let collectionReference = Current.firestoreManager.getCollection(collection: .polls) else { return }
         
         let query = collectionReference.whereField("published", isEqualTo: true )
-        query.addSnapshotListener { [weak self] (snapshot, error) in
-            do {
-                if let doc = snapshot?.documents.first {
-                    self?.pollData = try doc.data(as: PollModel.self)
-                    self?.getVotingData()
-                    if let pollId = self?.pollData?.id {
-                        MixpanelUtility.track(.pollClicked(pollId: pollId))
-                    }
+        
+        Current.firestoreManager.fetchDocumentsInCollection(PollModel.self, query: query, completion: { [weak self] snapshot in
+            if let doc = snapshot?.first {
+                self?.pollData = doc
+                self?.getVotingData()
+                if let pollId = self?.pollData?.id {
+                    MixpanelUtility.track(.pollClicked(pollId: pollId))
                 }
-            } catch {
-                print("Error getting documents: \(error)")
             }
-        }
+        })
     }
     
     func submitAnswer() {
         guard let answer = currentAnswer else { return }
+        
+        submitted.toggle()
         
         if var model = votingModel {
             model.answer = answer
             model.overwritten = true
             Current.firestoreManager.addDocument(model, collection: .pollResults, documentId: model.id ?? "") { [weak self] _ in
                 self?.getVoteCount()
-                self?.submitted.toggle()
             }
         } else {
             votingModel = PollVotingModel(pollId: pollData?.id ?? "", userId: userId ?? "", createdDate: Int(Date().timeIntervalSince1970), overwritten: false, answer: answer)
             Current.firestoreManager.addDocument(votingModel, collection: .pollResults) { [weak self] _ in
                 self?.getVoteCount()
-                self?.submitted.toggle()
             }
         }
     }
@@ -137,10 +130,9 @@ class PollSwiftUIViewModel: ObservableObject {
             return ""
         }
         
-        let startDate = NSDate(timeIntervalSince1970: TimeInterval(Date().timeIntervalSince1970))
         let endDate = NSDate(timeIntervalSince1970: TimeInterval(poll.closeTime))
         
-        let diffComponents = Calendar.current.dateComponents([.day, .hour, .minute, .second], from: startDate as Date, to: endDate as Date)
+        let diffComponents = Calendar.current.dateComponents([.day, .hour, .minute, .second], from: Date(), to: endDate as Date)
         let days = diffComponents.day ?? 0
         let hours = diffComponents.hour ?? 0
         let minutes = diffComponents.minute ?? 0
@@ -152,7 +144,7 @@ class PollSwiftUIViewModel: ObservableObject {
             return ""
         }
         
-        return String(format: "%i:%i:%i", hours, minutes, seconds)
+        return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
     }
     
     func votePercentage(answer: String) -> Double {

@@ -29,38 +29,33 @@ class NewPollCellViewModel: ObservableObject {
         }
         
         let query = collectionReference.whereField("published", isEqualTo: true )
-        query.addSnapshotListener { [weak self] (snapshot, error) in
-            do {
-                guard let self = self else { return }
-                
-                if let doc = snapshot?.documents.first {
-                    self.pollData = try doc.data(as: PollModel.self)
-                    if let poll = self.pollData {
-                        let endDate = NSDate(timeIntervalSince1970: TimeInterval(poll.closeTime)) as Date
-                        if self.isDateBefore(date: endDate) {
-                            if let pollId = Current.userDefaults.string(forDefaultsKey: .dismissedPollId) {
-                                if pollId == poll.id {
-                                    self.dispatchNotification(showUI: false)
-                                    return
-                                }
-                                
-                                Current.userDefaults.set("", forDefaultsKey: .dismissedPollId)
+        Current.firestoreManager.fetchDocumentsInCollection(PollModel.self, query: query, completion: { [weak self] snapshot in
+            guard let self = self else { return }
+            if let doc = snapshot?.first {
+                self.pollData = doc
+                if let poll = self.pollData {
+                    let endDate = NSDate(timeIntervalSince1970: TimeInterval(poll.closeTime)) as Date
+                    if self.isDateBefore(date: endDate) {
+                        if let pollId = Current.userDefaults.string(forDefaultsKey: .dismissedPollId) {
+                            if pollId == poll.id {
+                                self.dispatchNotification(showUI: false)
+                                return
                             }
                             
-                            self.question = poll.question
-                            self.dispatchNotification(showUI: true)
-                        } else {
-                            self.dispatchNotification(showUI: false)
+                            Current.userDefaults.set("", forDefaultsKey: .dismissedPollId)
                         }
+                        
+                        self.question = poll.question
+                        self.dispatchNotification(showUI: true)
+                    } else {
+                        self.dispatchNotification(showUI: false)
                     }
-                } else {
-                    self.question = nil
-                    self.dispatchNotification(showUI: false)
                 }
-            } catch {
-                print("Error getting documents: \(error)")
+            } else {
+                self.question = nil
+                self.dispatchNotification(showUI: false)
             }
-        }
+        })
     }
     
     func dismissPollPressed() {

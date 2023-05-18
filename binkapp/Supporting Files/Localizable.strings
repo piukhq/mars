@@ -558,7 +558,7 @@
 "remind_me_later" = "Remind me tomorrow";
 "dismiss_poll" = "Don't show me this poll again";
 "expires_in" = "THIS POLL EXPIRES IN ";
-"poll_answer_thank_you" = "Thanks for your response!";
+"poll_answer_thank_you" = "Thank you for your response!";
 "take_poll" = "TAKE POLL";
 "submit" = "Submit";
 "edit_my_vote" = "Edit my vote";
