@@ -53,12 +53,7 @@ class PollSwiftUIViewModel: ObservableObject {
     }
     
     private var votesTotalCount: Int {
-        var count = 0
-        
-        for value in votesDictionary.values {
-            count += value
-        }
-        return count
+        return votesDictionary.values.reduce(0, +)
     }
     
     private func getVotingData() {
@@ -66,24 +61,25 @@ class PollSwiftUIViewModel: ObservableObject {
         guard let pollData = self.pollData else { return }
         
         let query = collectionReference.whereField("userId", isEqualTo: userId ?? "").whereField("pollId", isEqualTo: pollData.id ?? "")
-        query.getDocuments { [weak self] (snapshot, error) in
-            do {
-                if let doc = snapshot?.documents.first {
-                    self?.votingModel = try doc.data(as: PollVotingModel.self)
-                    if let answer = self?.votingModel?.answer, !answer.isEmpty {
-                        self?.getVoteCount()
-                        self?.submitted.toggle()
-                        self?.currentAnswer = answer
-                    } else if let customAnswer = self?.votingModel?.customAnswer, !customAnswer.isEmpty {
+        Current.firestoreManager.fetchDocumentsInCollection(PollVotingModel.self, query: query, completion: { [weak self] snapshot in
+            if let doc = snapshot?.first {
+                if self?.votingModel != nil {
+                    self?.votingModel?.id = doc.id
+                    return
+                }
+
+                self?.votingModel = doc
+                if let answer = self?.votingModel?.answer, !answer.isEmpty {
+                    self?.getVoteCount()
+                    self?.submitted.toggle()
+                    self?.currentAnswer = answer
+                } else if let customAnswer = self?.votingModel?.customAnswer, !customAnswer.isEmpty {
                         self?.getVoteCount()
                         self?.submitted.toggle()
                         self?.customAnswer = customAnswer
-                    }
                 }
-            } catch {
-                print("Error getting documents: \(error)")
             }
-        }
+        })
     }
     
     private func getVoteCount() {
@@ -103,40 +99,37 @@ class PollSwiftUIViewModel: ObservableObject {
     private func getPollData() {
         guard let collectionReference = Current.firestoreManager.getCollection(collection: .polls) else { return }
         
-        let query = collectionReference.whereField("published", isEqualTo: true)
-        query.addSnapshotListener { [weak self] (snapshot, error) in
-            do {
-                if let doc = snapshot?.documents.first {
-                    self?.pollData = try doc.data(as: PollModel.self)
-                    self?.getVotingData()
-                    if let pollId = self?.pollData?.id {
-                        MixpanelUtility.track(.pollClicked(pollId: pollId))
-                    }
+        let query = collectionReference.whereField("published", isEqualTo: true )
+
+        Current.firestoreManager.fetchDocumentsInCollection(PollModel.self, query: query, completion: { [weak self] snapshot in
+            if let doc = snapshot?.first {
+                self?.pollData = doc
+                self?.getVotingData()
+                if let pollId = self?.pollData?.id {
+                    MixpanelUtility.track(.pollClicked(pollId: pollId))
                 }
-            } catch {
-                print("Error getting documents: \(error)")
             }
-        }
+        })
     }
     
     func submitAnswer() {
         let answer = currentAnswer ?? ""
         let customAnswer = customAnswer ?? ""
         
+        submitted.toggle()
+
         if var model = votingModel {
             model.answer = answer
             model.customAnswer = customAnswer
             model.overwritten = true
             Current.firestoreManager.addDocument(model, collection: .pollResults, documentId: model.id ?? "") { [weak self] _ in
                 self?.getVoteCount()
-                self?.submitted.toggle()
             }
         } else {
             votingModel = PollVotingModel(pollId: pollData?.id ?? "", userId: userId ?? "", createdDate: Int(Date().timeIntervalSince1970), overwritten: false, answer: answer, customAnswer: customAnswer)
             Current.firestoreManager.addDocument(votingModel, collection: .pollResults) { [weak self] docId in
                 self?.getVoteCount()
                 self?.submitted.toggle()
-                self?.votingModel?.id = docId
             }
         }
     }
@@ -145,11 +138,10 @@ class PollSwiftUIViewModel: ObservableObject {
         guard let poll = pollData else {
             return ""
         }
-        
-        let startDate = NSDate(timeIntervalSince1970: TimeInterval(Date().timeIntervalSince1970))
+
         let endDate = NSDate(timeIntervalSince1970: TimeInterval(poll.closeTime))
         
-        let diffComponents = Calendar.current.dateComponents([.day, .hour, .minute, .second], from: startDate as Date, to: endDate as Date)
+        let diffComponents = Calendar.current.dateComponents([.day, .hour, .minute, .second], from: Date(), to: endDate as Date)
         let days = diffComponents.day ?? 0
         let hours = diffComponents.hour ?? 0
         let minutes = diffComponents.minute ?? 0
@@ -161,7 +153,7 @@ class PollSwiftUIViewModel: ObservableObject {
             return ""
         }
         
-        return String(format: "%i:%i:%i", hours, minutes, seconds)
+        return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
     }
     
     func votePercentage(answer: String) -> Double {
@@ -173,10 +165,10 @@ class PollSwiftUIViewModel: ObservableObject {
         guard let answer = customAnswer else {
             return false
         }
-        
+
         return !answer.isEmpty
     }
-    
+
     func colorForOuterCircleIcons(colorScheme: ColorScheme) -> Color {
         switch Current.themeManager.currentTheme.type {
         case .system:

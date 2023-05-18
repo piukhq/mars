@@ -664,8 +664,8 @@ internal enum L10n {
   internal static let pointsModuleToSeeHistory = L10n.tr("Localizable", "points_module_to_see_history", fallback: "To see history")
   /// View history
   internal static let pointsModuleViewHistoryMessage = L10n.tr("Localizable", "points_module_view_history_message", fallback: "View history")
-  /// Thanks for your response!
-  internal static let pollAnswerThankYou = L10n.tr("Localizable", "poll_answer_thank_you", fallback: "Thanks for your response!")
+  /// Thank you for your response!
+  internal static let pollAnswerThankYou = L10n.tr("Localizable", "poll_answer_thank_you", fallback: "Thank you for your response!")
   /// Popular
   internal static let popularTitle = L10n.tr("Localizable", "popular_title", fallback: "Popular")
   /// Privacy Policy
