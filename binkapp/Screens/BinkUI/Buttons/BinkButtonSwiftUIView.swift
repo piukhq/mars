@@ -16,6 +16,24 @@ class ButtonViewModel: ObservableObject {
     init(title: String) {
         self.title = title
     }
+    
+    func borderedColor(colorScheme: ColorScheme) -> Color {
+        switch Current.themeManager.currentTheme.type {
+        case .system:
+            switch colorScheme {
+            case .light:
+                return  Color(UIColor.binkBlue)
+            case .dark:
+                return .white
+            @unknown default:
+                return Color(UIColor.binkBlue)
+        }
+        case .light:
+            return Color(UIColor.binkBlue)
+        case .dark:
+            return .white
+        }
+    }
 }
 
 struct BinkButtonSwiftUIView: View, Identifiable {
@@ -32,6 +50,7 @@ struct BinkButtonSwiftUIView: View, Identifiable {
         static let shadowYPosition: CGFloat = 8.0
     }
     
+    @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel: ButtonViewModel
     @State var enabled = false
     @State var loading = false
@@ -39,6 +58,7 @@ struct BinkButtonSwiftUIView: View, Identifiable {
     enum ButtonType {
         case capsule
         case plain
+        case bordered
     }
 
     var id = UUID()
@@ -47,7 +67,7 @@ struct BinkButtonSwiftUIView: View, Identifiable {
     var type: ButtonType
     
     var textColor: Color {
-        return type == .capsule ? .white : Color(Current.themeManager.color(for: .text))
+        return type == .capsule ? .white : type == .plain ? Color(Current.themeManager.color(for: .text)) : viewModel.borderedColor(colorScheme: colorScheme)
     }
     
     var body: some View {
@@ -70,7 +90,11 @@ struct BinkButtonSwiftUIView: View, Identifiable {
         }
         .disabled(!enabled)
         .cornerRadius(Constants.cornerRadius)
-        .shadow(color: .black.opacity(type == .capsule ? Constants.shadowSemiOpaque : Constants.shadowTransparent), radius: Constants.shadowRadius, x: Constants.shadowXPosition, y: Constants.shadowYPosition)
+        .shadow(color: .black.opacity(type == .capsule || type == .bordered ? Constants.shadowSemiOpaque : Constants.shadowTransparent), radius: Constants.shadowRadius, x: Constants.shadowXPosition, y: Constants.shadowYPosition)
+        .overlay(
+            type == .bordered ? RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                .stroke(viewModel.borderedColor(colorScheme: colorScheme), lineWidth: 1) : nil
+        )
         .overlay(ActivityIndicator(animate: $loading, style: .medium), alignment: .center)
         .onReceive(viewModel.$isLoading) { isLoading in
             self.loading = isLoading

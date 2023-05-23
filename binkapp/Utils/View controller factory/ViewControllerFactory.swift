@@ -69,6 +69,11 @@ enum ViewControllerFactory {
         return viewController
     }
     
+    static func makePollViewController() -> UIViewController {
+        let viewModel = PollSwiftUIViewModel()
+        return UIHostingController(rootView: PollSwiftUIView(viewModel: viewModel))
+    }
+    
     static func makeBarcodeViewController(membershipCard: CD_MembershipCard) -> UIViewController {
         let viewModel = BarcodeViewModel(membershipCard: membershipCard)
         return UIHostingController(rootView: BarcodeScreenSwiftUIView(viewModel: viewModel))
@@ -322,6 +327,24 @@ enum ViewControllerFactory {
         alert.addAction(UIAlertAction(title: L10n.cancel, style: .cancel, handler: { _ in
             cancelActionHandler()
         }))
+        return alert
+    }
+    
+    static func makePollManagementAlertViewController(remindLaterHandler: @escaping () -> Void, dontShowAgainHandler: @escaping () -> Void ) -> BinkAlertController {
+        let alert = BinkAlertController(title: L10n.dismissAlertTitle, message: nil, preferredStyle: .actionSheet)
+
+        let remindAction = UIAlertAction(title: L10n.remindMeLater, style: .default, handler: { _ in
+            remindLaterHandler()
+        })
+        alert.addAction(remindAction)
+        
+        alert.addAction(UIAlertAction(title: L10n.dismissPoll, style: .destructive, handler: { _ in
+            dontShowAgainHandler()
+        }))
+        
+        let cancelAction = UIAlertAction(title: L10n.cancel, style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        
         return alert
     }
 

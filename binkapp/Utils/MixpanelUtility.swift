@@ -70,6 +70,9 @@ enum MixpanelTrackableEvent {
     case binkScannerEnterManuallyPressed(brandName: String)
     case cardNumberCopiedToPasteboard
     case goToSitePressed(brandName: String)
+    case pollDismissedTemporarily(pollId: String)
+    case pollDismissedPermanently(pollId: String)
+    case pollClicked(pollId: String)
 
     enum JourneyRoute: String {
         case wallet = "Wallet"
@@ -119,6 +122,12 @@ enum MixpanelTrackableEvent {
             return "Card number copied to pasteboard"
         case .goToSitePressed:
             return "Go to site pressed"
+        case .pollClicked:
+            return "Poll Clicked"
+        case .pollDismissedTemporarily:
+            return "Poll Dismissed Temporarily"
+        case .pollDismissedPermanently:
+            return "Poll Dismissed Permanently"
         }
     }
 
@@ -181,6 +190,12 @@ enum MixpanelTrackableEvent {
             return [:]
         case .goToSitePressed(let brandName):
             return ["Brand": brandName]
+        case .pollClicked(pollId: let pollId):
+            return ["Poll ID": pollId]
+        case .pollDismissedTemporarily(pollId: let pollId):
+            return ["Poll ID": pollId]
+        case .pollDismissedPermanently(pollId: let pollId):
+            return ["Poll ID": pollId]
         }
     }
 }
