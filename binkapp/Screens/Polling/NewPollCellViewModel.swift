@@ -41,10 +41,10 @@ class NewPollCellViewModel: ObservableObject {
                                 self.dispatchNotification(showUI: false)
                                 return
                             }
-                            
+
                             Current.userDefaults.set("", forDefaultsKey: .dismissedPollId)
                         }
-                        
+
                         self.question = poll.question
                         self.dispatchNotification(showUI: true)
                     } else {

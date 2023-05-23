@@ -72,6 +72,7 @@ struct PollSwiftUIView: View {
                             Button(action: {
                                 if !viewModel.submitted {
                                     viewModel.currentAnswer = answer
+                                    viewModel.customAnswer = nil
                                 }
                             }) {
                                 VStack(alignment: .leading) {
@@ -119,13 +120,31 @@ struct PollSwiftUIView: View {
                                 }
                             }
                         }
+                        
+                        if viewModel.shouldDisplayCustomAnswer {
+                            TextField(L10n.customAnswerPlaceholder, text: Binding<String>(
+                                get: { self.viewModel.customAnswer ?? "" },
+                                set: { self.viewModel.customAnswer = $0 }))
+                                .textFieldStyle(PlainTextFieldStyle())
+                                .uiFont(.pollOption)
+                                .foregroundColor(Color(themeManager.color(for: .text)))
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 73)
+                                .padding([.horizontal], 14)
+                                .cornerRadius(12)
+                                .background(RoundedRectangle(cornerRadius: 12).fill(viewModel.customAnswerIsValid() ? viewModel.colorForAnsweredRow(colorScheme: colorScheme) : viewModel.colorForUnansweredRow(colorScheme: colorScheme)))
+                                .onTapGesture {
+                                    viewModel.currentAnswer = nil
+                                }
+                                .disabled(viewModel.submitted)
+                        }
                     }
                     .padding()
                     
-                    if viewModel.currentAnswer == nil {
+                    if viewModel.currentAnswer == nil && !viewModel.customAnswerIsValid() {
                         BinkButtonsStackView(buttons: [viewModel.disabledAnswerButton])
                             .padding(.top, -23)
-                    } else if viewModel.currentAnswer != nil && !viewModel.submitted {
+                    } else if (viewModel.currentAnswer != nil || viewModel.customAnswerIsValid()) && !viewModel.submitted {
                         BinkButtonsStackView(buttons: [viewModel.submitAnswerButton])
                             .padding(.top, -23)
                     } else if viewModel.submitted {

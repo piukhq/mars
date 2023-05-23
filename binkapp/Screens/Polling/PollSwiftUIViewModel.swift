@@ -13,6 +13,7 @@ import FirebaseFirestore
 class PollSwiftUIViewModel: ObservableObject {
     @Published var pollData: PollModel?
     @Published var currentAnswer: String?
+    @Published var customAnswer: String?
     @Published var gotVotes = false
     @Published var submitted = false
     
@@ -29,6 +30,7 @@ class PollSwiftUIViewModel: ObservableObject {
     lazy var editVoteButton: BinkButtonSwiftUIView = {
         return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.editMyVote), enabled: true, buttonTapped: { [weak self] in
             self?.currentAnswer = nil
+            self?.customAnswer = nil
             self?.submitted = false
             self?.gotVotes.toggle()
         }, type: .bordered)
@@ -39,6 +41,17 @@ class PollSwiftUIViewModel: ObservableObject {
             Current.navigate.back()
         }, type: .capsule)
     }()
+    
+    var shouldDisplayCustomAnswer: Bool {
+        if pollData?.allowCustomAnswer == true {
+            if submitted && customAnswer == nil {
+                return false
+            }
+            return true
+        }
+        
+        return false
+    }
     
     private var votingModel: PollVotingModel?
     
@@ -71,6 +84,10 @@ class PollSwiftUIViewModel: ObservableObject {
                     self?.getVoteCount()
                     self?.submitted.toggle()
                     self?.currentAnswer = answer
+                } else if let customAnswer = self?.votingModel?.customAnswer, !customAnswer.isEmpty {
+                    self?.getVoteCount()
+                    self?.submitted.toggle()
+                    self?.customAnswer = customAnswer
                 }
             }
         })
@@ -94,7 +111,7 @@ class PollSwiftUIViewModel: ObservableObject {
         guard let collectionReference = Current.firestoreManager.getCollection(collection: .polls) else { return }
         
         let query = collectionReference.whereField("published", isEqualTo: true )
-        
+
         Current.firestoreManager.fetchDocumentsInCollection(PollModel.self, query: query, completion: { [weak self] snapshot in
             if let doc = snapshot?.first {
                 self?.pollData = doc
@@ -107,19 +124,21 @@ class PollSwiftUIViewModel: ObservableObject {
     }
     
     func submitAnswer() {
-        guard let answer = currentAnswer else { return }
+        let answer = currentAnswer ?? ""
+        let customAnswer = customAnswer ?? ""
         
         submitted.toggle()
-        
+
         if var model = votingModel {
             model.answer = answer
+            model.customAnswer = customAnswer
             model.overwritten = true
             Current.firestoreManager.addDocument(model, collection: .pollResults, documentId: model.id ?? "") { [weak self] _ in
                 self?.getVoteCount()
             }
         } else {
-            votingModel = PollVotingModel(pollId: pollData?.id ?? "", userId: userId ?? "", createdDate: Int(Date().timeIntervalSince1970), overwritten: false, answer: answer)
-            Current.firestoreManager.addDocument(votingModel, collection: .pollResults) { [weak self] _ in
+            votingModel = PollVotingModel(pollId: pollData?.id ?? "", userId: userId ?? "", createdDate: Int(Date().timeIntervalSince1970), overwritten: false, answer: answer, customAnswer: customAnswer)
+            Current.firestoreManager.addDocument(votingModel, collection: .pollResults) { [weak self] docId in
                 self?.getVoteCount()
             }
         }
@@ -129,7 +148,7 @@ class PollSwiftUIViewModel: ObservableObject {
         guard let poll = pollData else {
             return ""
         }
-        
+
         let endDate = NSDate(timeIntervalSince1970: TimeInterval(poll.closeTime))
         
         let diffComponents = Calendar.current.dateComponents([.day, .hour, .minute, .second], from: Date(), to: endDate as Date)
@@ -152,6 +171,14 @@ class PollSwiftUIViewModel: ObservableObject {
         return answerCount / Double(votesTotalCount)
     }
     
+    func customAnswerIsValid() -> Bool {
+        guard let answer = customAnswer else {
+            return false
+        }
+
+        return !answer.isEmpty
+    }
+
     func colorForOuterCircleIcons(colorScheme: ColorScheme) -> Color {
         switch Current.themeManager.currentTheme.type {
         case .system:

@@ -18,4 +18,5 @@ struct PollModel: Codable {
     var published: Bool
     var question: String
     var remindLaterMinutes: Int?
+    var allowCustomAnswer: Bool?
 }
