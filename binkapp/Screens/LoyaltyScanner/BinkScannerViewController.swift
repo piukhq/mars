@@ -537,8 +537,9 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
     }
     
     private func showUnrecognisedBardcodeError(barcode: String) {
-        let alertController = ViewControllerFactory.makeTwoButtonAlertViewController(title: L10n.loyaltyScannerWidgetTitleUnrecognizedBarcodeText, message: L10n.loyaltyScannerUnrecognizedBarcodeAlertDescription, primaryButtonTitle: L10n.cancel, secondaryButtonTitle: L10n.loyaltyScannerUnrecognizedBarcodeAlertAddCustomButtonText) {
-            /// Cancel
+        let alertController = ViewControllerFactory.makeTwoButtonAlertViewController(title: L10n.loyaltyScannerWidgetTitleUnrecognizedBarcodeText, message: L10n.loyaltyScannerUnrecognizedBarcodeAlertDescription, primaryButtonTitle: L10n.cancel, secondaryButtonTitle: L10n.loyaltyScannerUnrecognizedBarcodeAlertAddCustomButtonText) { [weak self] in
+            self?.widgetView.enterManually()
+            self?.shouldAllowScanning = true
         } secondaryButtonCompletion: {
             if let customPlan = Current.wallet.membershipPlans?.first(where: { $0.isCustomCard }) {
                 let prefilledValues = FormDataSource.PrefilledValue(commonName: .cardNumber, value: barcode)

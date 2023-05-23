@@ -124,7 +124,7 @@ platform :ios do
 target =
     run_tests(
       workspace: "binkapp.xcworkspace",
-      device: "iPhone 14",
+      device: "iPhone 13",
       scheme: "binkapp tests"
     )
 
@@ -152,7 +152,7 @@ target =
 
     run_tests(
       workspace: "binkapp.xcworkspace",
-      device: "iPhone 14",
+      device: "iPhone 13",
       code_coverage: true,
       result_bundle: true,
       scheme: "binkapp tests",
@@ -230,7 +230,7 @@ target =
 
     run_tests(
       workspace: "binkapp.xcworkspace",
-      device: "iPhone 14",
+      device: "iPhone 13",
       scheme: "binkapp tests"
     )
 
