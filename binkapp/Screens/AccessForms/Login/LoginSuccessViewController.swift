@@ -15,7 +15,7 @@ class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
     }
     
     private lazy var continueButton: BinkButton = {
-        return BinkButton(type: .gradient, title: L10n.continueButtonTitle) { [weak self] in
+        return BinkButton(type: .capsule, title: L10n.continueButtonTitle) { [weak self] in
             self?.continueButtonTapped()
         }
     }()
@@ -57,7 +57,7 @@ class LoginSuccessViewController: BaseFormViewController, UserServiceProtocol {
     
     override func configureForCurrentTheme() {
         super.configureForCurrentTheme()
-        titleLabel.textColor = .binkBlueTitleText
+        titleLabel.textColor = .binkBlue
     }
     
     @objc func continueButtonTapped() {

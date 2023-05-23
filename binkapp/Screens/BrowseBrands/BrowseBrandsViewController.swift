@@ -112,7 +112,7 @@ class BrowseBrandsViewController: BinkViewController {
         
         filtersButton = UIBarButtonItem(title: L10n.filtersButtonTitle, style: .plain, target: self, action: #selector(filtersButtonTapped))
         filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.systemGray, .font: UIFont.linkTextButtonNormal], for: .highlighted)
-        filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
+        filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.binkBlue, .font: UIFont.linkTextButtonNormal], for: .normal)
         
         navigationItem.leftBarButtonItem = filtersButton
         
@@ -135,7 +135,7 @@ class BrowseBrandsViewController: BinkViewController {
         collectionView.backgroundColor = Current.themeManager.color(for: .viewBackground)
         topStackView.backgroundColor = Current.themeManager.color(for: .viewBackground)
         searchTextField.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
-        filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
+        filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.binkBlue, .font: UIFont.linkTextButtonNormal], for: .normal)
         
         if didLayoutSubviews {
             collectionView.reloadData()
@@ -196,7 +196,7 @@ class BrowseBrandsViewController: BinkViewController {
     
     private func hideFilters() {
         filtersButton?.isEnabled = false
-        filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .disabled)
+        filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.binkBlue, .font: UIFont.linkTextButtonNormal], for: .disabled)
 
         let frame = self.collectionView.frame
         listViewTopConstraint.constant = 0
@@ -205,13 +205,13 @@ class BrowseBrandsViewController: BinkViewController {
             self.view.layoutIfNeeded()
         }) { [weak self] _ in
             self?.filtersButton?.isEnabled = true
-            self?.filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
+            self?.filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.binkBlue, .font: UIFont.linkTextButtonNormal], for: .normal)
         }
     }
     
     private func displayFilters() {
         filtersButton?.isEnabled = false
-        filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .disabled)
+        filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.binkBlue, .font: UIFont.linkTextButtonNormal], for: .disabled)
         let frame = self.collectionView.frame
         listViewTopConstraint.constant = filterViewHeight
         UIView.animate(withDuration: 0.3, animations: {
@@ -222,7 +222,7 @@ class BrowseBrandsViewController: BinkViewController {
             self.view.layoutIfNeeded()
         }) { [weak self] _ in
             self?.filtersButton?.isEnabled = true
-            self?.filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
+            self?.filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.binkBlue, .font: UIFont.linkTextButtonNormal], for: .normal)
         }
     }
     

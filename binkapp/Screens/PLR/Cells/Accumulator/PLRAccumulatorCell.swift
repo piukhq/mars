@@ -33,7 +33,7 @@ class PLRAccumulatorCell: PLRBaseCollectionViewCell {
         case .cancelled:
             return .blue
         case .redeemed:
-            return .blueAccent
+            return .binkBlue
         case .issued:
             return .greenOk
         case .inProgress:

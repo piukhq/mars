@@ -9,7 +9,7 @@
 import UIKit
 
 class PaymentCardDetailAddLoyaltyCardCell: PaymentCardDetailTableViewCell {
-    @IBOutlet private weak var addCardButton: BinkMiniGradientButton!
+    @IBOutlet private weak var addCardButton: BinkMiniCapsuleButton!
 
     private var viewModel: PaymentCardDetailAddLoyaltyCardCellViewModel!
     

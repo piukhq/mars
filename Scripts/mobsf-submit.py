@@ -15,7 +15,7 @@ mobsfDest = os.environ.get('BITRISE_DEPLOY_DIR')
 multipart_data = MultipartEncoder(fields={'file': (mobsfFiles, open(mobsfFiles, 'rb'), 'application/octet-stream')})
 
 print('== MobSF 1/3 == \nUpload Process Starting')
-url = 'https://mobsf.uksouth.bink.sh/api/v1/upload'
+url = 'https://mobsf.gb.bink.com/api/v1/upload'
 headers = {'X-Mobsf-Api-Key': mobsfApiKey, 'Content-Type': multipart_data.content_type}
 r = requests.post(url, data=multipart_data, headers=headers, auth=(mobsfUser, mobsfPass))
 print('Upload Process Complete - ', r.status_code)
@@ -25,7 +25,7 @@ hash = json['hash']
 filename = json['file_name']
 scantype = json['scan_type']
 
-url = 'https://mobsf.uksouth.bink.sh/api/v1/scan'
+url = 'https://mobsf.gb.bink.com/api/v1/scan'
 
 headers = {'X-Mobsf-Api-Key': mobsfApiKey}
 files = {
@@ -45,7 +45,7 @@ score = json.get('security_score')
 
 print('Scan Complete - ', r.status_code)
 
-url = 'https://mobsf.uksouth.bink.sh/api/v1/download_pdf'
+url = 'https://mobsf.gb.bink.com/api/v1/download_pdf'
 
 print('== MobSF 3/3 == \nReport Downloading')
 time.sleep(5)

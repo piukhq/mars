@@ -38,7 +38,6 @@ class PaymentCardCell: UITableViewCell {
     // MARK: - Actions
     
     @IBAction func switchDidChangeValue(_ sender: BinkSwitch) {
-        switchButton.isGradientVisible = sender.isOn
         delegate?.paymentCardCellDidToggleSwitch(self, cardIndex: cardIndex)
     }
 }

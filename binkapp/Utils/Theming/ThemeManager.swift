@@ -86,6 +86,7 @@ class ThemeManager: ObservableObject {
         tabAppearance.shadowImage = UIImage()
         tabAppearance.backgroundColor = Styling.Colors.bar
         tabAppearance.backgroundEffect = Styling.barBlur(for: traitCollection)
+        tabAppearance.stackedLayoutAppearance.normal.iconColor = .binkBlue
         return tabAppearance
     }
 
@@ -118,6 +119,10 @@ class ThemeManager: ObservableObject {
     
     func scrollViewIndicatorStyle(for traitCollection: UITraitCollection) -> UIScrollView.IndicatorStyle {
         return Styling.scrollViewIndicatorStyle(for: traitCollection)
+    }
+    
+    func logo(for userInterfaceStyle: UIUserInterfaceStyle) -> ImageAsset {
+        return Styling.logo(for: userInterfaceStyle)
     }
 
     func addObserver(_ observer: Any, handler: Selector) {

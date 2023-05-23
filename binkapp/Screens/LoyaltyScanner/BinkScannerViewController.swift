@@ -74,7 +74,7 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
         static let closeButtonSize = CGSize(width: 44, height: 44)
         static let timerInterval: TimeInterval = 5.0
         static let scanErrorThreshold: TimeInterval = 1.0
-        static let flashLightBottomOffset: CGFloat = 110
+        static let flashLightBottomOffset: CGFloat = -40
     }
     
     enum LoyaltyScannerDetectionType {
@@ -297,8 +297,8 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
             footerButtons = [photoLibraryButton]
         } else {
             view.addSubview(flashLightButton)
-            flashLightButton.topAnchor.constraint(equalTo: widgetView.bottomAnchor, constant: Constants.flashLightBottomOffset).isActive = true
             flashLightButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            flashLightButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: Constants.flashLightBottomOffset).isActive = true
         }
     }
     
@@ -415,7 +415,7 @@ class BinkScannerViewController: BinkViewController, UINavigationControllerDeleg
                         self.stopScanning()
                         self.nameOnCardLabel.text = self.visionUtility.paymentCard.nameOnCard ?? ""
                         self.nameOnCardLabel.alpha = 1
-                        self.guideImageView.tintColor = .binkBlueTitleText
+                        self.guideImageView.tintColor = .binkBlue
                         self.guideImageView.layer.addBinkAnimation(.shake)
                     } completion: { _ in
                         HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
