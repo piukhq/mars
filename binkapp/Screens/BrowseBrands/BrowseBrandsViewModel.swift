@@ -116,6 +116,22 @@ class BrowseBrandsViewModel: ObservableObject {
             return filteredPlans
         }
     }
+    
+    private func isNewMerchant(goLiveDate: String) -> Bool {
+        if !goLiveDate.isEmpty {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy/MM/dd"
+            guard let liveDate = dateFormatter.date(from: goLiveDate) else { return false }
+            
+            return !Date.hasElapsed(days: 29, since: liveDate)
+        }
+        
+        return false
+    }
+    
+    func getNewPllMembershipPlans() -> [CD_MembershipPlan] {
+        return getMembershipPlans().filter { isNewMerchant(goLiveDate: $0.goLive ?? "") }
+    }
         
     func getPllMembershipPlans() -> [CD_MembershipPlan] {
         return getMembershipPlans().filter { $0.featureSet?.planCardType == .link }

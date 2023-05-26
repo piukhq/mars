@@ -742,6 +742,7 @@
 /* Begin PBXFileReference section */
 		0578BBF342AD2E4F349D1822 /* Pods_binkappUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2106F1EF29D44D0800EEDBE4 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
+		2108A3492A20B39100415D42 /* binkapp - 26-05-23 - MembershipPlan - go live date.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 26-05-23 - MembershipPlan - go live date.xcdatamodel"; sourceTree = "<group>"; };
 		211058482909469B00DFDF90 /* PaymentWalletViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWalletViewModelTests.swift; sourceTree = "<group>"; };
 		2110584B2909637300DFDF90 /* MerchantHeroCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantHeroCellTests.swift; sourceTree = "<group>"; };
 		2110584E2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletLoyaltyCardCellViewModelTests.swift; sourceTree = "<group>"; };
@@ -4076,7 +4077,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/mogenerator --swift --model binkapp/Persistence/Model/binkapp.xcdatamodeld --output-dir binkapp/Persistence/Entities\n";
+			shellScript = "/opt/homebrew/bin/mogenerator --swift --model binkapp/Persistence/Model/binkapp.xcdatamodeld --output-dir binkapp/Persistence/Entities\n";
 		};
 		F8F07BEC58B2D2BCE544103B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4716,7 +4717,7 @@
 			baseConfigurationReference = BD3CB9432328573C005C37AE /* Dev.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				API_BASE_URL = api.dev.gb.bink.com;
+				API_BASE_URL = api.staging.gb.bink.com;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -4853,7 +4854,7 @@
 			baseConfigurationReference = E708C17C8E9A69A07732E058 /* Pods-binkapp.alpha.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				API_BASE_URL = api.dev.gb.bink.com;
+				API_BASE_URL = api.staging.gb.bink.com;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Alpha";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
@@ -6637,6 +6638,7 @@
 		5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				2108A3492A20B39100415D42 /* binkapp - 26-05-23 - MembershipPlan - go live date.xcdatamodel */,
 				CE5985402923A0AD00C50EC4 /* binkapp - 15-11-22 - Card - custom card store name.xcdatamodel */,
 				21A9BE7128F6F1EF00FC1304 /* binkapp - 12-9-22 - MembershipCard - time when opened.xcdatamodel */,
 				CE3EA70C28CA272D00EFEDA9 /* binkapp - 8-9-22 - AddField-alternatives-type-edit.xcdatamodel */,
@@ -6655,7 +6657,7 @@
 				BD475E6C23A256820071302A /* binkapp - Plan Documents Display.xcdatamodel */,
 				5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */,
 			);
-			currentVersion = CE5985402923A0AD00C50EC4 /* binkapp - 15-11-22 - Card - custom card store name.xcdatamodel */;
+			currentVersion = 2108A3492A20B39100415D42 /* binkapp - 26-05-23 - MembershipPlan - go live date.xcdatamodel */;
 			path = binkapp.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -57,6 +57,10 @@ open class CD_MembershipPlan: _CD_MembershipPlan {
     var isCustomCard: Bool {
         return id == "9999"
     }
+    
+    var goLiveDate: String? {
+        return goLive
+    }
 
     enum DynamicContentColumn: String {
         case voucherStampsExpiredDetail = "Voucher_Expired_Detail"

@@ -327,7 +327,7 @@ class Wallet: NSObject, CoreDataRepositoryProtocol, WalletServiceProtocol {
         let storeNameField = AddFieldModel(apiId: 0, column: L10n.customCardNameAddFieldTitle, validation: nil, fieldDescription: L10n.customCardNameAddFieldDescription, type: 0, choices: nil, commonName: nil, alternatives: nil)
         let account = MembershipPlanAccountModel(apiId: nil, planNameCard: nil, companyName: L10n.customCardCompanyName, category: "Other", planDescription: nil, barcodeRedeemInstructions: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, addFields: [cardNumberField, storeNameField], authoriseFields: nil, registrationFields: nil, enrolFields: nil)
         let featureSet = FeatureSetModel(apiId: nil, authorisationRequired: nil, digitalOnly: nil, cardType: .store, linkingSupport: [.add], hasVouchers: nil)
-        return MembershipPlanModel(apiId: 9999, status: "active", featureSet: featureSet, images: nil, account: account, balances: nil, card: nil)
+        return MembershipPlanModel(apiId: 9999, status: "active", featureSet: featureSet, images: nil, account: account, balances: nil, card: nil, goLive: "")
     }
 }
 
