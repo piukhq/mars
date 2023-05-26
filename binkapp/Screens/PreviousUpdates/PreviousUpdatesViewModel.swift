@@ -8,24 +8,46 @@
 
 import Foundation
 import UIKit
+import FirebaseFirestoreSwift
+
+struct ReleaseNotes: Codable {
+    let releases: [ReleaseGroup]?
+    
+    struct ReleaseNotesGroup: Codable, Identifiable {
+        var id = UUID()
+        var heading: String?
+        var bulletPoints: [String]?
+        
+        enum CodingKeys: String, CodingKey {
+            case heading
+            case bulletPoints = "bullet_points"
+        }
+    }
+
+    struct ReleaseGroup: Codable, Identifiable {
+        var id = UUID()
+        var releaseTitle: String?
+        var releaseNotes: [ReleaseNotesGroup]?
+        
+        enum CodingKeys: String, CodingKey {
+            case releaseTitle = "release_title"
+            case releaseNotes = "release_notes"
+        }
+    }
+}
 
 class PreviousUpdatesViewModel: ObservableObject {
-    @Published var items: [RemoteConfigFile.ReleaseGroup] = []
+    @Published var items: [ReleaseNotes.ReleaseGroup] = []
     
     init() {
-        if UIApplication.isRunningUnitTests {
-            if let filePath = Bundle.main.path(forResource: "fireBase-config", ofType: "json") {
-                do {
-                    if let data = try String(contentsOfFile: filePath).data(using: .utf8) {
-                        let conf = try JSONDecoder().decode(RemoteConfigFile.self, from: data)
-                        self.items = conf.releases ?? []
-                    }
-                } catch let error {
-                    print(error.localizedDescription)
+        if !UIApplication.isRunningUnitTests {
+            guard let collectionReference = Current.firestoreManager.getCollection(collection: .releaseNotes) else { return }
+            
+            Current.firestoreManager.fetchDocumentsInCollection(ReleaseNotes.self, collection: collectionReference, completion: { [weak self] snapshot in
+                if let doc = snapshot?.first {
+                    self?.items = doc.releases ?? []
                 }
-            }
-        } else {
-            self.items = Current.remoteConfig.configFile?.releases ?? []
+            })
         }
     }
 }

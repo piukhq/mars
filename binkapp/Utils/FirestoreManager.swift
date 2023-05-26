@@ -12,6 +12,7 @@ import FirebaseFirestore
 enum FirestoreCollections: String {
     case polls
     case pollResults
+    case releaseNotes
 }
 
 class FirestoreManager {
@@ -36,6 +37,30 @@ class FirestoreManager {
     
     func fetchDocumentsInCollection<T: Codable>(_ type: T.Type, query: Query, completion: @escaping ([T]?) -> Void) {
         query.addSnapshotListener { querySnapshot, err in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                do {
+                    if let error = err {
+                        throw error
+                    }
+                    guard let documents = querySnapshot?.documents else {
+                        completion(nil)
+                        return
+                    }
+                    let data = try documents.compactMap { QueryDocumentSnapshot -> T? in
+                        return try QueryDocumentSnapshot.data(as: T.self)
+                    }
+                    completion(data)
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    func fetchDocumentsInCollection<T: Codable>(_ type: T.Type, collection: CollectionReference, completion: @escaping ([T]?) -> Void) {
+        collection.getDocuments() { querySnapshot, err in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
