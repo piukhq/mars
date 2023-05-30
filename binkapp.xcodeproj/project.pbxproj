@@ -4077,7 +4077,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/opt/homebrew/bin/mogenerator --swift --model binkapp/Persistence/Model/binkapp.xcdatamodeld --output-dir binkapp/Persistence/Entities\n";
+			shellScript = "/usr/local/bin/mogenerator --swift --model binkapp/Persistence/Model/binkapp.xcdatamodeld --output-dir binkapp/Persistence/Entities\n";
 		};
 		F8F07BEC58B2D2BCE544103B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
