@@ -11,6 +11,7 @@ class BrowseBrandsViewModel: ObservableObject {
     private var membershipPlans: [CD_MembershipPlan] = []
     @Published var sections: [[CD_MembershipPlan]] = [[]]
     @Published var scrollToSection: Int = 0
+    private var hasNewMerchants = false
 
     var shouldShowNoResultsLabel: Bool {
         return filteredPlans.isEmpty
@@ -50,7 +51,14 @@ class BrowseBrandsViewModel: ObservableObject {
     }
     
     func configureSections() {
-        sections = [getPllMembershipPlans(), getSeeMembershipPlans(), getStoreMembershipPlans()]
+        let goLiveMerchants = getNewPllMembershipPlans()
+        
+        if !goLiveMerchants.isEmpty {
+            sections = [goLiveMerchants, getPllMembershipPlans(), getSeeMembershipPlans(), getStoreMembershipPlans()]
+            hasNewMerchants = true
+        } else {
+            sections = [getPllMembershipPlans(), getSeeMembershipPlans(), getStoreMembershipPlans()]
+        }
     }
     
     func getMembershipPlan(for indexPath: IndexPath) -> CD_MembershipPlan? {
@@ -68,36 +76,67 @@ class BrowseBrandsViewModel: ObservableObject {
     }
     
     func getSectionTitleText(section: Int) -> String {
-        switch section {
-        case 0:
-            return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? L10n.storeTitle : L10n.seeTitle) : L10n.pllTitle
-        case 1:
-            return getPllMembershipPlans().isEmpty ? L10n.storeTitle : (getSeeMembershipPlans().isEmpty ? L10n.storeTitle : L10n.seeTitle)
-        case 2:
-            return L10n.storeTitle
-        default:
-            return ""
+        if !hasNewMerchants {
+            switch section {
+            case 0:
+                return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? L10n.storeTitle : L10n.seeTitle) : L10n.pllTitle
+            case 1:
+                return getPllMembershipPlans().isEmpty ? L10n.storeTitle : (getSeeMembershipPlans().isEmpty ? L10n.storeTitle : L10n.seeTitle)
+            case 2:
+                return L10n.storeTitle
+            default:
+                return ""
+            }
+        } else {
+            switch section {
+            case 0:
+                return "New for you"
+            case 1:
+                return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? L10n.storeTitle : L10n.seeTitle) : L10n.pllTitle
+            case 2:
+                return getPllMembershipPlans().isEmpty ? L10n.storeTitle : (getSeeMembershipPlans().isEmpty ? L10n.storeTitle : L10n.seeTitle)
+            case 3:
+                return L10n.storeTitle
+            default:
+                return ""
+            }
         }
     }
     
     func getSectionDescriptionText(section: Int) -> AttributedString {
         var descriptionText: String
-        switch section {
-        case 0:
-            descriptionText = getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? L10n.storeDescription : L10n.seeDescription) : L10n.pllDescription
-        case 1:
-            descriptionText = getPllMembershipPlans().isEmpty ? L10n.storeDescription : (getSeeMembershipPlans().isEmpty ? L10n.storeDescription : L10n.seeDescription)
-        case 2:
-            descriptionText = L10n.storeDescription
-        default:
-            descriptionText = ""
+        
+        if !hasNewMerchants {
+            switch section {
+            case 0:
+                descriptionText = getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? L10n.storeDescription : L10n.seeDescription) : L10n.pllDescription
+            case 1:
+                descriptionText = getPllMembershipPlans().isEmpty ? L10n.storeDescription : (getSeeMembershipPlans().isEmpty ? L10n.storeDescription : L10n.seeDescription)
+            case 2:
+                descriptionText = L10n.storeDescription
+            default:
+                descriptionText = ""
+            }
+        } else {
+            switch section {
+            case 0:
+                descriptionText = ""
+            case 1:
+                descriptionText = getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? L10n.storeDescription : L10n.seeDescription) : L10n.pllDescription
+            case 2:
+                descriptionText = getPllMembershipPlans().isEmpty ? L10n.storeDescription : (getSeeMembershipPlans().isEmpty ? L10n.storeDescription : L10n.seeDescription)
+            case 3:
+                descriptionText = L10n.storeDescription
+            default:
+                descriptionText = ""
+            }
         }
         
         var attributedText = AttributedString(descriptionText)
         attributedText.font = .bodyTextLarge
         attributedText.foregroundColor = Color(Current.themeManager.color(for: .text))
         
-        if section == 0 && !getPllMembershipPlans().isEmpty {
+        if !hasNewMerchants && section == 0 && !getPllMembershipPlans().isEmpty {
             if let range = attributedText.range(of: L10n.pllDescriptionHighlightAutomatically) {
                 var container = AttributeContainer()
                 container.font = .bodyTextBold
@@ -157,7 +196,7 @@ class BrowseBrandsViewModel: ObservableObject {
     
     func numberOfSections() -> Int {
         var sections = 0
-        [getPllMembershipPlans(), getSeeMembershipPlans(), getStoreMembershipPlans()].forEach {
+        [getNewPllMembershipPlans(), getPllMembershipPlans(), getSeeMembershipPlans(), getStoreMembershipPlans()].forEach {
             if !$0.isEmpty {
                 sections += 1
             }

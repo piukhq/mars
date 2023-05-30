@@ -21,7 +21,9 @@ struct BrowseBrandsHeaderView: View {
             Text(viewModel.getSectionTitleText(section: section))
                 .uiFont(.headline)
                 .foregroundColor(Color(Current.themeManager.color(for: .text)))
-            Text(viewModel.getSectionDescriptionText(section: section))
+            if !viewModel.getSectionDescriptionText(section: section).description.isEmpty {
+                Text(viewModel.getSectionDescriptionText(section: section))
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.horizontal, 25)

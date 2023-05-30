@@ -59,8 +59,8 @@ class MembershipPlanModelTests: XCTestCase {
     }
     
     func test_equatable_worksCorrectly() {
-        let plan1 = MembershipPlanModel(apiId: 500, status: nil, featureSet: nil, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
-        let plan2 = MembershipPlanModel(apiId: 500, status: nil, featureSet: nil, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+        let plan1 = MembershipPlanModel(apiId: 500, status: nil, featureSet: nil, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil, goLive: "")
+        let plan2 = MembershipPlanModel(apiId: 500, status: nil, featureSet: nil, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil, goLive: "")
 
         XCTAssertTrue(plan1 == plan2)
         XCTAssertFalse(plan1 != plan2)

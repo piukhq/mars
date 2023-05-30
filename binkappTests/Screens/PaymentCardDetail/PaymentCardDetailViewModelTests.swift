@@ -42,7 +42,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
         super.setUp()
         // Membership Plan
         let featureSet = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: [.add], hasVouchers: nil)
-        baseMembershipPlan = MembershipPlanModel(apiId: 500, status: nil, featureSet: featureSet, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+        baseMembershipPlan = MembershipPlanModel(apiId: 500, status: nil, featureSet: featureSet, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil, goLive: "")
         mapResponseToManagedObject(baseMembershipPlan, managedObjectType: CD_MembershipPlan.self) { plan in
             self.membershipPlan = plan
         }
@@ -86,7 +86,7 @@ class PaymentCardDetailViewModelTests: XCTestCase, CoreDataTestable, CardDetailI
     
     private func updateWalletWithPllPlanNotAlreadyAddedToWallet(completion: @escaping (CD_MembershipPlan) -> Void) {
         let featureSet = FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: true, cardType: .link, linkingSupport: [.add], hasVouchers: nil)
-        let pllPlan = MembershipPlanModel(apiId: 20, status: nil, featureSet: featureSet, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+        let pllPlan = MembershipPlanModel(apiId: 20, status: nil, featureSet: featureSet, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil, goLive: "")
         mapResponseToManagedObject(pllPlan, managedObjectType: CD_MembershipPlan.self) { plan in
             Self.walletDelegate?.updateMembershipCards(membershipCards: [Self.membershipCard])
             Self.walletDelegate?.updateMembershipPlans(membershipPlans: [plan])
