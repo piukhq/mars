@@ -90,7 +90,7 @@ class BrowseBrandsViewModel: ObservableObject {
         } else {
             switch section {
             case 0:
-                return "New for you"
+                return L10n.newForYou
             case 1:
                 return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? L10n.storeTitle : L10n.seeTitle) : L10n.pllTitle
             case 2:

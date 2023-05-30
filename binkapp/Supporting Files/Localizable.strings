@@ -564,3 +564,6 @@
 "edit_my_vote" = "Edit my vote";
 "custom_answer_placeholder" = "Add your own suggestion";
 
+// MARK: - New Merchants
+"new_for_you" = "New for you";
+
