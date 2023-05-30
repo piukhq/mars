@@ -124,6 +124,8 @@ extension MembershipPlanModel: CoreDataMappable, CoreDataIDMappable {
         
         if let goLive = goLive {
             update(cdObject, \.goLive, with: goLive, delta: true)
+        } else {
+            update(cdObject, \.goLive, with: nil, delta: false)
         }
 
         return cdObject

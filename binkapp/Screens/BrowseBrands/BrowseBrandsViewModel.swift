@@ -162,7 +162,9 @@ class BrowseBrandsViewModel: ObservableObject {
             dateFormatter.dateFormat = "yyyy/MM/dd"
             guard let liveDate = dateFormatter.date(from: goLiveDate) else { return false }
             
-            return !Date.hasElapsed(days: 29, since: liveDate)
+            if liveDate.isBefore(date: Date(), toGranularity: .day) {
+                return !Date.hasElapsed(days: 29, since: liveDate)
+            }
         }
         
         return false
