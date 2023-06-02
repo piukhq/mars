@@ -14,7 +14,6 @@ struct RemoteConfigFile: Codable {
     let dynamicActions: [DynamicAction]?
     let beta: Beta?
     let whatsNew: WhatsNewModel?
-    let releases: [ReleaseGroup]?
     
     enum CodingKeys: String, CodingKey {
         case localPointsCollection = "local_points_collection"
@@ -22,29 +21,6 @@ struct RemoteConfigFile: Codable {
         case dynamicActions = "dynamic_actions"
         case beta
         case whatsNew = "whats_new"
-        case releases
-    }
-    
-    struct ReleaseNotesGroup: Codable, Identifiable {
-        var id = UUID()
-        var heading: String?
-        var bulletPoints: [String]?
-        
-        enum CodingKeys: String, CodingKey {
-            case heading
-            case bulletPoints = "bullet_points"
-        }
-    }
-
-    struct ReleaseGroup: Codable, Identifiable {
-        var id = UUID()
-        var releaseTitle: String?
-        var releaseNotes: [ReleaseNotesGroup]?
-        
-        enum CodingKeys: String, CodingKey {
-            case releaseTitle = "release_title"
-            case releaseNotes = "release_notes"
-        }
     }
     
     struct LocalPointsCollection: Codable {
