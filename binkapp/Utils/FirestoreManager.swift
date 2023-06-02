@@ -13,6 +13,7 @@ enum FirestoreCollections: String {
     case polls
     case pollResults
     case releaseNotes
+    case whatsNewIOS
 }
 
 class FirestoreManager {
