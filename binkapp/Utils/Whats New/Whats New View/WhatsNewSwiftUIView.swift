@@ -47,8 +47,8 @@ struct WhatsNewSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             let merchant = NewMerchantModel(id: "207", description: ["Check out out lastest new merchant", "Sign up for a card in out app"])
-            let feature = NewFeatureModel(title: "New Feature", description: ["Check out this mint new feature."], screen: 0)
-            let feature2 = NewFeatureModel(title: "New Feature", description: ["Check out this other new feature."], screen: 0)
+            let feature = NewFeatureModel(title: "New Feature", description: ["Check out this mint new feature."], screen: 0, imageUrl: nil)
+            let feature2 = NewFeatureModel(title: "New Feature", description: ["Check out this other new feature."], screen: 0, imageUrl: nil)
             WhatsNewSwiftUIView(viewModel: WhatsNewViewModel(features: [feature, feature2], merchants: [merchant]))
         }
         .foregroundColor(.gray)

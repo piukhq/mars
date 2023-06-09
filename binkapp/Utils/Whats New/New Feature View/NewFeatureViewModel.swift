@@ -25,7 +25,7 @@ class NewFeatureViewModel: ObservableObject {
 
     init(feature: NewFeatureModel) {
         self.feature = feature
-        fetchImageFromStorage()
+        fetchImageFromUrl()
     }
     var backgroundColor: Color {
         return .teal
@@ -51,23 +51,26 @@ class NewFeatureViewModel: ObservableObject {
         }
     }
     
-    private func fetchImageFromStorage() {
+    private func fetchImageFromUrl() {
         guard let id = feature.id else { return }
-        let storage = Storage.storage()
         let path = "new-features/\(id).jpeg"
-        let pathReference = storage.reference(withPath: path)
         
         if let cachedImage = Cache.sharedImageCache.object(forKey: path.toNSString()) {
             self.uiImage = cachedImage
             return
         }
-
-        pathReference.getData(maxSize: 1 * 1024 * 1024) { data, _ in
-            guard let data = data, let uiImage = UIImage(data: data) else { return }
-            
-            Cache.sharedImageCache.setObject(uiImage, forKey: path.toNSString())
-            DispatchQueue.main.async {
-                self.uiImage = uiImage
+        
+        guard let url = feature.imageUrl else { return }
+        guard let imageUrl = URL(string: url) else { return }
+        
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: imageUrl) {
+                if let image = UIImage(data: data) {
+                    Cache.sharedImageCache.setObject(image, forKey: path.toNSString())
+                    DispatchQueue.main.async {
+                        self?.uiImage = image
+                    }
+                }
             }
         }
     }
