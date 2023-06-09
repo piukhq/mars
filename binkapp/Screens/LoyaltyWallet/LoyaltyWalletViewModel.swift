@@ -20,12 +20,24 @@ enum MembershipCardsSortState: String {
 class LoyaltyWalletViewModel: WalletViewModel {
     typealias T = CD_MembershipCard
     
+    private var whatsNew: WhatsNewModel?
+    
     private let repository = LoyaltyWalletRepository()
 
     var walletPrompts: [WalletPrompt]?
 
     var cards: [CD_MembershipCard]? {
         return Current.wallet.membershipCards
+    }
+    
+    init() {
+        guard let collectionReference = Current.firestoreManager.getCollection(collection: .whatsNewIOS) else { return }
+        
+        Current.firestoreManager.fetchDocumentsInCollection(WhatsNewModel.self, collection: collectionReference, completion: { [weak self] snapshot in
+            if let doc = snapshot?.first {
+                self?.whatsNew = doc
+            }
+        })
     }
     
     func setupWalletPrompts() {
@@ -144,7 +156,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
     }
     
     func configureWhatsNewScreen() {
-        guard let remoteConfigVersion = Current.remoteConfig.configFile?.whatsNew?.appVersion, let currentVersion = Bundle.currentVersion else { return }
+        guard let remoteConfigVersion = whatsNew?.appVersion, let currentVersion = Bundle.currentVersion else { return }
         let hasDismissedWhatsNewModal = Current.userDefaults.bool(forDefaultsKey: .hasDismissedWhatsNewView)
         
         if remoteConfigVersion == currentVersion.versionString && !hasDismissedWhatsNewModal {
@@ -165,7 +177,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
     }
     
     private func presentWhatsNewView() {
-        let viewModel = WhatsNewViewModel(features: Current.remoteConfig.configFile?.whatsNew?.features, merchants: Current.remoteConfig.configFile?.whatsNew?.merchants)
+        let viewModel = WhatsNewViewModel(features: whatsNew?.features, merchants: whatsNew?.merchants)
         let whatsNewViewController = ViewControllerFactory.makeWhatsNewViewController(viewModel: viewModel)
         let modalRequest = ModalNavigationRequest(viewController: whatsNewViewController)
         Current.navigate.to(modalRequest)
