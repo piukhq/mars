@@ -22,7 +22,7 @@ class WalletPromptTests: XCTestCase, CoreDataTestable {
         addPaymentCardsWalletPrompt = WalletPrompt(type: .addPaymentCards)
 
         let planAccountModel = MembershipPlanAccountModel(apiId: nil, planName: "Harvey Nichols Rewards", planNameCard: nil, planURL: nil, companyName: "Harvey Nichols", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
-        baseMembershipPlans = [MembershipPlanModel(apiId: nil, status: nil, featureSet: nil, images: nil, account: planAccountModel, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)]
+        baseMembershipPlans = [MembershipPlanModel(apiId: nil, status: nil, featureSet: nil, images: nil, account: planAccountModel, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil, goLive: "")]
         
         mapResponsesToManagedObjects(baseMembershipPlans, managedObjectType: CD_MembershipPlan.self) { plans in
             self.membershipPlans = plans
@@ -67,7 +67,7 @@ class WalletPromptTests: XCTestCase, CoreDataTestable {
         XCTAssertEqual(Self.addPaymentCardsWalletPrompt.numberOfRows, 0)
         
         let planAccountModel = MembershipPlanAccountModel(apiId: nil, planName: "Tesco Rewards", planNameCard: nil, planURL: nil, companyName: "Harvey Nichols", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
-        let plan = MembershipPlanModel(apiId: nil, status: nil, featureSet: nil, images: nil, account: planAccountModel, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+        let plan = MembershipPlanModel(apiId: nil, status: nil, featureSet: nil, images: nil, account: planAccountModel, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil, goLive: "")
         Self.baseMembershipPlans.append(plan)
         Self.baseMembershipPlans.append(plan)
         

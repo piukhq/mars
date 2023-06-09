@@ -18,6 +18,7 @@ struct MembershipPlanModel: Codable {
     var dynamicContent: [DynamicContentField]?
     var hasVouchers: Bool?
     let card: CardModel?
+    let goLive: String?
     
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
@@ -29,6 +30,7 @@ struct MembershipPlanModel: Codable {
         case dynamicContent = "content"
         case hasVouchers = "has_vouchers"
         case card
+        case goLive = "go_live"
     }
 }
 
@@ -118,6 +120,12 @@ extension MembershipPlanModel: CoreDataMappable, CoreDataIDMappable {
             update(cdObject, \.card, with: cdCard, delta: delta)
         } else {
             update(cdObject, \.card, with: nil, delta: false)
+        }
+        
+        if let goLive = goLive {
+            update(cdObject, \.goLive, with: goLive, delta: true)
+        } else {
+            update(cdObject, \.goLive, with: nil, delta: false)
         }
 
         return cdObject

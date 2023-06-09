@@ -22,7 +22,7 @@ class PaymentCardDetailLoyaltyCardStatusCellViewModelTests: XCTestCase, CoreData
         super.setUp()
         // Membership Plan
         let account = MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "Tesco", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
-        let plan = MembershipPlanModel(apiId: 500, status: nil, featureSet: nil, images: nil, account: account, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+        let plan = MembershipPlanModel(apiId: 500, status: nil, featureSet: nil, images: nil, account: account, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil, goLive: "")
         mapResponseToManagedObject(plan, managedObjectType: CD_MembershipPlan.self) { _ in }
         
         // Membership Card

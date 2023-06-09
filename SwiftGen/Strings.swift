@@ -414,6 +414,8 @@ internal enum L10n {
   }
   /// Sign up not supported
   internal static let nativeJoinUnavailableTitle = L10n.tr("Localizable", "native_join_unavailable_title", fallback: "Sign up not supported")
+  /// New for you
+  internal static let newForYou = L10n.tr("Localizable", "new_for_you", fallback: "New for you")
   /// your email address
   internal static let nilEmailAddress = L10n.tr("Localizable", "nil_email_address", fallback: "your email address")
   /// No

@@ -36,7 +36,7 @@ class PLLScreenViewModelTests: XCTestCase, CoreDataTestable {
     override class func setUp() {
         super.setUp()
         // Membership Plan
-        let plan = MembershipPlanModel(apiId: 500, status: nil, featureSet: nil, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+        let plan = MembershipPlanModel(apiId: 500, status: nil, featureSet: nil, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil, goLive: "")
         mapResponseToManagedObject(plan, managedObjectType: CD_MembershipPlan.self) { _ in }
         
         // Membership Card
