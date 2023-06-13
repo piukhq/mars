@@ -55,3 +55,7 @@
 - PreviousUpdatesSwiftUIView.swift
 - PollSwiftUIView.swift
 - PollTopTextView.swift
+- NewMerchantView.swift
+- NewFeatureView.swift
+- NewPollCellSwiftUIView.swift
+- OnboardingCardCollectionViewCell.swift
