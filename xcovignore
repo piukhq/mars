@@ -50,3 +50,8 @@
 - Assets.swift
 - DebugMenuView.swift
 - Strings.swift
+- BrowseBrandsListView.swift
+- WhatsNewSwiftUIView.swift
+- PreviousUpdatesSwiftUIView.swift
+- PollSwiftUIView.swift
+- PollTopTextView.swift

@@ -9,6 +9,10 @@
 
 import SwiftUI
 
+protocol LoyaltyCardFullDetailsViewControllerTestable {
+    func getShowBarcodeButton() -> UIButton
+}
+
 protocol LoyaltyCardFullDetailsModalDelegate: AnyObject {
     func refreshUI()
     func refreshModules()
@@ -234,7 +238,9 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         super.viewDidLoad()
         configureUI()
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidUpdate, object: nil)
-        viewModel.storeOpenedTimeForCard()
+        if !UIApplication.isRunningUnitTests {
+            viewModel.storeOpenedTimeForCard()
+        }
         fetchGeoData()
     }
     
@@ -668,5 +674,11 @@ extension LayoutHelper {
             return card.membershipPlan?.featureSet?.planCardType == .link ? brandHeaderAspectRatioLink : brandHeaderAspectRatio
         }
         static let goToSiteButtonHeight: CGFloat = 48
+    }
+}
+
+extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsViewControllerTestable {
+    func getShowBarcodeButton() -> UIButton {
+        return showBarcodeButton
     }
 }
