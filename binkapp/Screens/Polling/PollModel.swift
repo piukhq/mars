@@ -19,4 +19,5 @@ struct PollModel: Codable {
     var question: String
     var remindLaterMinutes: Int?
     var allowCustomAnswer: Bool?
+    var editTimeLimit: Int?
 }

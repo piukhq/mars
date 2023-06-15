@@ -16,6 +16,7 @@ class PollSwiftUIViewModel: ObservableObject {
     @Published var customAnswer: String?
     @Published var gotVotes = false
     @Published var submitted = false
+    @Published var canEditVote = false
     
     lazy var disabledAnswerButton: BinkButtonSwiftUIView = {
         return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.submit), enabled: false, buttonTapped: {}, type: .capsule)
@@ -103,6 +104,11 @@ class PollSwiftUIViewModel: ObservableObject {
                 self?.votesDictionary[answer] = snapshot?.documents.filter { $0["answer"] as? String == answer }.count
             }
             self?.gotVotes.toggle()
+        }
+        
+        if var model = votingModel {
+            let createdDate = Date(timeIntervalSince1970: TimeInterval(model.createdDate))
+            canEditVote = !Date.hasElapsed(minutes: pollData.editTimeLimit ?? 0, since: createdDate)
         }
     }
     

@@ -148,8 +148,13 @@ struct PollSwiftUIView: View {
                         BinkButtonsStackView(buttons: [viewModel.submitAnswerButton])
                             .padding(.top, -23)
                     } else if viewModel.submitted {
-                        BinkButtonsStackView(buttons: [viewModel.editVoteButton, viewModel.doneButton])
-                            .padding(.top, -46)
+                        if viewModel.canEditVote {
+                            BinkButtonsStackView(buttons: [viewModel.editVoteButton, viewModel.doneButton])
+                                .padding(.top, -46)
+                        } else {
+                            BinkButtonsStackView(buttons: [viewModel.doneButton])
+                                .padding(.top, -23)
+                        }
                     }
                 }
             }
