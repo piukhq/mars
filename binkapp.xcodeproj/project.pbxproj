@@ -38,6 +38,7 @@
 		2126377728B3E2FD00C795D6 /* BarcodeViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126377628B3E2FD00C795D6 /* BarcodeViewTests.swift */; };
 		212F0C442876EB7E007F09CE /* CalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C432876EB7E007F09CE /* CalloutView.swift */; };
 		212F0C462876EC63007F09CE /* GeoLocationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212F0C452876EC63007F09CE /* GeoLocationModelTests.swift */; };
+		213CDA1F2A39B1FD00392444 /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 213CDA1E2A39B1FD00392444 /* FirebasePerformance */; };
 		214680F02907F4B400C03EB1 /* WebScrapingResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214680EF2907F4B400C03EB1 /* WebScrapingResponseTests.swift */; };
 		2147C69E2907FD8C00B233B3 /* TransactionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2147C69D2907FD8C00B233B3 /* TransactionsViewModelTests.swift */; };
 		21497EC82864A1880053A9EE /* OptionItemListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21497EC72864A1880053A9EE /* OptionItemListViewController.swift */; };
@@ -1425,6 +1426,7 @@
 				7075382A26DFA72800690965 /* KeychainAccess in Frameworks */,
 				CE85A1DB26B05D95003B74CD /* Lottie in Frameworks */,
 				7075382426DFA38100690965 /* AlamofireNetworkActivityLogger in Frameworks */,
+				213CDA1F2A39B1FD00392444 /* FirebasePerformance in Frameworks */,
 				70A4FDA6271588AC00DA7FAA /* Mixpanel in Frameworks */,
 				7075382726DFA5F600690965 /* DeepDiff in Frameworks */,
 				7075382126DFA31100690965 /* AlamofireImage in Frameworks */,
@@ -3641,6 +3643,7 @@
 				CE2751AE2915087F005C27AB /* Mocker */,
 				21A6C4FD29D1D98E0051A481 /* FirebaseFirestore */,
 				21A6C50429D2D9150051A481 /* FirebaseFirestoreSwift */,
+				213CDA1E2A39B1FD00392444 /* FirebasePerformance */,
 			);
 			productName = binkapp;
 			productReference = 5ECE046822CE5798001BA964 /* Bink α.app */;
@@ -6582,6 +6585,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		213CDA1E2A39B1FD00392444 /* FirebasePerformance */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7063B1E7270473EE00C5C633 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebasePerformance;
+		};
 		215BC59428A6900100DB1377 /* BinkCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 215BC59328A6900100DB1377 /* XCRemoteSwiftPackageReference "ios-core" */;
