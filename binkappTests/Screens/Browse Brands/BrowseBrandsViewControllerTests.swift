@@ -61,7 +61,7 @@ final class BrowseBrandsViewControllerTests: XCTestCase, CoreDataTestable {
         Self.sut.filtersButtonTapped()
     }
 
-    func test_searchTextField_textHandledCorrecty() throws {
+    func test_searchTextField_textHandledCorrectly() throws {
         var textField = Self.sut.getSearchTextField()
         textField.text = "test"
 
