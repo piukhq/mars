@@ -112,7 +112,6 @@ class PollSwiftUIViewModel: ObservableObject {
         
         let createdDate = Date(timeIntervalSince1970: TimeInterval(model.createdDate))
         canEditVote = !Date.hasElapsed(minutes: ((pollData.editTimeLimit ?? 0) % 3600) / 60, since: createdDate)
-        print(canEditVote)
     }
     
     
