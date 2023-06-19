@@ -101,4 +101,16 @@ class FirestoreManager {
             print(error)
         }
     }
+    
+    func deleteDocument(collection: FirestoreCollections, documentId: String, completion: ((Bool) -> Void)? = nil) {
+        let collectionRef = db.collection(collection.rawValue)
+        collectionRef.document(documentId).delete() { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+                completion?(false)
+            } else {
+                completion?(true)
+            }
+        }
+    }
 }

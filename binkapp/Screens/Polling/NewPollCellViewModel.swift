@@ -85,8 +85,6 @@ class NewPollCellViewModel: ObservableObject {
         if let dateToCheck = Current.userDefaults.value(forDefaultsKey: .timeToPromptPollRemindDate) as? Date {
             if isDateBefore(date: dateToCheck) {
                 let timer = Timer.scheduledTimer(withTimeInterval: reminderInterval, repeats: true) { timer in
-                    print("Timer fired!")
-
                     /// if we passed the time diff we can show the poll cell again
                     if !self.isDateBefore(date: dateToCheck) {
                         timer.invalidate()

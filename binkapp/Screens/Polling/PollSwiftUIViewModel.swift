@@ -30,10 +30,7 @@ class PollSwiftUIViewModel: ObservableObject {
     
     lazy var editVoteButton: BinkButtonSwiftUIView = {
         return BinkButtonSwiftUIView(viewModel: ButtonViewModel(title: L10n.editMyVote), enabled: true, buttonTapped: { [weak self] in
-            self?.currentAnswer = nil
-            self?.customAnswer = nil
-            self?.submitted = false
-            self?.gotVotes.toggle()
+            self?.editVotePressed()
         }, type: .bordered)
     }()
     
@@ -106,10 +103,16 @@ class PollSwiftUIViewModel: ObservableObject {
             self?.gotVotes.toggle()
         }
         
-        if var model = votingModel {
-            let createdDate = Date(timeIntervalSince1970: TimeInterval(model.createdDate))
-            canEditVote = !Date.hasElapsed(minutes: ((pollData.editTimeLimit ?? 0) % 3600) / 60, since: createdDate)
-        }
+        checkIfCanEditVote()
+    }
+    
+    func checkIfCanEditVote() {
+        guard let pollData = pollData else { return }
+        guard let model = votingModel else { return }
+        
+        let createdDate = Date(timeIntervalSince1970: TimeInterval(model.createdDate))
+        canEditVote = !Date.hasElapsed(minutes: ((pollData.editTimeLimit ?? 0) % 3600) / 60, since: createdDate)
+        print(canEditVote)
     }
     
     
@@ -129,24 +132,29 @@ class PollSwiftUIViewModel: ObservableObject {
         })
     }
     
+    private func editVotePressed() {
+        if let modelId = votingModel?.id {
+            Current.firestoreManager.deleteDocument(collection: .pollResults, documentId: modelId) { [weak self] success in
+                if success {
+                    self?.votingModel = nil
+                    self?.currentAnswer = nil
+                    self?.customAnswer = nil
+                    self?.submitted = false
+                    self?.gotVotes.toggle()
+                }
+            }
+        }
+    }
+    
     func submitAnswer() {
         let answer = currentAnswer ?? ""
         let customAnswer = customAnswer ?? ""
         
         submitted.toggle()
-
-        if var model = votingModel {
-            model.answer = answer
-            model.customAnswer = customAnswer
-            model.overwritten = true
-            Current.firestoreManager.addDocument(model, collection: .pollResults, documentId: model.id ?? "") { [weak self] _ in
-                self?.getVoteCount()
-            }
-        } else {
-            votingModel = PollVotingModel(pollId: pollData?.id ?? "", userId: userId ?? "", createdDate: Int(Date().timeIntervalSince1970), overwritten: false, answer: answer, customAnswer: customAnswer)
-            Current.firestoreManager.addDocument(votingModel, collection: .pollResults) { [weak self] docId in
-                self?.getVoteCount()
-            }
+        
+        votingModel = PollVotingModel(pollId: pollData?.id ?? "", userId: userId ?? "", createdDate: Int(Date().timeIntervalSince1970), overwritten: false, answer: answer, customAnswer: customAnswer)
+        Current.firestoreManager.addDocument(votingModel, collection: .pollResults) { [weak self] _ in
+            self?.getVoteCount()
         }
     }
     

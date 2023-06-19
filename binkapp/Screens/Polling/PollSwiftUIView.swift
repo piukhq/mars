@@ -12,7 +12,8 @@ struct PollTopTextView: View {
     var viewModel: PollSwiftUIViewModel
     @State private var countdownText = ""
     @ObservedObject var themeManager = Current.themeManager
-    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    private let countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    private let editVoteTimer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -21,10 +22,10 @@ struct PollTopTextView: View {
                     .uiFont(.pollTimer)
                     .foregroundColor(Color(.binkBlue))
                     .multilineTextAlignment(.leading)
-                    .onReceive(timer) { _ in
+                    .onReceive(countdownTimer) { _ in
                         countdownText = viewModel.getTimeToEnd()
                         if countdownText.isEmpty {
-                            self.timer.upstream.connect().cancel()
+                            self.countdownTimer.upstream.connect().cancel()
                         }
                     }
                 
@@ -52,6 +53,9 @@ struct PollTopTextView: View {
         }
         .padding()
         .padding(.bottom, -20)
+        .onReceive(editVoteTimer) { _ in
+            viewModel.checkIfCanEditVote()
+        }
     }
 }
 
