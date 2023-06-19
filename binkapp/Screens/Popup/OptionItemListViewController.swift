@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol OptionItemListViewControllerTestable {
+    func getTableView() -> UITableView
+}
+
 protocol OptionItemProtocol {
     var text: String { get }
     var isSelected: Bool { get set }
@@ -146,4 +150,10 @@ struct SortOrderOptionItem: OptionItemProtocol {
     }
     var isSelected: Bool
     var orderType: MembershipCardsSortState
+}
+
+extension OptionItemListViewController: OptionItemListViewControllerTestable {
+    func getTableView() -> UITableView {
+        return tableView
+    }
 }

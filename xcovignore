@@ -50,3 +50,12 @@
 - Assets.swift
 - DebugMenuView.swift
 - Strings.swift
+- BrowseBrandsListView.swift
+- WhatsNewSwiftUIView.swift
+- PreviousUpdatesSwiftUIView.swift
+- PollSwiftUIView.swift
+- PollTopTextView.swift
+- NewMerchantView.swift
+- NewFeatureView.swift
+- NewPollCellSwiftUIView.swift
+- OnboardingCardCollectionViewCell.swift

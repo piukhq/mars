@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+protocol BrowseBrandsViewControllerTestable {
+    func getSearchTextField() -> BinkTextField
+    func getSearchTextFieldContainer() -> UIView
+    func getTopStackView() -> UIStackView
+    func areFiltersVisible() -> Bool
+}
+
 fileprivate enum Constants {
     static let searchIconLeftPadding = 12
     static let searchIconTopPadding = 13
@@ -355,5 +362,23 @@ extension BrowseBrandsViewController: UIImagePickerControllerDelegate, UINavigat
                 HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
             }
         }
+    }
+}
+
+extension BrowseBrandsViewController: BrowseBrandsViewControllerTestable {
+    func getSearchTextField() -> BinkTextField {
+        return searchTextField
+    }
+
+    func getSearchTextFieldContainer() -> UIView {
+        return searchTextFieldContainer
+    }
+
+    func getTopStackView() -> UIStackView {
+        return topStackView
+    }
+
+    func areFiltersVisible() -> Bool {
+        return filtersVisible
     }
 }
