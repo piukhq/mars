@@ -32,6 +32,7 @@
 - _CD_Voucher.swift
 - _CD_VoucherBurn.swift
 - _CD_VoucherEarn.swift
+- AppsModel.swift
 - BinkButtonSwiftUIView.swift
 - CheckboxSwiftUIView.swift
 - BarcodeScreenSwiftUIView.swift
@@ -48,7 +49,6 @@
 - CardInformationView.swift
 - AppDelegate.swift
 - Assets.swift
-- DebugMenuView.swift
 - Strings.swift
 - BrowseBrandsListView.swift
 - WhatsNewSwiftUIView.swift
@@ -58,4 +58,8 @@
 - NewMerchantView.swift
 - NewFeatureView.swift
 - NewPollCellSwiftUIView.swift
+- NewPollCell.swift
 - OnboardingCardCollectionViewCell.swift
+- DebugMenuSegmentedTableViewCell.swift
+- WebScrapingViewController.swift
+- WebScrapingUtility.swift
