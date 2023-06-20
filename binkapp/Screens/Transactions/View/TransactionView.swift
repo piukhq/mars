@@ -43,7 +43,7 @@ class TransactionView: CustomView {
     func setValueLabel(text: String, transactionValue: Float, addDecimals: Bool) {
         if transactionValue < 0 {
             let value = abs(transactionValue)
-            valueLabel.text = "-" + String(format: text, addDecimals ? Float(value) : value)
+            valueLabel.text = "-" + String(format: text, addDecimals ? Float(value) : Int(value))
             valueLabel.textColor = Current.themeManager.color(for: .text)
             imageView.image = Asset.down.image
             imageView.tintColor = Current.themeManager.color(for: .text)
