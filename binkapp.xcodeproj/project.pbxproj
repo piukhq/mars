@@ -25,6 +25,7 @@
 		211058492909469B00DFDF90 /* PaymentWalletViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211058482909469B00DFDF90 /* PaymentWalletViewModelTests.swift */; };
 		2110584C2909637300DFDF90 /* MerchantHeroCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110584B2909637300DFDF90 /* MerchantHeroCellTests.swift */; };
 		2110584F2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110584E2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift */; };
+		211246102A42E6F3006CC730 /* WhatsNewViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2112460F2A42E6F3006CC730 /* WhatsNewViewModelTests.swift */; };
 		211E83F129E96EAC00157B9F /* NewPollCellSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211E83F029E96EAB00157B9F /* NewPollCellSwiftUIView.swift */; };
 		211E83F329E970D600157B9F /* NewPollCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211E83F229E970D600157B9F /* NewPollCell.swift */; };
 		2126211928AFB4B900939609 /* NetworkRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126211828AFB4B900939609 /* NetworkRequestTests.swift */; };
@@ -754,6 +755,7 @@
 		211058482909469B00DFDF90 /* PaymentWalletViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWalletViewModelTests.swift; sourceTree = "<group>"; };
 		2110584B2909637300DFDF90 /* MerchantHeroCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantHeroCellTests.swift; sourceTree = "<group>"; };
 		2110584E2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletLoyaltyCardCellViewModelTests.swift; sourceTree = "<group>"; };
+		2112460F2A42E6F3006CC730 /* WhatsNewViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewViewModelTests.swift; sourceTree = "<group>"; };
 		211E83F029E96EAB00157B9F /* NewPollCellSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPollCellSwiftUIView.swift; sourceTree = "<group>"; };
 		211E83F229E970D600157B9F /* NewPollCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPollCell.swift; sourceTree = "<group>"; };
 		2126211828AFB4B900939609 /* NetworkRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequestTests.swift; sourceTree = "<group>"; };
@@ -1691,6 +1693,7 @@
 			children = (
 				21F868422A3863FF000392CD /* NewFeatureViewModelTests.swift */,
 				218E16E72A41A0050081790E /* NewMerchantViewModelTests.swift */,
+				2112460F2A42E6F3006CC730 /* WhatsNewViewModelTests.swift */,
 			);
 			path = WhatsNew;
 			sourceTree = "<group>";
@@ -4639,6 +4642,7 @@
 				211058492909469B00DFDF90 /* PaymentWalletViewModelTests.swift in Sources */,
 				21E5E2E728B38CBC00594DC3 /* LoyaltyCardFullDetailsViewModelTests.swift in Sources */,
 				214DCF5C28AD4FA000308531 /* GeoLocationsViewModelTests.swift in Sources */,
+				211246102A42E6F3006CC730 /* WhatsNewViewModelTests.swift in Sources */,
 				21A7711B29127FEE00233953 /* LoyaltyScannerWidgetViewTests.swift in Sources */,
 				EF8B701223587BE3006CE3DD /* MembershipCardBalanceModelTests.swift in Sources */,
 				2126211928AFB4B900939609 /* NetworkRequestTests.swift in Sources */,

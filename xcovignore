@@ -34,6 +34,7 @@
 - _CD_VoucherEarn.swift
 - AppsModel.swift
 - BinkButtonSwiftUIView.swift
+- BinkCopyableLabel.swift
 - CheckboxSwiftUIView.swift
 - BarcodeScreenSwiftUIView.swift
 - FeatureFlagsSwiftUIView.swift
@@ -63,3 +64,5 @@
 - DebugMenuSegmentedTableViewCell.swift
 - WebScrapingViewController.swift
 - WebScrapingUtility.swift
+- BinkScannerViewController.swift
+- GeoLocationsViewController.swift
