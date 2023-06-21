@@ -170,6 +170,6 @@ struct PollSwiftUIView: View {
 
 struct PollSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        PollSwiftUIView(viewModel: PollSwiftUIViewModel())
+        PollSwiftUIView(viewModel: PollSwiftUIViewModel(firestoreManager: Current.firestoreManager))
     }
 }

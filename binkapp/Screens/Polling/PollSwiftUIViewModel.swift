@@ -51,13 +51,16 @@ class PollSwiftUIViewModel: ObservableObject {
         return false
     }
     
-    private var votingModel: PollVotingModel?
+    var votingModel: PollVotingModel?
     
     private let userId = Current.userManager.currentUserId
     
     private var votesDictionary: [String: Int] = [:]
     
-    init () {
+    var firestoreManager: FirestoreProtocol
+    
+    init (firestoreManager: FirestoreProtocol) {
+        self.firestoreManager = firestoreManager
         self.getPollData()
     }
     
@@ -66,11 +69,12 @@ class PollSwiftUIViewModel: ObservableObject {
     }
     
     private func getVotingData() {
-        guard let collectionReference = Current.firestoreManager.getCollection(collection: .pollResults) else { return }
         guard let pollData = self.pollData else { return }
         
-        let query = collectionReference.whereField("userId", isEqualTo: userId ?? "").whereField("pollId", isEqualTo: pollData.id ?? "")
-        Current.firestoreManager.fetchDocumentsInCollection(PollVotingModel.self, query: query, completion: { [weak self] snapshot in
+        //guard let collectionReference = firestoreManager.getCollection(collection: .pollResults) else { return }
+        let collectionReference = firestoreManager.getCollection(collection: .pollResults)
+        let query = collectionReference?.whereField("userId", isEqualTo: userId ?? "").whereField("pollId", isEqualTo: pollData.id ?? "")
+        firestoreManager.fetchDocumentsInCollection(PollVotingModel.self, query: query, completion: { [weak self] snapshot in
             if let doc = snapshot?.first {
                 if self?.votingModel != nil {
                     self?.votingModel?.id = doc.id
@@ -92,16 +96,24 @@ class PollSwiftUIViewModel: ObservableObject {
     }
     
     private func getVoteCount() {
-        guard let collectionReference = Current.firestoreManager.getCollection(collection: .pollResults) else { return }
         guard let pollData = self.pollData else { return }
         
-        let query = collectionReference.whereField("pollId", isEqualTo: pollData.id ?? "")
-        query.getDocuments { [weak self] (snapshot, _) in
+        let collectionReference = firestoreManager.getCollection(collection: .pollResults)
+        let query = collectionReference?.whereField("pollId", isEqualTo: pollData.id ?? "")
+        
+        firestoreManager.getDocuments(PollVotingModel.self, query: query, completion: { [weak self] snapshot in
             for answer in pollData.answers {
-                self?.votesDictionary[answer] = snapshot?.documents.filter { $0["answer"] as? String == answer }.count
+                self?.votesDictionary[answer] = snapshot?.filter { $0.answer == answer }.count
             }
             self?.gotVotes.toggle()
-        }
+        })
+        
+//        query.getDocuments { [weak self] (snapshot, _) in
+//            for answer in pollData.answers {
+//                self?.votesDictionary[answer] = snapshot?.documents.filter { $0["answer"] as? String == answer }.count
+//            }
+//            self?.gotVotes.toggle()
+//        }
         
         checkIfCanEditVote()
     }
@@ -116,13 +128,16 @@ class PollSwiftUIViewModel: ObservableObject {
     
     
     private func getPollData() {
-        guard let collectionReference = Current.firestoreManager.getCollection(collection: .polls) else { return }
+        //guard let collectionReference = firestoreManager.getCollection(collection: .polls) else { return }
         
-        let query = collectionReference.whereField("published", isEqualTo: true )
+        let collectionReference = firestoreManager.getCollection(collection: .polls)
+        
+        let query = collectionReference?.whereField("published", isEqualTo: true )
 
-        Current.firestoreManager.fetchDocumentsInCollection(PollModel.self, query: query, completion: { [weak self] snapshot in
+        firestoreManager.fetchDocumentsInCollection(PollModel.self, query: query, completion: { [weak self] snapshot in
             if let doc = snapshot?.first {
                 self?.pollData = doc
+                print(doc)
                 self?.getVotingData()
                 if let pollId = self?.pollData?.id {
                     MixpanelUtility.track(.pollClicked(pollId: pollId))
@@ -133,7 +148,7 @@ class PollSwiftUIViewModel: ObservableObject {
     
     private func editVotePressed() {
         if let modelId = votingModel?.id {
-            Current.firestoreManager.deleteDocument(collection: .pollResults, documentId: modelId) { [weak self] success in
+            firestoreManager.deleteDocument(collection: .pollResults, documentId: modelId) { [weak self] success in
                 if success {
                     self?.votingModel = nil
                     self?.currentAnswer = nil
@@ -152,7 +167,7 @@ class PollSwiftUIViewModel: ObservableObject {
         submitted.toggle()
         
         votingModel = PollVotingModel(pollId: pollData?.id ?? "", userId: userId ?? "", createdDate: Int(Date().timeIntervalSince1970), overwritten: false, answer: answer, customAnswer: customAnswer)
-        Current.firestoreManager.addDocument(votingModel, collection: .pollResults) { [weak self] _ in
+        firestoreManager.addDocument(votingModel, collection: .pollResults, documentId: nil) { [weak self] _ in
             self?.getVoteCount()
         }
     }

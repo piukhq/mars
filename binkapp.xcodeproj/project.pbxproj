@@ -26,6 +26,7 @@
 		2110584C2909637300DFDF90 /* MerchantHeroCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110584B2909637300DFDF90 /* MerchantHeroCellTests.swift */; };
 		2110584F2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2110584E2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift */; };
 		211246102A42E6F3006CC730 /* WhatsNewViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2112460F2A42E6F3006CC730 /* WhatsNewViewModelTests.swift */; };
+		211246132A43021A006CC730 /* PollSwiftUIViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211246122A43021A006CC730 /* PollSwiftUIViewModelTests.swift */; };
 		211E83F129E96EAC00157B9F /* NewPollCellSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211E83F029E96EAB00157B9F /* NewPollCellSwiftUIView.swift */; };
 		211E83F329E970D600157B9F /* NewPollCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211E83F229E970D600157B9F /* NewPollCell.swift */; };
 		2126211928AFB4B900939609 /* NetworkRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2126211828AFB4B900939609 /* NetworkRequestTests.swift */; };
@@ -756,6 +757,7 @@
 		2110584B2909637300DFDF90 /* MerchantHeroCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantHeroCellTests.swift; sourceTree = "<group>"; };
 		2110584E2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletLoyaltyCardCellViewModelTests.swift; sourceTree = "<group>"; };
 		2112460F2A42E6F3006CC730 /* WhatsNewViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewViewModelTests.swift; sourceTree = "<group>"; };
+		211246122A43021A006CC730 /* PollSwiftUIViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollSwiftUIViewModelTests.swift; sourceTree = "<group>"; };
 		211E83F029E96EAB00157B9F /* NewPollCellSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPollCellSwiftUIView.swift; sourceTree = "<group>"; };
 		211E83F229E970D600157B9F /* NewPollCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPollCell.swift; sourceTree = "<group>"; };
 		2126211828AFB4B900939609 /* NetworkRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequestTests.swift; sourceTree = "<group>"; };
@@ -1488,6 +1490,14 @@
 				2110584E2909792100DFDF90 /* WalletLoyaltyCardCellViewModelTests.swift */,
 			);
 			path = "Loyalty Card Wallet";
+			sourceTree = "<group>";
+		};
+		211246112A4301F2006CC730 /* Poll */ = {
+			isa = PBXGroup;
+			children = (
+				211246122A43021A006CC730 /* PollSwiftUIViewModelTests.swift */,
+			);
+			path = Poll;
 			sourceTree = "<group>";
 		};
 		2126211728AFB48A00939609 /* Networking */ = {
@@ -3073,6 +3083,7 @@
 		EF485578231E5A3600FC9E5F /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				211246112A4301F2006CC730 /* Poll */,
 				21F868412A3863CA000392CD /* WhatsNew */,
 				21F8683A2A3722C9000392CD /* Popup */,
 				21719FEC29B7774600AEEB43 /* ReleaseUpdates */,
@@ -4632,6 +4643,7 @@
 				CE2751B229152540005C27AB /* CalloutViewTests.swift in Sources */,
 				70A61D16263095060073A08A /* BinkModuleViewModelTests.swift in Sources */,
 				214DCF6128AE597700308531 /* MagicLinkRequestModelTests.swift in Sources */,
+				211246132A43021A006CC730 /* PollSwiftUIViewModelTests.swift in Sources */,
 				CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */,
 				21514773290BC98600E6B209 /* LoginViewControllerTests.swift in Sources */,
 				21A771212912B34D00233953 /* DateManagerTests.swift in Sources */,
@@ -4768,7 +4780,7 @@
 			baseConfigurationReference = BD3CB9432328573C005C37AE /* Dev.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				API_BASE_URL = api.dev.gb.bink.com;
+				API_BASE_URL = api.staging.gb.bink.com;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -4905,7 +4917,7 @@
 			baseConfigurationReference = E708C17C8E9A69A07732E058 /* Pods-binkapp.alpha.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				API_BASE_URL = api.dev.gb.bink.com;
+				API_BASE_URL = api.staging.gb.bink.com;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Alpha";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;

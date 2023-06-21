@@ -70,7 +70,7 @@ enum ViewControllerFactory {
     }
     
     static func makePollViewController() -> UIViewController {
-        let viewModel = PollSwiftUIViewModel()
+        let viewModel = PollSwiftUIViewModel(firestoreManager: Current.firestoreManager)
         return UIHostingController(rootView: PollSwiftUIView(viewModel: viewModel))
     }
     
