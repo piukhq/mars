@@ -67,3 +67,15 @@
 - BinkScannerViewController.swift
 - GeoLocationsViewController.swift
 - FirestoreManager.swift
+- HTMLParsingUtil.swift
+- HyperlinkAlertController.swift
+- HyperlinkButton.swift
+- HyperlinkLabel.swift
+- KeyboardlayoutConstraints.swift
+- LoginSuccessViewController.swift
+- LoyaltyWalletViewController.swift
+- MainTabBarViewController.swift
+- OfferTileView.swift
+- PaymentCardCollectionViewCell.swift
+- PaymentWalletViewController.swift
+- Wallet.swift
