@@ -233,6 +233,12 @@ class ViewControllerFactoryTests: XCTestCase, CoreDataTestable {
 
         XCTAssertTrue(vc.isKind(of: BinkAlertController.self))
     }
+    
+    func test_makePollManagementAlertViewController() {
+        let vc = ViewControllerFactory.makeMapNavigationSelectionAlertViewController(appleMapsActionHandler: {}, googleMapsActionHandler: {}, cancelActionHandler: {})
+
+        XCTAssertTrue(vc.isKind(of: BinkAlertController.self))
+    }
 
     func test_makeDebugViewController() {
         let vc = ViewControllerFactory.makeDebugViewController()

@@ -32,6 +32,13 @@
 - _CD_Voucher.swift
 - _CD_VoucherBurn.swift
 - _CD_VoucherEarn.swift
+- CD_Voucher.swift
+- CD_AddField.swift
+- CD_AuthoriseField.swift
+- CD_EnrolField.swift
+- CD_MembershipCardBalance.swift
+- CD_RegistrationField.swift
+- CD_MembershipCard.swift
 - AppsModel.swift
 - BinkButtonSwiftUIView.swift
 - BinkCopyableLabel.swift
@@ -62,6 +69,8 @@
 - NewPollCell.swift
 - OnboardingCardCollectionViewCell.swift
 - DebugMenuSegmentedTableViewCell.swift
+- DebugSecondaryPlanColorCell.swift
+- DebugSecondaryPlanColorViewController.swift
 - WebScrapingViewController.swift
 - WebScrapingUtility.swift
 - BinkScannerViewController.swift
@@ -79,3 +88,6 @@
 - PaymentCardCollectionViewCell.swift
 - PaymentWalletViewController.swift
 - Wallet.swift
+- SecureUtility.swift
+- PLRStampView.swift
+- WalletLoyaltyCardCollectionViewCell.swift

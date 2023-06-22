@@ -15,21 +15,23 @@ class NewPollCellViewModel: ObservableObject {
     
     private let reminderInterval = 60.0
     
-    init () {
+    var firestoreManager: FirestoreProtocol
+    
+    init (firestoreManager: FirestoreProtocol) {
+        self.firestoreManager = firestoreManager
         self.startRemindLaterTimer()
         self.getPollData()
     }
     
     private func getPollData() {
-        guard let collectionReference = Current.firestoreManager.getCollection(collection: .polls) else { return }
-        
         guard Current.userDefaults.bool(forDefaultsKey: .isInPollRemindPeriod) == false else {
             dispatchNotification(showUI: false)
             return
         }
         
-        let query = collectionReference.whereField("published", isEqualTo: true )
-        Current.firestoreManager.fetchDocumentsInCollection(PollModel.self, query: query, completion: { [weak self] snapshot in
+        let collectionReference = firestoreManager.getCollection(collection: .polls)
+        let query = collectionReference?.whereField("published", isEqualTo: true )
+        firestoreManager.fetchDocumentsInCollection(PollModel.self, query: query, completion: { [weak self] snapshot in
             guard let self = self else { return }
             if let doc = snapshot?.first {
                 self.pollData = doc
@@ -81,7 +83,7 @@ class NewPollCellViewModel: ObservableObject {
         }
     }
     
-    private func startRemindLaterTimer() {
+    func startRemindLaterTimer() {
         if let dateToCheck = Current.userDefaults.value(forDefaultsKey: .timeToPromptPollRemindDate) as? Date {
             if isDateBefore(date: dateToCheck) {
                 let timer = Timer.scheduledTimer(withTimeInterval: reminderInterval, repeats: true) { timer in

@@ -72,6 +72,7 @@
 		2151478529114D0E00E6B209 /* htmlTest.html in Resources */ = {isa = PBXBuildFile; fileRef = 2151478329114D0E00E6B209 /* htmlTest.html */; };
 		215BC59528A6900100DB1377 /* BinkCore in Frameworks */ = {isa = PBXBuildFile; productRef = 215BC59428A6900100DB1377 /* BinkCore */; };
 		216B999C28AE902000A67A14 /* FloatExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216B999B28AE902000A67A14 /* FloatExtensionTests.swift */; };
+		216DCB5B2A447934000E433F /* NewPollCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216DCB5A2A447934000E433F /* NewPollCellViewModelTests.swift */; };
 		2171877F29EE90200079412B /* NewPollCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2171877E29EE90200079412B /* NewPollCellViewModel.swift */; };
 		21719FE929B20F2800AEEB43 /* PreviousUpdatesSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21719FE829B20F2800AEEB43 /* PreviousUpdatesSwiftUIView.swift */; };
 		21719FEB29B6013400AEEB43 /* PreviousUpdatesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21719FEA29B6013400AEEB43 /* PreviousUpdatesViewModel.swift */; };
@@ -803,6 +804,7 @@
 		2151478229114D0E00E6B209 /* fireBase-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "fireBase-config.json"; sourceTree = "<group>"; };
 		2151478329114D0E00E6B209 /* htmlTest.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = htmlTest.html; sourceTree = "<group>"; };
 		216B999B28AE902000A67A14 /* FloatExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtensionTests.swift; sourceTree = "<group>"; };
+		216DCB5A2A447934000E433F /* NewPollCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPollCellViewModelTests.swift; sourceTree = "<group>"; };
 		2171877E29EE90200079412B /* NewPollCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPollCellViewModel.swift; sourceTree = "<group>"; };
 		21719FE829B20F2800AEEB43 /* PreviousUpdatesSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousUpdatesSwiftUIView.swift; sourceTree = "<group>"; };
 		21719FEA29B6013400AEEB43 /* PreviousUpdatesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousUpdatesViewModel.swift; sourceTree = "<group>"; };
@@ -1496,6 +1498,7 @@
 			isa = PBXGroup;
 			children = (
 				211246122A43021A006CC730 /* PollSwiftUIViewModelTests.swift */,
+				216DCB5A2A447934000E433F /* NewPollCellViewModelTests.swift */,
 			);
 			path = Poll;
 			sourceTree = "<group>";
@@ -4598,6 +4601,7 @@
 				CE971A2A287EFDB4001D7E1C /* DebugMenuViewModelTests.swift in Sources */,
 				CE971A3528807FBB001D7E1C /* BinkInfoButtonTests.swift in Sources */,
 				2126377728B3E2FD00C795D6 /* BarcodeViewTests.swift in Sources */,
+				216DCB5B2A447934000E433F /* NewPollCellViewModelTests.swift in Sources */,
 				217288FA28B50D3700258EBA /* PLRCellViewModelTests.swift in Sources */,
 				21F8683E2A3726F0000392CD /* LoyaltyCardFullDetailsViewControllerTests.swift in Sources */,
 				2126212028AFE80900939609 /* LCDPlaceHolderGeneratorTests.swift in Sources */,
