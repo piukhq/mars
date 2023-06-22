@@ -35,8 +35,63 @@ final class PollSwiftUIViewModelTests: XCTestCase {
     }
     
     func test_votePercentageIsCorrect() throws {
-        print(sut.votePercentage(answer: "Nandos"))
         XCTAssertEqual(sut.votePercentage(answer: "Nandos"), 1.0)
+    }
+    
+    func test_editPressed_variablesSetupCorrectly() throws {
+        sut.editVotePressed()
+        XCTAssertNil(sut.votingModel)
+        XCTAssertNil(sut.currentAnswer)
+        XCTAssertNil(sut.customAnswer)
+        XCTAssertFalse(sut.submitted)
+    }
+    
+    func test_answerSubmittedCorrectly() throws {
+        sut.currentAnswer = "KFC"
+        
+        sut.submitAnswer()
+        
+        XCTAssertEqual(sut.votingModel?.answer, "KFC")
+    }
+
+    func test_canEdit_shouldbeFalse() throws {
+        sut.checkIfCanEditVote()
+        
+        XCTAssertEqual(sut.canEditVote, false)
+    }
+
+    func test_timeToEnd_shouldbeDays() throws {
+        let components = DateComponents(day: 2, hour: 2)
+        let expirationDate = Calendar.current.date(byAdding: components, to: Date(), wrappingComponents: false)
+        
+        sut.pollData!.closeTime = Int(expirationDate!.timeIntervalSince1970)
+        
+        XCTAssertEqual(sut.getTimeToEnd(), "2 days")
+    }
+    
+    func test_timeToEnd_shouldbeLongTimer() throws {
+        let components = DateComponents(hour: 2, minute: 2, second: 2)
+        //components.setValue(2, for: .hour)
+        let expirationDate = Calendar.current.date(byAdding: components, to: Date(), wrappingComponents: false)
+        
+        sut.pollData!.closeTime = Int(expirationDate!.timeIntervalSince1970)
+        
+        XCTAssertTrue(sut.getTimeToEnd().contains("02:02:"))
+    }
+    
+    func test_colorForAnsweredRowIsCorrect() throws {
+        XCTAssertEqual(sut.colorForAnsweredRow(colorScheme: .light), Color(.percentageGreen))
+        //XCTAssertEqual(sut.colorForAnsweredRow(colorScheme: .dark), Color(UIColor.binkBlue))
+    }
+    
+    func test_colorForUnansweredRowIsCorrect() throws {
+        XCTAssertEqual(sut.colorForUnansweredRow(colorScheme: .light), Color(.unansweredRowGreen))
+        //XCTAssertEqual(sut.colorForUnansweredRow(colorScheme: .dark), Color(.unansweredRowDarkBlue))
+    }
+    
+    func test_colorOuterCircleIconsIsCorrect() throws {
+        XCTAssertEqual(sut.colorForOuterCircleIcons(colorScheme: .light), .gray)
+        //XCTAssertEqual(sut.colorForOuterCircleIcons(colorScheme: .dark), .white)
     }
 
 }
@@ -76,7 +131,7 @@ class FirestoreMock: FirestoreProtocol {
     
     func getDocuments<T: Codable>(_ type: T.Type, query: Query?, completion: @escaping ([T]?) -> Void) {
         if "\(T.self)" == "PollVotingModel" {
-            let p = PollVotingModel(id: "1", pollId: "10", userId: "100", createdDate: 1687774246, overwritten: false, answer: "Nandos", customAnswer: "")
+            let p = PollVotingModel(id: "1", pollId: "10", userId: "100", createdDate: 1687336184, overwritten: false, answer: "Nandos", customAnswer: "")
             completion([p as! T])
         }
     }
@@ -89,13 +144,13 @@ class FirestoreMock: FirestoreProtocol {
         
         ///need to do this because can't used JSondecoder on models that have properties with the Firstore @DocumentID wrapper
         if "\(T.self)" == "PollModel" {
-            let p = PollModel(id: "10", title: "Brands", answers: ["Nandos"], startTime: 1686143254, closeTime: 1687774246, published: true, question: "Which retailer would you like to see next in your Bink app?", remindLaterMinutes: 10, allowCustomAnswer: true, editTimeLimit: 1000)
+            let p = PollModel(id: "10", title: "Brands", answers: ["Nandos", "KFC"], startTime: 1686143254, closeTime: 1687774246, published: true, question: "Which retailer would you like to see next in your Bink app?", remindLaterMinutes: 10, allowCustomAnswer: true, editTimeLimit: 60)
             completion([p as! T])
         } else  if "\(T.self)" == "PollVotingModel" {
 //            let data = self.votingModel.data(using: .utf8)!
 //            let val = try! JSONDecoder().decode(T.self, from: data)
 //            completion([val])
-            let p = PollVotingModel(id: "1", pollId: "10", userId: "100", createdDate: 1687774246, overwritten: false, answer: "Nandos", customAnswer: "")
+            let p = PollVotingModel(id: "1", pollId: "10", userId: "100", createdDate: 1687336184, overwritten: false, answer: "Nandos", customAnswer: "")
             completion([p as! T])
         }
     }
@@ -105,11 +160,11 @@ class FirestoreMock: FirestoreProtocol {
     }
     
     func addDocument(_ type: Codable, collection: FirestoreCollections, documentId: String?, completion: @escaping ((String) -> Void)) {
-        
+        completion("1000")
     }
     
     func deleteDocument(collection: FirestoreCollections, documentId: String, completion: @escaping ((Bool) -> Void)) {
-        
+        completion(true)
     }
 }
 

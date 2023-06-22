@@ -66,3 +66,4 @@
 - WebScrapingUtility.swift
 - BinkScannerViewController.swift
 - GeoLocationsViewController.swift
+- FirestoreManager.swift

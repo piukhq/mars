@@ -146,7 +146,7 @@ class PollSwiftUIViewModel: ObservableObject {
         })
     }
     
-    private func editVotePressed() {
+    func editVotePressed() {
         if let modelId = votingModel?.id {
             firestoreManager.deleteDocument(collection: .pollResults, documentId: modelId) { [weak self] success in
                 if success {
