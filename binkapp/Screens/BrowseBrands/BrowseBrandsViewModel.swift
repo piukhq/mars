@@ -156,7 +156,7 @@ class BrowseBrandsViewModel: ObservableObject {
         }
     }
     
-    private func isNewMerchant(goLiveDate: String) -> Bool {
+    func isNewMerchant(goLiveDate: String) -> Bool {
         if !goLiveDate.isEmpty {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy/MM/dd"

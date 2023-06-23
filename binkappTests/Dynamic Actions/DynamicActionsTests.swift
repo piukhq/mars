@@ -55,7 +55,7 @@ class DynamicActionsTests: XCTestCase {
     }
 
     func test_location_returnsCorrectly() {
-        let loyaltyWalletViewController = LoyaltyWalletViewController(viewModel: LoyaltyWalletViewModel())
+        let loyaltyWalletViewController = LoyaltyWalletViewController(viewModel: LoyaltyWalletViewModel(firestoreManager: FirestoreMock()))
         XCTAssertNotNil(baseDynamicActionModel.location(for: loyaltyWalletViewController))
 
         let paymentWalletViewController = PaymentWalletViewController(viewModel: PaymentWalletViewModel())
@@ -74,7 +74,7 @@ class DynamicActionsTests: XCTestCase {
 
         utility.allActions = [DynamicAction(name: nil, type: nil, startDate: yesterday?.timeIntervalSince1970, endDate: yesterday?.timeIntervalSince1970, locations: [DynamicActionLocation(icon: nil, screen: .loyaltyWallet, area: nil, action: nil), DynamicActionLocation(icon: nil, screen: .paymentWallet, area: nil, action: nil)], event: nil, enabledLive: false, forceDebug: false)]
 
-        let loyaltyWalletViewController = LoyaltyWalletViewController(viewModel: LoyaltyWalletViewModel())
+        let loyaltyWalletViewController = LoyaltyWalletViewController(viewModel: LoyaltyWalletViewModel(firestoreManager: FirestoreMock()))
         XCTAssertNil(utility.availableAction(for: loyaltyWalletViewController))
 
         let paymentWalletViewController = PaymentWalletViewController(viewModel: PaymentWalletViewModel())
@@ -92,7 +92,7 @@ class DynamicActionsTests: XCTestCase {
 
         utility.allActions = [DynamicAction(name: nil, type: nil, startDate: yesterday?.timeIntervalSince1970, endDate: tomorrow?.timeIntervalSince1970, locations: [DynamicActionLocation(icon: nil, screen: .loyaltyWallet, area: nil, action: nil), DynamicActionLocation(icon: nil, screen: .paymentWallet, area: nil, action: nil)], event: nil, enabledLive: false, forceDebug: false)]
 
-        let loyaltyWalletViewController = LoyaltyWalletViewController(viewModel: LoyaltyWalletViewModel())
+        let loyaltyWalletViewController = LoyaltyWalletViewController(viewModel: LoyaltyWalletViewModel(firestoreManager: FirestoreMock()))
         XCTAssertNotNil(utility.availableAction(for: loyaltyWalletViewController))
 
         let paymentWalletViewController = PaymentWalletViewController(viewModel: PaymentWalletViewModel())

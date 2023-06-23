@@ -16,7 +16,7 @@ protocol FirestoreProtocol {
     func getDocuments<T: Codable>(_ type: T.Type, query: Query?, completion: @escaping ([T]?) -> Void) 
     func fetchDocument<T: Codable>(_ type: T.Type, collection: FirestoreCollections, documentId: String, completion: @escaping (T?) -> Void)
     func fetchDocumentsInCollection<T: Codable>(_ type: T.Type, query: Query?, completion: @escaping ([T]?) -> Void)
-    func fetchDocumentsInCollection<T: Codable>(_ type: T.Type, collection: CollectionReference, completion: @escaping ([T]?) -> Void)
+    func fetchDocumentsInCollection<T: Codable>(_ type: T.Type, collection: CollectionReference?, completion: @escaping ([T]?) -> Void)
     func addDocument(_ type: Codable, collection: FirestoreCollections, documentId: String?, completion: @escaping ((String) -> Void))
     func deleteDocument(collection: FirestoreCollections, documentId: String, completion: @escaping ((Bool) -> Void))
 }
@@ -100,25 +100,27 @@ class FirestoreManager: FirestoreProtocol {
         }
     }
     
-    func fetchDocumentsInCollection<T: Codable>(_ type: T.Type, collection: CollectionReference, completion: @escaping ([T]?) -> Void) {
-        collection.getDocuments() { querySnapshot, err in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                do {
-                    if let error = err {
-                        throw error
+    func fetchDocumentsInCollection<T: Codable>(_ type: T.Type, collection: CollectionReference?, completion: @escaping ([T]?) -> Void) {
+        if let collection = collection {
+            collection.getDocuments() { querySnapshot, err in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    do {
+                        if let error = err {
+                            throw error
+                        }
+                        guard let documents = querySnapshot?.documents else {
+                            completion(nil)
+                            return
+                        }
+                        let data = try documents.compactMap { QueryDocumentSnapshot -> T? in
+                            return try QueryDocumentSnapshot.data(as: T.self)
+                        }
+                        completion(data)
+                    } catch {
+                        print(error.localizedDescription)
                     }
-                    guard let documents = querySnapshot?.documents else {
-                        completion(nil)
-                        return
-                    }
-                    let data = try documents.compactMap { QueryDocumentSnapshot -> T? in
-                        return try QueryDocumentSnapshot.data(as: T.self)
-                    }
-                    completion(data)
-                } catch {
-                    print(error.localizedDescription)
                 }
             }
         }

@@ -139,4 +139,18 @@ class BrowseBrandsViewModelTests: XCTestCase, CoreDataTestable {
     func test_getNumberOfRowsForSection_2() {
         XCTAssertEqual(Self.sut.getNumberOfRowsFor(section: 2), 1)
     }
+    
+    func test_shouldBeNewMerchant() {
+        let components = DateComponents(day: -2)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        let dateString = dateFormatter.string(from: Calendar.current.date(byAdding: components, to: Date(), wrappingComponents: false)!)
+        
+        XCTAssertTrue(Self.sut.isNewMerchant(goLiveDate: dateString))
+    }
+    
+    func test_shouldNotBeNewMerchant() {
+        XCTAssertFalse(Self.sut.isNewMerchant(goLiveDate: "2023/05/01"))
+    }
 }

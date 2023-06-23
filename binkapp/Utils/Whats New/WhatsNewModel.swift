@@ -9,7 +9,7 @@
 import Foundation
 
 struct WhatsNewModel: Codable {
-    let appVersion: String?
+    var appVersion: String?
     let merchants: [NewMerchantModel]?
     let features: [NewFeatureModel]?
     

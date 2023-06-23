@@ -147,16 +147,18 @@ class FirestoreMock: FirestoreProtocol {
             let p = PollModel(id: "10", title: "Brands", answers: ["Nandos", "KFC"], startTime: 1686143254, closeTime: 1687774246, published: true, question: "Which retailer would you like to see next in your Bink app?", remindLaterMinutes: 10, allowCustomAnswer: true, editTimeLimit: 60)
             completion([p as! T])
         } else  if "\(T.self)" == "PollVotingModel" {
-//            let data = self.votingModel.data(using: .utf8)!
-//            let val = try! JSONDecoder().decode(T.self, from: data)
-//            completion([val])
             let p = PollVotingModel(id: "1", pollId: "10", userId: "100", createdDate: 1687336184, overwritten: false, answer: "Nandos", customAnswer: "")
             completion([p as! T])
         }
     }
     
-    func fetchDocumentsInCollection<T>(_ type: T.Type, collection: CollectionReference, completion: @escaping ([T]?) -> Void) where T : Decodable, T : Encodable {
-        
+    func fetchDocumentsInCollection<T>(_ type: T.Type, collection: CollectionReference?, completion: @escaping ([T]?) -> Void) where T : Decodable, T : Encodable {
+        if "\(T.self)" == "WhatsNewModel" {
+            let merch1 = NewMerchantModel(id: "230", description: ["Sign up to Tesco clubcard", "View your points"])
+            let feat1 = NewFeatureModel(id: "0", title: "This is a new feature!", description: ["This new feature is pretty cool and you should totally check it out."], screen: 4, imageUrl: nil)
+            let p = WhatsNewModel(appVersion: Bundle.currentVersion?.versionString, merchants: [merch1], features: [feat1])
+            completion([p as! T])
+        }
     }
     
     func addDocument(_ type: Codable, collection: FirestoreCollections, documentId: String?, completion: @escaping ((String) -> Void)) {

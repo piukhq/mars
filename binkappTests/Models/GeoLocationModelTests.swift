@@ -13,6 +13,7 @@ import XCTest
 
 class GeoLocationModelTests: XCTestCase {
 
+//    let openHours = OpenHours(mon: [["6:00", "24:00"]], tue: [["6:00", "24:00"]], wed: [["6:00", "24:00"]], thu: [["6:00", "24:00"]], fri: [["6:00", "24:00"]], sat: [["6:00", "24:00"]], sun: [["6:00", "24:00"]])
     let goodJson = """
         {
             "type": "FeatureCollection",

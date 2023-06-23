@@ -39,7 +39,6 @@
 - CD_MembershipCardBalance.swift
 - CD_RegistrationField.swift
 - CD_MembershipCard.swift
-- AppsModel.swift
 - BinkButtonSwiftUIView.swift
 - BinkCopyableLabel.swift
 - CheckboxSwiftUIView.swift
@@ -96,3 +95,5 @@
 - UINavigationControllerExtension.swift
 - LoginController.swift
 - AuthAndAddViewController.swift
+- DynamicActionsUtility.swift
+- StorageUtility.swift
