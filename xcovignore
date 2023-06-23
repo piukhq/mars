@@ -56,6 +56,7 @@
 - BrowseBrandsListView.swift
 - CardInformationView.swift
 - AppDelegate.swift
+- AppDelegate+Extension.swift
 - Assets.swift
 - Strings.swift
 - BrowseBrandsListView.swift
@@ -91,3 +92,7 @@
 - SecureUtility.swift
 - PLRStampView.swift
 - WalletLoyaltyCardCollectionViewCell.swift
+- WalletViewController.swift
+- UINavigationControllerExtension.swift
+- LoginController.swift
+- AuthAndAddViewController.swift
