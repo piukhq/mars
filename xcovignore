@@ -97,5 +97,4 @@
 - AuthAndAddViewController.swift
 - DynamicActionsUtility.swift
 - StorageUtility.swift
-- CoreDataRepositoryProtocol.swift
 - CheckYourInboxViewController.swift
