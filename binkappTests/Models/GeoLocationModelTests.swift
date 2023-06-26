@@ -13,7 +13,7 @@ import XCTest
 
 class GeoLocationModelTests: XCTestCase {
 
-//    let openHours = OpenHours(mon: [["6:00", "24:00"]], tue: [["6:00", "24:00"]], wed: [["6:00", "24:00"]], thu: [["6:00", "24:00"]], fri: [["6:00", "24:00"]], sat: [["6:00", "24:00"]], sun: [["6:00", "24:00"]])
+    let openHours = OpenHours(mon: [["6:00", "24:00"]], tue: [["7:00", "21:00"]], wed: [["6:00", "24:00"]], thu: [["6:00", "24:00"]], fri: [["6:00", "24:00"]], sat: [["6:00", "24:00"]], sun: [["6:00", "24:00"]])
     let goodJson = """
         {
             "type": "FeatureCollection",
@@ -77,5 +77,21 @@ class GeoLocationModelTests: XCTestCase {
         let jsonData = badJson.data(using: .utf8)
         let response = try? JSONDecoder().decode(GeoModel.self, from: jsonData ?? Data())
         XCTAssertNil(response)
+    }
+    
+    func test_openingTimesAreCorrect() throws {
+        let openTimes = openHours.openingTimes(for: 0)
+        
+        XCTAssertTrue(openTimes?.opening == "6:00")
+        XCTAssertTrue(openTimes?.closing == "24:00")
+    }
+    
+    func test_openingTimesForNextOpenDayAreCorrect() throws {
+        let openTimes = openHours.openingTimesForNextOpenDay(from: 3)
+        
+        print(openTimes)
+        
+        XCTAssertTrue(openTimes?.opening == "7:00")
+        XCTAssertTrue(openTimes?.closing == "21:00")
     }
 }

@@ -9,6 +9,11 @@ import Foundation
 import KeychainAccess
 import UIKit
 
+protocol AuthAndAddViewModelTestable {
+    func getMembershipCardPostModel() -> MembershipCardPostModel?
+}
+
+
 enum FieldType {
     case add
     case authorise
@@ -464,5 +469,11 @@ class AuthAndAddViewModel {
         } addFromPhotoLibraryAction: { [weak self] in
             self?.delegate?.showImagePicker()
         }
+    }
+}
+
+extension AuthAndAddViewModel: AuthAndAddViewModelTestable {
+    func getMembershipCardPostModel() -> MembershipCardPostModel? {
+        return self.membershipCardPostModel
     }
 }
