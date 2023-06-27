@@ -95,6 +95,4 @@
 - UINavigationControllerExtension.swift
 - LoginController.swift
 - AuthAndAddViewController.swift
-- DynamicActionsUtility.swift
-- StorageUtility.swift
 - CheckYourInboxViewController.swift

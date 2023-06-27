@@ -419,14 +419,12 @@ class AuthAndAddViewModel {
             if planDocument?.name?.contains("policy") == true {
                 if let urlString = planDocument?.url, let url = UIApplication.isRunningUnitTests ? Bundle.main.url(forResource: "htmlTest", withExtension: "html") : URL(string: urlString) {
                     privacyPolicy = HTMLParsingUtil.makeAttributedStringFromHTML(url: url)
-                    print(privacyPolicy!.string)
                 }
             }
             
             if planDocument?.name?.contains("conditions") == true {
                 if let urlString = planDocument?.url, let url = UIApplication.isRunningUnitTests ? Bundle.main.url(forResource: "htmlTest", withExtension: "html") : URL(string: urlString) {
                     termsAndConditions = HTMLParsingUtil.makeAttributedStringFromHTML(url: url)
-                    print(termsAndConditions!.string)
                 }
             }
         }

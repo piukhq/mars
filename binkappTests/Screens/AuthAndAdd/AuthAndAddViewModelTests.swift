@@ -46,7 +46,7 @@ final class AuthAndAddViewModelTests: XCTestCase, CoreDataTestable {
         
         AuthAndAddViewModelTests.featureSetModel = FeatureSetModel(apiId: 500, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: true, cardType: .link, linkingSupport: [.add], hasVouchers: false)
         
-        AuthAndAddViewModelTests.membershipPlanAccountModel = MembershipPlanAccountModel(apiId: 500, planName: "Test Plan", planNameCard: "Card Name", planURL: nil, companyName: "Tesco", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: [PlanDocumentModel(apiId: 500, name: "policy", documentDescription: "doc description", url: "www.bink.com", display: [.add], checkbox: true), PlanDocumentModel(apiId: 500, name: "conditions", documentDescription: "doc description", url: "www.bink.com", display: [.add], checkbox: true)], addFields: [], authoriseFields: [], registrationFields: [], enrolFields: [])
+        AuthAndAddViewModelTests.membershipPlanAccountModel = MembershipPlanAccountModel(apiId: 500, planName: "Test Plan", planNameCard: "Card Name", planURL: nil, companyName: "Tesco", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: [PlanDocumentModel(apiId: 500, name: "policy", documentDescription: "doc description", url: "www.pp.com", display: [.add], checkbox: true), PlanDocumentModel(apiId: 500, name: "conditions", documentDescription: "doc description", url: "www.pp.com", display: [.add], checkbox: true)], addFields: [], authoriseFields: [], registrationFields: [], enrolFields: [])
         
         AuthAndAddViewModelTests.membershipPlanResponse = MembershipPlanModel(apiId: 500, status: nil, featureSet: AuthAndAddViewModelTests.featureSetModel, images: nil, account: AuthAndAddViewModelTests.membershipPlanAccountModel, balances: nil, dynamicContent: nil, hasVouchers: true, card: AuthAndAddViewModelTests.cardResponse, goLive: "")
         
@@ -305,5 +305,12 @@ final class AuthAndAddViewModelTests: XCTestCase, CoreDataTestable {
         XCTAssertTrue(text!.string == "Heading 1 \nHeading 2\nHeading 3\n\n")
         text = Self.sut.getTermsAndConditions()
         XCTAssertTrue(text!.string == "Heading 1 \nHeading 2\nHeading 3\n\n")
+    }
+    
+    func test_planModalIsDisplayed() {
+        Self.sut.configureAttributedStrings()
+        Self.sut.presentPlanDocumentsModal(withUrl: URL(string: "www.pp.com")!)
+        XCTAssertTrue(Current.navigate.currentViewController!.isKind(of: ReusableTemplateViewController.self))
+        Current.navigate.close()
     }
 }
