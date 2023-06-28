@@ -278,7 +278,7 @@ class LoyaltyCardFullDetailsViewModelTests: XCTestCase, CoreDataTestable {
     
     func test_positiveTransactionValueIsCorrect() {
         let t = TransactionView()
-        let mAmount = MembershipCardAmount(apiId: 500, currency: "Points", prefix: nil, suffix: "pts", value: 130.0)//valueLabel.text == -130 Points
+        let mAmount = MembershipCardAmount(apiId: 500, currency: "Points", prefix: nil, suffix: "pts", value: 130.0)
         let mTransaction = MembershipTransaction(apiId: 500, status: nil, timestamp: 1685882501, transactionDescription: "some desc", amounts: [mAmount])
         Self.baseMembershipCardResponse.membershipTransactions = [mTransaction]
         mapMembershipCard()
