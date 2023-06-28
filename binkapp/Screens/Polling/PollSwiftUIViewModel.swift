@@ -71,7 +71,6 @@ class PollSwiftUIViewModel: ObservableObject {
     private func getVotingData() {
         guard let pollData = self.pollData else { return }
         
-        //guard let collectionReference = firestoreManager.getCollection(collection: .pollResults) else { return }
         let collectionReference = firestoreManager.getCollection(collection: .pollResults)
         let query = collectionReference?.whereField("userId", isEqualTo: userId ?? "").whereField("pollId", isEqualTo: pollData.id ?? "")
         firestoreManager.fetchDocumentsInCollection(PollVotingModel.self, query: query, completion: { [weak self] snapshot in
@@ -108,13 +107,6 @@ class PollSwiftUIViewModel: ObservableObject {
             self?.gotVotes.toggle()
         })
         
-//        query.getDocuments { [weak self] (snapshot, _) in
-//            for answer in pollData.answers {
-//                self?.votesDictionary[answer] = snapshot?.documents.filter { $0["answer"] as? String == answer }.count
-//            }
-//            self?.gotVotes.toggle()
-//        }
-        
         checkIfCanEditVote()
     }
     
@@ -128,8 +120,6 @@ class PollSwiftUIViewModel: ObservableObject {
     
     
     private func getPollData() {
-        //guard let collectionReference = firestoreManager.getCollection(collection: .polls) else { return }
-        
         let collectionReference = firestoreManager.getCollection(collection: .polls)
         
         let query = collectionReference?.whereField("published", isEqualTo: true )

@@ -90,10 +90,4 @@ final class NewMerchantViewModelTests: XCTestCase, CoreDataTestable {
     func test_primaryColorIsValid() {
         XCTAssertNotNil(sut.primaryColor)
     }
-    
-//    func test_navigationsIsHandledCorrectly() {
-//        self.sut.handleNavigation()
-//        XCTAssertTrue(Current.navigate.currentViewController!.isKind(of: BrowseBrandsViewController.self))
-//    }
-
 }
