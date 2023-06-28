@@ -81,17 +81,14 @@ final class PollSwiftUIViewModelTests: XCTestCase {
     
     func test_colorForAnsweredRowIsCorrect() throws {
         XCTAssertEqual(sut.colorForAnsweredRow(colorScheme: .light), Color(.percentageGreen))
-        //XCTAssertEqual(sut.colorForAnsweredRow(colorScheme: .dark), Color(UIColor.binkBlue))
     }
     
     func test_colorForUnansweredRowIsCorrect() throws {
         XCTAssertEqual(sut.colorForUnansweredRow(colorScheme: .light), Color(.unansweredRowGreen))
-        //XCTAssertEqual(sut.colorForUnansweredRow(colorScheme: .dark), Color(.unansweredRowDarkBlue))
     }
     
     func test_colorOuterCircleIconsIsCorrect() throws {
         XCTAssertEqual(sut.colorForOuterCircleIcons(colorScheme: .light), .gray)
-        //XCTAssertEqual(sut.colorForOuterCircleIcons(colorScheme: .dark), .white)
     }
 
 }
