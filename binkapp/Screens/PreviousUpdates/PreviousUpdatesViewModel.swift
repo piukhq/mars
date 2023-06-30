@@ -43,7 +43,8 @@ class PreviousUpdatesViewModel: ObservableObject {
         if !UIApplication.isRunningUnitTests {
             guard let collectionReference = Current.firestoreManager.getCollection(collection: .releaseNotes) else { return }
             
-            Current.firestoreManager.fetchDocumentsInCollection(ReleaseNotes.self, collection: collectionReference, completion: { [weak self] snapshot in
+            let query = collectionReference.whereField("platform", isEqualTo: "iOS")
+            Current.firestoreManager.fetchDocumentsInCollection(ReleaseNotes.self, query: query, completion: { [weak self] snapshot in
                 if let doc = snapshot?.first {
                     self?.items = doc.releases ?? []
                 }
