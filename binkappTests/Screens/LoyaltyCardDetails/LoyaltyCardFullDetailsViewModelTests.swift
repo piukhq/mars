@@ -54,6 +54,7 @@ class LoyaltyCardFullDetailsViewModelTests: XCTestCase, CoreDataTestable {
         membershipCardBalanceModel = MembershipCardBalanceModel(apiId: nil, value: 500, currency: nil, prefix: "£", suffix: nil, updatedAt: nil)
         cardModel = CardModel(apiId: 300, barcode: "11111", membershipId: "1111", barcodeType: 1, colour: "111127", secondaryColour: nil, merchantName: nil)
         membershipCardStatusModel = MembershipCardStatusModel(apiId: 300, state: .authorised, reasonCodes: nil)
+        
         baseMembershipCardResponse = MembershipCardModel(apiId: 300, membershipPlan: 500, membershipTransactions: nil, status: membershipCardStatusModel, card: cardModel, images: nil, account: nil, paymentCards: nil, balances: [membershipCardBalanceModel], vouchers: [voucherResponse], openedTime: nil)
         
         mapResponseToManagedObject(baseMembershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
@@ -262,5 +263,38 @@ class LoyaltyCardFullDetailsViewModelTests: XCTestCase, CoreDataTestable {
     func test_goToScreenForState_toVoucherDetailScreen_shouldnavigateToCorrectVC() throws {
         Self.model.toVoucherDetailScreen(voucher: Self.voucher)
         XCTAssertTrue(currentViewController.isKind(of: PLRRewardDetailViewController.self))
+    }
+    
+    func test_negativeTransactionValueIsCorrect() {
+        let t = TransactionView()
+        let mAmount = MembershipCardAmount(apiId: 500, currency: "Points", prefix: nil, suffix: "pts", value: -130.0)
+        let mTransaction = MembershipTransaction(apiId: 500, status: nil, timestamp: 1685882501, transactionDescription: "some desc", amounts: [mAmount])
+        Self.baseMembershipCardResponse.membershipTransactions = [mTransaction]
+        mapMembershipCard()
+        t.configure(with: Array(Self.model.membershipCard.transactions).first as! CD_MembershipTransaction)
+        XCTAssertTrue(t.descriptionLabel.text == "04 June 2023, some desc")
+        XCTAssertTrue(t.valueLabel.text == "-130 Points")
+    }
+    
+    func test_positiveTransactionValueIsCorrect() {
+        let t = TransactionView()
+        let mAmount = MembershipCardAmount(apiId: 500, currency: "Points", prefix: nil, suffix: "pts", value: 130.0)
+        let mTransaction = MembershipTransaction(apiId: 500, status: nil, timestamp: 1685882501, transactionDescription: "some desc", amounts: [mAmount])
+        Self.baseMembershipCardResponse.membershipTransactions = [mTransaction]
+        mapMembershipCard()
+        t.configure(with: Array(Self.model.membershipCard.transactions).first as! CD_MembershipTransaction)
+        XCTAssertTrue(t.descriptionLabel.text == "04 June 2023, some desc")
+        XCTAssertTrue(t.valueLabel.text == "+130 Points")
+    }
+    
+    func test_noValueTransactionValueIsCorrect() {
+        let t = TransactionView()
+        let mAmount = MembershipCardAmount(apiId: 500, currency: "Points", prefix: nil, suffix: "pts", value: 0)//valueLabel.text == -130 Points
+        let mTransaction = MembershipTransaction(apiId: 500, status: nil, timestamp: 1685882501, transactionDescription: "some desc", amounts: [mAmount])
+        Self.baseMembershipCardResponse.membershipTransactions = [mTransaction]
+        mapMembershipCard()
+        t.configure(with: Array(Self.model.membershipCard.transactions).first as! CD_MembershipTransaction)
+        XCTAssertTrue(t.descriptionLabel.text == "04 June 2023, some desc")
+        XCTAssertTrue(t.valueLabel.text == "0 Points")
     }
 }

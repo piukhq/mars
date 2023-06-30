@@ -67,6 +67,6 @@ struct NewPollCellSwiftUIView: View {
 
 struct NewPollCellSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        NewPollCellSwiftUIView(viewModel: NewPollCellViewModel())
+        NewPollCellSwiftUIView(viewModel: NewPollCellViewModel(firestoreManager: Current.firestoreManager))
     }
 }

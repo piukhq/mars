@@ -35,36 +35,36 @@ final class AuthAndAddViewModelTests: XCTestCase, CoreDataTestable {
     
     static var sut: AuthAndAddViewModel!
     
-    override class func setUp() {
+    override func setUp() {
         super.setUp()
         
         let burnModel = VoucherBurnModel(apiId: 500, currency: nil, prefix: "£", suffix: "gift", value: 500, type: "voucher")
         let stampsVoucherEarnModel = VoucherEarnModel(apiId: 500, currency: nil, prefix: "£", suffix: "gift", type: .accumulator, targetValue: 600, value: 500)
-        voucherResponse = VoucherModel(apiId: 500, state: .inProgress, code: "123456", barcode: nil, barcodeType: nil, headline: nil, subtext: nil, dateRedeemed: 1536080100, dateIssued: 3332020, expiryDate: 1535080100, earn: stampsVoucherEarnModel, burn: burnModel)
+        AuthAndAddViewModelTests.voucherResponse = VoucherModel(apiId: 500, state: .inProgress, code: "123456", barcode: nil, barcodeType: nil, headline: nil, subtext: nil, dateRedeemed: 1536080100, dateIssued: 3332020, expiryDate: 1535080100, earn: stampsVoucherEarnModel, burn: burnModel)
         
-        cardResponse = CardModel(apiId: 500, barcode: "123456789", membershipId: "999 666", barcodeType: 0, colour: "#0000ff", secondaryColour: nil, merchantName: nil)
+        AuthAndAddViewModelTests.cardResponse = CardModel(apiId: 500, barcode: "123456789", membershipId: "999 666", barcodeType: 0, colour: "#0000ff", secondaryColour: nil, merchantName: nil)
         
-        featureSetModel = FeatureSetModel(apiId: 500, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: true, cardType: .link, linkingSupport: [.add], hasVouchers: false)
+        AuthAndAddViewModelTests.featureSetModel = FeatureSetModel(apiId: 500, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: true, cardType: .link, linkingSupport: [.add], hasVouchers: false)
         
-        membershipPlanAccountModel = MembershipPlanAccountModel(apiId: 500, planName: "Test Plan", planNameCard: "Card Name", planURL: nil, companyName: "Tesco", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
+        AuthAndAddViewModelTests.membershipPlanAccountModel = MembershipPlanAccountModel(apiId: 500, planName: "Test Plan", planNameCard: "Card Name", planURL: nil, companyName: "Tesco", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: [PlanDocumentModel(apiId: 500, name: "policy", documentDescription: "doc description", url: "www.pp.com", display: [.add], checkbox: true), PlanDocumentModel(apiId: 500, name: "conditions", documentDescription: "doc description", url: "www.pp.com", display: [.add], checkbox: true)], addFields: [], authoriseFields: [], registrationFields: [], enrolFields: [])
         
-        membershipPlanResponse = MembershipPlanModel(apiId: 500, status: nil, featureSet: featureSetModel, images: nil, account: membershipPlanAccountModel, balances: nil, dynamicContent: nil, hasVouchers: true, card: cardResponse, goLive: "")
+        AuthAndAddViewModelTests.membershipPlanResponse = MembershipPlanModel(apiId: 500, status: nil, featureSet: AuthAndAddViewModelTests.featureSetModel, images: nil, account: AuthAndAddViewModelTests.membershipPlanAccountModel, balances: nil, dynamicContent: nil, hasVouchers: true, card: AuthAndAddViewModelTests.cardResponse, goLive: "")
         
-        mapResponseToManagedObject(membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { plan in
-            self.membershipPlan = plan
+        mapResponseToManagedObject(AuthAndAddViewModelTests.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { plan in
+            AuthAndAddViewModelTests.membershipPlan = plan
         }
         
-        membershipCardBalanceModel = MembershipCardBalanceModel(apiId: 500, value: 500, currency: nil, prefix: "£", suffix: nil, updatedAt: nil)
+        AuthAndAddViewModelTests.membershipCardBalanceModel = MembershipCardBalanceModel(apiId: 500, value: 500, currency: nil, prefix: "£", suffix: nil, updatedAt: nil)
         
-        membershipCardStatusModel = MembershipCardStatusModel(apiId: 500, state: .authorised, reasonCodes: [.pointsScrapingLoginRequired])
+        AuthAndAddViewModelTests.membershipCardStatusModel = MembershipCardStatusModel(apiId: 500, state: .authorised, reasonCodes: [.pointsScrapingLoginRequired])
         
-        membershipCardResponse = MembershipCardModel(apiId: 500, membershipPlan: 500, membershipTransactions: nil, status: membershipCardStatusModel, card: cardResponse, images: nil, account: MembershipCardAccountModel(apiId: 500, tier: 1), paymentCards: nil, balances: [membershipCardBalanceModel], vouchers: [voucherResponse], openedTime: nil)
+        AuthAndAddViewModelTests.membershipCardResponse = MembershipCardModel(apiId: 500, membershipPlan: 500, membershipTransactions: nil, status: AuthAndAddViewModelTests.membershipCardStatusModel, card: AuthAndAddViewModelTests.cardResponse, images: nil, account: MembershipCardAccountModel(apiId: 500, tier: 1), paymentCards: nil, balances: [AuthAndAddViewModelTests.membershipCardBalanceModel], vouchers: [AuthAndAddViewModelTests.voucherResponse], openedTime: nil)
         
-        mapResponseToManagedObject(membershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
-            self.membershipCard = membershipCard
+        mapResponseToManagedObject(AuthAndAddViewModelTests.membershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
+            AuthAndAddViewModelTests.membershipCard = membershipCard
         }
         
-        sut = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: .add, existingMembershipCard: membershipCard, prefilledFormValues: [FormDataSource.PrefilledValue(commonName: .email, value: "rick@mail.com")])
+        AuthAndAddViewModelTests.sut = AuthAndAddViewModel(membershipPlan: AuthAndAddViewModelTests.membershipPlan, formPurpose: .add, existingMembershipCard: AuthAndAddViewModelTests.membershipCard, prefilledFormValues: [FormDataSource.PrefilledValue(commonName: .email, value: "rick@mail.com")])
     }
 
     func test_accountButtonShouldHide() throws {
@@ -198,5 +198,119 @@ final class AuthAndAddViewModelTests: XCTestCase, CoreDataTestable {
         Self.sut.brandHeaderWasTapped()
         
         XCTAssertTrue(Current.navigate.currentViewController!.isKind(of: ReusableTemplateViewController.self))
+    }
+    
+    func test_addFieldsToCartCorrect() {
+        var fField = FormField(
+            title: "Add",
+            placeholder: "J Appleseed",
+            validation: "^(((?=.{1,}$)[A-Za-z\\-\\u00C0-\\u00FF' ])+\\s*)$",
+            fieldType: .text,
+            updated: { field, newValue in },
+            shouldChange: { (field, textField, range, newValue) in return false},
+            fieldExited: { field in },
+            columnKind: .add
+        )
+        Self.sut.addFieldToCard(formField: fField)
+        var m = Self.sut.getMembershipCardPostModel()
+        XCTAssertTrue(m!.account!.addFields![0].column == "Add")
+        
+        
+        fField = FormField(
+            title: "Auth",
+            placeholder: "J Appleseed",
+            validation: "^(((?=.{1,}$)[A-Za-z\\-\\u00C0-\\u00FF' ])+\\s*)$",
+            fieldType: .text,
+            updated: { field, newValue in },
+            shouldChange: { (field, textField, range, newValue) in return false},
+            fieldExited: { field in },
+            columnKind: .auth
+        )
+        Self.sut.addFieldToCard(formField: fField)
+        m = Self.sut.getMembershipCardPostModel()
+        XCTAssertTrue(m!.account!.authoriseFields![0].column == "Auth")
+        
+        fField = FormField(
+            title: "Enrol",
+            placeholder: "J Appleseed",
+            validation: "^(((?=.{1,}$)[A-Za-z\\-\\u00C0-\\u00FF' ])+\\s*)$",
+            fieldType: .text,
+            updated: { field, newValue in },
+            shouldChange: { (field, textField, range, newValue) in return false},
+            fieldExited: { field in },
+            columnKind: .enrol
+        )
+        Self.sut.addFieldToCard(formField: fField)
+        m = Self.sut.getMembershipCardPostModel()
+        XCTAssertTrue(m!.account!.enrolFields![0].column == "Enrol")
+        
+        fField = FormField(
+            title: "Register",
+            placeholder: "J Appleseed",
+            validation: "^(((?=.{1,}$)[A-Za-z\\-\\u00C0-\\u00FF' ])+\\s*)$",
+            fieldType: .text,
+            updated: { field, newValue in },
+            shouldChange: { (field, textField, range, newValue) in return false},
+            fieldExited: { field in },
+            columnKind: .register
+        )
+        Self.sut.addFieldToCard(formField: fField)
+        m = Self.sut.getMembershipCardPostModel()
+        XCTAssertTrue(m!.account!.registrationFields![0].column == "Register")
+    }
+    
+    func test_checkBoxAddedToCardCorrect() {
+        var c = CheckboxViewModel(checkedState: true, columnName: "Add", columnKind: .add)
+        Self.sut.addCheckboxToCard(checkbox: c)
+        var m = Self.sut.getMembershipCardPostModel()
+        XCTAssertTrue(m!.account!.addFields![0].column == "Add")
+        
+        c = CheckboxViewModel(checkedState: true, columnName: "Auth", columnKind: .auth)
+        Self.sut.addCheckboxToCard(checkbox: c)
+        m = Self.sut.getMembershipCardPostModel()
+        XCTAssertTrue(m!.account!.authoriseFields![0].column == "Auth")
+        
+        c = CheckboxViewModel(checkedState: true, columnName: "Enrol", columnKind: .enrol)
+        Self.sut.addCheckboxToCard(checkbox: c)
+        m = Self.sut.getMembershipCardPostModel()
+        XCTAssertTrue(m!.account!.enrolFields![0].column == "Enrol")
+        
+        c = CheckboxViewModel(checkedState: true, columnName: "Register", columnKind: .register)
+        Self.sut.addCheckboxToCard(checkbox: c)
+        m = Self.sut.getMembershipCardPostModel()
+        XCTAssertTrue(m!.account!.registrationFields![0].column == "Register")
+    }
+    
+    func test_reloadWithGhostCardFields_presentsCorrectScreen() {
+        Self.sut.reloadWithGhostCardFields()
+        XCTAssertTrue(Current.navigate.currentViewController!.isKind(of: AuthAndAddViewController.self))
+        Current.navigate.close()
+    }
+    
+    func test_toReusableTemplateDisplayedCorrectly() {
+        Self.sut.toReusableTemplate(title: "T", description: "TT")
+        XCTAssertTrue(Current.navigate.currentViewController!.isKind(of: ReusableTemplateViewController.self))
+        Current.navigate.close()
+    }
+    
+    func test_brandHeaderWasTappedDisplayedCorrectly() {
+        Self.sut.brandHeaderWasTapped()
+        XCTAssertTrue(Current.navigate.currentViewController!.isKind(of: ReusableTemplateViewController.self))
+        Current.navigate.close()
+    }
+    
+    func test_attributedStrings_correctPolicyAndTerms() {
+        Self.sut.configureAttributedStrings()
+        var text = Self.sut.getPrivacyPolicy()
+        XCTAssertTrue(text!.string == "Heading 1 \nHeading 2\nHeading 3\n\n")
+        text = Self.sut.getTermsAndConditions()
+        XCTAssertTrue(text!.string == "Heading 1 \nHeading 2\nHeading 3\n\n")
+    }
+    
+    func test_planModalIsDisplayed() {
+        Self.sut.configureAttributedStrings()
+        Self.sut.presentPlanDocumentsModal(withUrl: URL(string: "www.pp.com")!)
+        XCTAssertTrue(Current.navigate.currentViewController!.isKind(of: ReusableTemplateViewController.self))
+        Current.navigate.close()
     }
 }

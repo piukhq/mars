@@ -11,7 +11,7 @@ import UIKit
 
 class NewPollCell: UICollectionViewCell {
     lazy var host: UIHostingController = {
-        return UIHostingController(rootView: NewPollCellSwiftUIView(viewModel: NewPollCellViewModel()))
+        return UIHostingController(rootView: NewPollCellSwiftUIView(viewModel: NewPollCellViewModel(firestoreManager: Current.firestoreManager)))
     }()
     
     override init(frame: CGRect) {

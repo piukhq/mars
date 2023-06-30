@@ -49,6 +49,9 @@ class NewMerchantViewModel: ObservableObject {
     }
     
     func getMembershipPlan(from id: String) {
+        if UIApplication.isRunningUnitTests {
+            return
+        }
         membershipPlan = Current.wallet.membershipPlans?.first(where: { $0.id == id })
     }
     

@@ -9,6 +9,8 @@
 import XCTest
 @testable import binkapp
 
+import SwiftUI
+
 // swiftlint:disable all
 final class LoyaltyWalletViewModelTests: XCTestCase, CoreDataTestable {
 
@@ -57,12 +59,15 @@ final class LoyaltyWalletViewModelTests: XCTestCase, CoreDataTestable {
         }
 
         //Current.wallet.launch()
-        model = LoyaltyWalletViewModel()
+        model = LoyaltyWalletViewModel(firestoreManager: FirestoreMock())
     }
 
     override func setUp() {
         Current.wallet.updateMembershipPlans(membershipPlans: [Self.membershipPlan])
         Current.wallet.updateMembershipCards(membershipCards: [Self.membershipCard])
+        
+        Current.userDefaults.set(false, forDefaultsKey: .hasDismissedWhatsNewView)
+        Current.userDefaults.set(nil, forDefaultsKey: .mostRecentAppVersion)
     }
 
     override func tearDown() {
@@ -81,6 +86,24 @@ final class LoyaltyWalletViewModelTests: XCTestCase, CoreDataTestable {
         mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { plan in
             Self.membershipPlan = plan
         }
+    }
+    
+    func test_hasValidWhatsNew() throws {
+        
+        XCTAssertNotNil(Self.model.whatsNew)
+    }
+    
+    func test_shouldDisplayWhatsNew_ifVersionsMatch() throws {
+        Self.model.whatsNew?.appVersion = Bundle.currentVersion?.versionString
+        Self.model.configureWhatsNewScreen()
+        XCTAssertTrue(Current.navigate.currentViewController!.isKind(of: UIHostingController<WhatsNewSwiftUIView>.self))
+        Current.navigate.close()
+    }
+    
+    func test_shouldNotDisplayWhatsNew_ifVersionsDontMatch() throws {
+        Self.model.whatsNew?.appVersion = ""
+        Self.model.configureWhatsNewScreen()
+        XCTAssertNil(Current.userDefaults.string(forDefaultsKey: .mostRecentAppVersion))
     }
 
     func test_hasValidCards() throws {

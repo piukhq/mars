@@ -9,6 +9,13 @@ import Foundation
 import KeychainAccess
 import UIKit
 
+protocol AuthAndAddViewModelTestable {
+    func getMembershipCardPostModel() -> MembershipCardPostModel?
+    func getPrivacyPolicy() -> NSMutableAttributedString?
+    func getTermsAndConditions() -> NSMutableAttributedString?
+}
+
+
 enum FieldType {
     case add
     case authorise
@@ -410,13 +417,13 @@ class AuthAndAddViewModel {
         for document in (membershipPlan.account?.planDocuments) ?? [] {
             let planDocument = document as? CD_PlanDocument
             if planDocument?.name?.contains("policy") == true {
-                if let urlString = planDocument?.url, let url = URL(string: urlString) {
+                if let urlString = planDocument?.url, let url = UIApplication.isRunningUnitTests ? Bundle.main.url(forResource: "htmlTest", withExtension: "html") : URL(string: urlString) {
                     privacyPolicy = HTMLParsingUtil.makeAttributedStringFromHTML(url: url)
                 }
             }
             
             if planDocument?.name?.contains("conditions") == true {
-                if let urlString = planDocument?.url, let url = URL(string: urlString) {
+                if let urlString = planDocument?.url, let url = UIApplication.isRunningUnitTests ? Bundle.main.url(forResource: "htmlTest", withExtension: "html") : URL(string: urlString) {
                     termsAndConditions = HTMLParsingUtil.makeAttributedStringFromHTML(url: url)
                 }
             }
@@ -464,5 +471,19 @@ class AuthAndAddViewModel {
         } addFromPhotoLibraryAction: { [weak self] in
             self?.delegate?.showImagePicker()
         }
+    }
+}
+
+extension AuthAndAddViewModel: AuthAndAddViewModelTestable {
+    func getMembershipCardPostModel() -> MembershipCardPostModel? {
+        return self.membershipCardPostModel
+    }
+    
+    func getPrivacyPolicy() -> NSMutableAttributedString? {
+        return self.privacyPolicy
+    }
+    
+    func getTermsAndConditions() -> NSMutableAttributedString? {
+        return self.termsAndConditions
     }
 }

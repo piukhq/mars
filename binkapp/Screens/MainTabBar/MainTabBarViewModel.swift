@@ -24,7 +24,7 @@ class MainTabBarViewModel {
     
     private func configure() {
         // LOYALTY WALLET
-        let loyaltyWalletViewModel = LoyaltyWalletViewModel()
+        let loyaltyWalletViewModel = LoyaltyWalletViewModel(firestoreManager: Current.firestoreManager)
         let loyaltyWalletViewController = LoyaltyWalletViewController(viewModel: loyaltyWalletViewModel)
         let loyaltyWalletNavigationController = PortraitNavigationController(rootViewController: loyaltyWalletViewController)
         loyaltyWalletNavigationController.tabBarItem = getTabBarLoyaltyButton()

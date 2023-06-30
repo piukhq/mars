@@ -13,7 +13,7 @@ import XCTest
 
 class SortStateTests: XCTestCase {
     func test_sortStateIsNewest() throws {
-        let loyaltyModel = LoyaltyWalletViewModel()
+        let loyaltyModel = LoyaltyWalletViewModel(firestoreManager: FirestoreMock())
         loyaltyModel.setMembershipCardsSortingType(sortType: .newest)
         let type = loyaltyModel.getCurrentMembershipCardsSortType()?.rawValue
         
@@ -21,7 +21,7 @@ class SortStateTests: XCTestCase {
     }
     
     func test_sortStateIsCustom() throws {
-        let loyaltyModel = LoyaltyWalletViewModel()
+        let loyaltyModel = LoyaltyWalletViewModel(firestoreManager: FirestoreMock())
         loyaltyModel.setMembershipCardsSortingType(sortType: .custom)
         let type = loyaltyModel.getCurrentMembershipCardsSortType()?.rawValue
         

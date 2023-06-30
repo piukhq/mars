@@ -20,7 +20,9 @@ enum MembershipCardsSortState: String {
 class LoyaltyWalletViewModel: WalletViewModel {
     typealias T = CD_MembershipCard
     
-    private var whatsNew: WhatsNewModel?
+    var whatsNew: WhatsNewModel?
+    
+    var firestoreManager: FirestoreProtocol
     
     private let repository = LoyaltyWalletRepository()
 
@@ -30,10 +32,11 @@ class LoyaltyWalletViewModel: WalletViewModel {
         return Current.wallet.membershipCards
     }
     
-    init() {
-        guard let collectionReference = Current.firestoreManager.getCollection(collection: .whatsNewIOS) else { return }
+    init(firestoreManager: FirestoreProtocol) {
+        self.firestoreManager = firestoreManager
         
-        Current.firestoreManager.fetchDocumentsInCollection(WhatsNewModel.self, collection: collectionReference, completion: { [weak self] snapshot in
+        let collectionReference = Current.firestoreManager.getCollection(collection: .whatsNewIOS)
+        firestoreManager.fetchDocumentsInCollection(WhatsNewModel.self, collection: collectionReference, completion: { [weak self] snapshot in
             if let doc = snapshot?.first {
                 self?.whatsNew = doc
             }

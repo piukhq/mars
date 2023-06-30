@@ -153,4 +153,11 @@ class UIColorExtensionTests: XCTestCase {
         let color = UIColor.binkDynamicRed
         XCTAssertEqual(color, UIColor(hexString: "ff453a"))
     }
+    
+    func test_palleteIsValid() {
+        let pal = ColorPallete()
+        
+        XCTAssertTrue(pal.primary != "")
+        XCTAssertTrue(pal.secondary != "")
+    }
 }
