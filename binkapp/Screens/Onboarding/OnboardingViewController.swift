@@ -113,6 +113,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         startTimer()
         WidgetController().reloadWidget(type: .quickLaunch)
+        WidgetController().reloadWidget(type: .barcodeLaunch)
     }
     
     override func viewDidAppear(_ animated: Bool) {

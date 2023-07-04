@@ -147,6 +147,7 @@ class UserManager {
         
         UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(false, forDefaultsKey: .hasCurrentUser)
         WidgetController().reloadWidget(type: .quickLaunch)
+        WidgetController().reloadWidget(type: .barcodeLaunch)
         Current.watchController.hasCurrentUser(false)
     }
     

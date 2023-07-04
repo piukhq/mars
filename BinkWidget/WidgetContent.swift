@@ -21,11 +21,14 @@ enum WidgetUrlPath: String {
 
 enum WidgetType: String, CaseIterable {
     case quickLaunch = "quicklaunch-widget"
+    case barcodeLaunch = "barcodelaunch-widget"
     
     var identifier: String {
         switch self {
         case .quickLaunch:
             return  "com.bink.wallet.quicklaunchwidget"
+        case .barcodeLaunch:
+            return  "com.bink.wallet.barcodelaunchwidget"
         }
     }
     
@@ -57,6 +60,7 @@ struct WidgetContent: TimelineEntry, Codable {
 struct MembershipCardWidget: Hashable, Codable {
     let id: String
     let imageData: Data?
+    let barCodeImage: Data?
     let backgroundColor: String?
     let planName: String?
     var url: URL {

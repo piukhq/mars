@@ -8,6 +8,7 @@
 
 import UIKit
 import WidgetKit
+import ZXingObjC
 
 class WidgetController {
     private var isPerformingNavigation = false
@@ -21,6 +22,13 @@ class WidgetController {
         NotificationCenter.default.removeObserver(self)
     }
     
+    func barcodeType(membershipCard: CD_MembershipCard) -> BarcodeType {
+        guard let barcodeType = membershipCard.card?.barcodeType?.intValue else {
+            return .code128
+        }
+        return BarcodeType(rawValue: barcodeType) ?? .code128
+    }
+
     @objc private func handleWalletReload() {
         if isPerformingNavigation {
             navigateToQuickLaunchWidgetDestination(urlPath: urlPath)
@@ -30,6 +38,8 @@ class WidgetController {
     func reloadWidget(type: WidgetType) {
         switch type {
         case .quickLaunch:
+            WidgetCenter.shared.reloadTimelines(ofKind: type.identifier)
+        case .barcodeLaunch:
             WidgetCenter.shared.reloadTimelines(ofKind: type.identifier)
         }
     }
@@ -58,6 +68,8 @@ class WidgetController {
                     self.navigateToQuickLaunchWidgetDestination(urlPath: urlPath)
                 }
             }
+        case .barcodeLaunch:
+            print("barcode launch")
         }
     }
     
@@ -99,6 +111,41 @@ class WidgetController {
         return false
     }
     
+    func barcodeImage(membershipCard: CD_MembershipCard, withSize size: CGSize, drawInContainer: Bool = true, alwaysShowBarCode: Bool = false) -> UIImage? {
+        guard let barcodeString = alwaysShowBarCode ? (membershipCard.card?.barcode ?? membershipCard.card?.membershipId) : membershipCard.card?.barcode else { return nil }
+
+        let writer = ZXMultiFormatWriter()
+        let encodeHints = ZXEncodeHints()
+        encodeHints.margin = 0
+
+
+        let width = barcodeType(membershipCard: membershipCard) == .code39 ? barcodeType(membershipCard: membershipCard).preferredWidth(for: barcodeString.count, targetWidth: size.width) : size.width
+        let height = size.height
+        var image: UIImage?
+
+        let exception = tryBlock { [weak self] in
+            guard let self = self else { return }
+
+            let result = try? writer.encode(barcodeString, format: barcodeType(membershipCard: membershipCard).zxingType, width: Int32(width), height: Int32(height), hints: encodeHints)
+
+            guard let cgImage = ZXImage(matrix: result).cgimage else { return }
+
+            // If the resulting image is larger than the destination, draw the CGImage in a fixed container
+            if CGFloat(cgImage.width) > size.width && drawInContainer {
+                let renderer = UIGraphicsImageRenderer(size: size)
+                let img = renderer.image { ctx in
+                    ctx.cgContext.draw(cgImage, in: CGRect(origin: .zero, size: size))
+                }
+
+                image = img
+            } else {
+                image = UIImage(cgImage: cgImage)
+            }
+        }
+
+        return exception == nil ? image : nil
+    }
+
     func writeContentsToDisk(membershipCards: [CD_MembershipCard]?) {
         guard let walletCards = membershipCards else { return }
         let imageRequestGroup = DispatchGroup()
@@ -109,7 +156,7 @@ class WidgetController {
             imageRequestGroup.enter()
             
             ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan)) { retrievedImage in
-                let membershipCardWidget = MembershipCardWidget(id: membershipCard.id, imageData: retrievedImage?.pngData(), backgroundColor: membershipCard.membershipPlan?.card?.colour, planName: membershipCard.membershipPlan?.account?.planName)
+                let membershipCardWidget = MembershipCardWidget(id: membershipCard.id, imageData: retrievedImage?.pngData(), barCodeImage: self.barcodeImage(membershipCard: membershipCard, withSize: CGSize(width: 182, height: 128), alwaysShowBarCode: true)?.pngData(), backgroundColor: membershipCard.membershipPlan?.card?.colour, planName: membershipCard.membershipPlan?.account?.planName)
                 widgetCards.append(membershipCardWidget)
                 imageRequestGroup.leave()
             }
@@ -117,9 +164,9 @@ class WidgetController {
         
         imageRequestGroup.notify(queue: .main) {
             if widgetCards.count < 4 {
-                let addCard = MembershipCardWidget(id: WidgetUrlPath.addCard.rawValue, imageData: nil, backgroundColor: nil, planName: nil)
-                let spacerZero = MembershipCardWidget(id: WidgetUrlPath.spacerZero.rawValue, imageData: nil, backgroundColor: nil, planName: nil)
-                let spacerOne = MembershipCardWidget(id: WidgetUrlPath.spacerOne.rawValue, imageData: nil, backgroundColor: nil, planName: nil)
+                let addCard = MembershipCardWidget(id: WidgetUrlPath.addCard.rawValue, imageData: nil, barCodeImage: nil, backgroundColor: nil, planName: nil)
+                let spacerZero = MembershipCardWidget(id: WidgetUrlPath.spacerZero.rawValue, imageData: nil, barCodeImage: nil, backgroundColor: nil, planName: nil)
+                let spacerOne = MembershipCardWidget(id: WidgetUrlPath.spacerOne.rawValue, imageData: nil, barCodeImage: nil, backgroundColor: nil, planName: nil)
                 var spacerCards: [MembershipCardWidget] = []
 
                 if widgetCards.count == 1 {
@@ -143,6 +190,7 @@ class WidgetController {
                 do {
                     try dataToSave.write(to: archiveURL)
                     self.reloadWidget(type: .quickLaunch)
+                    self.reloadWidget(type: .barcodeLaunch)
                 } catch {
                     BinkLogger.error(AppLoggerError.encodeWidgetContentsToDiskFailure, value: error.localizedDescription)
                     return
