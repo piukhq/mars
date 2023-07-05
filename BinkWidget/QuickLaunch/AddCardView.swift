@@ -18,7 +18,7 @@ struct AddCardView: View {
     }
 
     var body: some View {
-        Link(destination: membershipCard.url) {
+        Link(destination: membershipCard.quickLaunchUrl) {
             HStack(alignment: .center, spacing: 0) {
                 Spacer()
                 Image(systemName: "plus")

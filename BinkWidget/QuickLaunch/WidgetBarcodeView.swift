@@ -36,7 +36,7 @@ struct WidgetBarcodeView: View {
     }
     
     var body: some View {
-        Link(destination: membershipCard.url) {
+        Link(destination: membershipCard.barcodeLaunchUrl) {
             HStack {
                 if let imageData = membershipCard.imageData, let uiImage = UIImage(data: imageData) {
                     ZStack {

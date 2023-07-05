@@ -69,7 +69,30 @@ class WidgetController {
                 }
             }
         case .barcodeLaunch:
-            print("barcode launch")
+            Current.navigate.closeShieldView {
+                guard let topViewController = UIViewController.topMostViewController() else { return }
+                if topViewController.isModal {
+                    Current.navigate.close(animated: true) {
+                        guard let membershipCard = Current.wallet.membershipCards?.first else { return }
+                        let viewController = ViewControllerFactory.makeBarcodeViewController(membershipCard: membershipCard)
+                        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                        Current.navigate.to(navigationRequest)
+                        self.isPerformingNavigation = false
+                    }
+                } else {
+                    guard let membershipCard = Current.wallet.membershipCards?.first else { return }
+                    
+                    if urlPath == WidgetUrlPath.addCard.rawValue {
+                        self.navigateToBrowseBrands(urlPath: urlPath)
+                        return
+                    }
+                    
+                    let viewController = ViewControllerFactory.makeBarcodeViewController(membershipCard: membershipCard)
+                    let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
+                    self.isPerformingNavigation = false
+                }
+            }
         }
     }
     
@@ -164,9 +187,9 @@ class WidgetController {
         
         imageRequestGroup.notify(queue: .main) {
             if widgetCards.count < 4 {
-                let addCard = MembershipCardWidget(id: WidgetUrlPath.addCard.rawValue, imageData: nil, barCodeImage: nil, backgroundColor: nil, planName: nil)
-                let spacerZero = MembershipCardWidget(id: WidgetUrlPath.spacerZero.rawValue, imageData: nil, barCodeImage: nil, backgroundColor: nil, planName: nil)
-                let spacerOne = MembershipCardWidget(id: WidgetUrlPath.spacerOne.rawValue, imageData: nil, barCodeImage: nil, backgroundColor: nil, planName: nil)
+                let addCard = MembershipCardWidget(id: WidgetUrlPath.addCard.rawValue, imageData: nil, barCodeImage: nil, backgroundColor: "#f80000", planName: nil)
+                let spacerZero = MembershipCardWidget(id: WidgetUrlPath.spacerZero.rawValue, imageData: nil, barCodeImage: nil, backgroundColor: "#f80000", planName: nil)
+                let spacerOne = MembershipCardWidget(id: WidgetUrlPath.spacerOne.rawValue, imageData: nil, barCodeImage: nil, backgroundColor: "#f80000", planName: nil)
                 var spacerCards: [MembershipCardWidget] = []
 
                 if widgetCards.count == 1 {
@@ -174,8 +197,8 @@ class WidgetController {
                 }
 
                 if widgetCards.isEmpty {
-                    spacerCards.append(spacerZero)
-                    spacerCards.append(spacerOne)
+                    spacerCards.append(addCard)
+                    spacerCards.append(addCard)
                 }
                 
                 widgetCards.append(addCard)

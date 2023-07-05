@@ -100,6 +100,7 @@ struct BarcodeProvider: TimelineProvider {
     }
     
     private func readWidgetContentsFromDisk() -> [WidgetContent] {
+        print("readWidgetContentsFromDisk")
         var contents: [WidgetContent] = []
         guard let archiveURL = FileManager.sharedContainerURL()?.appendingPathComponent("contents.json") else { return contents }
         
@@ -162,7 +163,7 @@ struct BarcodeQuickLaunchEntryView: View {
 
     var twoColumnGrid = [GridItem(.flexible(), alignment: .topLeading), GridItem(.flexible())]
     let hasCurrentUser = UserDefaults(suiteName: WidgetType.barcodeLaunch.userDefaultsSuiteID)?.bool(forKey: "hasCurrentUser") ?? false
-    let url = URL(string: WidgetType.quickLaunch.rawValue + "://from_edge")
+    let url = URL(string: WidgetType.barcodeLaunch.rawValue + "://from_edge")
     
     enum Constants {
         static let widgetHeight: CGFloat = 164
@@ -172,12 +173,18 @@ struct BarcodeQuickLaunchEntryView: View {
     var body: some View {
         if hasCurrentUser || model.isPreview == true {
             if let widget = model.walletCards.first {
-                WidgetBarcodeView(membershipCard: widget)
+                switch widget.id {
+                case WidgetUrlPath.addCard.rawValue:
+                    AddCardView(membershipCard: widget)
+                default:
+                    WidgetBarcodeView(membershipCard: widget)
+                }
             }
+        } else {
+            UnauthenticatedSwiftUIView().unredacted()
         }
     }
 }
-
 
 struct BinkWidget: Widget {
     let kind: String = WidgetType.quickLaunch.identifier

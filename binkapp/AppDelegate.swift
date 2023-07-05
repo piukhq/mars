@@ -112,6 +112,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         if url.absoluteString.starts(with: "bink://magiclink?token=") {
             universalLinkUtility.handleLink(for: url)
+        } else if url.absoluteString.starts(with: "barcodelaunch-widget") {
+            widgetController.handleURLForWidgetType(type: .barcodeLaunch, url: url)
         } else {
             widgetController.handleURLForWidgetType(type: .quickLaunch, url: url)
         }

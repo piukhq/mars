@@ -63,7 +63,10 @@ struct MembershipCardWidget: Hashable, Codable {
     let barCodeImage: Data?
     let backgroundColor: String?
     let planName: String?
-    var url: URL {
+    var quickLaunchUrl: URL {
         URL(string: WidgetType.quickLaunch.rawValue + "://" + id) ?? URL(string: WidgetType.quickLaunch.rawValue + "://")!
+    }
+    var barcodeLaunchUrl: URL {
+        URL(string: WidgetType.barcodeLaunch.rawValue + "://" + id) ?? URL(string: WidgetType.barcodeLaunch.rawValue + "://")!
     }
 }

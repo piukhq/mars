@@ -36,7 +36,7 @@ struct WalletCardView: View {
     }
     
     var body: some View {
-        Link(destination: membershipCard.url) {
+        Link(destination: membershipCard.quickLaunchUrl) {
             HStack(alignment: .center, spacing: 0) {
                 if let imageData = membershipCard.imageData, let uiImage = UIImage(data: imageData) {
                     ZStack {
@@ -57,16 +57,6 @@ struct WalletCardView: View {
                         .foregroundColor(backgroundColorIsLight ? .black : .white)
                         .font(.nunitoBold(12))
                     Spacer()
-//                    HStack {
-//                        if let barcodeData = membershipCard.barCodeImage, let uiImage = UIImage(data: barcodeData) {
-//                            Spacer()
-//                            Image(uiImage: uiImage)
-//                                .resizable()
-//                                .aspectRatio(contentMode: .fit)
-//                                .frame(width: Constants.imageSize, height: Constants.imageSize)
-//                                .clipShape(RoundedRectangle(cornerRadius: Constants.imageCornerRadius, style: .continuous))
-//                        }
-//                    }
                 } else {
                     RoundedRectangle(cornerRadius: Constants.placeholderImageCornerRadius)
                         .frame(width: Constants.imageSize, height: Constants.imageSize, alignment: .center)
