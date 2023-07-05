@@ -179,7 +179,7 @@ class WidgetController {
             imageRequestGroup.enter()
             
             ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan)) { retrievedImage in
-                let membershipCardWidget = MembershipCardWidget(id: membershipCard.id, imageData: retrievedImage?.pngData(), barCodeImage: self.barcodeImage(membershipCard: membershipCard, withSize: CGSize(width: 182, height: 128), alwaysShowBarCode: true)?.pngData(), backgroundColor: membershipCard.membershipPlan?.card?.colour, planName: membershipCard.membershipPlan?.account?.planName)
+                let membershipCardWidget = MembershipCardWidget(id: membershipCard.id, imageData: retrievedImage?.pngData(), barCodeImage: self.barcodeImage(membershipCard: membershipCard, withSize: CGSize(width: UIScreen.main.bounds.width, height: 120), alwaysShowBarCode: true)?.pngData(), backgroundColor: membershipCard.membershipPlan?.card?.colour, planName: membershipCard.membershipPlan?.account?.planName)
                 widgetCards.append(membershipCardWidget)
                 imageRequestGroup.leave()
             }

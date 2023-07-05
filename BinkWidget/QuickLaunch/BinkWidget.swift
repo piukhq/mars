@@ -161,7 +161,7 @@ struct BarcodeQuickLaunchEntryView: View {
     
     let model: BarcodeProvider.Entry
 
-    var twoColumnGrid = [GridItem(.flexible(), alignment: .topLeading), GridItem(.flexible())]
+    var oneColumnGrid = [GridItem(.flexible(), alignment: .topLeading)]
     let hasCurrentUser = UserDefaults(suiteName: WidgetType.barcodeLaunch.userDefaultsSuiteID)?.bool(forKey: "hasCurrentUser") ?? false
     let url = URL(string: WidgetType.barcodeLaunch.rawValue + "://from_edge")
     
@@ -172,14 +172,21 @@ struct BarcodeQuickLaunchEntryView: View {
     
     var body: some View {
         if hasCurrentUser || model.isPreview == true {
-            if let widget = model.walletCards.first {
-                switch widget.id {
-                case WidgetUrlPath.addCard.rawValue:
-                    AddCardView(membershipCard: widget)
-                default:
-                    WidgetBarcodeView(membershipCard: widget)
+            LazyVGrid(columns: oneColumnGrid, alignment: .leading, spacing: 0) {
+                if let widget = model.walletCards.first {
+                    switch widget.id {
+                    case WidgetUrlPath.addCard.rawValue:
+                        AddCardView(membershipCard: widget)
+                    default:
+                        WidgetBarcodeView(membershipCard: widget)
+                    }
                 }
             }
+            .padding(.leading, 15)
+            .padding(.trailing, 15)
+            .padding(.top, 15)
+            .padding(.bottom, 15)
+            .background(Color("binkBlue"))
         } else {
             UnauthenticatedSwiftUIView().unredacted()
         }
