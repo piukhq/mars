@@ -119,10 +119,7 @@ struct BarcodeProvider: TimelineProvider {
 
 
 struct QuickLaunchEntryView: View {
-    @Environment(\.widgetFamily) var family
-    
     let model: QuickLaunchProvider.Entry
-
     var twoColumnGrid = [GridItem(.flexible(), alignment: .topLeading), GridItem(.flexible())]
     let hasCurrentUser = UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.bool(forKey: "hasCurrentUser") ?? false
     let url = URL(string: WidgetType.quickLaunch.rawValue + "://from_edge")
@@ -138,7 +135,7 @@ struct QuickLaunchEntryView: View {
                 ForEach(model.walletCards, id: \.self.id) { membershipCard in
                     switch membershipCard.id {
                     case WidgetUrlPath.addCard.rawValue:
-                        AddCardView(membershipCard: membershipCard)
+                        AddCardView()
                     case WidgetUrlPath.spacerZero.rawValue, WidgetUrlPath.spacerOne.rawValue:
                         QuickLaunchWidgetGridSpacerView()
                     default:
@@ -148,7 +145,7 @@ struct QuickLaunchEntryView: View {
             }
             .frame(height: Constants.widgetHeight)
             .padding(.all, Constants.widgetPadding)
-            .background(Color("binkBlue"))
+            .background(Color("WidgetBackground"))
             .widgetURL(url)
         } else {
             UnauthenticatedSwiftUIView().unredacted()
@@ -160,45 +157,64 @@ struct BarcodeQuickLaunchEntryView: View {
     @Environment(\.widgetFamily) var family
     
     let model: BarcodeProvider.Entry
-
+    
     var oneColumnGrid = [GridItem(.flexible(), alignment: .topLeading)]
     let hasCurrentUser = UserDefaults(suiteName: WidgetType.barcodeLaunch.userDefaultsSuiteID)?.bool(forKey: "hasCurrentUser") ?? false
-    let url = URL(string: WidgetType.barcodeLaunch.rawValue + "://from_edge")
     
     enum Constants {
-        static let widgetHeight: CGFloat = 164
         static let widgetPadding: CGFloat = 15
     }
     
     var body: some View {
-        if hasCurrentUser || model.isPreview == true {
-            LazyVGrid(columns: oneColumnGrid, alignment: .leading, spacing: 0) {
-                if let widget = model.walletCards.first {
-                    switch widget.id {
-                    case WidgetUrlPath.addCard.rawValue:
-                        AddCardView(membershipCard: widget)
-                    default:
-                        WidgetBarcodeView(membershipCard: widget)
+        ZStack {
+            Color("WidgetBackground")
+                .ignoresSafeArea()
+            if hasCurrentUser || model.isPreview == true {
+                switch family {
+                case .systemLarge:
+                    LazyVGrid(columns: oneColumnGrid, alignment: .leading, spacing: 22) {
+                        if model.walletCards.isEmpty {
+                            AddCardView()
+                            AddCardView()
+                        } else if model.walletCards.count == 1 {
+                            WidgetBarcodeView(membershipCard: model.walletCards[0])
+                            AddCardView()
+                        } else if model.walletCards.count >= 2 {
+                            WidgetBarcodeView(membershipCard: model.walletCards[0])
+                            WidgetBarcodeView(membershipCard: model.walletCards[1])
+                        }
                     }
+                    .padding(.all, Constants.widgetPadding)
+                    .background(Color("WidgetBackground"))
+                    
+                default:
+                    LazyVGrid(columns: oneColumnGrid, alignment: .leading, spacing: 0) {
+                        if let widget = model.walletCards.first {
+                            switch widget.id {
+                            case WidgetUrlPath.addCard.rawValue:
+                                AddCardView()
+                            default:
+                                WidgetBarcodeView(membershipCard: widget)
+                            }
+                        }
+                    }
+                    .padding(.all, Constants.widgetPadding)
+                    .background(Color("WidgetBackground"))
                 }
+            } else {
+                UnauthenticatedSwiftUIView().unredacted()
             }
-            .padding(.leading, 15)
-            .padding(.trailing, 15)
-            .padding(.top, 15)
-            .padding(.bottom, 15)
-            .background(Color("binkBlue"))
-        } else {
-            UnauthenticatedSwiftUIView().unredacted()
         }
     }
 }
 
-struct BinkWidget: Widget {
+struct QuickLaunchWidget: Widget {
     let kind: String = WidgetType.quickLaunch.identifier
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: QuickLaunchProvider()) { entry in
             QuickLaunchEntryView(model: entry)
+                .background(Color("WidgetBackground"))
         }
         .configurationDisplayName("Quick Launch")
         .description("Quickly access your favourite loyalty cards.")
@@ -206,16 +222,17 @@ struct BinkWidget: Widget {
     }
 }
 
-struct BinkWidget1: Widget {
+struct BarcodeWidget: Widget {
     let kind: String = WidgetType.barcodeLaunch.identifier
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: BarcodeProvider()) { entry in
             BarcodeQuickLaunchEntryView(model: entry)
+                .background(Color("WidgetBackground"))
         }
         .configurationDisplayName("Barcode")
-        .description("Quickly scan barcode.")
-        .supportedFamilies([.systemMedium])
+        .description("Quickly scan a barcode.")
+        .supportedFamilies([.systemMedium, .systemLarge])
     }
 }
 
@@ -223,15 +240,15 @@ struct BinkWidget1: Widget {
 struct BinkWidgetBundle: WidgetBundle {
     @WidgetBundleBuilder
     var body: some Widget {
-        BinkWidget()
-        BinkWidget1()
+        QuickLaunchWidget()
+        BarcodeWidget()
     }
 }
 
 struct BinkWidget_Previews: PreviewProvider {
     static var previews: some View {
         BarcodeQuickLaunchEntryView(model: WidgetContent(walletCards: previewWalletCards, isPreview: true))
-            .previewContext(WidgetPreviewContext(family: .systemMedium))
+            .previewContext(WidgetPreviewContext(family: .systemLarge))
             .preferredColorScheme(.light)
     }
 }

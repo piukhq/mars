@@ -20,31 +20,33 @@ struct WidgetBarcodeView: View {
     }
     
     var body: some View {
-        Link(destination: membershipCard.barcodeLaunchUrl) {
-            VStack(alignment: .leading, spacing: 4) {
-                if let barcodeData = membershipCard.barCodeImage, let uiImage = UIImage(data: barcodeData) {
-                    
-                    Text(membershipCard.planName ?? "")
-                        //.padding(.leading, Constants.textLeadingPadding)
-                        .lineLimit(Constants.textLineLimit)
-                        .multilineTextAlignment(.leading)
-                        .foregroundColor(.white)
-                        .font(.nunitoBold(12))
-                    
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: Constants.imageSize)
-                        .clipShape(RoundedRectangle(cornerRadius: Constants.imageCornerRadius, style: .continuous))
-                } else {
-                    Text(membershipCard.planName ?? "")
-                        .lineLimit(Constants.textLineLimit)
-                        .foregroundColor(.white)
-                        .font(.nunitoBold(12))
+        ZStack {
+            Color("WidgetBackground")
+                .ignoresSafeArea()
+            Link(destination: membershipCard.barcodeLaunchUrl) {
+                VStack(alignment: .leading, spacing: 4) {
+                    if let barcodeData = membershipCard.barCodeImage, let uiImage = UIImage(data: barcodeData) {
+                        Text(membershipCard.planName ?? "")
+                            .lineLimit(Constants.textLineLimit)
+                            .multilineTextAlignment(.leading)
+                            .foregroundColor(.white)
+                            .font(.nunitoBold(12))
+                        
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: Constants.imageSize)
+                            .clipShape(RoundedRectangle(cornerRadius: Constants.imageCornerRadius, style: .continuous))
+                    } else {
+                        Text(membershipCard.planName ?? "")
+                            .lineLimit(Constants.textLineLimit)
+                            .foregroundColor(.white)
+                            .font(.nunitoBold(12))
+                    }
                 }
+                .frame(maxHeight: .infinity)
             }
-            .background(Color("binkBlue"))
         }
     }
 }
