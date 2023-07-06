@@ -8,9 +8,9 @@
 
 import SwiftUI
 
+// swiftlint:disable force_unwrapping
+
 struct AddCardView: View {
-    let membershipCard: MembershipCardWidget
-    
     enum Constants {
         static let addCardImageSize = CGSize(width: 20, height: 36)
         static let cornerRadius: CGFloat = 12
@@ -18,7 +18,7 @@ struct AddCardView: View {
     }
 
     var body: some View {
-        Link(destination: membershipCard.url) {
+        Link(destination: URL(string: WidgetType.quickLaunch.rawValue + "://")!) {
             HStack(alignment: .center, spacing: 0) {
                 Spacer()
                 Image(systemName: "plus")

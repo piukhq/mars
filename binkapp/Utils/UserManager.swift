@@ -61,12 +61,14 @@ class UserManager {
         // We can safely assume that if we have no token, we have no user
         guard let token = currentToken, !token.isEmpty else {
             UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(false, forDefaultsKey: .hasCurrentUser)
+            UserDefaults(suiteName: WidgetType.barcodeLaunch.userDefaultsSuiteID)?.set(false, forDefaultsKey: .hasCurrentUser)
             Current.watchController.hasCurrentUser(false)
             return false
         }
         
         // Store in shared container
         UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(true, forDefaultsKey: .hasCurrentUser)
+        UserDefaults(suiteName: WidgetType.barcodeLaunch.userDefaultsSuiteID)?.set(true, forDefaultsKey: .hasCurrentUser)
         return true
     }
     
@@ -87,6 +89,7 @@ class UserManager {
             try setToken(with: response)
             try setEmail(with: response)
             UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(true, forDefaultsKey: .hasCurrentUser)
+            UserDefaults(suiteName: WidgetType.barcodeLaunch.userDefaultsSuiteID)?.set(true, forDefaultsKey: .hasCurrentUser)
         } catch {
             BinkLogger.error(UserLoggerError.setNewUser, value: error.localizedDescription)
         }
@@ -146,7 +149,9 @@ class UserManager {
         currentLastName = nil
         
         UserDefaults(suiteName: WidgetType.quickLaunch.userDefaultsSuiteID)?.set(false, forDefaultsKey: .hasCurrentUser)
+        UserDefaults(suiteName: WidgetType.barcodeLaunch.userDefaultsSuiteID)?.set(false, forDefaultsKey: .hasCurrentUser)
         WidgetController().reloadWidget(type: .quickLaunch)
+        WidgetController().reloadWidget(type: .barcodeLaunch)
         Current.watchController.hasCurrentUser(false)
     }
     

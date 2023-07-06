@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct WalletCardView: View {
     let membershipCard: MembershipCardWidget
@@ -35,7 +36,7 @@ struct WalletCardView: View {
     }
     
     var body: some View {
-        Link(destination: membershipCard.url) {
+        Link(destination: membershipCard.quickLaunchUrl) {
             HStack(alignment: .center, spacing: 0) {
                 if let imageData = membershipCard.imageData, let uiImage = UIImage(data: imageData) {
                     ZStack {
@@ -76,5 +77,14 @@ struct WalletCardView: View {
                     .foregroundColor(Color(UIColor(hexString: membershipCard.backgroundColor ?? "#009190")))
             )
         }
+    }
+}
+
+struct WalletCardView_Previews: PreviewProvider {
+    static var previews: some View {
+        VStack {
+            WalletCardView(membershipCard: MembershipCardWidget(id: "1", imageData: UIImage(named: "iceland")?.pngData(), barCodeImage: UIImage(named: "iceland")?.pngData(), backgroundColor: "#0000FF", planName: "Tesco"))
+        }
+        .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }

@@ -20,7 +20,7 @@ class WidgetController {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+
     @objc private func handleWalletReload() {
         if isPerformingNavigation {
             navigateToQuickLaunchWidgetDestination(urlPath: urlPath)
@@ -30,6 +30,8 @@ class WidgetController {
     func reloadWidget(type: WidgetType) {
         switch type {
         case .quickLaunch:
+            WidgetCenter.shared.reloadTimelines(ofKind: type.identifier)
+        case .barcodeLaunch:
             WidgetCenter.shared.reloadTimelines(ofKind: type.identifier)
         }
     }
@@ -56,6 +58,31 @@ class WidgetController {
                     }
                 } else {
                     self.navigateToQuickLaunchWidgetDestination(urlPath: urlPath)
+                }
+            }
+        case .barcodeLaunch:
+            Current.navigate.closeShieldView {
+                guard let topViewController = UIViewController.topMostViewController() else { return }
+                if topViewController.isModal {
+                    Current.navigate.close(animated: true) {
+                        guard let membershipCard = Current.wallet.membershipCards?.first else { return }
+                        let viewController = ViewControllerFactory.makeBarcodeViewController(membershipCard: membershipCard)
+                        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                        Current.navigate.to(navigationRequest)
+                        self.isPerformingNavigation = false
+                    }
+                } else {
+                    guard let membershipCard = Current.wallet.membershipCards?.first(where: { $0.id == urlPath }) else { return }
+                    
+                    if urlPath == WidgetUrlPath.addCard.rawValue {
+                        self.navigateToBrowseBrands(urlPath: urlPath)
+                        return
+                    }
+                    
+                    let viewController = ViewControllerFactory.makeBarcodeViewController(membershipCard: membershipCard)
+                    let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
+                    self.isPerformingNavigation = false
                 }
             }
         }
@@ -98,7 +125,7 @@ class WidgetController {
         }
         return false
     }
-    
+
     func writeContentsToDisk(membershipCards: [CD_MembershipCard]?) {
         guard let walletCards = membershipCards else { return }
         let imageRequestGroup = DispatchGroup()
@@ -109,7 +136,7 @@ class WidgetController {
             imageRequestGroup.enter()
             
             ImageService.getImage(forPathType: .membershipPlanIcon(plan: plan)) { retrievedImage in
-                let membershipCardWidget = MembershipCardWidget(id: membershipCard.id, imageData: retrievedImage?.pngData(), backgroundColor: membershipCard.membershipPlan?.card?.colour, planName: membershipCard.membershipPlan?.account?.planName)
+                let membershipCardWidget = MembershipCardWidget(id: membershipCard.id, imageData: retrievedImage?.pngData(), barCodeImage: BarcodeImageHelper.barcodeImage(membershipCard: membershipCard, withSize: CGSize(width: UIScreen.main.bounds.width, height: 120), alwaysShowBarCode: true)?.pngData(), backgroundColor: membershipCard.membershipPlan?.card?.colour, planName: membershipCard.membershipPlan?.account?.planName)
                 widgetCards.append(membershipCardWidget)
                 imageRequestGroup.leave()
             }
@@ -117,9 +144,9 @@ class WidgetController {
         
         imageRequestGroup.notify(queue: .main) {
             if widgetCards.count < 4 {
-                let addCard = MembershipCardWidget(id: WidgetUrlPath.addCard.rawValue, imageData: nil, backgroundColor: nil, planName: nil)
-                let spacerZero = MembershipCardWidget(id: WidgetUrlPath.spacerZero.rawValue, imageData: nil, backgroundColor: nil, planName: nil)
-                let spacerOne = MembershipCardWidget(id: WidgetUrlPath.spacerOne.rawValue, imageData: nil, backgroundColor: nil, planName: nil)
+                let addCard = MembershipCardWidget(id: WidgetUrlPath.addCard.rawValue, imageData: nil, barCodeImage: nil, backgroundColor: nil, planName: nil)
+                let spacerZero = MembershipCardWidget(id: WidgetUrlPath.spacerZero.rawValue, imageData: nil, barCodeImage: nil, backgroundColor: nil, planName: nil)
+                let spacerOne = MembershipCardWidget(id: WidgetUrlPath.spacerOne.rawValue, imageData: nil, barCodeImage: nil, backgroundColor: nil, planName: nil)
                 var spacerCards: [MembershipCardWidget] = []
 
                 if widgetCards.count == 1 {
@@ -127,8 +154,8 @@ class WidgetController {
                 }
 
                 if widgetCards.isEmpty {
-                    spacerCards.append(spacerZero)
-                    spacerCards.append(spacerOne)
+                    spacerCards.append(addCard)
+                    spacerCards.append(addCard)
                 }
                 
                 widgetCards.append(addCard)
@@ -143,6 +170,7 @@ class WidgetController {
                 do {
                     try dataToSave.write(to: archiveURL)
                     self.reloadWidget(type: .quickLaunch)
+                    self.reloadWidget(type: .barcodeLaunch)
                 } catch {
                     BinkLogger.error(AppLoggerError.encodeWidgetContentsToDiskFailure, value: error.localizedDescription)
                     return

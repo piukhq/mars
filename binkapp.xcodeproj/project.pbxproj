@@ -71,6 +71,7 @@
 		2151478429114D0E00E6B209 /* fireBase-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 2151478229114D0E00E6B209 /* fireBase-config.json */; };
 		2151478529114D0E00E6B209 /* htmlTest.html in Resources */ = {isa = PBXBuildFile; fileRef = 2151478329114D0E00E6B209 /* htmlTest.html */; };
 		215BC59528A6900100DB1377 /* BinkCore in Frameworks */ = {isa = PBXBuildFile; productRef = 215BC59428A6900100DB1377 /* BinkCore */; };
+		216AD1002A56CF9200C564F2 /* BarcodeImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216AD0FF2A56CF9200C564F2 /* BarcodeImageHelper.swift */; };
 		216B999C28AE902000A67A14 /* FloatExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216B999B28AE902000A67A14 /* FloatExtensionTests.swift */; };
 		216DCB5B2A447934000E433F /* NewPollCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216DCB5A2A447934000E433F /* NewPollCellViewModelTests.swift */; };
 		2171877F29EE90200079412B /* NewPollCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2171877E29EE90200079412B /* NewPollCellViewModel.swift */; };
@@ -83,6 +84,7 @@
 		217288F828B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288F728B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift */; };
 		217288FA28B50D3700258EBA /* PLRCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217288F928B50D3700258EBA /* PLRCellViewModelTests.swift */; };
 		218E16E82A41A0050081790E /* NewMerchantViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218E16E72A41A0050081790E /* NewMerchantViewModelTests.swift */; };
+		218E92EF2A544BD4004254FF /* WidgetBarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218E92EE2A544BD4004254FF /* WidgetBarcodeView.swift */; };
 		21A6C4FE29D1D98E0051A481 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 21A6C4FD29D1D98E0051A481 /* FirebaseFirestore */; };
 		21A6C50129D2D6FE0051A481 /* PollModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6C50029D2D6FE0051A481 /* PollModel.swift */; };
 		21A6C50329D2D7130051A481 /* PollVotingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6C50229D2D7130051A481 /* PollVotingModel.swift */; };
@@ -803,6 +805,7 @@
 		215147782911284A00E6B209 /* HTMLParsingUtilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLParsingUtilTests.swift; sourceTree = "<group>"; };
 		2151478229114D0E00E6B209 /* fireBase-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "fireBase-config.json"; sourceTree = "<group>"; };
 		2151478329114D0E00E6B209 /* htmlTest.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = htmlTest.html; sourceTree = "<group>"; };
+		216AD0FF2A56CF9200C564F2 /* BarcodeImageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeImageHelper.swift; sourceTree = "<group>"; };
 		216B999B28AE902000A67A14 /* FloatExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtensionTests.swift; sourceTree = "<group>"; };
 		216DCB5A2A447934000E433F /* NewPollCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPollCellViewModelTests.swift; sourceTree = "<group>"; };
 		2171877E29EE90200079412B /* NewPollCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPollCellViewModel.swift; sourceTree = "<group>"; };
@@ -815,6 +818,7 @@
 		217288F728B500A800258EBA /* PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailAddLoyaltyCardCellViewModelTest.swift; sourceTree = "<group>"; };
 		217288F928B50D3700258EBA /* PLRCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRCellViewModelTests.swift; sourceTree = "<group>"; };
 		218E16E72A41A0050081790E /* NewMerchantViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMerchantViewModelTests.swift; sourceTree = "<group>"; };
+		218E92EE2A544BD4004254FF /* WidgetBarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetBarcodeView.swift; sourceTree = "<group>"; };
 		21A6C50029D2D6FE0051A481 /* PollModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollModel.swift; sourceTree = "<group>"; };
 		21A6C50229D2D7130051A481 /* PollVotingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollVotingModel.swift; sourceTree = "<group>"; };
 		21A6C50629D301CF0051A481 /* PollSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollSwiftUIView.swift; sourceTree = "<group>"; };
@@ -1612,6 +1616,14 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		216AD0FE2A56CF5B00C564F2 /* BarcodeImage */ = {
+			isa = PBXGroup;
+			children = (
+				216AD0FF2A56CF9200C564F2 /* BarcodeImageHelper.swift */,
+			);
+			path = BarcodeImage;
+			sourceTree = "<group>";
+		};
 		21719FE729B20EF600AEEB43 /* PreviousUpdates */ = {
 			isa = PBXGroup;
 			children = (
@@ -2018,6 +2030,7 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				216AD0FE2A56CF5B00C564F2 /* BarcodeImage */,
 				CE1665E029AE20C500415D1B /* Whats New */,
 				CEADBFDC27464590008810A8 /* MixpanelUtility.swift */,
 				70FDBD72264E7C5300DC8DB3 /* Autofill */,
@@ -2961,6 +2974,7 @@
 				CE6DE57C268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift */,
 				CEE20922268E1E0E004D3759 /* AddCardView.swift */,
 				CEE20924268E1E3A004D3759 /* QuickLaunchWidgetGridSpacerView.swift */,
+				218E92EE2A544BD4004254FF /* WidgetBarcodeView.swift */,
 			);
 			path = QuickLaunch;
 			sourceTree = "<group>";
@@ -4223,6 +4237,7 @@
 				EF2E881323351A6000F678F3 /* CoreDataRepositoryProtocol.swift in Sources */,
 				EFA5F70F2379A7C70027AB80 /* CD_MembershipPlanImage.swift in Sources */,
 				EF94AF1423E05B5D00AAA039 /* ImageService.swift in Sources */,
+				216AD1002A56CF9200C564F2 /* BarcodeImageHelper.swift in Sources */,
 				EF8F0486238D583300BD708B /* CD_LinkingSupport.swift in Sources */,
 				EF94AF0823D9B89B00AAA039 /* Analytics.swift in Sources */,
 				EF94AF0523D887AE00AAA039 /* SpreedlyModels.swift in Sources */,
@@ -4722,6 +4737,7 @@
 				CEAF29FD2695A051006B6EB5 /* BinkLoggerErrors.swift in Sources */,
 				CE02D51F27293F14008B9BFA /* UIColor+BinkApp+WidgetApp+WatchApp.swift in Sources */,
 				CEAF29FC26959FA7006B6EB5 /* BinkLoggerEvents.swift in Sources */,
+				218E92EF2A544BD4004254FF /* WidgetBarcodeView.swift in Sources */,
 				CE6DE57D268203C70063A3A9 /* UnauthenticatedSwiftUIView.swift in Sources */,
 				CE6DE56B2681E8280063A3A9 /* BinkWidget.swift in Sources */,
 				CEE20921268E1DAA004D3759 /* WalletCardView.swift in Sources */,
@@ -4921,7 +4937,7 @@
 			baseConfigurationReference = E708C17C8E9A69A07732E058 /* Pods-binkapp.alpha.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				API_BASE_URL = api.dev.gb.bink.com;
+				API_BASE_URL = api.staging.gb.bink.com;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Alpha";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = binkapp/Binkapp.entitlements;
