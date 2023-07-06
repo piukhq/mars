@@ -100,7 +100,6 @@ struct BarcodeProvider: TimelineProvider {
     }
     
     private func readWidgetContentsFromDisk() -> [WidgetContent] {
-        print("readWidgetContentsFromDisk")
         var contents: [WidgetContent] = []
         guard let archiveURL = FileManager.sharedContainerURL()?.appendingPathComponent("contents.json") else { return contents }
         
@@ -173,15 +172,17 @@ struct BarcodeQuickLaunchEntryView: View {
                 switch family {
                 case .systemLarge:
                     LazyVGrid(columns: oneColumnGrid, alignment: .leading, spacing: 22) {
-                        if model.walletCards.isEmpty {
-                            AddCardView()
-                            AddCardView()
-                        } else if model.walletCards.count == 1 {
-                            WidgetBarcodeView(membershipCard: model.walletCards[0])
-                            AddCardView()
-                        } else if model.walletCards.count >= 2 {
-                            WidgetBarcodeView(membershipCard: model.walletCards[0])
-                            WidgetBarcodeView(membershipCard: model.walletCards[1])
+                        if model.walletCards.count >= 2 {
+                            if model.walletCards[0].id == WidgetUrlPath.addCard.rawValue {
+                                AddCardView()
+                                AddCardView()
+                            } else if model.walletCards[1].id == WidgetUrlPath.addCard.rawValue {
+                                WidgetBarcodeView(membershipCard: model.walletCards[0])
+                                AddCardView()
+                            } else {
+                                WidgetBarcodeView(membershipCard: model.walletCards[0])
+                                WidgetBarcodeView(membershipCard: model.walletCards[1])
+                            }
                         }
                     }
                     .padding(.all, Constants.widgetPadding)
