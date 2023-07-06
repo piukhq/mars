@@ -1616,12 +1616,12 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		216AD0FE2A56CF5B00C564F2 /* bBarcodeImage */ = {
+		216AD0FE2A56CF5B00C564F2 /* BarcodeImage */ = {
 			isa = PBXGroup;
 			children = (
 				216AD0FF2A56CF9200C564F2 /* BarcodeImageHelper.swift */,
 			);
-			path = bBarcodeImage;
+			path = BarcodeImage;
 			sourceTree = "<group>";
 		};
 		21719FE729B20EF600AEEB43 /* PreviousUpdates */ = {
@@ -2030,7 +2030,7 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				216AD0FE2A56CF5B00C564F2 /* bBarcodeImage */,
+				216AD0FE2A56CF5B00C564F2 /* BarcodeImage */,
 				CE1665E029AE20C500415D1B /* Whats New */,
 				CEADBFDC27464590008810A8 /* MixpanelUtility.swift */,
 				70FDBD72264E7C5300DC8DB3 /* Autofill */,
@@ -4800,7 +4800,7 @@
 			baseConfigurationReference = BD3CB9432328573C005C37AE /* Dev.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				API_BASE_URL = api.staging.gb.bink.com;
+				API_BASE_URL = api.dev.gb.bink.com;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;

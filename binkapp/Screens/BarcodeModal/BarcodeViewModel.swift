@@ -124,7 +124,7 @@ class BarcodeViewModel: ObservableObject {
     // MARK: - Functions
 
     func barcodeImage(withSize size: CGSize, drawInContainer: Bool = true, alwaysShowBarCode: Bool = false) -> UIImage? {
-        return BarcodeImageHelper.barcodeImage(membershipCard: membershipCard, withSize: size, alwaysShowBarCode: alwaysShowBarCode)
+        return BarcodeImageHelper.barcodeImage(membershipCard: membershipCard, withSize: size, drawInContainer: drawInContainer, alwaysShowBarCode: alwaysShowBarCode)
     }
     
     func getMerchantImage(colorScheme: ColorScheme) {

@@ -67,7 +67,6 @@ enum BarcodeImageHelper {
         let encodeHints = ZXEncodeHints()
         encodeHints.margin = 0
 
-
         let width = BarcodeImageHelper.barcodeType(membershipCard: membershipCard) == .code39 ? BarcodeImageHelper.barcodeType(membershipCard: membershipCard).preferredWidth(for: barcodeString.count, targetWidth: size.width) : size.width
         let height = size.height
         var image: UIImage?
